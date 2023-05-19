@@ -1,0 +1,52 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: detect-aws-credentials
+        args: [--allow-missing-credentials]
+      - id: detect-private-key
+      - id: debug-statements
+        name: Detect accidentally committed debug statements
+      - id: check-executables-have-shebangs
+        name: Check that executables have shebang
+      - id: check-merge-conflict
+        name: Check that merge conflicts are not being committed
+      - id: end-of-file-fixer
+        name: Make sure that there is an empty line at the end
+        exclude: data/.*|test
+      - id: check-yaml
+        name: Check XML files with xmllint
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.28.0
+    hooks:
+      - id: yamllint
+        name: Check YAML files with yamllint
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        name: Check imports order (isort)
+  - repo: https://github.com/psf/black
+    rev: 22.6.0
+    hooks:
+      - id: black
+        name: Check format (black)
+  - repo: https://gitlab.com/smop/pre-commit-hooks
+    rev: v1.0.0
+    hooks:
+      - id: check-poetry
+        name: Validate poetry config
+  - repo: local
+    hooks:
+      - name: Apply copyright
+        id: apply-copyright
+        language: script
+        pass_filenames: true
+        stages: [ commit ]
+        entry: development/apply-copyright.sh
+#  - repo: https://github.com/commitizen-tools/commitizen
+#    rev: v2.37.0
+#    hooks:
+#      - id: commitizen-branch
+#        stages: [ push ]

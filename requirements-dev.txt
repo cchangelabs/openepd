@@ -1,0 +1,4 @@
+# Build
+poetry~=1.4
+keyring~=23.13.0
+artifacts-keyring~=0.3.2
