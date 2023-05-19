@@ -17,7 +17,9 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-import pydantic
+from typing import Annotated
+
+import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
 
@@ -32,6 +34,17 @@ class ExternalIdentification(BaseOpenEpdSchema):  # TODO: NEW Object, not in the
 class ExternallyIdentifiableMixin:  # TODO: NEW Object, not in the spec
     """Mixin for objects that can be identified externally."""
 
-    identified: dict[str, ExternalIdentification] = pydantic.Field(
-        description="The external identification of the object."
+    identified: dict[str, ExternalIdentification] = pyd.Field(description="The external identification of the object.")
+
+
+class WithAttachmentsMixin:
+    """Mixin for objects that can have attachments."""
+
+    attachments: dict[Annotated[str, pyd.constr(max_length=200)], pyd.AnyUrl] | None = pyd.Field(
+        description="Dict of URLs relevant to this entry",
+        example={
+            "Contact Us": "https://www.c-change-labs.com/en/contact-us/",
+            "LinkedIn": "https://www.linkedin.com/company/c-change-labs/",
+        },
+        default=None,
     )

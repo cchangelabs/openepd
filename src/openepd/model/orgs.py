@@ -22,7 +22,7 @@ from typing import Annotated, Optional
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import ExternallyIdentifiableMixin
+from openepd.model.common import ExternallyIdentifiableMixin, WithAttachmentsMixin
 
 
 class Contact(BaseOpenEpdSchema):  # TODO: NEW Object, not in the spec
@@ -35,7 +35,9 @@ class Contact(BaseOpenEpdSchema):  # TODO: NEW Object, not in the spec
     )
 
 
-class Org(ExternallyIdentifiableMixin, BaseOpenEpdSchema):  # TODO: NEW Identifiable field, not in the spec
+class Org(
+    ExternallyIdentifiableMixin, WithAttachmentsMixin, BaseOpenEpdSchema
+):  # TODO: NEW Identifiable field, not in the spec
     """Represent an organization."""
 
     web_domain: str = pyd.Field(
@@ -55,11 +57,28 @@ class Org(ExternallyIdentifiableMixin, BaseOpenEpdSchema):  # TODO: NEW Identifi
         example=["cqd.io", "supplychaincarbonpricing.org"],
         default=None,
     )
-    attachments: dict[Annotated[str, pyd.constr(max_length=200)], pyd.AnyUrl] | None = pyd.Field(
-        description="Dict of URLs relevant to this entry",
-        example={
-            "Contact Us": "https://www.c-change-labs.com/en/contact-us/",
-            "LinkedIn": "https://www.linkedin.com/company/c-change-labs/",
-        },
-        default=None,
+
+
+class Plant(ExternallyIdentifiableMixin, WithAttachmentsMixin, BaseOpenEpdSchema):
+    """Represent a manufacturing plant."""
+
+    # TODO: Add proper validator
+    id: str = pyd.Field(
+        description="Plus code (aka Open Location Code) of plant's location and "
+        "owner's web domain joined with `.`(dot).",
+        example="865P2W3V+3W.interface.com",
+        alias="pluscode",
     )
+    owner: Org | None = pyd.Field(description="Organization that owns the plant", default=None)
+    name: str = pyd.Field(
+        max_length=200, description="Manufacturer's name for plant. Recommended < 40 chars", example="Dalton, GA"
+    )
+    address: str = pyd.Field(
+        max_length=200,
+        description="Text address, preferably geocoded",
+        example="1503 Orchard Hill Rd, LaGrange, GA 30240, United States",
+    )
+    contact_email: pyd.EmailStr | None = pyd.Field(description="Email contact", example="info@interface.com")
+
+    class Config(BaseOpenEpdSchema.Config):
+        allow_population_by_field_name = True
