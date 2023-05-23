@@ -23,7 +23,8 @@ from typing import Literal
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import ExternallyIdentifiableMixin
+from openepd.model.common import Amount, ExternallyIdentifiableMixin
+from openepd.model.lcia import ImpactSet, OutputFlowSet, ResourceUseSet
 from openepd.model.orgs import Org, Plant
 
 
@@ -103,4 +104,19 @@ class Epd(ExternallyIdentifiableMixin, BaseOpenEpdSchema):
     )
     product_class: dict[str, str] = pyd.Field(
         description="List of classifications, including Masterformat and UNSPC", default_factory=dict
+    )
+    declared_unit: Amount | None = pyd.Field(
+        description="SI declared unit for this EPD.  If a functional unit is "
+        "utilized, the declared unit shall refer to the amount of "
+        "product associated with the A1-A3 life cycle stage."
+    )
+    impacts: ImpactSet | None = pyd.Field(
+        description="List of environmental impacts, compiled per one of the standard Impact Assessment methods"
+    )
+    resource_uses: ResourceUseSet | None = pyd.Field(
+        description="Set of Resource Use Indicators, over various LCA scopes"
+    )
+    output_flows: OutputFlowSet | None = pyd.Field(
+        description="Set of Waste and Output Flow indicators which describe the waste categories "
+        "and other material output flows derived from the LCI."
     )

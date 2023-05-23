@@ -24,6 +24,22 @@ import pydantic as pyd
 from openepd.model.base import BaseOpenEpdSchema
 
 
+class Amount(BaseOpenEpdSchema):
+    """A value-and-unit pairing for amounts that do not have an uncertainty."""
+
+    qty: float | None = pyd.Field(description="How much of this in the amount.")
+    unit: str = pyd.Field(description="Which unit.  SI units are preferred.", example="kg")
+
+
+class Measurement(BaseOpenEpdSchema):
+    """A scientific value with units and uncertainty."""
+
+    mean: float = pyd.Field(description="Mean (expected) value of the measurement")
+    unit: str = pyd.Field(description="Measurement unit")
+    rsd: pyd.PositiveFloat = pyd.Field(description="Relative standard deviation, i.e. standard_deviation/mean")
+    dist: str | None = pyd.Field(description="Statistical distribution of the measurement error.")
+
+
 class ExternalIdentification(BaseOpenEpdSchema):  # TODO: NEW Object, not in the spec
     """Represent an external identification of an object."""
 
