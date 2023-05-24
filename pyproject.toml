@@ -17,6 +17,7 @@ classifiers = [
 ]
 readme = "README.md"
 packages = [{include = "openepd", from = "src"}]
+exclude = ["**/test_*.py"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -55,7 +56,7 @@ types-deprecated = ">=1.2.9"
 
 
 [tool.commitizen]
-version = "0.6.0"
+version = "0.2.0"
 bump_version = "bump: version $current_version → $new_version"
 update_changelog_on_bump = true
 pre_bump_hooks = []

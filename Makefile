@@ -137,7 +137,7 @@ publish: build
 		echo "Publishing packages"; \
 		set -e; \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
-		poetry publish -r pypi; \
+		poetry publish; \
 		echo "DONE: Publishing packages"; \
 	)
 
