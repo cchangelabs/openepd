@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "openepdpy"
+name = "openepd"
 version = "0.1.0"
 license = "Apache-2.0"
 description = "Python library to work with OpenEPD format"
@@ -34,7 +34,6 @@ pytest = "~=7.2"
 pytest-subtests = "~=0.4"
 pytest-cov = "~=4.0"
 teamcity-messages = ">=1.31"
-lxml-stubs = { version = ">=0.4.0" }
 
 # Dev tools
 black = "~=22.3"
