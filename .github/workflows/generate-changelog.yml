@@ -1,0 +1,56 @@
+name: Generate changelog
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      git_ref:
+        required: true
+        type: string
+
+jobs:
+  changelog:
+    name: Generate Changelog and Next Version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          ref: "${{ ((inputs.git_ref) && inputs.git_ref) || github.ref }}"
+          fetch-depth: 0  # Checkout with history
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip wheel commitizen~=2.42.1
+
+      - name: Determine New Version and Generate Changelog
+        id: bump
+        run: |
+          mkdir -p meta
+          cz bump --yes --dry-run --changelog > bump.txt
+          cat bump.txt | tail -n +5 > meta/new-changelog.md
+          cat bump.txt
+          # New Version
+          NEW_VERSION=`cat bump.txt | tail -n +2 | head -n 1 | grep -Po "(\d+\.\d+.\d+)"`
+          echo "$NEW_VERSION" > meta/new-version.txt
+          echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          ls -la meta
+          cat meta/new-version.txt
+          echo "=============================="
+          cat meta/new-changelog.md
+          echo "=============================="
+          # Change log
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "changelog<<$EOF" >> "$GITHUB_OUTPUT"
+          cat meta/new-changelog.md >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: bump-meta
+          path: meta/*
