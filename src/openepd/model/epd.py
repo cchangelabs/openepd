@@ -25,7 +25,7 @@ import pydantic as pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Amount, ExternallyIdentifiableMixin
 from openepd.model.lcia import ImpactSet, OutputFlowSet, ResourceUseSet
-from openepd.model.orgs import Org, Plant
+from openepd.model.org import Org, Plant
 
 
 class Epd(ExternallyIdentifiableMixin, BaseOpenEpdSchema):
@@ -78,7 +78,7 @@ class Epd(ExternallyIdentifiableMixin, BaseOpenEpdSchema):
     plants: list[Plant] = pyd.Field(
         max_items=32,
         description="List of object(s) for one or more plant(s) that this declaration applies to.",
-        default=[],
+        default_factory=list,
     )
     program_operator: Org | None = pyd.Field(description="JSON object for program operator Org")
     program_operator_doc_id: str | None = pyd.Field(

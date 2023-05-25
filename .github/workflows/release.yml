@@ -36,8 +36,8 @@ jobs:
       - name: Create Bump Commit
         id: bump
         run: |
-          git config --local user.email "github-actions@users.noreply.github.com"
-          git config --local user.name "Github Actions Bot"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           # Dry run to generate change incremental change
           mkdir -p meta
           cz bump --yes --dry-run --changelog > bump.txt

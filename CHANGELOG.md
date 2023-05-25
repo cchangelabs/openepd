@@ -1,3 +1,10 @@
+## 0.1.2 (2023-05-25)
+
+### Fix
+
+- fix `pcr.product_classes` definition
+- rename module orgs -> org
+
 ## 0.1.1 (2023-05-25)
 
 ### Fix
