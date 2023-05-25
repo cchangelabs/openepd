@@ -137,8 +137,17 @@ publish: build
 		echo "Publishing packages"; \
 		set -e; \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
-		poetry publish -r ec3; \
+		poetry publish; \
 		echo "DONE: Publishing packages"; \
+	)
+
+test-publish: build
+	@( \
+		echo "Publishing packages to the TEST PYPI"; \
+		set -e; \
+		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
+		poetry publish -r test-pypi; \
+		echo "DONE: Publishing packages (TEST PYPI)"; \
 	)
 
 coverage:
@@ -181,7 +190,7 @@ release:
 		echo "Preparing release"; \
 		set -e; \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
-		cz bump --changelog; \
+		cz bump --yes --changelog; \
 		echo "DONE: Preparing release"; \
 	)
 
