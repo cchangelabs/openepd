@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openepd"
-version = "0.1.2"
+version = "0.1.3"
 license = "Apache-2.0"
 description = "Python library to work with OpenEPD format"
 authors = ["C-Change Labs <support@c-change-labs.com>"]
@@ -56,7 +56,7 @@ types-deprecated = ">=1.2.9"
 
 
 [tool.commitizen]
-version = "0.1.2"
+version = "0.1.3"
 bump_version = "bump: version $current_version → $new_version"
 update_changelog_on_bump = true
 pre_bump_hooks = []
