@@ -68,6 +68,6 @@ class Pcr(ExternallyIdentifiableMixin, WithAttachmentsMixin, BaseOpenEpdSchema):
         default=None,
     )
     # TODO: why plural?
-    product_classes: dict[str, str] = pyd.Field(
+    product_classes: dict[str, str | list[str]] = pyd.Field(
         description="List of classifications, including Masterformat and UNSPC", default_factory=dict
     )
