@@ -7,9 +7,10 @@
 <a href="https://pypi.org/project/openepd/"><img src="https://img.shields.io/pypi/v/openepd?style=for-the-badge" title="PyPy Version"/></a> 
 <a href="https://pypi.org/project/openepd/"><img src="https://img.shields.io/pypi/dm/openepd?style=for-the-badge" title="PyPy Downloads"/></a> 
 <br>
-<a href="https://github.com/cchangelabs/openepd/actions/workflows/sanity-check.yml"><img src="https://img.shields.io/github/workflow/status/cchangelabs/cli-rack/Sanity%20Check?style=for-the-badge" title="Build Status"/></a> 
+<a href="https://github.com/cchangelabs/openepd/actions/workflows/sanity-check.yml"><img src="https://img.shields.io/github/actions/workflow/status/cchangelabs/openepd/sanity-check.yml?style=for-the-badge" title="Build Status"/></a> 
 <a href="https://github.com/cchangelabs/openepd/"><img src="https://img.shields.io/github/last-commit/cchangelabs/openepd?style=for-the-badge" title="Last Commit"/></a> 
 <a href="https://github.com/cchangelabs/openepd/releases/"><img src="https://img.shields.io/github/release-date/cchangelabs/openepd?style=for-the-badge" title="Last Release"/></a> 
+<a href="https://github.com/cchangelabs/openepd/releases/"><img src="https://img.shields.io/github/v/release/cchangelabs/openepd?style=for-the-badge" title="Recent Version"></a> 
 </p>
 
 This library is a Python library to work with OpenEPD format.
