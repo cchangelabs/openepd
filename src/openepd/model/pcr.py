@@ -24,7 +24,7 @@ import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import ExternallyIdentifiableMixin, WithAttachmentsMixin
-from openepd.model.orgs import Org
+from openepd.model.org import Org
 
 
 class Pcr(ExternallyIdentifiableMixin, WithAttachmentsMixin, BaseOpenEpdSchema):
