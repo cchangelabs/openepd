@@ -23,11 +23,11 @@ from typing import Optional
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import ExternallyIdentifiableMixin, WithAttachmentsMixin
+from openepd.model.common import WithAttachmentsMixin
 from openepd.model.org import Org
 
 
-class Pcr(ExternallyIdentifiableMixin, WithAttachmentsMixin, BaseOpenEpdSchema):
+class Pcr(WithAttachmentsMixin, BaseOpenEpdSchema):
     """Represent a PCR (Product Category Rules)."""
 
     id: str = pyd.Field(

@@ -42,19 +42,6 @@ class Measurement(BaseOpenEpdSchema):
     dist: str | None = pyd.Field(description="Statistical distribution of the measurement error.", default=None)
 
 
-class ExternalIdentification(BaseOpenEpdSchema):  # TODO: NEW Object, not in the spec
-    """Represent an external identification of an object."""
-
-    id: str
-    version: str | None
-
-
-class ExternallyIdentifiableMixin:  # TODO: NEW Object, not in the spec
-    """Mixin for objects that can be identified externally."""
-
-    identified: dict[str, ExternalIdentification] = pyd.Field(description="The external identification of the object.")
-
-
 class WithAttachmentsMixin:
     """Mixin for objects that can have attachments."""
 

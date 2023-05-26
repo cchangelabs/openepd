@@ -22,7 +22,7 @@ from typing import Annotated, Optional
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import ExternallyIdentifiableMixin, WithAttachmentsMixin
+from openepd.model.common import WithAttachmentsMixin
 
 
 class Contact(BaseOpenEpdSchema):  # TODO: NEW Object, not in the spec
@@ -35,9 +35,7 @@ class Contact(BaseOpenEpdSchema):  # TODO: NEW Object, not in the spec
     )
 
 
-class Org(
-    ExternallyIdentifiableMixin, WithAttachmentsMixin, BaseOpenEpdSchema
-):  # TODO: NEW Identifiable field, not in the spec
+class Org(WithAttachmentsMixin, BaseOpenEpdSchema):  # TODO: NEW Identifiable field, not in the spec
     """Represent an organization."""
 
     web_domain: str = pyd.Field(
@@ -59,7 +57,7 @@ class Org(
     )
 
 
-class Plant(ExternallyIdentifiableMixin, WithAttachmentsMixin, BaseOpenEpdSchema):
+class Plant(WithAttachmentsMixin, BaseOpenEpdSchema):
     """Represent a manufacturing plant."""
 
     # TODO: Add proper validator
