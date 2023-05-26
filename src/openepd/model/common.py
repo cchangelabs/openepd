@@ -36,8 +36,10 @@ class Measurement(BaseOpenEpdSchema):
 
     mean: float = pyd.Field(description="Mean (expected) value of the measurement")
     unit: str = pyd.Field(description="Measurement unit")
-    rsd: pyd.PositiveFloat = pyd.Field(description="Relative standard deviation, i.e. standard_deviation/mean")
-    dist: str | None = pyd.Field(description="Statistical distribution of the measurement error.")
+    rsd: pyd.PositiveFloat | None = pyd.Field(
+        description="Relative standard deviation, i.e. standard_deviation/mean", default=None
+    )
+    dist: str | None = pyd.Field(description="Statistical distribution of the measurement error.", default=None)
 
 
 class ExternalIdentification(BaseOpenEpdSchema):  # TODO: NEW Object, not in the spec
