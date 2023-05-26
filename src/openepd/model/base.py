@@ -20,9 +20,13 @@
 import pydantic
 from pydantic.generics import GenericModel
 
+AnySerializable = int | str | bool | float | list | dict | pydantic.BaseModel | None
+
 
 class BaseOpenEpdSchema(pydantic.BaseModel):
     """Base class for all OpenEPD models."""
+
+    extensions: dict[str, AnySerializable] | None = pydantic.Field(alias="ext", default=None)
 
     class Config:
         allow_mutation = True
@@ -31,6 +35,21 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
     def has_values(self) -> bool:
         """Return True if the model has any values."""
         return len(self.dict(exclude_unset=True, exclude_none=True)) > 0
+
+    @classmethod
+    def is_allowed_field_name(cls, field_name: str) -> bool:
+        """
+        Return True if the field name is defined in the module.
+
+        Both property name and aliases are checked.
+        """
+        if field_name in cls.__fields__:
+            return True
+        else:
+            for x in cls.__fields__.values():
+                if x.alias == field_name:
+                    return True
+        return False
 
 
 class BaseOpenEpdGenericSchema(GenericModel, BaseOpenEpdSchema):

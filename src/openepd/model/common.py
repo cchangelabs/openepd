@@ -36,21 +36,10 @@ class Measurement(BaseOpenEpdSchema):
 
     mean: float = pyd.Field(description="Mean (expected) value of the measurement")
     unit: str = pyd.Field(description="Measurement unit")
-    rsd: pyd.PositiveFloat = pyd.Field(description="Relative standard deviation, i.e. standard_deviation/mean")
-    dist: str | None = pyd.Field(description="Statistical distribution of the measurement error.")
-
-
-class ExternalIdentification(BaseOpenEpdSchema):  # TODO: NEW Object, not in the spec
-    """Represent an external identification of an object."""
-
-    id: str
-    version: str | None
-
-
-class ExternallyIdentifiableMixin:  # TODO: NEW Object, not in the spec
-    """Mixin for objects that can be identified externally."""
-
-    identified: dict[str, ExternalIdentification] = pyd.Field(description="The external identification of the object.")
+    rsd: pyd.PositiveFloat | None = pyd.Field(
+        description="Relative standard deviation, i.e. standard_deviation/mean", default=None
+    )
+    dist: str | None = pyd.Field(description="Statistical distribution of the measurement error.", default=None)
 
 
 class WithAttachmentsMixin:

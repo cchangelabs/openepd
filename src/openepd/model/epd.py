@@ -23,12 +23,12 @@ from typing import Literal
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import Amount, ExternallyIdentifiableMixin
-from openepd.model.lcia import ImpactSet, OutputFlowSet, ResourceUseSet
+from openepd.model.common import Amount
+from openepd.model.lcia import ImpactSet, OutputFlowSet, ResourceUseSet, Standard
 from openepd.model.org import Org, Plant
 
 
-class Epd(ExternallyIdentifiableMixin, BaseOpenEpdSchema):
+class Epd(BaseOpenEpdSchema):
     """Represent an EPD."""
 
     # TODO: Add validator for open-xpd-uuid on this field
@@ -119,4 +119,7 @@ class Epd(ExternallyIdentifiableMixin, BaseOpenEpdSchema):
     output_flows: OutputFlowSet | None = pyd.Field(
         description="Set of Waste and Output Flow indicators which describe the waste categories "
         "and other material output flows derived from the LCI."
+    )
+    compliance: list[Standard] = pyd.Field(
+        description="Standard(s) to which this declaration is compliant.", default_factory=list
     )

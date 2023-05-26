@@ -35,7 +35,8 @@ jobs:
 
       - name: Build and publish packages
         run: |
-          poetry config pypi-token.pypi "${{ secrets.pypi_token }}"
+          export POETRY_HTTP_BASIC_PYPI_USERNAME=__token__
+          export POETRY_HTTP_BASIC_PYPI_PASSWORD="${{ secrets.pypi_token }}"
           make publish NO_VENV=True
 
       - uses: actions/upload-artifact@v3

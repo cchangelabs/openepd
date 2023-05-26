@@ -1,3 +1,11 @@
+## 0.2.0 (2023-05-26)
+
+### Feat
+
+- add `compliance` field to EPD model
+- remove `ExternalIdentification` model
+- add `is_allowed_field` method to base model class
+
 ## 0.1.3 (2023-05-25)
 
 ### Fix
