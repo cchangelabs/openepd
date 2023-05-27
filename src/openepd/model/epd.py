@@ -128,3 +128,30 @@ class Epd(BaseOpenEpdSchema):
         default_factory=Specs,
         description="Data structure(s) describing performance specs of product. Unique for each material type.",
     )
+    lca_discussion: str | None = pyd.Field(
+        max_length=20000,
+        description="""A rich text description containing information for experts reviewing the EPD contents. 
+    Text descriptions required by ISO 14025, ISO 21930, EN 15804,, relevant PCRs, or program instructions and which do not 
+    have specific openEPD fields should be entered here.  This field may be large, and may contain multiple sections 
+    separated by github flavored markdown formatting.""",
+        example="""# Packaging
+
+    Information on product-specific packaging: type, composition and possible reuse of packaging materials (paper, 
+    strapping, pallets, foils, drums, etc.) shall be included in this Section. The EPD shall describe specific packaging 
+    scenario assumptions, including disposition pathways for each packaging material by reuse, recycling, or landfill 
+    disposal based on packaging type.*
+
+    # Product Installation
+
+    A description of the type of processing, machinery, tools, dust extraction equipment, auxiliary materials, etc. 
+    to be used during installation shall be included. Information on industrial and environmental protection may be 
+    included in this section. Any waste treatment included within the system boundary of installation waste should be 
+    specified.
+
+    # Use Conditions
+
+    Use-stage environmental impacts of flooring products during building operations depend on product cleaning assumptions. 
+    Information on cleaning frequency and cleaning products shall be provided based on the manufacturer’s recommendations. 
+    In the absence of primary data, cleaning assumptions shall be documented.
+    """,
+    )
