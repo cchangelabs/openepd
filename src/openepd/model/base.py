@@ -26,11 +26,13 @@ AnySerializable = int | str | bool | float | list | dict | pydantic.BaseModel | 
 class BaseOpenEpdSchema(pydantic.BaseModel):
     """Base class for all OpenEPD models."""
 
-    extensions: dict[str, AnySerializable] | None = pydantic.Field(alias="ext", default=None)
+    ext: dict[str, AnySerializable] | None = pydantic.Field(alias="ext", default=None)
 
     class Config:
         allow_mutation = True
         validate_assignment = False
+        allow_population_by_field_name = True
+        use_enum_values = True
 
     def has_values(self) -> bool:
         """Return True if the model has any values."""
@@ -54,5 +56,11 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
 
 class BaseOpenEpdGenericSchema(GenericModel, BaseOpenEpdSchema):
     """Base class for all OpenEPD generic models."""
+
+    pass
+
+
+class BaseOpenEpdSpec(BaseOpenEpdSchema):
+    """Base class for all OpenEPD specs."""
 
     pass

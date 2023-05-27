@@ -26,6 +26,7 @@ from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Amount
 from openepd.model.lcia import ImpactSet, OutputFlowSet, ResourceUseSet, Standard
 from openepd.model.org import Org, Plant
+from openepd.model.specs import Specs
 
 
 class Epd(BaseOpenEpdSchema):
@@ -122,4 +123,8 @@ class Epd(BaseOpenEpdSchema):
     )
     compliance: list[Standard] = pyd.Field(
         description="Standard(s) to which this declaration is compliant.", default_factory=list
+    )
+    specs: Specs = pyd.Field(
+        default_factory=Specs,
+        description="Data structure(s) describing performance specs of product. Unique for each material type.",
     )
