@@ -1,3 +1,9 @@
+## 0.4.0 (2023-05-29)
+
+### Feat
+
+- add `address` field to the contact entity
+
 ## 0.3.0 (2023-05-29)
 
 ### Feat
