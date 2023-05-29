@@ -24,9 +24,10 @@ import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Amount
-from openepd.model.lcia import ImpactSet, OutputFlowSet, ResourceUseSet, Standard
+from openepd.model.lcia import ImpactSet, OutputFlowSet, ResourceUseSet
 from openepd.model.org import Org, Plant
 from openepd.model.specs import Specs
+from openepd.model.standard import Standard
 
 
 class Epd(BaseOpenEpdSchema):
