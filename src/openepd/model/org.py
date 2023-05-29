@@ -33,6 +33,7 @@ class Contact(BaseOpenEpdSchema):  # TODO: NEW Object, not in the spec
     website: pyd.AnyUrl | None = pyd.Field(
         description="Url of the website", example="http://buildingtransparency.org", default=None
     )
+    address: str | None = pyd.Field(description="Address", example="123 Main St, San Francisco, CA 94105", default=None)
 
 
 class Org(WithAttachmentsMixin, BaseOpenEpdSchema):  # TODO: NEW Identifiable field, not in the spec
