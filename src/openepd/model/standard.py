@@ -17,4 +17,18 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-VERSION = "0.3.0"
+import pydantic as pyd
+
+from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.org import Org
+
+
+class Standard(BaseOpenEpdSchema):
+    """A standard, such as EN 15804, ISO 14044, ISO 14024:2018, etc."""
+
+    short_name: str = pyd.Field(description="Short-form of name of standard.  Must be unique. Case-insensitive")
+    name: str | None = pyd.Field(description="Full document name.  Must be unique. Case-insensitive", default=None)
+    link: pyd.AnyUrl | None = pyd.Field(
+        description="Link to the exact standard (including version) referred to", default=None
+    )
+    issuer: Org | None = pyd.Field(description="Org that issued this standard", default=None)

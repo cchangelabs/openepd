@@ -17,4 +17,13 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-VERSION = "0.3.0"
+import pydantic as pyd
+
+from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.specs.concrete import CmuSpec
+
+
+class Specs(BaseOpenEpdSchema):
+    """Material specific specs."""
+
+    cmu: CmuSpec | None = pyd.Field(default=None, description="Concrete Masonry Unit-specific (CMU) specs")

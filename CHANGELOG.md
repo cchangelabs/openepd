@@ -1,3 +1,14 @@
+## 0.3.0 (2023-05-29)
+
+### Feat
+
+- add `lca_discussion` field to EPD model
+- add `CMU` spec
+
+### Refactor
+
+- move `Standard` into dedicated module
+
 ## 0.2.0 (2023-05-26)
 
 ### Feat

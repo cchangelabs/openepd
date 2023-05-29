@@ -21,7 +21,6 @@ import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Measurement
-from openepd.model.org import Org
 
 
 class EolScenario(BaseOpenEpdSchema):
@@ -168,14 +167,3 @@ class OutputFlowSet(BaseOpenEpdSchema):
     """A set of output flows, such as waste, emissions, etc."""
 
     hwd: ScopeSet | None = pyd.Field(description="Hazardous waste disposed")
-
-
-class Standard(BaseOpenEpdSchema):
-    """A standard, such as EN 15804, ISO 14044, ISO 14024:2018, etc."""
-
-    short_name: str = pyd.Field(description="Short-form of name of standard.  Must be unique. Case-insensitive")
-    name: str | None = pyd.Field(description="Full document name.  Must be unique. Case-insensitive", default=None)
-    link: pyd.AnyUrl | None = pyd.Field(
-        description="Link to the exact standard (including version) referred to", default=None
-    )
-    issuer: Org | None = pyd.Field(description="Org that issued this standard", default=None)
