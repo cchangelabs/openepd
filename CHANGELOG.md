@@ -1,3 +1,9 @@
+## 0.5.0 (2023-06-01)
+
+### Feat
+
+- add utility methods to work with extensions
+
 ## 0.4.0 (2023-05-29)
 
 ### Feat
