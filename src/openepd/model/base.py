@@ -38,6 +38,18 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
         """Return True if the model has any values."""
         return len(self.dict(exclude_unset=True, exclude_none=True)) > 0
 
+    def set_ext_field(self, key: str, value: AnySerializable) -> None:
+        """Add an extension field to the model."""
+        if self.ext is None:
+            self.ext = {}
+        self.ext[key] = value
+
+    def get_ext_field(self, key: str, default: AnySerializable = None) -> AnySerializable | None:
+        """Get an extension field from the model."""
+        if self.ext is None:
+            return default
+        return self.ext.get(key, default)
+
     @classmethod
     def is_allowed_field_name(cls, field_name: str) -> bool:
         """
