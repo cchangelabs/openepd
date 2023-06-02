@@ -17,9 +17,10 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-from typing import Annotated
+from typing import Annotated, Any
 
 import pydantic as pyd
+from pydantic import root_validator
 
 from openepd.model.base import BaseOpenEpdSchema
 
@@ -27,8 +28,19 @@ from openepd.model.base import BaseOpenEpdSchema
 class Amount(BaseOpenEpdSchema):
     """A value-and-unit pairing for amounts that do not have an uncertainty."""
 
-    qty: float | None = pyd.Field(description="How much of this in the amount.")
-    unit: str = pyd.Field(description="Which unit.  SI units are preferred.", example="kg")
+    qty: float | None = pyd.Field(description="How much of this in the amount.", default=None)
+    unit: str | None = pyd.Field(description="Which unit.  SI units are preferred.", example="kg", default=None)
+
+    @root_validator
+    def check_qty_or_unit(cls, values: dict[str, Any]):
+        """Ensure that qty or unit is provided."""
+        if values["qty"] is None and values["unit"] is None:
+            raise ValueError("Either qty or unit must be provided.")
+        return values
+
+    def to_quantity_str(self):
+        """Return a string representation of the amount."""
+        return f"{self.qty or ''} {self.unit or 'str'}".strip()
 
 
 class Measurement(BaseOpenEpdSchema):
@@ -42,10 +54,29 @@ class Measurement(BaseOpenEpdSchema):
     dist: str | None = pyd.Field(description="Statistical distribution of the measurement error.", default=None)
 
 
+class Ingredient(BaseOpenEpdSchema):
+    """
+    An ingredient of a product.
+
+    The Ingredients list gives the core data references and quantities. This list is used to document supply-chain
+    transparency, such as the EPDs of major components (e.g. cement in concrete, or recycled steel
+    in hot-rolled sections).
+    """
+
+    qty: float | None = pyd.Field(
+        description="Number of declared units of this consumed. Negative values indicate an outflow."
+    )
+    link: pyd.AnyUrl | None = pyd.Field(
+        description="Link to this object's OpenEPD declaration. "
+        "An OpenIndustryEPD or OpenLCI link is also acceptable.",
+        default=None,
+    )
+
+
 class WithAttachmentsMixin:
     """Mixin for objects that can have attachments."""
 
-    attachments: dict[Annotated[str, pyd.constr(max_length=200)], pyd.AnyUrl] | None = pyd.Field(
+    attachments: dict[Annotated[str, pyd.Field(max_length=200)], pyd.AnyUrl] | None = pyd.Field(
         description="Dict of URLs relevant to this entry",
         example={
             "Contact Us": "https://www.c-change-labs.com/en/contact-us/",
