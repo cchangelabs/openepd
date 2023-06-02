@@ -18,14 +18,15 @@
 #  Find out more at www.BuildingTransparency.org
 #
 import datetime
-from typing import Literal
+from typing import Annotated, Literal
 
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import Amount
+from openepd.model.common import Amount, Ingredient
 from openepd.model.lcia import ImpactSet, OutputFlowSet, ResourceUseSet
 from openepd.model.org import Org, Plant
+from openepd.model.pcr import Pcr
 from openepd.model.specs import Specs
 from openepd.model.standard import Standard
 
@@ -46,7 +47,23 @@ class Epd(BaseOpenEpdSchema):
     product_name: str = pyd.Field(
         max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC"
     )
+    product_sku: str | None = pyd.Field(
+        max_length=200, description="Unique stock keeping identifier assigned by manufacturer"
+    )
+    product_description: str | None = pyd.Field(
+        max_length=2000,
+        description="1-paragraph description of product. " "Supports plain text or github flavored markdown.",
+    )
     # TODO: add product_alt_names? E.g. ILCD has a list of synonymous names
+    product_classes: dict[str, str] = pyd.Field(
+        description="List of classifications, including Masterformat and UNSPC", default_factory=dict
+    )
+    product_image_small: pyd.AnyUrl | None = pyd.Field(
+        description="Pointer to image illustrating the product, which is no more than 200x200 pixels", default=None
+    )
+    product_image: pyd.AnyUrl | None = pyd.Field(
+        description="pointer to image illustrating the product no more than 10MB", default=None
+    )
     version: pyd.PositiveInt = pyd.Field(
         description="Version of this document. The document's issuer should increment it anytime even a single "
         "character changes, as this value is used to determine the most recent version.",
@@ -104,13 +121,75 @@ class Epd(BaseOpenEpdSchema):
         example=datetime.date(day=11, month=9, year=2028),
         description="Last date the EPD is valid on, including any extensions.",
     )
-    product_class: dict[str, str] = pyd.Field(
-        description="List of classifications, including Masterformat and UNSPC", default_factory=dict
+    pcr: Pcr | None = pyd.Field(
+        description="JSON object for product category rules. Should point to the "
+        "most-specific PCR that applies; the PCR entry should point to any "
+        "parent PCR.",
+        default=None,
     )
     declared_unit: Amount | None = pyd.Field(
         description="SI declared unit for this EPD.  If a functional unit is "
         "utilized, the declared unit shall refer to the amount of "
         "product associated with the A1-A3 life cycle stage."
+    )
+    kg_per_declared_unit: Amount | None = pyd.Field(
+        default=None,
+        description="Mass of the product, in kilograms, per declared unit",
+        example=Amount(qty=12.5, unit="kg"),
+    )
+    kg_C_per_declared_unit: Amount | None = pyd.Field(
+        default=None,
+        description="Mass of elemental carbon, per declared unit, contained in the product itself at the manufacturing "
+        "facility gate.  Used (among other things) to check a carbon balance or calculate incineration "
+        "emissions.  The source of carbon (e.g. biogenic) is not relevant in this field.",
+        example=Amount(qty=8.76, unit="kg"),
+    )
+    kg_C_biogenic_per_declared_unit: Amount | None = pyd.Field(
+        default=None,
+        description="Mass of elemental carbon from biogenic sources, per declared unit, contained in the product "
+        "itself at the manufacturing facility gate.  It may be presumed that any biogenic carbon content "
+        "has been accounted for as -44/12 kgCO2e per kg C in stages A1-A3, per EN15804 and ISO 21930.",
+        example=Amount(qty=8.76, unit="kg"),
+    )
+    product_service_life_years: float | None = pyd.Field(
+        gt=0.0009,
+        lt=101,
+        description="Reference service life of the product, in years.  Serves as a maximum for replacement interval, "
+        "which may also be constrained by usage or the service life of what the product goes into "
+        "(e.g. a building).",
+        example=50.0,
+    )
+    annual_production: float | None = pyd.Field(
+        gt=0,
+        default=None,
+        description="Approximate annual production volume, in declared units, of product covered by this EPD. "
+        "This value is intended to be used for weighting of averages. "
+        "Providing this data is optional, and it is acceptable to round or obfuscate it downwards "
+        "(but not upwards) by any amount desired to protect confidentiality. For example, if the "
+        "product volume is 123,456 m3, a value of 120,000, 100,000 or even 87,654 would be acceptable.",
+        example=10000,
+    )
+    applicable_in: list[Annotated[str, pyd.Field(min_length=2, max_length=2)]] | None = pyd.Field(
+        max_items=100,
+        default=None,
+        description="Jurisdiction(s) in which EPD is applicable. An empty array, or absent properties, "
+        "implies global applicability.",
+        example=["US", "CA", "MX"],
+    )
+    product_usage_description: str | None = pyd.Field(
+        default=None,
+        description="Text description of how product is typically used. Can be used to describe accessories "
+        "like fasteners, adhesives, etc.  Supports plain text or github flavored markdown.",
+    )
+    product_usage_image: pyd.AnyUrl | None = pyd.Field(
+        description="Pointer (url) to image illustrating how the product is used. No more than 10MB.", default=None
+    )
+    manufacturing_description: str | None = pyd.Field(
+        default=None,
+        description="Text description of manufacturing process.  Supports plain text or github flavored markdown.",
+    )
+    manufacturing_image: pyd.AnyUrl | None = pyd.Field(
+        description="Pointer (url) to an image illustrating the manufacturing process. No more than 10MB.", default=None
     )
     impacts: ImpactSet | None = pyd.Field(
         description="List of environmental impacts, compiled per one of the standard Impact Assessment methods"
@@ -128,6 +207,11 @@ class Epd(BaseOpenEpdSchema):
     specs: Specs = pyd.Field(
         default_factory=Specs,
         description="Data structure(s) describing performance specs of product. Unique for each material type.",
+    )
+    includes: list[Ingredient] = pyd.Field(
+        max_items=255,
+        description="List of JSON objects pointing to product components. "
+        "Each one should be an EPD or digitized LCI process.",
     )
     lca_discussion: str | None = pyd.Field(
         max_length=20000,

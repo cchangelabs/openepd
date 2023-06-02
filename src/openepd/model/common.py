@@ -54,10 +54,29 @@ class Measurement(BaseOpenEpdSchema):
     dist: str | None = pyd.Field(description="Statistical distribution of the measurement error.", default=None)
 
 
+class Ingredient(BaseOpenEpdSchema):
+    """
+    An ingredient of a product.
+
+    The Ingredients list gives the core data references and quantities. This list is used to document supply-chain
+    transparency, such as the EPDs of major components (e.g. cement in concrete, or recycled steel
+    in hot-rolled sections).
+    """
+
+    qty: float | None = pyd.Field(
+        description="Number of declared units of this consumed. Negative values indicate an outflow."
+    )
+    link: pyd.AnyUrl | None = pyd.Field(
+        description="Link to this object's OpenEPD declaration. "
+        "An OpenIndustryEPD or OpenLCI link is also acceptable.",
+        default=None,
+    )
+
+
 class WithAttachmentsMixin:
     """Mixin for objects that can have attachments."""
 
-    attachments: dict[Annotated[str, pyd.constr(max_length=200)], pyd.AnyUrl] | None = pyd.Field(
+    attachments: dict[Annotated[str, pyd.Field(max_length=200)], pyd.AnyUrl] | None = pyd.Field(
         description="Dict of URLs relevant to this entry",
         example={
             "Contact Us": "https://www.c-change-labs.com/en/contact-us/",
