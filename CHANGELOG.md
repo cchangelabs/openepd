@@ -1,3 +1,10 @@
+## 0.6.0 (2023-06-02)
+
+### Feat
+
+- add missing fields to `Epd` model
+- add convenience `to_quantity_str` method to `Amount`
+
 ## 0.5.0 (2023-06-01)
 
 ### Feat
