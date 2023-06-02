@@ -17,9 +17,10 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-from typing import Annotated
+from typing import Annotated, Any
 
 import pydantic as pyd
+from pydantic import root_validator
 
 from openepd.model.base import BaseOpenEpdSchema
 
@@ -27,8 +28,19 @@ from openepd.model.base import BaseOpenEpdSchema
 class Amount(BaseOpenEpdSchema):
     """A value-and-unit pairing for amounts that do not have an uncertainty."""
 
-    qty: float | None = pyd.Field(description="How much of this in the amount.")
-    unit: str = pyd.Field(description="Which unit.  SI units are preferred.", example="kg")
+    qty: float | None = pyd.Field(description="How much of this in the amount.", default=None)
+    unit: str | None = pyd.Field(description="Which unit.  SI units are preferred.", example="kg", default=None)
+
+    @root_validator
+    def check_qty_or_unit(cls, values: dict[str, Any]):
+        """Ensure that qty or unit is provided."""
+        if values["qty"] is None and values["unit"] is None:
+            raise ValueError("Either qty or unit must be provided.")
+        return values
+
+    def to_quantity_str(self):
+        """Return a string representation of the amount."""
+        return f"{self.qty or ''} {self.unit or 'str'}".strip()
 
 
 class Measurement(BaseOpenEpdSchema):
