@@ -161,9 +161,41 @@ class ResourceUseSet(BaseOpenEpdSchema):
         description="Renewable primary resources with energy content used as material. "
         "First use biobased materials used as materials (e.g. wood, hemp, etc.)."
     )
+    rpre: ScopeSet | None = pyd.Field(description="Renewable primary energy resources as energy")
+    nrpre: ScopeSet | None = pyd.Field(description="Non-renewable primary resources as energy (fuel)")
+    nrprm: ScopeSet | None = pyd.Field(description="Non-renewable primary resources as material")
+    fw: ScopeSet | None = pyd.Field(description="Use of net fresh water")
+    sm: ScopeSet | None = pyd.Field(description="Use of secondary materials")
+    rsf: ScopeSet | None = pyd.Field(description="Use of renewable secondary materials")
+    nrsf: ScopeSet | None = pyd.Field(description="Use of non-renewable secondary fuels")
+    re: ScopeSet | None = pyd.Field(description="Renewable energy resources")
+    pere: ScopeSet | None = pyd.Field(
+        description="Use of renewable primary energy excluding renewable primary energy resources used as raw materials"
+    )
+    perm: ScopeSet | None = pyd.Field(description="Use of renewable primary energy resources used as raw materials")
+    pert: ScopeSet | None = pyd.Field(description="Total use of renewable primary energy resources")
+    penre: ScopeSet | None = pyd.Field(
+        description="Use of non-renewable primary energy excluding "
+        "non-renewable primary energy resources used as raw materials"
+    )
+    penrm: ScopeSet | None = pyd.Field(
+        description="Use of non-renewable primary energy resources used as raw materials"
+    )
+    penrt: ScopeSet | None = pyd.Field(description="Total use of non-renewable primary energy resources")
 
 
 class OutputFlowSet(BaseOpenEpdSchema):
     """A set of output flows, such as waste, emissions, etc."""
 
+    twd: ScopeSet | None = pyd.Field(description="Total waste disposed")
     hwd: ScopeSet | None = pyd.Field(description="Hazardous waste disposed")
+    nhwd: ScopeSet | None = pyd.Field(description="Non-hazardous waste disposed")
+    rwd: ScopeSet | None = pyd.Field(description="Radioactive waste disposed")
+    hlrw: ScopeSet | None = pyd.Field(description="High level radioactive waste disposed")
+    illrw: ScopeSet | None = pyd.Field(description="Intermediate level radioactive waste disposed")
+    cru: ScopeSet | None = pyd.Field(description="Components for re-use")
+    mr: ScopeSet | None = pyd.Field(description="Recycled materials")
+    mfr: ScopeSet | None = pyd.Field(description="Materials for recycling")
+    mer: ScopeSet | None = pyd.Field(description="Materials for energy recovery")
+    ee: ScopeSet | None = pyd.Field(description="Exported energy")
+    eh: ScopeSet | None = pyd.Field(description="Exported heat")
