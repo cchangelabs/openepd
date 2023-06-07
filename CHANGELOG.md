@@ -1,3 +1,9 @@
+## 0.7.0 (2023-06-07)
+
+### Feat
+
+- add flows and indicators
+
 ## 0.6.0 (2023-06-02)
 
 ### Feat
