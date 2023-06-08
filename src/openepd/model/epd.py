@@ -23,7 +23,7 @@ from typing import Annotated, Literal
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import Amount, Ingredient
+from openepd.model.common import Amount, Ingredient, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.lcia import ImpactSet, OutputFlowSet, ResourceUseSet
 from openepd.model.org import Org, Plant
 from openepd.model.pcr import Pcr
@@ -31,7 +31,7 @@ from openepd.model.specs import Specs
 from openepd.model.standard import Standard
 
 
-class Epd(BaseOpenEpdSchema):
+class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     """Represent an EPD."""
 
     # TODO: Add validator for open-xpd-uuid on this field
