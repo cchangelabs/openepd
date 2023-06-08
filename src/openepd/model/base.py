@@ -44,6 +44,11 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
             self.ext = {}
         self.ext[key] = value
 
+    def set_ext_field_if_any(self, key: str, value: AnySerializable) -> None:
+        """Add an extension field to the model if the value is not None."""
+        if value is not None:
+            self.set_ext_field(key, value)
+
     def get_ext_field(self, key: str, default: AnySerializable = None) -> AnySerializable | None:
         """Get an extension field from the model."""
         if self.ext is None:
