@@ -20,7 +20,7 @@
 from typing import Annotated, Any
 
 import pydantic as pyd
-from pydantic import root_validator
+from pydantic import BaseModel, root_validator
 
 from openepd.model.base import BaseOpenEpdSchema
 
@@ -73,7 +73,7 @@ class Ingredient(BaseOpenEpdSchema):
     )
 
 
-class WithAttachmentsMixin:
+class WithAttachmentsMixin(BaseModel):
     """Mixin for objects that can have attachments."""
 
     attachments: dict[Annotated[str, pyd.Field(max_length=200)], pyd.AnyUrl] | None = pyd.Field(
@@ -97,7 +97,7 @@ class WithAttachmentsMixin:
             self.set_attachment(name, url)
 
 
-class WithAltIdsMixin:
+class WithAltIdsMixin(BaseModel):
     """Mixin for objects that can have alt_ids."""
 
     alt_ids: dict[Annotated[str, pyd.Field(max_length=200)], str] | None = pyd.Field(

@@ -1,3 +1,9 @@
+## 0.8.1 (2023-06-08)
+
+### Fix
+
+- add missing base class for mixins
+
 ## 0.8.0 (2023-06-08)
 
 ### Feat
