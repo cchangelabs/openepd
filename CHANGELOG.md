@@ -1,3 +1,14 @@
+## 0.8.0 (2023-06-08)
+
+### Feat
+
+- extend base model with `set_ext_field_if_any` method
+- add `alt_ids` field
+
+### Fix
+
+- add missing `gwp-fossil` impact
+
 ## 0.7.0 (2023-06-07)
 
 ### Feat

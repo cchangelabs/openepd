@@ -23,7 +23,7 @@ from typing import Annotated, Literal
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import Amount, Ingredient
+from openepd.model.common import Amount, Ingredient, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.lcia import ImpactSet, OutputFlowSet, ResourceUseSet
 from openepd.model.org import Org, Plant
 from openepd.model.pcr import Pcr
@@ -31,7 +31,7 @@ from openepd.model.specs import Specs
 from openepd.model.standard import Standard
 
 
-class Epd(BaseOpenEpdSchema):
+class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     """Represent an EPD."""
 
     # TODO: Add validator for open-xpd-uuid on this field
@@ -55,7 +55,7 @@ class Epd(BaseOpenEpdSchema):
         description="1-paragraph description of product. " "Supports plain text or github flavored markdown.",
     )
     # TODO: add product_alt_names? E.g. ILCD has a list of synonymous names
-    product_classes: dict[str, str] = pyd.Field(
+    product_classes: dict[str, str | list[str]] = pyd.Field(
         description="List of classifications, including Masterformat and UNSPC", default_factory=dict
     )
     product_image_small: pyd.AnyUrl | None = pyd.Field(

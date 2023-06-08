@@ -84,3 +84,37 @@ class WithAttachmentsMixin:
         },
         default=None,
     )
+
+    def set_attachment(self, name: str, url: str):
+        """Set an attachment."""
+        if self.attachments is None:
+            self.attachments = {}  # type: ignore
+        self.attachments[name] = url  # type: ignore
+
+    def set_attachment_if_any(self, name: str, url: str | None):
+        """Set an attachment if url is not None."""
+        if url is not None:
+            self.set_attachment(name, url)
+
+
+class WithAltIdsMixin:
+    """Mixin for objects that can have alt_ids."""
+
+    alt_ids: dict[Annotated[str, pyd.Field(max_length=200)], str] | None = pyd.Field(
+        description="Dict identifiers for this entry.",
+        example={
+            "oekobau.dat": "bdda4364-451f-4df2-a68b-5912469ee4c9",
+        },
+        default=None,
+    )
+
+    def set_alt_id(self, domain_name: str, value: str):
+        """Set an alt_id."""
+        if self.alt_ids is None:
+            self.alt_ids = {}
+        self.alt_ids[domain_name] = value
+
+    def set_alt_id_if_any(self, domain_name: str, value: str | None):
+        """Set an alt_id if value is not None."""
+        if value is not None:
+            self.set_alt_id(domain_name, value)

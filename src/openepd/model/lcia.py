@@ -147,6 +147,11 @@ class ImpactSet(BaseOpenEpdSchema):
         alias="gwp-nonCO2",
         description="GWP from non-CO2, non-fossil sources, such as livestock-sourced CH4 and agricultural N2O.",
     )
+    gwp_fossil: ScopeSet | None = pyd.Field(
+        alias="gwp-fossil",
+        description="Climate change effects due to greenhouse gas emissions originating from the oxidation or "
+        "reduction of fossil fuels or materials containing fossil carbon. [Source: EN15804]",
+    )
 
 
 class ResourceUseSet(BaseOpenEpdSchema):
