@@ -55,7 +55,7 @@ class Epd(BaseOpenEpdSchema):
         description="1-paragraph description of product. " "Supports plain text or github flavored markdown.",
     )
     # TODO: add product_alt_names? E.g. ILCD has a list of synonymous names
-    product_classes: dict[str, str] = pyd.Field(
+    product_classes: dict[str, str | list[str]] = pyd.Field(
         description="List of classifications, including Masterformat and UNSPC", default_factory=dict
     )
     product_image_small: pyd.AnyUrl | None = pyd.Field(
