@@ -17,6 +17,8 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
+from enum import StrEnum
+
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
@@ -152,6 +154,74 @@ class ImpactSet(BaseOpenEpdSchema):
         description="Climate change effects due to greenhouse gas emissions originating from the oxidation or "
         "reduction of fossil fuels or materials containing fossil carbon. [Source: EN15804]",
     )
+
+
+class LCIAMethod(StrEnum):
+    """A list of available LCA methods."""
+
+    UNKNOWN = "Unknown LCIA"
+    TRACI_2_1 = "TRACI 2.1"
+    TRACI_2_0 = "TRACI 2.0"
+    TRACI_1_0 = "TRACI 1.0"
+    IPCC_AR5 = "IPCC AR5"
+    EF_3_0 = "EF 3.0"
+    EF_3_1 = "EF 3.1"
+    EF_2_0 = "EF 2.0"
+    EN_15978_2011 = "EN 15978:2011"
+    USETOX_2_12 = "USEtox 2.12"
+    CML_2016 = "CML 2016"
+    CML_2012 = "CML 2012"
+    CML_2007 = "CML 2007"
+    CML_2001 = "CML 2001"
+    CML_1992 = "CML 1992"
+    RECIPE_2016 = "ReCiPe 2016"
+    RECIPE_2008 = "ReCiPe 2008"
+
+    @classmethod
+    def is_method_supported(cls, method_name: str | None) -> bool:
+        """Return True if the method is supported, False otherwise."""
+        if method_name is None:
+            return False
+        try:
+            cls(method_name)
+        except ValueError:
+            return False
+        return True
+
+    @classmethod
+    def get_by_name(cls, d_name: str | None) -> "LCIAMethod":
+        """Return the LCIAMethod enum value for the given name, or UNKNOWN if not found."""
+        if d_name is None:
+            return cls.UNKNOWN
+        try:
+            return cls(d_name)
+        except ValueError:
+            return cls.UNKNOWN
+
+
+class Impacts(dict[LCIAMethod, ImpactSet]):
+    """List of environmental impacts, compiled per one of the standard Impact Assessment methods."""
+
+    def set_unknown_lcia(self, impact_set: ImpactSet):
+        """Set the impact set as an unknown LCIA method."""
+        self[LCIAMethod.UNKNOWN] = impact_set
+
+    def set_impact_set(self, lcia_method: LCIAMethod | str | None, impact_set: ImpactSet):
+        """
+        Set the impact set for the given LCIA method.
+
+        If the LCIA method is None, set it as an unknown LCIA method.
+        """
+        if lcia_method is None:
+            self.set_unknown_lcia(impact_set)
+        else:
+            if isinstance(lcia_method, str):
+                lcia_method = LCIAMethod.get_by_name(lcia_method)
+            self[lcia_method] = impact_set
+
+    def available_methods(self) -> set[LCIAMethod]:
+        """Return a list of available LCIA methods."""
+        return set(self.keys())
 
 
 class ResourceUseSet(BaseOpenEpdSchema):

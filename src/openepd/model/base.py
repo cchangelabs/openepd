@@ -17,10 +17,13 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
+from typing import Optional, Type, TypeVar
+
 import pydantic
 from pydantic.generics import GenericModel
 
 AnySerializable = int | str | bool | float | list | dict | pydantic.BaseModel | None
+TAnySerializable = TypeVar("TAnySerializable", bound=AnySerializable)
 
 
 class BaseOpenEpdSchema(pydantic.BaseModel):
@@ -54,6 +57,21 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
         if self.ext is None:
             return default
         return self.ext.get(key, default)
+
+    def get_typed_ext_field(
+        self, key: str, target_type: Type[TAnySerializable], default: Optional[TAnySerializable] = None
+    ) -> TAnySerializable:
+        """
+        Get an extension field from the model and convert it to the target type.
+
+        :raise ValueError: if the value cannot be converted to the target type.
+        """
+        value = self.get_ext_field(key, default)
+        if issubclass(target_type, pydantic.BaseModel) and isinstance(value, dict):
+            return target_type.construct(**value)  # type: ignore
+        elif isinstance(value, target_type):
+            return value
+        raise ValueError(f"Cannot convert {value} to {target_type}")
 
     @classmethod
     def is_allowed_field_name(cls, field_name: str) -> bool:
