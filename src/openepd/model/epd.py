@@ -24,7 +24,7 @@ import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Amount, Ingredient, WithAltIdsMixin, WithAttachmentsMixin
-from openepd.model.lcia import ImpactSet, OutputFlowSet, ResourceUseSet
+from openepd.model.lcia import Impacts, OutputFlowSet, ResourceUseSet
 from openepd.model.org import Org, Plant
 from openepd.model.pcr import Pcr
 from openepd.model.specs import Specs
@@ -191,7 +191,7 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     manufacturing_image: pyd.AnyUrl | None = pyd.Field(
         description="Pointer (url) to an image illustrating the manufacturing process. No more than 10MB.", default=None
     )
-    impacts: ImpactSet | None = pyd.Field(
+    impacts: Impacts | None = pyd.Field(
         description="List of environmental impacts, compiled per one of the standard Impact Assessment methods"
     )
     resource_uses: ResourceUseSet | None = pyd.Field(
