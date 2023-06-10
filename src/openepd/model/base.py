@@ -17,6 +17,7 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
+import abc
 from typing import Optional, Type, TypeVar
 
 import pydantic
@@ -40,6 +41,10 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
     def has_values(self) -> bool:
         """Return True if the model has any values."""
         return len(self.dict(exclude_unset=True, exclude_none=True)) > 0
+
+    def set_ext(self, ext: "OpenEpdExtension") -> None:
+        """Set the extension field."""
+        self.set_ext_field(ext.get_extension_name(), ext)
 
     def set_ext_field(self, key: str, value: AnySerializable) -> None:
         """Add an extension field to the model."""
@@ -73,6 +78,14 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
             return value
         raise ValueError(f"Cannot convert {value} to {target_type}")
 
+    def get_ext(self, ext_type: Type["TOpenEpdExtension"]) -> Optional["TOpenEpdExtension"]:
+        """Get an extension field from the model or None if it doesn't exist."""
+        return self.get_typed_ext_field(ext_type.get_extension_name(), ext_type, None)
+
+    def get_ext_or_empty(self, ext_type: Type["TOpenEpdExtension"]) -> "TOpenEpdExtension":
+        """Get an extension field from the model or an empty instance if it doesn't exist."""
+        return self.get_typed_ext_field(ext_type.get_extension_name(), ext_type, ext_type.construct(**{}))
+
     @classmethod
     def is_allowed_field_name(cls, field_name: str) -> bool:
         """
@@ -99,3 +112,16 @@ class BaseOpenEpdSpec(BaseOpenEpdSchema):
     """Base class for all OpenEPD specs."""
 
     pass
+
+
+class OpenEpdExtension(BaseOpenEpdSchema, metaclass=abc.ABCMeta):
+    """Base class for OpenEPD extension models."""
+
+    @classmethod
+    @abc.abstractmethod
+    def get_extension_name(cls) -> str:
+        """Return the name of the extension."""
+        pass
+
+
+TOpenEpdExtension = TypeVar("TOpenEpdExtension", bound=OpenEpdExtension)
