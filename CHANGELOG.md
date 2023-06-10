@@ -1,3 +1,9 @@
+## 0.10.0 (2023-06-10)
+
+### Feat
+
+- add base class for openEPD extensions
+
 ## 0.9.0 (2023-06-09)
 
 ### Feat
