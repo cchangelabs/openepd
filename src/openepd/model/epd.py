@@ -18,7 +18,7 @@
 #  Find out more at www.BuildingTransparency.org
 #
 import datetime
-from typing import Annotated, Literal
+from typing import Annotated
 
 import pydantic as pyd
 
@@ -35,16 +35,17 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     """Represent an EPD."""
 
     # TODO: Add validator for open-xpd-uuid on this field
-    id: str = pyd.Field(
+    id: str | None = pyd.Field(
         description="The unique ID for this EPD.  To ensure global uniqueness, should be registered at "
         "open-xpd-uuid.cqd.io/register or a coordinating registry.",
         example="1u7zsed8",
+        default=None,
     )
-    doctype: Literal["OpenEPD", "ILCD_EPD"] = pyd.Field(
+    doctype: str = pyd.Field(
         description='Describes the type and schema of the document. Must always always read "openEPD".',
         default="OpenEPD",
     )
-    product_name: str = pyd.Field(
+    product_name: str | None = pyd.Field(
         max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC"
     )
     product_sku: str | None = pyd.Field(
@@ -64,10 +65,11 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     product_image: pyd.AnyUrl | None = pyd.Field(
         description="pointer to image illustrating the product no more than 10MB", default=None
     )
-    version: pyd.PositiveInt = pyd.Field(
+    version: pyd.PositiveInt | None = pyd.Field(
         description="Version of this document. The document's issuer should increment it anytime even a single "
         "character changes, as this value is used to determine the most recent version.",
         example=1,
+        default=None,
     )
     language: str | None = pyd.Field(
         min_length=2,
@@ -212,6 +214,7 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         max_items=255,
         description="List of JSON objects pointing to product components. "
         "Each one should be an EPD or digitized LCI process.",
+        default_factory=list,
     )
     lca_discussion: str | None = pyd.Field(
         max_length=20000,
