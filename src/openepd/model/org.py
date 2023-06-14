@@ -22,18 +22,7 @@ from typing import Annotated, Optional
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
-
-
-class Contact(BaseOpenEpdSchema):  # TODO: NEW Object, not in the spec
-    """Contact information of a person or organization."""
-
-    email: pyd.EmailStr | None = pyd.Field(description="Email", example="contact@c-change-labs.com", default=None)
-    phone: str | None = pyd.Field(description="Phone number", example="+15263327352", default=None)
-    website: pyd.AnyUrl | None = pyd.Field(
-        description="Url of the website", example="http://buildingtransparency.org", default=None
-    )
-    address: str | None = pyd.Field(description="Address", example="123 Main St, San Francisco, CA 94105", default=None)
+from openepd.model.common import Location, WithAltIdsMixin, WithAttachmentsMixin
 
 
 class Org(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
@@ -54,12 +43,15 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         default=None,
     )
     # TODO: NEW field, not in the spec
-    contacts: Contact | None = pyd.Field(description="Contact information of the organization", default=None)
     owner: Optional["Org"] = pyd.Field(description="Organization that controls this organization", default=None)
     subsidiaries: Annotated[list[str], pyd.conlist(pyd.constr(max_length=200), max_items=255)] | None = pyd.Field(
         description="Organizations controlled by this organization",
         example=["cqd.io", "supplychaincarbonpricing.org"],
         default=None,
+    )
+    hq_location: Location | None = pyd.Field(
+        default=None,
+        description="Location of a place of business, prefereably the corporate headquarters.",
     )
 
 
