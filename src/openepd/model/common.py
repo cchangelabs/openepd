@@ -73,6 +73,25 @@ class Ingredient(BaseOpenEpdSchema):
     )
 
 
+class LatLng(BaseOpenEpdSchema):
+    """A latitude and longitude."""
+
+    lat: float = pyd.Field(description="Latitude", example=47.6062)
+    lng: float = pyd.Field(description="Longitude", example=-122.3321)
+
+
+class Location(BaseOpenEpdSchema):
+    """A location on the Earth's surface."""
+
+    pluscode: str | None = pyd.Field(default=None, description="Open Location code of this location")
+    latlng: LatLng | None = pyd.Field(default=None, description="Latitude and longitude of this location")
+    address: str | None = pyd.Field(default=None, description="Text address, preferably geocoded")
+    country: str | None = pyd.Field(default=None, description="2-alpha country code")
+    jurisdiction: str | None = pyd.Field(
+        default=None, description="Province, State, or similar subdivision below the level of a country"
+    )
+
+
 class WithAttachmentsMixin(BaseModel):
     """Mixin for objects that can have attachments."""
 
