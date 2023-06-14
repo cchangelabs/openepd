@@ -18,7 +18,8 @@
 #  Find out more at www.BuildingTransparency.org
 #
 import abc
-from typing import Optional, Type, TypeVar
+import json
+from typing import Any, Optional, Type, TypeVar
 
 import pydantic
 from pydantic.generics import GenericModel
@@ -37,6 +38,14 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
         validate_assignment = False
         allow_population_by_field_name = True
         use_enum_values = True
+
+    def to_serializable(self, *args, **kwargs) -> dict[str, Any]:
+        """
+        Return a serializable dict representation of the DTO.
+
+        It expects the same arguments as the pydantic.BaseModel.json() method.
+        """
+        return json.loads(self.json(*args, **kwargs))
 
     def has_values(self) -> bool:
         """Return True if the model has any values."""
