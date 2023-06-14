@@ -91,10 +91,13 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         description="Link to data object on original registrar's site",
         example="https://epd-online.com/EmbeddedEpdList/Download/6029",
     )
-    # ilcd_uuid: str | None = pyd.Field(description="An optional UUID (for use with ILCD and similar systems)")
     manufacturer: Org | None = pyd.Field(
         description="JSON object for declaring Org. Sometimes called the "
         '"Declaration Holder" or "Declaration Owner".'
+    )
+    epd_developer: Org | None = pyd.Field(
+        description="The organization responsible for the underlying LCA (and subsequent summarization as EPD).",
+        default=None,
     )
     plants: list[Plant] = pyd.Field(
         max_items=32,
