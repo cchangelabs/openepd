@@ -118,6 +118,9 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         description="Optional link to a verification statement.",
         example="https://we-verify-epds.com/en/letters/123-456.789b.pdf",
     )
+    third_party_verifier_email: pyd.EmailStr | None = pyd.Field(
+        description="Email address of the third party verifier", example="john.doe@example.com", default=None
+    )
     date_of_issue: datetime.date | None = pyd.Field(
         example=datetime.date(day=11, month=9, year=2019),
         description="Date the EPD was issued. This should be the first day on which the EPD is valid.",
