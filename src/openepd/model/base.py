@@ -81,6 +81,8 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
         :raise ValueError: if the value cannot be converted to the target type.
         """
         value = self.get_ext_field(key, default)
+        if value is None:
+            return None  # type: ignore
         if issubclass(target_type, pydantic.BaseModel) and isinstance(value, dict):
             return target_type.construct(**value)  # type: ignore
         elif isinstance(value, target_type):
