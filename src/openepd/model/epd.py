@@ -99,6 +99,12 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         description="The organization responsible for the underlying LCA (and subsequent summarization as EPD).",
         default=None,
     )
+    epd_developer_email: pyd.EmailStr | None = pyd.Field(
+        default=None,
+        example="john.doe@we-do-lca.com",
+        description="Email contact for inquiries about development of this EPD. "
+        "This must be an email which can be publicly shared.",
+    )
     plants: list[Plant] = pyd.Field(
         max_items=32,
         description="List of object(s) for one or more plant(s) that this declaration applies to.",
