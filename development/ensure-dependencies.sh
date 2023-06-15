@@ -1,6 +1,10 @@
 #!/bin/bash
 
-DEPS=("python3.11" "sed")
+DEPS=("python3.11" "poetry" "sed")
+
+COLOR_RED='\033[0;31m'
+COLOR_YELLOW='\033[1;33m'
+COLOR_NC='\033[0m' # No Color
 
 echo "Verifying required dependencies"
 echo ""
@@ -10,6 +14,13 @@ for d in "${DEPS[@]}"; do
     printf "   %-25s: installed\n" $d
   else
     printf "   %-25s: %b\n" $d "${COLOR_RED}NOT INSTALLED${COLOR_NC}"
+    if [ "$d" == "poetry" ]; then
+      echo ""
+      printf "${COLOR_YELLOW}Please install poetry on a system level. In order to install poetry you could run the following command:${COLOR_NC}"
+      echo ""
+      echo "curl -sSL https://install.python-poetry.org | python3 -"
+      echo ""
+    fi
     exit 1
   fi
 done

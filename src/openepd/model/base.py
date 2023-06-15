@@ -18,7 +18,8 @@
 #  Find out more at www.BuildingTransparency.org
 #
 import abc
-from typing import Optional, Type, TypeVar
+import json
+from typing import Any, Optional, Type, TypeVar
 
 import pydantic
 from pydantic.generics import GenericModel
@@ -37,6 +38,14 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
         validate_assignment = False
         allow_population_by_field_name = True
         use_enum_values = True
+
+    def to_serializable(self, *args, **kwargs) -> dict[str, Any]:
+        """
+        Return a serializable dict representation of the DTO.
+
+        It expects the same arguments as the pydantic.BaseModel.json() method.
+        """
+        return json.loads(self.json(*args, **kwargs))
 
     def has_values(self) -> bool:
         """Return True if the model has any values."""
@@ -72,6 +81,8 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
         :raise ValueError: if the value cannot be converted to the target type.
         """
         value = self.get_ext_field(key, default)
+        if value is None:
+            return None  # type: ignore
         if issubclass(target_type, pydantic.BaseModel) and isinstance(value, dict):
             return target_type.construct(**value)  # type: ignore
         elif isinstance(value, target_type):

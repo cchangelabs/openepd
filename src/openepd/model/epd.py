@@ -18,7 +18,7 @@
 #  Find out more at www.BuildingTransparency.org
 #
 import datetime
-from typing import Annotated, Literal
+from typing import Annotated
 
 import pydantic as pyd
 
@@ -35,16 +35,17 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     """Represent an EPD."""
 
     # TODO: Add validator for open-xpd-uuid on this field
-    id: str = pyd.Field(
+    id: str | None = pyd.Field(
         description="The unique ID for this EPD.  To ensure global uniqueness, should be registered at "
         "open-xpd-uuid.cqd.io/register or a coordinating registry.",
         example="1u7zsed8",
+        default=None,
     )
-    doctype: Literal["OpenEPD", "ILCD_EPD"] = pyd.Field(
+    doctype: str = pyd.Field(
         description='Describes the type and schema of the document. Must always always read "openEPD".',
         default="OpenEPD",
     )
-    product_name: str = pyd.Field(
+    product_name: str | None = pyd.Field(
         max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC"
     )
     product_sku: str | None = pyd.Field(
@@ -64,10 +65,11 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     product_image: pyd.AnyUrl | None = pyd.Field(
         description="pointer to image illustrating the product no more than 10MB", default=None
     )
-    version: pyd.PositiveInt = pyd.Field(
+    version: pyd.PositiveInt | None = pyd.Field(
         description="Version of this document. The document's issuer should increment it anytime even a single "
         "character changes, as this value is used to determine the most recent version.",
         example=1,
+        default=None,
     )
     language: str | None = pyd.Field(
         min_length=2,
@@ -89,10 +91,19 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         description="Link to data object on original registrar's site",
         example="https://epd-online.com/EmbeddedEpdList/Download/6029",
     )
-    # ilcd_uuid: str | None = pyd.Field(description="An optional UUID (for use with ILCD and similar systems)")
     manufacturer: Org | None = pyd.Field(
         description="JSON object for declaring Org. Sometimes called the "
         '"Declaration Holder" or "Declaration Owner".'
+    )
+    epd_developer: Org | None = pyd.Field(
+        description="The organization responsible for the underlying LCA (and subsequent summarization as EPD).",
+        default=None,
+    )
+    epd_developer_email: pyd.EmailStr | None = pyd.Field(
+        default=None,
+        example="john.doe@we-do-lca.com",
+        description="Email contact for inquiries about development of this EPD. "
+        "This must be an email which can be publicly shared.",
     )
     plants: list[Plant] = pyd.Field(
         max_items=32,
@@ -112,6 +123,9 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     third_party_verification_url: pyd.AnyUrl | None = pyd.Field(
         description="Optional link to a verification statement.",
         example="https://we-verify-epds.com/en/letters/123-456.789b.pdf",
+    )
+    third_party_verifier_email: pyd.EmailStr | None = pyd.Field(
+        description="Email address of the third party verifier", example="john.doe@example.com", default=None
     )
     date_of_issue: datetime.date | None = pyd.Field(
         example=datetime.date(day=11, month=9, year=2019),
@@ -212,6 +226,7 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         max_items=255,
         description="List of JSON objects pointing to product components. "
         "Each one should be an EPD or digitized LCI process.",
+        default_factory=list,
     )
     lca_discussion: str | None = pyd.Field(
         max_length=20000,

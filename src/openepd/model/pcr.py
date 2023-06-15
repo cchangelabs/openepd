@@ -30,44 +30,50 @@ from openepd.model.org import Org
 class Pcr(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     """Represent a PCR (Product Category Rules)."""
 
-    id: str = pyd.Field(
+    id: str | None = pyd.Field(
         description="The unique ID for this PCR.  To ensure global uniqueness, should be registered "
         "at open-xpd-uuid.cqd.io/register or a coordinating registry.",
         example="ec3xpgq2",
+        default=None,
     )
     issuer: Org | None = pyd.Field(description="Organization issuing this PCR", default=None)
     issuer_doc_id: str | None = pyd.Field(
         max_length=40,
+        default=None,
         description="Document ID or code created by issuer",
         example="c-PCR-003",
     )
     name: str | None = pyd.Field(
         max_length=200,
+        default=None,
         description="Full document name as listed in source document",
         example="c-PCR-003 Concrete and concrete elements (EN 16757)",
     )
     short_name: str | None = pyd.Field(
         max_length=40,
+        default=None,
         description="A shortened name without boilerplate text.",
         example="Concrete and Concrete Elements",
     )
-    version: pyd.PositiveInt = pyd.Field(
+    version: str | None = pyd.Field(
         description="Document version, as expressed in document.",
         example="1.0.2",
+        default=None,
     )
     date_of_issue: datetime.date | None = pyd.Field(
         example=datetime.date(day=11, month=2, year=2022),
+        default=None,
         description="First day on which the document is valid",
     )
     valid_until: datetime.date | None = pyd.Field(
         example=datetime.date(day=11, month=2, year=2024),
+        default=None,
         description="Last day on which the document is valid",
     )
     parent: Optional["Pcr"] = pyd.Field(
         description="The parent PCR, base PCR, `Part A` PCR",
         default=None,
     )
-    # TODO: why plural?
     product_classes: dict[str, str | list[str]] = pyd.Field(
         description="List of classifications, including Masterformat and UNSPC", default_factory=dict
     )

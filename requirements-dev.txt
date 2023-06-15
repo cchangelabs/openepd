@@ -1,2 +1,0 @@
-# Build
-poetry~=1.4

@@ -21,23 +21,21 @@ jobs:
           fetch-depth: 1
           ref: "${{ ((inputs.git_ref) && inputs.git_ref) || github.ref }}"
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
+      - name: Set up Python and Poetry
+        uses: cchangelabs/action-setup-python-poetry@v1
         with:
           python-version: 3.11
-          cache: 'pip'
-          cache-dependency-path: '**/requirements*.txt'
+          poetry-version: 1.5.1
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip wheel
-          make verify-prerequisites deps NO_VENV=1
+          make verify-prerequisites deps
 
       - name: Build and publish packages
         run: |
           export POETRY_HTTP_BASIC_PYPI_USERNAME=__token__
           export POETRY_HTTP_BASIC_PYPI_PASSWORD="${{ secrets.pypi_token }}"
-          make publish NO_VENV=True
+          make publish
 
       - uses: actions/upload-artifact@v3
         with:

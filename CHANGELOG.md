@@ -1,3 +1,19 @@
+## 0.11.0 (2023-06-15)
+
+### Feat
+
+- add `hq_location` to Org, remove `contacts` from Org
+- add `epd_developer_email` field
+- add `third_party_verifier_email` field
+- add location related objects
+- add `epd_developer` field
+- add `to_serializable` method to the base model
+- relax validation
+
+### Fix
+
+- fix `get_typed_ext_field` behavior to handle missing data properly
+
 ## 0.10.0 (2023-06-10)
 
 ### Feat
