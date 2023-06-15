@@ -17,19 +17,18 @@ jobs:
           fetch-depth: 1
           ref: "${{ ((inputs.git_ref) && inputs.git_ref) || github.ref }}"
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Set up Python and Poetry
+        uses: cchangelabs/action-setup-python-poetry@v1
         with:
           python-version: 3.11
-          cache: 'pip'
+          poetry-version: 1.5.1
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip wheel
-          make verify-prerequisites deps NO_VENV=1
+          make setup
 
       - name: Lint
-        run: make lint NO_VENV=1
+        run: make lint
 
       - name: Run build to make sure it works
-        run: make build NO_VENV=1
+        run: make build
