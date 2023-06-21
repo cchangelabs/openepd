@@ -1,3 +1,9 @@
+## 0.11.1 (2023-06-21)
+
+### Fix
+
+- change `Impacts` class definition to resolve deserialization issue
+
 ## 0.11.0 (2023-06-15)
 
 ### Feat

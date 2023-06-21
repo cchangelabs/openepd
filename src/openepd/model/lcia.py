@@ -296,12 +296,14 @@ class LCIAMethod(StrEnum):
             return cls.UNKNOWN
 
 
-class Impacts(dict[LCIAMethod, ImpactSet]):
+class Impacts(pyd.BaseModel):
     """List of environmental impacts, compiled per one of the standard Impact Assessment methods."""
+
+    __root__: dict[LCIAMethod, ImpactSet]
 
     def set_unknown_lcia(self, impact_set: ImpactSet):
         """Set the impact set as an unknown LCIA method."""
-        self[LCIAMethod.UNKNOWN] = impact_set
+        self.__root__[LCIAMethod.UNKNOWN] = impact_set
 
     def set_impact_set(self, lcia_method: LCIAMethod | str | None, impact_set: ImpactSet):
         """
@@ -314,11 +316,25 @@ class Impacts(dict[LCIAMethod, ImpactSet]):
         else:
             if isinstance(lcia_method, str):
                 lcia_method = LCIAMethod.get_by_name(lcia_method)
-            self[lcia_method] = impact_set
+            self.__root__[lcia_method] = impact_set
+
+    def get_impact_set(
+        self, lcia_method: LCIAMethod | str | None, default_val: ImpactSet | None = None
+    ) -> ImpactSet | None:
+        """Return the impact set for the given LCIA method."""
+        if lcia_method is None:
+            return self.__root__.get(LCIAMethod.UNKNOWN, default_val)
+        if isinstance(lcia_method, str):
+            lcia_method = LCIAMethod.get_by_name(lcia_method)
+        return self.__root__.get(lcia_method, default_val)
 
     def available_methods(self) -> set[LCIAMethod]:
         """Return a list of available LCIA methods."""
-        return set(self.keys())
+        return set(self.__root__.keys())
+
+    def as_dict(self) -> dict[LCIAMethod, ImpactSet]:
+        """Return the impacts as a dictionary."""
+        return self.__root__
 
 
 class ResourceUseSet(BaseOpenEpdSchema):
