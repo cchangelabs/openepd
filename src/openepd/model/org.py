@@ -83,5 +83,10 @@ class Plant(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         description="Email contact", example="info@interface.com", default=None
     )
 
+    @classmethod
+    def get_asset_type(cls) -> str | None:
+        """Return the asset type of this class (see BaseOpenEpdSchema.get_asset_type for details)."""
+        return "org"
+
     class Config(BaseOpenEpdSchema.Config):
         allow_population_by_field_name = True
