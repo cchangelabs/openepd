@@ -33,14 +33,13 @@ class DefaultBundleReader(BaseBundleReader):
 
     def __init__(self, bundle_file: PathLike | IO[bytes] | str):
         self._bundle_archive = zipfile.ZipFile(bundle_file, mode="r")
-        self.__toc: list[AssetInfo] = []
         try:
             with self._bundle_archive.open("manifest", "r") as manifest_stream:
                 self.__manifest = BundleManifest.parse_raw(manifest_stream.read())
         except Exception as e:
             raise ValueError("The bundle file is not valid. Manifest reading error: " + str(e)) from e
         try:
-            next(self.assets_iter())
+            self.__check_toc()
         except Exception as e:
             raise ValueError("The bundle file is not valid. TOC reading error: " + str(e)) from e
 
@@ -88,6 +87,12 @@ class DefaultBundleReader(BaseBundleReader):
             toc_reader = csv.DictReader(io.TextIOWrapper(toc_stream, encoding="utf-8"), dialect="toc")
             for x in toc_reader:
                 yield AssetInfo.parse_obj(self.__preprocess_csv_dict(x))
+
+    def __check_toc(self):
+        with self._bundle_archive.open("toc", "r") as toc_stream:
+            toc_reader = csv.DictReader(io.TextIOWrapper(toc_stream, encoding="utf-8"), dialect="toc")
+            if not toc_reader.fieldnames or len(toc_reader.fieldnames) < len(self._TOC_FIELDS):
+                raise ValueError("The bundle file is not valid. TOC reading error: wrong number of fields")
 
     def root_assets_iter(
         self,

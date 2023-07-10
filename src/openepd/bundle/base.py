@@ -43,7 +43,32 @@ class toc_dialect(csv.Dialect):
 csv.register_dialect("toc", toc_dialect)
 
 
-class BaseBundleReader(object, metaclass=abc.ABCMeta):
+class BundleMixin:
+    """Mixin for bundle readers and writers."""
+
+    _TOC_FIELDS: tuple[str, ...] = (
+        "ref",
+        "name",
+        "type",
+        "lang",
+        "rel_type",
+        "rel_asset",
+        "comment",
+        "content_type",
+        "size",
+        "custom_type",
+        "custom_data",
+    )
+
+    @classmethod
+    def _asset_ref_to_str(cls, asset_ref: AssetRef) -> str:
+        if isinstance(asset_ref, AssetInfo):
+            return asset_ref.ref
+        else:
+            return asset_ref
+
+
+class BaseBundleReader(BundleMixin, metaclass=abc.ABCMeta):
     """Base class for bundle readers."""
 
     def __enter__(self) -> Self:
@@ -123,7 +148,12 @@ class BaseBundleReader(object, metaclass=abc.ABCMeta):
     def get_first_relative_asset(
         self, asset: AssetInfo, rel_type: str | Sequence[str] | None = None
     ) -> AssetInfo | None:
-        """Get the first asset that is related to the given asset or None if not found."""
+        """
+        Get the first asset that is related to the given asset or None if not found.
+
+        :param asset: The asset to get related assets for.
+        :param rel_type: The type of the relation. If None, all relations are returned.
+        """
         for x in self.get_relative_assets_iter(asset, rel_type):
             return x
         return None
@@ -138,8 +168,55 @@ class BaseBundleReader(object, metaclass=abc.ABCMeta):
             return x
         return None
 
-    def _asset_ref_to_str(self, asset_ref: AssetRef) -> str:
-        if isinstance(asset_ref, AssetInfo):
-            return asset_ref.ref
-        else:
-            return asset_ref
+
+class BaseBundleWriter(BundleMixin, metaclass=abc.ABCMeta):
+    """Base class for bundle writers."""
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, type, value, traceback):
+        self.close()
+
+    @abc.abstractmethod
+    def write_blob_asset(
+        self,
+        data: IO[bytes],
+        content_type: str | None,
+        rel_asset: AssetRef | None = None,
+        rel_type: str | None = None,
+        file_name: str | None = None,
+        name: str | None = None,
+        lang: str | None = None,
+        comment: str | None = None,
+        custom_type: str | None = None,
+        custom_data: str | None = None,
+    ) -> AssetInfo:
+        """Write a blob asset."""
+        pass
+
+    @abc.abstractmethod
+    def write_object_asset(
+        self,
+        obj: TOpenEpdObject,
+        rel_asset: AssetRef | None = None,
+        rel_type: str | None = None,
+        file_name: str | None = None,
+        name: str | None = None,
+        lang: str | None = None,
+        comment: str | None = None,
+        custom_type: str | None = None,
+        custom_data: str | None = None,
+    ) -> AssetInfo:
+        """Write an object asset."""
+        pass
+
+    @abc.abstractmethod
+    def commit(self):
+        """Write all relevant metadata into the bundle."""
+        pass
+
+    @abc.abstractmethod
+    def close(self):
+        """Close the writer."""
+        pass
