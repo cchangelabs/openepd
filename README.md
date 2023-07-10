@@ -32,6 +32,56 @@ documenting supply-chain specific data.
 
 [Read More about OpenEPD format here](https://www.buildingtransparency.org/programs/openepd/).
 
+## Usage
+
+### Models
+
+The library provides the Pydantic models for all the OpenEPD entities. The models are available in the `openepd.models`
+module. For mode details on the usage please refer to Pydantic documentation.
+
+### Bundle
+
+Bundle is a format which allows to bundle multiple openEPD objects together (it might be EPDs, PCRs, Orgs + any
+other files which might be related to mentioned objects like pdf version of EPD, logo of the PCR company, etc).
+
+Bundle consists of root-level and dependent objects. Dependents are objects which are referenced by root-level objects
+or related to the root-level objects. For example, EPD is a root-level object, PDF version of this EPD is a dependent,
+translated version of the same EPD is dependent as well.
+
+The following example illustrates reading of the bundle file containing PCR and some of the related objects:
+
+```python
+from openepd.bundle.reader import DefaultBundleReader
+from openepd.bundle.model import AssetType, RelType
+
+with DefaultBundleReader("test-bundle.epb") as reader:  # You could either file path or file-like object
+    pcr = reader.get_first_root_asset(AssetType.Pcr)  # Get FIRST available root level PCR object. We consider that
+    # there is only one PCR in the bundle
+    # Read relative PDF file of the found PCR. `related_pdf` is a reference to the PDF file containing metadata only
+    related_pdf = reader.get_first_relative_asset(pcr, RelType.Pdf)
+    # We have to read the file content separately
+    with reader.read_blob_asset(related_pdf) as f:
+        pass  # Do something with the file content here
+```
+
+The next example illustrates the writing of the bundle file:
+
+```python
+from openepd.bundle.writer import DefaultBundleWriter
+from openepd.bundle.model import RelType
+from openepd.model.pcr import Pcr
+
+pcr_obj = Pcr(...)  # Let's assume we already have PCR object
+
+with DefaultBundleWriter("my-bundle.epb") as writer, open("test-pcr.pdf", "rb") as pcr_pdf_file:
+    # Add our PCR to the bundle. We do not specify any extra information, however you might what to add language
+    # and a file name to make it look nicer in the bundle. If omitted the name will be generated automatically.
+    pcr_asset = writer.write_object_asset(pcr_obj)
+    # Now add related PDF document. We have to specify the content type, related (parent) object and the 
+    # type of relation. Again, optionally you might want to specify the language and file name.
+    writer.write_blob_asset(pcr_pdf_file, "application/pdf", pcr_asset, RelType.Pdf)
+```
+
 # Credits
 
 This library has been written and maintained by [C-Change Labs](https://c-change-labs.com/).
