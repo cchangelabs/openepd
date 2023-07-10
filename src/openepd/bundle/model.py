@@ -21,7 +21,6 @@ from enum import StrEnum
 
 import pydantic as pyd
 
-from openepd.__version__ import VERSION
 from openepd.model.base import BaseOpenEpdSchema
 
 
@@ -33,6 +32,9 @@ class BundleManifestAssetsStats(BaseOpenEpdSchema):
 
     total_size: int = 0
     """The total size of assets in bytes."""
+
+    count_by_type: dict[str, int] = pyd.Field(default_factory=dict)
+    """The number of assets by type."""
 
 
 class AssetType(StrEnum):
@@ -49,8 +51,10 @@ class RelType(StrEnum):
 
     Translation = "translation"
     """A translation of the asset."""
-    Pdf = "repr_pdf"
+    Pdf = "repr.pdf"
     """A PDF representation of the asset."""
+    Ilcd = "repr.ilcd"
+    """An ILCD representation of the asset."""
 
 
 class BundleManifest(BaseOpenEpdSchema):
@@ -58,7 +62,7 @@ class BundleManifest(BaseOpenEpdSchema):
 
     format: str = "openEPD Bundle/1.0"
     """The format of the bundle."""
-    generator: str = f"pyopenepdlib/{VERSION}"
+    generator: str
     """The generator of the bundle."""
     assets: BundleManifestAssetsStats = pyd.Field(default_factory=BundleManifestAssetsStats)
     comment: str | None = pyd.Field(default=None)
