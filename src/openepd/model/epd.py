@@ -255,3 +255,8 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     In the absence of primary data, cleaning assumptions shall be documented.
     """,
     )
+
+    @classmethod
+    def get_asset_type(cls) -> str | None:
+        """Return the asset type of this class (see BaseOpenEpdSchema.get_asset_type for details)."""
+        return "epd"

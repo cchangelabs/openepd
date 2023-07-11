@@ -112,6 +112,16 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
                     return True
         return False
 
+    @classmethod
+    def get_asset_type(cls) -> str | None:
+        """
+        Return the asset type as it should be written into bundle.
+
+        Only independent (e.g. Pcr, Org, Epd, etc) objects have asset type.
+        Supplementary objects (e.g. ResourceUseSet, Location, LatLng) must always return None.
+        """
+        return None
+
 
 class BaseOpenEpdGenericSchema(GenericModel, BaseOpenEpdSchema):
     """Base class for all OpenEPD generic models."""
@@ -136,3 +146,5 @@ class OpenEpdExtension(BaseOpenEpdSchema, metaclass=abc.ABCMeta):
 
 
 TOpenEpdExtension = TypeVar("TOpenEpdExtension", bound=OpenEpdExtension)
+TOpenEpdObject = TypeVar("TOpenEpdObject", bound=BaseOpenEpdSchema)
+TOpenEpdObjectClass = TypeVar("TOpenEpdObjectClass", bound=Type[BaseOpenEpdSchema])

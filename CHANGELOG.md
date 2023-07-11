@@ -1,3 +1,10 @@
+## 0.12.0 (2023-07-11)
+
+### Feat
+
+- **bundle**: add bundle writer
+- **bundle**: add bundle models and bundle reader
+
 ## 0.11.2 (2023-07-04)
 
 ### Fix

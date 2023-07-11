@@ -77,3 +77,8 @@ class Pcr(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     product_classes: dict[str, str | list[str]] = pyd.Field(
         description="List of classifications, including Masterformat and UNSPC", default_factory=dict
     )
+
+    @classmethod
+    def get_asset_type(cls) -> str | None:
+        """Return the asset type of this class (see BaseOpenEpdSchema.get_asset_type for details)."""
+        return "pcr"
