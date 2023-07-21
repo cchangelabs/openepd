@@ -20,7 +20,7 @@
 from typing import Annotated, Any
 
 import pydantic as pyd
-from pydantic import BaseModel, root_validator
+from pydantic import BaseModel, model_validator
 
 from openepd.model.base import BaseOpenEpdSchema
 
@@ -29,9 +29,13 @@ class Amount(BaseOpenEpdSchema):
     """A value-and-unit pairing for amounts that do not have an uncertainty."""
 
     qty: float | None = pyd.Field(description="How much of this in the amount.", default=None)
-    unit: str | None = pyd.Field(description="Which unit.  SI units are preferred.", example="kg", default=None)
+    unit: str | None = pyd.Field(
+        description="Which unit.  SI units are preferred.",
+        default=None,
+        json_schema_extra=dict(example="kg"),
+    )
 
-    @root_validator
+    @model_validator(mode="before")
     def check_qty_or_unit(cls, values: dict[str, Any]):
         """Ensure that qty or unit is provided."""
         if values["qty"] is None and values["unit"] is None:
@@ -76,8 +80,8 @@ class Ingredient(BaseOpenEpdSchema):
 class LatLng(BaseOpenEpdSchema):
     """A latitude and longitude."""
 
-    lat: float = pyd.Field(description="Latitude", example=47.6062)
-    lng: float = pyd.Field(description="Longitude", example=-122.3321)
+    lat: float = pyd.Field(description="Latitude", json_schema_extra=dict(example=47.6062))
+    lng: float = pyd.Field(description="Longitude", json_schema_extra=dict(example=-122.3321))
 
 
 class Location(BaseOpenEpdSchema):
@@ -97,11 +101,13 @@ class WithAttachmentsMixin(BaseModel):
 
     attachments: dict[Annotated[str, pyd.Field(max_length=200)], pyd.AnyUrl] | None = pyd.Field(
         description="Dict of URLs relevant to this entry",
-        example={
-            "Contact Us": "https://www.c-change-labs.com/en/contact-us/",
-            "LinkedIn": "https://www.linkedin.com/company/c-change-labs/",
-        },
         default=None,
+        json_schema_extra={
+            "example": {
+                "Contact Us": "https://www.c-change-labs.com/en/contact-us/",
+                "LinkedIn": "https://www.linkedin.com/company/c-change-labs/",
+            }
+        },
     )
 
     def set_attachment(self, name: str, url: str):
@@ -121,10 +127,12 @@ class WithAltIdsMixin(BaseModel):
 
     alt_ids: dict[Annotated[str, pyd.Field(max_length=200)], str] | None = pyd.Field(
         description="Dict identifiers for this entry.",
-        example={
-            "oekobau.dat": "bdda4364-451f-4df2-a68b-5912469ee4c9",
-        },
         default=None,
+        json_schema_extra=dict(
+            example={
+                "oekobau.dat": "bdda4364-451f-4df2-a68b-5912469ee4c9",
+            }
+        ),
     )
 
     def set_alt_id(self, domain_name: str, value: str):

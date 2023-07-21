@@ -62,6 +62,7 @@ jobs:
 
       - name: Merge current branch -> prod
         uses: devmasx/merge-branch@v1.3.1
+        if: github.ref != 'refs/heads/v1'
         with:
           type: now
           from_branch: '${{ github.ref }}'

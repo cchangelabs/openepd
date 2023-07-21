@@ -34,20 +34,20 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     name: str | None = pyd.Field(
         max_length=200,
         description="Common name for organization",
-        example="C Change Labs",
         default=None,
+        json_schema_extra=dict(example="C Change Labs"),
     )
-    alt_names: Annotated[list[str], pyd.conlist(pyd.constr(max_length=200), max_items=255)] | None = pyd.Field(
+    alt_names: Annotated[list[str], pyd.conlist(pyd.constr(max_length=200), max_length=255)] | None = pyd.Field(
         description="List of other names for organization",
-        example=["C-Change Labs", "C-Change Labs inc."],
         default=None,
+        json_schema_extra=dict(example=["C-Change Labs", "C-Change Labs inc."]),
     )
     # TODO: NEW field, not in the spec
     owner: Optional["Org"] = pyd.Field(description="Organization that controls this organization", default=None)
-    subsidiaries: Annotated[list[str], pyd.conlist(pyd.constr(max_length=200), max_items=255)] | None = pyd.Field(
+    subsidiaries: Annotated[list[str], pyd.conlist(pyd.constr(max_length=200), max_length=255)] | None = pyd.Field(
         description="Organizations controlled by this organization",
-        example=["cqd.io", "supplychaincarbonpricing.org"],
         default=None,
+        json_schema_extra=dict(example=["cqd.io", "supplychaincarbonpricing.org"]),
     )
     hq_location: Location | None = pyd.Field(
         default=None,
@@ -58,35 +58,36 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
 class Plant(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     """Represent a manufacturing plant."""
 
+    model_config = pyd.ConfigDict(populate_by_name=True)
+
     # TODO: Add proper validator
     id: str | None = pyd.Field(
         description="Plus code (aka Open Location Code) of plant's location and "
         "owner's web domain joined with `.`(dot).",
-        example="865P2W3V+3W.interface.com",
         alias="pluscode",
         default=None,
+        json_schema_extra=dict(example="865P2W3V+3W.interface.com"),
     )
     owner: Org | None = pyd.Field(description="Organization that owns the plant", default=None)
     name: str | None = pyd.Field(
         max_length=200,
         description="Manufacturer's name for plant. Recommended < 40 chars",
-        example="Dalton, GA",
         default=None,
+        json_schema_extra=dict(example="Dalton, GA"),
     )
     address: str | None = pyd.Field(
         max_length=200,
         default=None,
         description="Text address, preferably geocoded",
-        example="1503 Orchard Hill Rd, LaGrange, GA 30240, United States",
+        json_schema_extra=dict(example="1503 Orchard Hill Rd, LaGrange, GA 30240, United States"),
     )
     contact_email: pyd.EmailStr | None = pyd.Field(
-        description="Email contact", example="info@interface.com", default=None
+        description="Email contact",
+        default=None,
+        json_schema_extra=dict(example="info@interface.com"),
     )
 
     @classmethod
     def get_asset_type(cls) -> str | None:
         """Return the asset type of this class (see BaseOpenEpdSchema.get_asset_type for details)."""
         return "org"
-
-    class Config(BaseOpenEpdSchema.Config):
-        allow_population_by_field_name = True

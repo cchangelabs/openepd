@@ -117,7 +117,7 @@ class DefaultBundleWriter(BaseBundleWriter):
             custom_data=custom_data,
         )
         self.__write_data_stream(
-            asset_info, BytesIO(obj.json(indent=2, exclude_unset=True, exclude_none=True).encode("utf-8"))
+            asset_info, BytesIO(obj.model_dump_json(indent=2, exclude_unset=True, exclude_none=True).encode("utf-8"))
         )
         self.__register_entry(asset_info)
         return asset_info
@@ -125,7 +125,7 @@ class DefaultBundleWriter(BaseBundleWriter):
     def commit(self):
         """Write the manifest and TOC to the bundle. This will be called automatically when the bundle is closed."""
         with self._bundle_archive.open("manifest", "w") as manifest_stream:
-            manifest_stream.write(self.__manifest.json(indent=2, exclude_none=True).encode("utf-8"))
+            manifest_stream.write(self.__manifest.model_dump_json(indent=2, exclude_none=True).encode("utf-8"))
         with self._bundle_archive.open("toc", "w") as toc_stream:
             toc_stream.write(self.__toc_buffer.getvalue().encode("utf-8"))
 
@@ -137,7 +137,7 @@ class DefaultBundleWriter(BaseBundleWriter):
     def __register_entry(self, asset_info: AssetInfo):
         if asset_info.ref in self.__added_entries:
             raise ValueError(f"Asset {asset_info.ref} already exists in the bundle.")
-        self._toc_writer.writerow(asset_info.dict(exclude_unset=True, exclude_none=True))
+        self._toc_writer.writerow(asset_info.model_dump(mode="json", exclude_unset=True, exclude_none=True))
         self.__added_entries.add(asset_info.ref)
         type_counter = self.__manifest.assets.count_by_type.get(asset_info.type, 0) + 1
         self.__manifest.assets.count_by_type[asset_info.type] = type_counter

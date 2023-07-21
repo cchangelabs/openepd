@@ -38,18 +38,20 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     id: str | None = pyd.Field(
         description="The unique ID for this EPD.  To ensure global uniqueness, should be registered at "
         "open-xpd-uuid.cqd.io/register or a coordinating registry.",
-        example="1u7zsed8",
         default=None,
+        json_schema_extra=dict(example="1u7zsed8"),
     )
     doctype: str = pyd.Field(
         description='Describes the type and schema of the document. Must always always read "openEPD".',
         default="OpenEPD",
     )
     product_name: str | None = pyd.Field(
-        max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC"
+        max_length=200,
+        description="The name of the product described by this EPD",
+        json_schema_extra=dict(example="Mix 12345AC"),
     )
     product_sku: str | None = pyd.Field(
-        max_length=200, description="Unique stock keeping identifier assigned by manufacturer"
+        default=None, max_length=200, description="Unique stock keeping identifier assigned by manufacturer"
     )
     product_description: str | None = pyd.Field(
         max_length=2000,
@@ -68,15 +70,15 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     version: pyd.PositiveInt | None = pyd.Field(
         description="Version of this document. The document's issuer should increment it anytime even a single "
         "character changes, as this value is used to determine the most recent version.",
-        example=1,
         default=None,
+        json_schema_extra=dict(example=1),
     )
     language: str | None = pyd.Field(
+        default=None,
         min_length=2,
         max_length=2,
-        strip_whitespace=True,
         description="Language this EPD is captured in, as an ISO 639-1 code",
-        example="en",
+        json_schema_extra=dict(example="en"),
     )
     private: bool = pyd.Field(
         default=False,
@@ -88,52 +90,65 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         "incomplete EPDs.",
     )
     declaration_url: pyd.AnyUrl | None = pyd.Field(
+        default=None,
         description="Link to data object on original registrar's site",
-        example="https://epd-online.com/EmbeddedEpdList/Download/6029",
+        json_schema_extra=dict(example="https://epd-online.com/EmbeddedEpdList/Download/6029"),
     )
     manufacturer: Org | None = pyd.Field(
+        default=None,
         description="JSON object for declaring Org. Sometimes called the "
-        '"Declaration Holder" or "Declaration Owner".'
+        '"Declaration Holder" or "Declaration Owner".',
     )
     epd_developer: Org | None = pyd.Field(
-        description="The organization responsible for the underlying LCA (and subsequent summarization as EPD).",
         default=None,
+        description="The organization responsible for the underlying LCA (and subsequent summarization as EPD).",
     )
     epd_developer_email: pyd.EmailStr | None = pyd.Field(
         default=None,
-        example="john.doe@we-do-lca.com",
         description="Email contact for inquiries about development of this EPD. "
         "This must be an email which can be publicly shared.",
+        json_schema_extra=dict(example="john.doe@we-do-lca.com"),
     )
     plants: list[Plant] = pyd.Field(
-        max_items=32,
+        max_length=32,
         description="List of object(s) for one or more plant(s) that this declaration applies to.",
         default_factory=list,
     )
     program_operator: Org | None = pyd.Field(description="JSON object for program operator Org")
     program_operator_doc_id: str | None = pyd.Field(
-        max_length=200, description="Document identifier from Program Operator.", example="123-456.789/b"
+        default=None,
+        max_length=200,
+        description="Document identifier from Program Operator.",
+        json_schema_extra=dict(example="123-456.789/b"),
     )
     program_operator_version: str | None = pyd.Field(
-        max_length=200, description="Document version number from Program Operator.", example="4.3.0"
+        default=None,
+        max_length=200,
+        description="Document version number from Program Operator.",
+        json_schema_extra=dict(example="4.3.0"),
     )
     third_party_verifier: Org | None = pyd.Field(
-        description="JSON object for Org that performed a critical review of the EPD data"
+        default=None, description="JSON object for Org that performed a critical review of the EPD data"
     )
     third_party_verification_url: pyd.AnyUrl | None = pyd.Field(
+        default=None,
         description="Optional link to a verification statement.",
-        example="https://we-verify-epds.com/en/letters/123-456.789b.pdf",
+        json_schema_extra=dict(example="https://we-verify-epds.com/en/letters/123-456.789b.pdf"),
     )
     third_party_verifier_email: pyd.EmailStr | None = pyd.Field(
-        description="Email address of the third party verifier", example="john.doe@example.com", default=None
+        description="Email address of the third party verifier",
+        default=None,
+        json_schema_extra=dict(example="john.doe@example.com"),
     )
     date_of_issue: datetime.date | None = pyd.Field(
-        example=datetime.date(day=11, month=9, year=2019),
+        default=None,
         description="Date the EPD was issued. This should be the first day on which the EPD is valid.",
+        json_schema_extra=dict(example=datetime.date(day=11, month=9, year=2019)),
     )
     valid_until: datetime.date | None = pyd.Field(
-        example=datetime.date(day=11, month=9, year=2028),
+        default=None,
         description="Last date the EPD is valid on, including any extensions.",
+        json_schema_extra=dict(example=datetime.date(day=11, month=9, year=2028)),
     )
     pcr: Pcr | None = pyd.Field(
         description="JSON object for product category rules. Should point to the "
@@ -149,29 +164,30 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     kg_per_declared_unit: Amount | None = pyd.Field(
         default=None,
         description="Mass of the product, in kilograms, per declared unit",
-        example=Amount(qty=12.5, unit="kg"),
+        json_schema_extra=dict(example=Amount(qty=12.5, unit="kg")),
     )
     kg_C_per_declared_unit: Amount | None = pyd.Field(
         default=None,
         description="Mass of elemental carbon, per declared unit, contained in the product itself at the manufacturing "
         "facility gate.  Used (among other things) to check a carbon balance or calculate incineration "
         "emissions.  The source of carbon (e.g. biogenic) is not relevant in this field.",
-        example=Amount(qty=8.76, unit="kg"),
+        json_schema_extra=dict(example=Amount(qty=8.76, unit="kg")),
     )
     kg_C_biogenic_per_declared_unit: Amount | None = pyd.Field(
         default=None,
         description="Mass of elemental carbon from biogenic sources, per declared unit, contained in the product "
         "itself at the manufacturing facility gate.  It may be presumed that any biogenic carbon content "
         "has been accounted for as -44/12 kgCO2e per kg C in stages A1-A3, per EN15804 and ISO 21930.",
-        example=Amount(qty=8.76, unit="kg"),
+        json_schema_extra=dict(example=Amount(qty=8.76, unit="kg")),
     )
     product_service_life_years: float | None = pyd.Field(
+        default=None,
         gt=0.0009,
         lt=101,
         description="Reference service life of the product, in years.  Serves as a maximum for replacement interval, "
         "which may also be constrained by usage or the service life of what the product goes into "
         "(e.g. a building).",
-        example=50.0,
+        json_schema_extra=dict(example=50.0),
     )
     annual_production: float | None = pyd.Field(
         gt=0,
@@ -181,14 +197,14 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         "Providing this data is optional, and it is acceptable to round or obfuscate it downwards "
         "(but not upwards) by any amount desired to protect confidentiality. For example, if the "
         "product volume is 123,456 m3, a value of 120,000, 100,000 or even 87,654 would be acceptable.",
-        example=10000,
+        json_schema_extra=dict(example=10000),
     )
     applicable_in: list[Annotated[str, pyd.Field(min_length=2, max_length=2)]] | None = pyd.Field(
-        max_items=100,
+        max_length=100,
         default=None,
         description="Jurisdiction(s) in which EPD is applicable. An empty array, or absent properties, "
         "implies global applicability.",
-        example=["US", "CA", "MX"],
+        json_schema_extra=dict(example=["US", "CA", "MX"]),
     )
     product_usage_description: str | None = pyd.Field(
         default=None,
@@ -223,7 +239,7 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         description="Data structure(s) describing performance specs of product. Unique for each material type.",
     )
     includes: list[Ingredient] = pyd.Field(
-        max_items=255,
+        max_length=255,
         description="List of JSON objects pointing to product components. "
         "Each one should be an EPD or digitized LCI process.",
         default_factory=list,
@@ -231,29 +247,30 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     lca_discussion: str | None = pyd.Field(
         max_length=20000,
         description="""A rich text description containing information for experts reviewing the EPD contents. 
-    Text descriptions required by ISO 14025, ISO 21930, EN 15804,, relevant PCRs, or program instructions and which do not 
-    have specific openEPD fields should be entered here.  This field may be large, and may contain multiple sections 
-    separated by github flavored markdown formatting.""",
-        example="""# Packaging
+Text descriptions required by ISO 14025, ISO 21930, EN 15804,, relevant PCRs, or program instructions and which do not 
+have specific openEPD fields should be entered here.  This field may be large, and may contain multiple sections 
+separated by github flavored markdown formatting.""",
+        json_schema_extra=dict(
+            example="""# Packaging
+Information on product-specific packaging: type, composition and possible reuse of packaging materials (paper, 
+strapping, pallets, foils, drums, etc.) shall be included in this Section. The EPD shall describe specific packaging 
+scenario assumptions, including disposition pathways for each packaging material by reuse, recycling, or landfill 
+disposal based on packaging type.*
 
-    Information on product-specific packaging: type, composition and possible reuse of packaging materials (paper, 
-    strapping, pallets, foils, drums, etc.) shall be included in this Section. The EPD shall describe specific packaging 
-    scenario assumptions, including disposition pathways for each packaging material by reuse, recycling, or landfill 
-    disposal based on packaging type.*
+# Product Installation
 
-    # Product Installation
+A description of the type of processing, machinery, tools, dust extraction equipment, auxiliary materials, etc. 
+to be used during installation shall be included. Information on industrial and environmental protection may be 
+included in this section. Any waste treatment included within the system boundary of installation waste should be 
+specified.
 
-    A description of the type of processing, machinery, tools, dust extraction equipment, auxiliary materials, etc. 
-    to be used during installation shall be included. Information on industrial and environmental protection may be 
-    included in this section. Any waste treatment included within the system boundary of installation waste should be 
-    specified.
+# Use Conditions
 
-    # Use Conditions
-
-    Use-stage environmental impacts of flooring products during building operations depend on product cleaning assumptions. 
-    Information on cleaning frequency and cleaning products shall be provided based on the manufacturer’s recommendations. 
-    In the absence of primary data, cleaning assumptions shall be documented.
-    """,
+Use-stage environmental impacts of flooring products during building operations depend on product cleaning assumptions. 
+Information on cleaning frequency and cleaning products shall be provided based on the manufacturer’s recommendations. 
+In the absence of primary data, cleaning assumptions shall be documented.
+    """
+        ),
     )
 
     @classmethod
