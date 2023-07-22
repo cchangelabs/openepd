@@ -34,6 +34,15 @@ documenting supply-chain specific data.
 
 ## Usage
 
+## Usage
+
+**❗ ATTENTION**: Pick the right version. The cornerstone of this library models package representing openEPD models. 
+Models are defined with Pydantic library which is a dependency for openepd package. If you use Pydantic in your project
+carefully pick the version:
+
+* Use version **below** `2.0.0` if your project uses Pydantic version below `2.0.0`
+* Use version `2.x.x` or higher if your project uses Pydantic version `2.0.0` or above
+
 ### Models
 
 The library provides the Pydantic models for all the OpenEPD entities. The models are available in the `openepd.models`
