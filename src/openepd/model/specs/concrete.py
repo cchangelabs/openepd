@@ -40,36 +40,39 @@ class CmuOptions(BaseOpenEpdSpec):
 
     load_bearing: bool | None = pyd.Field(
         description="Load-Bearing. CMUs intended to be loadbearing, rather than simply cosmetic",
-        example=True,
         default=None,
+        json_schema_extra={"example": True},
     )
     aerated_concrete: bool | None = pyd.Field(
-        description="AAC Aerated Concrete. Aerated Autoclaved Concrete, a foam concrete.", example=True, default=None
+        description="AAC Aerated Concrete. Aerated Autoclaved Concrete, a foam concrete.",
+        default=None,
+        json_schema_extra={"example": True},
     )
     insulated: bool | None = pyd.Field(
-        description="Insulated. CMUs with integral insulation", example=True, default=None
+        description="Insulated. CMUs with integral insulation",
+        default=None,
     )
     sound_absorbing: bool | None = pyd.Field(
-        description="Sound Absorbing. CMUs structured for sound absorbtion", example=True, default=None
+        description="Sound Absorbing. CMUs structured for sound absorbtion",
+        default=None,
     )
     white: bool | None = pyd.Field(
-        description="White. CMU using white cement and light-colored aggregate", example=True, default=None
+        description="White. CMU using white cement and light-colored aggregate",
+        default=None,
     )
     recycled_aggregate: bool | None = pyd.Field(
-        description="Recycled aggregate. CMU using primarily reycled aggregates", example=True, default=None
+        description="Recycled aggregate. CMU using primarily reycled aggregates",
+        default=None,
     )
     groundface: bool | None = pyd.Field(
-        description="Ground Face. Ground or Honed facing, typically for improved appearance", example=True, default=None
+        description="Ground Face. Ground or Honed facing, typically for improved appearance", default=None
     )
     splitface: bool | None = pyd.Field(
-        description="Splitface. Rough surface texture via splitting; aggregate can be seen", example=True, default=None
+        description="Splitface. Rough surface texture via splitting; aggregate can be seen", default=None
     )
-    smoothface: bool | None = pyd.Field(
-        description="Smooth Face. Standard smooth-faced blocks", example=True, default=None
-    )
+    smoothface: bool | None = pyd.Field(description="Smooth Face. Standard smooth-faced blocks", default=None)
     slumpstone: bool | None = pyd.Field(
         description="Slumpstone. A slightly rounded, random distortion with the look of rustic adobe.",
-        example=True,
         default=None,
     )
 
@@ -77,7 +80,10 @@ class CmuOptions(BaseOpenEpdSpec):
 class CmuSpec(BaseOpenEpdSpec):
     """Standardized Concrete Masonry Unit-specific extension for OpenEPD."""
 
-    strength: str = pyd.Field(description="Compressive strength", example="4000 psi")
+    strength: str = pyd.Field(
+        description="Compressive strength",
+        json_schema_extra=dict(example="4000 psi"),
+    )
     options: CmuOptions = pyd.Field(
         description="Options for CMU. List of true/false properties", default_factory=CmuOptions
     )

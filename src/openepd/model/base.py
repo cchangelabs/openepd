@@ -18,11 +18,9 @@
 #  Find out more at www.BuildingTransparency.org
 #
 import abc
-import json
 from typing import Any, Optional, Type, TypeVar
 
 import pydantic
-from pydantic.generics import GenericModel
 
 AnySerializable = int | str | bool | float | list | dict | pydantic.BaseModel | None
 TAnySerializable = TypeVar("TAnySerializable", bound=AnySerializable)
@@ -31,13 +29,9 @@ TAnySerializable = TypeVar("TAnySerializable", bound=AnySerializable)
 class BaseOpenEpdSchema(pydantic.BaseModel):
     """Base class for all OpenEPD models."""
 
-    ext: dict[str, AnySerializable] | None = pydantic.Field(alias="ext", default=None)
+    model_config = pydantic.ConfigDict(validate_assignment=False, populate_by_name=True, use_enum_values=True)
 
-    class Config:
-        allow_mutation = True
-        validate_assignment = False
-        allow_population_by_field_name = True
-        use_enum_values = True
+    ext: dict[str, AnySerializable] | None = pydantic.Field(alias="ext", default=None)
 
     def to_serializable(self, *args, **kwargs) -> dict[str, Any]:
         """
@@ -45,11 +39,11 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
 
         It expects the same arguments as the pydantic.BaseModel.json() method.
         """
-        return json.loads(self.json(*args, **kwargs))
+        return self.model_dump(mode="json", *args, **kwargs)
 
     def has_values(self) -> bool:
         """Return True if the model has any values."""
-        return len(self.dict(exclude_unset=True, exclude_none=True)) > 0
+        return len(self.model_dump(mode="python", exclude_unset=True, exclude_none=True)) > 0
 
     def set_ext(self, ext: "OpenEpdExtension") -> None:
         """Set the extension field."""
@@ -104,10 +98,10 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
 
         Both property name and aliases are checked.
         """
-        if field_name in cls.__fields__:
+        if field_name in cls.model_fields:
             return True
         else:
-            for x in cls.__fields__.values():
+            for x in cls.model_fields.values():
                 if x.alias == field_name:
                     return True
         return False
@@ -121,12 +115,6 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
         Supplementary objects (e.g. ResourceUseSet, Location, LatLng) must always return None.
         """
         return None
-
-
-class BaseOpenEpdGenericSchema(GenericModel, BaseOpenEpdSchema):
-    """Base class for all OpenEPD generic models."""
-
-    pass
 
 
 class BaseOpenEpdSpec(BaseOpenEpdSchema):

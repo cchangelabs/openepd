@@ -77,10 +77,10 @@ class AssetInfo(BaseOpenEpdSchema):
     """The name of the asset."""
     type: AssetType
     """The type of the asset."""
-    lang: str | None
+    lang: str | None = None
     """The language of the asset."""
-    rel_type: str | None
-    rel_asset: str | None
+    rel_type: str | None = None
+    rel_asset: str | None = None
     comment: str | None = pyd.Field(default=None)
     content_type: str | None = pyd.Field(default=None)
     size: int | None = pyd.Field(default=None)
