@@ -48,6 +48,33 @@ carefully pick the version:
 The library provides the Pydantic models for all the OpenEPD entities. The models are available in the `openepd.models`
 module. For mode details on the usage please refer to Pydantic documentation.
 
+### API Client
+
+The library provides the API client to work with the OpenEPD API. The client is available in the `openepd.client` module.
+Currently, the only available implementation is based on synchronous [requests]() library. Client provides the following
+features:
+* Error handling - depending on HTTP status code the client raises different exceptions allowing to handle errors
+  in a more granular way.
+* Throttling - the client is able to throttle the requests to the API to avoid hitting the rate limits.
+* Retry - the client is able to retry the requests in case of the network errors.
+
+#### API Client Usage
+
+The following example illustrates the usage of the API client:
+
+```python
+from openepd.api.sync_client import OpenEpdApiClientSync
+
+# Setup the client
+api_client = OpenEpdApiClientSync(
+    "https://openepd.buildingtransparency.org/api",
+    "<Your API Token>",
+)
+
+# Use API, e.g. get EPD by ID
+epd = api_client.epds.get_by_openxpd_uuid("ec3b9j5t")
+```
+
 ### Bundle
 
 Bundle is a format which allows to bundle multiple openEPD objects together (it might be EPDs, PCRs, Orgs + any

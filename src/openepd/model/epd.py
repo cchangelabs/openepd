@@ -87,7 +87,7 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         "number of required fields, to allow for multiple systems to coordinate "
         "incomplete EPDs.",
     )
-    declaration_url: pyd.AnyUrl | None = pyd.Field(
+    declaration_url: str | None = pyd.Field(
         description="Link to data object on original registrar's site",
         example="https://epd-online.com/EmbeddedEpdList/Download/6029",
     )
@@ -127,12 +127,12 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     third_party_verifier_email: pyd.EmailStr | None = pyd.Field(
         description="Email address of the third party verifier", example="john.doe@example.com", default=None
     )
-    date_of_issue: datetime.date | None = pyd.Field(
-        example=datetime.date(day=11, month=9, year=2019),
+    date_of_issue: datetime.datetime | None = pyd.Field(
+        example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.timezone.utc),
         description="Date the EPD was issued. This should be the first day on which the EPD is valid.",
     )
-    valid_until: datetime.date | None = pyd.Field(
-        example=datetime.date(day=11, month=9, year=2028),
+    valid_until: datetime.datetime | None = pyd.Field(
+        example=datetime.datetime(day=11, month=9, year=2028, tzinfo=datetime.timezone.utc),
         description="Last date the EPD is valid on, including any extensions.",
     )
     pcr: Pcr | None = pyd.Field(
@@ -187,8 +187,12 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         max_items=100,
         default=None,
         description="Jurisdiction(s) in which EPD is applicable. An empty array, or absent properties, "
-        "implies global applicability.",
-        example=["US", "CA", "MX"],
+        "implies global applicability. Accepts "
+        "[2-letter country codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), "
+        "[M49 region codes](https://unstats.un.org/unsd/methodology/m49/), "
+        'or the alias "EU27" for the 27 members of the Euro bloc, or the alias "NAFTA" '
+        "for the members of North American Free Trade Agreement",
+        example=["US", "CA", "MX", "EU27", "NAFTA"],
     )
     product_usage_description: str | None = pyd.Field(
         default=None,
@@ -260,3 +264,10 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     def get_asset_type(cls) -> str | None:
         """Return the asset type of this class (see BaseOpenEpdSchema.get_asset_type for details)."""
         return "epd"
+
+    @pyd.validator("compliance", always=True, pre=True)
+    def validate_compliance(cls, v):
+        """Handle correctly None values for compliance field."""
+        if v is None:
+            return []
+        return v
