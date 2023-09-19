@@ -1,3 +1,9 @@
+## 1.1.0 (2023-09-19)
+
+### Feat
+
+- add openEPD API client (just a few methods)
+
 ## 1.0.0 (2023-07-22)
 
 ### Feat
