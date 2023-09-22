@@ -62,7 +62,7 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     product_image_small: pyd.AnyUrl | None = pyd.Field(
         description="Pointer to image illustrating the product, which is no more than 200x200 pixels", default=None
     )
-    product_image: pyd.AnyUrl | None = pyd.Field(
+    product_image: pyd.AnyUrl | pyd.FileUrl | None = pyd.Field(
         description="pointer to image illustrating the product no more than 10MB", default=None
     )
     version: pyd.PositiveInt | None = pyd.Field(
