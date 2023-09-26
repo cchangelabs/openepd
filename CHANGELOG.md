@@ -1,3 +1,9 @@
+## 1.2.0 (2023-09-26)
+
+### Feat
+
+- **epd**: update product image field
+
 ## 1.1.0 (2023-09-19)
 
 ### Feat
