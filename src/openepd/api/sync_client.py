@@ -17,7 +17,7 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-__all__ = ("OpenEpdApiClientSync",)
+__all__ = ("OpenEpdApiClientSync", "PrivateOpenEpdApiClientSync")
 
 from requests.auth import AuthBase
 
@@ -27,7 +27,7 @@ from openepd.api.epd.sync_api import EpdApi
 from openepd.api.pcr.sync_api import PcrApi
 
 
-class OpenEpdApiClientSync:
+class BaseOpenEpdApiClientSync:
     """Synchronous API client for OpenEPD."""
 
     def __init__(self, base_url: str, auth_token: str | None, **kwargs) -> None:
@@ -58,6 +58,16 @@ class OpenEpdApiClientSync:
         if self.__pcr_api is None:
             self.__pcr_api = PcrApi(self._http_client)
         return self.__pcr_api
+
+
+class PrivateOpenEpdApiClientSync(BaseOpenEpdApiClientSync):
+    """Private API client for OpenEPD."""
+
+    pass
+
+
+class OpenEpdApiClientSync(BaseOpenEpdApiClientSync):
+    """Public API client for OpenEPD."""
 
     @property
     def categories(self) -> CategoryApi:

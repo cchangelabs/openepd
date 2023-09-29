@@ -103,3 +103,13 @@ class EpdApi(BaseApiMethodGroup):
         :return: statistics wrapped in OpenEpdApiResponse
         """
         return self.get_statistics_raw(omf).payload
+
+    def get_download_link_by_uuid(self, uuid: str) -> str:
+        """
+        Retrieve the download link for an EPD by OpenEPD UUID.
+
+        :param uuid: OpenEPD UUID
+        :return: download link
+        """
+        content = self._client.do_request("get", f"/epds/{uuid}/links").json()
+        return content["download"]
