@@ -266,8 +266,15 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         return "epd"
 
     @pyd.validator("compliance", always=True, pre=True)
-    def validate_compliance(cls, v):
+    def validate_compliance(cls, v: list | None):
         """Handle correctly None values for compliance field."""
+        if v is None:
+            return []
+        return v
+
+    @pyd.validator("includes", always=True, pre=True)
+    def validate_includes(cls, v: list | None):
+        """Handle correctly None values for includes field."""
         if v is None:
             return []
         return v
