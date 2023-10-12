@@ -1,3 +1,13 @@
+## 1.3.0 (2023-10-12)
+
+### Feat
+
+- change type of PCR date fields to `datetime`
+
+### Fix
+
+- treat None as empty list for `epd.includes` field
+
 ## 1.2.0 (2023-09-26)
 
 ### Feat
