@@ -35,6 +35,7 @@ import shutil
 import time
 from typing import IO, Any, BinaryIO, Callable, Final, NamedTuple
 
+import requests
 from requests import PreparedRequest, Response, Session, Timeout
 from requests import codes as requests_codes
 from requests.auth import AuthBase
@@ -443,7 +444,7 @@ class SyncHttpClient:
                 exception = None
                 try:
                     response = func(*args, **kwargs)
-                except (ConnectionError, Timeout) as e:
+                except (requests.exceptions.ConnectionError, ConnectionError, Timeout) as e:
                     exception = e
 
                 if exception or response.status_code == requests_codes.service_unavailable:
