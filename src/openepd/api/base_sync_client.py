@@ -161,6 +161,7 @@ class SyncHttpClient:
         base_url: str,
         throttle_retry_timeout: float | int | datetime.timedelta = 300,
         requests_per_sec: float = 10,
+        retry_count: int = 3,
         user_agent: str | None = None,
         timeout_sec: float | tuple[float, float] | None = None,
         auth: AuthBase | None = None,
@@ -176,6 +177,7 @@ class SyncHttpClient:
             if `None` then underlying library decides which one to pass
         :param timeout_sec: how long to wait for the server to send data before giving up,
             as a seconds (just a single float), or a (connect timeout, read timeout) tuple.
+        :param retry_count: count of retries to perform in case of connection error or timeout.
         """
         self._base_url: str = no_trailing_slash(base_url)
         self._throttler = Throttler(rate_per_sec=requests_per_sec)
@@ -188,6 +190,7 @@ class SyncHttpClient:
         self.timeout = timeout_sec
         self._session: Session | None = None
         self._auth: AuthBase | None = auth
+        self._retry_count: int = retry_count
 
         self._http_retry_handlers: dict[int, RetryHandler] = {}
         self._http_error_handlers: dict[int, ErrorHandler] = {}
@@ -371,7 +374,10 @@ class SyncHttpClient:
         request_kwargs.update(kwargs)
 
         do_request = self._handle_service_unavailable(
-            method, url, partial(self._run_throttled_request, method, url, request_kwargs, session=session)
+            method,
+            url,
+            self._retry_count,
+            partial(self._run_throttled_request, method, url, request_kwargs, session=session),
         )
 
         response = do_request()
@@ -434,10 +440,10 @@ class SyncHttpClient:
                 return default
 
     @staticmethod
-    def _handle_service_unavailable(method: str, url: str, func: Callable):
+    def _handle_service_unavailable(method: str, url: str, retry_count: int, func: Callable):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            attempts = 3
+            attempts = retry_count
             response = None
             exception = None
             while attempts > 0:
