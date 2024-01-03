@@ -1,3 +1,13 @@
+## 1.3.1 (2024-01-03)
+
+### Fix
+
+- correct the retry logic for http client
+
+### Refactor
+
+- add retry count parameter for HTTP Client
+
 ## 1.3.0 (2023-10-12)
 
 ### Feat
