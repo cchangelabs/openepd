@@ -337,6 +337,12 @@ class Impacts(pyd.BaseModel):
         return self.__root__
 
 
+class MultiProductImpacts(pyd.BaseModel):
+    """List of environmental impacts, compiled per one of the standard Impact Assessment methods."""
+
+    __root__: dict[str, Impacts]
+
+
 class ResourceUseSet(BaseOpenEpdSchema):
     """A set of resource use indicators, such as RPRec, RPRm, etc."""
 
