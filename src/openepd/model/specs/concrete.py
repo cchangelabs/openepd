@@ -19,6 +19,7 @@
 #
 from enum import StrEnum
 
+import pydantic
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSpec
@@ -80,4 +81,10 @@ class CmuSpec(BaseOpenEpdSpec):
     strength: str = pyd.Field(description="Compressive strength", example="4000 psi")
     options: CmuOptions = pyd.Field(
         description="Options for CMU. List of true/false properties", default_factory=CmuOptions
+    )
+
+
+class Concrete(BaseOpenEpdSpec):
+    strength_28d: str | None = pydantic.Field(
+        default=None, title="Concrete Strength 28d", description="Concrete strength after 28 days"
     )

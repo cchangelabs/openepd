@@ -20,10 +20,14 @@
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.specs.concrete import CmuSpec
+from openepd.model.specs import concrete, steel
 
 
 class Specs(BaseOpenEpdSchema):
     """Material specific specs."""
 
-    cmu: CmuSpec | None = pyd.Field(default=None, description="Concrete Masonry Unit-specific (CMU) specs")
+    cmu: concrete.CmuSpec | None = pyd.Field(default=None, description="Concrete Masonry Unit-specific (CMU) specs")
+    CMU: concrete.CmuSpec | None = pyd.Field(default=None, description="Concrete Masonry Unit-specific (CMU) specs")
+    Steel: steel.Steel | None = pyd.Field(default=None, description="Steel-specific specs")
+    RebarSteel: steel.RebarSteel | None = pyd.Field(default=None, description="Rebar Steel-specific specs")
+    Concrete: concrete.Concrete | None = pyd.Field(default=None, description="Concrete-specific specs")
