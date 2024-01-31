@@ -17,17 +17,17 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
+from typing import Annotated, Any
+
 import pydantic as pyd
 
-from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.specs import concrete, steel
+RatioFloat = Annotated[float, pyd.Field(ge=0, le=1, example=0.5)]
+"""Float field which represents a percentage ratio between 0 and 1."""
 
 
-class Specs(BaseOpenEpdSchema):
-    """Material specific specs."""
-
-    cmu: concrete.CmuSpec | None = pyd.Field(default=None, description="Concrete Masonry Unit-specific (CMU) specs")
-    CMU: concrete.CmuSpec | None = pyd.Field(default=None, description="Concrete Masonry Unit-specific (CMU) specs")
-    Steel: steel.Steel | None = pyd.Field(default=None, description="Steel-specific specs")
-    RebarSteel: steel.RebarSteel | None = pyd.Field(default=None, description="Rebar Steel-specific specs")
-    Concrete: concrete.ConcreteV1 | None = pyd.Field(default=None, description="Concrete-specific specs")
+def together_validator(field1: str, field2: Any, values: dict[str, Any]) -> Any:
+    """Shared validator to ensure that two fields are provided together or not provided at all."""
+    value1 = values.get(field1)
+    value2 = values.get(field2)
+    if value1 is not None and value2 is None or value1 is None and value2 is not None:
+        raise ValueError(f"Both or neither {field1} and {field2} days must be provided together")

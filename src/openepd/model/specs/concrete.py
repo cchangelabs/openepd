@@ -18,10 +18,12 @@
 #  Find out more at www.BuildingTransparency.org
 #
 from enum import StrEnum
+from typing import Literal
 
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSpec
+from openepd.model.validation import RatioFloat, together_validator
 
 
 class CmuWeightClassification(StrEnum):
@@ -148,3 +150,61 @@ class CmuSpec(BaseOpenEpdSpec):
     options: CmuOptions = pyd.Field(
         description="Options for CMU. List of true/false properties", default_factory=CmuOptions
     )
+
+
+class Cementitious(BaseOpenEpdSpec):
+    """List of cementitious materials, and proportion by mass."""
+
+    opc: RatioFloat | None = pyd.Field(default=None, title="Ordinary Gray Portland Cement")
+    wht: RatioFloat | None = pyd.Field(default=None, title="White Portland Cement")
+    ggbs: RatioFloat | None = pyd.Field(default=None, title="Ground Granulated Blast Furnace Slag")
+    flyAsh: RatioFloat | None = pyd.Field(default=None, title="Fly Ash, including types F, CL, and CH")
+    siFume: RatioFloat | None = pyd.Field(default=None, title="Silica Fume")
+    gg45: RatioFloat | None = pyd.Field(default=None, title="Ground Glass, 45um or smaller")
+    natPoz: RatioFloat | None = pyd.Field(default=None, title="Natural pozzolan")
+    mk: RatioFloat | None = pyd.Field(default=None, title="Metakaolin")
+    CaCO3: RatioFloat | None = pyd.Field(default=None, title="Limestone")
+    other: RatioFloat | None = pyd.Field(default=None, title="Other SCMs")
+
+
+class ConcreteV1(BaseOpenEpdSpec):
+    """Concrete spec."""
+
+    class Config:
+        title: str = "Concrete"
+
+    strength_28d: str | None = pyd.Field(
+        default=None, title="Concrete Strength 28d", description="Concrete strength after 28 days"
+    )
+
+    strength_early: str | None = pyd.Field(
+        default=None,
+        title="Early Strength",
+        description="A strength spec which is to be reached earlier than 28 days (e.g. 3d)",
+    )
+    strength_early_d: Literal[3, 7, 14] | None = pyd.Field(
+        default=None, title="Test Days for Early Strength", description="Test Day for the Early Strength"
+    )
+    strength_late: str | None = pyd.Field(
+        default=None,
+        title="Late Strength",
+        description="A strength spec which is to be reached later than 28 days (e.g. 42d)",
+    )
+    strength_late_d: Literal[42, 56, 72, 96, 120] | None = pyd.Field(
+        default=None, title="Test Day for the Late Strength", description="Test Day for the Late Strength"
+    )
+    cementitious: Cementitious | None = pyd.Field(
+        default=None,
+        title="Cementitious Materials",
+        description="List of cementitious materials, and proportion by mass",
+    )
+
+    @pyd.root_validator
+    def _late_validator(cls, values):
+        together_validator("strength_late", "strength_late_d", values)
+        return values
+
+    @pyd.root_validator
+    def _early_validator(cls, values):
+        together_validator("strength_early", "strength_early_d", values)
+        return values
