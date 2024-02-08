@@ -18,7 +18,7 @@
 #  Find out more at www.BuildingTransparency.org
 #
 from enum import StrEnum
-from typing import Annotated
+from typing import Annotated, Literal
 
 import pydantic
 
@@ -43,12 +43,19 @@ RatioFloat = Annotated[float, pydantic.Field(ge=0, le=1)]
 
 
 class Steel(BaseOpenEpdSpec):
+    class Config:
+        use_enum_values = False
+
+
+class SteelV1(Steel):
     class Options(BaseOpenEpdSchema):
         galvanized: bool | None = pydantic.Field(default=None, title="Galvanized")
         cold_finished: bool | None = pydantic.Field(default=None, title="Cold Finished")
 
-    class Config:
-        use_enum_values = False
+    def __init__(self, *args, version=1, **kwargs):
+        super().__init__(*args, version=version, **kwargs)
+
+    version: Literal[1] = pydantic.Field(default=1, title="Version 1")
 
     recycled_content: RatioFloat | None = pydantic.Field(
         default=None,
@@ -58,9 +65,6 @@ class Steel(BaseOpenEpdSpec):
         "used to evaluate the EPD w.r.t. targets or limits that are"
         " different for primary and recycled content.",
     )
-    steel_composition: SteelComposition | None = pydantic.Field(
-        default=None, title="Steel Composition", description="Basic chemical composition"
-    )
     making_route: SteelMakingRoute | None = pydantic.Field(
         default=None, title="Steel Making Route", description="Steel making route"
     )
@@ -69,11 +73,34 @@ class Steel(BaseOpenEpdSpec):
     )
 
 
+class SteelV2(Steel):
+    def __init__(self, *args, version=2, **kwargs):
+        super().__init__(*args, version=version, **kwargs)
+
+    version: Literal[2] = pydantic.Field(default=2, title="Version 2", const=True)
+    steel_composition: SteelComposition | None = pydantic.Field(
+        default=None, title="Steel Composition", description="Basic chemical composition"
+    )
+
+
 class RebarSteel(BaseOpenEpdSpec):
+    pass
+
+
+class RebarSteelV1(RebarSteel):
     class Options(BaseOpenEpdSchema):
         epoxy: bool | None = pydantic.Field(default=None, title="Epoxy Coated")
         fabricated: bool | None = pydantic.Field(default=None, title="Fabricated", description="Fabricated")
 
+    def __init__(self, *args, version=1, **kwargs):
+        super().__init__(*args, version=version, **kwargs)
+
+    version: Literal[1] = pydantic.Field(default=1, title="Version 1")
+
     options: Options = pydantic.Field(
         title="Rebar Steel Options", description="Rebar Steel options", default_factory=Options
     )
+
+
+SteelAllVersions = Annotated[SteelV1 | SteelV2, pydantic.Field(discriminator="version")]
+RebarSteelAllVersions = RebarSteelV1
