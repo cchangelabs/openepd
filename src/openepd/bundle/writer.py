@@ -117,7 +117,8 @@ class DefaultBundleWriter(BaseBundleWriter):
             custom_data=custom_data,
         )
         self.__write_data_stream(
-            asset_info, BytesIO(obj.json(indent=2, exclude_unset=True, exclude_none=True).encode("utf-8"))
+            asset_info,
+            BytesIO(obj.json(indent=2, exclude_unset=True, exclude_none=True, by_alias=True).encode("utf-8")),
         )
         self.__register_entry(asset_info)
         return asset_info
