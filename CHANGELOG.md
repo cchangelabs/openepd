@@ -1,3 +1,9 @@
+## 1.3.2 (2024-02-09)
+
+### Fix
+
+- enable serialization by alias when creating a bundle
+
 ## 1.3.1 (2024-01-03)
 
 ### Fix
