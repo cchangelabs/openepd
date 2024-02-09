@@ -1,3 +1,9 @@
+## 1.3.3 (2024-02-09)
+
+### Fix
+
+- fix email-validator dependency
+
 ## 1.3.2 (2024-02-09)
 
 ### Fix
