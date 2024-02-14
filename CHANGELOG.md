@@ -1,3 +1,9 @@
+## 1.4.0 (2024-02-14)
+
+### Feat
+
+- add TypicalApplication spec for Concrete
+
 ## 1.3.3 (2024-02-09)
 
 ### Fix
