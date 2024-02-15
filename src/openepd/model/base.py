@@ -21,17 +21,17 @@ import abc
 import json
 from typing import Any, Optional, Type, TypeVar
 
-import pydantic
+import pydantic as pyd
 from pydantic.generics import GenericModel
 
-AnySerializable = int | str | bool | float | list | dict | pydantic.BaseModel | None
+AnySerializable = int | str | bool | float | list | dict | pyd.BaseModel | None
 TAnySerializable = TypeVar("TAnySerializable", bound=AnySerializable)
 
 
-class BaseOpenEpdSchema(pydantic.BaseModel):
+class BaseOpenEpdSchema(pyd.BaseModel):
     """Base class for all OpenEPD models."""
 
-    ext: dict[str, AnySerializable] | None = pydantic.Field(alias="ext", default=None)
+    ext: dict[str, AnySerializable] | None = pyd.Field(alias="ext", default=None)
 
     class Config:
         allow_mutation = True
@@ -43,7 +43,7 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
         """
         Return a serializable dict representation of the DTO.
 
-        It expects the same arguments as the pydantic.BaseModel.json() method.
+        It expects the same arguments as the pyd.BaseModel.json() method.
         """
         return json.loads(self.json(*args, **kwargs))
 
@@ -83,7 +83,7 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
         value = self.get_ext_field(key, default)
         if value is None:
             return None  # type: ignore
-        if issubclass(target_type, pydantic.BaseModel) and isinstance(value, dict):
+        if issubclass(target_type, pyd.BaseModel) and isinstance(value, dict):
             return target_type.construct(**value)  # type: ignore
         elif isinstance(value, target_type):
             return value
@@ -125,12 +125,6 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
 
 class BaseOpenEpdGenericSchema(GenericModel, BaseOpenEpdSchema):
     """Base class for all OpenEPD generic models."""
-
-    pass
-
-
-class BaseOpenEpdSpec(BaseOpenEpdSchema):
-    """Base class for all OpenEPD specs."""
 
     pass
 
