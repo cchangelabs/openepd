@@ -17,17 +17,3 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-import pydantic as pyd
-
-from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.specs import concrete, steel
-
-
-class Specs(BaseOpenEpdSchema):
-    """Material specific specs."""
-
-    cmu: concrete.CmuSpec | None = pyd.Field(default=None, description="Concrete Masonry Unit-specific (CMU) specs")
-    CMU: concrete.CmuSpec | None = pyd.Field(default=None, description="Concrete Masonry Unit-specific (CMU) specs")
-    Steel: steel.SteelV1 | None = pyd.Field(default=None, description="Steel-specific specs")
-    RebarSteel: steel.RebarSteelV1 | None = pyd.Field(default=None, description="Rebar Steel-specific specs")
-    Concrete: concrete.ConcreteV1 | None = pyd.Field(default=None, description="Concrete-specific specs")

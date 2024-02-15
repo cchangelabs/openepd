@@ -22,7 +22,8 @@ from typing import Literal
 
 import pydantic as pyd
 
-from openepd.model.base import BaseOpenEpdSpec
+from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec
 from openepd.model.validation import RatioFloat, together_validator
 
 
@@ -37,7 +38,7 @@ class CmuWeightClassification(StrEnum):
     """Lightweight CMU has a density less than 105 lbs/cu. ft."""
 
 
-class CmuOptions(BaseOpenEpdSpec):
+class CmuOptions(BaseOpenEpdSchema):
     """Concrete Masonry Unit options."""
 
     load_bearing: bool | None = pyd.Field(
@@ -152,7 +153,7 @@ class CmuSpec(BaseOpenEpdSpec):
     )
 
 
-class Cementitious(BaseOpenEpdSpec):
+class Cementitious(BaseOpenEpdSchema):
     """List of cementitious materials, and proportion by mass."""
 
     opc: RatioFloat | None = pyd.Field(default=None, title="Ordinary Gray Portland Cement")
@@ -167,11 +168,10 @@ class Cementitious(BaseOpenEpdSpec):
     other: RatioFloat | None = pyd.Field(default=None, title="Other SCMs")
 
 
-class ConcreteV1(BaseOpenEpdSpec):
+class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     """Concrete spec."""
 
-    class Config:
-        title: str = "Concrete"
+    _EXT_VERSION = "1.0"
 
     strength_28d: str | None = pyd.Field(
         default=None, title="Concrete Strength 28d", description="Concrete strength after 28 days"

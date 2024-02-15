@@ -19,18 +19,19 @@
 #
 from enum import StrEnum
 
-import pydantic
+import pydantic as pyd
 
-from openepd.model.base import BaseOpenEpdSchema, BaseOpenEpdSpec
+from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation import RatioFloat
 
 
 class SteelMakingRoute(BaseOpenEpdSchema):
     """Steel making route."""
 
-    bof: bool | None = pydantic.Field(default=None, title="Steel Making Route BOF", description="Basic oxygen furnace")
-    eaf: bool | None = pydantic.Field(default=None, title="Steel Making Route EAF", description="Electric arc furnace")
-    ohf: bool | None = pydantic.Field(default=None, title="Steel Making Route OHF", description="Open hearth furnace")
+    bof: bool | None = pyd.Field(default=None, title="Steel Making Route BOF", description="Basic oxygen furnace")
+    eaf: bool | None = pyd.Field(default=None, title="Steel Making Route EAF", description="Electric arc furnace")
+    ohf: bool | None = pyd.Field(default=None, title="Steel Making Route OHF", description="Open hearth furnace")
 
 
 class SteelComposition(StrEnum):
@@ -43,19 +44,18 @@ class SteelComposition(StrEnum):
     OTHER = "Other"
 
 
-class Steel(BaseOpenEpdSpec):
+class SteelV1(BaseOpenEpdHierarchicalSpec):
     """Steel spec."""
+
+    _EXT_VERSION = "1.0"
 
     class Options(BaseOpenEpdSchema):
         """Steel spec options."""
 
-        galvanized: bool | None = pydantic.Field(default=None, title="Galvanized")
-        cold_finished: bool | None = pydantic.Field(default=None, title="Cold Finished")
+        galvanized: bool | None = pyd.Field(default=None, title="Galvanized")
+        cold_finished: bool | None = pyd.Field(default=None, title="Cold Finished")
 
-    class Config:
-        use_enum_values = False
-
-    recycled_content: RatioFloat | None = pydantic.Field(
+    recycled_content: RatioFloat | None = pyd.Field(
         default=None,
         title="Scrap Recycled Content",
         description="Scrap steel inputs from other processes.  Includes "
@@ -63,26 +63,26 @@ class Steel(BaseOpenEpdSpec):
         "used to evaluate the EPD w.r.t. targets or limits that are"
         " different for primary and recycled content.",
     )
-    steel_composition: SteelComposition | None = pydantic.Field(
+    steel_composition: SteelComposition | None = pyd.Field(
         default=None, title="Steel Composition", description="Basic chemical composition"
     )
-    making_route: SteelMakingRoute | None = pydantic.Field(
+    making_route: SteelMakingRoute | None = pyd.Field(
         default=None, title="Steel Making Route", description="Steel making route"
     )
-    options: Options | None = pydantic.Field(
-        title="Steel Options", description="Steel options", default_factory=Options
-    )
+    options: Options | None = pyd.Field(title="Steel Options", description="Steel options", default_factory=Options)
 
 
-class RebarSteel(BaseOpenEpdSpec):
+class RebarSteelV1(BaseOpenEpdHierarchicalSpec):
     """Rebar steel spec."""
+
+    _EXT_VERSION = "1.0"
 
     class Options(BaseOpenEpdSchema):
         """Rebar steel options."""
 
-        epoxy: bool | None = pydantic.Field(default=None, title="Epoxy Coated")
-        fabricated: bool | None = pydantic.Field(default=None, title="Fabricated", description="Fabricated")
+        epoxy: bool | None = pyd.Field(default=None, title="Epoxy Coated")
+        fabricated: bool | None = pyd.Field(default=None, title="Fabricated", description="Fabricated")
 
-    options: Options = pydantic.Field(
+    options: Options = pyd.Field(
         title="Rebar Steel Options", description="Rebar Steel options", default_factory=Options
     )

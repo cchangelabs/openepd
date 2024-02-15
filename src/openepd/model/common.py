@@ -17,7 +17,8 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-from typing import Annotated, Any
+from abc import ABC
+from typing import Annotated, Any, ClassVar
 
 import pydantic as pyd
 from pydantic import BaseModel, root_validator
@@ -137,3 +138,18 @@ class WithAltIdsMixin(BaseModel):
         """Set an alt_id if value is not None."""
         if value is not None:
             self.set_alt_id(domain_name, value)
+
+
+class WithExtVersionMixin(ABC, BaseModel):
+    """Mixin for extensions supporting versions: recommended way."""
+
+    _EXT_VERSION: ClassVar[str]
+    """Exact version (major, minor) of the spec extension"""
+
+    def __init_subclass__(cls):
+        """Set the default value for the ext_version field from _EXT_VERSION class var."""
+        super().__init_subclass__()
+        if hasattr(cls, "_EXT_VERSION"):
+            cls.__fields__["ext_version"].default = cls._EXT_VERSION
+
+    ext_version: str = pyd.Field(title="Extension version", example="3.22", default=None)
