@@ -30,6 +30,9 @@ from openepd.model.pcr import Pcr
 from openepd.model.specs import Specs
 from openepd.model.standard import Standard
 
+OPENEPD_VERSION = "0.1"
+"""Current implemented version of openEPD data format."""
+
 
 class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     """Represent an EPD."""
@@ -44,6 +47,9 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     doctype: str = pyd.Field(
         description='Describes the type and schema of the document. Must always always read "openEPD".',
         default="OpenEPD",
+    )
+    openepd_version: str = pyd.Field(
+        description="Version of the document format, related to /doctype", default=OPENEPD_VERSION
     )
     product_name: str | None = pyd.Field(
         max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC"
