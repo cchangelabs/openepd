@@ -21,11 +21,15 @@ import math
 import unittest
 
 from openepd.api.common import StreamingListResponse
-from openepd.api.dto.common import MetaCollectionDto, OpenEpdApiResponse, PagingMeta
+from openepd.api.dto.common import MetaCollectionDto, OpenEpdApiResponse
+from openepd.api.dto.meta import PagingMeta, PagingMetaMixin
+
+
+class PagingMetaResponseForTest(PagingMetaMixin, MetaCollectionDto):
+    pass
 
 
 class StreamingListResponseTestCase(unittest.TestCase):
-
     DATA: list[int] = [x for x in range(100)]
 
     @classmethod
@@ -33,14 +37,15 @@ class StreamingListResponseTestCase(unittest.TestCase):
         cls,
         page_num: int,
         page_size: int,
-    ) -> OpenEpdApiResponse[list[int]]:
+    ) -> OpenEpdApiResponse[list[int], PagingMetaResponseForTest]:
         payload = cls.DATA[(page_num - 1) * page_size : page_num * page_size]
+
         response = OpenEpdApiResponse(
             payload=payload,
-            meta=MetaCollectionDto(),
+            meta=PagingMetaResponseForTest(),
         )
-        response.meta.set_ext(
-            PagingMeta(total_count=len(cls.DATA), total_pages=math.ceil(len(cls.DATA) / page_size), page_size=page_size)
+        response.meta.paging = PagingMeta(
+            total_count=len(cls.DATA), total_pages=math.ceil(len(cls.DATA) / page_size), page_size=page_size
         )
         return response
 
