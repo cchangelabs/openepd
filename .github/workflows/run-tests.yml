@@ -1,4 +1,4 @@
-name: Sanity Check
+name: Test
 on:
   push:
   workflow_call:
@@ -8,7 +8,7 @@ on:
         type: string
 jobs:
   run:
-    name: Sanity check
+    name: Run tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -27,8 +27,5 @@ jobs:
         run: |
           make setup
 
-      - name: Lint
-        run: make lint
-
-      - name: Run build to make sure it works
-        run: make build
+      - name: Run tests
+        run: make test
