@@ -44,6 +44,22 @@ class SteelComposition(StrEnum):
     OTHER = "Other"
 
 
+class RebarSteelV1(BaseOpenEpdHierarchicalSpec):
+    """Rebar steel spec."""
+
+    _EXT_VERSION = "1.0"
+
+    class Options(BaseOpenEpdSchema):
+        """Rebar steel options."""
+
+        epoxy: bool | None = pyd.Field(default=None, title="Epoxy Coated")
+        fabricated: bool | None = pyd.Field(default=None, title="Fabricated", description="Fabricated")
+
+    options: Options = pyd.Field(
+        title="Rebar Steel Options", description="Rebar Steel options", default_factory=Options
+    )
+
+
 class SteelV1(BaseOpenEpdHierarchicalSpec):
     """Steel spec."""
 
@@ -69,20 +85,7 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
     making_route: SteelMakingRoute | None = pyd.Field(
         default=None, title="Steel Making Route", description="Steel making route"
     )
-    options: Options | None = pyd.Field(title="Steel Options", description="Steel options", default_factory=Options)
+    options: Options | None = pyd.Field(description="Steel options", default_factory=Options)
 
-
-class RebarSteelV1(BaseOpenEpdHierarchicalSpec):
-    """Rebar steel spec."""
-
-    _EXT_VERSION = "1.0"
-
-    class Options(BaseOpenEpdSchema):
-        """Rebar steel options."""
-
-        epoxy: bool | None = pyd.Field(default=None, title="Epoxy Coated")
-        fabricated: bool | None = pyd.Field(default=None, title="Fabricated", description="Fabricated")
-
-    options: Options = pyd.Field(
-        title="Rebar Steel Options", description="Rebar Steel options", default_factory=Options
-    )
+    # Nested specs
+    RebarSteel: RebarSteelV1 | None = None

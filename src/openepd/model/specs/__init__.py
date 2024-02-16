@@ -29,5 +29,4 @@ class Specs(BaseOpenEpdSchema):
     cmu: concrete.CmuSpec | None = pyd.Field(default=None, description="Concrete Masonry Unit-specific (CMU) specs")
     CMU: concrete.CmuSpec | None = pyd.Field(default=None, description="Concrete Masonry Unit-specific (CMU) specs")
     Steel: steel.SteelV1 | None = pyd.Field(default=None, description="Steel-specific specs")
-    RebarSteel: steel.RebarSteelV1 | None = pyd.Field(default=None, description="Rebar Steel-specific specs")
     Concrete: concrete.ConcreteV1 | None = pyd.Field(default=None, description="Concrete-specific specs")
