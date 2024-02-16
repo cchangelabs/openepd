@@ -1,0 +1,31 @@
+{
+  "ext": {
+    "ec3": {
+      "language": "de",
+      "is_translated": false,
+      "short_name": "Anforderungen an die EPD f\u00fcr Bodenbel\u00e4ge",
+      "categories": [
+        "Finishes >> Flooring >> Resilient Flooring",
+        "Finishes >> Flooring >> Laminate",
+        "Finishes >> Flooring >> Other Flooring"
+      ],
+      "lcia_requirements": {
+        "EF 3.0": {}
+      },
+      "curator_notes": "EC3 categories has been classified automatically by AI, PLEASE REVIEW and remove this comment. \nThe reasoning behind the classification is the following: \nThe text mentions requirements for elastic, textile, and laminate floor coverings, as well as loose-laid floor panels. The categories 'Finishes >> Flooring >> Resilient Flooring', 'Finishes >> Flooring >> Laminate', and 'Finishes >> Flooring >> Other Flooring' are the most relevant based on the given information.",
+      "scope_description": "Geltungsbereich\nDieses Dokument enth\u00e4lt die Anforderungen an eine Umwelt-Produktdeklaration (EPD) des Programms f\u00fcr \nUmwelt-Produktdeklarationen des Institutes Bauen und Umwelt e.V. (IBU) basierend auf der Norm EN 15804. \nDas Dokument gilt f\u00fcr:\nElastische Bodenbel\u00e4ge aus Plastik, Linoleum, Kork oder Gummi, keine lose verlegten Matten;\nTextile Bodenbel\u00e4ge, keine lose verlegten Matten und Teppiche; \nLaminat-Bodenbel\u00e4ge; \nBodenpaneele zur losen Verlegung.\nGem\u00e4\u00df EN 14041: 2004/AC: 2006, Elastische, textile und Laminat-Bodenbel\u00e4ge - Wesentliche \nEigenschaften.\nDie Nutzungsklassen sind in der EPD mithilfe der entsprechenden standardisierten Symbole nach CEN TS \n15398 /4/ f\u00fcr Bodenbel\u00e4ge anzugeben (Standardisierte Symbole f\u00fcr Bodenbel\u00e4ge (FCSS), siehe auch \nwww.floorsymbols.com).\n\uf0b7\nF\u00fcr die Erstellung von EPDs f\u00fcr Holzfu\u00dfb\u00f6den und Parkett gem\u00e4\u00df EN 14342 gelten die PCR Teil B \nVollholzprodukte.\nDie Anforderungen an die EPD umfassen:\n\uf0b7\nAnforderungen aus der Norm EN 15804 als Europ\u00e4ische Kern-EPD,\n\uf0b7\nKomplement\u00e4re Anforderungen an IBU-EPD.\nDie Rechenregeln f\u00fcr die \u00d6kobilanz und Anforderungen an den Hintergrundbericht sind in einem eigenen \nDokument als Teil A der Produktkategorienregeln festgelegt.\nZus\u00e4tzlich gelten die Allgemeinen Grunds\u00e4tze f\u00fcr das EPD-Programm des Instituts Bauen und Umwelt e.V. (IBU).\nHinweise zur Verwendung des Datenbanksystems"
+    }
+  },
+  "issuer": {
+    "web_domain": "ibu-epd.com",
+    "name": "IBU",
+    "hq_location": {
+      "address": "Panoramastra\u00dfe 1, 10178 Berlin, Germany"
+    }
+  },
+  "name": "Teil B: Anforderungen an die EPD f\u00fcr Bodenbel\u00e4ge",
+  "version": "1.0/1.5/1.1",
+  "parent": {
+    "name": "IBU PCR for PCR for Building-Related Products and Services Part A: Calculation Rules for the LCA and Requirements on the Project Report"
+  }
+}

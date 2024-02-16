@@ -1,0 +1,106 @@
+Field parent_pcr_name: IBU PCR for PCR for ...ect Report
+	Source: Conditional Static Block Extractor / IbuParentPcrName
+	Score: 2.00
+	Score History:
+		(=1.00) Initial score
+		(* 2) Layout specific
+	Other candidates:
+		No other candidates
+Field lcia_requirements: __root__={<LCIAMetho...ion=None)}
+	Source: Conditional Static Block Extractor / IbuParentPcrName
+	Score: 2.00
+	Score History:
+		(=1.00) Initial score
+		(* 2) Layout specific
+	Other candidates:
+		No other candidates
+Field scope_description: Geltungsbereich\nDie...anksystems
+	Source: Block Extractor / IbuPcrScopeBlockExtractor
+	Score: 2.00
+	Score History:
+		(=1.00) Initial score
+		(* 2) Layout specific
+	Other candidates:
+		No other candidates
+Field name: Teil B: Anforderunge...odenbeläge
+	Source: HTML Extractor / IbuPcrNameExtractor
+	Score: 3.00
+	Score History:
+		(=1.00) Initial score
+		(+ 0.5) : Passed LengthVerifier check
+		(* 2) Layout specific
+	Other candidates:
+		No other candidates
+Field short_name: Anforderungen an die EPD für Bodenbeläge
+	Source: HTML Extractor / IbuPcrNameExtractor
+	Score: 3.00
+	Score History:
+		(=1.00) Initial score
+		(+ 0.5) : Passed LengthVerifier check
+		(* 2) Layout specific
+	Other candidates:
+		No other candidates
+Field external_doc_version: 1.0/1.5/1.1
+	Source: Table Extractor (vector) / IbuPcrVersionExtractorV1
+	Score: 2.00
+	Score History:
+		(=1.00) Initial score
+		(* 2) Layout specific
+	Other candidates:
+		No other candidates
+Field issuer__name: IBU
+	Source: Const / IbuStaticPcrIssuer
+	Score: 2.00
+	Score History:
+		(=1.00) Initial score
+		(* 2) Layout specific
+	Other candidates:
+		No other candidates
+Field issuer__website: www.ibu-epd.com
+	Source: Const / IbuStaticPcrIssuer
+	Score: 2.00
+	Score History:
+		(=1.00) Initial score
+		(* 2) Layout specific
+	Other candidates:
+		No other candidates
+Field issuer__domain: ibu-epd.com
+	Source: Const / IbuStaticPcrIssuer
+	Score: 2.00
+	Score History:
+		(=1.00) Initial score
+		(* 2) Layout specific
+	Other candidates:
+		No other candidates
+Field issuer__address__unstructured: Panoramastraße 1, 10178 Berlin, Germany
+	Source: Const / IbuStaticPcrIssuer
+	Score: 2.00
+	Score History:
+		(=1.00) Initial score
+		(* 2) Layout specific
+	Other candidates:
+		No other candidates
+Field categories: Finishes >> Flooring...t Flooring
+	Source: PCR Classifier / OpenAiPcrClassificationService
+	Score: 0.80
+	Score History:
+		(=0.80) AI Assigned
+	Other candidates:
+		Value: Finishes >> Flooring >> Laminate
+			Source: PCR Classifier / OpenAiPcrClassificationService
+			Score: 0.70
+			Score History:
+				(=0.70) AI Assigned
+		Value: Finishes >> Flooring >> Other Flooring
+			Source: PCR Classifier / OpenAiPcrClassificationService
+			Score: 0.60
+			Score History:
+				(=0.60) AI Assigned
+Field category_classification_explanation: The text mentions re...formation.
+	Source: n/a
+	Score: 1.00
+	Score History:
+		(=1.00) Initial score
+	Other candidates:
+		No other candidates
+
