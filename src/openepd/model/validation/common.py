@@ -17,12 +17,7 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-from typing import Annotated, Any
-
-import pydantic as pyd
-
-RatioFloat = Annotated[float, pyd.Field(ge=0, le=1, example=0.5)]
-"""Float field which represents a percentage ratio between 0 and 1."""
+from typing import Any
 
 
 def together_validator(field1: str, field2: Any, values: dict[str, Any]) -> Any:

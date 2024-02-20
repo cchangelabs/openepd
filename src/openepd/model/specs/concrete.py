@@ -24,7 +24,8 @@ import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec
-from openepd.model.validation import RatioFloat, together_validator
+from openepd.model.validation.common import together_validator
+from openepd.model.validation.numbers import RatioFloat
 
 
 class CmuWeightClassification(StrEnum):
