@@ -18,14 +18,27 @@
 #  Find out more at www.BuildingTransparency.org
 #
 import abc
+from enum import StrEnum
 import json
-from typing import Any, NamedTuple, Optional, Type, TypeVar
+from typing import Any, Generic, Optional, Type, TypeVar
 
 import pydantic as pyd
 from pydantic.generics import GenericModel
 
+from openepd.model.validation.common import validate_version_compatibility, validate_version_format
+from openepd.model.versioning import OpenEpdVersions, Version
+
 AnySerializable = int | str | bool | float | list | dict | pyd.BaseModel | None
 TAnySerializable = TypeVar("TAnySerializable", bound=AnySerializable)
+
+OPENEPD_VERSION_FIELD = "openepd_version"
+"""Field name for the openEPD format version."""
+
+
+class OpenEpdDoctypes(StrEnum):
+    """Enum of supported openEPD document types."""
+
+    Epd = "openEPD"
 
 
 class BaseOpenEpdSchema(pyd.BaseModel):
@@ -144,31 +157,61 @@ TOpenEpdObject = TypeVar("TOpenEpdObject", bound=BaseOpenEpdSchema)
 TOpenEpdObjectClass = TypeVar("TOpenEpdObjectClass", bound=Type[BaseOpenEpdSchema])
 
 
-class Version(NamedTuple):
-    """Version of the object or specification."""
+class RootDocument(abc.ABC, BaseOpenEpdSchema):
+    """Base class for all objects representing openEPD root element. E.g. Epd, IndustryEpd, GenericEstimate, etc."""
 
-    major: int
-    minor: int
+    _FORMAT_VERSION: str
+    """Version of this document format. Must be defined in the concrete class."""
 
-    @staticmethod
-    def parse_version(version: str) -> "Version":
-        """Parse the version of extension or the format.
+    doctype: str = pyd.Field(
+        description='Describes the type and schema of the document. Must always always read "openEPD".',
+        default="OpenEPD",
+    )
+    openepd_version: str = pyd.Field(
+        description="Version of the document format, related to /doctype",
+        default=OpenEpdVersions.get_current().as_str(),
+    )
 
-        Version is expected to be major.minor
+    _version_format_validator = pyd.validator(OPENEPD_VERSION_FIELD, allow_reuse=True, check_fields=False)(
+        validate_version_format
+    )
+    _version_major_match_validator = pyd.validator(OPENEPD_VERSION_FIELD, allow_reuse=True, check_fields=False)(
+        validate_version_compatibility("_FORMAT_VERSION")
+    )
 
-        :param version: The extension version.
-        :return: A tuple of major and minor version numbers.
-        """
-        splits = version.split(".", 1) if isinstance(version, str) else None
-        if len(splits) != 2:
-            raise ValueError(f"Invalid version: {version}")
-        if not splits[0].isdigit() or not splits[1].isdigit():
-            raise ValueError(f"Invalid version: {version}")
-        return Version(major=int(splits[0]), minor=int(splits[1]))
 
-    def __str__(self) -> str:
-        return self.as_str()
+TRootDocument = TypeVar("TRootDocument", bound=RootDocument)
 
-    def as_str(self) -> str:
-        """Return the version as a string."""
-        return f"{self.major}.{self.minor}"
+
+class BaseDocumentFactory(Generic[TRootDocument]):
+    """
+    Base class for document factories.
+
+    Extend it to create a factory for a specific document type e.g. for industry epd, epd, etc.
+    """
+
+    DOCTYPE_CONSTRAINT: str = ""
+    VERSION_MAP: dict[Version, type[TRootDocument]] = {}
+
+    @classmethod
+    def from_dict(cls, data: dict) -> TRootDocument:
+        """Create a document from a dictionary."""
+        doctype: str | None = data.get("doctype")
+        if doctype is None:
+            raise ValueError("Doctype not found in the data.")
+        if doctype.lower() != cls.DOCTYPE_CONSTRAINT.lower():
+            raise ValueError(
+                f"Document type {doctype} not supported. This factory supports {cls.DOCTYPE_CONSTRAINT} only."
+            )
+        version = Version.parse_version(data.get(OPENEPD_VERSION_FIELD, ""))
+        for x, doc_cls in cls.VERSION_MAP.items():
+            if x.major == version.major:
+                if version.minor <= x.minor:
+                    return doc_cls(**data)
+                else:
+                    raise ValueError(
+                        f"Unsupported version: {version}. "
+                        f"The highest supported version from branch {x.major}.x is {x}"
+                    )
+        supported_versions = ", ".join(f"{v.major}.x" for v in cls.VERSION_MAP.keys())
+        raise ValueError(f"Version {version} is not supported. Supported versions are: {supported_versions}")

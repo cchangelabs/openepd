@@ -22,7 +22,8 @@ from typing import Any
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema, Version
-from openepd.model.common import WithExtVersionMixin
+from openepd.model.validation.common import validate_version_compatibility, validate_version_format
+from openepd.model.versioning import WithExtVersionMixin
 
 
 class BaseOpenEpdSpec(BaseOpenEpdSchema):
@@ -43,15 +44,9 @@ class BaseOpenEpdHierarchicalSpec(BaseOpenEpdSpec, WithExtVersionMixin):
         Version.parse_version(self._EXT_VERSION)  # validate format correctness
         super().__init__(**{"ext_version": self._EXT_VERSION, **data})
 
-    @pyd.validator("ext_version", check_fields=False)
-    def check_ext_version(cls, v: str) -> str:
-        """Ensure that the extension version is valid."""
-        Version.parse_version(v)  # will raise an error if not valid
-        return v
-
-    @pyd.validator("ext_version", check_fields=False)
-    def validate_ext_version_compatibility(cls, v: str) -> str:
-        """Ensure that the extension version is the same as the class version."""
-        if Version.parse_version(v).major != Version.parse_version(cls._EXT_VERSION).major:
-            raise ValueError(f"Extension version {v} does not match class version {cls._EXT_VERSION}")
-        return v
+    _version_format_validator = pyd.validator("ext_version", allow_reuse=True, check_fields=False)(
+        validate_version_format
+    )
+    _version_major_match_validator = pyd.validator("ext_version", allow_reuse=True, check_fields=False)(
+        validate_version_compatibility("_EXT_VERSION")
+    )

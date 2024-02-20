@@ -17,7 +17,9 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-from typing import Any
+from typing import Any, Callable, Type
+
+from openepd.model.versioning import Version
 
 
 def together_validator(field1: str, field2: Any, values: dict[str, Any]) -> Any:
@@ -26,3 +28,25 @@ def together_validator(field1: str, field2: Any, values: dict[str, Any]) -> Any:
     value2 = values.get(field2)
     if value1 is not None and value2 is None or value1 is None and value2 is not None:
         raise ValueError(f"Both or neither {field1} and {field2} days must be provided together")
+
+
+def validate_version_format(v: str) -> str:
+    """Ensure that the extension version is valid."""
+    Version.parse_version(v)  # will raise an error if not valid
+    return v
+
+
+def validate_version_compatibility(class_version_attribute_name: str) -> Callable[[Type, str], str]:
+    """Ensure that the object which is passed for parsing and validation is compatible with the class."""
+
+    # we need closure to pass property name, since actual class will only be available in runtime
+    def internal_validate_version_compatibility(cls: Type, v: str) -> str:
+        if not hasattr(cls, class_version_attribute_name):
+            raise ValueError(f"Class {cls} must declare a class var extension var named {class_version_attribute_name}")
+
+        class_version = getattr(cls, class_version_attribute_name)
+        if Version.parse_version(v).major != Version.parse_version(class_version).major:
+            raise ValueError(f"Extension version {v} does not match class version {class_version}")
+        return v
+
+    return internal_validate_version_compatibility
