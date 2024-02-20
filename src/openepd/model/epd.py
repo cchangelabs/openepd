@@ -22,23 +22,30 @@ from typing import Annotated
 
 import pydantic as pyd
 
-from openepd.model.base import BaseOpenEpdSchema, Version
+from openepd.model.base import BaseDocumentFactory, RootDocument
 from openepd.model.common import Amount, Ingredient, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.lcia import Impacts, OutputFlowSet, ResourceUseSet
 from openepd.model.org import Org, Plant
 from openepd.model.pcr import Pcr
 from openepd.model.specs import Specs
 from openepd.model.standard import Standard
-
-OPENEPD_V0_VERSION = Version.parse_version("0.1")
-"""Current implemented version of openEPD data format, for V0."""
-
-OPENEPD_VERSION = OPENEPD_V0_VERSION
-"""Current implemented version of openEPD data format."""
+from openepd.model.versioning import OpenEpdVersions, Version
 
 
-class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
+class BaseEpd(RootDocument):
+    """
+    Base class for EPD documents.
+
+    This class should not be used directly.  Use Epd or EpdVx instead.
+    """
+
+    pass
+
+
+class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
     """Represent an EPD."""
+
+    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
 
     # TODO: Add validator for open-xpd-uuid on this field
     id: str | None = pyd.Field(
@@ -46,13 +53,6 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         "open-xpd-uuid.cqd.io/register or a coordinating registry.",
         example="1u7zsed8",
         default=None,
-    )
-    doctype: str = pyd.Field(
-        description='Describes the type and schema of the document. Must always always read "openEPD".',
-        default="OpenEPD",
-    )
-    openepd_version: str = pyd.Field(
-        description="Version of the document format, related to /doctype", default=OPENEPD_VERSION.as_str()
     )
     product_name: str | None = pyd.Field(
         max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC"
@@ -62,7 +62,7 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     )
     product_description: str | None = pyd.Field(
         max_length=2000,
-        description="1-paragraph description of product. " "Supports plain text or github flavored markdown.",
+        description="1-paragraph description of product. Supports plain text or github flavored markdown.",
     )
     # TODO: add product_alt_names? E.g. ILCD has a list of synonymous names
     product_classes: dict[str, str | list[str]] = pyd.Field(
@@ -292,21 +292,8 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
 Epd = EpdV0
 
 
-def parse_epd(data: dict) -> EpdV0:
-    """Parse a dictionary into an EPD object, using the correct version.
+class EpdFactory(BaseDocumentFactory[BaseEpd]):
+    """Factory for EPD objects."""
 
-    Args:
-        data: The dictionary to parse.
-
-    Returns:
-        The parsed EPD object of correct version
-    """
-    if data.get("openepd_version", None) is None:
-        return Epd.parse_obj(data)
-
-    version = data["openepd_version"]
-    match Version.parse_version(version):
-        case 0, minor if minor <= OPENEPD_V0_VERSION.minor:
-            return EpdV0.parse_obj(data)
-
-    raise ValueError(f"Unknown openEPD version: {version}")
+    DOCTYPE_CONSTRAINT = "openEPD"
+    VERSION_MAP: dict[Version, type[BaseEpd]] = {OpenEpdVersions.Version0: EpdV0}

@@ -1,0 +1,30 @@
+#
+#  Copyright 2024 by C Change Labs Inc. www.c-change-labs.com
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+#  This software was developed with support from the Skanska USA,
+#  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
+#  Find out more at www.BuildingTransparency.org
+#
+import unittest
+
+from openepd.model.base import OPENEPD_VERSION_FIELD, OpenEpdDoctypes
+from openepd.model.epd import EpdFactory
+from openepd.model.versioning import OpenEpdVersions
+
+
+class DocumentFactoryTestCase(unittest.TestCase):
+    def test_document_factory_supports_all_doc_types(self):
+        for doctype in OpenEpdDoctypes:
+            EpdFactory.from_dict({OPENEPD_VERSION_FIELD: OpenEpdVersions.get_current().as_str(), "doctype": doctype})
