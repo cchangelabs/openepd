@@ -23,7 +23,7 @@ import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.validation import RatioFloat
+from openepd.model.validation.numbers import RatioFloat
 
 
 class SteelMakingRoute(BaseOpenEpdSchema):
