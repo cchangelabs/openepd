@@ -22,7 +22,7 @@ from typing import Annotated
 
 import pydantic as pyd
 
-from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.base import BaseOpenEpdSchema, Version
 from openepd.model.common import Amount, Ingredient, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.lcia import Impacts, OutputFlowSet, ResourceUseSet
 from openepd.model.org import Org, Plant
@@ -30,11 +30,14 @@ from openepd.model.pcr import Pcr
 from openepd.model.specs import Specs
 from openepd.model.standard import Standard
 
-OPENEPD_VERSION = "0.1"
+OPENEPD_V0_VERSION = Version.parse_version("0.1")
+"""Current implemented version of openEPD data format, for V0."""
+
+OPENEPD_VERSION = OPENEPD_V0_VERSION
 """Current implemented version of openEPD data format."""
 
 
-class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
+class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     """Represent an EPD."""
 
     # TODO: Add validator for open-xpd-uuid on this field
@@ -49,7 +52,7 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         default="OpenEPD",
     )
     openepd_version: str = pyd.Field(
-        description="Version of the document format, related to /doctype", default=OPENEPD_VERSION
+        description="Version of the document format, related to /doctype", default=OPENEPD_VERSION.as_str()
     )
     product_name: str | None = pyd.Field(
         max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC"
@@ -284,3 +287,26 @@ class Epd(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         if v is None:
             return []
         return v
+
+
+Epd = EpdV0
+
+
+def parse_epd(data: dict) -> EpdV0:
+    """Parse a dictionary into an EPD object, using the correct version.
+
+    Args:
+        data: The dictionary to parse.
+
+    Returns:
+        The parsed EPD object of correct version
+    """
+    if data.get("openepd_version", None) is None:
+        return Epd.parse_obj(data)
+
+    version = data["openepd_version"]
+    match Version.parse_version(version):
+        case 0, minor if minor <= OPENEPD_V0_VERSION.minor:
+            return EpdV0.parse_obj(data)
+
+    raise ValueError(f"Unknown openEPD version: {version}")

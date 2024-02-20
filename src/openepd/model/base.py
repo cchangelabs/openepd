@@ -19,7 +19,7 @@
 #
 import abc
 import json
-from typing import Any, Optional, Type, TypeVar
+from typing import Any, NamedTuple, Optional, Type, TypeVar
 
 import pydantic as pyd
 from pydantic.generics import GenericModel
@@ -142,3 +142,33 @@ class OpenEpdExtension(BaseOpenEpdSchema, metaclass=abc.ABCMeta):
 TOpenEpdExtension = TypeVar("TOpenEpdExtension", bound=OpenEpdExtension)
 TOpenEpdObject = TypeVar("TOpenEpdObject", bound=BaseOpenEpdSchema)
 TOpenEpdObjectClass = TypeVar("TOpenEpdObjectClass", bound=Type[BaseOpenEpdSchema])
+
+
+class Version(NamedTuple):
+    """Version of the object or specification."""
+
+    major: int
+    minor: int
+
+    @staticmethod
+    def parse_version(version: str) -> "Version":
+        """Parse the version of extension or the format.
+
+        Version is expected to be major.minor
+
+        :param version: The extension version.
+        :return: A tuple of major and minor version numbers.
+        """
+        splits = version.split(".", 1) if isinstance(version, str) else None
+        if len(splits) != 2:
+            raise ValueError(f"Invalid version: {version}")
+        if not splits[0].isdigit() or not splits[1].isdigit():
+            raise ValueError(f"Invalid version: {version}")
+        return Version(major=int(splits[0]), minor=int(splits[1]))
+
+    def __str__(self) -> str:
+        return self.as_str()
+
+    def as_str(self) -> str:
+        """Return the version as a string."""
+        return f"{self.major}.{self.minor}"
