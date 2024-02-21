@@ -318,6 +318,18 @@ class Impacts(pyd.BaseModel):
                 lcia_method = LCIAMethod.get_by_name(lcia_method)
             self.__root__[lcia_method] = impact_set
 
+    def replace_lcia_method(self, lcia_method: LCIAMethod, new_lcia_method: LCIAMethod) -> None:
+        """
+        Replace the LCIA method.
+
+        If the there is no impact set for the given LCIA method, do nothing.
+        """
+        impact_set = self.get_impact_set(lcia_method)
+        if impact_set is None:
+            return None
+        self.set_impact_set(new_lcia_method, impact_set)
+        del self.__root__[lcia_method]
+
     def get_impact_set(
         self, lcia_method: LCIAMethod | str | None, default_val: ImpactSet | None = None
     ) -> ImpactSet | None:
