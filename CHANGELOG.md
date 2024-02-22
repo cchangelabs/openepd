@@ -1,3 +1,24 @@
+## 1.5.0 (2024-02-22)
+
+### Feat
+
+- implement factory function for EPD
+- change spec structure to nested
+- add `openepd_version` to EPD
+- add material spec versions
+- add initial specs named after categories
+- add Readme on versioning specs
+
+### Fix
+
+- add test action
+- fix broken tests
+
+### Refactor
+
+- generalize versions for other document types
+- split validation to numbers and common
+
 ## 1.4.0 (2024-02-14)
 
 ### Feat
