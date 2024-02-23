@@ -37,7 +37,7 @@ class WithExtVersionMixin(ABC, BaseModel):
         if hasattr(cls, "_EXT_VERSION"):
             cls.__fields__["ext_version"].default = cls._EXT_VERSION
 
-    ext_version: str = pyd.Field(title="Extension version", example="3.22", default=None)
+    ext_version: str = pyd.Field(description="Extension version", example="3.22", default=None)
 
 
 class Version(NamedTuple):

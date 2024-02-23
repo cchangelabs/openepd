@@ -25,8 +25,8 @@ from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Location, WithAltIdsMixin, WithAttachmentsMixin
 
 
-class Org(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
-    """Represent an organization."""
+class OrgRef(BaseOpenEpdSchema):
+    """Represents Organisation with minimal data."""
 
     web_domain: str | None = pyd.Field(
         description="A web domain owned by organization. Typically is the org's home website address", default=None
@@ -37,12 +37,18 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         example="C Change Labs",
         default=None,
     )
+
+
+class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
+    """Represent an organization."""
+
     alt_names: Annotated[list[str], pyd.conlist(pyd.constr(max_length=200), max_items=255)] | None = pyd.Field(
         description="List of other names for organization",
         example=["C-Change Labs", "C-Change Labs inc."],
         default=None,
     )
     # TODO: NEW field, not in the spec
+
     owner: Optional["Org"] = pyd.Field(description="Organization that controls this organization", default=None)
     subsidiaries: Annotated[list[str], pyd.conlist(pyd.constr(max_length=200), max_items=255)] | None = pyd.Field(
         description="Organizations controlled by this organization",

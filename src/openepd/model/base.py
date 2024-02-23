@@ -20,7 +20,7 @@
 import abc
 from enum import StrEnum
 import json
-from typing import Any, Generic, Optional, Type, TypeVar
+from typing import Any, Callable, Generic, Optional, Type, TypeVar
 
 import pydantic as pyd
 from pydantic.generics import GenericModel
@@ -41,6 +41,22 @@ class OpenEpdDoctypes(StrEnum):
     Epd = "openEPD"
 
 
+def modify_pydantic_schema(schema_dict: dict, cls: type) -> dict:
+    """
+    Modify the schema dictionary to add the required fields.
+
+    :param schema_dict: schema dictionary
+    :param cls: class for which the schema was generated
+    :return: modified schema dictionary
+    """
+    ext = schema_dict.get("properties", {}).get("ext")
+    # move to bottom
+    if ext is not None:
+        del schema_dict["properties"]["ext"]
+        schema_dict["properties"]["ext"] = ext
+    return schema_dict
+
+
 class BaseOpenEpdSchema(pyd.BaseModel):
     """Base class for all OpenEPD models."""
 
@@ -51,6 +67,7 @@ class BaseOpenEpdSchema(pyd.BaseModel):
         validate_assignment = False
         allow_population_by_field_name = True
         use_enum_values = True
+        schema_extra: Callable | dict = modify_pydantic_schema
 
     def to_serializable(self, *args, **kwargs) -> dict[str, Any]:
         """

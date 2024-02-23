@@ -28,6 +28,63 @@ from openepd.model.validation.common import together_validator
 from openepd.model.validation.numbers import RatioFloat
 
 
+class AciExposureClass(StrEnum):
+    """ACI Code (US)."""
+
+    F0 = "aci.F0"
+    F1 = "aci.F1"
+    F2 = "aci.F2"
+    F3 = "aci.F3"
+    S0 = "aci.S0"
+    S1 = "aci.S1"
+    S2 = "aci.S2"
+    S3 = "aci.S3"
+    C1 = "aci.C1"
+    C2 = "aci.C2"
+    W0 = "aci.W0"
+    W1 = "aci.W1"
+    W2 = "aci.W2"
+
+
+class CsaExposureClass(StrEnum):
+    """CSA Code (Canada)."""
+
+    N = "csa.N"
+    F2 = "csa.F-2"
+    F_1 = "csa.F-1"
+    C_1 = "csa.C-1"
+    S_3 = "csa.S-3"
+    S_2 = "csa.S-2"
+    S_1 = "csa.S-1"
+    A_1 = "csa.A-1"
+    A_2 = "csa.A-2"
+    A_3 = "csa.A-3"
+    A_4 = "csa.A-4"
+
+
+class EnExposureClass(StrEnum):
+    """EN 206 Class (Europe)."""
+
+    en206_0 = "en206.0"
+    F1 = "en206.F1"
+    F2 = "en206.F2"
+    F3 = "en206.F3"
+    F4 = "en206.F4"
+    A1 = "en206.A1"
+    A2 = "en206.A2"
+    A3 = "en206.A3"
+    D1 = "en206.D1"
+    D2 = "en206.D2"
+    D3 = "en206.D3"
+    S1 = "en206.S1"
+    S2 = "en206.S2"
+    S3 = "en206.S3"
+    C1 = "en206.C1"
+    C2 = "en206.C2"
+    C3 = "en206.C3"
+    C4 = "en206.C4"
+
+
 class CmuWeightClassification(StrEnum):
     """Concrete Masonry Unit weight classification."""
 
@@ -157,22 +214,50 @@ class CmuSpec(BaseOpenEpdSpec):
 class Cementitious(BaseOpenEpdSchema):
     """List of cementitious materials, and proportion by mass."""
 
-    opc: RatioFloat | None = pyd.Field(default=None, title="Ordinary Gray Portland Cement")
-    wht: RatioFloat | None = pyd.Field(default=None, title="White Portland Cement")
-    ggbs: RatioFloat | None = pyd.Field(default=None, title="Ground Granulated Blast Furnace Slag")
-    flyAsh: RatioFloat | None = pyd.Field(default=None, title="Fly Ash, including types F, CL, and CH")
-    siFume: RatioFloat | None = pyd.Field(default=None, title="Silica Fume")
-    gg45: RatioFloat | None = pyd.Field(default=None, title="Ground Glass, 45um or smaller")
-    natPoz: RatioFloat | None = pyd.Field(default=None, title="Natural pozzolan")
-    mk: RatioFloat | None = pyd.Field(default=None, title="Metakaolin")
-    CaCO3: RatioFloat | None = pyd.Field(default=None, title="Limestone")
-    other: RatioFloat | None = pyd.Field(default=None, title="Other SCMs")
+    opc: RatioFloat | None = pyd.Field(default=None, description="Ordinary Gray Portland Cement")
+    wht: RatioFloat | None = pyd.Field(default=None, description="White Portland Cement")
+    ggbs: RatioFloat | None = pyd.Field(default=None, description="Ground Granulated Blast Furnace Slag")
+    flyAsh: RatioFloat | None = pyd.Field(default=None, description="Fly Ash, including types F, CL, and CH")
+    siFume: RatioFloat | None = pyd.Field(default=None, description="Silica Fume")
+    gg45: RatioFloat | None = pyd.Field(default=None, description="Ground Glass, 45um or smaller")
+    natPoz: RatioFloat | None = pyd.Field(default=None, description="Natural pozzolan")
+    mk: RatioFloat | None = pyd.Field(default=None, description="Metakaolin")
+    CaCO3: RatioFloat | None = pyd.Field(default=None, description="Limestone")
+    other: RatioFloat | None = pyd.Field(default=None, description="Other SCMs")
+
+
+class TypicalApplication(BaseOpenEpdSchema):
+    """Concrete typical application."""
+
+    fnd: bool | None = pyd.Field(description="Foundation", default=None)
+    sog: bool | None = pyd.Field(description="Slab on Grade", default=None)
+    hrz: bool | None = pyd.Field(description="Elevated Horizontal", default=None)
+    vrt_wall: bool | None = pyd.Field(description="Vertical Wall", default=None)
+    vrt_column: bool | None = pyd.Field(description="Vertical Column", default=None)
+    vrt_other: bool | None = pyd.Field(description="Vertical Other", default=None)
+    sht: bool | None = pyd.Field(description="Shotcrete", default=None)
+    cdf: bool | None = pyd.Field(description="Flowable Fill (CDF,default=None)", default=None)
+    sac: bool | None = pyd.Field(description="Sidewalk and Curb", default=None)
+    pav: bool | None = pyd.Field(description="Paving", default=None)
+    oil: bool | None = pyd.Field(description="Oil Patch", default=None)
+    grt: bool | None = pyd.Field(description="Cement Grout", default=None)
+    ota: bool | None = pyd.Field(description="Other", default=None)
 
 
 class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     """Concrete spec."""
 
     _EXT_VERSION = "1.0"
+
+    class Options(BaseOpenEpdSchema):
+        lightweight: bool | None = pyd.Field(description="Lightweight", default=None)
+        plc: bool | None = pyd.Field(description="Portland Limestone Cement", default=None)
+        scc: bool | None = pyd.Field(description="Self Compacting", default=None)
+        finishable: bool | None = pyd.Field(description="Finishable", default=None)
+        air: bool | None = pyd.Field(description="Air Entrainment", default=None)
+        co2: bool | None = pyd.Field(description="CO2 Curing", default=None)
+        white: bool | None = pyd.Field(description="White Cement", default=None)
+        fiber_reinforced: bool | None = pyd.Field(description="Fiber reinforced", default=None)
 
     strength_28d: str | None = pyd.Field(
         default=None, title="Concrete Strength 28d", description="Concrete strength after 28 days"
@@ -194,6 +279,22 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     strength_late_d: Literal[42, 56, 72, 96, 120] | None = pyd.Field(
         default=None, title="Test Day for the Late Strength", description="Test Day for the Late Strength"
     )
+    slump: str | None = pyd.Field(description="Minimum test slump", default=None)
+    w_c_ratio: RatioFloat | None = pyd.Field(description="Ratio of water to cement", default=None)
+    aci_exposure_classes: list[AciExposureClass] = pyd.Field(
+        description="List of ACI318-19 exposure classes this product meets", default=None
+    )
+    csa_exposure_classes: list[CsaExposureClass] = pyd.Field(
+        description="List of CSA A23.1 exposure classes this product meets", default=None
+    )
+    en_exposure_classes: list[EnExposureClass] = pyd.Field(
+        description="List of EN206 exposure classes this product meets", default=None
+    )
+
+    application: TypicalApplication | None = pyd.Field(description="Typical Application", default=None)
+
+    options: Options = pyd.Field(description="Concrete options", default=None)
+
     cementitious: Cementitious | None = pyd.Field(
         default=None,
         title="Cementitious Materials",
