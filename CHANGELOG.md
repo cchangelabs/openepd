@@ -1,3 +1,10 @@
+## 1.6.0 (2024-02-28)
+
+### Feat
+
+- support external quantity validators
+- map models for Steel and Concrete
+
 ## 1.5.0 (2024-02-22)
 
 ### Feat
