@@ -17,6 +17,7 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
+from enum import StrEnum
 from typing import Annotated, Any
 
 import pydantic as pyd
@@ -137,3 +138,18 @@ class WithAltIdsMixin(BaseModel):
         """Set an alt_id if value is not None."""
         if value is not None:
             self.set_alt_id(domain_name, value)
+
+
+class OpenEPDUnit(StrEnum):
+    """OpenEPD allowed units."""
+
+    kg = "kg"
+    m2 = "m2"
+    m = "m"
+    M2_RSI = "m2 * RSI"
+    MJ = "MJ"
+    t_km = "t * km"
+    MPa = "MPa"
+    item = "item"
+    W = "W"
+    use = "use"

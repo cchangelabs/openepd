@@ -23,6 +23,7 @@ import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema, Version
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
+from openepd.model.validation.numbers import QuantityValidator
 from openepd.model.versioning import WithExtVersionMixin
 
 
@@ -35,6 +36,8 @@ class BaseOpenEpdSpec(BaseOpenEpdSchema):
 
 class BaseOpenEpdHierarchicalSpec(BaseOpenEpdSpec, WithExtVersionMixin):
     """Base class for new specs (hierarchical, versioned)."""
+
+    _QUANTITY_VALIDATOR: QuantityValidator | None = None
 
     def __init__(self, **data: Any) -> None:
         # ensure that all the concrete spec objects fail on creations if they dont have _EXT_VERSION declared to
@@ -50,3 +53,8 @@ class BaseOpenEpdHierarchicalSpec(BaseOpenEpdSpec, WithExtVersionMixin):
     _version_major_match_validator = pyd.validator("ext_version", allow_reuse=True, check_fields=False)(
         validate_version_compatibility("_EXT_VERSION")
     )
+
+
+def setup_external_validators(quantity_validator: QuantityValidator):
+    """Set the implementation unit validator for specs."""
+    BaseOpenEpdHierarchicalSpec._QUANTITY_VALIDATOR = quantity_validator

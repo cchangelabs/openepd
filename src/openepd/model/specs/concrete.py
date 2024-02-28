@@ -23,9 +23,10 @@ from typing import Literal
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.common import OpenEPDUnit
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec
 from openepd.model.validation.common import together_validator
-from openepd.model.validation.numbers import RatioFloat
+from openepd.model.validation.numbers import RatioFloat, validate_unit_factory
 
 
 class AciExposureClass(StrEnum):
@@ -299,6 +300,9 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
         default=None,
         title="Cementitious Materials",
         description="List of cementitious materials, and proportion by mass",
+    )
+    _compressive_strength_unit_validator = pyd.validator("strength_28d", allow_reuse=True)(
+        validate_unit_factory(OpenEPDUnit.MPa)
     )
 
     @pyd.root_validator
