@@ -59,7 +59,7 @@ def validate_unit_factory(dimensionality: OpenEPDUnit | str):
     """Create validator for unit field."""
 
     def validator(cls: "BaseOpenEpdHierarchicalSpec", value: str) -> str:
-        if hasattr(cls, "_QUNATITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
+        if hasattr(cls, "_QUANTITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
             cls._QUANTITY_VALIDATOR.validate(value, dimensionality)
         return value
 
