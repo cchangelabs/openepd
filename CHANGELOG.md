@@ -1,3 +1,9 @@
+## 1.6.1 (2024-02-29)
+
+### Fix
+
+- correct conditional quantity validator
+
 ## 1.6.0 (2024-02-28)
 
 ### Feat
