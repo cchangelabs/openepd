@@ -22,6 +22,10 @@ import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs import concrete, steel
+from openepd.model.specs.aluminium import AluminiumV1
+from openepd.model.specs.asphalt import AsphaltV1
+from openepd.model.specs.glass import GlazingV1
+from openepd.model.specs.wood import TimberV1
 
 
 class Specs(BaseOpenEpdSchema):
@@ -29,7 +33,14 @@ class Specs(BaseOpenEpdSchema):
 
     cmu: concrete.CmuSpec | None = pyd.Field(default=None, description="Concrete Masonry Unit-specific (CMU) specs")
     CMU: concrete.CmuSpec | None = pyd.Field(default=None, description="Concrete Masonry Unit-specific (CMU) specs")
-    Steel: steel.SteelV1 | None = pyd.Field(default=None, title="SteelV1", description="Steel-specific specs")
     Concrete: concrete.ConcreteV1 | None = pyd.Field(
         default=None, title="ConcreteV1", description="Concrete-specific specs"
     )
+    PrecastConcrete: concrete.PrecastConcreteV1 | None = pyd.Field(
+        default=None, title="PrecastConcreteV1", description="Precast Concrete-specific specs"
+    )
+    Steel: steel.SteelV1 | None = pyd.Field(default=None, title="SteelV1", description="Steel-specific specs")
+    Asphalt: AsphaltV1 | None = pyd.Field(default=None, title="AsphaltV1")
+    Aluminium: AluminiumV1 | None = pyd.Field(default=None, title="AluminiumV1", description="Aluminium-specific specs")
+    Timber: TimberV1 | None = pyd.Field(default=None, title="TimberV1", description="Timber-specific specs")
+    Glazing: GlazingV1 | None = pyd.Field(default=None, title="GlazingV1", description="Glazing-specific specs")
