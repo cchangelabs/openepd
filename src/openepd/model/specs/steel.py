@@ -22,9 +22,10 @@ from enum import StrEnum
 import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.common import OpenEPDUnit
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.standard import Standard
-from openepd.model.validation.numbers import RatioFloat
+from openepd.model.validation.numbers import RatioFloat, validate_unit_factory
 
 
 class SteelMakingRoute(BaseOpenEpdSchema):
@@ -62,6 +63,28 @@ class WireMeshSteelV1(BaseOpenEpdHierarchicalSpec):
     options: Options = pyd.Field(description="Rebar Steel options", default_factory=Options)
 
 
+class RebarGrade(StrEnum):
+    """Rebar grade enum."""
+
+    USA_60_KSI = "60 ksi"
+    USA_75_KIS = "75 ksi"
+    USA_80_KSI = "80 ksi"
+    USA_90_KSI = "90 ksi"
+    USA_100_KSI = "100 ksi"
+    USA_120_KSI = "120 ksi"
+    USA_40_KSI = "40 ksi"
+    USA_50_KSI = "50 ksi"
+
+    METRIC_420_MPA = "420 Mpa"
+    METRIC_520_MPA = "520 Mpa"
+    METRIC_550_MPA = "550 Mpa"
+    METRIC_620_MPA = "620 Mpa"
+    METRIC_690_MPA = "690 MPa"
+    METRIC_830_MPA = "830 Mpa"
+    METRIC_280_MPA = "280 MPa"
+    METRIC_350_MPA = "350 Mpa"
+
+
 class RebarSteelV1(BaseOpenEpdHierarchicalSpec):
     """Rebar steel spec."""
 
@@ -73,6 +96,19 @@ class RebarSteelV1(BaseOpenEpdHierarchicalSpec):
         epoxy: bool | None = pyd.Field(default=None, description="Epoxy Coated")
 
     options: Options = pyd.Field(description="Rebar Steel options", default_factory=Options)
+
+    steel_rebar_grade: RebarGrade | None = pyd.Field(default=None, description="Rebar steel grade")
+    steel_rebar_diameter_min: str | None = pyd.Field(default=None, description="Minimum rebar diameter")
+    _steel_rebar_diameter_min = pyd.validator("steel_rebar_diameter_min", allow_reuse=True)(
+        validate_unit_factory(OpenEPDUnit.m)
+    )
+
+    steel_rebar_bending_pin_max: float | None = pyd.Field(
+        default=None, description="Maximum rebar bending pin in diameters of this rebar"
+    )
+    steel_rebar_ts_ys_ratio_max: float | None = pyd.Field(
+        default=None, description="Max ratio of ultimate tensile to yield tensile strength"
+    )
 
 
 class PlateSteelV1(BaseOpenEpdHierarchicalSpec):

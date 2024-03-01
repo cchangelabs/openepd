@@ -34,6 +34,9 @@ TAnySerializable = TypeVar("TAnySerializable", bound=AnySerializable)
 OPENEPD_VERSION_FIELD = "openepd_version"
 """Field name for the openEPD format version."""
 
+OPENAPI_SCHEMA_SERVICE_PROPERTIES = ["ext_version", "ext"]
+"""OpenAPI properties which should be moved to the bottom of specification if present. """
+
 
 class OpenEpdDoctypes(StrEnum):
     """Enum of supported openEPD document types."""
@@ -49,11 +52,13 @@ def modify_pydantic_schema(schema_dict: dict, cls: type) -> dict:
     :param cls: class for which the schema was generated
     :return: modified schema dictionary
     """
-    ext = schema_dict.get("properties", {}).get("ext")
-    # move to bottom
-    if ext is not None:
-        del schema_dict["properties"]["ext"]
-        schema_dict["properties"]["ext"] = ext
+    for prop_name in OPENAPI_SCHEMA_SERVICE_PROPERTIES:
+        prop = schema_dict.get("properties", {}).get(prop_name, None)
+        # move to bottom
+        if prop is not None:
+            del schema_dict["properties"][prop_name]
+            schema_dict["properties"][prop_name] = prop
+
     return schema_dict
 
 

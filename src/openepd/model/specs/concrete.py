@@ -66,24 +66,24 @@ class CsaExposureClass(StrEnum):
 class EnExposureClass(StrEnum):
     """EN 206 Class (Europe)."""
 
-    en206_0 = "en206.0"
-    F1 = "en206.F1"
-    F2 = "en206.F2"
-    F3 = "en206.F3"
-    F4 = "en206.F4"
-    A1 = "en206.A1"
-    A2 = "en206.A2"
-    A3 = "en206.A3"
-    D1 = "en206.D1"
-    D2 = "en206.D2"
-    D3 = "en206.D3"
-    S1 = "en206.S1"
-    S2 = "en206.S2"
-    S3 = "en206.S3"
-    C1 = "en206.C1"
-    C2 = "en206.C2"
-    C3 = "en206.C3"
-    C4 = "en206.C4"
+    en206_X0 = "en206.X0"
+    en206_XC1 = "en206.XC1"
+    en206_XC2 = "en206.XC2"
+    en206_XC3 = "en206.XC3"
+    en206_XC4 = "en206.XC4"
+    en206_XS1 = "en206.XS1"
+    en206_XS2 = "en206.XS2"
+    en206_XS3 = "en206.XS3"
+    en206_XD1 = "en206.XD1"
+    en206_XD2 = "en206.XD2"
+    en206_XD3 = "en206.XD3"
+    en206_XF1 = "en206.XF1"
+    en206_XF2 = "en206.XF2"
+    en206_XF3 = "en206.XF3"
+    en206_XF4 = "en206.XF4"
+    en206_XA1 = "en206.XA1"
+    en206_XA2 = "en206.XA2"
+    en206_XA3 = "en206.XA3"
 
 
 class CmuWeightClassification(StrEnum):
@@ -245,42 +245,23 @@ class TypicalApplication(BaseOpenEpdSchema):
     ota: bool | None = pyd.Field(description="Other", default=None)
 
 
-class ConcreteV1(BaseOpenEpdHierarchicalSpec):
-    """Concrete spec."""
+class ConcreteV1Options(BaseOpenEpdSchema):
+    """Concrete options."""
 
-    _EXT_VERSION = "1.0"
+    lightweight: bool | None = pyd.Field(description="Lightweight", default=None)
+    plc: bool | None = pyd.Field(description="Portland Limestone Cement", default=None)
+    scc: bool | None = pyd.Field(description="Self Compacting", default=None)
+    finishable: bool | None = pyd.Field(description="Finishable", default=None)
+    air: bool | None = pyd.Field(description="Air Entrainment", default=None)
+    co2: bool | None = pyd.Field(description="CO2 Curing", default=None)
+    white: bool | None = pyd.Field(description="White Cement", default=None)
+    fiber_reinforced: bool | None = pyd.Field(description="Fiber reinforced", default=None)
 
-    class Options(BaseOpenEpdSchema):
-        lightweight: bool | None = pyd.Field(description="Lightweight", default=None)
-        plc: bool | None = pyd.Field(description="Portland Limestone Cement", default=None)
-        scc: bool | None = pyd.Field(description="Self Compacting", default=None)
-        finishable: bool | None = pyd.Field(description="Finishable", default=None)
-        air: bool | None = pyd.Field(description="Air Entrainment", default=None)
-        co2: bool | None = pyd.Field(description="CO2 Curing", default=None)
-        white: bool | None = pyd.Field(description="White Cement", default=None)
-        fiber_reinforced: bool | None = pyd.Field(description="Fiber reinforced", default=None)
 
-    strength_28d: str | None = pyd.Field(
-        default=None, title="Concrete Strength 28d", description="Concrete strength after 28 days"
-    )
+class ConcreteV1Mixin(BaseOpenEpdHierarchicalSpec):
+    """Concrete common properties mixin."""
 
-    strength_early: str | None = pyd.Field(
-        default=None,
-        title="Early Strength",
-        description="A strength spec which is to be reached earlier than 28 days (e.g. 3d)",
-    )
-    strength_early_d: Literal[3, 7, 14] | None = pyd.Field(
-        default=None, title="Test Days for Early Strength", description="Test Day for the Early Strength"
-    )
-    strength_late: str | None = pyd.Field(
-        default=None,
-        title="Late Strength",
-        description="A strength spec which is to be reached later than 28 days (e.g. 42d)",
-    )
-    strength_late_d: Literal[42, 56, 72, 96, 120] | None = pyd.Field(
-        default=None, title="Test Day for the Late Strength", description="Test Day for the Late Strength"
-    )
-    slump: str | None = pyd.Field(description="Minimum test slump", default=None)
+    strength_28d: str | None = pyd.Field(default=None, description="Concrete strength after 28 days")
     w_c_ratio: RatioFloat | None = pyd.Field(description="Ratio of water to cement", default=None)
     aci_exposure_classes: list[AciExposureClass] = pyd.Field(
         description="List of ACI318-19 exposure classes this product meets", default=None
@@ -291,17 +272,34 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     en_exposure_classes: list[EnExposureClass] = pyd.Field(
         description="List of EN206 exposure classes this product meets", default=None
     )
-
-    application: TypicalApplication | None = pyd.Field(description="Typical Application", default=None)
-
-    options: Options = pyd.Field(description="Concrete options", default=None)
-
     cementitious: Cementitious | None = pyd.Field(
         default=None,
-        title="Cementitious Materials",
         description="List of cementitious materials, and proportion by mass",
     )
-    _compressive_strength_unit_validator = pyd.validator("strength_28d", allow_reuse=True)(
+    application: TypicalApplication | None = pyd.Field(description="Typical Application", default=None)
+    options: ConcreteV1Options = pyd.Field(description="Concrete options", default=None)
+
+
+class ConcreteV1(ConcreteV1Mixin, BaseOpenEpdHierarchicalSpec):
+    """Concrete spec."""
+
+    _EXT_VERSION = "1.0"
+
+    strength_early: str | None = pyd.Field(
+        default=None,
+        description="A strength spec which is to be reached earlier than 28 days (e.g. 3d)",
+    )
+    strength_early_d: Literal[3, 7, 14] | None = pyd.Field(default=None, description="Test Day for the Early Strength")
+    strength_late: str | None = pyd.Field(
+        default=None,
+        description="A strength spec which is to be reached later than 28 days (e.g. 42d)",
+    )
+    strength_late_d: Literal[42, 56, 72, 96, 120] | None = pyd.Field(
+        default=None, description="Test Day for the Late Strength"
+    )
+    slump: str | None = pyd.Field(description="Minimum test slump", default=None)
+
+    _compressive_strength_unit_validator = pyd.validator("strength_28d", allow_reuse=True, check_fields=False)(
         validate_unit_factory(OpenEPDUnit.MPa)
     )
 
@@ -314,3 +312,12 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     def _early_validator(cls, values):
         together_validator("strength_early", "strength_early_d", values)
         return values
+
+
+class PrecastConcreteV1(ConcreteV1Mixin, BaseOpenEpdHierarchicalSpec):
+    """Precast Concrete spec."""
+
+    _EXT_VERSION = "1.0"
+
+    insulated: bool | None = pyd.Field(description="Insulated", default=None)
+    gfrc: bool | None = pyd.Field(description="Glass Fiber Reinforced Concrete", default=None)
