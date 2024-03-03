@@ -23,19 +23,25 @@ import pydantic as pyd
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Location, WithAltIdsMixin, WithAttachmentsMixin
+from openepd.model.validation.common import ReferenceStr
 
 
 class OrgRef(BaseOpenEpdSchema):
     """Represents Organisation with minimal data."""
 
-    web_domain: str | None = pyd.Field(
-        description="A web domain owned by organization. Typically is the org's home website address", default=None
+    web_domain: str = pyd.Field(
+        description="A web domain owned by organization. Typically is the org's home website address"
     )
     name: str | None = pyd.Field(
         max_length=200,
         description="Common name for organization",
         example="C Change Labs",
         default=None,
+    )
+    ref: ReferenceStr | None = pyd.Field(
+        default=None,
+        example="https://buildingtransparency.org/ec3/epds/1u7zsed8",
+        description="Reference to this Org's JSON object",
     )
 
 

@@ -25,7 +25,8 @@ from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import OpenEPDUnit
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.standard import Standard
-from openepd.model.validation.numbers import RatioFloat, validate_unit_factory
+from openepd.model.validation.numbers import RatioFloat
+from openepd.model.validation.quantity import LengthMmStr, validate_unit_factory
 
 
 class SteelMakingRoute(BaseOpenEpdSchema):
@@ -98,13 +99,13 @@ class RebarSteelV1(BaseOpenEpdHierarchicalSpec):
     options: Options = pyd.Field(description="Rebar Steel options", default_factory=Options)
 
     steel_rebar_grade: RebarGrade | None = pyd.Field(default=None, description="Rebar steel grade")
-    steel_rebar_diameter_min: str | None = pyd.Field(default=None, description="Minimum rebar diameter")
+    steel_rebar_diameter_min: LengthMmStr | None = pyd.Field(default=None, description="Minimum rebar diameter")
     _steel_rebar_diameter_min = pyd.validator("steel_rebar_diameter_min", allow_reuse=True)(
         validate_unit_factory(OpenEPDUnit.m)
     )
 
     steel_rebar_bending_pin_max: float | None = pyd.Field(
-        default=None, description="Maximum rebar bending pin in diameters of this rebar"
+        default=None, description="Maximum rebar bending pin in diameters of this rebar", example=6.2
     )
     steel_rebar_ts_ys_ratio_max: float | None = pyd.Field(
         default=None, description="Max ratio of ultimate tensile to yield tensile strength"
@@ -159,6 +160,7 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
     steel_composition: SteelComposition | None = pyd.Field(default=None, description="Basic chemical composition")
     recycled_content: RatioFloat | None = pyd.Field(
         default=None,
+        example=0.3,
         description="Scrap steel inputs from other processes.  Includes "
         "Post-Consumer content, if any.  This percentage may be "
         "used to evaluate the EPD w.r.t. targets or limits that are"

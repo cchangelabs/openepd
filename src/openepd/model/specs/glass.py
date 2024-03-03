@@ -22,14 +22,19 @@ from enum import StrEnum
 import pydantic as pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.validation.numbers import RatioFloat
+from openepd.model.validation.numbers import PositiveInt, RatioFloat
+from openepd.model.validation.quantity import HeatConductanceUCIStr, LengthMmStr, PressureMPaStr, QuantityStr
 
 
 class SolarHeatGainMixin(BaseOpenEpdHierarchicalSpec):
     """Solar heat gain mixin."""
 
     solar_heat_gain: RatioFloat | None = pyd.Field(
-        default=None, description="Solar heat gain, measured at a certain level of Differential Pressure."
+        default=None,
+        description="Solar heat gain, measured at a certain level of Differential Pressure.",
+        example=0.3,
+        le=1,
+        ge=0,
     )
 
 
@@ -78,33 +83,38 @@ class GlazingOptionsMixin(BaseOpenEpdHierarchicalSpec):
 class GlassPanesMixin(BaseOpenEpdHierarchicalSpec):
     """Glass panes mixin."""
 
-    glass_panes: int | None = pyd.Field(
+    glass_panes: PositiveInt | None = pyd.Field(
         default=None,
         description="Number of panes, each separated by a cavity. A 3 pane unit has 2 cavities. example: 3",
+        example=3,
     )
 
 
 class DPRatingMixin(BaseOpenEpdHierarchicalSpec):
     """Differential pressure rating mixin."""
 
-    dp_rating: str | None = pyd.Field(
-        default=None, description="Maximum Differential Pressure, a measure of wind tolerance."
+    dp_rating: PressureMPaStr | None = pyd.Field(
+        default=None, description="Maximum Differential Pressure, a measure of wind tolerance.", example="75 psf"
     )
 
 
 class AirInfiltrationMixin(BaseOpenEpdHierarchicalSpec):
     """Air infiltration mixin."""
 
-    air_infiltration: str | None = pyd.Field(
-        default=None, description="Air infiltration, measured at a certain level of Differential Pressure."
+    air_infiltration: QuantityStr | None = pyd.Field(
+        default=None,
+        description="Air infiltration, measured at a certain level of Differential Pressure.",
+        example="0.3 m3/(sec * m2)",
     )
 
 
 class AssemblyUFactorMixin(BaseOpenEpdHierarchicalSpec):
     """Assembly U factor mixin."""
 
-    assembly_u_factor: str | None = pyd.Field(
-        default=None, description="Weighted average conductance of heat across assembly (including frame)."
+    assembly_u_factor: HeatConductanceUCIStr | None = pyd.Field(
+        default=None,
+        description="Weighted average conductance of heat across assembly (including frame).",
+        example="0.3 UCI",
     )
 
 
@@ -308,7 +318,9 @@ class InsulatingGlazingUnitsV1(
 
     _EXT_VERSION = "1.0"
 
-    cog_u_factor: str | None = pyd.Field(default=None, description="Conductance of heat at center of glass.")
+    cog_u_factor: HeatConductanceUCIStr | None = pyd.Field(
+        default=None, description="Conductance of heat at center of glass.", example="0.3 UCI"
+    )
     spacer: SpacerEnum | None = pyd.Field(default=None, description="Spacer material for Integrated Glass Unit.")
 
 
@@ -355,7 +367,9 @@ class FlatGlassPanesV1(BaseOpenEpdHierarchicalSpec):
     """Flat glass panes."""
 
     _EXT_VERSION = "1.0"
-    flat_glass_panes_thickness: str | None = pyd.Field(default=None, description="Thickness of the flat glass panes.")
+    flat_glass_panes_thickness: LengthMmStr | None = pyd.Field(
+        default=None, description="Thickness of the flat glass panes.", example="8 mm"
+    )
 
 
 class GlassPanesV1(BaseOpenEpdHierarchicalSpec):

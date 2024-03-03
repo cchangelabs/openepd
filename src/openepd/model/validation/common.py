@@ -17,7 +17,9 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-from typing import Any, Callable, Type
+from typing import Annotated, Any, Callable, Type, TypeAlias
+
+import pydantic as pyd
 
 from openepd.model.versioning import Version
 
@@ -50,3 +52,9 @@ def validate_version_compatibility(class_version_attribute_name: str) -> Callabl
         return v
 
     return internal_validate_version_compatibility
+
+
+ReferenceStr: TypeAlias = Annotated[
+    str,
+    pyd.Field(description="Reference to another object", example="https://buildingtransparency.org/ec3/epds/1u7zsed8"),
+]

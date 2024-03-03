@@ -21,6 +21,7 @@ from enum import StrEnum
 
 import pydantic as pyd
 
+from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.numbers import RatioFloat
 
@@ -105,7 +106,8 @@ class TimberV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    timber_strength_grade: str | None = pyd.Field(default=None, description="Timber strength grade")
+    # tood restore this if needed? No data in DB.
+    # timber_strength_grade: str | None = pyd.Field(default=None, description="Timber strength grade")
 
     # Forest Stewardship Council certified proportion.  Range is 0 to 1; express as a percentage.
     fsc_certified: RatioFloat | None = pyd.Field(
@@ -120,6 +122,9 @@ class TimberV1(BaseOpenEpdHierarchicalSpec):
     timber_species: TimberSpecies | None = pyd.Field(default=None, description="Timber species")
     fabrication: TimberFabrication | None = pyd.Field(default=None, description="Timber fabrication")
 
+    forest_practices_certifiers: list[OrgRef] | None = pyd.Field(
+        default=None, description="List of organizations that certify forest practices."
+    )
     # Todo forest practices certifiers
     # rel_forest_practices_certifiers: neomodel.ZeroOrMore = ogm.RelationshipFrom(
     #     Org, RelType.FOREST_PRACTICES_CERTIFIED, model=ogm.CertifiesRel
