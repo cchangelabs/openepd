@@ -26,7 +26,8 @@ from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import OpenEPDUnit
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec
 from openepd.model.validation.common import together_validator
-from openepd.model.validation.numbers import RatioFloat, validate_unit_factory
+from openepd.model.validation.numbers import RatioFloat
+from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, validate_unit_factory
 
 
 class AciExposureClass(StrEnum):
@@ -261,8 +262,10 @@ class ConcreteV1Options(BaseOpenEpdSchema):
 class ConcreteV1Mixin(BaseOpenEpdHierarchicalSpec):
     """Concrete common properties mixin."""
 
-    strength_28d: str | None = pyd.Field(default=None, description="Concrete strength after 28 days")
-    w_c_ratio: RatioFloat | None = pyd.Field(description="Ratio of water to cement", default=None)
+    strength_28d: PressureMPaStr | None = pyd.Field(
+        default=None, example="30 MPa", description="Concrete strength after 28 days"
+    )
+    w_c_ratio: RatioFloat | None = pyd.Field(description="Ratio of water to cement", example=0.3, default=None)
     aci_exposure_classes: list[AciExposureClass] = pyd.Field(
         description="List of ACI318-19 exposure classes this product meets", default=None
     )
@@ -274,10 +277,14 @@ class ConcreteV1Mixin(BaseOpenEpdHierarchicalSpec):
     )
     cementitious: Cementitious | None = pyd.Field(
         default=None,
-        description="List of cementitious materials, and proportion by mass",
+        description="List of cementitious materials, and proportion by mass. Each field is 0 to 1.",
     )
     application: TypicalApplication | None = pyd.Field(description="Typical Application", default=None)
     options: ConcreteV1Options = pyd.Field(description="Concrete options", default=None)
+
+    _compressive_strength_unit_validator = pyd.validator("strength_28d", allow_reuse=True, check_fields=False)(
+        validate_unit_factory(OpenEPDUnit.MPa)
+    )
 
 
 class ConcreteV1(ConcreteV1Mixin, BaseOpenEpdHierarchicalSpec):
@@ -285,21 +292,26 @@ class ConcreteV1(ConcreteV1Mixin, BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    strength_early: str | None = pyd.Field(
+    strength_early: PressureMPaStr | None = pyd.Field(
         default=None,
+        example="30 MPa",
         description="A strength spec which is to be reached earlier than 28 days (e.g. 3d)",
     )
     strength_early_d: Literal[3, 7, 14] | None = pyd.Field(default=None, description="Test Day for the Early Strength")
-    strength_late: str | None = pyd.Field(
+    strength_late: PressureMPaStr | None = pyd.Field(
         default=None,
+        example="30 MPa",
         description="A strength spec which is to be reached later than 28 days (e.g. 42d)",
     )
     strength_late_d: Literal[42, 56, 72, 96, 120] | None = pyd.Field(
         default=None, description="Test Day for the Late Strength"
     )
-    slump: str | None = pyd.Field(description="Minimum test slump", default=None)
+    slump: LengthMmStr | None = pyd.Field(description="Minimum test slump", example="40 mm", default=None)
 
-    _compressive_strength_unit_validator = pyd.validator("strength_28d", allow_reuse=True, check_fields=False)(
+    _strength_early_unit_validator = pyd.validator("strength_early", allow_reuse=True)(
+        validate_unit_factory(OpenEPDUnit.MPa)
+    )
+    _strength_late_unit_validator = pyd.validator("strength_late", allow_reuse=True)(
         validate_unit_factory(OpenEPDUnit.MPa)
     )
 

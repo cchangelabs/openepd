@@ -17,50 +17,10 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Annotated
+from typing import Annotated
 
 import pydantic as pyd
 
-from openepd.model.common import OpenEPDUnit
-
-if TYPE_CHECKING:
-    from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-
+# todo when move to pydantic 2, check that validators are being enforced.
 RatioFloat = Annotated[float, pyd.Field(ge=0, le=1, example=0.5)]
-"""Float field which represents a percentage ratio between 0 and 1."""
-
-
-class QuantityValidator(ABC):
-    """
-    Interface for quantity validator.
-
-    The openEPD models are mapped using the simple types. Caller code should provide their own implementation of this
-    and set it with `set_unit_validator` function.
-    """
-
-    @abstractmethod
-    def validate(self, value: str, dimensionality: str) -> None:
-        """
-        Validate the given string value against the given dimensionality.
-
-        Args:
-            value: The value to validate, like "102.4 kg"
-            dimensionality: The dimensionality to validate against, like "kg"
-        Returns:
-            None if the value is valid, raises an error otherwise.
-        Raises:
-            ValueError: If the value is not valid.
-        """
-        pass
-
-
-def validate_unit_factory(dimensionality: OpenEPDUnit | str):
-    """Create validator for unit field."""
-
-    def validator(cls: "BaseOpenEpdHierarchicalSpec", value: str) -> str:
-        if hasattr(cls, "_QUANTITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
-            cls._QUANTITY_VALIDATOR.validate(value, dimensionality)
-        return value
-
-    return validator
+PositiveInt = Annotated[int, pyd.Field(ge=0, example=1)]

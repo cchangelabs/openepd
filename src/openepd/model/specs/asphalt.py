@@ -23,7 +23,8 @@ import pydantic as pyd
 
 from openepd.model.common import OpenEPDUnit
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.validation.numbers import RatioFloat, validate_unit_factory
+from openepd.model.validation.numbers import RatioFloat
+from openepd.model.validation.quantity import LengthMmStr, TemperatureCStr, validate_unit_factory
 
 
 class AsphaltMixType(StrEnum):
@@ -46,7 +47,9 @@ class AsphaltV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    asphalt_aggregate_size_max: str | None = pyd.Field(default=None, description="Max aggregate size")
+    asphalt_aggregate_size_max: LengthMmStr | None = pyd.Field(
+        default=None, example="5mm", description="Max aggregate size"
+    )
 
     asphalt_rap: RatioFloat | None = pyd.Field(
         default=None, description="Percent of mixture that has been replaced by recycled " "asphalt pavement (RAP)."
@@ -58,13 +61,13 @@ class AsphaltV1(BaseOpenEpdHierarchicalSpec):
         default=None, description="Percent of mixture that has been replaced " "by ground tire rubber (GTR)."
     )
 
-    asphalt_max_temperature: float | None = pyd.Field(
+    asphalt_max_temperature: TemperatureCStr | None = pyd.Field(
         default=None,
         description="The upper threshold temperature to which an asphalt "
         "binder can be heated preventing the asphalt mixture "
         "from rutting",
     )
-    asphalt_min_temperature: float | None = pyd.Field(
+    asphalt_min_temperature: TemperatureCStr | None = pyd.Field(
         default=None,
         description="The lower threshold temperature for an asphalt "
         "binder to prevent thermal cracking of the asphalt"
@@ -80,6 +83,6 @@ class AsphaltV1(BaseOpenEpdHierarchicalSpec):
     asphalt_gtr: bool | None = pyd.Field(default=None, description="Ground tire rubber (GTR)")
     asphalt_pmb: bool | None = pyd.Field(default=None, description="Polymer modified bitumen (PMB)")
 
-    _compressive_strength_unit_validator = pyd.validator("asphalt_aggregate_size_max", allow_reuse=True)(
-        validate_unit_factory(OpenEPDUnit.MPa)
+    _aggregate_size_max_validator = pyd.validator("asphalt_aggregate_size_max", allow_reuse=True)(
+        validate_unit_factory(OpenEPDUnit.m)
     )
