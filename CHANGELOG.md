@@ -1,3 +1,14 @@
+## 1.7.0 (2024-03-04)
+
+### Feat
+
+- add more specs for materials
+- add logic for replacing Impacts LCIA method
+
+### Refactor
+
+- extract semantic types for pydantic models
+
 ## 1.6.1 (2024-02-29)
 
 ### Fix
