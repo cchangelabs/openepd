@@ -30,7 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip wheel commitizen~=2.42.1
+          python -m pip install --upgrade pip wheel commitizen~=3.16.0
 
       - name: Create Bump Commit
         id: bump
