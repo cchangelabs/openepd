@@ -1,3 +1,9 @@
+## 1.7.1 (2024-03-05)
+
+### Fix
+
+- correct content and docs of Concrete exposure classes enums
+
 ## 1.7.0 (2024-03-04)
 
 ### Feat
