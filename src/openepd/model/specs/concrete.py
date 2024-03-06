@@ -357,12 +357,29 @@ class ConcreteV1Options(BaseOpenEpdSchema):
     fiber_reinforced: bool | None = pyd.Field(description="Fiber reinforced", default=None)
 
 
-class ConcreteV1Mixin(BaseOpenEpdHierarchicalSpec):
-    """Concrete common properties mixin."""
+class ConcreteV1(BaseOpenEpdHierarchicalSpec):
+    """Concrete spec."""
+
+    _EXT_VERSION = "1.0"
 
     strength_28d: PressureMPaStr | None = pyd.Field(
         default=None, example="30 MPa", description="Concrete strength after 28 days"
     )
+    strength_early: PressureMPaStr | None = pyd.Field(
+        default=None,
+        example="30 MPa",
+        description="A strength spec which is to be reached earlier than 28 days (e.g. 3d)",
+    )
+    strength_early_d: Literal[3, 7, 14] | None = pyd.Field(default=None, description="Test Day for the Early Strength")
+    strength_late: PressureMPaStr | None = pyd.Field(
+        default=None,
+        example="30 MPa",
+        description="A strength spec which is to be reached later than 28 days (e.g. 42d)",
+    )
+    strength_late_d: Literal[42, 56, 72, 96, 120] | None = pyd.Field(
+        default=None, description="Test Day for the Late Strength"
+    )
+    slump: LengthMmStr | None = pyd.Field(description="Minimum test slump", example="40 mm", default=None)
     w_c_ratio: RatioFloat | None = pyd.Field(description="Ratio of water to cement", example=0.3, default=None)
     aci_exposure_classes: list[AciExposureClass] = pyd.Field(
         description=(AciExposureClass.__doc__ or "").lstrip(), default_factory=list
@@ -383,29 +400,6 @@ class ConcreteV1Mixin(BaseOpenEpdHierarchicalSpec):
     _compressive_strength_unit_validator = pyd.validator("strength_28d", allow_reuse=True, check_fields=False)(
         validate_unit_factory(OpenEPDUnit.MPa)
     )
-
-
-class ConcreteV1(ConcreteV1Mixin, BaseOpenEpdHierarchicalSpec):
-    """Concrete spec."""
-
-    _EXT_VERSION = "1.0"
-
-    strength_early: PressureMPaStr | None = pyd.Field(
-        default=None,
-        example="30 MPa",
-        description="A strength spec which is to be reached earlier than 28 days (e.g. 3d)",
-    )
-    strength_early_d: Literal[3, 7, 14] | None = pyd.Field(default=None, description="Test Day for the Early Strength")
-    strength_late: PressureMPaStr | None = pyd.Field(
-        default=None,
-        example="30 MPa",
-        description="A strength spec which is to be reached later than 28 days (e.g. 42d)",
-    )
-    strength_late_d: Literal[42, 56, 72, 96, 120] | None = pyd.Field(
-        default=None, description="Test Day for the Late Strength"
-    )
-    slump: LengthMmStr | None = pyd.Field(description="Minimum test slump", example="40 mm", default=None)
-
     _strength_early_unit_validator = pyd.validator("strength_early", allow_reuse=True)(
         validate_unit_factory(OpenEPDUnit.MPa)
     )
@@ -424,10 +418,26 @@ class ConcreteV1(ConcreteV1Mixin, BaseOpenEpdHierarchicalSpec):
         return values
 
 
-class PrecastConcreteV1(ConcreteV1Mixin, BaseOpenEpdHierarchicalSpec):
+class PrecastConcreteV1(BaseOpenEpdHierarchicalSpec):
     """Precast Concrete spec."""
 
     _EXT_VERSION = "1.0"
 
+    strength_28d: PressureMPaStr | None = pyd.Field(
+        default=None, example="30 MPa", description="Concrete strength after 28 days"
+    )
+
+    lightweight: bool | None = pyd.Field(description="Lightweight", default=None)
+    steel_mass_percentage: RatioFloat | None = pyd.Field(
+        default=None,
+        description="Percent of total mass that is steel reinforcement. Steel reinforcement "
+        "substantially changes functional performance and usually adds substantial GWP "
+        "per declared unit.",
+    )
+
     insulated: bool | None = pyd.Field(description="Insulated", default=None)
     gfrc: bool | None = pyd.Field(description="Glass Fiber Reinforced Concrete", default=None)
+
+    _compressive_strength_unit_validator = pyd.validator("strength_28d", allow_reuse=True)(
+        validate_unit_factory(OpenEPDUnit.MPa)
+    )
