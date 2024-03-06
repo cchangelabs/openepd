@@ -357,6 +357,61 @@ class ConcreteV1Options(BaseOpenEpdSchema):
     fiber_reinforced: bool | None = pyd.Field(description="Fiber reinforced", default=None)
 
 
+class ReadyMixV1(BaseOpenEpdHierarchicalSpec):
+    """Concretes to be mixed and then poured on-site."""
+
+    pass
+
+
+class FlowableFillV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Flowable fill is a slurry that is placed as a flowable liquid (high slump) and sets with no compaction.
+
+    It is often used in tight or restricted access areas where placing and compacting
+    fill is difficult. Applications include filling large voids such as abandoned underground storage
+    tanks, basements, tunnels, mines, and sewers. It can also be used as paving sub-base, bridge
+    abutment, and retaining wall backfill. Also called Controlled Density Fill (CDF) or Controlled
+    Low Strength Materials (CLSMs). These materials typically have compressive strengths
+    under 1200 psi.
+    """
+
+    pass
+
+
+class OilPatchV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Concretes for use in petroleum extraction wells and similar applications.
+
+    Includes foamed cement; often called cement in the drilling industry. Differs from
+    flowable fill and grout in that it contains no sand or other aggregates.
+    """
+
+    pass
+
+
+class ConcretePavingV1(BaseOpenEpdHierarchicalSpec):
+    """Concrete paving."""
+
+    pass
+
+
+class ShotcreteV1(BaseOpenEpdHierarchicalSpec):
+    """Concretes sprayed on a target."""
+
+    pass
+
+
+class CementGroutV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Cement grouting is a slurry that is placed as a flowable liquid.
+
+    It is an effective material for filling and
+    strengthening granular soils, voids in rocks, foundation underpinnings, and other underground voids. Also called
+    structural grout, these materials typically impart significant compressive strength to the system.
+
+    """
+
+
 class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     """Concrete spec."""
 
@@ -396,6 +451,14 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     )
     application: TypicalApplication | None = pyd.Field(description="Typical Application", default=None)
     options: ConcreteV1Options | None = pyd.Field(description="Concrete options", default=None)
+
+    # Nested specs
+    ReadyMix: ReadyMixV1 | None = None
+    FlowableFill: FlowableFillV1 | None = None
+    OilPatch: OilPatchV1 | None = None
+    ConcretePaving: ConcretePavingV1 | None = None
+    Shotcrete: ShotcreteV1 | None = None
+    CementGrout: CementGroutV1 | None = None
 
     _compressive_strength_unit_validator = pyd.validator("strength_28d", allow_reuse=True, check_fields=False)(
         validate_unit_factory(OpenEPDUnit.MPa)
