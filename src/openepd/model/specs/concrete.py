@@ -43,6 +43,13 @@ class AciExposureClass(StrEnum):
       * `aci.S1` - Exposed to <1500 ppm of SO4 in water and <0.2% SO4 in soil
       * `aci.S2` - Exposed to <10000 ppm of SO4 in water and <2% SO4 in soil
       * `aci.S3` - Exposed to >10000 ppm of SO4 in water or >2% SO4 in soil
+
+      * `aci.C1` - Concrete in contact with moisture, but the external source of chloride does not reach it.
+      * `aci.C2` - Concrete subjected to moisture and an external source of chlorides such as deicing chemicals,
+                    salt, brackish water, seawater, or spray from these sources.
+      * `aci.W0` - Concrete dry in service
+      * `aci.W1` - Concrete in contact with water, no requirement for low permeability
+      * `aci.W2` - Concrete in contact with water where low permeability is required
     """
 
     F0 = "aci.F0"
@@ -53,6 +60,11 @@ class AciExposureClass(StrEnum):
     S1 = "aci.S1"
     S2 = "aci.S2"
     S3 = "aci.S3"
+    C1 = "aci.C1"
+    C2 = "aci.C2"
+    W0 = "aci.W0"
+    W1 = "aci.W1"
+    W2 = "aci.W2"
 
 
 class CsaExposureClass(StrEnum):
