@@ -1,3 +1,15 @@
+## 1.8.0 (2024-03-06)
+
+### Feat
+
+- add placeholder specs for Concrete children
+- update `PrecastConcreteV1` to the new parameters
+
+### Fix
+
+- extend Concrete ACI exposure classes with missing values
+- fix typing issues and allow nullability for some properties
+
 ## 1.7.2 (2024-03-06)
 
 ### Fix
