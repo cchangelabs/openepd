@@ -37,20 +37,34 @@ class StatisticsDto(BaseOpenEpdApiModel):
     """
 
     # percentiles
-    pct10_gwp: float = pyd.Field("10th percentile GWP for this statistics measured in kgCO2e per declared unit")
+    pct10_gwp: float = pyd.Field(
+        description="10th percentile GWP for this statistics measured in kgCO2e per declared unit"
+    )
     achievable_target: float = pyd.Field(
         description="Achievable target. 20th percentile of GWP measured in kgCO2e per declared unit", example=445.65
     )
-    pct30_gwp: float = pyd.Field("30th percentile GWP for this statistics measured in kgCO2e per declared unit")
-    pct40_gwp: float = pyd.Field("40th percentile GWP for this statistics measured in kgCO2e per declared unit")
-    pct50_gwp: float = pyd.Field("50th percentile GWP for this statistics measured in kgCO2e per declared unit")
-    pct60_gwp: float = pyd.Field("60th percentile GWP for this statistics measured in kgCO2e per declared unit")
-    pct70_gwp: float = pyd.Field("70th percentile GWP for this statistics measured in kgCO2e per declared unit")
+    pct30_gwp: float = pyd.Field(
+        description="30th percentile GWP for this statistics measured in kgCO2e per declared unit"
+    )
+    pct40_gwp: float = pyd.Field(
+        description="40th percentile GWP for this statistics measured in kgCO2e per declared unit"
+    )
+    pct50_gwp: float = pyd.Field(
+        description="50th percentile GWP for this statistics measured in kgCO2e per declared unit"
+    )
+    pct60_gwp: float = pyd.Field(
+        description="60th percentile GWP for this statistics measured in kgCO2e per declared unit"
+    )
+    pct70_gwp: float = pyd.Field(
+        description="70th percentile GWP for this statistics measured in kgCO2e per declared unit"
+    )
     conservative_estimate: float = pyd.Field(
         description="Conservative estimate. 80th percentile of GWP per declared unit measured in kgCO2e",
         example=640.778,
     )
-    pct90_gwp: float = pyd.Field("70th percentile GWP for this statistics measured in kgCO2e per declared unit")
+    pct90_gwp: float = pyd.Field(
+        description="70th percentile GWP for this statistics measured in kgCO2e per declared unit"
+    )
 
     # stats
     average: float = pyd.Field(description="Average GWP in kgCO2e per declared unit", example=554.2)

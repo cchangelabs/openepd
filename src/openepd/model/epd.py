@@ -55,7 +55,7 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
         default=None,
     )
     product_name: str | None = pyd.Field(
-        max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC"
+        max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC", default=None
     )
     product_sku: str | None = pyd.Field(
         max_length=200, description="Unique stock keeping identifier assigned by manufacturer"

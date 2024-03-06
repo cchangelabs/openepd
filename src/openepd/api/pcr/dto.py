@@ -25,15 +25,14 @@ from openepd.api.dto.base import BaseOpenEpdApiModel
 class PcrRef(BaseOpenEpdApiModel):
     """Reference to a PCR."""
 
-    id: str = pyd.Field(
+    id: str | None = pyd.Field(
         description="The unique ID for this PCR.  To ensure global uniqueness, should be registered "
         "at open-xpd-uuid.cqd.io/register or a coordinating registry.",
         example="ec3xpgq2",
         default=None,
     )
-    name: str = pyd.Field(
+    name: str | None = pyd.Field(
         max_length=200,
-        default=None,
         description="Full document name as listed in source document",
         example="c-PCR-003 Concrete and concrete elements (EN 16757)",
     )
