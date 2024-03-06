@@ -1,3 +1,9 @@
+## 1.7.2 (2024-03-06)
+
+### Fix
+
+- add commit to test versioning
+
 ## 1.7.1 (2024-03-05)
 
 ### Fix
