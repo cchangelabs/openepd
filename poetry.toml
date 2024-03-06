@@ -5,3 +5,7 @@ create = false
 [repositories]
 [repositories.test-pypi]
 url = "https://test.pypi.org/legacy/"
+
+[repositories.private]
+url = "please_set_POETRY_REPOSITORIES_PRIVATE_URL_env_variable"
+# provide a repository URL via environment variable POETRY_REPOSITORIES_PRIVATE_URL
