@@ -365,20 +365,20 @@ class ConcreteV1Mixin(BaseOpenEpdHierarchicalSpec):
     )
     w_c_ratio: RatioFloat | None = pyd.Field(description="Ratio of water to cement", example=0.3, default=None)
     aci_exposure_classes: list[AciExposureClass] = pyd.Field(
-        description=(AciExposureClass.__doc__ or "").lstrip(), default=None
+        description=(AciExposureClass.__doc__ or "").lstrip(), default_factory=list
     )
     csa_exposure_classes: list[CsaExposureClass] = pyd.Field(
-        description=(CsaExposureClass.__doc__ or "").lstrip(), default=None
+        description=(CsaExposureClass.__doc__ or "").lstrip(), default_factory=list
     )
     en_exposure_classes: list[EnExposureClass] = pyd.Field(
-        description=(EnExposureClass.__doc__ or "").lstrip(), default=None
+        description=(EnExposureClass.__doc__ or "").lstrip(), default_factory=list
     )
     cementitious: Cementitious | None = pyd.Field(
         default=None,
         description="List of cementitious materials, and proportion by mass. Each field is 0 to 1.",
     )
     application: TypicalApplication | None = pyd.Field(description="Typical Application", default=None)
-    options: ConcreteV1Options = pyd.Field(description="Concrete options", default=None)
+    options: ConcreteV1Options | None = pyd.Field(description="Concrete options", default=None)
 
     _compressive_strength_unit_validator = pyd.validator("strength_28d", allow_reuse=True, check_fields=False)(
         validate_unit_factory(OpenEPDUnit.MPa)

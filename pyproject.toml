@@ -123,6 +123,7 @@ warn_return_any = false
 disallow_any_generics = false
 pretty = true
 mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs"
+plugins = ["pydantic.mypy"]
 exclude = ["test_.*\\.py$", ]
 
 [[tool.mypy.overrides]]

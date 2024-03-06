@@ -29,8 +29,8 @@ from openepd.model.validation.common import ReferenceStr
 class OrgRef(BaseOpenEpdSchema):
     """Represents Organisation with minimal data."""
 
-    web_domain: str = pyd.Field(
-        description="A web domain owned by organization. Typically is the org's home website address"
+    web_domain: str | None = pyd.Field(
+        description="A web domain owned by organization. Typically is the org's home website address", default=None
     )
     name: str | None = pyd.Field(
         max_length=200,
