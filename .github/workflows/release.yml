@@ -89,6 +89,8 @@ jobs:
       git_ref: 'refs/tags/${{ needs.prepare-release.outputs.version }}'
     secrets:
       pypi_token: '${{ secrets.pypi_token }}'
+      pypi_private_token: '${{ secrets.pypi_private_token }}'
+      pypi_private_url: '${{ secrets.pypi_private_url }}'
 
   attach-assets:
     name: Attach release assets

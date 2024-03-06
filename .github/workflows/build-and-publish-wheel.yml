@@ -9,6 +9,10 @@ on:
     secrets:
       pypi_token:
         required: true
+      pypi_private_token:
+        required: true
+      pypi_private_url:
+        required: true
 
 jobs:
   run:
@@ -36,6 +40,13 @@ jobs:
           export POETRY_HTTP_BASIC_PYPI_USERNAME=__token__
           export POETRY_HTTP_BASIC_PYPI_PASSWORD="${{ secrets.pypi_token }}"
           make publish
+
+      - name: Build and publish packages to private pypi
+        run: |
+          export POETRY_HTTP_BASIC_PRIVATE_USERNAME=
+          export POETRY_HTTP_BASIC_PRIVATE_PASSWORD="${{ secrets.pypi_private_token }}"
+          export POETRY_REPOSITORIES_PRIVATE_URL="${{ secrets.pypi_private_url }}"
+          make private-publish
 
       - uses: actions/upload-artifact@v3
         with:
