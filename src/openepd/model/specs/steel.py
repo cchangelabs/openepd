@@ -50,11 +50,15 @@ class SteelComposition(StrEnum):
 class FabricatedOptionsMixin(pyd.BaseModel):
     """Fabricated options mixin."""
 
+    _EXT_VERSION = "1.0"
+
     fabricated: bool | None = pyd.Field(default=None, description="Fabricated")
 
 
 class WireMeshSteelV1(BaseOpenEpdHierarchicalSpec):
     """Spec for wire mesh steel."""
+
+    _EXT_VERSION = "1.0"
 
     class Options(BaseOpenEpdSchema, FabricatedOptionsMixin):
         """Wire Mesh Options."""
@@ -115,6 +119,8 @@ class RebarSteelV1(BaseOpenEpdHierarchicalSpec):
 class PlateSteelV1(BaseOpenEpdHierarchicalSpec):
     """Plate Steel Spec."""
 
+    _EXT_VERSION = "1.0"
+
     class Options(BaseOpenEpdSchema, FabricatedOptionsMixin):
         """Plate Steel Options."""
 
@@ -126,6 +132,8 @@ class PlateSteelV1(BaseOpenEpdHierarchicalSpec):
 class HollowV1(BaseOpenEpdHierarchicalSpec):
     """Hollow Sections Spec."""
 
+    _EXT_VERSION = "1.0"
+
     class Options(FabricatedOptionsMixin, BaseOpenEpdSchema):
         """Hollow Sections Options."""
 
@@ -136,6 +144,8 @@ class HollowV1(BaseOpenEpdHierarchicalSpec):
 
 class HotRolledV1(BaseOpenEpdHierarchicalSpec):
     """Hot Rolled spec."""
+
+    _EXT_VERSION = "1.0"
 
     class Options(FabricatedOptionsMixin, BaseOpenEpdSchema):
         """Hot Rolled options."""
