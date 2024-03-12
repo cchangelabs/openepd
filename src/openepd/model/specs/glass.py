@@ -21,12 +21,13 @@ from enum import StrEnum
 
 import pydantic as pyd
 
+from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.numbers import PositiveInt, RatioFloat
 from openepd.model.validation.quantity import HeatConductanceUCIStr, LengthMmStr, PressureMPaStr, QuantityStr
 
 
-class SolarHeatGainMixin(BaseOpenEpdHierarchicalSpec):
+class SolarHeatGainMixin(BaseOpenEpdSchema):
     """Solar heat gain mixin."""
 
     solar_heat_gain: RatioFloat | None = pyd.Field(
@@ -38,7 +39,7 @@ class SolarHeatGainMixin(BaseOpenEpdHierarchicalSpec):
     )
 
 
-class GlazingOptionsMixin(BaseOpenEpdHierarchicalSpec):
+class GlazingOptionsMixin(BaseOpenEpdSchema):
     """Glazing options mixin."""
 
     low_emissivity: bool | None = pyd.Field(default=None, description="Low Emissivity coatings")
@@ -80,7 +81,7 @@ class GlazingOptionsMixin(BaseOpenEpdHierarchicalSpec):
     )
 
 
-class GlassPanesMixin(BaseOpenEpdHierarchicalSpec):
+class GlassPanesMixin(BaseOpenEpdSchema):
     """Glass panes mixin."""
 
     glass_panes: PositiveInt | None = pyd.Field(
@@ -90,7 +91,7 @@ class GlassPanesMixin(BaseOpenEpdHierarchicalSpec):
     )
 
 
-class DPRatingMixin(BaseOpenEpdHierarchicalSpec):
+class DPRatingMixin(BaseOpenEpdSchema):
     """Differential pressure rating mixin."""
 
     dp_rating: PressureMPaStr | None = pyd.Field(
@@ -98,7 +99,7 @@ class DPRatingMixin(BaseOpenEpdHierarchicalSpec):
     )
 
 
-class AirInfiltrationMixin(BaseOpenEpdHierarchicalSpec):
+class AirInfiltrationMixin(BaseOpenEpdSchema):
     """Air infiltration mixin."""
 
     air_infiltration: QuantityStr | None = pyd.Field(
@@ -108,7 +109,7 @@ class AirInfiltrationMixin(BaseOpenEpdHierarchicalSpec):
     )
 
 
-class AssemblyUFactorMixin(BaseOpenEpdHierarchicalSpec):
+class AssemblyUFactorMixin(BaseOpenEpdSchema):
     """Assembly U factor mixin."""
 
     assembly_u_factor: HeatConductanceUCIStr | None = pyd.Field(
@@ -118,7 +119,7 @@ class AssemblyUFactorMixin(BaseOpenEpdHierarchicalSpec):
     )
 
 
-class GlassIntendedApplicationMixin(BaseOpenEpdHierarchicalSpec):
+class GlassIntendedApplicationMixin(BaseOpenEpdSchema):
     """Glass intended application mixin."""
 
     glazing_intended_application_curtain_wall: bool | None = pyd.Field(
@@ -165,13 +166,13 @@ class ThermalSeparationEnum(StrEnum):
     NON_METAL = "Nonmetal"
 
 
-class ThermalSeparationMixin(BaseOpenEpdHierarchicalSpec):
+class ThermalSeparationMixin(BaseOpenEpdSchema):
     """Thermal separation mixin."""
 
     thermal_separation: ThermalSeparationEnum | None = pyd.Field(default=None, description="Thermal separation.")
 
 
-class HurricaneResistantMixin(BaseOpenEpdHierarchicalSpec):
+class HurricaneResistantMixin(BaseOpenEpdSchema):
     """Hurricane resistant mixin."""
 
     hurricane_resistant: bool | None = pyd.Field(

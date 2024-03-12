@@ -372,7 +372,7 @@ class ConcreteV1Options(BaseOpenEpdSchema):
 class ReadyMixV1(BaseOpenEpdHierarchicalSpec):
     """Concretes to be mixed and then poured on-site."""
 
-    pass
+    _EXT_VERSION = "1.0"
 
 
 class FlowableFillV1(BaseOpenEpdHierarchicalSpec):
@@ -387,7 +387,7 @@ class FlowableFillV1(BaseOpenEpdHierarchicalSpec):
     under 1200 psi.
     """
 
-    pass
+    _EXT_VERSION = "1.0"
 
 
 class OilPatchV1(BaseOpenEpdHierarchicalSpec):
@@ -398,19 +398,19 @@ class OilPatchV1(BaseOpenEpdHierarchicalSpec):
     flowable fill and grout in that it contains no sand or other aggregates.
     """
 
-    pass
+    _EXT_VERSION = "1.0"
 
 
 class ConcretePavingV1(BaseOpenEpdHierarchicalSpec):
     """Concrete paving."""
 
-    pass
+    _EXT_VERSION = "1.0"
 
 
 class ShotcreteV1(BaseOpenEpdHierarchicalSpec):
     """Concretes sprayed on a target."""
 
-    pass
+    _EXT_VERSION = "1.0"
 
 
 class CementGroutV1(BaseOpenEpdHierarchicalSpec):
@@ -422,6 +422,8 @@ class CementGroutV1(BaseOpenEpdHierarchicalSpec):
     structural grout, these materials typically impart significant compressive strength to the system.
 
     """
+
+    _EXT_VERSION = "1.0"
 
 
 class ConcreteV1(BaseOpenEpdHierarchicalSpec):
