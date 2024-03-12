@@ -69,7 +69,9 @@ def validate_unit_factory(dimensionality: OpenEPDUnit | str):
 # for abitrary non-standard quantity
 QuantityStr: TypeAlias = Annotated[str, pyd.Field()]
 PressureMPaStr: TypeAlias = Annotated[str, pyd.Field(example="30 MPa")]
+MassKgStr: TypeAlias = Annotated[str, pyd.Field(example="30 kg")]
 LengthMmStr: TypeAlias = Annotated[str, pyd.Field(example="30 mm")]
+AreaM2Str: TypeAlias = Annotated[str, pyd.Field(example="12 m2")]
 LengthMStr: TypeAlias = Annotated[str, pyd.Field(example="30 m")]
 TemperatureCStr: TypeAlias = Annotated[str, pyd.Field(example="45 C")]
 HeatConductanceUCIStr: TypeAlias = Annotated[str, pyd.Field(example="0.3 U")]
