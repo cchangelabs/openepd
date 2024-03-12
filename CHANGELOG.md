@@ -1,3 +1,13 @@
+## 1.9.0 (2024-03-12)
+
+### Feat
+
+- add type aliases for some quantity types
+
+### Fix
+
+- add default _EXT_VERSION to where it was missing
+
 ## 1.8.0 (2024-03-06)
 
 ### Feat
