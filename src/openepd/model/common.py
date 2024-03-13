@@ -153,3 +153,5 @@ class OpenEPDUnit(StrEnum):
     item = "item"
     W = "W"
     use = "use"
+    degree_c = "°C"
+    kg_co2 = "kgCO2e"
