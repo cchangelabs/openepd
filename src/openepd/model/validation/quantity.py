@@ -18,7 +18,7 @@
 #  Find out more at www.BuildingTransparency.org
 #
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Annotated, TypeAlias
+from typing import TYPE_CHECKING, Annotated, Callable, TypeAlias
 
 import pydantic as pyd
 
@@ -26,6 +26,8 @@ from openepd.model.common import OpenEPDUnit
 
 if TYPE_CHECKING:
     from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+
+    QuantityValidatorType = Callable[[type[BaseOpenEpdHierarchicalSpec], str], str]
 
 
 class QuantityValidator(ABC):
@@ -37,7 +39,7 @@ class QuantityValidator(ABC):
     """
 
     @abstractmethod
-    def validate(self, value: str, dimensionality: str) -> None:
+    def validate_unit_correctness(self, value: str, dimensionality: str) -> None:
         """
         Validate the given string value against the given dimensionality.
 
@@ -51,13 +53,65 @@ class QuantityValidator(ABC):
         """
         pass
 
+    @abstractmethod
+    def validate_quantity_greater_or_equal(self, value: str, min_value: str) -> None:
+        """
+        Validate the quantity is greater than minimal value.
 
-def validate_unit_factory(dimensionality: OpenEPDUnit | str):
-    """Create validator for unit field."""
+        Args:
+            value: The value to validate, like "2.4 kg"
+            min_value: The value to compare with, like "102.4 kg"
+        Returns:
+            None if the value is valid, raises an error otherwise.
+        Raises:
+            ValueError: If the value is not valid.
+        """
+        pass
 
-    def validator(cls: "BaseOpenEpdHierarchicalSpec", value: str) -> str:
+    @abstractmethod
+    def validate_quantity_less_or_equal(self, value: str, max_value: str) -> None:
+        """
+        Validate the quantity is less than minimal value.
+
+        Args:
+            value: The value to validate, like "2.4 kg"
+            max_value: The value to compare with, like "0.4 kg"
+        Returns:
+            None if the value is valid, raises an error otherwise.
+        Raises:
+            ValueError: If the value is not valid.
+        """
+        pass
+
+
+def validate_unit_factory(dimensionality: OpenEPDUnit | str) -> "QuantityValidatorType":
+    """Create validator for quantity field to check unit matching."""
+
+    def validator(cls: "type[BaseOpenEpdHierarchicalSpec]", value: str) -> str:
         if hasattr(cls, "_QUANTITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
-            cls._QUANTITY_VALIDATOR.validate(value, dimensionality)
+            cls._QUANTITY_VALIDATOR.validate_unit_correctness(value, dimensionality)
+        return value
+
+    return validator
+
+
+def validate_quantity_ge_factory(min_value: str) -> "QuantityValidatorType":
+    """Create validator to check that quantity is greater than or equal to min_value."""
+
+    def validator(cls: "type[BaseOpenEpdHierarchicalSpec]", value: str) -> str:
+        if hasattr(cls, "_QUANTITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
+            cls._QUANTITY_VALIDATOR.validate_quantity_greater_or_equal(value, min_value)
+        return value
+
+    return validator
+
+
+def validate_quantity_le_factory(max_value: str) -> "QuantityValidatorType":
+    """Create validator to check that quantity is less than or equal to max_value."""
+
+    def validator(cls: "type[BaseOpenEpdHierarchicalSpec]", value: str) -> str:
+        if hasattr(cls, "_QUANTITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
+            cls._QUANTITY_VALIDATOR.validate_quantity_less_or_equal(value, max_value)
         return value
 
     return validator
