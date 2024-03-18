@@ -1,3 +1,10 @@
+## 1.10.0 (2024-03-18)
+
+### Feat
+
+- extend quantity validator interface with less than and more than methods
+- add more quantity types
+
 ## 1.9.0 (2024-03-12)
 
 ### Feat
