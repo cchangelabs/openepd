@@ -17,10 +17,13 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
+from typing import TypeAlias
+
 from openepd.compat.pydantic import pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import FrameMaterial, HardwareFunction, Spacer, ThermalSeparation
+from openepd.model.specs.glass import NAFSPerformanceGrade
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMStr, PressureMPaStr, validate_unit_factory
 
@@ -189,6 +192,10 @@ class GlassPanesV1(BaseOpenEpdHierarchicalSpec):
     ProcessedNonInsulatingGlassPanes: ProcessedNonInsulatingGlassPanesV1 | None = None
 
 
+# special case of quantity which is also enum
+NAFSPerformanceGradePSFStrQuantity: TypeAlias = NAFSPerformanceGrade
+
+
 class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec):
     """NAFS fenestration performance specification."""
 
@@ -216,7 +223,7 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec):
     nafs_performance_class_lc: bool | None = pyd.Field(default=None, description="", example="True")
     nafs_performance_class_cw: bool | None = pyd.Field(default=None, description="", example="True")
     nafs_performance_class_aw: bool | None = pyd.Field(default=None, description="", example="True")
-    nafs_performance_grade: PressureMPaStr | None = pyd.Field(
+    nafs_performance_grade: NAFSPerformanceGradePSFStrQuantity | None = pyd.Field(
         default=None, description="", example="4.788025898033585e-05 MPa"
     )
 
@@ -228,7 +235,7 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec):
     )
     _dp_rating_is_quantity_validator = pyd.validator("dp_rating", allow_reuse=True)(validate_unit_factory("MPa"))
     _nafs_performance_grade_is_quantity_validator = pyd.validator("nafs_performance_grade", allow_reuse=True)(
-        validate_unit_factory("MPa")
+        validate_unit_factory("psf")
     )
 
     # Nested specs:

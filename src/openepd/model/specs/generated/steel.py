@@ -20,10 +20,9 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import SteelComposition, SteelRebarGrade
+from openepd.model.standard import Standard
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMStr, PressureMPaStr, validate_unit_factory
-
-UnknownStrTypeHandleMe = str
 
 
 class ColdFormedFramingV1(BaseOpenEpdHierarchicalSpec):
@@ -202,7 +201,6 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    steel_fy: UnknownStrTypeHandleMe | None = pyd.Field(default=None, description="", example="test_valueAliasProperty")
     steel_yield_tensile_str: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
     steel_bar_elongation: float | None = pyd.Field(default=None, description="", example="2.3")
     steel_recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example="0.5", ge=0, le=1)
@@ -222,15 +220,9 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
     steel_making_route_bof: bool | None = pyd.Field(default=None, description="", example="True")
     steel_making_route_eaf: bool | None = pyd.Field(default=None, description="", example="True")
     steel_making_route_ohf: bool | None = pyd.Field(default=None, description="", example="True")
-    rel_astm_standards: UnknownStrTypeHandleMe | None = pyd.Field(
-        default=None, description="", example="test_valueRelationshipTo"
-    )
-    rel_sae_standards: UnknownStrTypeHandleMe | None = pyd.Field(
-        default=None, description="", example="test_valueRelationshipTo"
-    )
-    rel_en_standards: UnknownStrTypeHandleMe | None = pyd.Field(
-        default=None, description="", example="test_valueRelationshipTo"
-    )
+    astm_standards: list[Standard] | None = pyd.Field(default=None, description="")
+    sae_standards: list[Standard] | None = pyd.Field(default=None, description="")
+    en_standards: list[Standard] | None = pyd.Field(default=None, description="")
 
     _steel_yield_tensile_str_is_quantity_validator = pyd.validator("steel_yield_tensile_str", allow_reuse=True)(
         validate_unit_factory("MPa")

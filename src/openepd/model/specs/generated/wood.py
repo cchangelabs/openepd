@@ -19,6 +19,7 @@
 #
 from openepd.compat.pydantic import pyd
 
+from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import (
     AllFabrication,
@@ -30,8 +31,6 @@ from openepd.model.specs.generated.enums import (
     SheathingPanelsFabrication,
 )
 from openepd.model.validation.quantity import LengthMStr, validate_unit_factory
-
-UnknownStrTypeHandleMe = str
 
 
 class WoodDeckingV1(BaseOpenEpdHierarchicalSpec):
@@ -138,9 +137,7 @@ class WoodV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     timber_species: AllTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
     fabrication: AllFabrication | None = pyd.Field(default=None, description="", example="LVL")
-    rel_forest_practices_certifiers: UnknownStrTypeHandleMe | None = pyd.Field(
-        default=None, description="", example="test_valueRelationshipFrom"
-    )
+    forest_practices_certifiers: list[OrgRef] | None = pyd.Field(default=None, description="")
     weather_exposed: bool | None = pyd.Field(default=None, description="", example="True")
     fire_retardant: bool | None = pyd.Field(default=None, description="", example="True")
     decay_resistant: bool | None = pyd.Field(default=None, description="", example="True")

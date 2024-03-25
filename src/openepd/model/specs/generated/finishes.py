@@ -19,6 +19,7 @@
 #
 from openepd.compat.pydantic import pyd
 
+from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import (
     AccessFlooringCoreMaterial,
@@ -45,8 +46,6 @@ from openepd.model.specs.generated.enums import (
 )
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import GwpKgCo2eStr, LengthMStr, PressureMPaStr, validate_unit_factory
-
-UnknownStrTypeHandleMe = str
 
 
 class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
@@ -112,9 +111,6 @@ class CarpetV1(BaseOpenEpdHierarchicalSpec):
     form_factor: CarpetFormFactor | None = pyd.Field(default=None, description="", example="Tiles")
     yarn_weight: str | None = pyd.Field(default=None, description="", example="1 g / m2")
     yarn_type: CarpetYarnType | None = pyd.Field(default=None, description="", example="Nylon 6,6")
-    yarn_material: UnknownStrTypeHandleMe | None = pyd.Field(
-        default=None, description="", example="test_valueAliasProperty"
-    )
     fire_radiant_panel_rating_astme648: str | None = pyd.Field(
         default=None, description="", example="test_valueValidatedStringProperty"
     )
@@ -126,12 +122,6 @@ class CarpetV1(BaseOpenEpdHierarchicalSpec):
     bleachable: bool | None = pyd.Field(default=None, description="", example="True")
     gwp_factor_base: GwpKgCo2eStr | None = pyd.Field(default=None, description="", example="1 kgCO2e")
     gwp_factor_yarn: GwpKgCo2eStr | None = pyd.Field(default=None, description="", example="1 kgCO2e")
-    rel_yarn: UnknownStrTypeHandleMe | None = pyd.Field(
-        default=None, description="", example="test_valueRelationshipTo"
-    )
-    rel_backing: UnknownStrTypeHandleMe | None = pyd.Field(
-        default=None, description="", example="test_valueRelationshipTo"
-    )
 
     _length_is_quantity_validator = pyd.validator("length", allow_reuse=True)(validate_unit_factory("m"))
     _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))
@@ -207,7 +197,7 @@ class WoodFlooringV1(BaseOpenEpdHierarchicalSpec):
     thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
     timber_species: SawnTimberSpecies | None = pyd.Field(default=None, description="", example="Oak")
     fabrication: WoodFlooringFabrication | None = pyd.Field(default=None, description="", example="Solid hardwood")
-    rel_forest_practices_certifiers: UnknownStrTypeHandleMe | None = pyd.Field(
+    forest_practices_certifiers: list[OrgRef] | None = pyd.Field(
         default=None, description="", example="test_valueRelationshipFrom"
     )
 
@@ -425,7 +415,7 @@ class DeckingBoardsV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     timber_species: SawnTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
     fabrication: AllFabrication | None = pyd.Field(default=None, description="", example="LVL")
-    rel_forest_practices_certifiers: UnknownStrTypeHandleMe | None = pyd.Field(
+    forest_practices_certifiers: list[OrgRef] | None = pyd.Field(
         default=None, description="", example="test_valueRelationshipFrom"
     )
     weather_exposed: bool | None = pyd.Field(default=None, description="", example="True")
