@@ -1,0 +1,75 @@
+#
+#  Copyright 2024 by C Change Labs Inc. www.c-change-labs.com
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+#  This software was developed with support from the Skanska USA,
+#  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
+#  Find out more at www.BuildingTransparency.org
+#
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+
+UnknownStrTypeHandleMe = str
+
+
+class AcTransformersV1(BaseOpenEpdHierarchicalSpec):
+    """Ac transformers performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    pass
+
+
+class ElectricalInsulatorsV1(BaseOpenEpdHierarchicalSpec):
+    """Electrical insulators performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    pass
+
+
+class ElectricalSubstationsV1(BaseOpenEpdHierarchicalSpec):
+    """Electrical substations performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    pass
+
+
+class ElectricalSwitchgearV1(BaseOpenEpdHierarchicalSpec):
+    """Electrical switchgear performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    pass
+
+
+class PowerCablingV1(BaseOpenEpdHierarchicalSpec):
+    """Power cabling performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    pass
+
+
+class ElectricalTransmissionAndDistributionEquipmentV1(BaseOpenEpdHierarchicalSpec):
+    """Electrical transmission and distribution equipment performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    # Nested specs:
+    AcTransformers: AcTransformersV1 | None = None
+    ElectricalInsulators: ElectricalInsulatorsV1 | None = None
+    ElectricalSubstations: ElectricalSubstationsV1 | None = None
+    ElectricalSwitchgear: ElectricalSwitchgearV1 | None = None
+    PowerCabling: PowerCablingV1 | None = None
