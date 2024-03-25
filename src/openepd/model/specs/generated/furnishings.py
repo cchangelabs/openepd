@@ -1,0 +1,110 @@
+#
+#  Copyright 2024 by C Change Labs Inc. www.c-change-labs.com
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+#  This software was developed with support from the Skanska USA,
+#  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
+#  Find out more at www.BuildingTransparency.org
+#
+from openepd.compat.pydantic import pyd
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.validation.quantity import LengthMStr, validate_unit_factory
+
+from .enums import *
+
+UnknownStrTypeHandleMe = str
+
+
+class DemountablePartitionTrackV1(BaseOpenEpdHierarchicalSpec):
+    """Demountable partition track performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    pass
+
+
+class ChairsV1(BaseOpenEpdHierarchicalSpec):
+    """Chairs performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    pass
+
+
+class CountertopsV1(BaseOpenEpdHierarchicalSpec):
+    """Countertops performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    # Own fields:
+    thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    countertop_material: CountertopMaterial | None = pyd.Field(default=None, description="", example="Stone")
+
+    _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
+
+
+class DemountablePartitionsV1(BaseOpenEpdHierarchicalSpec):
+    """Demountable partitions performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    # Nested specs:
+    DemountablePartitionTrack: DemountablePartitionTrackV1 | None = None
+
+
+class OtherFurnishingsV1(BaseOpenEpdHierarchicalSpec):
+    """Other furnishings performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    pass
+
+
+class StorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
+    """Storage furniture performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    pass
+
+
+class TablesV1(BaseOpenEpdHierarchicalSpec):
+    """Tables performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    pass
+
+
+class WorkSurfacesV1(BaseOpenEpdHierarchicalSpec):
+    """Work surfaces performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    pass
+
+
+class FurnishingsV1(BaseOpenEpdHierarchicalSpec):
+    """Furnishings performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    # Nested specs:
+    Chairs: ChairsV1 | None = None
+    Countertops: CountertopsV1 | None = None
+    DemountablePartitions: DemountablePartitionsV1 | None = None
+    OtherFurnishings: OtherFurnishingsV1 | None = None
+    StorageFurniture: StorageFurnitureV1 | None = None
+    Tables: TablesV1 | None = None
+    WorkSurfaces: WorkSurfacesV1 | None = None
