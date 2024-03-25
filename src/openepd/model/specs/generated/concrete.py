@@ -19,10 +19,10 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.concrete import Cementitious
+from openepd.model.specs.generated.enums import AciExposureClass, CsaExposureClass, EnExposureClass
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMStr, MassKgStr, PressureMPaStr, validate_unit_factory
-
-UnknownStrTypeHandleMe = str
 
 
 class CementGroutV1(BaseOpenEpdHierarchicalSpec):
@@ -77,7 +77,7 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     lightweight: bool | None = pyd.Field(default=None, description="", example="True")
     concrete_compressive_strength_28d: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    cementitious: UnknownStrTypeHandleMe | None = pyd.Field(
+    cementitious: Cementitious | None = pyd.Field(
         default=None, description="", example="test_valueValidatedJSONProperty"
     )
     white_cement: bool | None = pyd.Field(default=None, description="", example="True")
@@ -98,13 +98,13 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     fiber_reinforced: bool | None = pyd.Field(default=None, description="", example="True")
     concrete_aggregate_size_max: LengthMStr | None = pyd.Field(default=None, description="", example="0.0254 m")
     concrete_cement_content: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
-    aci_exposure_classes: UnknownStrTypeHandleMe | None = pyd.Field(
+    aci_exposure_classes: list[AciExposureClass] | None = pyd.Field(
         default=None, description="", example="test_valueValidatedArrayPropertyGeneric"
     )
-    csa_exposure_classes: UnknownStrTypeHandleMe | None = pyd.Field(
+    csa_exposure_classes: list[CsaExposureClass] | None = pyd.Field(
         default=None, description="", example="test_valueValidatedArrayPropertyGeneric"
     )
-    en_exposure_classes: UnknownStrTypeHandleMe | None = pyd.Field(
+    en_exposure_classes: list[EnExposureClass] | None = pyd.Field(
         default=None, description="", example="test_valueValidatedArrayPropertyGeneric"
     )
     fnd: bool | None = pyd.Field(default=None, description="", example="True")

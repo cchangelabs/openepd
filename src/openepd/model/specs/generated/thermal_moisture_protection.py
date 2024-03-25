@@ -30,8 +30,6 @@ from openepd.model.specs.generated.enums import (
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMStr, PressureMPaStr, validate_unit_factory
 
-UnknownStrTypeHandleMe = str
-
 
 class BituminousRoofingV1(BaseOpenEpdHierarchicalSpec):
     """Bituminous roofing performance specification."""

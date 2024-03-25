@@ -19,6 +19,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.concrete import Cementitious
 from openepd.model.specs.generated.enums import (
     C1157,
     AdmixtureEffects,
@@ -31,8 +32,6 @@ from openepd.model.specs.generated.enums import (
     TextilesFabricType,
 )
 
-UnknownStrTypeHandleMe = str
-
 
 class CementV1(BaseOpenEpdHierarchicalSpec):
     """Cement performance specification."""
@@ -40,7 +39,7 @@ class CementV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    cementitious: UnknownStrTypeHandleMe | None = pyd.Field(
+    cementitious: Cementitious | None = pyd.Field(
         default=None, description="", example="test_valueValidatedJSONProperty"
     )
     white_cement: bool | None = pyd.Field(default=None, description="", example="True")
@@ -84,11 +83,6 @@ class CarpetBackingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
     """Fabric backing holding a carpet together"""
 
-    # Own fields:
-    rel_carpet: UnknownStrTypeHandleMe | None = pyd.Field(
-        default=None, description="", example="test_valueRelationshipFrom"
-    )
-
 
 class CarpetFiberV1(BaseOpenEpdHierarchicalSpec):
     """Carpet fiber performance specification."""
@@ -99,9 +93,6 @@ class CarpetFiberV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     yarn_material: CarpetYarnType | None = pyd.Field(default=None, description="", example="Nylon 6,6")
     yarn_recycled_content: float | None = pyd.Field(default=None, description="", example="2.3")
-    rel_carpet: UnknownStrTypeHandleMe | None = pyd.Field(
-        default=None, description="", example="test_valueRelationshipFrom"
-    )
 
 
 class CementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):

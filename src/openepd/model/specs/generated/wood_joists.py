@@ -19,10 +19,9 @@
 #
 from openepd.compat.pydantic import pyd
 
+from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import AllFabrication, AllTimberSpecies
-
-UnknownStrTypeHandleMe = str
 
 
 class WoodJoistsV1(BaseOpenEpdHierarchicalSpec):
@@ -33,7 +32,7 @@ class WoodJoistsV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     timber_species: AllTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
     fabrication: AllFabrication | None = pyd.Field(default=None, description="", example="LVL")
-    rel_forest_practices_certifiers: UnknownStrTypeHandleMe | None = pyd.Field(
+    forest_practices_certifiers: list[OrgRef] | None = pyd.Field(
         default=None, description="", example="test_valueRelationshipFrom"
     )
     weather_exposed: bool | None = pyd.Field(default=None, description="", example="True")
