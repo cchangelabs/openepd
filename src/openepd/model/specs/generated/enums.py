@@ -2107,3 +2107,170 @@ class FloorBoxFloorMaterial(StrEnum):
     CONCRETE = "Concrete"
     WOOD = "Wood"
     OTHER = "Other"
+
+
+class AciExposureClass(StrEnum):
+    """
+    American Concrete Institute concrete exposure classes.
+
+      * `aci.F0` - Concrete not subjected to freezing-and-thawing cycles
+      * `aci.F1` - Concrete experiences freezing-and-thawing cycles with limited exposure to water
+      * `aci.F2` - Concrete exposed to freezing-and-thawing cycles with frequent exposure to water
+      * `aci.F3` - Concrete exposed to freezing-and-thawing cycles with continual exposure to water
+                    and exposure to deicing chemicals
+      * `aci.S0` - Exposed to <150 ppm of SO4 in water and <0.1% SO4 in soil
+      * `aci.S1` - Exposed to <1500 ppm of SO4 in water and <0.2% SO4 in soil
+      * `aci.S2` - Exposed to <10000 ppm of SO4 in water and <2% SO4 in soil
+      * `aci.S3` - Exposed to >10000 ppm of SO4 in water or >2% SO4 in soil
+
+      * `aci.C1` - Concrete in contact with moisture, but the external source of chloride does not reach it.
+      * `aci.C2` - Concrete subjected to moisture and an external source of chlorides such as deicing chemicals,
+                    salt, brackish water, seawater, or spray from these sources.
+      * `aci.W0` - Concrete dry in service
+      * `aci.W1` - Concrete in contact with water, no requirement for low permeability
+      * `aci.W2` - Concrete in contact with water where low permeability is required
+    """
+
+    F0 = "aci.F0"
+    F1 = "aci.F1"
+    F2 = "aci.F2"
+    F3 = "aci.F3"
+    S0 = "aci.S0"
+    S1 = "aci.S1"
+    S2 = "aci.S2"
+    S3 = "aci.S3"
+    C1 = "aci.C1"
+    C2 = "aci.C2"
+    W0 = "aci.W0"
+    W1 = "aci.W1"
+    W2 = "aci.W2"
+
+
+class CsaExposureClass(StrEnum):
+    """
+    Canadian Standard Association concrete exposure classes.
+
+      * `csa.C-XL` - Structurally reinforced concrete exposed to chlorides or other severe environment with or without
+                     freezing and thawing conditions, with higher durability performance expectations than the C-1, A-1
+                     or S-1 classes.
+
+      * `csa.C-1` - Structurally reinforced concrete exposed to chlorides with or without freezing and thawing conditions.
+                    Examples: bridge decks, parking decks and ramps, portions of marine structures located within the tidal
+                    and splash zones, concrete exposed to seawater spray, and salt water pools.
+      * `csa.C-2` - Non-structurally reinforced (i.e. plain) concrete exposed to chlorides and freezing and thawing.
+                    Examples: garage floors, porches, steps, pavements, sidewalks curbs and gutters.
+      * `csa.C-3` - Continuously submerged concrete exposed to chlorides but not to freezing and thawing.
+                    Example: underwater portions of marine structures.
+      * `csa.C-4` - Non-structurally reinforced concrete exposed to chlorides but not to freezing and thawing.
+                    Examples: underground parking slabs on grade.
+
+      * `csa.F-1` - Concrete exposed to freezing and thawing in a saturated condition but not to chlorides.
+                    Examples: pool decks, patios, tennis courts, freshwater pools and fresh water control structures.
+      * `csa.F-2` - Concrete in an unsaturated condition exposed to freezing and thawing but not to chlorides.
+                    Examples: exterior walls and columns.
+
+      * `csa.N` - Concrete not exposed to chlorides nor to freezing and thawing.
+                  Examples: footings and interior slabs, walls and columns.
+
+      * `csa.A-1` - Structurally reinforced concrete exposed to severe manure and/or silage gases, with or without
+                    freeze-thaw exposure. Concrete exposed to the vapour above municipal sewage or industrial effluent,
+                    where hydrogen sulphide gas may be generated.
+                    Examples: reinforced beams, slabs, and columns over manure pits and silos, canals, and pig slats;
+                    and access holes, enclosed chambers and pipes that are partially filled with effluents.
+      * `csa.A-2` - Structurally reinforced concrete exposed to moderate to severe manure and/or silage gases and liquids,
+                    with or without freeze-thaw exposure.
+                    Examples: reinforced walls in exterior manure tanks, silos and feed bunkers, and exterior slabs.
+      * `csa.A-3` - Structurally reinforced concrete exposed to moderate to severe manure and/or silage gases and liquids,
+                    with or without freeze-thaw exposure in a continuously submerged condition. Concrete continuously
+                    submerged in municipal or industrial effluents.
+                    Examples: interior gutter walls, beams, slabs and columns; sewage pipes that are continuously full
+                    (e.g. force mains); and submerged portions of sewage treatment structures.
+      * `csa.A-4` - Non-structurally reinforced concrete exposed to moderate manure and/or silage gases and liquids, without
+                    freeze-thaw exposure.
+                    Examples: interior slabs on grade.
+
+      * `csa.S-1` - Concrete subjected to very severe sulphate exposures.
+                    Exposed to >10000 ppm of SO4 in water or >2% SO4 in soil
+      * `csa.S-2` - Concrete subjected to severe sulphate exposure.
+                    Exposed to <10000 ppm of SO4 in water and <2% SO4 in soil
+      * `csa.S-3` - Concrete subjected to moderate sulphate exposure.
+                    Exposed to <1500 ppm of SO4 in water and <0.2% SO4 in soil
+    """
+
+    C_XL = "csa.C-XL"
+    C_1 = "csa.C-1"
+    C_2 = "csa.C-2"
+    C_3 = "csa.C-3"
+    C_4 = "csa.C-4"
+    F_1 = "csa.F-1"
+    F2 = "csa.F-2"
+    N = "csa.N"
+    S_1 = "csa.S-1"
+    S_2 = "csa.S-2"
+    S_3 = "csa.S-3"
+    A_1 = "csa.A-1"
+    A_2 = "csa.A-2"
+    A_3 = "csa.A-3"
+    A_4 = "csa.A-4"
+
+
+class EnExposureClass(StrEnum):
+    """
+    EN 206 Class (Europe).
+
+    European Standard concrete exposure classes.
+
+      * `en206.X0` - No risk of corrosion or attack.
+
+      Corrosion induced by carbonation.
+
+      * `en206.XC1` - Dry or permanently wet.
+      * `en206.XC2` - Wet, rarely dry.
+      * `en206.XC3` - Moderate humidity.
+      * `en206.XC4` - Cyclic wet and dry.
+
+      Corrosion induced by chlorides from sea water.
+
+      * `en206.XS1` - Exposed to airborne salt but not in direct contact with sea water.
+      * `en206.XS2` - Permanently submerged.
+      * `en206.XS3` - Tidal, splash and spray zones.
+
+      Corrosion induced by chlorides other than from sea water.
+
+      * `en206.XD1` - Moderate humidity.
+      * `en206.XD2` - Wet, rarely dry.
+      * `en206.XD3` - Cyclic wet and dry.
+
+      Freeze/thaw attack with or without de-icing agents.
+
+      * `en206.XF1` - Moderate water saturation, without deicing agent.
+      * `en206.XF2` - Moderate water saturation, with deicing agent.
+      * `en206.XF3` - High water saturation, without de-icing agent.
+      * `en206.XF4` - High water saturation, with de-icing agent or sea water.
+
+      Chemical attack.
+
+      * `en206.XA1` - Slightly aggressive chemical environment.
+      * `en206.XA2` - Moderately aggressive chemical environment.
+      * `en206.XA3` - Highly aggressive chemical environment.
+
+    """
+
+    en206_X0 = "en206.X0"
+    en206_XC1 = "en206.XC1"
+    en206_XC2 = "en206.XC2"
+    en206_XC3 = "en206.XC3"
+    en206_XC4 = "en206.XC4"
+    en206_XS1 = "en206.XS1"
+    en206_XS2 = "en206.XS2"
+    en206_XS3 = "en206.XS3"
+    en206_XD1 = "en206.XD1"
+    en206_XD2 = "en206.XD2"
+    en206_XD3 = "en206.XD3"
+    en206_XF1 = "en206.XF1"
+    en206_XF2 = "en206.XF2"
+    en206_XF3 = "en206.XF3"
+    en206_XF4 = "en206.XF4"
+    en206_XA1 = "en206.XA1"
+    en206_XA2 = "en206.XA2"
+    en206_XA3 = "en206.XA3"
