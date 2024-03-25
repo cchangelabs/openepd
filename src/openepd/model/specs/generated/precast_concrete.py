@@ -23,15 +23,11 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import PressureMPaStr, validate_unit_factory
 
-UnknownStrTypeHandleMe = str
-
 
 class ArchitecturalPrecastV1(BaseOpenEpdHierarchicalSpec):
     """Architectural precast performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class StructuralPrecastV1(BaseOpenEpdHierarchicalSpec):
@@ -39,15 +35,11 @@ class StructuralPrecastV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class UtilityUndergroundPrecastV1(BaseOpenEpdHierarchicalSpec):
     """Utility underground precast performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class PrecastConcreteV1(BaseOpenEpdHierarchicalSpec):
@@ -61,7 +53,8 @@ class PrecastConcreteV1(BaseOpenEpdHierarchicalSpec):
     insulated: bool | None = pyd.Field(default=None, description="", example="True")
     gfrc: bool | None = pyd.Field(
         default=None,
-        description="Glass Fiber Reinforced Concrete is fiber-reinforced concrete sometimes used in architectural panels",
+        description="Glass Fiber Reinforced Concrete is fiber-reinforced concrete sometimes used in "
+        "architectural panels",
         example="True",
     )
     steel_mass_percentage: RatioFloat | None = pyd.Field(default=None, description="", example="0.5", ge=0, le=1)

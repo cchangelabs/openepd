@@ -20,10 +20,16 @@
 import pydantic as pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import (
+    FoamType,
+    InsulatingMaterial,
+    InsulationIntendedApplication,
+    MembraneRoofingReinforcement,
+    RoofCoverBoardsFacing,
+    RoofCoverBoardsMaterial,
+)
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMStr, PressureMPaStr, validate_unit_factory
-
-from .enums import *
 
 UnknownStrTypeHandleMe = str
 
@@ -33,15 +39,11 @@ class BituminousRoofingV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class SinglePlyEPDMV1(BaseOpenEpdHierarchicalSpec):
     """Single ply e p d m performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class SinglePlyKEEV1(BaseOpenEpdHierarchicalSpec):
@@ -49,15 +51,11 @@ class SinglePlyKEEV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class SinglePlyOtherV1(BaseOpenEpdHierarchicalSpec):
     """Single ply other performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class SinglePlyPolyurethaneV1(BaseOpenEpdHierarchicalSpec):
@@ -65,15 +63,11 @@ class SinglePlyPolyurethaneV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class SinglePlyPVCV1(BaseOpenEpdHierarchicalSpec):
     """Single ply p v c performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class SinglePlyTPOV1(BaseOpenEpdHierarchicalSpec):
@@ -81,23 +75,17 @@ class SinglePlyTPOV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class BlanketInsulationV1(BaseOpenEpdHierarchicalSpec):
     """Blanket insulation performance specification."""
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class BlownInsulationV1(BaseOpenEpdHierarchicalSpec):
     """Blown insulation performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class BoardInsulationV1(BaseOpenEpdHierarchicalSpec):
@@ -127,15 +115,11 @@ class SprayedInsulationV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class AirBarriersV1(BaseOpenEpdHierarchicalSpec):
     """Air barriers performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class MembraneRoofingV1(BaseOpenEpdHierarchicalSpec):
@@ -199,23 +183,17 @@ class DampproofingAndWaterproofingV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class FlashingAndSheetMetalV1(BaseOpenEpdHierarchicalSpec):
     """Flashing and sheet metal performance specification."""
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class JointProtectionV1(BaseOpenEpdHierarchicalSpec):
     """Joint protection performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class RoofCoverBoardsV1(BaseOpenEpdHierarchicalSpec):
@@ -242,15 +220,11 @@ class SteepSlopeRoofingV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class WeatherBarriersV1(BaseOpenEpdHierarchicalSpec):
     """Weather barriers performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class ThermalMoistureProtectionV1(BaseOpenEpdHierarchicalSpec):

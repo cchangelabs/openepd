@@ -20,11 +20,8 @@
 import pydantic as pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import CountertopMaterial
 from openepd.model.validation.quantity import LengthMStr, validate_unit_factory
-
-from .enums import *
-
-UnknownStrTypeHandleMe = str
 
 
 class DemountablePartitionTrackV1(BaseOpenEpdHierarchicalSpec):
@@ -32,15 +29,11 @@ class DemountablePartitionTrackV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class ChairsV1(BaseOpenEpdHierarchicalSpec):
     """Chairs performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class CountertopsV1(BaseOpenEpdHierarchicalSpec):
@@ -69,15 +62,11 @@ class OtherFurnishingsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class StorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
     """Storage furniture performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class TablesV1(BaseOpenEpdHierarchicalSpec):
@@ -85,15 +74,11 @@ class TablesV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class WorkSurfacesV1(BaseOpenEpdHierarchicalSpec):
     """Work surfaces performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class FurnishingsV1(BaseOpenEpdHierarchicalSpec):

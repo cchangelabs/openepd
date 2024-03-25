@@ -20,10 +20,9 @@
 import pydantic as pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import SteelComposition, SteelRebarGrade
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMStr, PressureMPaStr, validate_unit_factory
-
-from .enums import *
 
 UnknownStrTypeHandleMe = str
 
@@ -33,23 +32,18 @@ class ColdFormedFramingV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class DeckingSteelV1(BaseOpenEpdHierarchicalSpec):
     """Decking steel performance specification."""
 
     _EXT_VERSION = "1.0"
     """Cold Formed Steel Decking"""
-    pass
 
 
 class SteelSuspensionAssemblyV1(BaseOpenEpdHierarchicalSpec):
     """Steel suspension assembly performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class HollowSectionsV1(BaseOpenEpdHierarchicalSpec):
@@ -85,15 +79,11 @@ class MetalRailingsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class MetalStairsV1(BaseOpenEpdHierarchicalSpec):
     """Metal stairs performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class MiscMetalFabricationV1(BaseOpenEpdHierarchicalSpec):
@@ -101,15 +91,11 @@ class MiscMetalFabricationV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class OpenWebMembranesV1(BaseOpenEpdHierarchicalSpec):
     """Open web membranes performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class MBQSteelV1(BaseOpenEpdHierarchicalSpec):
@@ -117,15 +103,11 @@ class MBQSteelV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class CoilSteelV1(BaseOpenEpdHierarchicalSpec):
     """Coil steel performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class ColdFormedSteelV1(BaseOpenEpdHierarchicalSpec):
@@ -184,7 +166,6 @@ class PostTensioningSteelV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
     """Post-Tensioning Steels, per https://www.concretenetwork.com/post-tension/industry.html"""
-    pass
 
 
 class RebarSteelV1(BaseOpenEpdHierarchicalSpec):

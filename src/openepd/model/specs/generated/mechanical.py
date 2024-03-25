@@ -20,19 +20,25 @@
 import pydantic as pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import (
+    AhuAirflowControl,
+    AhuZoneControl,
+    AirFiltersMediaType,
+    AirFiltersMervRating,
+    BoilerConfiguration,
+    BoilerEquipmentFuelType,
+    HeatPumpType,
+    HvacHeatExchangersType,
+    MechanicalInstallation,
+    MechanicalRefrigerants,
+)
 from openepd.model.validation.quantity import PressureMPaStr, validate_unit_factory
-
-from .enums import *
-
-UnknownStrTypeHandleMe = str
 
 
 class HvacVrfControlV1(BaseOpenEpdHierarchicalSpec):
     """Hvac vrf control performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class HvacVrfIndoorV1(BaseOpenEpdHierarchicalSpec):
@@ -91,8 +97,6 @@ class HvacAirDiffusersV1(BaseOpenEpdHierarchicalSpec):
     """Hvac air diffusers performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class HvacAirFiltersV1(BaseOpenEpdHierarchicalSpec):
@@ -185,8 +189,6 @@ class HvacFansV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class HvacHeatPumpsV1(BaseOpenEpdHierarchicalSpec):
     """Hvac heat pumps performance specification."""
@@ -252,8 +254,6 @@ class HvacRTUsV1(BaseOpenEpdHierarchicalSpec):
     """Hvac r t us performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class HvacVrfSystemsV1(BaseOpenEpdHierarchicalSpec):

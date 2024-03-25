@@ -19,12 +19,8 @@
 #
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
-UnknownStrTypeHandleMe = str
-
 
 class OtherElectricalEquipmentV1(BaseOpenEpdHierarchicalSpec):
     """Other electrical equipment performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass

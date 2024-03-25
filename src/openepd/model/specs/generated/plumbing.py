@@ -20,11 +20,8 @@
 import pydantic as pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import FireProtectionPipingMaterial, PipingAnsiSchedule, PlumbingPipingMaterial
 from openepd.model.validation.quantity import LengthMStr, validate_unit_factory
-
-from .enums import *
-
-UnknownStrTypeHandleMe = str
 
 
 class BathtubsV1(BaseOpenEpdHierarchicalSpec):
@@ -32,15 +29,11 @@ class BathtubsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class FaucetsV1(BaseOpenEpdHierarchicalSpec):
     """Faucets performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class OtherPlumbingFixturesV1(BaseOpenEpdHierarchicalSpec):
@@ -48,15 +41,11 @@ class OtherPlumbingFixturesV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class WaterClosetsV1(BaseOpenEpdHierarchicalSpec):
     """Water closets performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class FireProtectionPipingV1(BaseOpenEpdHierarchicalSpec):
@@ -87,23 +76,17 @@ class FireSprinklersV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class StorageTanksV1(BaseOpenEpdHierarchicalSpec):
     """Storage tanks performance specification."""
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class WaterHeatersV1(BaseOpenEpdHierarchicalSpec):
     """Water heaters performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class PlumbingFixturesV1(BaseOpenEpdHierarchicalSpec):

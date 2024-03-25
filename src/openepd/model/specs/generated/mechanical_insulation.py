@@ -20,11 +20,8 @@
 import pydantic as pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import InsulatingMaterial, InsulationIntendedApplication
 from openepd.model.validation.quantity import LengthMStr, validate_unit_factory
-
-from .enums import *
-
-UnknownStrTypeHandleMe = str
 
 
 class MechanicalInsulationV1(BaseOpenEpdHierarchicalSpec):

@@ -19,12 +19,8 @@
 #
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
-UnknownStrTypeHandleMe = str
-
 
 class BulkMaterialsV1(BaseOpenEpdHierarchicalSpec):
     """Bulk materials performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass

@@ -19,12 +19,8 @@
 #
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
-UnknownStrTypeHandleMe = str
-
 
 class ElectricityV1(BaseOpenEpdHierarchicalSpec):
     """Electricity performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass

@@ -20,11 +20,8 @@
 import pydantic as pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import CladdingFacingMaterial, CladdingInsulatingMaterial, SidingFormFactor
 from openepd.model.validation.quantity import LengthMStr, validate_unit_factory
-
-from .enums import *
-
-UnknownStrTypeHandleMe = str
 
 
 class AluminiumSidingV1(BaseOpenEpdHierarchicalSpec):
@@ -32,15 +29,11 @@ class AluminiumSidingV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class SteelSidingV1(BaseOpenEpdHierarchicalSpec):
     """Steel siding performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class ZincSidingV1(BaseOpenEpdHierarchicalSpec):
@@ -48,15 +41,11 @@ class ZincSidingV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class ShingleAndShakeSidingV1(BaseOpenEpdHierarchicalSpec):
     """Shingle and shake siding performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class MetalSidingV1(BaseOpenEpdHierarchicalSpec):
@@ -75,15 +64,11 @@ class CompositionSidingV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class FiberCementSidingV1(BaseOpenEpdHierarchicalSpec):
     """Fiber cement siding performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class InsulatedVinylSidingV1(BaseOpenEpdHierarchicalSpec):
@@ -104,15 +89,11 @@ class PlywoodSidingV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class PolypropyleneSidingV1(BaseOpenEpdHierarchicalSpec):
     """Polypropylene siding performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class SolidWoodSidingV1(BaseOpenEpdHierarchicalSpec):
@@ -201,23 +182,17 @@ class RoofPanelsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class StoneCladdingV1(BaseOpenEpdHierarchicalSpec):
     """Stone cladding performance specification."""
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class WallPanelsV1(BaseOpenEpdHierarchicalSpec):
     """Wall panels performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class CladdingV1(BaseOpenEpdHierarchicalSpec):

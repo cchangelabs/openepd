@@ -19,15 +19,11 @@
 #
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
-UnknownStrTypeHandleMe = str
-
 
 class BlanketFacingV1(BaseOpenEpdHierarchicalSpec):
     """Blanket facing performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class DoorsHardwareV1(BaseOpenEpdHierarchicalSpec):
@@ -35,15 +31,11 @@ class DoorsHardwareV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class FlooringAccessoriesV1(BaseOpenEpdHierarchicalSpec):
     """Flooring accessories performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class MortarV1(BaseOpenEpdHierarchicalSpec):
@@ -51,15 +43,11 @@ class MortarV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class TileGroutV1(BaseOpenEpdHierarchicalSpec):
     """Tile grout performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class AccessoriesV1(BaseOpenEpdHierarchicalSpec):

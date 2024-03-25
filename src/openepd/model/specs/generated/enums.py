@@ -1317,9 +1317,9 @@ class IntendedApplication(StrEnum):
     IND = "Ind"
 
 
-class Fabrication(StrEnum):
+class WoodFlooringFabrication(StrEnum):
     """
-    Fabrication.
+    Wood Flooring Fabrication.
 
      - Solid hardwood: Solid hardwood
      - Engineered hardwood: Engineered hardwood
@@ -1336,12 +1336,52 @@ class Fabrication(StrEnum):
     CORK = "Cork"
 
 
-class Fabrication(StrEnum):
+class CompositeLumberFabrication(StrEnum):
     """
-    Fabrication.
+    Composite Lumber Fabrication.
 
      - LVL: LVL
      - Bonded Strand: Bonded Strand
+    """
+
+    LVL = "LVL"
+    BONDED_STRAND = "Bonded Strand"
+
+
+class MassTimberFabrication(StrEnum):
+    """
+    Composite Lumber Fabrication.
+
+     - CLT: CLT
+     - GLT: GLT
+     - NLT: NLT
+     - DLT: DLT
+    """
+
+    CLT = "CLT"
+    GLT = "GLT"
+    NLT = "NLT"
+    DLT = "DLT"
+
+
+class SheathingPanelsFabrication(StrEnum):
+    """
+    Sheathing Panels Fabrication.
+
+     - Plywood: Plywood
+     - OSB: OSB
+     - Fiberboard: Fiberboard
+    """
+
+    PLYWOOD = "Plywood"
+    OSB = "OSB"
+    FIBERBOARD = "Fiberboard"
+
+
+class AllFabrication(StrEnum):
+    """
+    Wood fabrication enumeration.
+
      - Plywood: Plywood
      - OSB: OSB
      - Fiberboard: Fiberboard
@@ -1349,16 +1389,15 @@ class Fabrication(StrEnum):
      - GLT: GLT
      - NLT: NLT
      - DLT: DLT
+     - LVL: LVL
+     - Bonded Strand: Bonded Strand
      - Solid hardwood: Solid hardwood
      - Engineered hardwood: Engineered hardwood
      - Bamboo: Bamboo
      - Parquet: Parquet
      - Cork: Cork
-
     """
 
-    LVL = "LVL"
-    BONDED_STRAND = "Bonded Strand"
     PLYWOOD = "Plywood"
     OSB = "OSB"
     FIBERBOARD = "Fiberboard"
@@ -1366,6 +1405,8 @@ class Fabrication(StrEnum):
     GLT = "GLT"
     NLT = "NLT"
     DLT = "DLT"
+    LVL = "LVL"
+    BONDED_STRAND = "Bonded Strand"
     SOLID_HARDWOOD = "Solid hardwood"
     ENGINEERED_HARDWOOD = "Engineered hardwood"
     BAMBOO = "Bamboo"
@@ -1386,9 +1427,86 @@ class AsphaltMixType(StrEnum):
     HMA = "HMA"
 
 
-class TimberSpecies(StrEnum):
+class EngineeredTimberSpecies(StrEnum):
+    """Engineered Timber species."""
+
+    ALASKA_CEDAR = "Alaska Cedar"
+    DOUGLAS_FIR_LARCH = "Douglas Fir-Larch"
+    BLACK_SPRUCE = "Black Spruce"
+    WHITE_SPRUCE = "White Spruce"
+    RED_SPRUCE = "Red Spruce"
+    GRAND_FIR = "Grand Fir"
+    WHITE_FIR = "White Fir"
+    WESTERN_HEMLOCK = "Western Hemlock"
+    CALIFORNIA_RED_FIR = "California Red Fir"
+    NOBLE_FIR = "Noble Fir"
+    PACIFIC_SILVER_FIR = "Pacific Silver Fir"
+    DOUGLAS_FIR = "Douglas Fir"
+    JACK_PINE = "Jack Pine"
+    IDAHO_WHITE_PINE = "Idaho White Pine"
+    MOUNTAIN_HEMLOCK = "Mountain Hemlock"
+    ALPINE_FIR = "Alpine Fir"
+    LODGEPOLE_PINE = "Lodgepole Pine"
+    PONDEROSA_PINE = "Ponderosa Pine"
+    SUGAR_PINE = "Sugar Pine"
+    WESTERN_RED_CEDAR = "Western Red Cedar"
+    ENGELMANN_SPRUCE = "Engelmann Spruce"
+    DOUGLAS_FIR_SOUTH = "Douglas Fir South"
+    WESTERN_LARCH = "Western Larch"
+    BALSAM_FIR = "Balsam Fir"
+    LOBLOLLY_PINE = "Loblolly Pine"
+    SHORTLEAF_PINE = "Shortleaf Pine"
+    LONGLEAF_PINE = "Longleaf Pine"
+    SLASH_PINE = "Slash Pine"
+    SITKA_SPRUCE = "Sitka Spruce"
+    NORWAY_PINE = "Norway Pine"
+    SHAGBARK_HICKORY = "Shagbark Hickory"
+    MOCKERNUT_HICKORY = "Mockernut Hickory"
+    PIGNUT_HICKORY = "Pignut Hickory"
+    NUTMEG_HICKORY = "Nutmeg Hickory"
+    AMERICAN_BEECH = "American Beech"
+    WATER_HICKORY = "Water Hickory"
+    YELLOW_BIRCH = "Yellow Birch"
+    SWEET_BIRCH = "Sweet Birch"
+    WHITE_ASH = "White Ash"
+    BITTERNUT_HICKORY = "Bitternut Hickory"
+    SHELLBARK_HICKORY = "Shellbark Hickory"
+    NORTHERN_RED_OAK = "Northern Red Oak"
+    WHITE_OAK = "White Oak"
+    PECAN_HICKORY = "Pecan Hickory"
+    WATER_OAK = "Water Oak"
+    BLACK_MAPLE = "Black Maple"
+    POST_OAK = "Post Oak"
+    SCARLET_OAK = "Scarlet Oak"
+    SWEETGUM_OAK = "Sweetgum Oak"
+    PIN_OAK = "Pin Oak"
+    SOUTHERN_RED_OAK = "Southern Red Oak"
+    MIXED_OAK = "Mixed Oak"
+    CHESTNUT_OAK = "Chestnut Oak"
+    SWAMP_WHITE_OAK = "Swamp White Oak"
+    BUR_OAK = "Bur Oak"
+    BLACK_OAK = "Black Oak"
+    SWAMP_CHESTNUT_OAK = "Swamp Chestnut Oak"
+    RED_MAPLE = "Red Maple"
+    CHERRYBARK_OAK = "Cherrybark Oak"
+    LIVE_OAK = "Live Oak"
+    OVERCUP_OAK = "Overcup Oak"
+    LAUREL_OAK = "Laurel Oak"
+    ROCK_ELM = "Rock Elm"
+    YELLOW_POPLAR = "Yellow Poplar"
+    AMERICAN_ELM = "American Elm"
+    BLACK_ASH = "Black Ash"
+    WATER_TUPULO = "Water Tupulo"
+    SILVER_MAPLE = "Silver Maple"
+    BIGTOOTH_ASPEN = "Bigtooth Aspen"
+    EASTERN_COTTONWOOD = "Eastern Cottonwood"
+    SUGAR_MAPLE = "Sugar Maple"
+    QUAKING_ASPEN = "Quaking Aspen"
+
+
+class WoodFlooringTimberSpecies(StrEnum):
     """
-    Timber species.
+    Engineered Timber species.
 
      - Oak: Oak
      - Maple: Maple
@@ -1417,9 +1535,9 @@ class TimberSpecies(StrEnum):
     BAMBOO = "Bamboo"
 
 
-class TimberSpecies(StrEnum):
+class SawnTimberSpecies(StrEnum):
     """
-    Timber species.
+    Sawn Timber species.
 
      - Alaska Cedar: Alaska Cedar
      - Alaska Hemlock: Alaska Hemlock
@@ -1528,21 +1646,22 @@ class TimberSpecies(StrEnum):
     YELLOW_POPLAR = "Yellow Poplar"
 
 
-class TimberSpecies(StrEnum):
+class AllTimberSpecies(StrEnum):
     """
-    Timber species.
+    All timber species.
 
+     - Oak: Oak
+     - Maple: Maple
+     - Cherry: Cherry
+     - Walnut: Walnut
+     - Ash: Ash
+     - Mahogany: Mahogany
+     - Hickory: Hickory
+     - Teak: Teak
+     - Jarrah: Jarrah
+     - Mesquite: Mesquite
+     - Bamboo: Bamboo
      - Alaska Cedar: Alaska Cedar
-     - Douglas Fir-Larch: Douglas Fir-Larch
-     - Eastern Spruce: Eastern Spruce
-     - Hem-Fir: Hem-Fir
-     - Softwood Species: Softwood Species
-     - Southern Pine: Southern Pine
-     - Spruce-Pine-Fir: Spruce-Pine-Fir
-     - Group A Hardwoods: Group A Hardwoods
-     - Group B Hardwoods: Group B Hardwoods
-     - Group C Hardwoods: Group C Hardwoods
-     - Group D Hardwoods: Group D Hardwoods
      - Alaska Hemlock: Alaska Hemlock
      - Alaska Spruce: Alaska Spruce
      - Alaska Yellow Cedar: Alaska Yellow Cedar
@@ -1553,6 +1672,7 @@ class TimberSpecies(StrEnum):
      - Coast Sitka Spruce: Coast Sitka Spruce
      - Coast Species: Coast Species
      - Cottonwood: Cottonwood
+     - Douglas Fir-Larch: Douglas Fir-Larch
      - Douglas Fir-Larch (North): Douglas Fir-Larch (North)
      - Douglas Fir-South: Douglas Fir-South
      - Eastern Hemlock: Eastern Hemlock
@@ -1560,8 +1680,10 @@ class TimberSpecies(StrEnum):
      - Eastern Hemlock-Tamarack: Eastern Hemlock-Tamarack
      - Eastern Hemlock-Tamarack (North): Eastern Hemlock-Tamarack (North)
      - Eastern Softwoods: Eastern Softwoods
+     - Eastern Spruce: Eastern Spruce
      - Eastern White Pine: Eastern White Pine
      - Eastern White Pine (North): Eastern White Pine (North)
+     - Hem-Fir: Hem-Fir
      - Hem-Fir (North): Hem-Fir (North)
      - Mixed Maple: Mixed Maple
      - Mixed Oak: Mixed Oak
@@ -1577,6 +1699,8 @@ class TimberSpecies(StrEnum):
      - Red Pine: Red Pine
      - Redwood: Redwood
      - Sitka Spruce: Sitka Spruce
+     - Southern Pine: Southern Pine
+     - Spruce-Pine-Fir: Spruce-Pine-Fir
      - Scots Pine: Scots Pine
      - Spruce-Pine-Fir (South): Spruce-Pine-Fir (South)
      - Western Cedars: Western Cedars
@@ -1588,31 +1712,21 @@ class TimberSpecies(StrEnum):
      - White Oak: White Oak
      - Yellow Cedar: Yellow Cedar
      - Yellow Poplar: Yellow Poplar
-     - Oak: Oak
-     - Maple: Maple
-     - Cherry: Cherry
-     - Walnut: Walnut
-     - Ash: Ash
-     - Mahogany: Mahogany
-     - Hickory: Hickory
-     - Teak: Teak
-     - Jarrah: Jarrah
-     - Mesquite: Mesquite
-     - Bamboo: Bamboo
 
     """
 
+    OAK = "Oak"
+    MAPLE = "Maple"
+    CHERRY = "Cherry"
+    WALNUT = "Walnut"
+    ASH = "Ash"
+    MAHOGANY = "Mahogany"
+    HICKORY = "Hickory"
+    TEAK = "Teak"
+    JARRAH = "Jarrah"
+    MESQUITE = "Mesquite"
+    BAMBOO = "Bamboo"
     ALASKA_CEDAR = "Alaska Cedar"
-    DOUGLAS_FIR_LARCH = "Douglas Fir-Larch"
-    EASTERN_SPRUCE = "Eastern Spruce"
-    HEM_FIR = "Hem-Fir"
-    SOFTWOOD_SPECIES = "Softwood Species"
-    SOUTHERN_PINE = "Southern Pine"
-    SPRUCE_PINE_FIR = "Spruce-Pine-Fir"
-    GROUP_A_HARDWOODS = "Group A Hardwoods"
-    GROUP_B_HARDWOODS = "Group B Hardwoods"
-    GROUP_C_HARDWOODS = "Group C Hardwoods"
-    GROUP_D_HARDWOODS = "Group D Hardwoods"
     ALASKA_HEMLOCK = "Alaska Hemlock"
     ALASKA_SPRUCE = "Alaska Spruce"
     ALASKA_YELLOW_CEDAR = "Alaska Yellow Cedar"
@@ -1623,6 +1737,7 @@ class TimberSpecies(StrEnum):
     COAST_SITKA_SPRUCE = "Coast Sitka Spruce"
     COAST_SPECIES = "Coast Species"
     COTTONWOOD = "Cottonwood"
+    DOUGLAS_FIR_LARCH = "Douglas Fir-Larch"
     DOUGLAS_FIR_LARCH_NORTH = "Douglas Fir-Larch (North)"
     DOUGLAS_FIR_SOUTH = "Douglas Fir-South"
     EASTERN_HEMLOCK = "Eastern Hemlock"
@@ -1630,8 +1745,10 @@ class TimberSpecies(StrEnum):
     EASTERN_HEMLOCK_TAMARACK = "Eastern Hemlock-Tamarack"
     EASTERN_HEMLOCK_TAMARACK_NORTH = "Eastern Hemlock-Tamarack (North)"
     EASTERN_SOFTWOODS = "Eastern Softwoods"
+    EASTERN_SPRUCE = "Eastern Spruce"
     EASTERN_WHITE_PINE = "Eastern White Pine"
     EASTERN_WHITE_PINE_NORTH = "Eastern White Pine (North)"
+    HEM_FIR = "Hem-Fir"
     HEM_FIR_NORTH = "Hem-Fir (North)"
     MIXED_MAPLE = "Mixed Maple"
     MIXED_OAK = "Mixed Oak"
@@ -1647,6 +1764,8 @@ class TimberSpecies(StrEnum):
     RED_PINE = "Red Pine"
     REDWOOD = "Redwood"
     SITKA_SPRUCE = "Sitka Spruce"
+    SOUTHERN_PINE = "Southern Pine"
+    SPRUCE_PINE_FIR = "Spruce-Pine-Fir"
     SCOTS_PINE = "Scots Pine"
     SPRUCE_PINE_FIR_SOUTH = "Spruce-Pine-Fir (South)"
     WESTERN_CEDARS = "Western Cedars"
@@ -1658,17 +1777,6 @@ class TimberSpecies(StrEnum):
     WHITE_OAK = "White Oak"
     YELLOW_CEDAR = "Yellow Cedar"
     YELLOW_POPLAR = "Yellow Poplar"
-    OAK = "Oak"
-    MAPLE = "Maple"
-    CHERRY = "Cherry"
-    WALNUT = "Walnut"
-    ASH = "Ash"
-    MAHOGANY = "Mahogany"
-    HICKORY = "Hickory"
-    TEAK = "Teak"
-    JARRAH = "Jarrah"
-    MESQUITE = "Mesquite"
-    BAMBOO = "Bamboo"
 
 
 class HardwareFunction(StrEnum):

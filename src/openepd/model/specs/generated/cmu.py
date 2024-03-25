@@ -20,15 +20,12 @@
 import pydantic as pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import CmuBlockType, CmuWeightClassification
 from openepd.model.validation.quantity import GwpKgCo2eStr, PressureMPaStr, validate_unit_factory
-
-from .enums import *
-
-UnknownStrTypeHandleMe = str
 
 
 class CMUV1(BaseOpenEpdHierarchicalSpec):
-    """C m u performance specification."""
+    """CMU performance specification."""
 
     _EXT_VERSION = "1.0"
 

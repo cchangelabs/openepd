@@ -19,15 +19,11 @@
 #
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
-UnknownStrTypeHandleMe = str
-
 
 class ConveyorsV1(BaseOpenEpdHierarchicalSpec):
     """Conveyors performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class MaterialHandlingV1(BaseOpenEpdHierarchicalSpec):
