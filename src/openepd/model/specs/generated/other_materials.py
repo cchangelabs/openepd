@@ -19,15 +19,11 @@
 #
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
-UnknownStrTypeHandleMe = str
-
 
 class AuxiliariesV1(BaseOpenEpdHierarchicalSpec):
     """Auxiliaries performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class CleaningProductsV1(BaseOpenEpdHierarchicalSpec):
@@ -35,23 +31,17 @@ class CleaningProductsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class ClothingV1(BaseOpenEpdHierarchicalSpec):
     """Clothing performance specification."""
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class FoodBeverageV1(BaseOpenEpdHierarchicalSpec):
     """Food beverage performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class TransportationInfrastructureV1(BaseOpenEpdHierarchicalSpec):
@@ -79,15 +69,11 @@ class CopperV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class EarthworkV1(BaseOpenEpdHierarchicalSpec):
     """Earthwork performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class ExteriorSunControlDevicesV1(BaseOpenEpdHierarchicalSpec):
@@ -95,15 +81,12 @@ class ExteriorSunControlDevicesV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class GypsumFinishingCompoundsV1(BaseOpenEpdHierarchicalSpec):
     """Gypsum finishing compounds performance specification."""
 
     _EXT_VERSION = "1.0"
     """Plasters and the like for finishing Gypsum Sheet and Board"""
-    pass
 
 
 class ProfilesV1(BaseOpenEpdHierarchicalSpec):
@@ -111,23 +94,17 @@ class ProfilesV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class UnknownV1(BaseOpenEpdHierarchicalSpec):
     """Unknown performance specification."""
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class ZincV1(BaseOpenEpdHierarchicalSpec):
     """Zinc performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class OtherMaterialsV1(BaseOpenEpdHierarchicalSpec):

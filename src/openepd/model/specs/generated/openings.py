@@ -20,12 +20,9 @@
 from openepd.compat.pydantic import pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import FrameMaterial, HardwareFunction, Spacer, ThermalSeparation
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMStr, PressureMPaStr, validate_unit_factory
-
-from .enums import *
-
-UnknownStrTypeHandleMe = str
 
 
 class PanelDoorsV1(BaseOpenEpdHierarchicalSpec):
@@ -33,15 +30,11 @@ class PanelDoorsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class PressureResistantDoorsV1(BaseOpenEpdHierarchicalSpec):
     """Pressure resistant doors performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class SpecialFunctionDoorsV1(BaseOpenEpdHierarchicalSpec):
@@ -59,15 +52,11 @@ class SlidingGlassDoorsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class FenestrationAccessoriesV1(BaseOpenEpdHierarchicalSpec):
     """Fenestration accessories performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class FenestrationFramingV1(BaseOpenEpdHierarchicalSpec):
@@ -126,15 +115,11 @@ class GlazedDoorsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class UnitSkylightsV1(BaseOpenEpdHierarchicalSpec):
     """Unit skylights performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class WindowsV1(BaseOpenEpdHierarchicalSpec):
@@ -142,23 +127,17 @@ class WindowsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class IntegratedDoorsOpeningAssembliesV1(BaseOpenEpdHierarchicalSpec):
     """Integrated doors opening assemblies performance specification."""
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class MetalDoorAndFramesV1(BaseOpenEpdHierarchicalSpec):
     """Metal door and frames performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class SpecialtyDoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
@@ -175,8 +154,6 @@ class WoodDoorsV1(BaseOpenEpdHierarchicalSpec):
     """Wood doors performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class FenestrationPartsV1(BaseOpenEpdHierarchicalSpec):
@@ -213,7 +190,7 @@ class GlassPanesV1(BaseOpenEpdHierarchicalSpec):
 
 
 class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec):
-    """N a f s fenestration performance specification."""
+    """NAFS fenestration performance specification."""
 
     _EXT_VERSION = "1.0"
 
@@ -306,8 +283,6 @@ class CurtainWallsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class DoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
     """Doors and frames performance specification."""
@@ -333,8 +308,6 @@ class EntrancesV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class GlazingV1(BaseOpenEpdHierarchicalSpec):
     """Glazing performance specification."""
@@ -353,23 +326,17 @@ class StorefrontsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class TranslucentWallAndRoofAssembliesV1(BaseOpenEpdHierarchicalSpec):
     """Translucent wall and roof assemblies performance specification."""
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class WindowWallAssembliesV1(BaseOpenEpdHierarchicalSpec):
     """Window wall assemblies performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class OpeningsV1(BaseOpenEpdHierarchicalSpec):

@@ -21,15 +21,11 @@ from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.quantity import PressureMPaStr, validate_unit_factory
 
-UnknownStrTypeHandleMe = str
-
 
 class GMUV1(BaseOpenEpdHierarchicalSpec):
-    """G m u performance specification."""
+    """Glass Masonry Unit performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class AutoclavedAeratedConcreteV1(BaseOpenEpdHierarchicalSpec):

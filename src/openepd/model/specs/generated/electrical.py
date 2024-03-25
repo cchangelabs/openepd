@@ -19,6 +19,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import CableTraysMaterial, EnergySource, RacewaysMaterial
 from openepd.model.validation.quantity import (
     LengthMStr,
     MassKgStr,
@@ -28,17 +29,11 @@ from openepd.model.validation.quantity import (
     validate_unit_factory,
 )
 
-from .enums import *
-
-UnknownStrTypeHandleMe = str
-
 
 class LowVoltBusesV1(BaseOpenEpdHierarchicalSpec):
     """Low volt buses performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class MedVoltBusesV1(BaseOpenEpdHierarchicalSpec):
@@ -46,23 +41,17 @@ class MedVoltBusesV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class BatteriesV1(BaseOpenEpdHierarchicalSpec):
     """Batteries performance specification."""
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class OtherElectricalPowerStorageV1(BaseOpenEpdHierarchicalSpec):
     """Other electrical power storage performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class CableTraysV1(BaseOpenEpdHierarchicalSpec):
@@ -99,15 +88,11 @@ class FloorEquipmentBoxesV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class PowerDistributionUnitsV1(BaseOpenEpdHierarchicalSpec):
     """Power distribution units performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class RacewaysV1(BaseOpenEpdHierarchicalSpec):
@@ -131,15 +116,11 @@ class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class OtherGenerationV1(BaseOpenEpdHierarchicalSpec):
     """Other generation performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class PhotovoltaicsV1(BaseOpenEpdHierarchicalSpec):
@@ -147,23 +128,17 @@ class PhotovoltaicsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class WindTurbinesV1(BaseOpenEpdHierarchicalSpec):
     """Wind turbines performance specification."""
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class ElectricityFromPowerGridV1(BaseOpenEpdHierarchicalSpec):
     """Electricity from power grid performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class ElectricityFromSpecificGeneratorV1(BaseOpenEpdHierarchicalSpec):
@@ -189,15 +164,11 @@ class LightbulbsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class LightingControlsV1(BaseOpenEpdHierarchicalSpec):
     """Lighting controls performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class LightingFixturesV1(BaseOpenEpdHierarchicalSpec):
@@ -205,15 +176,11 @@ class LightingFixturesV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class OutdoorLightingV1(BaseOpenEpdHierarchicalSpec):
     """Outdoor lighting performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class SpecialtyLightingV1(BaseOpenEpdHierarchicalSpec):
@@ -221,15 +188,11 @@ class SpecialtyLightingV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class TaskLightingV1(BaseOpenEpdHierarchicalSpec):
     """Task lighting performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class ElectricalPowerStorageV1(BaseOpenEpdHierarchicalSpec):

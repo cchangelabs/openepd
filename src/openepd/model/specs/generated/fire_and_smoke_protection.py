@@ -19,11 +19,12 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import (
+    IntumescentFireproofingMaterialType,
+    SprayFireproofingDensity,
+    SprayFireproofingMaterialType,
+)
 from openepd.model.validation.quantity import LengthMStr, validate_unit_factory
-
-from .enums import *
-
-UnknownStrTypeHandleMe = str
 
 
 class IntumescentFireproofingV1(BaseOpenEpdHierarchicalSpec):
@@ -70,8 +71,6 @@ class FirestoppingV1(BaseOpenEpdHierarchicalSpec):
     """Firestopping performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class FireAndSmokeProtectionV1(BaseOpenEpdHierarchicalSpec):
