@@ -19,15 +19,11 @@
 #
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
-UnknownStrTypeHandleMe = str
-
 
 class AcTransformersV1(BaseOpenEpdHierarchicalSpec):
-    """Ac transformers performance specification."""
+    """AC transformers performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class ElectricalInsulatorsV1(BaseOpenEpdHierarchicalSpec):
@@ -35,15 +31,11 @@ class ElectricalInsulatorsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class ElectricalSubstationsV1(BaseOpenEpdHierarchicalSpec):
     """Electrical substations performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class ElectricalSwitchgearV1(BaseOpenEpdHierarchicalSpec):
@@ -51,15 +43,11 @@ class ElectricalSwitchgearV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class PowerCablingV1(BaseOpenEpdHierarchicalSpec):
     """Power cabling performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class ElectricalTransmissionAndDistributionEquipmentV1(BaseOpenEpdHierarchicalSpec):

@@ -21,8 +21,6 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
-UnknownStrTypeHandleMe = str
-
 
 class AggregatesV1(BaseOpenEpdHierarchicalSpec):
     """Aggregates performance specification."""

@@ -20,8 +20,7 @@
 from openepd.compat.pydantic import pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-
-from .enums import *
+from openepd.model.specs.generated.enums import AllFabrication, AllTimberSpecies
 
 UnknownStrTypeHandleMe = str
 
@@ -32,8 +31,8 @@ class WoodJoistsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    timber_species: TimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
-    fabrication: Fabrication | None = pyd.Field(default=None, description="", example="LVL")
+    timber_species: AllTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
+    fabrication: AllFabrication | None = pyd.Field(default=None, description="", example="LVL")
     rel_forest_practices_certifiers: UnknownStrTypeHandleMe | None = pyd.Field(
         default=None, description="", example="test_valueRelationshipFrom"
     )

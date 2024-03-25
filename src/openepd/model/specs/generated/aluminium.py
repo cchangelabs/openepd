@@ -19,18 +19,13 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-
-from .enums import *
-
-UnknownStrTypeHandleMe = str
+from openepd.model.specs.generated.enums import Alloy
 
 
 class AluminiumBilletsV1(BaseOpenEpdHierarchicalSpec):
     """Aluminium billets performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class AluminiumExtrusionsV1(BaseOpenEpdHierarchicalSpec):
@@ -47,15 +42,11 @@ class AluminiumSheetGoodsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class AluminiumSuspensionAssemblyV1(BaseOpenEpdHierarchicalSpec):
     """Aluminium suspension assembly performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class AluminiumV1(BaseOpenEpdHierarchicalSpec):

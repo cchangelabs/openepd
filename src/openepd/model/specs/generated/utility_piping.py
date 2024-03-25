@@ -19,19 +19,14 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import BuriedPipingType, PipingAnsiSchedule, UtilityPipingMaterial
 from openepd.model.validation.quantity import LengthMStr, validate_unit_factory
-
-from .enums import *
-
-UnknownStrTypeHandleMe = str
 
 
 class BuildingHeatingPipingV1(BaseOpenEpdHierarchicalSpec):
     """Building heating piping performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class BuriedPipingV1(BaseOpenEpdHierarchicalSpec):

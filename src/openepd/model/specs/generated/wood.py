@@ -20,27 +20,30 @@
 from openepd.compat.pydantic import pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import (
+    AllFabrication,
+    AllTimberSpecies,
+    CompositeLumberFabrication,
+    EngineeredTimberSpecies,
+    MassTimberFabrication,
+    SawnTimberSpecies,
+    SheathingPanelsFabrication,
+)
 from openepd.model.validation.quantity import LengthMStr, validate_unit_factory
-
-from .enums import *
 
 UnknownStrTypeHandleMe = str
 
 
 class WoodDeckingV1(BaseOpenEpdHierarchicalSpec):
-    """Wood decking performance specification."""
+    """Wood used for decking."""
 
     _EXT_VERSION = "1.0"
-    """Wood used for decking"""
-    pass
 
 
 class WoodFramingV1(BaseOpenEpdHierarchicalSpec):
-    """Wood framing performance specification."""
+    """Lumber for framing, typically softwood."""
 
     _EXT_VERSION = "1.0"
-    """Lumber for framing, typically softwood"""
-    pass
 
 
 class PrefabricatedWoodInsulatedPanelsV1(BaseOpenEpdHierarchicalSpec):
@@ -48,15 +51,11 @@ class PrefabricatedWoodInsulatedPanelsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class PrefabricatedWoodTrussV1(BaseOpenEpdHierarchicalSpec):
     """Prefabricated wood truss performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class CompositeLumberV1(BaseOpenEpdHierarchicalSpec):
@@ -64,7 +63,8 @@ class CompositeLumberV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
+    fabrication: CompositeLumberFabrication | None = pyd.Field(default=None, description="", example="LVL")
+    timber_species: EngineeredTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
 
 
 class DimensionLumberV1(BaseOpenEpdHierarchicalSpec):
@@ -73,32 +73,30 @@ class DimensionLumberV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Nested specs:
+    timber_species: SawnTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
     WoodDecking: WoodDeckingV1 | None = None
     WoodFraming: WoodFramingV1 | None = None
 
 
 class HeavyTimberV1(BaseOpenEpdHierarchicalSpec):
-    """Heavy timber performance specification."""
+    """Large format natural timber."""
 
     _EXT_VERSION = "1.0"
-    """Large format natural timber"""
-    pass
 
 
 class MassTimberV1(BaseOpenEpdHierarchicalSpec):
-    """Mass timber performance specification."""
+    """Manufactured structural wood elements, such a CLT and LVL."""
 
     _EXT_VERSION = "1.0"
-    """Manufactured structural wood elements, such a CLT and LVL"""
-    pass
+
+    fabrication: MassTimberFabrication | None = pyd.Field(default=None, description="", example="CLT")
+    timber_species: EngineeredTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
 
 
 class NonStructuralWoodV1(BaseOpenEpdHierarchicalSpec):
-    """Non structural wood performance specification."""
+    """Wood products that are not meant for structural use."""
 
     _EXT_VERSION = "1.0"
-    """Wood products that are not meant for structural use."""
-    pass
 
 
 class PrefabricatedWoodV1(BaseOpenEpdHierarchicalSpec):
@@ -112,13 +110,14 @@ class PrefabricatedWoodV1(BaseOpenEpdHierarchicalSpec):
 
 
 class SheathingPanelsV1(BaseOpenEpdHierarchicalSpec):
-    """Sheathing panels performance specification."""
+    """Structural Wood Panels."""
 
     _EXT_VERSION = "1.0"
-    """Structural Wood Panels"""
 
     # Own fields:
+    fabrication: SheathingPanelsFabrication | None = pyd.Field(default=None, description="", example="Plywood")
     wood_board_thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    timber_species: EngineeredTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
 
     _wood_board_thickness_is_quantity_validator = pyd.validator("wood_board_thickness", allow_reuse=True)(
         validate_unit_factory("m")
@@ -126,11 +125,9 @@ class SheathingPanelsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class UnfinishedWoodV1(BaseOpenEpdHierarchicalSpec):
-    """Unfinished wood performance specification."""
+    """Unfinished or 'green' timber."""
 
     _EXT_VERSION = "1.0"
-    """Unfinished or 'green' timber"""
-    pass
 
 
 class WoodV1(BaseOpenEpdHierarchicalSpec):
@@ -139,8 +136,8 @@ class WoodV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    timber_species: TimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
-    fabrication: Fabrication | None = pyd.Field(default=None, description="", example="LVL")
+    timber_species: AllTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
+    fabrication: AllFabrication | None = pyd.Field(default=None, description="", example="LVL")
     rel_forest_practices_certifiers: UnknownStrTypeHandleMe | None = pyd.Field(
         default=None, description="", example="test_valueRelationshipFrom"
     )

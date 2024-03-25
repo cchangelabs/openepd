@@ -30,8 +30,6 @@ class CementGroutV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class ConcretePavingV1(BaseOpenEpdHierarchicalSpec):
     """Concrete paving performance specification."""
@@ -51,15 +49,11 @@ class FlowableFillV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class OilPatchV1(BaseOpenEpdHierarchicalSpec):
     """Oil patch performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class ReadyMixV1(BaseOpenEpdHierarchicalSpec):
@@ -67,15 +61,12 @@ class ReadyMixV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
     """Concretes that are mixed just before use, and then poured on-site into forms"""
-    pass
 
 
 class ShotcreteV1(BaseOpenEpdHierarchicalSpec):
     """Shotcrete performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class ConcreteV1(BaseOpenEpdHierarchicalSpec):

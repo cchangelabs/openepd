@@ -20,10 +20,31 @@
 from openepd.compat.pydantic import pyd
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import (
+    AccessFlooringCoreMaterial,
+    AccessFlooringFinishMaterial,
+    AccessFlooringSeismicRating,
+    AccessFlooringStringers,
+    AllFabrication,
+    CarpetFormFactor,
+    CarpetManufactureType,
+    CarpetYarnType,
+    CeilingPanelCoreMaterial,
+    CeilingPanelFireRating,
+    DeckingBoardMaterial,
+    GypsumFacing,
+    GypsumFireRating,
+    IntendedApplication,
+    ResilientFlooringFormFactor,
+    ResilientFlooringMaterial,
+    ResilientFlooringThickness,
+    SawnTimberSpecies,
+    SheetConstruction,
+    WallBaseMaterial,
+    WoodFlooringFabrication,
+)
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import GwpKgCo2eStr, LengthMStr, PressureMPaStr, validate_unit_factory
-
-from .enums import *
 
 UnknownStrTypeHandleMe = str
 
@@ -128,15 +149,11 @@ class LaminateV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class OtherFlooringV1(BaseOpenEpdHierarchicalSpec):
     """Other flooring performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class ResilientFlooringV1(BaseOpenEpdHierarchicalSpec):
@@ -188,8 +205,8 @@ class WoodFlooringV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    timber_species: TimberSpecies | None = pyd.Field(default=None, description="", example="Oak")
-    fabrication: Fabrication | None = pyd.Field(default=None, description="", example="Solid hardwood")
+    timber_species: SawnTimberSpecies | None = pyd.Field(default=None, description="", example="Oak")
+    fabrication: WoodFlooringFabrication | None = pyd.Field(default=None, description="", example="Solid hardwood")
     rel_forest_practices_certifiers: UnknownStrTypeHandleMe | None = pyd.Field(
         default=None, description="", example="test_valueRelationshipFrom"
     )
@@ -224,7 +241,8 @@ class CeramicTileV1(BaseOpenEpdHierarchicalSpec):
     )
     pressed_floor_tile: bool | None = pyd.Field(
         default=None,
-        description="A durable and low-maintenance type of tile made by compressing clay or other materials at high pressure.",
+        description="A durable and low-maintenance type of tile made by compressing clay or "
+        "other materials at high pressure.",
         example="True",
     )
     wall_tile: bool | None = pyd.Field(
@@ -234,12 +252,14 @@ class CeramicTileV1(BaseOpenEpdHierarchicalSpec):
     )
     mosaic_tile: bool | None = pyd.Field(
         default=None,
-        description="A small decorative tile made of glass, stone, or ceramic, arranged in a pattern to create a design.",
+        description="A small decorative tile made of glass, stone, or ceramic, arranged in a pattern "
+        "to create a design.",
         example="True",
     )
     specialty: bool | None = pyd.Field(
         default=None,
-        description="A unique and customized type of tile, often made from unconventional materials or with specialized designs or finishes.",
+        description="A unique and customized type of tile, often made from unconventional materials or with "
+        "specialized designs or finishes.",
         example="True",
     )
 
@@ -252,12 +272,16 @@ class GaugedTileV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     tile_panels: bool | None = pyd.Field(
         default=None,
-        description="Large-format porcelain or natural stone tiles that are typically over 3 feet in length and width, designed for use in floor and wall installations to create a seamless and uninterrupted appearance.",
+        description="Large-format porcelain or natural stone tiles that are typically over 3 feet in length and width, "
+        "designed for use in floor and wall installations to create a seamless and uninterrupted "
+        "appearance.",
         example="True",
     )
     tile_pavers: bool | None = pyd.Field(
         default=None,
-        description="Thick and durable porcelain or natural stone tiles that are commonly used in outdoor applications, such as patios, walkways, and driveways, due to their high resistance to weather and wear.",
+        description="Thick and durable porcelain or natural stone tiles that are commonly used in outdoor "
+        "applications, such as patios, walkways, and driveways, due to their high resistance to weather "
+        "and wear.",
         example="True",
     )
 
@@ -278,8 +302,6 @@ class GypsumSupportsV1(BaseOpenEpdHierarchicalSpec):
     """Gypsum supports performance specification."""
 
     _EXT_VERSION = "1.0"
-    """Plasters and the like for finishing Gypsum Sheet and Board"""
-    pass
 
 
 class FlooringV1(BaseOpenEpdHierarchicalSpec):
@@ -322,8 +344,6 @@ class BackingAndUnderlayV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class CementBoardV1(BaseOpenEpdHierarchicalSpec):
     """Cement board performance specification."""
@@ -353,7 +373,9 @@ class TilingV1(BaseOpenEpdHierarchicalSpec):
     )
     cladding: bool | None = pyd.Field(
         default=None,
-        description="Tiling for exterior use, primarily used for the walls of buildings and structures, providing a protective and decorative layer that enhances the aesthetic appearance and weather resistance of the underlying structure.",
+        description="Tiling for exterior use, primarily used for the walls of buildings and structures, providing a "
+        "protective and decorative layer that enhances the aesthetic appearance and weather resistance "
+        "of the underlying structure.",
         example="True",
     )
     other: bool | None = pyd.Field(
@@ -361,7 +383,9 @@ class TilingV1(BaseOpenEpdHierarchicalSpec):
     )
     residential_only: bool | None = pyd.Field(
         default=None,
-        description="All commercial tile can also be used in residential applications, but the opposite may not be true. This selection allows to filter out tiling that is not intended for commercial applications.",
+        description="All commercial tile can also be used in residential applications, but the opposite may not be "
+        "true. This selection allows to filter out tiling that is not intended for commercial "
+        "applications.",
         example="True",
     )
     reinforced: bool | None = pyd.Field(
@@ -371,7 +395,8 @@ class TilingV1(BaseOpenEpdHierarchicalSpec):
     )
     tiling_total_recycled_content: RatioFloat | None = pyd.Field(
         default=None,
-        description="Proportion of this product that is sourced from recycled content. Pre-consumer recycling is given a 50% weighting, 100% for post-consumer, by mass.",
+        description="Proportion of this product that is sourced from recycled content. Pre-consumer recycling is "
+        "given a 50% weighting, 100% for post-consumer, by mass.",
         example="0.5",
         ge=0,
         le=1,
@@ -398,8 +423,8 @@ class DeckingBoardsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    timber_species: TimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
-    fabrication: Fabrication | None = pyd.Field(default=None, description="", example="LVL")
+    timber_species: SawnTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
+    fabrication: AllFabrication | None = pyd.Field(default=None, description="", example="LVL")
     rel_forest_practices_certifiers: UnknownStrTypeHandleMe | None = pyd.Field(
         default=None, description="", example="test_valueRelationshipFrom"
     )
@@ -413,8 +438,6 @@ class GlassFiberReinforcedGypsumFabricationsV1(BaseOpenEpdHierarchicalSpec):
     """Glass fiber reinforced gypsum fabrications performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class GypsumV1(BaseOpenEpdHierarchicalSpec):
@@ -455,15 +478,11 @@ class MirrorsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    pass
-
 
 class PaintingAndCoatingV1(BaseOpenEpdHierarchicalSpec):
     """Painting and coating performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class WallFinishesV1(BaseOpenEpdHierarchicalSpec):

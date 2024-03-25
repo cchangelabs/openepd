@@ -19,12 +19,8 @@
 #
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
-UnknownStrTypeHandleMe = str
-
 
 class GroutingV1(BaseOpenEpdHierarchicalSpec):
     """Grouting performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass

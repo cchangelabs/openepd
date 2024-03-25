@@ -19,11 +19,19 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import (
+    CableTraysMaterial,
+    CablingCategory,
+    CablingFireRating,
+    CablingJacketMaterial,
+    FloorBoxCoverMaterial,
+    FloorBoxFloorMaterial,
+    FloorBoxMaterial,
+    PduTechnology,
+    RacewaysMaterial,
+    RackType,
+)
 from openepd.model.validation.quantity import LengthMStr, MassKgStr, validate_unit_factory
-
-from .enums import *
-
-UnknownStrTypeHandleMe = str
 
 
 class PDUV1(BaseOpenEpdHierarchicalSpec):

@@ -19,8 +19,17 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-
-from .enums import *
+from openepd.model.specs.generated.enums import (
+    C1157,
+    AdmixtureEffects,
+    CarpetYarnType,
+    CementAstmType,
+    CementEn197_1,
+    CementScm,
+    CsaA3001,
+    MasonryCementAstmC91Type,
+    TextilesFabricType,
+)
 
 UnknownStrTypeHandleMe = str
 
@@ -67,8 +76,6 @@ class AccessFlooringPedestalsV1(BaseOpenEpdHierarchicalSpec):
     """Access flooring pedestals performance specification."""
 
     _EXT_VERSION = "1.0"
-
-    pass
 
 
 class CarpetBackingV1(BaseOpenEpdHierarchicalSpec):
