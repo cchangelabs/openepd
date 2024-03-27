@@ -21,6 +21,7 @@ from openepd.compat.pydantic import pyd
 
 from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.common import HasForestPracticesCertifiers
 from openepd.model.specs.generated.enums import (
     AccessFlooringCoreMaterial,
     AccessFlooringFinishMaterial,
@@ -188,7 +189,7 @@ class WallBaseV1(BaseOpenEpdHierarchicalSpec):
     wall_base_material: WallBaseMaterial | None = pyd.Field(default=None, description="", example="Rubber")
 
 
-class WoodFlooringV1(BaseOpenEpdHierarchicalSpec):
+class WoodFlooringV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
     """Wood flooring performance specification."""
 
     _EXT_VERSION = "1.0"
@@ -407,7 +408,7 @@ class TilingV1(BaseOpenEpdHierarchicalSpec):
     GlassTile: GlassTileV1 | None = None
 
 
-class DeckingBoardsV1(BaseOpenEpdHierarchicalSpec):
+class DeckingBoardsV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
     """Decking boards performance specification."""
 
     _EXT_VERSION = "1.0"
