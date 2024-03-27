@@ -224,7 +224,7 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec):
     nafs_performance_class_cw: bool | None = pyd.Field(default=None, description="", example="True")
     nafs_performance_class_aw: bool | None = pyd.Field(default=None, description="", example="True")
     nafs_performance_grade: NAFSPerformanceGradePSFStrQuantity | None = pyd.Field(
-        default=None, description="", example="4.788025898033585e-05 MPa"
+        default=None, description="", example="95 psf"
     )
 
     _assembly_u_factor_is_quantity_validator = pyd.validator("assembly_u_factor", allow_reuse=True)(
