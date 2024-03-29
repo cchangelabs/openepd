@@ -17,10 +17,3 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-from typing import Annotated
-
-from openepd.compat.pydantic import pyd
-
-# todo when move to pydantic 2, check that validators are being enforced.
-RatioFloat = Annotated[float, pyd.Field(ge=0, le=1, example=0.5)]
-PositiveInt = Annotated[int, pyd.Field(ge=0, example=1)]

@@ -21,11 +21,10 @@ from abc import ABC
 from enum import ReprEnum
 from typing import ClassVar, NamedTuple
 
-import pydantic as pyd
-from pydantic import BaseModel
+from openepd.compat.pydantic import pyd
 
 
-class WithExtVersionMixin(ABC, BaseModel):
+class WithExtVersionMixin(ABC, pyd.BaseModel):
     """Mixin for extensions supporting versions: recommended way."""
 
     _EXT_VERSION: ClassVar[str]

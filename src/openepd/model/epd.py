@@ -20,8 +20,7 @@
 import datetime
 from typing import Annotated
 
-import pydantic as pyd
-
+from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseDocumentFactory, RootDocument
 from openepd.model.common import Amount, Ingredient, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.lcia import Impacts, OutputFlowSet, ResourceUseSet

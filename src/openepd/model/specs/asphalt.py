@@ -19,8 +19,7 @@
 #
 from enum import StrEnum
 
-import pydantic as pyd
-
+from openepd.compat.pydantic import pyd
 from openepd.model.common import OpenEPDUnit
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.numbers import RatioFloat

@@ -21,11 +21,9 @@ import abc
 import datetime
 from typing import Final, Generic, TypeAlias, TypeVar
 
-import pydantic as pyd
-from pydantic.generics import GenericModel
-
 from openepd.api.dto.base import BaseMetaDto, BaseOpenEpdApiModel, MetaExtensionBase
 from openepd.api.dto.meta import PerformanceMetaMixin
+from openepd.compat.pydantic import pyd, pyd_generics
 from openepd.model.base import AnySerializable, BaseOpenEpdSchema
 
 DEFAULT_PAGE_SIZE: Final[int] = 100
@@ -65,7 +63,7 @@ TMetaDto = TypeVar("TMetaDto", bound=BaseMetaDto)
 TMetaExtension = TypeVar("TMetaExtension", bound=MetaExtensionBase)
 
 
-class MetaCollectionDto(BaseOpenEpdApiModel, GenericModel, Generic[TMetaExtension]):
+class MetaCollectionDto(BaseOpenEpdApiModel, pyd_generics.GenericModel, Generic[TMetaExtension]):
     """
     This class is intended to be used as a container for different meta objects.
 
@@ -107,7 +105,7 @@ class BaseMeta(PerformanceMetaMixin, MetaCollectionDto[TMetaExtension], Generic[
 TMeta = TypeVar("TMeta", bound=MetaCollectionDto, covariant=True)
 
 
-class OpenEpdApiResponse(GenericModel, BaseOpenEpdApiModel, Generic[TPayload, TMeta]):
+class OpenEpdApiResponse(pyd_generics.GenericModel, BaseOpenEpdApiModel, Generic[TPayload, TMeta]):
     """Standard DTO representing response from OpenEPD API server."""
 
     payload: TPayload
