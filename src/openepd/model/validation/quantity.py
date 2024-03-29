@@ -20,8 +20,7 @@
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Annotated, Callable, TypeAlias
 
-import pydantic as pyd
-
+from openepd.compat.pydantic import pyd
 from openepd.model.common import OpenEPDUnit
 
 if TYPE_CHECKING:

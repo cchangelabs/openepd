@@ -19,8 +19,7 @@
 #
 from typing import Annotated, Any, Callable, Type, TypeAlias
 
-import pydantic as pyd
-
+from openepd.compat.pydantic import pyd
 from openepd.model.versioning import Version
 
 

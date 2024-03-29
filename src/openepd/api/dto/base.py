@@ -19,7 +19,7 @@
 #
 import abc
 
-import pydantic as pyd
+from openepd.compat.pydantic import pyd
 
 
 class BaseOpenEpdApiModel(pyd.BaseModel):

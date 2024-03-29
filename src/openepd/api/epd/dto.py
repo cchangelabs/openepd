@@ -19,12 +19,11 @@
 #
 from typing import TypeAlias
 
-import pydantic as pyd
-
 from openepd.api.dto.base import BaseOpenEpdApiModel
 from openepd.api.dto.common import BaseMeta, OpenEpdApiResponse
 from openepd.api.dto.meta import PagingMetaMixin, WarningMetaMixin
 from openepd.api.dto.mf import MaterialFilterMetaMixin
+from openepd.compat.pydantic import pyd
 from openepd.model.common import Amount
 from openepd.model.epd import Epd
 

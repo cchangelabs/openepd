@@ -20,15 +20,13 @@
 import abc
 from enum import StrEnum
 import json
-from typing import Any, Callable, Generic, Optional, Type, TypeVar
+from typing import Any, Callable, Generic, Optional, Type, TypeAlias, TypeVar
 
-import pydantic as pyd
-from pydantic.generics import GenericModel
-
+from openepd.compat.pydantic import pyd, pyd_generics
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
 from openepd.model.versioning import OpenEpdVersions, Version
 
-AnySerializable = int | str | bool | float | list | dict | pyd.BaseModel | None
+AnySerializable: TypeAlias = int | str | bool | float | list | dict | pyd.BaseModel | None
 TAnySerializable = TypeVar("TAnySerializable", bound=AnySerializable)
 
 OPENEPD_VERSION_FIELD = "openepd_version"
@@ -158,7 +156,7 @@ class BaseOpenEpdSchema(pyd.BaseModel):
         return None
 
 
-class BaseOpenEpdGenericSchema(GenericModel, BaseOpenEpdSchema):
+class BaseOpenEpdGenericSchema(pyd_generics.GenericModel, BaseOpenEpdSchema):
     """Base class for all OpenEPD generic models."""
 
     pass

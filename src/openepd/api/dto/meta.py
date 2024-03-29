@@ -17,9 +17,8 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-import pydantic as pyd
-
 from openepd.api.dto.base import BaseMetaDto, BaseOpenEpdApiModel
+from openepd.compat.pydantic import pyd
 
 
 class PerformanceMeta(BaseMetaDto):

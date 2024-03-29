@@ -20,9 +20,7 @@
 from enum import StrEnum
 from typing import Annotated, Any
 
-import pydantic as pyd
-from pydantic import BaseModel, root_validator
-
+from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 
 
@@ -32,7 +30,7 @@ class Amount(BaseOpenEpdSchema):
     qty: float | None = pyd.Field(description="How much of this in the amount.", default=None)
     unit: str | None = pyd.Field(description="Which unit.  SI units are preferred.", example="kg", default=None)
 
-    @root_validator
+    @pyd.root_validator
     def check_qty_or_unit(cls, values: dict[str, Any]):
         """Ensure that qty or unit is provided."""
         if values["qty"] is None and values["unit"] is None:
@@ -93,7 +91,7 @@ class Location(BaseOpenEpdSchema):
     )
 
 
-class WithAttachmentsMixin(BaseModel):
+class WithAttachmentsMixin(pyd.BaseModel):
     """Mixin for objects that can have attachments."""
 
     attachments: dict[Annotated[str, pyd.Field(max_length=200)], pyd.AnyUrl] | None = pyd.Field(
@@ -117,7 +115,7 @@ class WithAttachmentsMixin(BaseModel):
             self.set_attachment(name, url)
 
 
-class WithAltIdsMixin(BaseModel):
+class WithAltIdsMixin(pyd.BaseModel):
     """Mixin for objects that can have alt_ids."""
 
     alt_ids: dict[Annotated[str, pyd.Field(max_length=200)], str] | None = pyd.Field(

@@ -19,8 +19,7 @@
 #
 from typing import Any
 
-import pydantic as pyd
-
+from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema, Version
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
 from openepd.model.validation.quantity import QuantityValidator

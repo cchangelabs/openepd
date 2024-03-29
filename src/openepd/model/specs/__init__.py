@@ -18,8 +18,7 @@
 #  Find out more at www.BuildingTransparency.org
 #
 
-import pydantic as pyd
-
+from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs import concrete, steel
 from openepd.model.specs.aluminium import AluminiumV1
