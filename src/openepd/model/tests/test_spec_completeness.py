@@ -20,6 +20,7 @@
 import importlib
 import inspect
 import pkgutil
+from types import ModuleType
 from typing import Iterable
 import unittest
 
@@ -42,7 +43,7 @@ class SpecVersionTestCase(unittest.TestCase):
                 self.assertIsNotNone(spec._EXT_VERSION, f"_EXT_VERSION is not defined for {spec.__name__}")
 
     @classmethod
-    def __find_iteratively(cls, module_name: str, relative_to: str) -> Iterable[tuple[str, str]]:
+    def __find_iteratively(cls, module_name: str, relative_to: str) -> Iterable[tuple[str, ModuleType]]:
         spec = importlib.util.find_spec(module_name, relative_to)
         if spec:
             module = importlib.import_module(spec.name)

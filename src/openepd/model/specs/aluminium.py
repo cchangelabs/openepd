@@ -60,7 +60,7 @@ class AluminiumV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
     recycled_content: RatioFloat | None = pyd.Field(default=None, description="Recycled content")
 
-    alloy: AluminiumAlloy | None = pyd.Field(default=None, description="Alloy")
+    alloy: AluminiumAlloy | None = pyd.Field(default=None, description="AluminiumAlloy")
     anodized: bool | None = None
     painted: bool | None = None
 

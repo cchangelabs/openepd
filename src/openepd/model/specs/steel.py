@@ -23,6 +23,7 @@ from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import OpenEPDUnit
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import SteelComposition
 from openepd.model.standard import Standard
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMmStr, validate_unit_factory
@@ -34,16 +35,6 @@ class SteelMakingRoute(BaseOpenEpdSchema):
     bof: bool | None = pyd.Field(default=None, description="Basic oxygen furnace")
     eaf: bool | None = pyd.Field(default=None, description="Electric arc furnace")
     ohf: bool | None = pyd.Field(default=None, description="Open hearth furnace")
-
-
-class SteelComposition(StrEnum):
-    """Steel composition enum."""
-
-    CARBON = "Carbon"
-    ALLOY = "Alloy"
-    STAINLESS = "Stainless"
-    TOOL = "Tool"
-    OTHER = "Other"
 
 
 class FabricatedOptionsMixin(pyd.BaseModel):

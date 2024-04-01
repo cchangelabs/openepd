@@ -19,7 +19,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import Alloy
+from openepd.model.specs.generated.enums import AluminiumAlloy
 
 
 class AluminiumBilletsV1(BaseOpenEpdHierarchicalSpec):
@@ -56,7 +56,7 @@ class AluminiumV1(BaseOpenEpdHierarchicalSpec):
     """Material definition for objects made primarily from Aluminium and its alloys"""
 
     # Own fields:
-    alloy: Alloy | None = pyd.Field(default=None, description="", example="1xxx")
+    alloy: AluminiumAlloy | None = pyd.Field(default=None, description="", example="1xxx")
     anodized: bool | None = pyd.Field(default=None, description="", example="True")
     painted: bool | None = pyd.Field(default=None, description="", example="True")
 

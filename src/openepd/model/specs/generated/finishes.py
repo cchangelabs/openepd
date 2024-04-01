@@ -18,7 +18,6 @@
 #  Find out more at www.BuildingTransparency.org
 #
 from openepd.compat.pydantic import pyd
-
 from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.common import HasForestPracticesCertifiers
@@ -29,6 +28,7 @@ from openepd.model.specs.generated.enums import (
     AccessFlooringStringers,
     AllFabrication,
     CarpetFormFactor,
+    CarpetIntendedApplication,
     CarpetManufactureType,
     CarpetYarnType,
     CeilingPanelCoreMaterial,
@@ -36,14 +36,14 @@ from openepd.model.specs.generated.enums import (
     DeckingBoardMaterial,
     GypsumFacing,
     GypsumFireRating,
-    IntendedApplication,
     ResilientFlooringFormFactor,
     ResilientFlooringMaterial,
     ResilientFlooringThickness,
     SawnTimberSpecies,
-    SheetConstruction,
+    VinylSheetConstruction,
     WallBaseMaterial,
     WoodFlooringFabrication,
+    WoodFlooringTimberSpecies,
 )
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import GwpKgCo2eStr, LengthMStr, PressureMPaStr, validate_unit_factory
@@ -107,7 +107,9 @@ class CarpetV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     length: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
     width: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    intended_application: list[IntendedApplication] | None = pyd.Field(default=None, description="", example="['Res']")
+    intended_application: list[CarpetIntendedApplication] | None = pyd.Field(
+        default=None, description="", example="['Res']"
+    )
     manufacture_type: CarpetManufactureType | None = pyd.Field(default=None, description="", example="Tufted")
     form_factor: CarpetFormFactor | None = pyd.Field(default=None, description="", example="Tiles")
     yarn_weight: str | None = pyd.Field(default=None, description="", example="1 g / m2")
@@ -161,7 +163,7 @@ class ResilientFlooringV1(BaseOpenEpdHierarchicalSpec):
     resilient_flooring_material: ResilientFlooringMaterial | None = pyd.Field(
         default=None, description="", example="VCT"
     )
-    sheet_construction: SheetConstruction | None = pyd.Field(default=None, description="", example="Homogeneous")
+    sheet_construction: VinylSheetConstruction | None = pyd.Field(default=None, description="", example="Homogeneous")
     resilient_flooring_wear_layer: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
     resilient_flooring_delta_iic: float | None = pyd.Field(default=None, description="", example="2.3")
     resilient_flooring_thickness: ResilientFlooringThickness | None = pyd.Field(
@@ -196,7 +198,7 @@ class WoodFlooringV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
 
     # Own fields:
     thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    timber_species: SawnTimberSpecies | None = pyd.Field(default=None, description="", example="Oak")
+    timber_species: WoodFlooringTimberSpecies | None = pyd.Field(default=None, description="", example="Oak")
     fabrication: WoodFlooringFabrication | None = pyd.Field(default=None, description="", example="Solid hardwood")
     forest_practices_certifiers: list[OrgRef] | None = pyd.Field(
         default=None, description="", example="test_valueRelationshipFrom"
