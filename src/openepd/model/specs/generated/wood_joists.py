@@ -18,7 +18,6 @@
 #  Find out more at www.BuildingTransparency.org
 #
 from openepd.compat.pydantic import pyd
-
 from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.common import HasForestPracticesCertifiers

@@ -504,7 +504,7 @@ class CementEn197_1(StrEnum):
     CEM_V_B = "CEM V/B"
 
 
-class CsaA3001(StrEnum):
+class CementCsaA3001(StrEnum):
     """
     Csa a3001.
 
@@ -591,7 +591,7 @@ class CeilingPanelFireRating(StrEnum):
     CLASS_D = "Class D"
 
 
-class SheetConstruction(StrEnum):
+class VinylSheetConstruction(StrEnum):
     """
     Sheet construction.
 
@@ -1261,9 +1261,9 @@ class CarpetYarnType(StrEnum):
     OLEFIN = "Olefin"
 
 
-class Alloy(StrEnum):
+class AluminiumAlloy(StrEnum):
     """
-    Alloy.
+    AluminiumAlloy.
 
      - 1xxx: 1xxx
      - 2xxx: 2xxx
@@ -1302,7 +1302,7 @@ class Alloy(StrEnum):
     _9XX_X = "9xx.x"
 
 
-class IntendedApplication(StrEnum):
+class CarpetIntendedApplication(StrEnum):
     """
     Intended application.
 
@@ -2005,9 +2005,9 @@ class CementScm(StrEnum):
     OTHER = "other"
 
 
-class C1157(StrEnum):
+class CementC1157(StrEnum):
     """
-    C1157.
+    CementC1157.
 
      - GU: GU
      - HE: HE

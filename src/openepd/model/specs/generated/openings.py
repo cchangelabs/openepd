@@ -20,7 +20,6 @@
 from typing import TypeAlias
 
 from openepd.compat.pydantic import pyd
-
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import FrameMaterial, HardwareFunction, Spacer, ThermalSeparation
 from openepd.model.specs.glass import NAFSPerformanceGrade

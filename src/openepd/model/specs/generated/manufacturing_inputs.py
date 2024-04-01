@@ -21,13 +21,13 @@ from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.concrete import Cementitious
 from openepd.model.specs.generated.enums import (
-    C1157,
     AdmixtureEffects,
     CarpetYarnType,
     CementAstmType,
+    CementC1157,
+    CementCsaA3001,
     CementEn197_1,
     CementScm,
-    CsaA3001,
     MasonryCementAstmC91Type,
     TextilesFabricType,
 )
@@ -44,8 +44,8 @@ class CementV1(BaseOpenEpdHierarchicalSpec):
     )
     white_cement: bool | None = pyd.Field(default=None, description="", example="True")
     astm_type: CementAstmType | None = pyd.Field(default=None, description="", example="C150 Type I")
-    c1157: list[C1157] | None = pyd.Field(default=None, description="", example="['GU']")
-    csa_a3001: list[CsaA3001] | None = pyd.Field(default=None, description="", example="['A3001 GU']")
+    c1157: list[CementC1157] | None = pyd.Field(default=None, description="", example="['GU']")
+    csa_a3001: list[CementCsaA3001] | None = pyd.Field(default=None, description="", example="['A3001 GU']")
     en197_1: CementEn197_1 | None = pyd.Field(default=None, description="", example="CEM I")
     oil_well_cement: bool | None = pyd.Field(default=None, description="", example="True")
 
