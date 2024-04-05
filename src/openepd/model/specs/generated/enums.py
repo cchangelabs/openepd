@@ -2274,3 +2274,40 @@ class EnExposureClass(StrEnum):
     en206_XA1 = "en206.XA1"
     en206_XA2 = "en206.XA2"
     en206_XA3 = "en206.XA3"
+
+
+class AggregateWeightClassification(StrEnum):
+    """Aggregate weight classification enum."""
+
+    LIGHTWEIGHT = "Lightweight"
+    """
+    Also called "low-density aggregate". Aggregate with bulk density less than 1120 kg/m3 such as: pumice, scoria,
+    volcanic cinders, tuff, and diatomite; expanded or sintered clay, shale, slate, diatomaceous shale, perlite,
+    vermiculite, or slag; and end products of coal or coke combustion.
+    """
+    NORMAL_WEIGHT = "Normal-weight"
+    """
+    Aggregate that is between the densities of lightweight and heavy-weight
+    """
+    HEAVY_WEIGHT = "Heavy-weight"
+    """
+    Also called "high-density aggregate". Aggregate with bulk density greater than 1920 kg/m3 such as: barite,
+    magnetite, limonite, ilmenite, iron, or steel.
+    """
+
+
+class AggregateGradation(StrEnum):
+    """Aggregate gradation enum."""
+
+    DENSE = "Dense"
+    """
+    Grading in which the void percentage between aggregate particles is minimized
+    """
+    GAP = "Gap"
+    """
+    Grading in which one or more intermediate size fractions are omitted
+    """
+    OPEN = "Open"
+    """
+    Grading with a large amount of air voids, which allows water drainage
+    """
