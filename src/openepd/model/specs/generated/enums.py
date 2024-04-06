@@ -1650,6 +1650,11 @@ class AllTimberSpecies(StrEnum):
     """
     All timber species.
 
+     - Softwood Species: Softwood Species
+     - Group A Hardwoods: Group A Hardwoods
+     - Group B Hardwoods: Group B Hardwoods
+     - Group C Hardwoods: Group C Hardwoods
+     - Group D Hardwoods: Group D Hardwoods
      - Oak: Oak
      - Maple: Maple
      - Cherry: Cherry
@@ -1715,6 +1720,11 @@ class AllTimberSpecies(StrEnum):
 
     """
 
+    SOFTWOOD_SPECIES = "Softwood Species"
+    GROUP_A_HARDWOODS = "Group A Hardwoods"
+    GROUP_B_HARDWOODS = "Group B Hardwoods"
+    GROUP_C_HARDWOODS = "Group C Hardwoods"
+    GROUP_D_HARDWOODS = "Group D Hardwoods"
     OAK = "Oak"
     MAPLE = "Maple"
     CHERRY = "Cherry"
