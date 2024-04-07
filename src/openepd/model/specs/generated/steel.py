@@ -18,11 +18,18 @@
 #  Find out more at www.BuildingTransparency.org
 #
 from openepd.compat.pydantic import pyd
-from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec
 from openepd.model.specs.generated.enums import SteelComposition, SteelRebarGrade
+from openepd.model.specs.steel import SteelMakingRoute
 from openepd.model.standard import Standard
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import LengthMStr, PressureMPaStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, validate_unit_factory
+
+
+class SteelFabricatedMixin(BaseOpenEpdSpec):
+    """Class with fabricated property used in different parts of steel hierarchy."""
+
+    fabricated: bool | None = pyd.Field(default=None, description="", example="True")
 
 
 class ColdFormedFramingV1(BaseOpenEpdHierarchicalSpec):
@@ -32,10 +39,9 @@ class ColdFormedFramingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class DeckingSteelV1(BaseOpenEpdHierarchicalSpec):
-    """Decking steel performance specification."""
+    """Cold Formed Steel Decking."""
 
     _EXT_VERSION = "1.0"
-    """Cold Formed Steel Decking"""
 
 
 class SteelSuspensionAssemblyV1(BaseOpenEpdHierarchicalSpec):
@@ -44,32 +50,28 @@ class SteelSuspensionAssemblyV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
-class HollowSectionsV1(BaseOpenEpdHierarchicalSpec):
+class HollowSectionsV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
     """Hollow sections performance specification."""
 
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    steel_fabricated: bool | None = pyd.Field(default=None, description="", example="True")
 
 
-class HotRolledSectionsV1(BaseOpenEpdHierarchicalSpec):
+class HotRolledSectionsV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
     """Hot rolled sections performance specification."""
 
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    steel_fabricated: bool | None = pyd.Field(default=None, description="", example="True")
 
 
-class PlateSteelV1(BaseOpenEpdHierarchicalSpec):
-    """Plate steel performance specification."""
+class PlateSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
+    """Plate Steels."""
 
     _EXT_VERSION = "1.0"
-    """Plate Steels"""
 
     # Own fields:
-    steel_fabricated: bool | None = pyd.Field(default=None, description="", example="True")
 
 
 class MetalRailingsV1(BaseOpenEpdHierarchicalSpec):
@@ -109,10 +111,9 @@ class CoilSteelV1(BaseOpenEpdHierarchicalSpec):
 
 
 class ColdFormedSteelV1(BaseOpenEpdHierarchicalSpec):
-    """Cold formed steel performance specification."""
+    """Cold Formed Structural Steel."""
 
     _EXT_VERSION = "1.0"
-    """Cold Formed Structural Steel"""
 
     # Nested specs:
     ColdFormedFraming: ColdFormedFramingV1 | None = None
@@ -121,23 +122,22 @@ class ColdFormedSteelV1(BaseOpenEpdHierarchicalSpec):
 
 
 class StructuralSteelV1(BaseOpenEpdHierarchicalSpec):
-    """Structural steel performance specification."""
+    """Structural Steel."""
 
     _EXT_VERSION = "1.0"
-    """Structural Steel"""
 
     # Own fields:
-    steel_modulus_of_elasticity: PressureMPaStr | None = pyd.Field(default=None, description="", example="1.0 MPa")
-    steel_thermal_expansion: str | None = pyd.Field(default=None, description="", example="1 / K")
-    steel_thermal_conductivity: str | None = pyd.Field(default=None, description="", example="1 W / (m * K)")
+    modulus_of_elasticity: PressureMPaStr | None = pyd.Field(default=None, description="", example="1.0 MPa")
+    thermal_expansion: str | None = pyd.Field(default=None, description="", example="1 / K")
+    thermal_conductivity: str | None = pyd.Field(default=None, description="", example="1 W / (m * K)")
 
-    _steel_modulus_of_elasticity_is_quantity_validator = pyd.validator("steel_modulus_of_elasticity", allow_reuse=True)(
+    _steel_modulus_of_elasticity_is_quantity_validator = pyd.validator("modulus_of_elasticity", allow_reuse=True)(
         validate_unit_factory("MPa")
     )
-    _steel_thermal_expansion_is_quantity_validator = pyd.validator("steel_thermal_expansion", allow_reuse=True)(
+    _steel_thermal_expansion_is_quantity_validator = pyd.validator("thermal_expansion", allow_reuse=True)(
         validate_unit_factory("1 / K")
     )
-    _steel_thermal_conductivity_is_quantity_validator = pyd.validator("steel_thermal_conductivity", allow_reuse=True)(
+    _steel_thermal_conductivity_is_quantity_validator = pyd.validator("thermal_conductivity", allow_reuse=True)(
         validate_unit_factory("W / (m * K)")
     )
 
@@ -160,39 +160,32 @@ class PrefabricatedSteelAssembliesV1(BaseOpenEpdHierarchicalSpec):
 
 
 class PostTensioningSteelV1(BaseOpenEpdHierarchicalSpec):
-    """Post tensioning steel performance specification."""
+    """Post-Tensioning Steels, per https://www.concretenetwork.com/post-tension/industry.html."""
 
     _EXT_VERSION = "1.0"
-    """Post-Tensioning Steels, per https://www.concretenetwork.com/post-tension/industry.html"""
 
 
-class RebarSteelV1(BaseOpenEpdHierarchicalSpec):
-    """Rebar steel performance specification."""
+class RebarSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
+    """Bar steels, such as rebar for concrete reinforcement."""
 
     _EXT_VERSION = "1.0"
-    """Bar steels, such as rebar for concrete reinforcement"""
 
     # Own fields:
-    steel_fabricated: bool | None = pyd.Field(default=None, description="", example="True")
-    steel_rebar_grade: SteelRebarGrade | None = pyd.Field(default=None, description="", example="60 ksi")
-    steel_rebar_diameter_min: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    steel_rebar_bending_pin_max: float | None = pyd.Field(default=None, description="", example="2.3")
-    steel_rebar_ts_ys_ratio_max: float | None = pyd.Field(default=None, description="", example="2.3")
+    grade: SteelRebarGrade | None = pyd.Field(default=None, description="", example="60 ksi")
+    diameter_min: LengthMmStr | None = pyd.Field(default=None, description="", example="8 mm")
+    bending_pin_max: float | None = pyd.Field(default=None, description="", example="2.3")
+    ts_ys_ratio_max: float | None = pyd.Field(default=None, description="", example="2.3")
     epoxy_coated: bool | None = pyd.Field(default=None, description="", example="True")
 
-    _steel_rebar_diameter_min_is_quantity_validator = pyd.validator("steel_rebar_diameter_min", allow_reuse=True)(
+    _steel_rebar_diameter_min_is_quantity_validator = pyd.validator("diameter_min", allow_reuse=True)(
         validate_unit_factory("m")
     )
 
 
-class WireMeshSteelV1(BaseOpenEpdHierarchicalSpec):
-    """Wire mesh steel performance specification."""
+class WireMeshSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
+    """Mild steel wire for reinforcement, connections, and meshes."""
 
     _EXT_VERSION = "1.0"
-    """Mild steel wire for reinforcement, connections, and meshes"""
-
-    # Own fields:
-    steel_fabricated: bool | None = pyd.Field(default=None, description="", example="True")
 
 
 class SteelV1(BaseOpenEpdHierarchicalSpec):
@@ -201,30 +194,24 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    steel_yield_tensile_str: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    steel_bar_elongation: float | None = pyd.Field(default=None, description="", example="2.3")
-    steel_recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example="0.5", ge=0, le=1)
-    steel_post_consumer_recycled_content: RatioFloat | None = pyd.Field(
+    yield_tensile_str: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
+    bar_elongation: float | None = pyd.Field(default=None, description="", example="2.3")
+    recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example="0.5", ge=0, le=1)
+    post_consumer_recycled_content: RatioFloat | None = pyd.Field(
         default=None, description="", example="0.5", ge=0, le=1
     )
-    steel_astm_marking: str | None = pyd.Field(
-        default=None, description="", example="test_valueValidatedStringProperty"
-    )
-    steel_euro_marking: str | None = pyd.Field(
-        default=None, description="", example="test_valueValidatedStringProperty"
-    )
-    steel_composition: SteelComposition | None = pyd.Field(default=None, description="", example="Carbon")
+    astm_marking: str | None = pyd.Field(default=None, description="", example="test_valueValidatedStringProperty")
+    euro_marking: str | None = pyd.Field(default=None, description="", example="test_valueValidatedStringProperty")
+    composition: SteelComposition | None = pyd.Field(default=None, description="", example="Carbon")
     cold_finished: bool | None = pyd.Field(default=None, description="", example="True")
     galvanized: bool | None = pyd.Field(default=None, description="", example="True")
     stainless: bool | None = pyd.Field(default=None, description="", example="True")
-    steel_making_route_bof: bool | None = pyd.Field(default=None, description="", example="True")
-    steel_making_route_eaf: bool | None = pyd.Field(default=None, description="", example="True")
-    steel_making_route_ohf: bool | None = pyd.Field(default=None, description="", example="True")
+    making_route: SteelMakingRoute | None = pyd.Field(default=None)
     astm_standards: list[Standard] | None = pyd.Field(default=None, description="")
     sae_standards: list[Standard] | None = pyd.Field(default=None, description="")
     en_standards: list[Standard] | None = pyd.Field(default=None, description="")
 
-    _steel_yield_tensile_str_is_quantity_validator = pyd.validator("steel_yield_tensile_str", allow_reuse=True)(
+    _steel_yield_tensile_str_is_quantity_validator = pyd.validator("yield_tensile_str", allow_reuse=True)(
         validate_unit_factory("MPa")
     )
 

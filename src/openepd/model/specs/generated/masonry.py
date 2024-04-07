@@ -34,14 +34,14 @@ class AutoclavedAeratedConcreteV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    concrete_compressive_strength_28d: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    aac_thermal_conductivity: str | None = pyd.Field(default=None, description="", example="1 W / (m * K)")
-    aac_white: bool | None = pyd.Field(default=None, description="", example="True")
+    strength_28d: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
+    thermal_conductivity: str | None = pyd.Field(default=None, description="", example="1 W / (m * K)")
+    white: bool | None = pyd.Field(default=None, description="", example="True")
 
-    _concrete_compressive_strength_28d_is_quantity_validator = pyd.validator(
-        "concrete_compressive_strength_28d", allow_reuse=True
-    )(validate_unit_factory("MPa"))
-    _aac_thermal_conductivity_is_quantity_validator = pyd.validator("aac_thermal_conductivity", allow_reuse=True)(
+    _concrete_compressive_strength_28d_is_quantity_validator = pyd.validator("strength_28d", allow_reuse=True)(
+        validate_unit_factory("MPa")
+    )
+    _aac_thermal_conductivity_is_quantity_validator = pyd.validator("thermal_conductivity", allow_reuse=True)(
         validate_unit_factory("W / (m * K)")
     )
 
@@ -52,15 +52,15 @@ class BrickV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    brick_building: bool | None = pyd.Field(default=None, description="", example="True")
-    brick_facing: bool | None = pyd.Field(default=None, description="", example="True")
-    brick_floor: bool | None = pyd.Field(default=None, description="", example="True")
-    brick_pedestrian: bool | None = pyd.Field(default=None, description="", example="True")
-    brick_paving: bool | None = pyd.Field(default=None, description="", example="True")
-    brick_other: bool | None = pyd.Field(default=None, description="", example="True")
-    brick_chemical_resistant: bool | None = pyd.Field(default=None, description="", example="True")
-    brick_glazed: bool | None = pyd.Field(default=None, description="", example="True")
-    brick_tiles: bool | None = pyd.Field(default=None, description="", example="True")
+    building: bool | None = pyd.Field(default=None, description="", example="True")
+    facing: bool | None = pyd.Field(default=None, description="", example="True")
+    floor: bool | None = pyd.Field(default=None, description="", example="True")
+    pedestrian: bool | None = pyd.Field(default=None, description="", example="True")
+    paving: bool | None = pyd.Field(default=None, description="", example="True")
+    other: bool | None = pyd.Field(default=None, description="", example="True")
+    chemical_resistant: bool | None = pyd.Field(default=None, description="", example="True")
+    glazed: bool | None = pyd.Field(default=None, description="", example="True")
+    tiles: bool | None = pyd.Field(default=None, description="", example="True")
 
 
 class MasonryV1(BaseOpenEpdHierarchicalSpec):

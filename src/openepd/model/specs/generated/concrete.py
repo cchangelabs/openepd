@@ -17,12 +17,20 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
+from typing import Literal
+
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.concrete import Cementitious
+from openepd.model.specs.concrete import Cementitious, ConcreteTypicalApplication
 from openepd.model.specs.generated.enums import AciExposureClass, CsaExposureClass, EnExposureClass
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import LengthMStr, MassKgStr, PressureMPaStr, validate_unit_factory
+from openepd.model.validation.quantity import (
+    LengthInchStr,
+    LengthMmStr,
+    MassKgStr,
+    PressureMPaStr,
+    validate_unit_factory,
+)
 
 
 class CementGroutV1(BaseOpenEpdHierarchicalSpec):
@@ -37,9 +45,11 @@ class ConcretePavingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    concrete_flexion_strength: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
+    flexion_strength: PressureMPaStr | None = pyd.Field(
+        default=None, description="Paving flexion strength", example="30 MPa"
+    )
 
-    _concrete_flexion_strength_is_quantity_validator = pyd.validator("concrete_flexion_strength", allow_reuse=True)(
+    _concrete_flexion_strength_is_quantity_validator = pyd.validator("flexion_strength", allow_reuse=True)(
         validate_unit_factory("MPa")
     )
 
@@ -57,10 +67,9 @@ class OilPatchV1(BaseOpenEpdHierarchicalSpec):
 
 
 class ReadyMixV1(BaseOpenEpdHierarchicalSpec):
-    """Ready mix performance specification."""
+    """Concretes that are mixed just before use, and then poured on-site into forms."""
 
     _EXT_VERSION = "1.0"
-    """Concretes that are mixed just before use, and then poured on-site into forms"""
 
 
 class ShotcreteV1(BaseOpenEpdHierarchicalSpec):
@@ -75,74 +84,61 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    lightweight: bool | None = pyd.Field(default=None, description="", example="True")
-    concrete_compressive_strength_28d: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    cementitious: Cementitious | None = pyd.Field(
-        default=None, description="", example="test_valueValidatedJSONProperty"
-    )
-    white_cement: bool | None = pyd.Field(default=None, description="", example="True")
-    concrete_compressive_strength_other: PressureMPaStr | None = pyd.Field(
-        default=None, description="", example="1 MPa"
-    )
-    concrete_compressive_strength_other_d: float | None = pyd.Field(default=None, description="", example="2.3")
-    concrete_slump: LengthMStr | None = pyd.Field(default=None, description="", example="0.0254 m")
-    concrete_min_slump: LengthMStr | None = pyd.Field(default=None, description="", example="0.0254 m")
-    concrete_max_slump: LengthMStr | None = pyd.Field(default=None, description="", example="0.0254 m")
-    concrete_min_pipeline_size: LengthMStr | None = pyd.Field(default=None, description="", example="0.0254 m")
-    concrete_w_c_ratio: RatioFloat | None = pyd.Field(default=None, description="", example="0.5", ge=0, le=1)
-    concrete_air_entrain: bool | None = pyd.Field(default=None, description="", example="True")
-    concrete_co2_entrain: bool | None = pyd.Field(default=None, description="", example="True")
-    concrete_self_consolidating: bool | None = pyd.Field(default=None, description="", example="True")
-    plc: bool | None = pyd.Field(default=None, description="", example="True")
-    finishable: bool | None = pyd.Field(default=None, description="", example="True")
-    fiber_reinforced: bool | None = pyd.Field(default=None, description="", example="True")
-    concrete_aggregate_size_max: LengthMStr | None = pyd.Field(default=None, description="", example="0.0254 m")
-    concrete_cement_content: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
-    aci_exposure_classes: list[AciExposureClass] | None = pyd.Field(
-        default=None, description="", example="test_valueValidatedArrayPropertyGeneric"
-    )
-    csa_exposure_classes: list[CsaExposureClass] | None = pyd.Field(
-        default=None, description="", example="test_valueValidatedArrayPropertyGeneric"
-    )
-    en_exposure_classes: list[EnExposureClass] | None = pyd.Field(
-        default=None, description="", example="test_valueValidatedArrayPropertyGeneric"
-    )
-    fnd: bool | None = pyd.Field(default=None, description="", example="True")
-    sog: bool | None = pyd.Field(default=None, description="", example="True")
-    hrz: bool | None = pyd.Field(default=None, description="", example="True")
-    vrt_wall: bool | None = pyd.Field(default=None, description="", example="True")
-    vrt_column: bool | None = pyd.Field(default=None, description="", example="True")
-    vrt_other: bool | None = pyd.Field(default=None, description="", example="True")
-    sht: bool | None = pyd.Field(default=None, description="", example="True")
-    cdf: bool | None = pyd.Field(default=None, description="", example="True")
-    sac: bool | None = pyd.Field(default=None, description="", example="True")
-    pav: bool | None = pyd.Field(default=None, description="", example="True")
-    oil: bool | None = pyd.Field(default=None, description="", example="True")
-    grt: bool | None = pyd.Field(default=None, description="", example="True")
-    ota: bool | None = pyd.Field(default=None, description="", example="True")
+    lightweight: bool | None = pyd.Field(default=None, description="Lightweight", example="True")
 
-    _concrete_compressive_strength_28d_is_quantity_validator = pyd.validator(
-        "concrete_compressive_strength_28d", allow_reuse=True
-    )(validate_unit_factory("MPa"))
-    _concrete_compressive_strength_other_is_quantity_validator = pyd.validator(
-        "concrete_compressive_strength_other", allow_reuse=True
-    )(validate_unit_factory("MPa"))
-    _concrete_slump_is_quantity_validator = pyd.validator("concrete_slump", allow_reuse=True)(
+    strength_28d: PressureMPaStr | None = pyd.Field(
+        default=None, description="Concrete strength after 28 days", example="1 MPa"
+    )
+    strength_other: PressureMPaStr | None = pyd.Field(
+        default=None,
+        description="A strength spec which is to be reached later other 28 days (e.g. 42d)",
+        example="30 MPa",
+    )
+    strength_other_d: Literal[3, 7, 14, 42, 56, 72, 96, 120] | None = pyd.Field(
+        default=None, description="Test Day for the Late Strength", example="42"
+    )
+
+    slump: LengthInchStr | None = pyd.Field(default=None, description="", example="2 in")
+    min_slump: LengthInchStr | None = pyd.Field(default=None, description="Minimum test slump", example="2 in")
+    max_slump: LengthInchStr | None = pyd.Field(default=None, description="", example="2 in")
+
+    min_pipeline_size: LengthMmStr | None = pyd.Field(default=None, description="", example="200 mm")
+    w_c_ratio: RatioFloat | None = pyd.Field(
+        default=None, description="Ratio of water to cement", example="0.5", ge=0, le=1
+    )
+    air_entrain: bool | None = pyd.Field(default=None, description="Air Entrainment", example="True")
+    co2_entrain: bool | None = pyd.Field(default=None, description="CO2 Curing", example="True")
+    self_consolidating: bool | None = pyd.Field(default=None, description="Self Compacting", example="True")
+    white_cement: bool | None = pyd.Field(default=None, description="White Cement", example="True")
+    plc: bool | None = pyd.Field(default=None, description="Portland Limestone Cement", example="True")
+    finishable: bool | None = pyd.Field(default=None, description="Finishable", example="True")
+    fiber_reinforced: bool | None = pyd.Field(default=None, description="fiber_reinforced", example="True")
+
+    cementitious: Cementitious | None = pyd.Field(default=None, description="")
+
+    aggregate_size_max: LengthMmStr | None = pyd.Field(default=None, description="", example="0.0254 m")
+    cement_content: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
+    aci_exposure_classes: list[AciExposureClass] | None = pyd.Field(default=None, description="", example="F0")
+    csa_exposure_classes: list[CsaExposureClass] | None = pyd.Field(default=None, description="", example="C-2")
+    en_exposure_classes: list[EnExposureClass] | None = pyd.Field(default=None, description="", example="XS1")
+    typical_application: ConcreteTypicalApplication | None = pyd.Field(default=None, description="Typical Application")
+
+    _concrete_compressive_strength_28d_is_quantity_validator = pyd.validator("strength_28d", allow_reuse=True)(
+        validate_unit_factory("MPa")
+    )
+    _concrete_compressive_strength_other_is_quantity_validator = pyd.validator("strength_other", allow_reuse=True)(
+        validate_unit_factory("MPa")
+    )
+    _concrete_slump_is_quantity_validator = pyd.validator("slump", allow_reuse=True)(validate_unit_factory("m"))
+    _concrete_min_slump_is_quantity_validator = pyd.validator("min_slump", allow_reuse=True)(validate_unit_factory("m"))
+    _concrete_max_slump_is_quantity_validator = pyd.validator("max_slump", allow_reuse=True)(validate_unit_factory("m"))
+    _concrete_min_pipeline_size_is_quantity_validator = pyd.validator("min_pipeline_size", allow_reuse=True)(
         validate_unit_factory("m")
     )
-    _concrete_min_slump_is_quantity_validator = pyd.validator("concrete_min_slump", allow_reuse=True)(
+    _concrete_aggregate_size_max_is_quantity_validator = pyd.validator("aggregate_size_max", allow_reuse=True)(
         validate_unit_factory("m")
     )
-    _concrete_max_slump_is_quantity_validator = pyd.validator("concrete_max_slump", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-    _concrete_min_pipeline_size_is_quantity_validator = pyd.validator("concrete_min_pipeline_size", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-    _concrete_aggregate_size_max_is_quantity_validator = pyd.validator("concrete_aggregate_size_max", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-    _concrete_cement_content_is_quantity_validator = pyd.validator("concrete_cement_content", allow_reuse=True)(
+    _concrete_cement_content_is_quantity_validator = pyd.validator("cement_content", allow_reuse=True)(
         validate_unit_factory("kg")
     )
 

@@ -83,10 +83,9 @@ class ExteriorSunControlDevicesV1(BaseOpenEpdHierarchicalSpec):
 
 
 class GypsumFinishingCompoundsV1(BaseOpenEpdHierarchicalSpec):
-    """Gypsum finishing compounds performance specification."""
+    """Plasters and the like for finishing Gypsum Sheet and Board."""
 
     _EXT_VERSION = "1.0"
-    """Plasters and the like for finishing Gypsum Sheet and Board"""
 
 
 class ProfilesV1(BaseOpenEpdHierarchicalSpec):

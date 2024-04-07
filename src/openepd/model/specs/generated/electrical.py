@@ -21,6 +21,7 @@ from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import CableTraysMaterial, EnergySource, RacewaysMaterial
 from openepd.model.validation.quantity import (
+    LengthMmStr,
     LengthMStr,
     MassKgStr,
     TemperatureCStr,
@@ -60,11 +61,13 @@ class CableTraysV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    height: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    width: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    depth: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    height: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
+    width: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
+    depth: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
     static_load: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
-    ventilated: bool | None = pyd.Field(default=None, description="", example="True")
+    ventilated: bool | None = pyd.Field(
+        default=None, description="At least 40% of the tray base is open to air flow", example="True"
+    )
     cable_trays_material: CableTraysMaterial | None = pyd.Field(default=None, description="", example="Stainless Steel")
 
     _height_is_quantity_validator = pyd.validator("height", allow_reuse=True)(validate_unit_factory("m"))
@@ -101,8 +104,8 @@ class RacewaysV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    width: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    depth: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    width: LengthMStr | None = pyd.Field(default=None, description="", example="100 mm")
+    depth: LengthMStr | None = pyd.Field(default=None, description="", example="100 mm")
     painted: bool | None = pyd.Field(default=None, description="", example="True")
     divided: bool | None = pyd.Field(default=None, description="", example="True")
     raceways_material: RacewaysMaterial | None = pyd.Field(default=None, description="", example="Aluminum")

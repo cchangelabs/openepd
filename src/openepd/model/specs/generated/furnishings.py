@@ -20,7 +20,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import CountertopMaterial
-from openepd.model.validation.quantity import LengthMStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, validate_unit_factory
 
 
 class DemountablePartitionTrackV1(BaseOpenEpdHierarchicalSpec):
@@ -41,7 +41,7 @@ class CountertopsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="30 mm")
     countertop_material: CountertopMaterial | None = pyd.Field(default=None, description="", example="Stone")
 
     _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))

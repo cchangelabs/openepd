@@ -31,7 +31,7 @@ from openepd.model.specs.generated.enums import (
     RacewaysMaterial,
     RackType,
 )
-from openepd.model.validation.quantity import LengthMStr, MassKgStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, MassKgStr, validate_unit_factory
 
 
 class PDUV1(BaseOpenEpdHierarchicalSpec):
@@ -72,13 +72,27 @@ class DataCablingV1(BaseOpenEpdHierarchicalSpec):
     cabling_category: CablingCategory | None = pyd.Field(default=None, description="", example="Cat7")
     fire_rating: CablingFireRating | None = pyd.Field(default=None, description="", example="CMP")
     jacket_material: CablingJacketMaterial | None = pyd.Field(default=None, description="", example="PVC")
-    shielded: bool | None = pyd.Field(default=None, description="", example="True")
-    armored: bool | None = pyd.Field(default=None, description="", example="True")
-    rohs: bool | None = pyd.Field(default=None, description="", example="True")
-    reach: bool | None = pyd.Field(default=None, description="", example="True")
-    zwtl: bool | None = pyd.Field(default=None, description="", example="True")
-    connectorized: bool | None = pyd.Field(default=None, description="", example="True")
-    thin_ethernet: bool | None = pyd.Field(default=None, description="", example="True")
+    shielded: bool | None = pyd.Field(
+        default=None, description="Foil or similar electromagnetic shielding", example="True"
+    )
+    armored: bool | None = pyd.Field(default=None, description="Steel or similar physical armor jacket", example="True")
+    rohs: bool | None = pyd.Field(default=None, description="Certified ROHS Compliant", example="True")
+    reach: bool | None = pyd.Field(default=None, description="Certified REACH compliant", example="True")
+    zwtl: bool | None = pyd.Field(default=None, description="Certified ZWTL compliant", example="True")
+    connectorized: bool | None = pyd.Field(
+        default=None,
+        description="This cable is shipped as a specific length with integrated connectors. Impacts include the "
+        "connectors for the specific cable length. Connectors add impact similar to 0.1-0.5 additional "
+        "meters of cable",
+        example="True",
+    )
+    thin_ethernet: bool | None = pyd.Field(
+        default=None,
+        description="At least part of this cable has a reduced outer diameter and thinner wires. Thin ethernet cables "
+        "have handling advantages and tend to have a reduced impact, but also reduced channel length. "
+        "See TIA 568.2-D Annex G.",
+        example="True",
+    )
 
 
 class FloorBoxesAndAccessoriesV1(BaseOpenEpdHierarchicalSpec):
@@ -88,15 +102,30 @@ class FloorBoxesAndAccessoriesV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     painted: bool | None = pyd.Field(default=None, description="", example="True")
-    fire_classified: bool | None = pyd.Field(default=None, description="", example="True")
-    outdoor: bool | None = pyd.Field(default=None, description="", example="True")
-    raised: bool | None = pyd.Field(default=None, description="", example="True")
-    poke_through: bool | None = pyd.Field(default=None, description="", example="True")
-    floor_box_cover: bool | None = pyd.Field(default=None, description="", example="True")
-    floor_box_outlets: int | None = pyd.Field(default=None, description="", example="3", le=16)
-    floor_box_material: FloorBoxMaterial | None = pyd.Field(default=None, description="", example="Metallic Box")
-    floor_box_cover_material: FloorBoxCoverMaterial | None = pyd.Field(default=None, description="", example="Brass")
-    floor_box_floor_material: FloorBoxFloorMaterial | None = pyd.Field(default=None, description="", example="Concrete")
+    fire_classified: bool | None = pyd.Field(
+        default=None, description="Includes hardware to maintain fire rating of the floor", example="True"
+    )
+    outdoor: bool | None = pyd.Field(default=None, description="Floor boxes installed in the ground", example="True")
+    raised: bool | None = pyd.Field(
+        default=None, description="Used in raised or computer style flooring", example="True"
+    )
+    poke_through: bool | None = pyd.Field(
+        default=None,
+        description="Used primarily in retrofit or renovation and will maintain fire rating of the floor",
+        example="True",
+    )
+    cover: bool | None = pyd.Field(
+        default=None, description="Floor box cover or lid for use with a separate floor box", example="True"
+    )
+    outlets: int | None = pyd.Field(
+        default=None,
+        description="Number of outlet ports from floor box, including power, data, video, and other connections",
+        example="3",
+        le=16,
+    )
+    material: FloorBoxMaterial | None = pyd.Field(default=None, description="", example="Metallic Box")
+    cover_material: FloorBoxCoverMaterial | None = pyd.Field(default=None, description="", example="Brass")
+    floor_material: FloorBoxFloorMaterial | None = pyd.Field(default=None, description="", example="Concrete")
 
 
 class NetworkingCableTraysV1(BaseOpenEpdHierarchicalSpec):
@@ -105,12 +134,14 @@ class NetworkingCableTraysV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    height: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    width: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    depth: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    static_load: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
-    ventilated: bool | None = pyd.Field(default=None, description="", example="True")
-    cable_trays_material: CableTraysMaterial | None = pyd.Field(default=None, description="", example="Stainless Steel")
+    height: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
+    width: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
+    depth: LengthMmStr | None = pyd.Field(default=None, description="Depth of enclosure system", example="1 m")
+    static_load: MassKgStr | None = pyd.Field(default=None, description="Mass that the unit can hold", example="1 kg")
+    ventilated: bool | None = pyd.Field(
+        default=None, description="At least 40% of the tray base is open to air flow", example="True"
+    )
+    material: CableTraysMaterial | None = pyd.Field(default=None, description="", example="Stainless Steel")
 
     _height_is_quantity_validator = pyd.validator("height", allow_reuse=True)(validate_unit_factory("m"))
     _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))
@@ -124,10 +155,14 @@ class NetworkingRacewaysV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    width: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    depth: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    width: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
+    depth: LengthMmStr | None = pyd.Field(default=None, description="Depth of enclosure system", example="100 mm")
     painted: bool | None = pyd.Field(default=None, description="", example="True")
-    divided: bool | None = pyd.Field(default=None, description="", example="True")
+    divided: bool | None = pyd.Field(
+        default=None,
+        description="Dual service raceway for high and low voltage data and power applications",
+        example="True",
+    )
     raceways_material: RacewaysMaterial | None = pyd.Field(default=None, description="", example="Aluminum")
 
     _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))

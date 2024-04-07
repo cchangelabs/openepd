@@ -19,8 +19,8 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import GypsumFacing, GypsumFireRating
-from openepd.model.validation.quantity import LengthMStr, validate_unit_factory
+from openepd.model.specs.generated.enums import GypsumFacing, GypsumFireRating, GypsumThickness
+from openepd.model.validation.quantity import LengthMmStr, validate_unit_factory
 
 
 class CementitiousSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
@@ -29,7 +29,7 @@ class CementitiousSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    cement_board_thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    cement_board_thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
 
     _cement_board_thickness_is_quantity_validator = pyd.validator("cement_board_thickness", allow_reuse=True)(
         validate_unit_factory("m")
@@ -42,27 +42,26 @@ class GypsumSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    gypsum_fire_rating: GypsumFireRating | None = pyd.Field(default=None, description="", example="-")
-    gypsum_thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    gypsum_facing: GypsumFacing | None = pyd.Field(default=None, description="", example="Paper")
-    gypsum_r_factor: str | None = pyd.Field(default=None, description="", example="1 RSI")
-    gypsum_flame_spread_astm_e84: int | None = pyd.Field(default=None, description="", example="3")
-    gypsum_smoke_production_astm_e84: int | None = pyd.Field(default=None, description="", example="3")
-    gypsum_surface_abrasion_d4977: int | None = pyd.Field(default=None, description="", example="3")
-    gypsum_indentation_d5420: int | None = pyd.Field(default=None, description="", example="3")
-    gypsum_soft_body_impact_e695: int | None = pyd.Field(default=None, description="", example="3")
-    gypsum_hard_body_impact_c1929: int | None = pyd.Field(default=None, description="", example="3")
+    fire_rating: GypsumFireRating | None = pyd.Field(default=None, description="", example="-")
+    thickness: GypsumThickness | None = pyd.Field(default=None, description="", example="9 mm")
+    facing: GypsumFacing | None = pyd.Field(default=None, description="", example="Paper")
+
+    r_factor: str | None = pyd.Field(default=None, description="", example="1 RSI")
+
+    flame_spread_astm_e84: int | None = pyd.Field(default=None, description="", example="3")
+    smoke_production_astm_e84: int | None = pyd.Field(default=None, description="", example="3")
+    surface_abrasion_d4977: int | None = pyd.Field(default=None, description="", example="3")
+    indentation_d5420: int | None = pyd.Field(default=None, description="", example="3")
+    soft_body_impact_e695: int | None = pyd.Field(default=None, description="", example="3")
+    hard_body_impact_c1929: int | None = pyd.Field(default=None, description="", example="3")
+
     mold_resistant: bool | None = pyd.Field(default=None, description="", example="True")
     foil_backing: bool | None = pyd.Field(default=None, description="", example="True")
     moisture_resistant: bool | None = pyd.Field(default=None, description="", example="True")
     abuse_resistant: bool | None = pyd.Field(default=None, description="", example="True")
 
-    _gypsum_thickness_is_quantity_validator = pyd.validator("gypsum_thickness", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-    _gypsum_r_factor_is_quantity_validator = pyd.validator("gypsum_r_factor", allow_reuse=True)(
-        validate_unit_factory("RSI")
-    )
+    _gypsum_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
+    _gypsum_r_factor_is_quantity_validator = pyd.validator("r_factor", allow_reuse=True)(validate_unit_factory("RSI"))
 
 
 class SheathingV1(BaseOpenEpdHierarchicalSpec):
