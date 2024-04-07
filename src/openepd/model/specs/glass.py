@@ -22,6 +22,7 @@ from enum import StrEnum
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.generated.enums import NAFSPerformanceGrade
 from openepd.model.validation.numbers import PositiveInt, RatioFloat
 from openepd.model.validation.quantity import HeatConductanceUCIStr, LengthMmStr, PressureMPaStr, QuantityStr
 
@@ -177,51 +178,6 @@ class HurricaneResistantMixin(BaseOpenEpdSchema):
     hurricane_resistant: bool | None = pyd.Field(
         default=None, description="The product has been designed to resist windborne debris."
     )
-
-
-class NAFSPerformanceGrade(StrEnum):
-    """NAFS Performance Grade enum."""
-
-    GRADE_15_PSF = "15 psf"
-    GRADE_20_PSF = "20 psf"
-    GRADE_25_PSF = "25 psf"
-    GRADE_30_PSF = "30 psf"
-    GRADE_35_PSF = "35 psf"
-    GRADE_40_PSF = "40 psf"
-    GRADE_45_PSF = "45 psf"
-    GRADE_50_PSF = "50 psf"
-    GRADE_55_PSF = "55 psf"
-    GRADE_60_PSF = "60 psf"
-    GRADE_65_PSF = "65 psf"
-    GRADE_70_PSF = "70 psf"
-    GRADE_75_PSF = "75 psf"
-    GRADE_80_PSF = "80 psf"
-    GRADE_85_PSF = "85 psf"
-    GRADE_90_PSF = "90 psf"
-    GRADE_95_PSF = "95 psf"
-    GRADE_100_PSF = "100 psf"
-    GRADE_105_PSF = "105 psf"
-    GRADE_110_PSF = "110 psf"
-    GRADE_115_PSF = "115 psf"
-    GRADE_120_PSF = "120 psf"
-    GRADE_125_PSF = "125 psf"
-    GRADE_130_PSF = "130 psf"
-    GRADE_135_PSF = "135 psf"
-    GRADE_140_PSF = "140 psf"
-    GRADE_145_PSF = "145 psf"
-    GRADE_150_PSF = "150 psf"
-    GRADE_155_PSF = "155 psf"
-    GRADE_160_PSF = "160 psf"
-    GRADE_165_PSF = "165 psf"
-    GRADE_170_PSF = "170 psf"
-    GRADE_175_PSF = "175 psf"
-    GRADE_180_PSF = "180 psf"
-    GRADE_185_PSF = "185 psf"
-    GRADE_190_PSF = "190 psf"
-    GRADE_195_PSF = "195 psf"
-    GRADE_200_PSF = "200 psf"
-    GRADE_205_PSF = "205 psf"
-    GRADE_210_PSF = "210 psf"
 
 
 class SpacerEnum(StrEnum):

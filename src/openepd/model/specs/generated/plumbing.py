@@ -20,7 +20,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import FireProtectionPipingMaterial, PipingAnsiSchedule, PlumbingPipingMaterial
-from openepd.model.validation.quantity import LengthMStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, validate_unit_factory
 
 
 class BathtubsV1(BaseOpenEpdHierarchicalSpec):
@@ -53,8 +53,8 @@ class FireProtectionPipingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    piping_diameter: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="6 mm")
+    piping_diameter: LengthMmStr | None = pyd.Field(default=None, description="", example="120 mm")
     mass_per_unit_length: str | None = pyd.Field(default=None, description="", example="1 kg / m")
     piping_ansi_schedule: PipingAnsiSchedule | None = pyd.Field(default=None, description="", example="5")
     fire_protection_piping_material: FireProtectionPipingMaterial | None = pyd.Field(
@@ -116,8 +116,8 @@ class PipingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    piping_diameter: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="6 mm")
+    piping_diameter: LengthMmStr | None = pyd.Field(default=None, description="", example="120 mm")
     mass_per_unit_length: str | None = pyd.Field(default=None, description="", example="1 kg / m")
     piping_ansi_schedule: PipingAnsiSchedule | None = pyd.Field(default=None, description="", example="5")
     plumbing_piping_material: PlumbingPipingMaterial | None = pyd.Field(default=None, description="", example="PVC")

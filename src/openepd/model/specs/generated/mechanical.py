@@ -46,9 +46,7 @@ class HvacVrfIndoorV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    mechanical_refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(
-        default=None, description="", example="['R11']"
-    )
+    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example="['R11']")
     heating_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
     cooling_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
     airflow_rate: str | None = pyd.Field(default=None, description="", example="1 m3 / s")
@@ -72,9 +70,7 @@ class HvacVrfOutdoorV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    mechanical_refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(
-        default=None, description="", example="['R11']"
-    )
+    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example="['R11']")
     heating_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
     cooling_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
     airflow_rate: str | None = pyd.Field(default=None, description="", example="1 m3 / s")
@@ -104,8 +100,8 @@ class HvacAirFiltersV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    air_filters_merv_rating: AirFiltersMervRating | None = pyd.Field(default=None, description="", example="MERV 1")
-    air_filters_media_type: AirFiltersMediaType | None = pyd.Field(default=None, description="", example="Acrylic")
+    merv_rating: AirFiltersMervRating | None = pyd.Field(default=None, description="", example="MERV 1")
+    media_type: AirFiltersMediaType | None = pyd.Field(default=None, description="", example="Acrylic")
 
 
 class HvacAHUsV1(BaseOpenEpdHierarchicalSpec):
@@ -114,16 +110,14 @@ class HvacAHUsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    mechanical_refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(
-        default=None, description="", example="['R11']"
-    )
-    mechanical_installation: MechanicalInstallation | None = pyd.Field(default=None, description="", example="Indoor")
+    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example="['R11']")
+    installation: MechanicalInstallation | None = pyd.Field(default=None, description="", example="Indoor")
     airflow_rate: str | None = pyd.Field(default=None, description="", example="1 m3 / s")
     air_volume: str | None = pyd.Field(default=None, description="", example="1 m3")
     cooling_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
     heating_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
-    ahu_airflow_control: AhuAirflowControl | None = pyd.Field(default=None, description="", example="CAV")
-    ahu_zone_control: AhuZoneControl | None = pyd.Field(default=None, description="", example="Single Zone")
+    airflow_control: AhuAirflowControl | None = pyd.Field(default=None, description="", example="CAV")
+    zone_control: AhuZoneControl | None = pyd.Field(default=None, description="", example="Single Zone")
 
     _airflow_rate_is_quantity_validator = pyd.validator("airflow_rate", allow_reuse=True)(
         validate_unit_factory("m3 / s")
@@ -145,10 +139,8 @@ class HvacBoilersV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     flow_rate: str | None = pyd.Field(default=None, description="", example="1 l / min")
     heating_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
-    boilers_configuration: BoilerConfiguration | None = pyd.Field(default=None, description="", example="Hot water")
-    boilers_equipment_fuel_type: BoilerEquipmentFuelType | None = pyd.Field(
-        default=None, description="", example="Coal"
-    )
+    configuration: BoilerConfiguration | None = pyd.Field(default=None, description="", example="Hot water")
+    fuel_type: BoilerEquipmentFuelType | None = pyd.Field(default=None, description="", example="Coal")
 
     _flow_rate_is_quantity_validator = pyd.validator("flow_rate", allow_reuse=True)(validate_unit_factory("l / min"))
     _heating_capacity_is_quantity_validator = pyd.validator("heating_capacity", allow_reuse=True)(
@@ -162,10 +154,8 @@ class HvacChillersV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    mechanical_refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(
-        default=None, description="", example="['R11']"
-    )
-    mechanical_installation: MechanicalInstallation | None = pyd.Field(default=None, description="", example="Indoor")
+    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example="['R11']")
+    installation: MechanicalInstallation | None = pyd.Field(default=None, description="", example="Indoor")
     heating_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
     cooling_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
     air_volume: str | None = pyd.Field(default=None, description="", example="1 m3")
@@ -195,9 +185,7 @@ class HvacHeatPumpsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    mechanical_refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(
-        default=None, description="", example="['R11']"
-    )
+    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example="['R11']")
     cooling_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
     heating_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
     air_volume: str | None = pyd.Field(default=None, description="", example="1 m3")
@@ -217,15 +205,13 @@ class HvacHeatPumpsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class HvacHeatExV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac heat ex performance specification."""
+    """Hvac heat exchangers performance specification."""
 
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    mechanical_refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(
-        default=None, description="", example="['R11']"
-    )
-    hvac_heat_exchangers_type: HvacHeatExchangersType | None = pyd.Field(
+    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example="['R11']")
+    heat_exchangers_type: HvacHeatExchangersType | None = pyd.Field(
         default=None, description="", example="Shell and Tube"
     )
 

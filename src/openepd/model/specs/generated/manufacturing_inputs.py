@@ -39,9 +39,7 @@ class CementV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    cementitious: Cementitious | None = pyd.Field(
-        default=None, description="", example="test_valueValidatedJSONProperty"
-    )
+    cementitious: Cementitious | None = pyd.Field(default=None, description="")
     white_cement: bool | None = pyd.Field(default=None, description="", example="True")
     astm_type: CementAstmType | None = pyd.Field(default=None, description="", example="C150 Type I")
     c1157: list[CementC1157] | None = pyd.Field(default=None, description="", example="['GU']")
@@ -54,12 +52,9 @@ class MasonryCementV1(BaseOpenEpdHierarchicalSpec):
     """Masonry cement performance specification."""
 
     _EXT_VERSION = "1.0"
-    """Concretes that are mixed just before use, and then poured on-site into forms"""
 
     # Own fields:
-    masonry_cement_astm_c91_type: MasonryCementAstmC91Type | None = pyd.Field(
-        default=None, description="", example="Type N"
-    )
+    astm_c91_type: MasonryCementAstmC91Type | None = pyd.Field(default=None, description="", example="Type N")
 
 
 class SupplementaryCementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):
@@ -78,17 +73,15 @@ class AccessFlooringPedestalsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class CarpetBackingV1(BaseOpenEpdHierarchicalSpec):
-    """Carpet backing performance specification."""
+    """Fabric backing holding a carpet together."""
 
     _EXT_VERSION = "1.0"
-    """Fabric backing holding a carpet together"""
 
 
 class CarpetFiberV1(BaseOpenEpdHierarchicalSpec):
-    """Carpet fiber performance specification."""
+    """Fiber yarn used in the manufacture of carpet, typically nylon or wool."""
 
     _EXT_VERSION = "1.0"
-    """Fiber yarn used in the manufacture of carpet, typically nylon or wool"""
 
     # Own fields:
     yarn_material: CarpetYarnType | None = pyd.Field(default=None, description="", example="Nylon 6,6")
@@ -112,9 +105,7 @@ class ConcreteAdmixturesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    admixture_effects: list[AdmixtureEffects] | None = pyd.Field(
-        default=None, description="", example="['Air Entrainer']"
-    )
+    effects: list[AdmixtureEffects] | None = pyd.Field(default=None, description="", example="['Air Entrainer']")
 
 
 class TextilesV1(BaseOpenEpdHierarchicalSpec):
@@ -123,9 +114,7 @@ class TextilesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    textiles_fabric_type: list[TextilesFabricType] | None = pyd.Field(
-        default=None, description="", example="['Leather']"
-    )
+    fabric_type: list[TextilesFabricType] | None = pyd.Field(default=None, description="", example="['Leather']")
 
 
 class ManufacturingInputsV1(BaseOpenEpdHierarchicalSpec):

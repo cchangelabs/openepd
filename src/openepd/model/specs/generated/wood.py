@@ -30,7 +30,8 @@ from openepd.model.specs.generated.enums import (
     SawnTimberSpecies,
     SheathingPanelsFabrication,
 )
-from openepd.model.validation.quantity import LengthMStr, validate_unit_factory
+from openepd.model.validation.numbers import RatioFloat
+from openepd.model.validation.quantity import LengthMmStr, validate_unit_factory
 
 
 class WoodDeckingV1(BaseOpenEpdHierarchicalSpec):
@@ -115,7 +116,7 @@ class SheathingPanelsV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     fabrication: SheathingPanelsFabrication | None = pyd.Field(default=None, description="", example="Plywood")
-    wood_board_thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    wood_board_thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
     timber_species: EngineeredTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
 
     _wood_board_thickness_is_quantity_validator = pyd.validator("wood_board_thickness", allow_reuse=True)(
@@ -135,18 +136,25 @@ class WoodV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    timber_species: AllTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
-    fabrication: AllFabrication | None = pyd.Field(default=None, description="", example="LVL")
-    forest_practices_certifiers: list[OrgRef] | None = pyd.Field(default=None, description="")
-    weather_exposed: bool | None = pyd.Field(default=None, description="", example="True")
-    fire_retardant: bool | None = pyd.Field(default=None, description="", example="True")
-    decay_resistant: bool | None = pyd.Field(default=None, description="", example="True")
-    timber_strength_grade: str | None = pyd.Field(
-        default=None, description="", example="test_valueValidatedStringProperty"
+    timber_species: AllTimberSpecies | None = pyd.Field(
+        default=None, description="Timber species", example="Alaska Cedar"
     )
-    fsc_certified: float | None = pyd.Field(default=None, description="", example="2.3")
-    fsc_certified_z: float | None = pyd.Field(default=None, description="", example="2.3")
-    recycled_content_z: float | None = pyd.Field(default=None, description="", example="2.3")
+    fabrication: AllFabrication | None = pyd.Field(default=None, description="Timber fabrication", example="LVL")
+    forest_practices_certifiers: list[OrgRef] | None = pyd.Field(
+        default=None, description="List of organizations that certify forest practices."
+    )
+    weather_exposed: bool | None = pyd.Field(default=None, description="Weather exposed", example="True")
+    fire_retardant: bool | None = pyd.Field(default=None, description="Fire retardant", example="True")
+    decay_resistant: bool | None = pyd.Field(default=None, description="Decay resistant", example="True")
+    fsc_certified: RatioFloat | None = pyd.Field(
+        default=None, description="Forest Stewardship Council certified proportion", example="0.3", ge=0, le=1
+    )
+    fsc_certified_z: float | None = pyd.Field(default=None, description="", example="0.7")
+
+    recycled_content: RatioFloat | None = pyd.Field(
+        default=None, description="Recycled content", example="0.3", ge=0, le=1
+    )
+    recycled_content_z: float | None = pyd.Field(default=None, description="", example="0.7")
 
     # Nested specs:
     CompositeLumber: CompositeLumberV1 | None = None

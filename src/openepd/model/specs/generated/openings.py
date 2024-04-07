@@ -17,14 +17,55 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-from typing import TypeAlias
 
 from openepd.compat.pydantic import pyd
+from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import FrameMaterial, HardwareFunction, Spacer, ThermalSeparation
-from openepd.model.specs.glass import NAFSPerformanceGrade
+from openepd.model.specs.generated.enums import (
+    FlatGlassPanesThickness,
+    FrameMaterial,
+    HardwareFunction,
+    NAFSPerformanceGrade,
+    Spacer,
+    ThermalSeparation,
+)
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import LengthMStr, PressureMPaStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, validate_unit_factory
+
+
+class GlazingIntendedApplication(BaseOpenEpdSchema):
+    """Glass intended application mixin."""
+
+    curtain_wall: bool | None = pyd.Field(default=None, description="Intended for curtain walls. Relevant for IGUs.")
+    r_windows: bool | None = pyd.Field(
+        default=None,
+        description="Intended for residential (NAFS 'R') and similar windows, doors, or skylights. Relevant for IGUs.",
+    )
+    lc_windows: bool | None = pyd.Field(
+        default=None, description="Intended for light commercial (NAFS 'LC') and similar windows. Relevant for IGUs."
+    )
+    cw_windows: bool | None = pyd.Field(
+        default=None, description="Intended for commercial (NAFS 'CW') and similar windows. Relevant for IGUs."
+    )
+    aw_windows: bool | None = pyd.Field(
+        default=None, description="Intended for architectural (NAFS 'AW') and similar windows. Relevant for IGUs."
+    )
+    storefronts: bool | None = pyd.Field(
+        default=None, description="Intended for Storefronts and similar applications. Relevant for IGUs."
+    )
+    glazed_doors: bool | None = pyd.Field(
+        default=None, description="Intended for Glazed Doors and similar applications. Relevant for IGUs."
+    )
+    unit_skylights: bool | None = pyd.Field(
+        default=None, description="Intended for Unit Skylights and similar applications. Relevant for IGUs."
+    )
+    sloped_skylights: bool | None = pyd.Field(
+        default=None,
+        description="Intended for sloped glazing, and architectural skylights, and similar. Relevant for IGUs.",
+    )
+    other: bool | None = pyd.Field(
+        default=None, description="Intended for other application not listed. Relevant for IGUs."
+    )
 
 
 class PanelDoorsV1(BaseOpenEpdHierarchicalSpec):
@@ -68,7 +109,7 @@ class FenestrationFramingV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     thermal_separation: ThermalSeparation | None = pyd.Field(default=None, description="", example="Aluminium")
-    frame_material: FrameMaterial | None = pyd.Field(default=None, description="", example="Vinyl")
+    material: FrameMaterial | None = pyd.Field(default=None, description="", example="Vinyl")
 
 
 class FenestrationHardwareV1(BaseOpenEpdHierarchicalSpec):
@@ -77,7 +118,7 @@ class FenestrationHardwareV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    hardware_function: HardwareFunction | None = pyd.Field(default=None, description="", example="Lock")
+    function: HardwareFunction | None = pyd.Field(default=None, description="", example="Lock")
 
 
 class FlatGlassPanesV1(BaseOpenEpdHierarchicalSpec):
@@ -86,9 +127,9 @@ class FlatGlassPanesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    flat_glass_panes_thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    thickness: FlatGlassPanesThickness | None = pyd.Field(default=None, description="", example="12 mm")
 
-    _flat_glass_panes_thickness_is_quantity_validator = pyd.validator("flat_glass_panes_thickness", allow_reuse=True)(
+    _flat_glass_panes_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
         validate_unit_factory("m")
     )
 
@@ -164,16 +205,9 @@ class FenestrationPartsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    glazing_intended_application_curtain_wall: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_r_windows: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_lc_windows: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_cw_windows: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_aw_windows: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_storefronts: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_glazed_doors: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_unit_skylights: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_sloped_skylights: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_other: bool | None = pyd.Field(default=None, description="", example="True")
+    intended_application: GlazingIntendedApplication | None = pyd.Field(
+        default=None, description="Intended application."
+    )
 
     # Nested specs:
     FenestrationAccessories: FenestrationAccessoriesV1 | None = None
@@ -191,8 +225,31 @@ class GlassPanesV1(BaseOpenEpdHierarchicalSpec):
     ProcessedNonInsulatingGlassPanes: ProcessedNonInsulatingGlassPanesV1 | None = None
 
 
-# special case of quantity which is also enum
-NAFSPerformanceGradePSFStrQuantity: TypeAlias = NAFSPerformanceGrade
+class NAFSPerformanceClass(BaseOpenEpdSchema):
+    """NAFS Performance class."""
+
+    r: bool | None = pyd.Field(
+        default=None, description="Residential; commonly used in one- and two-family dwellings.", example="True"
+    )
+    lc: bool | None = pyd.Field(
+        default=None,
+        description="Light Commercial: commonly used in low-rise and mid-rise multi-family dwellings and other "
+        "buildings where larger sizes and higher loading requirements are expected.",
+        example="True",
+    )
+    cw: bool | None = pyd.Field(
+        default=None,
+        description="Commercial Window: commonly used in low-rise and mid-rise buildings where larger sizes, higher "
+        "loading requirements, limits on deflection, and heavy use are expected.",
+        example="True",
+    )
+    aw: bool | None = pyd.Field(
+        default=None,
+        description="Architectural Window: commonly used in high-rise and mid-rise buildings to meet increased "
+        "loading requirements and limits on deflection, and in buildings where frequent and extreme use "
+        "of the fenestration products is expected.",
+        example="True",
+    )
 
 
 class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec):
@@ -218,12 +275,19 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec):
     air_infiltration: str | None = pyd.Field(default=None, description="", example="1 m / s")
     dp_rating: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
     glass_panes: int | None = pyd.Field(default=None, description="", example="3")
-    nafs_performance_class_r: bool | None = pyd.Field(default=None, description="", example="True")
-    nafs_performance_class_lc: bool | None = pyd.Field(default=None, description="", example="True")
-    nafs_performance_class_cw: bool | None = pyd.Field(default=None, description="", example="True")
-    nafs_performance_class_aw: bool | None = pyd.Field(default=None, description="", example="True")
-    nafs_performance_grade: NAFSPerformanceGradePSFStrQuantity | None = pyd.Field(
-        default=None, description="", example="95 psf"
+
+    performance_class: NAFSPerformanceClass | None = pyd.Field(
+        default=None, description="Performance class according to NAFS."
+    )
+
+    performance_grade: NAFSPerformanceGrade | None = pyd.Field(
+        default=None,
+        description="NAFS Performance Grade. The NAFS Performance Grade is a number that represents the performance "
+        "of the glazing product. The higher the number, the better the performance. The NAFS Performance "
+        "Grade is calculated using the NAFS Performance Class, the NAFS Performance Index, and the NAFS "
+        "Performance Factor. While it is expressed as pressure, there are specific values which are "
+        "allowed. The values are listed in the enum.",
+        example="95 psf",
     )
 
     _assembly_u_factor_is_quantity_validator = pyd.validator("assembly_u_factor", allow_reuse=True)(
@@ -233,7 +297,7 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec):
         validate_unit_factory("m / s")
     )
     _dp_rating_is_quantity_validator = pyd.validator("dp_rating", allow_reuse=True)(validate_unit_factory("MPa"))
-    _nafs_performance_grade_is_quantity_validator = pyd.validator("nafs_performance_grade", allow_reuse=True)(
+    _nafs_performance_grade_is_quantity_validator = pyd.validator("performance_grade", allow_reuse=True)(
         validate_unit_factory("psf")
     )
 
@@ -249,16 +313,10 @@ class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    glazing_intended_application_curtain_wall: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_r_windows: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_lc_windows: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_cw_windows: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_aw_windows: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_storefronts: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_glazed_doors: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_unit_skylights: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_sloped_skylights: bool | None = pyd.Field(default=None, description="", example="True")
-    glazing_intended_application_other: bool | None = pyd.Field(default=None, description="", example="True")
+    intended_application: GlazingIntendedApplication | None = pyd.Field(
+        default=None, description="Intended application for IGUs."
+    )
+
     hurricane_resistant: bool | None = pyd.Field(default=None, description="", example="True")
     low_emissivity: bool | None = pyd.Field(default=None, description="", example="True")
     electrochromic: bool | None = pyd.Field(default=None, description="", example="True")
@@ -296,8 +354,8 @@ class DoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    height: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    width: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    height: LengthMmStr | None = pyd.Field(default=None, description="", example="1200 mm")
+    width: LengthMmStr | None = pyd.Field(default=None, description="", example="600 mm")
 
     _height_is_quantity_validator = pyd.validator("height", allow_reuse=True)(validate_unit_factory("m"))
     _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))
@@ -351,7 +409,7 @@ class OpeningsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="80 mm")
 
     _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
 

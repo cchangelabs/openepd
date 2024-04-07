@@ -33,9 +33,11 @@ from openepd.model.specs.generated.enums import (
     CarpetYarnType,
     CeilingPanelCoreMaterial,
     CeilingPanelFireRating,
+    CementBoardThickness,
     DeckingBoardMaterial,
     GypsumFacing,
     GypsumFireRating,
+    GypsumThickness,
     ResilientFlooringFormFactor,
     ResilientFlooringMaterial,
     ResilientFlooringThickness,
@@ -46,7 +48,15 @@ from openepd.model.specs.generated.enums import (
     WoodFlooringTimberSpecies,
 )
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import GwpKgCo2eStr, LengthMStr, PressureMPaStr, validate_unit_factory
+from openepd.model.validation.quantity import (
+    GwpKgCo2eStr,
+    LengthMmStr,
+    LengthMStr,
+    PressureMPaStr,
+    validate_quantity_ge_factory,
+    validate_quantity_le_factory,
+    validate_unit_factory,
+)
 
 
 class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
@@ -55,47 +65,39 @@ class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    access_flooring_core_material: AccessFlooringCoreMaterial | None = pyd.Field(
-        default=None, description="", example="Cementitious"
-    )
-    access_flooring_finish_material: AccessFlooringFinishMaterial | None = pyd.Field(
-        default=None, description="", example="Linoleum"
-    )
-    access_flooring_stringers: AccessFlooringStringers | None = pyd.Field(
-        default=None, description="", example="Standard"
-    )
-    access_flooring_seismic_rating: AccessFlooringSeismicRating | None = pyd.Field(
-        default=None, description="", example="Type 0"
-    )
-    access_flooring_magnetically_attached_finish: bool | None = pyd.Field(default=None, description="", example="True")
-    access_flooring_permanent_finish: bool | None = pyd.Field(default=None, description="", example="True")
-    access_flooring_drylay: bool | None = pyd.Field(default=None, description="", example="True")
-    access_flooring_adjustable_height: bool | None = pyd.Field(default=None, description="", example="True")
-    access_flooring_fixed_height: bool | None = pyd.Field(default=None, description="", example="True")
-    access_flooring_finished_floor_height: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    access_flooring_panel_thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    access_flooring_concentrated_load: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    access_flooring_uniform_load: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    access_flooring_rolling_load_10_pass: str | None = pyd.Field(default=None, description="", example="1 N")
-    access_flooring_rolling_load_10000_pass: str | None = pyd.Field(default=None, description="", example="1 N")
+    core_material: AccessFlooringCoreMaterial | None = pyd.Field(default=None, description="", example="Cementitious")
+    finish_material: AccessFlooringFinishMaterial | None = pyd.Field(default=None, description="", example="Linoleum")
+    stringers: AccessFlooringStringers | None = pyd.Field(default=None, description="", example="Standard")
+    seismic_rating: AccessFlooringSeismicRating | None = pyd.Field(default=None, description="", example="Type 0")
+    magnetically_attached_finish: bool | None = pyd.Field(default=None, description="", example="True")
+    permanent_finish: bool | None = pyd.Field(default=None, description="", example="True")
+    drylay: bool | None = pyd.Field(default=None, description="", example="True")
+    adjustable_height: bool | None = pyd.Field(default=None, description="", example="True")
+    fixed_height: bool | None = pyd.Field(default=None, description="", example="True")
+    finished_floor_height: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
+    panel_thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
+    concentrated_load: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
+    uniform_load: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
+    rolling_load_10_pass: str | None = pyd.Field(default=None, description="", example="1 N")
+    rolling_load_10000_pass: str | None = pyd.Field(default=None, description="", example="1 N")
 
     _access_flooring_finished_floor_height_is_quantity_validator = pyd.validator(
-        "access_flooring_finished_floor_height", allow_reuse=True
+        "finished_floor_height", allow_reuse=True
     )(validate_unit_factory("m"))
-    _access_flooring_panel_thickness_is_quantity_validator = pyd.validator(
-        "access_flooring_panel_thickness", allow_reuse=True
-    )(validate_unit_factory("m"))
-    _access_flooring_concentrated_load_is_quantity_validator = pyd.validator(
-        "access_flooring_concentrated_load", allow_reuse=True
-    )(validate_unit_factory("MPa"))
-    _access_flooring_uniform_load_is_quantity_validator = pyd.validator(
-        "access_flooring_uniform_load", allow_reuse=True
-    )(validate_unit_factory("MPa"))
+    _access_flooring_panel_thickness_is_quantity_validator = pyd.validator("panel_thickness", allow_reuse=True)(
+        validate_unit_factory("m")
+    )
+    _access_flooring_concentrated_load_is_quantity_validator = pyd.validator("concentrated_load", allow_reuse=True)(
+        validate_unit_factory("MPa")
+    )
+    _access_flooring_uniform_load_is_quantity_validator = pyd.validator("uniform_load", allow_reuse=True)(
+        validate_unit_factory("MPa")
+    )
     _access_flooring_rolling_load_10_pass_is_quantity_validator = pyd.validator(
-        "access_flooring_rolling_load_10_pass", allow_reuse=True
+        "rolling_load_10_pass", allow_reuse=True
     )(validate_unit_factory("N"))
     _access_flooring_rolling_load_10000_pass_is_quantity_validator = pyd.validator(
-        "access_flooring_rolling_load_10000_pass", allow_reuse=True
+        "rolling_load_10000_pass", allow_reuse=True
     )(validate_unit_factory("N"))
 
 
@@ -157,18 +159,12 @@ class ResilientFlooringV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     length: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
     width: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    resilient_flooring_form_factor: ResilientFlooringFormFactor | None = pyd.Field(
-        default=None, description="", example="Loose Lay"
-    )
-    resilient_flooring_material: ResilientFlooringMaterial | None = pyd.Field(
-        default=None, description="", example="VCT"
-    )
+    form_factor: ResilientFlooringFormFactor | None = pyd.Field(default=None, description="", example="Loose Lay")
+    material: ResilientFlooringMaterial | None = pyd.Field(default=None, description="", example="VCT")
     sheet_construction: VinylSheetConstruction | None = pyd.Field(default=None, description="", example="Homogeneous")
-    resilient_flooring_wear_layer: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    resilient_flooring_delta_iic: float | None = pyd.Field(default=None, description="", example="2.3")
-    resilient_flooring_thickness: ResilientFlooringThickness | None = pyd.Field(
-        default=None, description="", example="≤ 2mm"
-    )
+    wear_layer: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
+    delta_iic: float | None = pyd.Field(default=None, description="", example="2.3")
+    thickness: ResilientFlooringThickness | None = pyd.Field(default=None, description="", example="≤ 2mm")
     sport_flooring: bool | None = pyd.Field(default=None, description="", example="True")
     conductive_flooring: bool | None = pyd.Field(default=None, description="", example="True")
     zwtl: bool | None = pyd.Field(default=None, description="", example="True")
@@ -177,9 +173,9 @@ class ResilientFlooringV1(BaseOpenEpdHierarchicalSpec):
 
     _length_is_quantity_validator = pyd.validator("length", allow_reuse=True)(validate_unit_factory("m"))
     _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))
-    _resilient_flooring_wear_layer_is_quantity_validator = pyd.validator(
-        "resilient_flooring_wear_layer", allow_reuse=True
-    )(validate_unit_factory("m"))
+    _resilient_flooring_wear_layer_is_quantity_validator = pyd.validator("wear_layer", allow_reuse=True)(
+        validate_unit_factory("m")
+    )
 
 
 class WallBaseV1(BaseOpenEpdHierarchicalSpec):
@@ -197,7 +193,7 @@ class WoodFlooringV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
     timber_species: WoodFlooringTimberSpecies | None = pyd.Field(default=None, description="", example="Oak")
     fabrication: WoodFlooringFabrication | None = pyd.Field(default=None, description="", example="Solid hardwood")
     forest_practices_certifiers: list[OrgRef] | None = pyd.Field(
@@ -213,7 +209,7 @@ class AcousticalCeilingsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
 
     _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
 
@@ -285,10 +281,30 @@ class GlassTileV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    regular: bool | None = pyd.Field(default=None, description="", example="True")
-    glass_mosaic: bool | None = pyd.Field(default=None, description="", example="True")
-    miniature_mosaic: bool | None = pyd.Field(default=None, description="", example="True")
-    large_format: bool | None = pyd.Field(default=None, description="", example="True")
+    regular: bool | None = pyd.Field(
+        default=None,
+        description="Glass tile that is typically square or rectangular in shape, and used for a variety of "
+        "decorative applications, such as kitchen backsplashes, shower walls, and accent borders.",
+        example="True",
+    )
+    glass_mosaic: bool | None = pyd.Field(
+        default=None,
+        description="A small, decorative glass tile made in a variety of shapes and colors, used for intricate "
+        "designs and patterns on walls, floors, and other surfaces.",
+        example="True",
+    )
+    miniature_mosaic: bool | None = pyd.Field(
+        default=None,
+        description="Glass mosaic tile that is smaller in size than regular glass mosaic tile, often used for "
+        "intricate details and designs in backsplashes, shower walls, and decorative accents.",
+        example="True",
+    )
+    large_format: bool | None = pyd.Field(
+        default=None,
+        description="Glass tile that is larger in size than regular glass tile, often used to create a dramatic and "
+        "modern effect in commercial and residential spaces.",
+        example="True",
+    )
 
 
 class GypsumSupportsV1(BaseOpenEpdHierarchicalSpec):
@@ -319,14 +335,18 @@ class CeilingPanelV1(BaseOpenEpdHierarchicalSpec):
     """Modular Ceiling Panels"""
 
     # Own fields:
-    ceiling_panel_fire_rating: CeilingPanelFireRating | None = pyd.Field(
-        default=None, description="", example="Class A"
+    fire_rating: CeilingPanelFireRating | None = pyd.Field(default=None, description="", example="Class A")
+    core_material: CeilingPanelCoreMaterial | None = pyd.Field(default=None, description="", example="Fiberglass")
+    nrc: RatioFloat | None = pyd.Field(
+        default=None,
+        description="Noise Reduction Coefficient (NRC) or Sound Absorbtion Average (SAA) per ASTM C423",
+        example="0.5",
+        ge=0,
+        le=1,
     )
-    ceiling_panel_core_material: CeilingPanelCoreMaterial | None = pyd.Field(
-        default=None, description="", example="Fiberglass"
+    cac: int | None = pyd.Field(
+        default=None, description="Ceiling Attenuation Class (CAC) per ASTM E1414", example="3", ge=10, le=50
     )
-    ceiling_panel_nrc: RatioFloat | None = pyd.Field(default=None, description="", example="0.5", ge=0, le=1)
-    ceiling_panel_cac: int | None = pyd.Field(default=None, description="", example="3")
 
     # Nested specs:
     AcousticalCeilings: AcousticalCeilingsV1 | None = None
@@ -344,9 +364,11 @@ class CementBoardV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    cement_board_thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    thickness: CementBoardThickness | None = pyd.Field(
+        default=None, description="", example=CementBoardThickness.INCH_1_2
+    )
 
-    _cement_board_thickness_is_quantity_validator = pyd.validator("cement_board_thickness", allow_reuse=True)(
+    _cement_board_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
         validate_unit_factory("m")
     )
 
@@ -386,7 +408,7 @@ class TilingV1(BaseOpenEpdHierarchicalSpec):
         description="Steel-reinforced ceramic tiles or tiles with other special reinforcing technology.",
         example="True",
     )
-    tiling_total_recycled_content: RatioFloat | None = pyd.Field(
+    total_recycled_content: RatioFloat | None = pyd.Field(
         default=None,
         description="Proportion of this product that is sourced from recycled content. Pre-consumer recycling is "
         "given a 50% weighting, 100% for post-consumer, by mass.",
@@ -394,7 +416,7 @@ class TilingV1(BaseOpenEpdHierarchicalSpec):
         ge=0,
         le=1,
     )
-    tiling_post_consumer_recycled_content: RatioFloat | None = pyd.Field(
+    post_consumer_recycled_content: RatioFloat | None = pyd.Field(
         default=None,
         description="Proportion of this product that is sourced from post-consumer recycled content, by mass.",
         example="0.5",
@@ -403,6 +425,8 @@ class TilingV1(BaseOpenEpdHierarchicalSpec):
     )
 
     _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
+    _thickness_min_validator = pyd.validator("thickness", allow_reuse=True)(validate_quantity_ge_factory("0 mm"))
+    _thickness_max_validator = pyd.validator("thickness", allow_reuse=True)(validate_quantity_le_factory("50 mm"))
 
     # Nested specs:
     CeramicTile: CeramicTileV1 | None = None
@@ -424,7 +448,7 @@ class DeckingBoardsV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers)
     weather_exposed: bool | None = pyd.Field(default=None, description="", example="True")
     fire_retardant: bool | None = pyd.Field(default=None, description="", example="True")
     decay_resistant: bool | None = pyd.Field(default=None, description="", example="True")
-    decking_board_material: DeckingBoardMaterial | None = pyd.Field(default=None, description="", example="Wood")
+    material: DeckingBoardMaterial | None = pyd.Field(default=None, description="", example="Wood")
 
 
 class GlassFiberReinforcedGypsumFabricationsV1(BaseOpenEpdHierarchicalSpec):
@@ -434,33 +458,28 @@ class GlassFiberReinforcedGypsumFabricationsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class GypsumV1(BaseOpenEpdHierarchicalSpec):
-    """Gypsum performance specification."""
+    """Gypsum Sheet and Board."""
 
     _EXT_VERSION = "1.0"
-    """Gypsum Sheet and Board"""
 
     # Own fields:
-    gypsum_fire_rating: GypsumFireRating | None = pyd.Field(default=None, description="", example="-")
-    gypsum_thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    gypsum_facing: GypsumFacing | None = pyd.Field(default=None, description="", example="Paper")
-    gypsum_r_factor: str | None = pyd.Field(default=None, description="", example="1 RSI")
-    gypsum_flame_spread_astm_e84: int | None = pyd.Field(default=None, description="", example="3")
-    gypsum_smoke_production_astm_e84: int | None = pyd.Field(default=None, description="", example="3")
-    gypsum_surface_abrasion_d4977: int | None = pyd.Field(default=None, description="", example="3")
-    gypsum_indentation_d5420: int | None = pyd.Field(default=None, description="", example="3")
-    gypsum_soft_body_impact_e695: int | None = pyd.Field(default=None, description="", example="3")
-    gypsum_hard_body_impact_c1929: int | None = pyd.Field(default=None, description="", example="3")
+    fire_rating: GypsumFireRating | None = pyd.Field(default=None, description="", example="-")
+    thickness: GypsumThickness | None = pyd.Field(default=None, description="", example="1 m")
+    facing: GypsumFacing | None = pyd.Field(default=None, description="", example="Paper")
+    r_factor: str | None = pyd.Field(default=None, description="", example="1 RSI")
+    flame_spread_astm_e84: int | None = pyd.Field(default=None, description="", example="3")
+    smoke_production_astm_e84: int | None = pyd.Field(default=None, description="", example="3")
+    surface_abrasion_d4977: int | None = pyd.Field(default=None, description="", example="3")
+    indentation_d5420: int | None = pyd.Field(default=None, description="", example="3")
+    soft_body_impact_e695: int | None = pyd.Field(default=None, description="", example="3")
+    hard_body_impact_c1929: int | None = pyd.Field(default=None, description="", example="3")
     mold_resistant: bool | None = pyd.Field(default=None, description="", example="True")
     foil_backing: bool | None = pyd.Field(default=None, description="", example="True")
     moisture_resistant: bool | None = pyd.Field(default=None, description="", example="True")
     abuse_resistant: bool | None = pyd.Field(default=None, description="", example="True")
 
-    _gypsum_thickness_is_quantity_validator = pyd.validator("gypsum_thickness", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-    _gypsum_r_factor_is_quantity_validator = pyd.validator("gypsum_r_factor", allow_reuse=True)(
-        validate_unit_factory("RSI")
-    )
+    _gypsum_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
+    _gypsum_r_factor_is_quantity_validator = pyd.validator("r_factor", allow_reuse=True)(validate_unit_factory("RSI"))
 
     # Nested specs:
     GypsumSupports: GypsumSupportsV1 | None = None
@@ -484,7 +503,7 @@ class WallFinishesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
 
     _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
 

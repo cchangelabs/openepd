@@ -89,16 +89,16 @@ class ResilientFlooringThickness(StrEnum):
 
     """
 
-    _2MM = "≤ 2mm"
-    _2_5MM = "~ 2.5mm"
-    _3_2MM = "~ 3.2mm"
-    _4MM = "~ 4mm"
-    _4_5MM = "~ 4.5mm"
-    _5MM = "~ 5mm"
-    _5_5MM = "~ 5.5mm"
-    _6MM = "~ 6mm"
-    _8MM = "~ 8mm"
-    _10MM = "≥ 10mm"
+    MM_LT_2 = "≤ 2mm"
+    MM_2_5 = "~ 2.5mm"
+    MM_3_2 = "~ 3.2mm"
+    MM_4 = "~ 4mm"
+    MM_4_5 = "~ 4.5mm"
+    MM_5 = "~ 5mm"
+    MM_5_5 = "~ 5.5mm"
+    MM_6 = "~ 6mm"
+    MM_8 = "~ 8mm"
+    MM_GT_10 = "≥ 10mm"
 
 
 class CablingFireRating(StrEnum):
@@ -204,7 +204,7 @@ class GypsumFireRating(StrEnum):
 
     """
 
-    _ = "-"
+    REGULAR = "-"
     X = "X"
     C = "C"
     F = "F"
@@ -728,14 +728,14 @@ class SteelRebarGrade(StrEnum):
 
     """
 
-    _60_KSI = "60 ksi"
-    _75_KSI = "75 ksi"
-    _80_KSI = "80 ksi"
-    _90_KSI = "90 ksi"
-    _100_KSI = "100 ksi"
-    _120_KSI = "120 ksi"
-    _40_KSI = "40 ksi"
-    _50_KSI = "50 ksi"
+    KSI_60 = "60 ksi"
+    KSI_75 = "75 ksi"
+    KSI_80 = "80 ksi"
+    KSI_90 = "90 ksi"
+    KSI_100 = "100 ksi"
+    KSI_120 = "120 ksi"
+    KSI_40 = "40 ksi"
+    KSI_50 = "50 ksi"
 
 
 class AsphaltGradation(StrEnum):
@@ -1284,22 +1284,22 @@ class AluminiumAlloy(StrEnum):
 
     """
 
-    _1XXX = "1xxx"
-    _2XXX = "2xxx"
-    _3XXX = "3xxx"
-    _4XXX = "4xxx"
-    _5XXX = "5xxx"
-    _6XXX = "6xxx"
-    _7XXX = "7xxx"
-    _8XXX = "8xxx"
-    _1XX_X = "1xx.x"
-    _2XX_X = "2xx.x"
-    _3XX_X = "3xx.x"
-    _4XX_X = "4xx.x"
-    _5XX_X = "5xx.x"
-    _7XX_X = "7xx.x"
-    _8XX_X = "8xx.x"
-    _9XX_X = "9xx.x"
+    ALLOY_1XXX = "1xxx"
+    ALLOY_2XXX = "2xxx"
+    ALLOY__3XXX = "3xxx"
+    ALLOY_4XXX = "4xxx"
+    ALLOY_5XXX = "5xxx"
+    ALLOY_6XXX = "6xxx"
+    ALLOY_7XXX = "7xxx"
+    ALLOY_8XXX = "8xxx"
+    ALLOY_1XX_X = "1xx.x"
+    ALLOY_2XX_X = "2xx.x"
+    ALLOY_3XX_X = "3xx.x"
+    ALLOY_4XX_X = "4xx.x"
+    ALLOY_5XX_X = "5xx.x"
+    ALLOY_7XX_X = "7xx.x"
+    ALLOY_8XX_X = "8xx.x"
+    ALLOY_9XX_X = "9xx.x"
 
 
 class CarpetIntendedApplication(StrEnum):
@@ -2287,37 +2287,134 @@ class EnExposureClass(StrEnum):
 
 
 class AggregateWeightClassification(StrEnum):
-    """Aggregate weight classification enum."""
+    """
+    Aggregate weight classification enum.
+
+    - Lightweight: Also called "low-density aggregate". Aggregate with bulk density less than 1120 kg/m3 such as:
+      pumice, scoria, volcanic cinders, tuff, and diatomite; expanded or sintered clay, shale, slate, diatomaceous
+      shale, perlite, vermiculite, or slag; and end products of coal or coke combustion.
+    - Normal-weight: Aggregate that is between the densities of lightweight and heavy-weight
+    - Heavy-weight: Also called "high-density aggregate". Aggregate with bulk density greater than 1920 kg/m3 such as:
+      barite, magnetite, limonite, ilmenite, iron, or steel.
+    """
 
     LIGHTWEIGHT = "Lightweight"
-    """
-    Also called "low-density aggregate". Aggregate with bulk density less than 1120 kg/m3 such as: pumice, scoria,
-    volcanic cinders, tuff, and diatomite; expanded or sintered clay, shale, slate, diatomaceous shale, perlite,
-    vermiculite, or slag; and end products of coal or coke combustion.
-    """
     NORMAL_WEIGHT = "Normal-weight"
-    """
-    Aggregate that is between the densities of lightweight and heavy-weight
-    """
     HEAVY_WEIGHT = "Heavy-weight"
-    """
-    Also called "high-density aggregate". Aggregate with bulk density greater than 1920 kg/m3 such as: barite,
-    magnetite, limonite, ilmenite, iron, or steel.
-    """
 
 
 class AggregateGradation(StrEnum):
-    """Aggregate gradation enum."""
+    """
+    Aggregate gradation enum.
+
+    - Dense: Grading in which the void percentage between aggregate particles is minimized.
+    - Gap: Grading in which one or more intermediate size fractions are omitted.
+    - Open: Grading with a large amount of air voids, which allows water drainage.
+    """
 
     DENSE = "Dense"
-    """
-    Grading in which the void percentage between aggregate particles is minimized
-    """
     GAP = "Gap"
-    """
-    Grading in which one or more intermediate size fractions are omitted
-    """
     OPEN = "Open"
-    """
-    Grading with a large amount of air voids, which allows water drainage
-    """
+
+
+class CementBoardThickness(StrEnum):
+    """Options for cement board thickness."""
+
+    INCH_1_4 = '1/4"'
+    INCH_5_16 = '5/16"'
+    INCH_11_32 = '11/32"'
+    INCH_3_8 = '3/8"'
+    INCH_1_2 = '1/2"'
+    INCH_5_8 = '5/8"'
+    MM_6_5 = "6.5 mm"
+    MM_8_0 = "8.0 mm"
+    MM_9_0 = "9.0 mm"
+    MM_9_5 = "9.5 mm"
+    MM_12_5 = "12.5 mm"
+    MM_13 = "13 mm"
+    MM_15 = "15 mm"
+    MM_18 = "18 mm"
+
+
+class GypsumThickness(StrEnum):
+    """Options for gypsum thickness."""
+
+    INCH_1_4 = '1/4"'
+    INCH_5_16 = '5/16"'
+    INCH_3_8 = '3/8"'
+    INCH_1_2 = '1/2"'
+    INCH_5_8 = '5/8"'
+    INCH_3_4 = '3/4"'
+    INCH_1 = '1"'
+    MM_6 = "6 mm"
+    MM_6_5 = "6.5 mm"
+    MM_9 = "9 mm"
+    MM_9_5 = "9.5 mm"
+    MM_10 = "10 mm"
+    MM_12_5 = "12.5 mm"
+    MM_13 = "13 mm"
+    MM_15 = "15 mm"
+    MM_15_5 = "15.5 mm"
+    MM_16 = "16 mm"
+    MM_18 = "18 mm"
+    MM_19 = "19 mm"
+
+
+class FlatGlassPanesThickness(StrEnum):
+    """Options for flat glass panes thickness."""
+
+    MM_2 = "2 mm"
+    MM_3 = "3 mm"
+    MM_4 = "4 mm"
+    MM_5 = "5 mm"
+    MM_6 = "6 mm"
+    MM_8 = "8 mm"
+    MM_10 = "10 mm"
+    MM_12 = "12 mm"
+    MM_16 = "16 mm"
+    MM_19 = "19 mm"
+
+
+class NAFSPerformanceGrade(StrEnum):
+    """NAFS Performance Grade enum."""
+
+    GRADE_15_PSF = "15 psf"
+    GRADE_20_PSF = "20 psf"
+    GRADE_25_PSF = "25 psf"
+    GRADE_30_PSF = "30 psf"
+    GRADE_35_PSF = "35 psf"
+    GRADE_40_PSF = "40 psf"
+    GRADE_45_PSF = "45 psf"
+    GRADE_50_PSF = "50 psf"
+    GRADE_55_PSF = "55 psf"
+    GRADE_60_PSF = "60 psf"
+    GRADE_65_PSF = "65 psf"
+    GRADE_70_PSF = "70 psf"
+    GRADE_75_PSF = "75 psf"
+    GRADE_80_PSF = "80 psf"
+    GRADE_85_PSF = "85 psf"
+    GRADE_90_PSF = "90 psf"
+    GRADE_95_PSF = "95 psf"
+    GRADE_100_PSF = "100 psf"
+    GRADE_105_PSF = "105 psf"
+    GRADE_110_PSF = "110 psf"
+    GRADE_115_PSF = "115 psf"
+    GRADE_120_PSF = "120 psf"
+    GRADE_125_PSF = "125 psf"
+    GRADE_130_PSF = "130 psf"
+    GRADE_135_PSF = "135 psf"
+    GRADE_140_PSF = "140 psf"
+    GRADE_145_PSF = "145 psf"
+    GRADE_150_PSF = "150 psf"
+    GRADE_155_PSF = "155 psf"
+    GRADE_160_PSF = "160 psf"
+    GRADE_165_PSF = "165 psf"
+    GRADE_170_PSF = "170 psf"
+    GRADE_175_PSF = "175 psf"
+    GRADE_180_PSF = "180 psf"
+    GRADE_185_PSF = "185 psf"
+    GRADE_190_PSF = "190 psf"
+    GRADE_195_PSF = "195 psf"
+    GRADE_200_PSF = "200 psf"
+    GRADE_205_PSF = "205 psf"
+    GRADE_210_PSF = "210 psf"

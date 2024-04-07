@@ -50,15 +50,14 @@ class AluminiumSuspensionAssemblyV1(BaseOpenEpdHierarchicalSpec):
 
 
 class AluminiumV1(BaseOpenEpdHierarchicalSpec):
-    """Aluminium performance specification."""
+    """Material definition for objects made primarily from Aluminium and its alloys."""
 
     _EXT_VERSION = "1.0"
-    """Material definition for objects made primarily from Aluminium and its alloys"""
 
     # Own fields:
-    alloy: AluminiumAlloy | None = pyd.Field(default=None, description="", example="1xxx")
-    anodized: bool | None = pyd.Field(default=None, description="", example="True")
-    painted: bool | None = pyd.Field(default=None, description="", example="True")
+    alloy: AluminiumAlloy | None = pyd.Field(default=None, description="", example=str(AluminiumAlloy.ALLOY_1XXX))
+    anodized: bool | None = pyd.Field(default=None, description="", example=True)
+    painted: bool | None = pyd.Field(default=None, description="", example=True)
 
     # Nested specs:
     AluminiumBillets: AluminiumBilletsV1 | None = None
