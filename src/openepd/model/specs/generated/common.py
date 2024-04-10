@@ -17,10 +17,11 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
+from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.org import OrgRef
 
 
-class HasForestPracticesCertifiers:
+class HasForestPracticesCertifiers(BaseOpenEpdSchema):
     """An interface for models which are linked to forest practices certifiers."""
 
     forest_practices_certifiers: list[OrgRef] | None
