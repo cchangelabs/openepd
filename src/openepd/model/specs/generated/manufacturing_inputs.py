@@ -40,12 +40,12 @@ class CementV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     cementitious: Cementitious | None = pyd.Field(default=None, description="")
-    white_cement: bool | None = pyd.Field(default=None, description="", example="True")
+    white_cement: bool | None = pyd.Field(default=None, description="", example=True)
     astm_type: CementAstmType | None = pyd.Field(default=None, description="", example="C150 Type I")
-    c1157: list[CementC1157] | None = pyd.Field(default=None, description="", example="['GU']")
-    csa_a3001: list[CementCsaA3001] | None = pyd.Field(default=None, description="", example="['A3001 GU']")
+    c1157: list[CementC1157] | None = pyd.Field(default=None, description="", example=["GU"])
+    csa_a3001: list[CementCsaA3001] | None = pyd.Field(default=None, description="", example=["A3001 GU"])
     en197_1: CementEn197_1 | None = pyd.Field(default=None, description="", example="CEM I")
-    oil_well_cement: bool | None = pyd.Field(default=None, description="", example="True")
+    oil_well_cement: bool | None = pyd.Field(default=None, description="", example=True)
 
 
 class MasonryCementV1(BaseOpenEpdHierarchicalSpec):
@@ -63,7 +63,7 @@ class SupplementaryCementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    cement_scm: list[CementScm] | None = pyd.Field(default=None, description="", example="['ggbs']")
+    cement_scm: list[CementScm] | None = pyd.Field(default=None, description="", example=["ggbs"])
 
 
 class AccessFlooringPedestalsV1(BaseOpenEpdHierarchicalSpec):
@@ -85,7 +85,7 @@ class CarpetFiberV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     yarn_material: CarpetYarnType | None = pyd.Field(default=None, description="", example="Nylon 6,6")
-    yarn_recycled_content: float | None = pyd.Field(default=None, description="", example="2.3")
+    yarn_recycled_content: float | None = pyd.Field(default=None, description="", example=2.3)
 
 
 class CementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):
@@ -105,7 +105,7 @@ class ConcreteAdmixturesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    effects: list[AdmixtureEffects] | None = pyd.Field(default=None, description="", example="['Air Entrainer']")
+    effects: list[AdmixtureEffects] | None = pyd.Field(default=None, description="", example=["Air Entrainer"])
 
 
 class TextilesV1(BaseOpenEpdHierarchicalSpec):
@@ -114,7 +114,7 @@ class TextilesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    fabric_type: list[TextilesFabricType] | None = pyd.Field(default=None, description="", example="['Leather']")
+    fabric_type: list[TextilesFabricType] | None = pyd.Field(default=None, description="", example=["Leather"])
 
 
 class ManufacturingInputsV1(BaseOpenEpdHierarchicalSpec):

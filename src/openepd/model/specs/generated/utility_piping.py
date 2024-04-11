@@ -36,7 +36,7 @@ class BuriedPipingV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     buried_piping_type: list[BuriedPipingType] | None = pyd.Field(
-        default=None, description="", example="['Water Utilities']"
+        default=None, description="", example=["Water Utilities"]
     )
 
 

@@ -84,7 +84,7 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    lightweight: bool | None = pyd.Field(default=None, description="Lightweight", example="True")
+    lightweight: bool | None = pyd.Field(default=None, description="Lightweight", example=True)
 
     strength_28d: PressureMPaStr | None = pyd.Field(
         default=None, description="Concrete strength after 28 days", example="1 MPa"
@@ -95,7 +95,7 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
         example="30 MPa",
     )
     strength_other_d: Literal[3, 7, 14, 42, 56, 72, 96, 120] | None = pyd.Field(
-        default=None, description="Test Day for the Late Strength", example="42"
+        default=None, description="Test Day for the Late Strength", example=42
     )
 
     slump: LengthInchStr | None = pyd.Field(default=None, description="", example="2 in")
@@ -104,23 +104,23 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
 
     min_pipeline_size: LengthMmStr | None = pyd.Field(default=None, description="", example="200 mm")
     w_c_ratio: RatioFloat | None = pyd.Field(
-        default=None, description="Ratio of water to cement", example="0.5", ge=0, le=1
+        default=None, description="Ratio of water to cement", example=0.5, ge=0, le=1
     )
-    air_entrain: bool | None = pyd.Field(default=None, description="Air Entrainment", example="True")
-    co2_entrain: bool | None = pyd.Field(default=None, description="CO2 Curing", example="True")
-    self_consolidating: bool | None = pyd.Field(default=None, description="Self Compacting", example="True")
-    white_cement: bool | None = pyd.Field(default=None, description="White Cement", example="True")
-    plc: bool | None = pyd.Field(default=None, description="Portland Limestone Cement", example="True")
-    finishable: bool | None = pyd.Field(default=None, description="Finishable", example="True")
-    fiber_reinforced: bool | None = pyd.Field(default=None, description="fiber_reinforced", example="True")
+    air_entrain: bool | None = pyd.Field(default=None, description="Air Entrainment", example=True)
+    co2_entrain: bool | None = pyd.Field(default=None, description="CO2 Curing", example=True)
+    self_consolidating: bool | None = pyd.Field(default=None, description="Self Compacting", example=True)
+    white_cement: bool | None = pyd.Field(default=None, description="White Cement", example=True)
+    plc: bool | None = pyd.Field(default=None, description="Portland Limestone Cement", example=True)
+    finishable: bool | None = pyd.Field(default=None, description="Finishable", example=True)
+    fiber_reinforced: bool | None = pyd.Field(default=None, description="fiber_reinforced", example=True)
 
     cementitious: Cementitious | None = pyd.Field(default=None, description="")
 
     aggregate_size_max: LengthMmStr | None = pyd.Field(default=None, description="", example="0.0254 m")
     cement_content: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
-    aci_exposure_classes: list[AciExposureClass] | None = pyd.Field(default=None, description="", example="F0")
-    csa_exposure_classes: list[CsaExposureClass] | None = pyd.Field(default=None, description="", example="C-2")
-    en_exposure_classes: list[EnExposureClass] | None = pyd.Field(default=None, description="", example="XS1")
+    aci_exposure_classes: list[AciExposureClass] | None = pyd.Field(default=None, description="", example=["aci.F0"])
+    csa_exposure_classes: list[CsaExposureClass] | None = pyd.Field(default=None, description="", example=["csa.C-2"])
+    en_exposure_classes: list[EnExposureClass] | None = pyd.Field(default=None, description="", example=["en206.X0"])
     typical_application: ConcreteTypicalApplication | None = pyd.Field(default=None, description="Typical Application")
 
     _concrete_compressive_strength_28d_is_quantity_validator = pyd.validator("strength_28d", allow_reuse=True)(

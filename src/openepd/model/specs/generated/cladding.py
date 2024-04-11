@@ -123,9 +123,9 @@ class SidingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    insulated: bool | None = pyd.Field(default=None, description="", example="True")
-    ventilated: bool | None = pyd.Field(default=None, description="", example="True")
-    paint_or_stain_required: bool | None = pyd.Field(default=None, description="", example="True")
+    insulated: bool | None = pyd.Field(default=None, description="", example=True)
+    ventilated: bool | None = pyd.Field(default=None, description="", example=True)
+    paint_or_stain_required: bool | None = pyd.Field(default=None, description="", example=True)
     r_value: str | None = pyd.Field(default=None, description="", example="1 K * m2 / W")
     form_factor: SidingFormFactor | None = pyd.Field(default=None, description="", example="Lap")
 

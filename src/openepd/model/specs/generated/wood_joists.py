@@ -32,9 +32,7 @@ class WoodJoistsV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
     # Own fields:
     timber_species: AllTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
     fabrication: AllFabrication | None = pyd.Field(default=None, description="", example="LVL")
-    forest_practices_certifiers: list[OrgRef] | None = pyd.Field(
-        default=None, description="", example="test_valueRelationshipFrom"
-    )
-    weather_exposed: bool | None = pyd.Field(default=None, description="", example="True")
-    fire_retardant: bool | None = pyd.Field(default=None, description="", example="True")
-    decay_resistant: bool | None = pyd.Field(default=None, description="", example="True")
+    forest_practices_certifiers: list[OrgRef] | None = pyd.Field(default=None, description="")
+    weather_exposed: bool | None = pyd.Field(default=None, description="", example=True)
+    fire_retardant: bool | None = pyd.Field(default=None, description="", example=True)
+    decay_resistant: bool | None = pyd.Field(default=None, description="", example=True)

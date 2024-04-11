@@ -126,15 +126,13 @@ class MembraneRoofingV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
-    sri: float | None = pyd.Field(default=None, description="", example="2.3")
-    total_recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example="0.5", ge=0, le=1)
-    post_consumer_recycled_content: RatioFloat | None = pyd.Field(
-        default=None, description="", example="0.5", ge=0, le=1
-    )
+    sri: float | None = pyd.Field(default=None, description="", example=2.3)
+    total_recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
+    post_consumer_recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
     reinforcement: MembraneRoofingReinforcement | None = pyd.Field(default=None, description="", example="Polyester")
-    felt_backing: bool | None = pyd.Field(default=None, description="", example="True")
-    nsf347: bool | None = pyd.Field(default=None, description="", example="True")
-    vantage_vinyl: bool | None = pyd.Field(default=None, description="", example="True")
+    felt_backing: bool | None = pyd.Field(default=None, description="", example=True)
+    nsf347: bool | None = pyd.Field(default=None, description="", example=True)
+    vantage_vinyl: bool | None = pyd.Field(default=None, description="", example=True)
 
     _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
 
@@ -154,10 +152,10 @@ class InsulationV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    r_value: float | None = pyd.Field(default=None, description="", example="2.3")
+    r_value: float | None = pyd.Field(default=None, description="", example=2.3)
     material: InsulatingMaterial | None = pyd.Field(default=None, description="", example="Mineral Wool")
     intended_application: list[InsulationIntendedApplication] | None = pyd.Field(
-        default=None, description="", example="['Wall & General']"
+        default=None, description="", example=["Wall & General"]
     )
     thickness_per_declared_unit: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
 
@@ -198,7 +196,7 @@ class RoofCoverBoardsV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     material: RoofCoverBoardsMaterial | None = pyd.Field(default=None, description="", example="Gypsum Fiber")
-    facing: list[RoofCoverBoardsFacing] | None = pyd.Field(default=None, description="", example="['Paper']")
+    facing: list[RoofCoverBoardsFacing] | None = pyd.Field(default=None, description="", example=["Paper"])
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
 
     _roof_cover_boards_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(

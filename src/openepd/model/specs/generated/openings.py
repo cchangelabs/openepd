@@ -140,17 +140,17 @@ class ProcessedNonInsulatingGlassPanesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    low_emissivity: bool | None = pyd.Field(default=None, description="", example="True")
-    electrochromic: bool | None = pyd.Field(default=None, description="", example="True")
-    acid_etched: bool | None = pyd.Field(default=None, description="", example="True")
-    tempered: bool | None = pyd.Field(default=None, description="", example="True")
-    toughened: bool | None = pyd.Field(default=None, description="", example="True")
-    laminated: bool | None = pyd.Field(default=None, description="", example="True")
-    fire_resistant: bool | None = pyd.Field(default=None, description="", example="True")
-    fire_protection: bool | None = pyd.Field(default=None, description="", example="True")
-    pyrolytic_coated: bool | None = pyd.Field(default=None, description="", example="True")
-    sputter_coat: bool | None = pyd.Field(default=None, description="", example="True")
-    solar_heat_gain: RatioFloat | None = pyd.Field(default=None, description="", example="0.5", ge=0, le=1)
+    low_emissivity: bool | None = pyd.Field(default=None, description="", example=True)
+    electrochromic: bool | None = pyd.Field(default=None, description="", example=True)
+    acid_etched: bool | None = pyd.Field(default=None, description="", example=True)
+    tempered: bool | None = pyd.Field(default=None, description="", example=True)
+    toughened: bool | None = pyd.Field(default=None, description="", example=True)
+    laminated: bool | None = pyd.Field(default=None, description="", example=True)
+    fire_resistant: bool | None = pyd.Field(default=None, description="", example=True)
+    fire_protection: bool | None = pyd.Field(default=None, description="", example=True)
+    pyrolytic_coated: bool | None = pyd.Field(default=None, description="", example=True)
+    sputter_coat: bool | None = pyd.Field(default=None, description="", example=True)
+    solar_heat_gain: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
 
 
 class GlazedDoorsV1(BaseOpenEpdHierarchicalSpec):
@@ -229,26 +229,26 @@ class NAFSPerformanceClass(BaseOpenEpdSchema):
     """NAFS Performance class."""
 
     r: bool | None = pyd.Field(
-        default=None, description="Residential; commonly used in one- and two-family dwellings.", example="True"
+        default=None, description="Residential; commonly used in one- and two-family dwellings.", example=True
     )
     lc: bool | None = pyd.Field(
         default=None,
         description="Light Commercial: commonly used in low-rise and mid-rise multi-family dwellings and other "
         "buildings where larger sizes and higher loading requirements are expected.",
-        example="True",
+        example=True,
     )
     cw: bool | None = pyd.Field(
         default=None,
         description="Commercial Window: commonly used in low-rise and mid-rise buildings where larger sizes, higher "
         "loading requirements, limits on deflection, and heavy use are expected.",
-        example="True",
+        example=True,
     )
     aw: bool | None = pyd.Field(
         default=None,
         description="Architectural Window: commonly used in high-rise and mid-rise buildings to meet increased "
         "loading requirements and limits on deflection, and in buildings where frequent and extreme use "
         "of the fenestration products is expected.",
-        example="True",
+        example=True,
     )
 
 
@@ -258,23 +258,23 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    hurricane_resistant: bool | None = pyd.Field(default=None, description="", example="True")
-    low_emissivity: bool | None = pyd.Field(default=None, description="", example="True")
-    electrochromic: bool | None = pyd.Field(default=None, description="", example="True")
-    acid_etched: bool | None = pyd.Field(default=None, description="", example="True")
-    tempered: bool | None = pyd.Field(default=None, description="", example="True")
-    toughened: bool | None = pyd.Field(default=None, description="", example="True")
-    laminated: bool | None = pyd.Field(default=None, description="", example="True")
-    fire_resistant: bool | None = pyd.Field(default=None, description="", example="True")
-    fire_protection: bool | None = pyd.Field(default=None, description="", example="True")
-    pyrolytic_coated: bool | None = pyd.Field(default=None, description="", example="True")
-    sputter_coat: bool | None = pyd.Field(default=None, description="", example="True")
+    hurricane_resistant: bool | None = pyd.Field(default=None, description="", example=True)
+    low_emissivity: bool | None = pyd.Field(default=None, description="", example=True)
+    electrochromic: bool | None = pyd.Field(default=None, description="", example=True)
+    acid_etched: bool | None = pyd.Field(default=None, description="", example=True)
+    tempered: bool | None = pyd.Field(default=None, description="", example=True)
+    toughened: bool | None = pyd.Field(default=None, description="", example=True)
+    laminated: bool | None = pyd.Field(default=None, description="", example=True)
+    fire_resistant: bool | None = pyd.Field(default=None, description="", example=True)
+    fire_protection: bool | None = pyd.Field(default=None, description="", example=True)
+    pyrolytic_coated: bool | None = pyd.Field(default=None, description="", example=True)
+    sputter_coat: bool | None = pyd.Field(default=None, description="", example=True)
     thermal_separation: ThermalSeparation | None = pyd.Field(default=None, description="", example="Aluminium")
     assembly_u_factor: str | None = pyd.Field(default=None, description="", example="1 USI")
-    solar_heat_gain: RatioFloat | None = pyd.Field(default=None, description="", example="0.5", ge=0, le=1)
+    solar_heat_gain: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
     air_infiltration: str | None = pyd.Field(default=None, description="", example="1 m / s")
     dp_rating: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    glass_panes: int | None = pyd.Field(default=None, description="", example="3")
+    glass_panes: int | None = pyd.Field(default=None, description="", example=3)
 
     performance_class: NAFSPerformanceClass | None = pyd.Field(
         default=None, description="Performance class according to NAFS."
@@ -317,21 +317,21 @@ class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec):
         default=None, description="Intended application for IGUs."
     )
 
-    hurricane_resistant: bool | None = pyd.Field(default=None, description="", example="True")
-    low_emissivity: bool | None = pyd.Field(default=None, description="", example="True")
-    electrochromic: bool | None = pyd.Field(default=None, description="", example="True")
-    acid_etched: bool | None = pyd.Field(default=None, description="", example="True")
-    tempered: bool | None = pyd.Field(default=None, description="", example="True")
-    toughened: bool | None = pyd.Field(default=None, description="", example="True")
-    laminated: bool | None = pyd.Field(default=None, description="", example="True")
-    fire_resistant: bool | None = pyd.Field(default=None, description="", example="True")
-    fire_protection: bool | None = pyd.Field(default=None, description="", example="True")
-    pyrolytic_coated: bool | None = pyd.Field(default=None, description="", example="True")
-    sputter_coat: bool | None = pyd.Field(default=None, description="", example="True")
-    solar_heat_gain: RatioFloat | None = pyd.Field(default=None, description="", example="0.5", ge=0, le=1)
+    hurricane_resistant: bool | None = pyd.Field(default=None, description="", example=True)
+    low_emissivity: bool | None = pyd.Field(default=None, description="", example=True)
+    electrochromic: bool | None = pyd.Field(default=None, description="", example=True)
+    acid_etched: bool | None = pyd.Field(default=None, description="", example=True)
+    tempered: bool | None = pyd.Field(default=None, description="", example=True)
+    toughened: bool | None = pyd.Field(default=None, description="", example=True)
+    laminated: bool | None = pyd.Field(default=None, description="", example=True)
+    fire_resistant: bool | None = pyd.Field(default=None, description="", example=True)
+    fire_protection: bool | None = pyd.Field(default=None, description="", example=True)
+    pyrolytic_coated: bool | None = pyd.Field(default=None, description="", example=True)
+    sputter_coat: bool | None = pyd.Field(default=None, description="", example=True)
+    solar_heat_gain: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
     air_infiltration: str | None = pyd.Field(default=None, description="", example="1 m / s")
     dp_rating: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    glass_panes: int | None = pyd.Field(default=None, description="", example="3")
+    glass_panes: int | None = pyd.Field(default=None, description="", example=3)
     cog_u_factor: str | None = pyd.Field(default=None, description="", example="1 USI")
     spacer: Spacer | None = pyd.Field(default=None, description="", example="Aluminium")
 

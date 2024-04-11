@@ -36,7 +36,7 @@ class AutoclavedAeratedConcreteV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     strength_28d: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
     thermal_conductivity: str | None = pyd.Field(default=None, description="", example="1 W / (m * K)")
-    white: bool | None = pyd.Field(default=None, description="", example="True")
+    white: bool | None = pyd.Field(default=None, description="", example=True)
 
     _concrete_compressive_strength_28d_is_quantity_validator = pyd.validator("strength_28d", allow_reuse=True)(
         validate_unit_factory("MPa")
@@ -52,15 +52,15 @@ class BrickV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    building: bool | None = pyd.Field(default=None, description="", example="True")
-    facing: bool | None = pyd.Field(default=None, description="", example="True")
-    floor: bool | None = pyd.Field(default=None, description="", example="True")
-    pedestrian: bool | None = pyd.Field(default=None, description="", example="True")
-    paving: bool | None = pyd.Field(default=None, description="", example="True")
-    other: bool | None = pyd.Field(default=None, description="", example="True")
-    chemical_resistant: bool | None = pyd.Field(default=None, description="", example="True")
-    glazed: bool | None = pyd.Field(default=None, description="", example="True")
-    tiles: bool | None = pyd.Field(default=None, description="", example="True")
+    building: bool | None = pyd.Field(default=None, description="", example=True)
+    facing: bool | None = pyd.Field(default=None, description="", example=True)
+    floor: bool | None = pyd.Field(default=None, description="", example=True)
+    pedestrian: bool | None = pyd.Field(default=None, description="", example=True)
+    paving: bool | None = pyd.Field(default=None, description="", example=True)
+    other: bool | None = pyd.Field(default=None, description="", example=True)
+    chemical_resistant: bool | None = pyd.Field(default=None, description="", example=True)
+    glazed: bool | None = pyd.Field(default=None, description="", example=True)
+    tiles: bool | None = pyd.Field(default=None, description="", example=True)
 
 
 class MasonryV1(BaseOpenEpdHierarchicalSpec):
@@ -69,7 +69,7 @@ class MasonryV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    white_cement: bool | None = pyd.Field(default=None, description="", example="True")
+    white_cement: bool | None = pyd.Field(default=None, description="", example=True)
 
     # Nested specs:
     GMU: GMUV1 | None = None

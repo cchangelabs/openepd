@@ -47,16 +47,16 @@ class PrecastConcreteV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    lightweight: bool | None = pyd.Field(default=None, description="", example="True")
+    lightweight: bool | None = pyd.Field(default=None, description="", example=True)
     concrete_compressive_strength_28d: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    insulated: bool | None = pyd.Field(default=None, description="", example="True")
+    insulated: bool | None = pyd.Field(default=None, description="", example=True)
     gfrc: bool | None = pyd.Field(
         default=None,
         description="Glass Fiber Reinforced Concrete is fiber-reinforced concrete sometimes used in "
         "architectural panels",
-        example="True",
+        example=True,
     )
-    steel_mass_percentage: RatioFloat | None = pyd.Field(default=None, description="", example="0.5", ge=0, le=1)
+    steel_mass_percentage: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
 
     _concrete_compressive_strength_28d_is_quantity_validator = pyd.validator(
         "concrete_compressive_strength_28d", allow_reuse=True
