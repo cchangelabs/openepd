@@ -29,14 +29,14 @@ class CMUV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    white_cement: bool | None = pyd.Field(default=None, description="", example="True")
+    white_cement: bool | None = pyd.Field(default=None, description="", example=True)
     strength_28d: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
     weight_classification: CmuWeightClassification | None = pyd.Field(default=None, description="", example="Normal")
     block_type: CmuBlockType | None = pyd.Field(default=None, description="", example="Gray")
-    insulated: bool | None = pyd.Field(default=None, description="", example="True")
-    sound_performance: bool | None = pyd.Field(default=None, description="", example="True")
+    insulated: bool | None = pyd.Field(default=None, description="", example=True)
+    sound_performance: bool | None = pyd.Field(default=None, description="", example=True)
     b1_recarbonation: GwpKgCo2eStr | None = pyd.Field(default=None, description="", example="1 kgCO2e")
-    b1_recarbonation_z: float | None = pyd.Field(default=None, description="", example="2.3")
+    b1_recarbonation_z: float | None = pyd.Field(default=None, description="", example=2.3)
 
     _concrete_compressive_strength_28d_is_quantity_validator = pyd.validator("strength_28d", allow_reuse=True)(
         validate_unit_factory("MPa")

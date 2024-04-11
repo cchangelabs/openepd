@@ -48,17 +48,17 @@ class GypsumSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
 
     r_factor: str | None = pyd.Field(default=None, description="", example="1 RSI")
 
-    flame_spread_astm_e84: int | None = pyd.Field(default=None, description="", example="3")
-    smoke_production_astm_e84: int | None = pyd.Field(default=None, description="", example="3")
-    surface_abrasion_d4977: int | None = pyd.Field(default=None, description="", example="3")
-    indentation_d5420: int | None = pyd.Field(default=None, description="", example="3")
-    soft_body_impact_e695: int | None = pyd.Field(default=None, description="", example="3")
-    hard_body_impact_c1929: int | None = pyd.Field(default=None, description="", example="3")
+    flame_spread_astm_e84: int | None = pyd.Field(default=None, description="", example=3)
+    smoke_production_astm_e84: int | None = pyd.Field(default=None, description="", example=3)
+    surface_abrasion_d4977: int | None = pyd.Field(default=None, description="", example=3)
+    indentation_d5420: int | None = pyd.Field(default=None, description="", example=3)
+    soft_body_impact_e695: int | None = pyd.Field(default=None, description="", example=3)
+    hard_body_impact_c1929: int | None = pyd.Field(default=None, description="", example=3)
 
-    mold_resistant: bool | None = pyd.Field(default=None, description="", example="True")
-    foil_backing: bool | None = pyd.Field(default=None, description="", example="True")
-    moisture_resistant: bool | None = pyd.Field(default=None, description="", example="True")
-    abuse_resistant: bool | None = pyd.Field(default=None, description="", example="True")
+    mold_resistant: bool | None = pyd.Field(default=None, description="", example=True)
+    foil_backing: bool | None = pyd.Field(default=None, description="", example=True)
+    moisture_resistant: bool | None = pyd.Field(default=None, description="", example=True)
+    abuse_resistant: bool | None = pyd.Field(default=None, description="", example=True)
 
     _gypsum_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
     _gypsum_r_factor_is_quantity_validator = pyd.validator("r_factor", allow_reuse=True)(validate_unit_factory("RSI"))

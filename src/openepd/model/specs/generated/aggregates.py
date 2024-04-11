@@ -46,7 +46,7 @@ class AggregatesV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     recycled_content: RatioFloat | None = pyd.Field(
-        example="0.3", default=None, description="Percent of total mass that is recycled aggregate"
+        example=0.3, default=None, description="Percent of total mass that is recycled aggregate"
     )
     nominal_max_size: LengthMmStr | None = pyd.Field(
         default=None,
@@ -56,9 +56,9 @@ class AggregatesV1(BaseOpenEpdHierarchicalSpec):
         "The maximum aggregate size is defined as the smallest sieve size that requires 100% passing.",
     )
     weight_classification: AggregateWeightClassification | None = pyd.Field(
-        example=AggregateWeightClassification.HEAVY_WEIGHT, default=None
+        example=str(AggregateWeightClassification.HEAVY_WEIGHT), default=None
     )
-    gradation: AggregateGradation | None = pyd.Field(example=AggregateGradation.GAP, default=None)
+    gradation: AggregateGradation | None = pyd.Field(example=str(AggregateGradation.GAP), default=None)
     manufactured: bool | None = pyd.Field(
         default=None,
         description="Aggregate produced via expansion or sintering at high temperatures of the following materials: "

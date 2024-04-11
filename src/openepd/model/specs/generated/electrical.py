@@ -66,7 +66,7 @@ class CableTraysV1(BaseOpenEpdHierarchicalSpec):
     depth: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
     static_load: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
     ventilated: bool | None = pyd.Field(
-        default=None, description="At least 40% of the tray base is open to air flow", example="True"
+        default=None, description="At least 40% of the tray base is open to air flow", example=True
     )
     cable_trays_material: CableTraysMaterial | None = pyd.Field(default=None, description="", example="Stainless Steel")
 
@@ -106,8 +106,8 @@ class RacewaysV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     width: LengthMStr | None = pyd.Field(default=None, description="", example="100 mm")
     depth: LengthMStr | None = pyd.Field(default=None, description="", example="100 mm")
-    painted: bool | None = pyd.Field(default=None, description="", example="True")
-    divided: bool | None = pyd.Field(default=None, description="", example="True")
+    painted: bool | None = pyd.Field(default=None, description="", example=True)
+    divided: bool | None = pyd.Field(default=None, description="", example=True)
     raceways_material: RacewaysMaterial | None = pyd.Field(default=None, description="", example="Aluminum")
 
     _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))
@@ -254,8 +254,8 @@ class LightingV1(BaseOpenEpdHierarchicalSpec):
     typical_utilization: str | None = pyd.Field(default=None, description="", example="1 h / yr")
     luminosity: str | None = pyd.Field(default=None, description="", example="1 lumen")
     wattage: str | None = pyd.Field(default=None, description="", example="1000.0 W")
-    color_rendering_index: float | None = pyd.Field(default=None, description="", example="2.3")
-    dimmable: bool | None = pyd.Field(default=None, description="", example="True")
+    color_rendering_index: float | None = pyd.Field(default=None, description="", example=2.3)
+    dimmable: bool | None = pyd.Field(default=None, description="", example=True)
 
     _color_temperature_quantity_ge_validator = pyd.validator("color_temperature", allow_reuse=True)(
         validate_quantity_ge_factory("1E+03 K")

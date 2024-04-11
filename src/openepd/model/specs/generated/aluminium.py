@@ -34,7 +34,7 @@ class AluminiumExtrusionsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thermally_improved: bool | None = pyd.Field(default=None, description="", example="True")
+    thermally_improved: bool | None = pyd.Field(default=None, description="", example=True)
 
 
 class AluminiumSheetGoodsV1(BaseOpenEpdHierarchicalSpec):

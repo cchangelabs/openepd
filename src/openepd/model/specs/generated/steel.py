@@ -29,7 +29,7 @@ from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, valid
 class SteelFabricatedMixin(BaseOpenEpdSpec):
     """Class with fabricated property used in different parts of steel hierarchy."""
 
-    fabricated: bool | None = pyd.Field(default=None, description="", example="True")
+    fabricated: bool | None = pyd.Field(default=None, description="", example=True)
 
 
 class ColdFormedFramingV1(BaseOpenEpdHierarchicalSpec):
@@ -173,9 +173,9 @@ class RebarSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
     # Own fields:
     grade: SteelRebarGrade | None = pyd.Field(default=None, description="", example="60 ksi")
     diameter_min: LengthMmStr | None = pyd.Field(default=None, description="", example="8 mm")
-    bending_pin_max: float | None = pyd.Field(default=None, description="", example="2.3")
-    ts_ys_ratio_max: float | None = pyd.Field(default=None, description="", example="2.3")
-    epoxy_coated: bool | None = pyd.Field(default=None, description="", example="True")
+    bending_pin_max: float | None = pyd.Field(default=None, description="", example=2.3)
+    ts_ys_ratio_max: float | None = pyd.Field(default=None, description="", example=2.3)
+    epoxy_coated: bool | None = pyd.Field(default=None, description="", example=True)
 
     _steel_rebar_diameter_min_is_quantity_validator = pyd.validator("diameter_min", allow_reuse=True)(
         validate_unit_factory("m")
@@ -195,17 +195,15 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     yield_tensile_str: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    bar_elongation: float | None = pyd.Field(default=None, description="", example="2.3")
-    recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example="0.5", ge=0, le=1)
-    post_consumer_recycled_content: RatioFloat | None = pyd.Field(
-        default=None, description="", example="0.5", ge=0, le=1
-    )
-    astm_marking: str | None = pyd.Field(default=None, description="", example="test_valueValidatedStringProperty")
-    euro_marking: str | None = pyd.Field(default=None, description="", example="test_valueValidatedStringProperty")
+    bar_elongation: float | None = pyd.Field(default=None, description="", example=2.3)
+    recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
+    post_consumer_recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
+    astm_marking: str | None = pyd.Field(default=None, description="")
+    euro_marking: str | None = pyd.Field(default=None, description="")
     composition: SteelComposition | None = pyd.Field(default=None, description="", example="Carbon")
-    cold_finished: bool | None = pyd.Field(default=None, description="", example="True")
-    galvanized: bool | None = pyd.Field(default=None, description="", example="True")
-    stainless: bool | None = pyd.Field(default=None, description="", example="True")
+    cold_finished: bool | None = pyd.Field(default=None, description="", example=True)
+    galvanized: bool | None = pyd.Field(default=None, description="", example=True)
+    stainless: bool | None = pyd.Field(default=None, description="", example=True)
     making_route: SteelMakingRoute | None = pyd.Field(default=None)
     astm_standards: list[Standard] | None = pyd.Field(default=None, description="")
     sae_standards: list[Standard] | None = pyd.Field(default=None, description="")

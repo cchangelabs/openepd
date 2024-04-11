@@ -29,10 +29,10 @@ class MechanicalInsulationV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    r_value: float | None = pyd.Field(default=None, description="", example="2.3")
+    r_value: float | None = pyd.Field(default=None, description="", example=2.3)
     material: InsulatingMaterial | None = pyd.Field(default=None, description="", example="Mineral Wool")
     intended_application: list[InsulationIntendedApplication] | None = pyd.Field(
-        default=None, description="", example="['Wall & General']"
+        default=None, description="", example=["Wall & General"]
     )
     thickness_per_declared_unit: LengthMmStr | None = pyd.Field(default=None, description="", example="20 mm")
 

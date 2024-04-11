@@ -30,7 +30,7 @@ class ElevatorsV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     usage_intensity: list[ElevatorsUsageIntensity] | None = pyd.Field(
-        default=None, description="", example="['Very low']"
+        default=None, description="", example=["Very low"]
     )
     travel_length: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
     rated_load: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")

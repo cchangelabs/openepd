@@ -143,18 +143,18 @@ class WoodV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
     forest_practices_certifiers: list[OrgRef] | None = pyd.Field(
         default=None, description="List of organizations that certify forest practices."
     )
-    weather_exposed: bool | None = pyd.Field(default=None, description="Weather exposed", example="True")
-    fire_retardant: bool | None = pyd.Field(default=None, description="Fire retardant", example="True")
-    decay_resistant: bool | None = pyd.Field(default=None, description="Decay resistant", example="True")
+    weather_exposed: bool | None = pyd.Field(default=None, description="Weather exposed", example=True)
+    fire_retardant: bool | None = pyd.Field(default=None, description="Fire retardant", example=True)
+    decay_resistant: bool | None = pyd.Field(default=None, description="Decay resistant", example=True)
     fsc_certified: RatioFloat | None = pyd.Field(
-        default=None, description="Forest Stewardship Council certified proportion", example="0.3", ge=0, le=1
+        default=None, description="Forest Stewardship Council certified proportion", example=0.3, ge=0, le=1
     )
-    fsc_certified_z: float | None = pyd.Field(default=None, description="", example="0.7")
+    fsc_certified_z: float | None = pyd.Field(default=None, description="", example=0.7)
 
     recycled_content: RatioFloat | None = pyd.Field(
-        default=None, description="Recycled content", example="0.3", ge=0, le=1
+        default=None, description="Recycled content", example=0.3, ge=0, le=1
     )
-    recycled_content_z: float | None = pyd.Field(default=None, description="", example="0.7")
+    recycled_content_z: float | None = pyd.Field(default=None, description="", example=0.7)
 
     # Nested specs:
     CompositeLumber: CompositeLumberV1 | None = None
