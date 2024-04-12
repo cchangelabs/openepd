@@ -1,3 +1,23 @@
+## 3.1.0 (2024-04-12)
+
+### Feat
+
+- support new Aggregate specs
+- add semantic types for cementitious and some enums
+- add initial scaffolded openepd pydantic models
+
+### Fix
+
+- correct initial apidocs for all openepd specs
+- correct pydantic validation error propagation
+- add fix and test for random read from real DB openepd specs
+- clean up generated code, lint it
+
+### Refactor
+
+- clean up and rename the specs interfaces
+- extract forest practices certifiers interface
+
 ## 3.0.0 (2024-04-06)
 
 ### Feat
