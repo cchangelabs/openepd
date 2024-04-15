@@ -19,6 +19,7 @@
 #
 
 from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.specs.base import WithHierarchicalOperationsMixin
 from openepd.model.specs.generated.accessories import AccessoriesV1
 from openepd.model.specs.generated.aggregates import AggregatesV1
 from openepd.model.specs.generated.aluminium import AluminiumV1
@@ -57,7 +58,7 @@ from openepd.model.specs.generated.wood import WoodV1
 from openepd.model.specs.generated.wood_joists import WoodJoistsV1
 
 
-class Specs(BaseOpenEpdSchema):
+class Specs(BaseOpenEpdSchema, WithHierarchicalOperationsMixin):
     """Material specific specs."""
 
     # Nested specs:

@@ -39,6 +39,11 @@ class WithExtVersionMixin(ABC, pyd.BaseModel):
     # Note: default is set programmatically in __init_subclass__
     ext_version: str | None = pyd.Field(description="Extension version", example="3.22", default=None)
 
+    @classmethod
+    def get_ext_version(cls) -> str:
+        """Return the version of the extension."""
+        return cls._EXT_VERSION
+
 
 class Version(NamedTuple):
     """Version of the object or specification."""
@@ -71,6 +76,14 @@ class Version(NamedTuple):
     def as_str(self) -> str:
         """Return the version as a string."""
         return f"{self.major}.{self.minor}"
+
+    def as_int(self) -> int:
+        """
+        Return the version as an integer.
+
+        This could be useful for comparisons
+        """
+        return self.major * 1_000_000 + self.minor
 
 
 class OpenEpdVersions(Version, ReprEnum):
