@@ -1,3 +1,9 @@
+## 3.1.1 (2024-04-22)
+
+### Fix
+
+- add validation for ratio type for Cementitious
+
 ## 3.1.0 (2024-04-12)
 
 ### Feat
