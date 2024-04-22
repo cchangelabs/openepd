@@ -56,7 +56,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }}
           branch: ${{ github.ref }}
           tags: true
 
@@ -67,7 +67,7 @@ jobs:
           type: now
           from_branch: '${{ github.ref }}'
           target_branch: master
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }}
 
       - name: Create Github Release
         id: create_release
@@ -79,7 +79,7 @@ jobs:
             ${{ steps.bump.outputs.changelog }}
           draft: false
           prerelease: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
 
   build-wheel:
     name: Release python package
