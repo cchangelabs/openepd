@@ -22,4 +22,4 @@ jobs:
           type: now
           from_branch: '${{ github.ref }}'
           target_branch: dev
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.gh_token }}
