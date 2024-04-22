@@ -159,16 +159,24 @@ class CmuSpec(BaseOpenEpdSpec):
 class Cementitious(BaseOpenEpdSchema):
     """List of cementitious materials, and proportion by mass."""
 
-    opc: RatioFloat | None = pyd.Field(default=None, description="Ordinary Gray Portland Cement")
-    wht: RatioFloat | None = pyd.Field(default=None, description="White Portland Cement")
-    ggbs: RatioFloat | None = pyd.Field(default=None, description="Ground Granulated Blast Furnace Slag")
-    flyAsh: RatioFloat | None = pyd.Field(default=None, description="Fly Ash, including types F, CL, and CH")
-    siFume: RatioFloat | None = pyd.Field(default=None, description="Silica Fume")
-    gg45: RatioFloat | None = pyd.Field(default=None, description="Ground Glass, 45um or smaller")
-    natPoz: RatioFloat | None = pyd.Field(default=None, description="Natural pozzolan")
-    mk: RatioFloat | None = pyd.Field(default=None, description="Metakaolin")
-    CaCO3: RatioFloat | None = pyd.Field(default=None, description="Limestone")
-    other: RatioFloat | None = pyd.Field(default=None, description="Other SCMs")
+    opc: RatioFloat | None = pyd.Field(
+        default=None, description="Ordinary Gray Portland Cement", example=0.5, ge=0, le=1
+    )
+    wht: RatioFloat | None = pyd.Field(default=None, description="White Portland Cement", example=0.5, ge=0, le=1)
+    ggbs: RatioFloat | None = pyd.Field(
+        default=None, description="Ground Granulated Blast Furnace Slag", example=0.5, ge=0, le=1
+    )
+    flyAsh: RatioFloat | None = pyd.Field(
+        default=None, description="Fly Ash, including types F, CL, and CH", example=0.5, ge=0, le=1
+    )
+    siFume: RatioFloat | None = pyd.Field(default=None, description="Silica Fume", example=0.5, ge=0, le=1)
+    gg45: RatioFloat | None = pyd.Field(
+        default=None, description="Ground Glass, 45um or smaller", example=0.5, ge=0, le=1
+    )
+    natPoz: RatioFloat | None = pyd.Field(default=None, description="Natural pozzolan", example=0.5, ge=0, le=1)
+    mk: RatioFloat | None = pyd.Field(default=None, description="Metakaolin", example=0.5, ge=0, le=1)
+    CaCO3: RatioFloat | None = pyd.Field(default=None, description="Limestone", example=0.5, ge=0, le=1)
+    other: RatioFloat | None = pyd.Field(default=None, description="Other SCMs", example=0.5, ge=0, le=1)
 
 
 class TypicalApplication(BaseOpenEpdSchema):
