@@ -17,18 +17,13 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-try:
-    from pydantic import functional_validators  # type: ignore
-    from pydantic import v1 as pyd  # type: ignore
-    from pydantic.v1 import generics as pyd_generics  # type: ignore
+from typing import Any
 
-except ImportError:
-    import pydantic as pyd  # type: ignore[no-redef]
-    from pydantic import generics as pyd_generics  # type: ignore[no-redef]
-
-    from . import compat_functional_validators as functional_validators  # type: ignore[no-redef]
+__all__ = ["AfterValidator"]
 
 
-pydantic = pyd
+class AfterValidator:
+    """Placeholder stub for validator, unused in pydantic 1."""
 
-__all__ = ["pyd", "pydantic", "pyd_generics", "functional_validators"]
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        pass

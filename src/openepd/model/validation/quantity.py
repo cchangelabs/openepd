@@ -20,6 +20,7 @@
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Annotated, Callable, TypeAlias
 
+from openepd.compat.compat_functional_validators import AfterValidator
 from openepd.compat.pydantic import pyd
 from openepd.model.common import OpenEPDUnit
 
@@ -116,12 +117,26 @@ def validate_quantity_le_factory(max_value: str) -> "QuantityValidatorType":
     return validator
 
 
+def validate_quantity_for_new_validator(max_value: str) -> Callable:
+    """Create validator to check that quantity is less than or equal to max_value."""
+
+    def validator(value: str) -> str:
+        cls = BaseOpenEpdHierarchicalSpec
+        if hasattr(cls, "_QUANTITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
+            cls._QUANTITY_VALIDATOR.validate_quantity_less_or_equal(value, max_value)
+        return value
+
+    return validator
+
+
 # todo with the migration to Pydantic 2 we will be able to use pydantic.funcational_validators.AfterDecorator
 # this will let us bind the validator not to the model or the field, but to the type itself.
 
 # for abitrary non-standard quantity
 QuantityStr: TypeAlias = Annotated[str, pyd.Field()]
-PressureMPaStr: TypeAlias = Annotated[str, pyd.Field(example="30 MPa")]
+PressureMPaStr: TypeAlias = Annotated[
+    str, AfterValidator(validate_quantity_for_new_validator("100 MPa")), pyd.Field(example="30 MPa")
+]
 MassKgStr: TypeAlias = Annotated[str, pyd.Field(example="30 kg")]
 AreaM2Str: TypeAlias = Annotated[str, pyd.Field(example="12 m2", gt=0)]
 LengthMStr: TypeAlias = Annotated[str, pyd.Field(example="30 m", gt=0)]
