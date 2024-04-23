@@ -51,9 +51,12 @@ class DefaultBundleReaderTestCase(unittest.TestCase):
 
     def test_add_objects_with_minimal_info(self):
         file_name, writer = self.__create_writer()
-        with writer, open(SRC_DATA / "test-pcr.json", "r") as pcr_file, open(
-            SRC_DATA / "test-pcr.pdf", "rb"
-        ) as pcr_pdf_file, open(SRC_DATA / "extraction-report.txt", "rb") as report_file:
+        with (
+            writer,
+            open(SRC_DATA / "test-pcr.json", "r") as pcr_file,
+            open(SRC_DATA / "test-pcr.pdf", "rb") as pcr_pdf_file,
+            open(SRC_DATA / "extraction-report.txt", "rb") as report_file,
+        ):
             pcr_obj = Pcr.parse_raw(pcr_file.read())
             pcr_asset = writer.write_object_asset(pcr_obj)
             writer.write_blob_asset(pcr_pdf_file, "application/pdf", pcr_asset, RelType.Pdf)
@@ -66,9 +69,12 @@ class DefaultBundleReaderTestCase(unittest.TestCase):
 
     def test_add_objects_with_custom_names(self):
         file_name, writer = self.__create_writer()
-        with writer, open(SRC_DATA / "test-pcr.json", "r") as pcr_file, open(
-            SRC_DATA / "test-pcr.pdf", "rb"
-        ) as pcr_pdf_file, open(SRC_DATA / "extraction-report.txt", "rb") as report_file:
+        with (
+            writer,
+            open(SRC_DATA / "test-pcr.json", "r") as pcr_file,
+            open(SRC_DATA / "test-pcr.pdf", "rb") as pcr_pdf_file,
+            open(SRC_DATA / "extraction-report.txt", "rb") as report_file,
+        ):
             pcr_obj = Pcr.parse_raw(pcr_file.read())
             pcr_asset = writer.write_object_asset(
                 pcr_obj, file_name="original-pcr.json", lang="en", comment="My comment", name="Original PCR"

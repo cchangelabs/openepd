@@ -33,41 +33,51 @@ class SteelFabricatedMixin(BaseOpenEpdSpec):
 
 
 class ColdFormedFramingV1(BaseOpenEpdHierarchicalSpec):
-    """Cold formed framing performance specification."""
+    """
+    Cold Formed Framing performance specification.
+
+    Cold formed steel elements such as studs and framing, typically made from coil or sheet steel and used
+    within walls and ceilings.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class DeckingSteelV1(BaseOpenEpdHierarchicalSpec):
-    """Cold Formed Steel Decking."""
+    """Corrugated Decking made from cold-formed sheet steel. Often filled with concrete."""
 
     _EXT_VERSION = "1.0"
 
 
 class SteelSuspensionAssemblyV1(BaseOpenEpdHierarchicalSpec):
-    """Steel suspension assembly performance specification."""
+    """Steel suspension assemblies for suspended (e.g. acoustical) ceiling systems."""
 
     _EXT_VERSION = "1.0"
 
 
 class HollowSectionsV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
-    """Hollow sections performance specification."""
+    """Hollow cross section steel shape, typically referred to as hollow structural section (HSS)."""
 
     _EXT_VERSION = "1.0"
-
-    # Own fields:
 
 
 class HotRolledSectionsV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
-    """Hot rolled sections performance specification."""
+    """
+    Hot rolled sections performance specification.
+
+    Steel shapes, such as angles, wide flange beams and I-beams, produced using a high temperature
+    mill process.
+    """
 
     _EXT_VERSION = "1.0"
 
-    # Own fields:
-
 
 class PlateSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
-    """Plate Steels."""
+    """Plate Steels.
+
+    Flat hot-rolled steel, typically thicker than 'sheet', made by compressing multiple steel
+    layers together into one.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -75,43 +85,66 @@ class PlateSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
 
 
 class MetalRailingsV1(BaseOpenEpdHierarchicalSpec):
-    """Metal railings performance specification."""
+    """Metal Railings including pipe and tube railings."""
 
     _EXT_VERSION = "1.0"
 
 
 class MetalStairsV1(BaseOpenEpdHierarchicalSpec):
-    """Metal stairs performance specification."""
+    """
+    Metal stairs.
+
+    Includes: metal pan stairs, metal floor plate stairs, grating stairs, fire escapes,
+    ladders, and walkways/catwalks/ramps/platforms.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class MiscMetalFabricationV1(BaseOpenEpdHierarchicalSpec):
-    """Misc metal fabrication performance specification."""
+    """Prefabricated steel assemblies not included in another category."""
 
     _EXT_VERSION = "1.0"
 
 
 class OpenWebMembranesV1(BaseOpenEpdHierarchicalSpec):
-    """Open web membranes performance specification."""
+    """
+    Open web membranes performance specification.
+
+    Lightweight steel truss, typically made of parallel chords and a triangulated web system,
+    "proportioned to span between bearing points.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class MBQSteelV1(BaseOpenEpdHierarchicalSpec):
-    """M b q steel performance specification."""
+    """
+    Merchant Bar Quality (MBQ) steel.
+
+    Used as feedstock to steel construction products, but also includes rounds, angles, and light structural shapes.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class CoilSteelV1(BaseOpenEpdHierarchicalSpec):
-    """Coil steel performance specification."""
+    """
+    Sheet or strip steel, sold in rolls.
+
+    Typically, coil steel is cold-formed into light gauge products.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class ColdFormedSteelV1(BaseOpenEpdHierarchicalSpec):
-    """Cold Formed Structural Steel."""
+    """
+    Cold Formed Steel Products.
+
+    All types of cold formed steel products. These products are made from hot-rolled steel coils and
+    sheets and are cold formed into products such as studs, decking, panels, and other accessories.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -122,14 +155,30 @@ class ColdFormedSteelV1(BaseOpenEpdHierarchicalSpec):
 
 
 class StructuralSteelV1(BaseOpenEpdHierarchicalSpec):
-    """Structural Steel."""
+    """
+    Structural Steel.
+
+    Hot rolled steel shapes, Hollow Sections, pipes, and similar hot-worked structural steels.
+    """
 
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    modulus_of_elasticity: PressureMPaStr | None = pyd.Field(default=None, description="", example="1.0 MPa")
-    thermal_expansion: str | None = pyd.Field(default=None, description="", example="1 / K")
-    thermal_conductivity: str | None = pyd.Field(default=None, description="", example="1 W / (m * K)")
+    modulus_of_elasticity: PressureMPaStr | None = pyd.Field(
+        default=None,
+        description="Modulus of Elasticity, https://en.wikipedia.org/wiki/Elastic_modulus ",
+        example="193 GPa",
+    )
+    thermal_expansion: str | None = pyd.Field(
+        default=None,
+        description="Thermal Expansion, https://en.wikipedia.org/wiki/Thermal_expansion",
+        example="1.11E-5 / K",
+    )
+    thermal_conductivity: str | None = pyd.Field(
+        default=None,
+        description="Thermal Conductivity, https://en.wikipedia.org/wiki/Thermal_conductivity_and_resistivity",
+        example="1.45E-5 W / (m * K)",
+    )
 
     _steel_modulus_of_elasticity_is_quantity_validator = pyd.validator("modulus_of_elasticity", allow_reuse=True)(
         validate_unit_factory("MPa")
@@ -148,7 +197,7 @@ class StructuralSteelV1(BaseOpenEpdHierarchicalSpec):
 
 
 class PrefabricatedSteelAssembliesV1(BaseOpenEpdHierarchicalSpec):
-    """Prefabricated steel assemblies performance specification."""
+    """Prefabricated assemblies made primarily of steel."""
 
     _EXT_VERSION = "1.0"
 
@@ -160,22 +209,24 @@ class PrefabricatedSteelAssembliesV1(BaseOpenEpdHierarchicalSpec):
 
 
 class PostTensioningSteelV1(BaseOpenEpdHierarchicalSpec):
-    """Post-Tensioning Steels, per https://www.concretenetwork.com/post-tension/industry.html."""
+    """Steel tensioning cables or tendons for compression of prestressed concrete."""
 
     _EXT_VERSION = "1.0"
 
 
 class RebarSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
-    """Bar steels, such as rebar for concrete reinforcement."""
+    """Reinforcing bar used together with concrete."""
 
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    grade: SteelRebarGrade | None = pyd.Field(default=None, description="", example="60 ksi")
-    diameter_min: LengthMmStr | None = pyd.Field(default=None, description="", example="8 mm")
-    bending_pin_max: float | None = pyd.Field(default=None, description="", example=2.3)
-    ts_ys_ratio_max: float | None = pyd.Field(default=None, description="", example=2.3)
-    epoxy_coated: bool | None = pyd.Field(default=None, description="", example=True)
+    grade: SteelRebarGrade | None = pyd.Field(default=None, example="60 ksi")
+    diameter_min: LengthMmStr | None = pyd.Field(default=None, description="Minimal diameter", example="8 mm")
+    bending_pin_max: float | None = pyd.Field(default=None, example=2.3)
+    ts_ys_ratio_max: float | None = pyd.Field(
+        default=None, description="Max ratio of ultimate tensile to yield tensile strength", example=2.3
+    )
+    epoxy_coated: bool | None = pyd.Field(default=None, example=True)
 
     _steel_rebar_diameter_min_is_quantity_validator = pyd.validator("diameter_min", allow_reuse=True)(
         validate_unit_factory("m")
@@ -189,25 +240,41 @@ class WireMeshSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
 
 
 class SteelV1(BaseOpenEpdHierarchicalSpec):
-    """Steel performance specification."""
+    """Broad category for construction materials made from steel and its alloys."""
 
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    yield_tensile_str: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    bar_elongation: float | None = pyd.Field(default=None, description="", example=2.3)
+    yield_tensile_str: PressureMPaStr | None = pyd.Field(
+        default=None, description="Yield Tensile strength (Mpa) per unit area", example="100 MPa"
+    )
+    bar_elongation: float | None = pyd.Field(
+        default=None, description="Increase in length at break, in percent. Typically 10%-20%", example=0.2
+    )
     recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
-    post_consumer_recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
-    astm_marking: str | None = pyd.Field(default=None, description="")
-    euro_marking: str | None = pyd.Field(default=None, description="")
-    composition: SteelComposition | None = pyd.Field(default=None, description="", example="Carbon")
-    cold_finished: bool | None = pyd.Field(default=None, description="", example=True)
-    galvanized: bool | None = pyd.Field(default=None, description="", example=True)
-    stainless: bool | None = pyd.Field(default=None, description="", example=True)
+    post_consumer_recycled_content: RatioFloat | None = pyd.Field(
+        default=None,
+        description="Should be a number between zero and the Recycled Content (steel_recycled_content)",
+        example=0.5,
+        ge=0,
+        le=1,
+    )
+    astm_marking: str | None = pyd.Field(
+        default=None, description="The marking to be expected on the product.", example="S4S60"
+    )
+    euro_marking: str | None = pyd.Field(
+        default=None, description="The marking to be expected on the product.", examples="S4S60"
+    )
+    composition: SteelComposition | None = pyd.Field(
+        default=None, description="Basic chemical composition", example="Carbon"
+    )
+    cold_finished: bool | None = pyd.Field(default=None, example=True)
+    galvanized: bool | None = pyd.Field(default=None, example=True)
+    stainless: bool | None = pyd.Field(default=None, example=True)
     making_route: SteelMakingRoute | None = pyd.Field(default=None)
-    astm_standards: list[Standard] | None = pyd.Field(default=None, description="")
-    sae_standards: list[Standard] | None = pyd.Field(default=None, description="")
-    en_standards: list[Standard] | None = pyd.Field(default=None, description="")
+    astm_standards: list[Standard] | None = pyd.Field(default=None, description="List of ASTM standards")
+    sae_standards: list[Standard] | None = pyd.Field(default=None, description="List of SAE standards")
+    en_standards: list[Standard] | None = pyd.Field(default=None, description="List of EN standards")
 
     _steel_yield_tensile_str_is_quantity_validator = pyd.validator("yield_tensile_str", allow_reuse=True)(
         validate_unit_factory("MPa")

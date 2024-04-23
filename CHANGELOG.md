@@ -1,3 +1,15 @@
+## 3.1.2 (2024-04-23)
+
+### Fix
+
+- add validation for ratio type for Cementitious
+
+### Refactor
+
+- clean up Opening documentation
+- clean up Concrete documentation
+- clean up steel documentation
+
 ## 3.1.1 (2024-04-22)
 
 ### Fix

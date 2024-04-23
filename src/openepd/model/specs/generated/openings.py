@@ -68,6 +68,63 @@ class GlazingIntendedApplication(BaseOpenEpdSchema):
     )
 
 
+class GlazingOptionsMixin(BaseOpenEpdSchema):
+    """Common glazing options."""
+
+    low_emissivity: bool | None = pyd.Field(default=None, description="Low Emissivity coatings", example=True)
+    electrochromic: bool | None = pyd.Field(
+        default=None,
+        description="Glazing with an electrically controllable solar heat gain and/or other properties.",
+        example=True,
+    )
+    acid_etched: bool | None = pyd.Field(
+        default=None, description="Flat glass that has undergone a chemical etching process.", example=True
+    )
+    tempered: bool | None = pyd.Field(
+        default=None,
+        description="Consists of a single pane that has been heat-treated to give the glass increased impact "
+        "resistance. Standard typically used in North America.",
+        example=True,
+    )
+    toughened: bool | None = pyd.Field(
+        default=None,
+        description="Consists of a single pane that has been specially heat-treated to give the glass increased impact "
+        "resistance. Standard typically used in Europe.",
+        example=True,
+    )
+    laminated: bool | None = pyd.Field(
+        default=None,
+        description="Consists of at least two glass panes lying one on top of the other, with one or several layers of "
+        "a tear-resistant, viscoelastic film positioned between the panes, which consist of polyvinyl "
+        "butyral (PVB)",
+        example=True,
+    )
+    fire_resistant: bool | None = pyd.Field(default=None, example=True)
+    fire_protection: bool | None = pyd.Field(
+        default=None,
+        description="Specifically tested for its ability to block flames and smoke, but not radiant heat. Ranges from"
+        " specialty tempered products rated for ~20 minutes to glass ceramics rated up to 3 hours.",
+        example=True,
+    )
+    pyrolytic_coated: bool | None = pyd.Field(
+        default=None,
+        description="At least one coating is applied in a pyrolytic process, typically during float glass production.",
+        example=True,
+    )
+    sputter_coat: bool | None = pyd.Field(
+        default=None,
+        description="At least one coating is applied using sputter (vacuum deposition) coating.",
+        example=True,
+    )
+    solar_heat_gain: RatioFloat | None = pyd.Field(
+        default=None,
+        description="Solar heat gain, measured at a certain level of Differential Pressure. Range is 0 to 1.",
+        example=0.5,
+        ge=0,
+        le=1,
+    )
+
+
 class PanelDoorsV1(BaseOpenEpdHierarchicalSpec):
     """Panel doors performance specification."""
 
@@ -75,13 +132,18 @@ class PanelDoorsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class PressureResistantDoorsV1(BaseOpenEpdHierarchicalSpec):
-    """Pressure resistant doors performance specification."""
+    """Pressure-Resistant Doors."""
 
     _EXT_VERSION = "1.0"
 
 
 class SpecialFunctionDoorsV1(BaseOpenEpdHierarchicalSpec):
-    """Special function doors performance specification."""
+    """
+    Special function doors.
+
+    Includes doors for e.g., cold storage, hangars, lightproof applications,
+    security, sound control, vaults, etc.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -97,23 +159,32 @@ class SlidingGlassDoorsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class FenestrationAccessoriesV1(BaseOpenEpdHierarchicalSpec):
-    """Fenestration accessories performance specification."""
+    """
+    Fenestration accessories.
+
+    Gaskets, seals, fasteners, and other low-mass items which may be useful in calculating the impact of a
+    fenestration system.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class FenestrationFramingV1(BaseOpenEpdHierarchicalSpec):
-    """Fenestration framing performance specification."""
+    """
+    Fenestration Framing.
+
+    Lineal elements ("sticks") for use in fenestration, including frames, sashes, and mullions.
+    """
 
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thermal_separation: ThermalSeparation | None = pyd.Field(default=None, description="", example="Aluminium")
-    material: FrameMaterial | None = pyd.Field(default=None, description="", example="Vinyl")
+    thermal_separation: ThermalSeparation | None = pyd.Field(default=None, example="Aluminium")
+    material: FrameMaterial | None = pyd.Field(default=None, example="Vinyl")
 
 
 class FenestrationHardwareV1(BaseOpenEpdHierarchicalSpec):
-    """Fenestration hardware performance specification."""
+    """Locks, operation hardware, and other substantial items declared on a per-piece basis."""
 
     _EXT_VERSION = "1.0"
 
@@ -122,69 +193,81 @@ class FenestrationHardwareV1(BaseOpenEpdHierarchicalSpec):
 
 
 class FlatGlassPanesV1(BaseOpenEpdHierarchicalSpec):
-    """Flat glass panes performance specification."""
+    """Monolithic, uncoated flat glass panes that are not substantially processed."""
 
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: FlatGlassPanesThickness | None = pyd.Field(default=None, description="", example="12 mm")
+    thickness: FlatGlassPanesThickness | None = pyd.Field(default=None, example="12 mm")
 
     _flat_glass_panes_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
         validate_unit_factory("m")
     )
 
 
-class ProcessedNonInsulatingGlassPanesV1(BaseOpenEpdHierarchicalSpec):
-    """Processed non insulating glass panes performance specification."""
+class ProcessedNonInsulatingGlassPanesV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin):
+    """
+    Solid glass panes without internal gaps which have been heat-treated or otherwise substantially processed.
+
+    Includes:
+    1. Coatings including low-e and other coatings (see PCR)
+    2. laminating (fire-rated, glass clad polycarbonate, interlayers
+    3. Heat treated (heat strengthened, tempered, fire-rated)
+    4. Mechanically or chemically processed or fabricated
+    (edging, bending, etching, drilling, notching, cutting, polishing, etc)
+    5. combined products of processing in 1-5.
+    """
 
     _EXT_VERSION = "1.0"
 
-    # Own fields:
-    low_emissivity: bool | None = pyd.Field(default=None, description="", example=True)
-    electrochromic: bool | None = pyd.Field(default=None, description="", example=True)
-    acid_etched: bool | None = pyd.Field(default=None, description="", example=True)
-    tempered: bool | None = pyd.Field(default=None, description="", example=True)
-    toughened: bool | None = pyd.Field(default=None, description="", example=True)
-    laminated: bool | None = pyd.Field(default=None, description="", example=True)
-    fire_resistant: bool | None = pyd.Field(default=None, description="", example=True)
-    fire_protection: bool | None = pyd.Field(default=None, description="", example=True)
-    pyrolytic_coated: bool | None = pyd.Field(default=None, description="", example=True)
-    sputter_coat: bool | None = pyd.Field(default=None, description="", example=True)
-    solar_heat_gain: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
-
 
 class GlazedDoorsV1(BaseOpenEpdHierarchicalSpec):
-    """Glazed doors performance specification."""
+    """
+    Factory assembled door which is at least 50% glass by area.
+
+    Includes sliding patio doors and hinged doors.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class UnitSkylightsV1(BaseOpenEpdHierarchicalSpec):
-    """Unit skylights performance specification."""
+    """
+    Unit skylights performance specification.
+
+    A factory assembled fenestration unit for installation on the roof of a structure to provide interior
+    building spaces with natural daylight, warmth, and ventilation; generally not operable
+    by hand (cf. roof window). Includes frame(s) and possibly operating hardware.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class WindowsV1(BaseOpenEpdHierarchicalSpec):
-    """Windows performance specification."""
+    """Windows including glazing and frame material."""
 
     _EXT_VERSION = "1.0"
 
 
 class IntegratedDoorsOpeningAssembliesV1(BaseOpenEpdHierarchicalSpec):
-    """Integrated doors opening assemblies performance specification."""
+    """Pre-installed unit that includes door, frame, and hardware."""
 
     _EXT_VERSION = "1.0"
 
 
 class MetalDoorAndFramesV1(BaseOpenEpdHierarchicalSpec):
-    """Metal door and frames performance specification."""
+    """Metal doors and frames."""
 
     _EXT_VERSION = "1.0"
 
 
 class SpecialtyDoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
-    """Specialty doors and frames performance specification."""
+    """
+    Specialty doors and frames.
+
+    Includes e.g., access doors and panels, sliding glass doors, coiling doors, special function doors,
+    folding doors, etc.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -200,7 +283,12 @@ class WoodDoorsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class FenestrationPartsV1(BaseOpenEpdHierarchicalSpec):
-    """Fenestration parts performance specification."""
+    """
+    Fenestration Parts.
+
+    Parts and assemblies for integration into building fenestration such as windows, curtain walls,
+    and storefronts.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -216,7 +304,7 @@ class FenestrationPartsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class GlassPanesV1(BaseOpenEpdHierarchicalSpec):
-    """Glass panes performance specification."""
+    """Flat glass panes."""
 
     _EXT_VERSION = "1.0"
 
@@ -252,29 +340,34 @@ class NAFSPerformanceClass(BaseOpenEpdSchema):
     )
 
 
-class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec):
-    """NAFS fenestration performance specification."""
+class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin):
+    """Factory assembled fenestration units compliant to the North American Fenestration Standard."""
 
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    hurricane_resistant: bool | None = pyd.Field(default=None, description="", example=True)
-    low_emissivity: bool | None = pyd.Field(default=None, description="", example=True)
-    electrochromic: bool | None = pyd.Field(default=None, description="", example=True)
-    acid_etched: bool | None = pyd.Field(default=None, description="", example=True)
-    tempered: bool | None = pyd.Field(default=None, description="", example=True)
-    toughened: bool | None = pyd.Field(default=None, description="", example=True)
-    laminated: bool | None = pyd.Field(default=None, description="", example=True)
-    fire_resistant: bool | None = pyd.Field(default=None, description="", example=True)
-    fire_protection: bool | None = pyd.Field(default=None, description="", example=True)
-    pyrolytic_coated: bool | None = pyd.Field(default=None, description="", example=True)
-    sputter_coat: bool | None = pyd.Field(default=None, description="", example=True)
-    thermal_separation: ThermalSeparation | None = pyd.Field(default=None, description="", example="Aluminium")
-    assembly_u_factor: str | None = pyd.Field(default=None, description="", example="1 USI")
-    solar_heat_gain: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
-    air_infiltration: str | None = pyd.Field(default=None, description="", example="1 m / s")
+    hurricane_resistant: bool | None = pyd.Field(
+        default=None, description="The product has been designed to resist windborne debris.", example=True
+    )
+
+    assembly_u_factor: str | None = pyd.Field(
+        default=None,
+        description="Weighted average conductance of heat across assembly (including frame).",
+        example="1 USI",
+    )
+    air_infiltration: str | None = pyd.Field(
+        default=None,
+        description="Air infiltration, measured at a certain level of Differential Pressure.",
+        example="1 m / s",
+    )
+
+    thermal_separation: ThermalSeparation | None = pyd.Field(default=None, example="Aluminium")
     dp_rating: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    glass_panes: int | None = pyd.Field(default=None, description="", example=3)
+    glass_panes: int | None = pyd.Field(
+        default=None,
+        description="Number of panes, each separated by a cavity. A 3 pane unit has 2 cavities. example: 3",
+        example=3,
+    )
 
     performance_class: NAFSPerformanceClass | None = pyd.Field(
         default=None, description="Performance class according to NAFS."
@@ -307,7 +400,7 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec):
     Windows: WindowsV1 | None = None
 
 
-class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec):
+class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin):
     """Insulating glazing units performance specification."""
 
     _EXT_VERSION = "1.0"
@@ -317,23 +410,27 @@ class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec):
         default=None, description="Intended application for IGUs."
     )
 
-    hurricane_resistant: bool | None = pyd.Field(default=None, description="", example=True)
-    low_emissivity: bool | None = pyd.Field(default=None, description="", example=True)
-    electrochromic: bool | None = pyd.Field(default=None, description="", example=True)
-    acid_etched: bool | None = pyd.Field(default=None, description="", example=True)
-    tempered: bool | None = pyd.Field(default=None, description="", example=True)
-    toughened: bool | None = pyd.Field(default=None, description="", example=True)
-    laminated: bool | None = pyd.Field(default=None, description="", example=True)
-    fire_resistant: bool | None = pyd.Field(default=None, description="", example=True)
-    fire_protection: bool | None = pyd.Field(default=None, description="", example=True)
-    pyrolytic_coated: bool | None = pyd.Field(default=None, description="", example=True)
-    sputter_coat: bool | None = pyd.Field(default=None, description="", example=True)
-    solar_heat_gain: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
-    air_infiltration: str | None = pyd.Field(default=None, description="", example="1 m / s")
-    dp_rating: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    glass_panes: int | None = pyd.Field(default=None, description="", example=3)
-    cog_u_factor: str | None = pyd.Field(default=None, description="", example="1 USI")
-    spacer: Spacer | None = pyd.Field(default=None, description="", example="Aluminium")
+    hurricane_resistant: bool | None = pyd.Field(default=None, example=True)
+
+    dp_rating: PressureMPaStr | None = pyd.Field(
+        default=None, description="Maximum Differential Pressure, a measure of wind tolerance.", example="1 MPa"
+    )
+    air_infiltration: str | None = pyd.Field(
+        default=None,
+        description="Air infiltration, measured at a certain level of Differential Pressure.",
+        example="1 m / s",
+    )
+    glass_panes: int | None = pyd.Field(
+        default=None,
+        description="Number of panes, each separated by a cavity. A 3 pane unit has 2 cavities. example: 3",
+        example=3,
+    )
+    cog_u_factor: str | None = pyd.Field(
+        default=None, description="Conductance of heat at center of glass.", example="1 USI"
+    )
+    spacer: Spacer | None = pyd.Field(
+        default=None, description="Spacer material for Integrated Glass Unit.", example="Aluminium"
+    )
 
     _air_infiltration_is_quantity_validator = pyd.validator("air_infiltration", allow_reuse=True)(
         validate_unit_factory("m / s")
@@ -343,19 +440,27 @@ class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class CurtainWallsV1(BaseOpenEpdHierarchicalSpec):
-    """Curtain walls performance specification."""
+    """
+    Curtain Walls.
+
+    Exterior skin of building where walls are non-structural and are outboard of the floor slabs,
+    often as system of aluminum framing with vision glass and opaque panels of glass, metal, or other
+    materials.
+
+    Can be 'unitized' (prefabricated off-site) or 'stick' (fabricated on site).
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class DoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
-    """Doors and frames performance specification."""
+    """Doors (the operable part) and frames (what holds the door proper)."""
 
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    height: LengthMmStr | None = pyd.Field(default=None, description="", example="1200 mm")
-    width: LengthMmStr | None = pyd.Field(default=None, description="", example="600 mm")
+    height: LengthMmStr | None = pyd.Field(default=None, example="1200 mm")
+    width: LengthMmStr | None = pyd.Field(default=None, example="600 mm")
 
     _height_is_quantity_validator = pyd.validator("height", allow_reuse=True)(validate_unit_factory("m"))
     _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))
@@ -368,13 +473,18 @@ class DoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
 
 
 class EntrancesV1(BaseOpenEpdHierarchicalSpec):
-    """Entrances performance specification."""
+    """Building entrances (distinct from the door proper)."""
 
     _EXT_VERSION = "1.0"
 
 
 class GlazingV1(BaseOpenEpdHierarchicalSpec):
-    """Glazing performance specification."""
+    """
+    Glazing performance specification.
+
+    Broad category of glass-based products, accessories, and assemblies ranging from
+    glass panes and framing to curtain walls.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -386,30 +496,50 @@ class GlazingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class StorefrontsV1(BaseOpenEpdHierarchicalSpec):
-    """Storefronts performance specification."""
+    """
+    Storefronts.
+
+    Fabricated building facades commonly used in retail applications, typically one or two stories
+    tall and using metal framing and glass.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class TranslucentWallAndRoofAssembliesV1(BaseOpenEpdHierarchicalSpec):
-    """Translucent wall and roof assemblies performance specification."""
+    """
+    Translucent wall and roof assemblies.
+
+    Includes structured polycarbonate panel and fiberglass sandwich panel assemblies.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class WindowWallAssembliesV1(BaseOpenEpdHierarchicalSpec):
-    """Window wall assemblies performance specification."""
+    """
+    Window Wall Assemblies.
+
+    Exterior skin of building where walls are non-structural and sit between floor slabs, often as
+    system of aluminum framing with vision glass and opaque panels of glass, metal,
+    or other materials.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class OpeningsV1(BaseOpenEpdHierarchicalSpec):
-    """Openings performance specification."""
+    """
+    Openings performance specification.
+
+    General category that includes windows, storefronts, window walls, curtain walls,
+    doors, entrances, etc.
+    """
 
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="80 mm")
+    thickness: LengthMmStr | None = pyd.Field(default=None, example="80 mm")
 
     _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
 

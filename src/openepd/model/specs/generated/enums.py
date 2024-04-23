@@ -372,14 +372,14 @@ class FrameMaterial(StrEnum):
     """
     Frame material.
 
-     - Vinyl: Vinyl
-     - Aluminium: Aluminium
-     - Steel: Steel
-     - Wood: Wood
-     - Fiberglass: Fiberglass
-     - Composite: Composite
-     - None: None
-     - Other: Other
+     - Vinyl: PVC and similar polymer frames
+     - Aluminium: Aluminium, with optional thermal improvement. Does not include aluminium clad.
+     - Steel: Steel, with optional thermal improvement
+     - Wood: Wood with optional cladding
+     - Fiberglass: Fiber reinforced plastic
+     - Composite: Plastic and Wood Fiber composite.
+     - None: This EPD does not cover the frame.
+     - Other: Other framing material not listed
 
     """
 
@@ -1793,12 +1793,12 @@ class HardwareFunction(StrEnum):
     """
     Hardware function.
 
-     - Lock: Lock
-     - Hinge: Hinge
-     - Handle: Handle
-     - Operator: Operator
-     - Balance: Balance
-     - Other: Other
+     - Lock: Locks, Keepers, and similar items that resist opening.
+     - Hinge: Hinges, Pivots, and similar items that secure glazing to the frame while it moves.
+     - Handle: Handles, knobs, and similar items for directly manipulating a window.
+     - Operator: Arms, Cranks, and other hardware that moves a window.
+     - Balance: Springs, Sash Balances, and other items that counter the weight of an operable sash.
+     - Other: Other hardware not described above.
 
     """
 
@@ -1975,11 +1975,17 @@ class ThermalSeparation(StrEnum):
     """
     Thermal separation.
 
-     - Aluminium: Aluminium
-     - Steel: Steel
-     - Thermally Improved Metal: Thermally Improved Metal
-     - Thermally Broken Metal: Thermally Broken Metal
-     - Nonmetal: Nonmetal
+     - Aluminium: Aluminium System members with less than 1.6 mm (0.062 in) or no separation between metal or system
+       members to provide a resistance heat transfer path from exterior to interior.
+     - Steel: Steel System members with less than 1.6 mm (0.062 in) or no separation between metal or system members to
+       provide a resistance heat transfer path from exterior to interior.
+     - Thermally Improved Metal: Metal System members with a separation ≥ 1.60 mm (0.062 in) provided by either a
+       thermal break or open air space that may be interrupted by short thermal bridges between the interior and
+       exterior surfaces.
+     - Thermally Broken Metal: Aluminium System members with a minimum of 5.30 mm (0.210 in) separation provided by
+       a thermal break.
+     - Nonmetal: Nonmetal material where the path from inside to outside inherently has low thermal conductivity,
+       such as wood, vinyl, and fiberglass. Aluminium-clad or split windows fall in this category.
 
     """
 
@@ -2376,7 +2382,7 @@ class FlatGlassPanesThickness(StrEnum):
 
 
 class NAFSPerformanceGrade(StrEnum):
-    """NAFS Performance Grade enum."""
+    """NAFS Performance Grade."""
 
     GRADE_15_PSF = "15 psf"
     GRADE_20_PSF = "20 psf"
