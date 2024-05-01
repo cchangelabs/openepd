@@ -18,12 +18,20 @@
 #  Find out more at www.BuildingTransparency.org
 #
 from openepd.compat.pydantic import pyd
+from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec
 from openepd.model.specs.generated.enums import SteelComposition, SteelRebarGrade
-from openepd.model.specs.steel import SteelMakingRoute
 from openepd.model.standard import Standard
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, validate_unit_factory
+
+
+class SteelMakingRoute(BaseOpenEpdSchema):
+    """Steel making route."""
+
+    bof: bool | None = pyd.Field(default=None, description="Basic oxygen furnace")
+    eaf: bool | None = pyd.Field(default=None, description="Electric arc furnace")
+    ohf: bool | None = pyd.Field(default=None, description="Open hearth furnace")
 
 
 class SteelFabricatedMixin(BaseOpenEpdSpec):
