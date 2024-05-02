@@ -20,7 +20,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import ElevatorsBuildingRise, ElevatorsUsageIntensity
-from openepd.model.validation.quantity import LengthMStr, MassKgStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMStr, MassKgStr, SpeedStr
 
 
 class ElevatorsV1(BaseOpenEpdHierarchicalSpec):
@@ -34,18 +34,8 @@ class ElevatorsV1(BaseOpenEpdHierarchicalSpec):
     )
     travel_length: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
     rated_load: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
-    rated_speed: str | None = pyd.Field(default=None, description="", example="1 m / s")
+    rated_speed: SpeedStr | None = pyd.Field(default=None, description="", example="1 m / s")
     building_rise: ElevatorsBuildingRise | None = pyd.Field(default=None, description="", example="Low-rise")
-
-    _elevators_travel_length_is_quantity_validator = pyd.validator("travel_length", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-    _elevators_rated_load_is_quantity_validator = pyd.validator("rated_load", allow_reuse=True)(
-        validate_unit_factory("kg")
-    )
-    _elevators_rated_speed_is_quantity_validator = pyd.validator("rated_speed", allow_reuse=True)(
-        validate_unit_factory("m / s")
-    )
 
 
 class ConveyingEquipmentV1(BaseOpenEpdHierarchicalSpec):

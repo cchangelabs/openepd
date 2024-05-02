@@ -20,7 +20,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import FireProtectionPipingMaterial, PipingAnsiSchedule, PlumbingPipingMaterial
-from openepd.model.validation.quantity import LengthMmStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, MassPerLengthStr
 
 
 class BathtubsV1(BaseOpenEpdHierarchicalSpec):
@@ -55,18 +55,10 @@ class FireProtectionPipingV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="6 mm")
     piping_diameter: LengthMmStr | None = pyd.Field(default=None, description="", example="120 mm")
-    mass_per_unit_length: str | None = pyd.Field(default=None, description="", example="1 kg / m")
+    mass_per_unit_length: MassPerLengthStr | None = pyd.Field(default=None, description="", example="1 kg / m")
     piping_ansi_schedule: PipingAnsiSchedule | None = pyd.Field(default=None, description="", example="5")
     fire_protection_piping_material: FireProtectionPipingMaterial | None = pyd.Field(
         default=None, description="", example="PVC"
-    )
-
-    _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
-    _piping_diameter_is_quantity_validator = pyd.validator("piping_diameter", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-    _mass_per_unit_length_is_quantity_validator = pyd.validator("mass_per_unit_length", allow_reuse=True)(
-        validate_unit_factory("kg / m")
     )
 
 
@@ -118,17 +110,9 @@ class PipingV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="6 mm")
     piping_diameter: LengthMmStr | None = pyd.Field(default=None, description="", example="120 mm")
-    mass_per_unit_length: str | None = pyd.Field(default=None, description="", example="1 kg / m")
+    mass_per_unit_length: MassPerLengthStr | None = pyd.Field(default=None, description="", example="1 kg / m")
     piping_ansi_schedule: PipingAnsiSchedule | None = pyd.Field(default=None, description="", example="5")
     plumbing_piping_material: PlumbingPipingMaterial | None = pyd.Field(default=None, description="", example="PVC")
-
-    _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
-    _piping_diameter_is_quantity_validator = pyd.validator("piping_diameter", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-    _mass_per_unit_length_is_quantity_validator = pyd.validator("mass_per_unit_length", allow_reuse=True)(
-        validate_unit_factory("kg / m")
-    )
 
 
 class PlumbingEquipmentV1(BaseOpenEpdHierarchicalSpec):

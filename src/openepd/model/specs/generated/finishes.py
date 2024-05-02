@@ -81,18 +81,6 @@ class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
     rolling_load_10_pass: str | None = pyd.Field(default=None, description="", example="1 N")
     rolling_load_10000_pass: str | None = pyd.Field(default=None, description="", example="1 N")
 
-    _access_flooring_finished_floor_height_is_quantity_validator = pyd.validator(
-        "finished_floor_height", allow_reuse=True
-    )(validate_unit_factory("m"))
-    _access_flooring_panel_thickness_is_quantity_validator = pyd.validator("panel_thickness", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-    _access_flooring_concentrated_load_is_quantity_validator = pyd.validator("concentrated_load", allow_reuse=True)(
-        validate_unit_factory("MPa")
-    )
-    _access_flooring_uniform_load_is_quantity_validator = pyd.validator("uniform_load", allow_reuse=True)(
-        validate_unit_factory("MPa")
-    )
     _access_flooring_rolling_load_10_pass_is_quantity_validator = pyd.validator(
         "rolling_load_10_pass", allow_reuse=True
     )(validate_unit_factory("N"))
@@ -124,15 +112,8 @@ class CarpetV1(BaseOpenEpdHierarchicalSpec):
     gwp_factor_base: GwpKgCo2eStr | None = pyd.Field(default=None, description="", example="1 kgCO2e")
     gwp_factor_yarn: GwpKgCo2eStr | None = pyd.Field(default=None, description="", example="1 kgCO2e")
 
-    _length_is_quantity_validator = pyd.validator("length", allow_reuse=True)(validate_unit_factory("m"))
-    _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))
     _yarn_weight_is_quantity_validator = pyd.validator("yarn_weight", allow_reuse=True)(validate_unit_factory("g / m2"))
-    _gwp_factor_base_is_quantity_validator = pyd.validator("gwp_factor_base", allow_reuse=True)(
-        validate_unit_factory("kgCO2e")
-    )
-    _gwp_factor_yarn_is_quantity_validator = pyd.validator("gwp_factor_yarn", allow_reuse=True)(
-        validate_unit_factory("kgCO2e")
-    )
+    _yarn_weight_ge_validator = pyd.validator("yarn_weight", allow_reuse=True)(validate_quantity_ge_factory("0 g / m2"))
 
 
 class LaminateV1(BaseOpenEpdHierarchicalSpec):
@@ -167,12 +148,6 @@ class ResilientFlooringV1(BaseOpenEpdHierarchicalSpec):
     floor_score: bool | None = pyd.Field(default=None, description="", example=True)
     nsf332: bool | None = pyd.Field(default=None, description="", example=True)
 
-    _length_is_quantity_validator = pyd.validator("length", allow_reuse=True)(validate_unit_factory("m"))
-    _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))
-    _resilient_flooring_wear_layer_is_quantity_validator = pyd.validator("wear_layer", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-
 
 class WallBaseV1(BaseOpenEpdHierarchicalSpec):
     """Wall base performance specification."""
@@ -194,8 +169,6 @@ class WoodFlooringV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
     fabrication: WoodFlooringFabrication | None = pyd.Field(default=None, description="", example="Solid hardwood")
     forest_practices_certifiers: list[OrgRef] | None = pyd.Field(default=None, description="")
 
-    _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
-
 
 class AcousticalCeilingsV1(BaseOpenEpdHierarchicalSpec):
     """Acoustical ceilings performance specification."""
@@ -204,8 +177,6 @@ class AcousticalCeilingsV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
-
-    _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
 
 
 class CeramicTileV1(BaseOpenEpdHierarchicalSpec):
@@ -373,7 +344,7 @@ class TilingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
+    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="9 mm")
     flooring: bool | None = pyd.Field(default=None, description="Tiling intended for walking.", example=True)
     wall_finish: bool | None = pyd.Field(
         default=None,
@@ -418,8 +389,6 @@ class TilingV1(BaseOpenEpdHierarchicalSpec):
         le=1,
     )
 
-    _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
-    _thickness_min_validator = pyd.validator("thickness", allow_reuse=True)(validate_quantity_ge_factory("0 mm"))
     _thickness_max_validator = pyd.validator("thickness", allow_reuse=True)(validate_quantity_le_factory("50 mm"))
 
     # Nested specs:
@@ -470,7 +439,6 @@ class GypsumV1(BaseOpenEpdHierarchicalSpec):
     moisture_resistant: bool | None = pyd.Field(default=None, description="", example=True)
     abuse_resistant: bool | None = pyd.Field(default=None, description="", example=True)
 
-    _gypsum_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
     _gypsum_r_factor_is_quantity_validator = pyd.validator("r_factor", allow_reuse=True)(validate_unit_factory("RSI"))
 
     # Nested specs:
@@ -496,8 +464,6 @@ class WallFinishesV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
-
-    _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
 
 
 class FinishesV1(BaseOpenEpdHierarchicalSpec):

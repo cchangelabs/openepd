@@ -20,7 +20,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import CmuBlockType, CmuWeightClassification
-from openepd.model.validation.quantity import GwpKgCo2eStr, PressureMPaStr, validate_unit_factory
+from openepd.model.validation.quantity import GwpKgCo2eStr, PressureMPaStr
 
 
 class CMUV1(BaseOpenEpdHierarchicalSpec):
@@ -37,10 +37,3 @@ class CMUV1(BaseOpenEpdHierarchicalSpec):
     sound_performance: bool | None = pyd.Field(default=None, description="", example=True)
     b1_recarbonation: GwpKgCo2eStr | None = pyd.Field(default=None, description="", example="1 kgCO2e")
     b1_recarbonation_z: float | None = pyd.Field(default=None, description="", example=2.3)
-
-    _concrete_compressive_strength_28d_is_quantity_validator = pyd.validator("strength_28d", allow_reuse=True)(
-        validate_unit_factory("MPa")
-    )
-    _b1_recarbonation_is_quantity_validator = pyd.validator("b1_recarbonation", allow_reuse=True)(
-        validate_unit_factory("kgCO2e")
-    )

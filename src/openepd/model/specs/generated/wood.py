@@ -31,7 +31,7 @@ from openepd.model.specs.generated.enums import (
     SheathingPanelsFabrication,
 )
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import LengthMmStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr
 
 
 class WoodDeckingV1(BaseOpenEpdHierarchicalSpec):
@@ -118,10 +118,6 @@ class SheathingPanelsV1(BaseOpenEpdHierarchicalSpec):
     fabrication: SheathingPanelsFabrication | None = pyd.Field(default=None, description="", example="Plywood")
     wood_board_thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
     timber_species: EngineeredTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
-
-    _wood_board_thickness_is_quantity_validator = pyd.validator("wood_board_thickness", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
 
 
 class UnfinishedWoodV1(BaseOpenEpdHierarchicalSpec):

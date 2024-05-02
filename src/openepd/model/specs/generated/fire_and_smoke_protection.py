@@ -24,7 +24,7 @@ from openepd.model.specs.generated.enums import (
     SprayFireproofingDensity,
     SprayFireproofingMaterialType,
 )
-from openepd.model.validation.quantity import LengthMmStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr
 
 
 class IntumescentFireproofingV1(BaseOpenEpdHierarchicalSpec):
@@ -55,8 +55,6 @@ class AppliedFireproofingV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
-
-    _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
 
     # Nested specs:
     IntumescentFireproofing: IntumescentFireproofingV1 | None = None
