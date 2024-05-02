@@ -31,7 +31,7 @@ from openepd.model.specs.generated.enums import (
     MechanicalInstallation,
     MechanicalRefrigerants,
 )
-from openepd.model.validation.quantity import PressureMPaStr, validate_unit_factory
+from openepd.model.validation.quantity import AirflowStr, FlowRateStr, PowerStr, PressureMPaStr, VolumeStr
 
 
 class HvacVrfControlV1(BaseOpenEpdHierarchicalSpec):
@@ -47,21 +47,10 @@ class HvacVrfIndoorV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example=["R11"])
-    heating_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
-    cooling_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
-    airflow_rate: str | None = pyd.Field(default=None, description="", example="1 m3 / s")
-    air_volume: str | None = pyd.Field(default=None, description="", example="1 m3")
-
-    _heating_capacity_is_quantity_validator = pyd.validator("heating_capacity", allow_reuse=True)(
-        validate_unit_factory("W")
-    )
-    _cooling_capacity_is_quantity_validator = pyd.validator("cooling_capacity", allow_reuse=True)(
-        validate_unit_factory("W")
-    )
-    _airflow_rate_is_quantity_validator = pyd.validator("airflow_rate", allow_reuse=True)(
-        validate_unit_factory("m3 / s")
-    )
-    _air_volume_is_quantity_validator = pyd.validator("air_volume", allow_reuse=True)(validate_unit_factory("m3"))
+    heating_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
+    cooling_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
+    airflow_rate: AirflowStr | None = pyd.Field(default=None, description="", example="1 m3 / s")
+    air_volume: VolumeStr | None = pyd.Field(default=None, description="", example="1 m3")
 
 
 class HvacVrfOutdoorV1(BaseOpenEpdHierarchicalSpec):
@@ -71,21 +60,10 @@ class HvacVrfOutdoorV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example=["R11"])
-    heating_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
-    cooling_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
-    airflow_rate: str | None = pyd.Field(default=None, description="", example="1 m3 / s")
-    air_volume: str | None = pyd.Field(default=None, description="", example="1 m3")
-
-    _heating_capacity_is_quantity_validator = pyd.validator("heating_capacity", allow_reuse=True)(
-        validate_unit_factory("W")
-    )
-    _cooling_capacity_is_quantity_validator = pyd.validator("cooling_capacity", allow_reuse=True)(
-        validate_unit_factory("W")
-    )
-    _airflow_rate_is_quantity_validator = pyd.validator("airflow_rate", allow_reuse=True)(
-        validate_unit_factory("m3 / s")
-    )
-    _air_volume_is_quantity_validator = pyd.validator("air_volume", allow_reuse=True)(validate_unit_factory("m3"))
+    heating_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
+    cooling_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
+    airflow_rate: AirflowStr | None = pyd.Field(default=None, description="", example="1 m3 / s")
+    air_volume: VolumeStr | None = pyd.Field(default=None, description="", example="1 m3")
 
 
 class HvacAirDiffusersV1(BaseOpenEpdHierarchicalSpec):
@@ -112,23 +90,12 @@ class HvacAHUsV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example=["R11"])
     installation: MechanicalInstallation | None = pyd.Field(default=None, description="", example="Indoor")
-    airflow_rate: str | None = pyd.Field(default=None, description="", example="1 m3 / s")
-    air_volume: str | None = pyd.Field(default=None, description="", example="1 m3")
-    cooling_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
-    heating_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
+    airflow_rate: AirflowStr | None = pyd.Field(default=None, description="", example="1 m3 / s")
+    air_volume: VolumeStr | None = pyd.Field(default=None, description="", example="1 m3")
+    cooling_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
+    heating_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
     airflow_control: AhuAirflowControl | None = pyd.Field(default=None, description="", example="CAV")
     zone_control: AhuZoneControl | None = pyd.Field(default=None, description="", example="Single Zone")
-
-    _airflow_rate_is_quantity_validator = pyd.validator("airflow_rate", allow_reuse=True)(
-        validate_unit_factory("m3 / s")
-    )
-    _air_volume_is_quantity_validator = pyd.validator("air_volume", allow_reuse=True)(validate_unit_factory("m3"))
-    _cooling_capacity_is_quantity_validator = pyd.validator("cooling_capacity", allow_reuse=True)(
-        validate_unit_factory("W")
-    )
-    _heating_capacity_is_quantity_validator = pyd.validator("heating_capacity", allow_reuse=True)(
-        validate_unit_factory("W")
-    )
 
 
 class HvacBoilersV1(BaseOpenEpdHierarchicalSpec):
@@ -137,15 +104,10 @@ class HvacBoilersV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    flow_rate: str | None = pyd.Field(default=None, description="", example="1 l / min")
-    heating_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
+    flow_rate: FlowRateStr | None = pyd.Field(default=None, description="", example="1 l / min")
+    heating_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
     configuration: BoilerConfiguration | None = pyd.Field(default=None, description="", example="Hot water")
     fuel_type: BoilerEquipmentFuelType | None = pyd.Field(default=None, description="", example="Coal")
-
-    _flow_rate_is_quantity_validator = pyd.validator("flow_rate", allow_reuse=True)(validate_unit_factory("l / min"))
-    _heating_capacity_is_quantity_validator = pyd.validator("heating_capacity", allow_reuse=True)(
-        validate_unit_factory("W")
-    )
 
 
 class HvacChillersV1(BaseOpenEpdHierarchicalSpec):
@@ -156,21 +118,10 @@ class HvacChillersV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example=["R11"])
     installation: MechanicalInstallation | None = pyd.Field(default=None, description="", example="Indoor")
-    heating_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
-    cooling_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
-    air_volume: str | None = pyd.Field(default=None, description="", example="1 m3")
-    airflow_rate: str | None = pyd.Field(default=None, description="", example="1 m3 / s")
-
-    _heating_capacity_is_quantity_validator = pyd.validator("heating_capacity", allow_reuse=True)(
-        validate_unit_factory("W")
-    )
-    _cooling_capacity_is_quantity_validator = pyd.validator("cooling_capacity", allow_reuse=True)(
-        validate_unit_factory("W")
-    )
-    _air_volume_is_quantity_validator = pyd.validator("air_volume", allow_reuse=True)(validate_unit_factory("m3"))
-    _airflow_rate_is_quantity_validator = pyd.validator("airflow_rate", allow_reuse=True)(
-        validate_unit_factory("m3 / s")
-    )
+    heating_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
+    cooling_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
+    air_volume: VolumeStr | None = pyd.Field(default=None, description="", example="1 m3")
+    airflow_rate: AirflowStr | None = pyd.Field(default=None, description="", example="1 m3 / s")
 
 
 class HvacFansV1(BaseOpenEpdHierarchicalSpec):
@@ -186,22 +137,11 @@ class HvacHeatPumpsV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example=["R11"])
-    cooling_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
-    heating_capacity: str | None = pyd.Field(default=None, description="", example="1000.0 W")
-    air_volume: str | None = pyd.Field(default=None, description="", example="1 m3")
-    airflow_rate: str | None = pyd.Field(default=None, description="", example="1 m3 / s")
+    cooling_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
+    heating_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
+    air_volume: VolumeStr | None = pyd.Field(default=None, description="", example="1 m3")
+    airflow_rate: AirflowStr | None = pyd.Field(default=None, description="", example="1 m3 / s")
     heat_pumps_type: HeatPumpType | None = pyd.Field(default=None, description="", example="Air-to-Water")
-
-    _cooling_capacity_is_quantity_validator = pyd.validator("cooling_capacity", allow_reuse=True)(
-        validate_unit_factory("W")
-    )
-    _heating_capacity_is_quantity_validator = pyd.validator("heating_capacity", allow_reuse=True)(
-        validate_unit_factory("W")
-    )
-    _air_volume_is_quantity_validator = pyd.validator("air_volume", allow_reuse=True)(validate_unit_factory("m3"))
-    _airflow_rate_is_quantity_validator = pyd.validator("airflow_rate", allow_reuse=True)(
-        validate_unit_factory("m3 / s")
-    )
 
 
 class HvacHeatExV1(BaseOpenEpdHierarchicalSpec):
@@ -222,17 +162,9 @@ class HvacPumpsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    flow_rate: str | None = pyd.Field(default=None, description="", example="1 l / min")
+    flow_rate: FlowRateStr | None = pyd.Field(default=None, description="", example="1 l / min")
     pump_discharge_pressure: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    pump_horsepower: str | None = pyd.Field(default=None, description="", example="1000.0 W")
-
-    _flow_rate_is_quantity_validator = pyd.validator("flow_rate", allow_reuse=True)(validate_unit_factory("l / min"))
-    _pump_discharge_pressure_is_quantity_validator = pyd.validator("pump_discharge_pressure", allow_reuse=True)(
-        validate_unit_factory("MPa")
-    )
-    _pump_horsepower_is_quantity_validator = pyd.validator("pump_horsepower", allow_reuse=True)(
-        validate_unit_factory("W")
-    )
+    pump_horsepower: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
 
 
 class HvacRTUsV1(BaseOpenEpdHierarchicalSpec):

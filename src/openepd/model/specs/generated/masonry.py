@@ -19,7 +19,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.validation.quantity import PressureMPaStr, validate_unit_factory
+from openepd.model.validation.quantity import PressureMPaStr, validate_quantity_ge_factory, validate_unit_factory
 
 
 class GMUV1(BaseOpenEpdHierarchicalSpec):
@@ -38,11 +38,12 @@ class AutoclavedAeratedConcreteV1(BaseOpenEpdHierarchicalSpec):
     thermal_conductivity: str | None = pyd.Field(default=None, description="", example="1 W / (m * K)")
     white: bool | None = pyd.Field(default=None, description="", example=True)
 
-    _concrete_compressive_strength_28d_is_quantity_validator = pyd.validator("strength_28d", allow_reuse=True)(
-        validate_unit_factory("MPa")
-    )
     _aac_thermal_conductivity_is_quantity_validator = pyd.validator("thermal_conductivity", allow_reuse=True)(
         validate_unit_factory("W / (m * K)")
+    )
+
+    _aac_thermal_conductivity_min_validator = pyd.validator("thermal_conductivity", allow_reuse=True)(
+        validate_quantity_ge_factory("0 W / (m * K)")
     )
 
 

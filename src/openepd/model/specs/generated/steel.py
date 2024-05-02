@@ -188,9 +188,6 @@ class StructuralSteelV1(BaseOpenEpdHierarchicalSpec):
         example="1.45E-5 W / (m * K)",
     )
 
-    _steel_modulus_of_elasticity_is_quantity_validator = pyd.validator("modulus_of_elasticity", allow_reuse=True)(
-        validate_unit_factory("MPa")
-    )
     _steel_thermal_expansion_is_quantity_validator = pyd.validator("thermal_expansion", allow_reuse=True)(
         validate_unit_factory("1 / K")
     )
@@ -236,10 +233,6 @@ class RebarSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
     )
     epoxy_coated: bool | None = pyd.Field(default=None, example=True)
 
-    _steel_rebar_diameter_min_is_quantity_validator = pyd.validator("diameter_min", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-
 
 class WireMeshSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
     """Mild steel wire for reinforcement, connections, and meshes."""
@@ -283,10 +276,6 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
     astm_standards: list[Standard] | None = pyd.Field(default=None, description="List of ASTM standards")
     sae_standards: list[Standard] | None = pyd.Field(default=None, description="List of SAE standards")
     en_standards: list[Standard] | None = pyd.Field(default=None, description="List of EN standards")
-
-    _steel_yield_tensile_str_is_quantity_validator = pyd.validator("yield_tensile_str", allow_reuse=True)(
-        validate_unit_factory("MPa")
-    )
 
     # Nested specs:
     MBQSteel: MBQSteelV1 | None = None

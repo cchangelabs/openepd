@@ -21,10 +21,12 @@ from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import CableTraysMaterial, EnergySource, RacewaysMaterial
 from openepd.model.validation.quantity import (
+    ColorTemperatureStr,
     LengthMmStr,
     LengthMStr,
+    LuminosityStr,
     MassKgStr,
-    TemperatureCStr,
+    PowerStr,
     validate_quantity_ge_factory,
     validate_quantity_le_factory,
     validate_unit_factory,
@@ -70,11 +72,6 @@ class CableTraysV1(BaseOpenEpdHierarchicalSpec):
     )
     cable_trays_material: CableTraysMaterial | None = pyd.Field(default=None, description="", example="Stainless Steel")
 
-    _height_is_quantity_validator = pyd.validator("height", allow_reuse=True)(validate_unit_factory("m"))
-    _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))
-    _depth_is_quantity_validator = pyd.validator("depth", allow_reuse=True)(validate_unit_factory("m"))
-    _static_load_is_quantity_validator = pyd.validator("static_load", allow_reuse=True)(validate_unit_factory("kg"))
-
 
 class ElectricalBusesV1(BaseOpenEpdHierarchicalSpec):
     """Electrical buses performance specification."""
@@ -109,9 +106,6 @@ class RacewaysV1(BaseOpenEpdHierarchicalSpec):
     painted: bool | None = pyd.Field(default=None, description="", example=True)
     divided: bool | None = pyd.Field(default=None, description="", example=True)
     raceways_material: RacewaysMaterial | None = pyd.Field(default=None, description="", example="Aluminum")
-
-    _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))
-    _depth_is_quantity_validator = pyd.validator("depth", allow_reuse=True)(validate_unit_factory("m"))
 
 
 class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
@@ -250,10 +244,10 @@ class LightingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    color_temperature: TemperatureCStr | None = pyd.Field(default=None, description="", example="1 K")
+    color_temperature: ColorTemperatureStr | None = pyd.Field(default=None, description="", example="1 K")
     typical_utilization: str | None = pyd.Field(default=None, description="", example="1 h / yr")
-    luminosity: str | None = pyd.Field(default=None, description="", example="1 lumen")
-    wattage: str | None = pyd.Field(default=None, description="", example="1000.0 W")
+    luminosity: LuminosityStr | None = pyd.Field(default=None, description="", example="1 lumen")
+    wattage: PowerStr | None = pyd.Field(default=None, description="")
     color_rendering_index: float | None = pyd.Field(default=None, description="", example=2.3)
     dimmable: bool | None = pyd.Field(default=None, description="", example=True)
 
@@ -262,6 +256,9 @@ class LightingV1(BaseOpenEpdHierarchicalSpec):
     )
     _color_temperature_quantity_le_validator = pyd.validator("color_temperature", allow_reuse=True)(
         validate_quantity_le_factory("1E+04 K")
+    )
+    _typical_utilization_unit_validator = pyd.validator("typical_utilization", allow_reuse=True)(
+        validate_unit_factory("h / yr")
     )
     _typical_utilization_quantity_ge_validator = pyd.validator("typical_utilization", allow_reuse=True)(
         validate_quantity_ge_factory("25 h / yr")

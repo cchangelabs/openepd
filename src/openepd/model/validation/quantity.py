@@ -18,10 +18,8 @@
 #  Find out more at www.BuildingTransparency.org
 #
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Annotated, Callable, TypeAlias
+from typing import TYPE_CHECKING, Callable, ClassVar
 
-from openepd.compat.compat_functional_validators import AfterValidator
-from openepd.compat.pydantic import pyd
 from openepd.model.common import OpenEPDUnit
 
 if TYPE_CHECKING:
@@ -129,19 +127,148 @@ def validate_quantity_for_new_validator(max_value: str) -> Callable:
     return validator
 
 
-# todo with the migration to Pydantic 2 we will be able to use pydantic.funcational_validators.AfterDecorator
-# this will let us bind the validator not to the model or the field, but to the type itself.
+# for arbitrary non-standard quantity
+# todo these types should be replaced by Annotated[str, AfterValidator...] as we move completely to pydantic 2
 
-# for abitrary non-standard quantity
-QuantityStr: TypeAlias = Annotated[str, pyd.Field()]
-PressureMPaStr: TypeAlias = Annotated[
-    str, AfterValidator(validate_quantity_for_new_validator("100 MPa")), pyd.Field(example="30 MPa")
-]
-MassKgStr: TypeAlias = Annotated[str, pyd.Field(example="30 kg")]
-AreaM2Str: TypeAlias = Annotated[str, pyd.Field(example="12 m2", gt=0)]
-LengthMStr: TypeAlias = Annotated[str, pyd.Field(example="30 m", gt=0)]
-LengthMmStr: TypeAlias = Annotated[str, pyd.Field(example="30 mm", gt=0)]
-LengthInchStr: TypeAlias = Annotated[str, pyd.Field(example="30 m", gt=0)]
-TemperatureCStr: TypeAlias = Annotated[str, pyd.Field(example="45 C")]
-HeatConductanceUCIStr: TypeAlias = Annotated[str, pyd.Field(example="0.3 U")]
-GwpKgCo2eStr: TypeAlias = Annotated[str, pyd.Field(example="300 kgCO2e")]
+
+class QuantityStr(str):
+    """
+    Quantity string type.
+
+    Should be used in models where the physical value (quantity) is expected.
+
+    Checks for dimensionality and for the fact that value is greater than zero.
+    """
+
+    unit: ClassVar[str]
+
+    @classmethod
+    def __get_validators__(cls):
+        yield validate_unit_factory(cls.unit)
+        yield validate_quantity_ge_factory(f"0 {cls.unit}")
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        field_schema.update(
+            examples=[f"1 {cls.unit}"],
+        )
+
+
+class PressureMPaStr(QuantityStr):
+    """Pressure quantity type."""
+
+    unit = OpenEPDUnit.MPa
+
+
+class MassKgStr(QuantityStr):
+    """Mass quantity type."""
+
+    unit = OpenEPDUnit.kg
+
+
+class AreaM2Str(QuantityStr):
+    """Area quantity type."""
+
+    unit = OpenEPDUnit.m2
+
+
+class LengthMStr(QuantityStr):
+    """Length (m) quantity type."""
+
+    unit = OpenEPDUnit.m
+
+
+class LengthMmStr(QuantityStr):
+    """Length (mm) quantity type."""
+
+    unit = OpenEPDUnit.m
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        field_schema.update(
+            examples=["6 mm"],
+        )
+
+
+class LengthInchStr(QuantityStr):
+    """Length (inch) quantity type."""
+
+    unit = OpenEPDUnit.m
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        field_schema.update(
+            examples=["2.5 inch"],
+        )
+
+
+class TemperatureCStr(QuantityStr):
+    """Temperature celsius quantity type."""
+
+    unit = OpenEPDUnit.degree_c
+
+
+class GwpKgCo2eStr(QuantityStr):
+    """GWP intensity quantity type."""
+
+    unit = OpenEPDUnit.kg_co2
+
+
+class RValueStr(QuantityStr):
+    """R-Value quantity type."""
+
+    unit = "K * m2 / W"
+
+
+class SpeedStr(QuantityStr):
+    """Speed quantity type."""
+
+    unit = "m / s"
+
+
+class ColorTemperatureStr(QuantityStr):
+    """Color temp quantity type."""
+
+    unit = "K"
+
+
+class LuminosityStr(QuantityStr):
+    """Luminosity quantity type."""
+
+    unit = "lumen"
+
+
+class PowerStr(QuantityStr):
+    """Power quantity type."""
+
+    unit = "W"
+
+
+class ElectricalCurrentStr(QuantityStr):
+    """Current quantity type."""
+
+    unit = "A"
+
+
+class VolumeStr(QuantityStr):
+    """Volume quantity type."""
+
+    unit = "m3"
+
+
+class AirflowStr(QuantityStr):
+    """Air flow quantity type."""
+
+    unit = "m3 / s"
+
+
+class FlowRateStr(QuantityStr):
+    """Liquid flow rate quantity type."""
+
+    unit = "l / min"
+
+
+class MassPerLengthStr(QuantityStr):
+    """Mass per unit of length quantity type."""
+
+    unit = "kg / m"

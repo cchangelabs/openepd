@@ -20,7 +20,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import InsulatingMaterial, InsulationIntendedApplication
-from openepd.model.validation.quantity import LengthMmStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr
 
 
 class MechanicalInsulationV1(BaseOpenEpdHierarchicalSpec):
@@ -35,7 +35,3 @@ class MechanicalInsulationV1(BaseOpenEpdHierarchicalSpec):
         default=None, description="", example=["Wall & General"]
     )
     thickness_per_declared_unit: LengthMmStr | None = pyd.Field(default=None, description="", example="20 mm")
-
-    _thickness_per_declared_unit_is_quantity_validator = pyd.validator("thickness_per_declared_unit", allow_reuse=True)(
-        validate_unit_factory("m")
-    )

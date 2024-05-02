@@ -20,7 +20,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import PressureMPaStr, validate_unit_factory
+from openepd.model.validation.quantity import PressureMPaStr
 
 
 class ArchitecturalPrecastV1(BaseOpenEpdHierarchicalSpec):
@@ -57,10 +57,6 @@ class PrecastConcreteV1(BaseOpenEpdHierarchicalSpec):
         example=True,
     )
     steel_mass_percentage: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
-
-    _concrete_compressive_strength_28d_is_quantity_validator = pyd.validator(
-        "concrete_compressive_strength_28d", allow_reuse=True
-    )(validate_unit_factory("MPa"))
 
     # Nested specs:
     ArchitecturalPrecast: ArchitecturalPrecastV1 | None = None
