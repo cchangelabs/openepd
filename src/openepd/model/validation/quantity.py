@@ -150,7 +150,7 @@ class QuantityStr(str):
     @classmethod
     def __modify_schema__(cls, field_schema):
         field_schema.update(
-            examples=[f"1 {cls.unit}"],
+            example=f"1 {cls.unit}",
         )
 
 
@@ -186,7 +186,7 @@ class LengthMmStr(QuantityStr):
     @classmethod
     def __modify_schema__(cls, field_schema):
         field_schema.update(
-            examples=["6 mm"],
+            example="6 mm",
         )
 
 
@@ -198,7 +198,7 @@ class LengthInchStr(QuantityStr):
     @classmethod
     def __modify_schema__(cls, field_schema):
         field_schema.update(
-            examples=["2.5 inch"],
+            example="2.5 inch",
         )
 
 
