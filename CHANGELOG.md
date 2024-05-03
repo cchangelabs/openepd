@@ -1,3 +1,9 @@
+## 3.1.4 (2024-05-03)
+
+### Fix
+
+- correct json_schema modifiers for models
+
 ## 3.1.3 (2024-05-03)
 
 ### Fix
