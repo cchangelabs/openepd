@@ -1,3 +1,13 @@
+## 3.1.3 (2024-05-03)
+
+### Fix
+
+- add consolidated validators for quantity types
+
+### Refactor
+
+- clean up old material specs
+
 ## 3.1.2 (2024-04-23)
 
 ### Fix

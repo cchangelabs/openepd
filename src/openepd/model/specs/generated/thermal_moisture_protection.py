@@ -28,7 +28,7 @@ from openepd.model.specs.generated.enums import (
     RoofCoverBoardsMaterial,
 )
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr
 
 
 class BituminousRoofingV1(BaseOpenEpdHierarchicalSpec):
@@ -93,10 +93,6 @@ class BoardInsulationV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     compressive_strength: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
 
-    _compressive_strength_is_quantity_validator = pyd.validator("compressive_strength", allow_reuse=True)(
-        validate_unit_factory("MPa")
-    )
-
 
 class FoamedInPlaceV1(BaseOpenEpdHierarchicalSpec):
     """Foamed in place performance specification."""
@@ -134,8 +130,6 @@ class MembraneRoofingV1(BaseOpenEpdHierarchicalSpec):
     nsf347: bool | None = pyd.Field(default=None, description="", example=True)
     vantage_vinyl: bool | None = pyd.Field(default=None, description="", example=True)
 
-    _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
-
     # Nested specs:
     BituminousRoofing: BituminousRoofingV1 | None = None
     SinglePlyEPDM: SinglePlyEPDMV1 | None = None
@@ -158,10 +152,6 @@ class InsulationV1(BaseOpenEpdHierarchicalSpec):
         default=None, description="", example=["Wall & General"]
     )
     thickness_per_declared_unit: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
-
-    _thickness_per_declared_unit_is_quantity_validator = pyd.validator("thickness_per_declared_unit", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
 
     # Nested specs:
     BlanketInsulation: BlanketInsulationV1 | None = None
@@ -198,10 +188,6 @@ class RoofCoverBoardsV1(BaseOpenEpdHierarchicalSpec):
     material: RoofCoverBoardsMaterial | None = pyd.Field(default=None, description="", example="Gypsum Fiber")
     facing: list[RoofCoverBoardsFacing] | None = pyd.Field(default=None, description="", example=["Paper"])
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
-
-    _roof_cover_boards_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
 
 
 class SteepSlopeRoofingV1(BaseOpenEpdHierarchicalSpec):

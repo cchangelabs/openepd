@@ -31,7 +31,7 @@ from openepd.model.specs.generated.enums import (
     RacewaysMaterial,
     RackType,
 )
-from openepd.model.validation.quantity import LengthMmStr, MassKgStr, validate_unit_factory
+from openepd.model.validation.quantity import ElectricalCurrentStr, LengthMmStr, MassKgStr, validate_unit_factory
 
 
 class PDUV1(BaseOpenEpdHierarchicalSpec):
@@ -40,7 +40,7 @@ class PDUV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    amperage: str | None = pyd.Field(default=None, description="", example="1 A")
+    amperage: ElectricalCurrentStr | None = pyd.Field(default=None, description="", example="1 A")
     outlet_level_metering: bool | None = pyd.Field(default=None, description="", example=True)
     outlet_level_switching: bool | None = pyd.Field(default=None, description="", example=True)
     pdu_technology: PduTechnology | None = pyd.Field(default=None, description="", example="Basic")
@@ -58,8 +58,6 @@ class CabinetsRacksAndEnclosuresV1(BaseOpenEpdHierarchicalSpec):
     static_load: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
     total_racking_units: int | None = pyd.Field(default=None, description="", example=3)
     rack_type: RackType | None = pyd.Field(default=None, description="", example="Cabinet")
-
-    _static_load_is_quantity_validator = pyd.validator("static_load", allow_reuse=True)(validate_unit_factory("kg"))
 
 
 class DataCablingV1(BaseOpenEpdHierarchicalSpec):
@@ -141,11 +139,6 @@ class NetworkingCableTraysV1(BaseOpenEpdHierarchicalSpec):
     )
     material: CableTraysMaterial | None = pyd.Field(default=None, description="", example="Stainless Steel")
 
-    _height_is_quantity_validator = pyd.validator("height", allow_reuse=True)(validate_unit_factory("m"))
-    _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))
-    _depth_is_quantity_validator = pyd.validator("depth", allow_reuse=True)(validate_unit_factory("m"))
-    _static_load_is_quantity_validator = pyd.validator("static_load", allow_reuse=True)(validate_unit_factory("kg"))
-
 
 class NetworkingRacewaysV1(BaseOpenEpdHierarchicalSpec):
     """Networking raceways performance specification."""
@@ -162,9 +155,6 @@ class NetworkingRacewaysV1(BaseOpenEpdHierarchicalSpec):
         example=True,
     )
     raceways_material: RacewaysMaterial | None = pyd.Field(default=None, description="", example="Aluminum")
-
-    _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))
-    _depth_is_quantity_validator = pyd.validator("depth", allow_reuse=True)(validate_unit_factory("m"))
 
 
 class NetworkInfrastructureV1(BaseOpenEpdHierarchicalSpec):

@@ -21,7 +21,7 @@ from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import AsphaltGradation, AsphaltMixType
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import LengthMmStr, TemperatureCStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, TemperatureCStr
 
 
 class AsphaltV1(BaseOpenEpdHierarchicalSpec):
@@ -74,13 +74,3 @@ class AsphaltV1(BaseOpenEpdHierarchicalSpec):
     ppa: bool | None = pyd.Field(default=None, description="Polyphosphoric acid (PPA)", example=True)
     gtr: bool | None = pyd.Field(default=None, description="Ground tire rubber (GTR)", example=True)
     pmb: bool | None = pyd.Field(default=None, description="Polymer modified bitumen (PMB)", example=True)
-
-    _asphalt_aggregate_size_max_is_quantity_validator = pyd.validator("aggregate_size_max", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-    _asphalt_max_temperature_is_quantity_validator = pyd.validator("max_temperature", allow_reuse=True)(
-        validate_unit_factory("°C")
-    )
-    _asphalt_min_temperature_is_quantity_validator = pyd.validator("min_temperature", allow_reuse=True)(
-        validate_unit_factory("°C")
-    )

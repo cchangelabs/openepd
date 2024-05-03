@@ -20,7 +20,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import CladdingFacingMaterial, CladdingInsulatingMaterial, SidingFormFactor
-from openepd.model.validation.quantity import LengthMmStr, LengthMStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, LengthMStr, RValueStr, validate_unit_factory
 
 
 class AluminiumSidingV1(BaseOpenEpdHierarchicalSpec):
@@ -126,12 +126,8 @@ class SidingV1(BaseOpenEpdHierarchicalSpec):
     insulated: bool | None = pyd.Field(default=None, description="", example=True)
     ventilated: bool | None = pyd.Field(default=None, description="", example=True)
     paint_or_stain_required: bool | None = pyd.Field(default=None, description="", example=True)
-    r_value: str | None = pyd.Field(default=None, description="", example="1 K * m2 / W")
+    r_value: RValueStr | None = pyd.Field(default=None, description="")
     form_factor: SidingFormFactor | None = pyd.Field(default=None, description="", example="Lap")
-
-    _siding_r_value_is_quantity_validator = pyd.validator("r_value", allow_reuse=True)(
-        validate_unit_factory("K * m2 / W")
-    )
 
     # Nested specs:
     MetalSiding: MetalSidingV1 | None = None
@@ -150,13 +146,9 @@ class InsulatedRoofPanelsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    r_value: str | None = pyd.Field(default=None, description="", example="1 K * m2 / W")
+    r_value: RValueStr | None = pyd.Field(default=None, description="")
     insulating_material: CladdingInsulatingMaterial | None = pyd.Field(
         default=None, description="", example="No Insulation"
-    )
-
-    _cladding_r_value_is_quantity_validator = pyd.validator("r_value", allow_reuse=True)(
-        validate_unit_factory("K * m2 / W")
     )
 
 
@@ -166,13 +158,9 @@ class InsulatedWallPanelsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    r_value: str | None = pyd.Field(default=None, description="", example="1 K * m2 / W")
+    r_value: RValueStr | None = pyd.Field(default=None, description="")
     insulating_material: CladdingInsulatingMaterial | None = pyd.Field(
         default=None, description="", example="No Insulation"
-    )
-
-    _cladding_r_value_is_quantity_validator = pyd.validator("r_value", allow_reuse=True)(
-        validate_unit_factory("K * m2 / W")
     )
 
 

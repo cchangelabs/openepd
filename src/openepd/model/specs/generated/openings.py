@@ -30,7 +30,7 @@ from openepd.model.specs.generated.enums import (
     ThermalSeparation,
 )
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, SpeedStr, validate_unit_factory
 
 
 class GlazingIntendedApplication(BaseOpenEpdSchema):
@@ -355,10 +355,10 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin):
         description="Weighted average conductance of heat across assembly (including frame).",
         example="1 USI",
     )
-    air_infiltration: str | None = pyd.Field(
+    air_infiltration: SpeedStr | None = pyd.Field(
         default=None,
         description="Air infiltration, measured at a certain level of Differential Pressure.",
-        example="1 m / s",
+        example="1 m3 / m2 / s",
     )
 
     thermal_separation: ThermalSeparation | None = pyd.Field(default=None, example="Aluminium")
@@ -386,10 +386,6 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin):
     _assembly_u_factor_is_quantity_validator = pyd.validator("assembly_u_factor", allow_reuse=True)(
         validate_unit_factory("USI")
     )
-    _air_infiltration_is_quantity_validator = pyd.validator("air_infiltration", allow_reuse=True)(
-        validate_unit_factory("m / s")
-    )
-    _dp_rating_is_quantity_validator = pyd.validator("dp_rating", allow_reuse=True)(validate_unit_factory("MPa"))
     _nafs_performance_grade_is_quantity_validator = pyd.validator("performance_grade", allow_reuse=True)(
         validate_unit_factory("psf")
     )
@@ -415,10 +411,10 @@ class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin)
     dp_rating: PressureMPaStr | None = pyd.Field(
         default=None, description="Maximum Differential Pressure, a measure of wind tolerance.", example="1 MPa"
     )
-    air_infiltration: str | None = pyd.Field(
+    air_infiltration: SpeedStr | None = pyd.Field(
         default=None,
         description="Air infiltration, measured at a certain level of Differential Pressure.",
-        example="1 m / s",
+        example="1 m3 / m2 / s",
     )
     glass_panes: int | None = pyd.Field(
         default=None,
@@ -432,9 +428,6 @@ class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin)
         default=None, description="Spacer material for Integrated Glass Unit.", example="Aluminium"
     )
 
-    _air_infiltration_is_quantity_validator = pyd.validator("air_infiltration", allow_reuse=True)(
-        validate_unit_factory("m / s")
-    )
     _dp_rating_is_quantity_validator = pyd.validator("dp_rating", allow_reuse=True)(validate_unit_factory("MPa"))
     _cog_u_factor_is_quantity_validator = pyd.validator("cog_u_factor", allow_reuse=True)(validate_unit_factory("USI"))
 
@@ -461,9 +454,6 @@ class DoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
     # Own fields:
     height: LengthMmStr | None = pyd.Field(default=None, example="1200 mm")
     width: LengthMmStr | None = pyd.Field(default=None, example="600 mm")
-
-    _height_is_quantity_validator = pyd.validator("height", allow_reuse=True)(validate_unit_factory("m"))
-    _width_is_quantity_validator = pyd.validator("width", allow_reuse=True)(validate_unit_factory("m"))
 
     # Nested specs:
     IntegratedDoorsOpeningAssemblies: IntegratedDoorsOpeningAssembliesV1 | None = None
@@ -540,8 +530,6 @@ class OpeningsV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     thickness: LengthMmStr | None = pyd.Field(default=None, example="80 mm")
-
-    _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
 
     # Nested specs:
     CurtainWalls: CurtainWallsV1 | None = None

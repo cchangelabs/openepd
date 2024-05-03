@@ -168,25 +168,6 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     )
     typical_application: ConcreteTypicalApplication | None = pyd.Field(default=None, description="Typical Application")
 
-    _concrete_compressive_strength_28d_is_quantity_validator = pyd.validator("strength_28d", allow_reuse=True)(
-        validate_unit_factory("MPa")
-    )
-    _concrete_compressive_strength_other_is_quantity_validator = pyd.validator("strength_other", allow_reuse=True)(
-        validate_unit_factory("MPa")
-    )
-    _concrete_slump_is_quantity_validator = pyd.validator("slump", allow_reuse=True)(validate_unit_factory("m"))
-    _concrete_min_slump_is_quantity_validator = pyd.validator("min_slump", allow_reuse=True)(validate_unit_factory("m"))
-    _concrete_max_slump_is_quantity_validator = pyd.validator("max_slump", allow_reuse=True)(validate_unit_factory("m"))
-    _concrete_min_pipeline_size_is_quantity_validator = pyd.validator("min_pipeline_size", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-    _concrete_aggregate_size_max_is_quantity_validator = pyd.validator("aggregate_size_max", allow_reuse=True)(
-        validate_unit_factory("m")
-    )
-    _concrete_cement_content_is_quantity_validator = pyd.validator("cement_content", allow_reuse=True)(
-        validate_unit_factory("kg")
-    )
-
     # Nested specs:
     CementGrout: CementGroutV1 | None = None
     ConcretePaving: ConcretePavingV1 | None = None

@@ -20,7 +20,7 @@
 import unittest
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.steel import SteelV1
+from openepd.model.specs.generated.steel import SteelV1
 
 
 class SpecVersionTestCase(unittest.TestCase):

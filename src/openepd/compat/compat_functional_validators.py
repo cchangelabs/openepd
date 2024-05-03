@@ -17,4 +17,13 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-VERSION = "3.1.3"
+from typing import Any
+
+__all__ = ["AfterValidator"]
+
+
+class AfterValidator:
+    """Placeholder stub for validator, unused in pydantic 1."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        pass

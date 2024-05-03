@@ -18,12 +18,17 @@
 #  Find out more at www.BuildingTransparency.org
 #
 try:
+    from pydantic import functional_validators  # type: ignore
     from pydantic import v1 as pyd  # type: ignore
     from pydantic.v1 import generics as pyd_generics  # type: ignore
+
 except ImportError:
     import pydantic as pyd  # type: ignore[no-redef]
     from pydantic import generics as pyd_generics  # type: ignore[no-redef]
 
+    from . import compat_functional_validators as functional_validators  # type: ignore[no-redef]
+
+
 pydantic = pyd
 
-__all__ = ["pyd", "pydantic", "pyd_generics"]
+__all__ = ["pyd", "pydantic", "pyd_generics", "functional_validators"]
