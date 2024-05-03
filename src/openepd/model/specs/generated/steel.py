@@ -264,7 +264,7 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
         default=None, description="The marking to be expected on the product.", example="S4S60"
     )
     euro_marking: str | None = pyd.Field(
-        default=None, description="The marking to be expected on the product.", examples="S4S60"
+        default=None, description="The marking to be expected on the product.", example="S4S60"
     )
     composition: SteelComposition | None = pyd.Field(
         default=None, description="Basic chemical composition", example="Carbon"
