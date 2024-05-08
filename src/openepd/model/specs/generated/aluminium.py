@@ -23,13 +23,16 @@ from openepd.model.specs.generated.enums import AluminiumAlloy
 
 
 class AluminiumBilletsV1(BaseOpenEpdHierarchicalSpec):
-    """Aluminium billets performance specification."""
+    """Cast Aluminium ingots or billets for use in manufacturing more finished products."""
 
     _EXT_VERSION = "1.0"
 
 
 class AluminiumExtrusionsV1(BaseOpenEpdHierarchicalSpec):
-    """Aluminium extrusions performance specification."""
+    """Extruded aluminum products used in construction.
+
+    Includes range of finish options including mill finish, painted, and anodized.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -38,19 +41,19 @@ class AluminiumExtrusionsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class AluminiumSheetGoodsV1(BaseOpenEpdHierarchicalSpec):
-    """Aluminium sheet goods performance specification."""
+    """Rolled and/or Stamped Aluminium coil or sheets, often used in flashing, trim, panels, and deck."""
 
     _EXT_VERSION = "1.0"
 
 
 class AluminiumSuspensionAssemblyV1(BaseOpenEpdHierarchicalSpec):
-    """Aluminium suspension assembly performance specification."""
+    """Aluminum suspension assemblies for acoustical ceiling systems."""
 
     _EXT_VERSION = "1.0"
 
 
 class AluminiumV1(BaseOpenEpdHierarchicalSpec):
-    """Material definition for objects made primarily from Aluminium and its alloys."""
+    """Broad category for construction materials made primarily from Aluminium and its alloys."""
 
     _EXT_VERSION = "1.0"
 

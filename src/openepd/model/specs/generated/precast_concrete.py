@@ -24,25 +24,25 @@ from openepd.model.validation.quantity import PressureMPaStr
 
 
 class ArchitecturalPrecastV1(BaseOpenEpdHierarchicalSpec):
-    """Architectural precast performance specification."""
+    """Precast concrete cladding used for architectural purposes."""
 
     _EXT_VERSION = "1.0"
 
 
 class StructuralPrecastV1(BaseOpenEpdHierarchicalSpec):
-    """Structural precast performance specification."""
+    """Precast concrete used for structural purposes."""
 
     _EXT_VERSION = "1.0"
 
 
 class UtilityUndergroundPrecastV1(BaseOpenEpdHierarchicalSpec):
-    """Utility underground precast performance specification."""
+    """Precast concrete for utility vaults, manhole, drain inlets. Excludes piping."""
 
     _EXT_VERSION = "1.0"
 
 
 class PrecastConcreteV1(BaseOpenEpdHierarchicalSpec):
-    """Precast concrete performance specification."""
+    """General category for precast concrete components."""
 
     _EXT_VERSION = "1.0"
 

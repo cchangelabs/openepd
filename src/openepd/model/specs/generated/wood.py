@@ -35,31 +35,43 @@ from openepd.model.validation.quantity import LengthMmStr
 
 
 class WoodDeckingV1(BaseOpenEpdHierarchicalSpec):
-    """Wood used for decking."""
+    """Dimensional boards for exterior decking."""
 
     _EXT_VERSION = "1.0"
 
 
 class WoodFramingV1(BaseOpenEpdHierarchicalSpec):
-    """Lumber for framing, typically softwood."""
+    """
+    Dimension lumber for light framing.
+
+    Includes solid and finger-jointed lumber. Standard shapes include 2x4, 2x6, and 2x8.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class PrefabricatedWoodInsulatedPanelsV1(BaseOpenEpdHierarchicalSpec):
-    """Prefabricated wood insulated panels performance specification."""
+    """
+    Structural insulated panels (SIPs).
+
+    Consist of wood sheet layer(s) combined with (typically foam) insulation layer(s).
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class PrefabricatedWoodTrussV1(BaseOpenEpdHierarchicalSpec):
-    """Prefabricated wood truss performance specification."""
+    """Shop-fabricated wood truss."""
 
     _EXT_VERSION = "1.0"
 
 
 class CompositeLumberV1(BaseOpenEpdHierarchicalSpec):
-    """Composite lumber performance specification."""
+    """
+    Shop-fabricated structural Lumber.
+
+    Includes Laminated Strand Lumber (LSL), Parallel Strand Lumber (PSL), and Laminated Veneer Lumber (LVL).
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -68,7 +80,7 @@ class CompositeLumberV1(BaseOpenEpdHierarchicalSpec):
 
 
 class DimensionLumberV1(BaseOpenEpdHierarchicalSpec):
-    """Dimension lumber performance specification."""
+    """Dimension lumber for framing, decking, and other purposes."""
 
     _EXT_VERSION = "1.0"
 
@@ -79,13 +91,18 @@ class DimensionLumberV1(BaseOpenEpdHierarchicalSpec):
 
 
 class HeavyTimberV1(BaseOpenEpdHierarchicalSpec):
-    """Large format natural timber."""
+    """Large format, unfinished natural timber."""
 
     _EXT_VERSION = "1.0"
 
 
 class MassTimberV1(BaseOpenEpdHierarchicalSpec):
-    """Manufactured structural wood elements, such a CLT and LVL."""
+    """
+    Engineered heavy timber products.
+
+    Includes glue laminated (glulam), cross-laminated timber (CLT), dowel laminated timber (DLT), and nail laminated
+    timber (NLT).
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -94,13 +111,18 @@ class MassTimberV1(BaseOpenEpdHierarchicalSpec):
 
 
 class NonStructuralWoodV1(BaseOpenEpdHierarchicalSpec):
-    """Wood products that are not meant for structural use."""
+    """Non-structural interior and exterior wood products for trim, cabinets, countertops, etc."""
 
     _EXT_VERSION = "1.0"
 
 
 class PrefabricatedWoodV1(BaseOpenEpdHierarchicalSpec):
-    """Prefabricated wood performance specification."""
+    """
+    Prefabricated wood structural members made primarily from one or more types of wood.
+
+    Includes products made with metallic connectors, insulation, etc. Excludes products where the wood is merely
+    decorative.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -110,7 +132,7 @@ class PrefabricatedWoodV1(BaseOpenEpdHierarchicalSpec):
 
 
 class SheathingPanelsV1(BaseOpenEpdHierarchicalSpec):
-    """Structural Wood Panels."""
+    """Wood sheets used for structural sheathing, including plywood and Oriented Strand Board."""
 
     _EXT_VERSION = "1.0"
 
@@ -121,13 +143,13 @@ class SheathingPanelsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class UnfinishedWoodV1(BaseOpenEpdHierarchicalSpec):
-    """Unfinished or 'green' timber."""
+    """Raw logs and other unfinished wood products."""
 
     _EXT_VERSION = "1.0"
 
 
 class WoodV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
-    """Wood performance specification."""
+    """Structural Wood Products used in construction."""
 
     _EXT_VERSION = "1.0"
 

@@ -21,13 +21,21 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
 class ConveyorsV1(BaseOpenEpdHierarchicalSpec):
-    """Conveyors performance specification."""
+    """
+    Machinery and tools designed to move materials within a facility, both manually and automatically.
+
+    This includes various types of conveyors such as belt, roller, and overhead conveyors.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class MaterialHandlingV1(BaseOpenEpdHierarchicalSpec):
-    """Material handling performance specification."""
+    """
+    Material handling.
+
+    Equipment and supplies for moving, storing, administering, and protecting materials during the handling process.
+    """
 
     _EXT_VERSION = "1.0"
 

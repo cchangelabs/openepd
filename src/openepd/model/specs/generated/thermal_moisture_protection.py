@@ -32,19 +32,27 @@ from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr
 
 
 class BituminousRoofingV1(BaseOpenEpdHierarchicalSpec):
-    """Bituminous roofing performance specification."""
+    """
+    Bituminous roofing.
+
+    Premanufactured membrane roofing sheets consisting of asphalt, reinforcing layers, and in some cases a surfacing.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class SinglePlyEPDMV1(BaseOpenEpdHierarchicalSpec):
-    """Single ply e p d m performance specification."""
+    """Ethylene propylene diene monomer (EPDM) rubber membrane."""
 
     _EXT_VERSION = "1.0"
 
 
 class SinglePlyKEEV1(BaseOpenEpdHierarchicalSpec):
-    """Single ply k e e performance specification."""
+    """
+    Ketone Ethylene Ester (KEE) roof membranes.
+
+    Consist of PVC resin and KEE plasticizer, with KEE exceeding 50% of the polymer content by weight.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -56,37 +64,37 @@ class SinglePlyOtherV1(BaseOpenEpdHierarchicalSpec):
 
 
 class SinglePlyPolyurethaneV1(BaseOpenEpdHierarchicalSpec):
-    """Single ply polyurethane performance specification."""
+    """Polyurethane liquid for flat roof waterproofing."""
 
     _EXT_VERSION = "1.0"
 
 
 class SinglePlyPVCV1(BaseOpenEpdHierarchicalSpec):
-    """Single ply p v c performance specification."""
+    """Polyvinyl chloride (PVC) thermoplastic membrane."""
 
     _EXT_VERSION = "1.0"
 
 
 class SinglePlyTPOV1(BaseOpenEpdHierarchicalSpec):
-    """Single ply t p o performance specification."""
+    """Thermoplastic Polyolefin (TPO) membrane."""
 
     _EXT_VERSION = "1.0"
 
 
 class BlanketInsulationV1(BaseOpenEpdHierarchicalSpec):
-    """Blanket insulation performance specification."""
+    """Non-rigid insulation batts, blankets, and rolls."""
 
     _EXT_VERSION = "1.0"
 
 
 class BlownInsulationV1(BaseOpenEpdHierarchicalSpec):
-    """Blown insulation performance specification."""
+    """Loose-fill insulation for blow-in or closed cavity applications."""
 
     _EXT_VERSION = "1.0"
 
 
 class BoardInsulationV1(BaseOpenEpdHierarchicalSpec):
-    """Board insulation performance specification."""
+    """Rigid insulation products including rigid foams, wood fiberboard insulation, and rigid mineral wool boards."""
 
     _EXT_VERSION = "1.0"
 
@@ -95,7 +103,7 @@ class BoardInsulationV1(BaseOpenEpdHierarchicalSpec):
 
 
 class FoamedInPlaceV1(BaseOpenEpdHierarchicalSpec):
-    """Foamed in place performance specification."""
+    """Open and closed cell spray foam insulation."""
 
     _EXT_VERSION = "1.0"
 
@@ -104,19 +112,28 @@ class FoamedInPlaceV1(BaseOpenEpdHierarchicalSpec):
 
 
 class SprayedInsulationV1(BaseOpenEpdHierarchicalSpec):
-    """Sprayed insulation performance specification."""
+    """
+    Spray-on insulation, such as spray-on cellulose.
+
+    Foaming sprays are categorized separately under foamed-in-place.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class AirBarriersV1(BaseOpenEpdHierarchicalSpec):
-    """Air barriers performance specification."""
+    """Air Infiltration Barrier."""
 
     _EXT_VERSION = "1.0"
 
 
 class MembraneRoofingV1(BaseOpenEpdHierarchicalSpec):
-    """Membrane roofing performance specification."""
+    """
+    Membrane roofing.
+
+    Built-up bituminous, modified bituminous, elastomeric, thermoplastic, fluid-applied, and hot-applied rubberized
+    asphalt membrane roofing.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -141,7 +158,7 @@ class MembraneRoofingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class InsulationV1(BaseOpenEpdHierarchicalSpec):
-    """Insulation performance specification."""
+    """Thermal insulation materials for use in construction."""
 
     _EXT_VERSION = "1.0"
 
@@ -162,25 +179,34 @@ class InsulationV1(BaseOpenEpdHierarchicalSpec):
 
 
 class DampproofingAndWaterproofingV1(BaseOpenEpdHierarchicalSpec):
-    """Dampproofing and waterproofing performance specification."""
+    """
+    Dampproofing and waterproofing.
+
+    Dampproofing, and built-up bituminous, sheet, fluid-applied, cementitious, reactive, and bentonite waterproofing.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class FlashingAndSheetMetalV1(BaseOpenEpdHierarchicalSpec):
-    """Flashing and sheet metal performance specification."""
+    """Exposed sheet metal items, typically for drainage."""
 
     _EXT_VERSION = "1.0"
 
 
 class JointProtectionV1(BaseOpenEpdHierarchicalSpec):
-    """Joint protection performance specification."""
+    """Preformed joint seals and sealants, expansion control joint cover assemblies."""
 
     _EXT_VERSION = "1.0"
 
 
 class RoofCoverBoardsV1(BaseOpenEpdHierarchicalSpec):
-    """Roof cover boards performance specification."""
+    """
+    Boards installed between the insulation and membrane layers on a roof system.
+
+    It provides additional durability, fire protection, thermal, and vapor performance to a roof system, especially
+    in low-slope, high foot traffic applications.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -191,19 +217,24 @@ class RoofCoverBoardsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class SteepSlopeRoofingV1(BaseOpenEpdHierarchicalSpec):
-    """Steep slope roofing performance specification."""
+    """Roofing materials typically for slopes of 3:12 and greater."""
 
     _EXT_VERSION = "1.0"
 
 
 class WeatherBarriersV1(BaseOpenEpdHierarchicalSpec):
-    """Weather barriers performance specification."""
+    """Vapor retarders and sheet or membrane air barriers."""
 
     _EXT_VERSION = "1.0"
 
 
 class ThermalMoistureProtectionV1(BaseOpenEpdHierarchicalSpec):
-    """Thermal moisture protection performance specification."""
+    """
+    Thermal moisture protection.
+
+    Broad category of materials whose function is to provide moisture and thermal protection between spaces (e.g.,
+    between the exterior and interior of a building).
+    """
 
     _EXT_VERSION = "1.0"
 

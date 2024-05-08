@@ -25,7 +25,12 @@ from openepd.model.specs.generated.enums import AllFabrication, AllTimberSpecies
 
 
 class WoodJoistsV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
-    """Wood joists performance specification."""
+    """
+    Wood joists.
+
+    Prefabricated I-shaped engineered wood structural members made primarily from one or more types of wood. Includes
+    products made with metallic webbing. Excludes products where the wood is merely decorative.
+    """
 
     _EXT_VERSION = "1.0"
 

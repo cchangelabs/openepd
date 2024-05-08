@@ -24,7 +24,11 @@ from openepd.model.validation.quantity import LengthMmStr
 
 
 class MechanicalInsulationV1(BaseOpenEpdHierarchicalSpec):
-    """Mechanical insulation performance specification."""
+    """
+    Insulation products whose primary purpose is for mechanical systems rather than for building envelope.
+
+    Includes HVAC, plumbing, and acoustic insulations.
+    """
 
     _EXT_VERSION = "1.0"
 

@@ -27,25 +27,25 @@ class AuxiliariesV1(BaseOpenEpdHierarchicalSpec):
 
 
 class CleaningProductsV1(BaseOpenEpdHierarchicalSpec):
-    """Cleaning products performance specification."""
+    """Cleaning and disinfecting solutions."""
 
     _EXT_VERSION = "1.0"
 
 
 class ClothingV1(BaseOpenEpdHierarchicalSpec):
-    """Clothing performance specification."""
+    """Clothing."""
 
     _EXT_VERSION = "1.0"
 
 
 class FoodBeverageV1(BaseOpenEpdHierarchicalSpec):
-    """Food beverage performance specification."""
+    """Food Beverage and Tobacco Products."""
 
     _EXT_VERSION = "1.0"
 
 
 class TransportationInfrastructureV1(BaseOpenEpdHierarchicalSpec):
-    """Transportation infrastructure performance specification."""
+    """A broad category for unclassified materials focused on transportation infrastructure."""
 
     _EXT_VERSION = "1.0"
 
@@ -54,7 +54,11 @@ class TransportationInfrastructureV1(BaseOpenEpdHierarchicalSpec):
 
 
 class UnsupportedV1(BaseOpenEpdHierarchicalSpec):
-    """Unsupported performance specification."""
+    """
+    A generic category for EPDs/Materials and categories that are explicitly not yet supported by EC3.
+
+    Assume that any data in this subcategory is unreliable.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -65,19 +69,19 @@ class UnsupportedV1(BaseOpenEpdHierarchicalSpec):
 
 
 class CopperV1(BaseOpenEpdHierarchicalSpec):
-    """Copper performance specification."""
+    """Products made of copper."""
 
     _EXT_VERSION = "1.0"
 
 
 class EarthworkV1(BaseOpenEpdHierarchicalSpec):
-    """Earthwork performance specification."""
+    """Earthwork, including excavation, shoring, piles, etc."""
 
     _EXT_VERSION = "1.0"
 
 
 class ExteriorSunControlDevicesV1(BaseOpenEpdHierarchicalSpec):
-    """Exterior sun control devices performance specification."""
+    """Sun control devices help to manage solar heat gain by redirecting sunlight."""
 
     _EXT_VERSION = "1.0"
 
@@ -89,25 +93,25 @@ class GypsumFinishingCompoundsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class ProfilesV1(BaseOpenEpdHierarchicalSpec):
-    """Profiles performance specification."""
+    """Metal or polymer profiles used for producing or installing of Windows, Doors, Frames and Cladding."""
 
     _EXT_VERSION = "1.0"
 
 
 class UnknownV1(BaseOpenEpdHierarchicalSpec):
-    """Unknown performance specification."""
+    """Materials with unknown category. Assume that any data in this subcategory is unreliable."""
 
     _EXT_VERSION = "1.0"
 
 
 class ZincV1(BaseOpenEpdHierarchicalSpec):
-    """Zinc performance specification."""
+    """Products made of zinc."""
 
     _EXT_VERSION = "1.0"
 
 
 class OtherMaterialsV1(BaseOpenEpdHierarchicalSpec):
-    """Other materials performance specification."""
+    """Broad category of materials not yet classified."""
 
     _EXT_VERSION = "1.0"
 
