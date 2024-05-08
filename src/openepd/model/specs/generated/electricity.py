@@ -21,6 +21,6 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
 class ElectricityV1(BaseOpenEpdHierarchicalSpec):
-    """Electricity performance specification."""
+    """Electrical equipment and components and supplies."""
 
     _EXT_VERSION = "1.0"

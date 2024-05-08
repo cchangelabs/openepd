@@ -21,37 +21,42 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
 class BlanketFacingV1(BaseOpenEpdHierarchicalSpec):
-    """Blanket facing performance specification."""
+    """
+    Facing materials for insulation products.
+
+    Such as kraft, white vinyl sheeting, or aluminum foil, which can serve as air barrier, vapor barrier, radiant
+    barrier, or flame resistive layer.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class DoorsHardwareV1(BaseOpenEpdHierarchicalSpec):
-    """Doors hardware performance specification."""
+    """Door hardware, including automatic and security door hardware."""
 
     _EXT_VERSION = "1.0"
 
 
 class FlooringAccessoriesV1(BaseOpenEpdHierarchicalSpec):
-    """Flooring accessories performance specification."""
+    """Products used in flooring, other than the actual flooring product itself."""
 
     _EXT_VERSION = "1.0"
 
 
 class MortarV1(BaseOpenEpdHierarchicalSpec):
-    """Mortar performance specification."""
+    """Cementitious paste used to bind building blocks such as stones, bricks, and concrete masonry."""
 
     _EXT_VERSION = "1.0"
 
 
 class TileGroutV1(BaseOpenEpdHierarchicalSpec):
-    """Tile grout performance specification."""
+    """Water-cement-sand mixture for laying ceramic tile."""
 
     _EXT_VERSION = "1.0"
 
 
 class AccessoriesV1(BaseOpenEpdHierarchicalSpec):
-    """Accessories performance specification."""
+    """Materials that are used alongside other materials."""
 
     _EXT_VERSION = "1.0"
 

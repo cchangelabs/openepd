@@ -28,7 +28,11 @@ from openepd.model.validation.quantity import LengthMmStr
 
 
 class IntumescentFireproofingV1(BaseOpenEpdHierarchicalSpec):
-    """Intumescent fireproofing performance specification."""
+    """
+    Fireproofing material applied to structural materials, which swells as a result of heat exposure.
+
+    As a result it increases in volume and decreasing in density.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -37,7 +41,11 @@ class IntumescentFireproofingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class SprayFireproofingV1(BaseOpenEpdHierarchicalSpec):
-    """Spray fireproofing performance specification."""
+    """
+    Spray fireproofing.
+
+    A passive fire protection system that reduces the rate of temperature increase in concrete or steel during a fire.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -49,7 +57,12 @@ class SprayFireproofingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class AppliedFireproofingV1(BaseOpenEpdHierarchicalSpec):
-    """Applied fireproofing performance specification."""
+    """
+    Fireproofing material applied to structural materials.
+
+    Materials include: cement aggregate, cementitious, magnesium-oxychloride, intumescent, magnesium cement, mineral
+    fiber, and mineral fiber fireproofing products.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -62,13 +75,22 @@ class AppliedFireproofingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class FirestoppingV1(BaseOpenEpdHierarchicalSpec):
-    """Firestopping performance specification."""
+    """
+    Seals and protects openings and joints in fire rate assemblies.
+
+    Typically sealants, sprays, and caulks.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class FireAndSmokeProtectionV1(BaseOpenEpdHierarchicalSpec):
-    """Fire and smoke protection performance specification."""
+    """
+    Fire and smoke protection.
+
+    General category of materials whose function is to provide protection of materials, spaces, and occupants from
+    fire and smoke damage.
+    """
 
     _EXT_VERSION = "1.0"
 

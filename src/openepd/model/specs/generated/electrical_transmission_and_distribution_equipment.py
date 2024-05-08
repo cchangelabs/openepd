@@ -21,13 +21,13 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
 class AcTransformersV1(BaseOpenEpdHierarchicalSpec):
-    """AC transformers performance specification."""
+    """Equipment for transforming between higher and lower voltage AC power."""
 
     _EXT_VERSION = "1.0"
 
 
 class ElectricalInsulatorsV1(BaseOpenEpdHierarchicalSpec):
-    """Electrical insulators performance specification."""
+    """Passive electrical isolation."""
 
     _EXT_VERSION = "1.0"
 
@@ -39,19 +39,23 @@ class ElectricalSubstationsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class ElectricalSwitchgearV1(BaseOpenEpdHierarchicalSpec):
-    """Electrical switchgear performance specification."""
+    """
+    Equipment for interrupting and controlling high-power electrical flows.
+
+    Used for protection, isolation, or control of electrical equipment.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class PowerCablingV1(BaseOpenEpdHierarchicalSpec):
-    """Power cabling performance specification."""
+    """High-voltage electrical cabling."""
 
     _EXT_VERSION = "1.0"
 
 
 class ElectricalTransmissionAndDistributionEquipmentV1(BaseOpenEpdHierarchicalSpec):
-    """Electrical transmission and distribution equipment performance specification."""
+    """Electrical Transmission & Distribution Equipment."""
 
     _EXT_VERSION = "1.0"
 

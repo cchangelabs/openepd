@@ -23,13 +23,13 @@ from openepd.model.validation.quantity import PressureMPaStr, validate_quantity_
 
 
 class GMUV1(BaseOpenEpdHierarchicalSpec):
-    """Glass Masonry Unit performance specification."""
+    """Glass masonry unit."""
 
     _EXT_VERSION = "1.0"
 
 
 class AutoclavedAeratedConcreteV1(BaseOpenEpdHierarchicalSpec):
-    """Autoclaved aerated concrete performance specification."""
+    """A lightweight, precast, foamed concrete masonry building material."""
 
     _EXT_VERSION = "1.0"
 
@@ -48,7 +48,7 @@ class AutoclavedAeratedConcreteV1(BaseOpenEpdHierarchicalSpec):
 
 
 class BrickV1(BaseOpenEpdHierarchicalSpec):
-    """Brick performance specification."""
+    """Solid masonry units made from clay or shale."""
 
     _EXT_VERSION = "1.0"
 
@@ -65,7 +65,7 @@ class BrickV1(BaseOpenEpdHierarchicalSpec):
 
 
 class MasonryV1(BaseOpenEpdHierarchicalSpec):
-    """Masonry performance specification."""
+    """Structural and/or enclosure system based on individual rigid units stacked and bound together with mortar."""
 
     _EXT_VERSION = "1.0"
 

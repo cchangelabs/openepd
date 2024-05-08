@@ -24,19 +24,19 @@ from openepd.model.validation.quantity import LengthMmStr
 
 
 class DemountablePartitionTrackV1(BaseOpenEpdHierarchicalSpec):
-    """Demountable partition track performance specification."""
+    """Track for modular partitions."""
 
     _EXT_VERSION = "1.0"
 
 
 class ChairsV1(BaseOpenEpdHierarchicalSpec):
-    """Chairs performance specification."""
+    """Chairs."""
 
     _EXT_VERSION = "1.0"
 
 
 class CountertopsV1(BaseOpenEpdHierarchicalSpec):
-    """Countertops performance specification."""
+    """Raised, flat, and horizontal surfaces often used in kitchens, bathrooms, and workrooms."""
 
     _EXT_VERSION = "1.0"
 
@@ -46,7 +46,7 @@ class CountertopsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class DemountablePartitionsV1(BaseOpenEpdHierarchicalSpec):
-    """Demountable partitions performance specification."""
+    """Demountable partitions."""
 
     _EXT_VERSION = "1.0"
 
@@ -55,31 +55,31 @@ class DemountablePartitionsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class OtherFurnishingsV1(BaseOpenEpdHierarchicalSpec):
-    """Other furnishings performance specification."""
+    """Other furnishings."""
 
     _EXT_VERSION = "1.0"
 
 
 class StorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
-    """Storage furniture performance specification."""
+    """Storage Furniture."""
 
     _EXT_VERSION = "1.0"
 
 
 class TablesV1(BaseOpenEpdHierarchicalSpec):
-    """Tables performance specification."""
+    """Tables."""
 
     _EXT_VERSION = "1.0"
 
 
 class WorkSurfacesV1(BaseOpenEpdHierarchicalSpec):
-    """Work surfaces performance specification."""
+    """Work surfaces."""
 
     _EXT_VERSION = "1.0"
 
 
 class FurnishingsV1(BaseOpenEpdHierarchicalSpec):
-    """Furnishings performance specification."""
+    """Home and office furnishings."""
 
     _EXT_VERSION = "1.0"
 

@@ -24,31 +24,31 @@ from openepd.model.validation.quantity import LengthMmStr, MassPerLengthStr
 
 
 class BathtubsV1(BaseOpenEpdHierarchicalSpec):
-    """Bathtubs performance specification."""
+    """Bathtubs."""
 
     _EXT_VERSION = "1.0"
 
 
 class FaucetsV1(BaseOpenEpdHierarchicalSpec):
-    """Faucets performance specification."""
+    """Faucets."""
 
     _EXT_VERSION = "1.0"
 
 
 class OtherPlumbingFixturesV1(BaseOpenEpdHierarchicalSpec):
-    """Other plumbing fixtures performance specification."""
+    """Other plumbing fixtures."""
 
     _EXT_VERSION = "1.0"
 
 
 class WaterClosetsV1(BaseOpenEpdHierarchicalSpec):
-    """Water closets performance specification."""
+    """Water Closets."""
 
     _EXT_VERSION = "1.0"
 
 
 class FireProtectionPipingV1(BaseOpenEpdHierarchicalSpec):
-    """Fire protection piping performance specification."""
+    """System of pipes used to supply fire-suppression fluids to homes and/or businesses."""
 
     _EXT_VERSION = "1.0"
 
@@ -63,25 +63,25 @@ class FireProtectionPipingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class FireSprinklersV1(BaseOpenEpdHierarchicalSpec):
-    """Fire sprinklers performance specification."""
+    """Fire sprinklers."""
 
     _EXT_VERSION = "1.0"
 
 
 class StorageTanksV1(BaseOpenEpdHierarchicalSpec):
-    """Storage tanks performance specification."""
+    """Storage tanks."""
 
     _EXT_VERSION = "1.0"
 
 
 class WaterHeatersV1(BaseOpenEpdHierarchicalSpec):
-    """Water heaters performance specification."""
+    """Water heaters."""
 
     _EXT_VERSION = "1.0"
 
 
 class PlumbingFixturesV1(BaseOpenEpdHierarchicalSpec):
-    """Plumbing fixtures performance specification."""
+    """Residential and commercial water closets, urinals, lavatories, sinks, bathtubs, showers, faucets, etc."""
 
     _EXT_VERSION = "1.0"
 
@@ -93,7 +93,7 @@ class PlumbingFixturesV1(BaseOpenEpdHierarchicalSpec):
 
 
 class FireSuppressionV1(BaseOpenEpdHierarchicalSpec):
-    """Fire suppression performance specification."""
+    """Systems used to extinguish, control, or prevent fires."""
 
     _EXT_VERSION = "1.0"
 
@@ -103,7 +103,12 @@ class FireSuppressionV1(BaseOpenEpdHierarchicalSpec):
 
 
 class PipingV1(BaseOpenEpdHierarchicalSpec):
-    """Piping performance specification."""
+    """
+    Piping.
+
+    System of pipes used to provide water and fuel, remove wastewater, allow venting of gases, or supply
+    fire-suppression fluids to homes, businesses, or other facilities.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -116,7 +121,7 @@ class PipingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class PlumbingEquipmentV1(BaseOpenEpdHierarchicalSpec):
-    """Plumbing equipment performance specification."""
+    """Water softeners, filtration equipment, water heaters, and other plumbing equipment."""
 
     _EXT_VERSION = "1.0"
 
@@ -126,7 +131,7 @@ class PlumbingEquipmentV1(BaseOpenEpdHierarchicalSpec):
 
 
 class PlumbingV1(BaseOpenEpdHierarchicalSpec):
-    """Plumbing performance specification."""
+    """Residential and commercial plumbing equipment and fixtures."""
 
     _EXT_VERSION = "1.0"
 

@@ -24,7 +24,12 @@ from openepd.model.validation.quantity import LengthMmStr, validate_unit_factory
 
 
 class CementitiousSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
-    """Cementitious sheathing board performance specification."""
+    """
+    Cementitious sheathing board.
+
+    Cementitious non-gypsum board used for sheathing exteriors, shaft walls, and interior walls/ceilings requiring
+    moisture resistance.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -37,7 +42,11 @@ class CementitiousSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
 
 
 class GypsumSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
-    """Gypsum sheathing board performance specification."""
+    """
+    Cementitious sheathing board.
+
+    Gypsum board used for sheathing exteriors, shaft walls, and interior walls/ceilings requiring moisture resistance.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -65,7 +74,11 @@ class GypsumSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
 
 
 class SheathingV1(BaseOpenEpdHierarchicalSpec):
-    """Sheathing performance specification."""
+    """
+    Sheathing.
+
+    Boards or panels used in floor, wall and roof assemblies as a surface onto which other materials can be applied.
+    """
 
     _EXT_VERSION = "1.0"
 

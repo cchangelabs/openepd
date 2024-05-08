@@ -21,6 +21,11 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
 class CastDecksAndUnderlaymentV1(BaseOpenEpdHierarchicalSpec):
-    """Cast decks and underlayment performance specification."""
+    """
+    Cast roof deck substrate systems.
+
+    Typically made of gyspum concrete or cementitious wood fiber, that provide structural support to
+    roofing materials.
+    """
 
     _EXT_VERSION = "1.0"

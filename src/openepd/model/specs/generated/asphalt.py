@@ -25,7 +25,7 @@ from openepd.model.validation.quantity import LengthMmStr, TemperatureCStr
 
 
 class AsphaltV1(BaseOpenEpdHierarchicalSpec):
-    """Asphalt performance specification."""
+    """General category for asphalt mixtures."""
 
     _EXT_VERSION = "1.0"
 

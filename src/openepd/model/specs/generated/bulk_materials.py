@@ -21,6 +21,6 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
 class BulkMaterialsV1(BaseOpenEpdHierarchicalSpec):
-    """Bulk materials performance specification."""
+    """A generic category for materials whose declared unit is mass and which are not in another category."""
 
     _EXT_VERSION = "1.0"

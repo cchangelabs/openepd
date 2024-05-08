@@ -60,7 +60,12 @@ from openepd.model.validation.quantity import (
 
 
 class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
-    """Access flooring performance specification."""
+    """
+    Elevated floor system built on top of concrete slab surface.
+
+    It thereby creates a hidden void between the two floors that is used for the passage of mechanical and electrical
+    services. The system consists of panels, stringers, and pedestals.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -90,7 +95,7 @@ class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
 
 
 class CarpetV1(BaseOpenEpdHierarchicalSpec):
-    """Carpet performance specification."""
+    """Textile Floor Coverings."""
 
     _EXT_VERSION = "1.0"
 
@@ -117,19 +122,23 @@ class CarpetV1(BaseOpenEpdHierarchicalSpec):
 
 
 class LaminateV1(BaseOpenEpdHierarchicalSpec):
-    """Laminate performance specification."""
+    """Laminate flooring."""
 
     _EXT_VERSION = "1.0"
 
 
 class OtherFlooringV1(BaseOpenEpdHierarchicalSpec):
-    """Other flooring performance specification."""
+    """Other not yet classified kinds of flooring."""
 
     _EXT_VERSION = "1.0"
 
 
 class ResilientFlooringV1(BaseOpenEpdHierarchicalSpec):
-    """Resilient flooring performance specification."""
+    """
+    Resilient floor products.
+
+    Includes vinyl, rubber, linoleum, composition cork, etc. in modular square or rectangle shapes.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -150,7 +159,7 @@ class ResilientFlooringV1(BaseOpenEpdHierarchicalSpec):
 
 
 class WallBaseV1(BaseOpenEpdHierarchicalSpec):
-    """Wall base performance specification."""
+    """Wall base made to help cover gaps between wall and vinyl, rubber, wood, or tile flooring."""
 
     _EXT_VERSION = "1.0"
 
@@ -159,7 +168,12 @@ class WallBaseV1(BaseOpenEpdHierarchicalSpec):
 
 
 class WoodFlooringV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
-    """Wood flooring performance specification."""
+    """
+    Wood flooring for interior applications.
+
+    Includes hardwood strip and plank flooring, engineered hardwood flooring, wood parquet flooring, coordinated
+    transitions, and molding pieces.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -171,7 +185,7 @@ class WoodFlooringV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
 
 
 class AcousticalCeilingsV1(BaseOpenEpdHierarchicalSpec):
-    """Acoustical ceilings performance specification."""
+    """Acoustical ceiling panels."""
 
     _EXT_VERSION = "1.0"
 
@@ -180,7 +194,7 @@ class AcousticalCeilingsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class CeramicTileV1(BaseOpenEpdHierarchicalSpec):
-    """Ceramic tile performance specification."""
+    """Ceramic tiles, including porcelain, quarry, pressed floor tile, wall tile, mosaic tile, etc."""
 
     _EXT_VERSION = "1.0"
 
@@ -219,7 +233,11 @@ class CeramicTileV1(BaseOpenEpdHierarchicalSpec):
 
 
 class GaugedTileV1(BaseOpenEpdHierarchicalSpec):
-    """Gauged tile performance specification."""
+    """
+    Specially manufactured porcelain tile with extra-large panels/slabs.
+
+    Manufactured to a specific thickness ranging from 2-20 mm.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -241,7 +259,7 @@ class GaugedTileV1(BaseOpenEpdHierarchicalSpec):
 
 
 class GlassTileV1(BaseOpenEpdHierarchicalSpec):
-    """Glass tile performance specification."""
+    """Glass Tiles."""
 
     _EXT_VERSION = "1.0"
 
@@ -273,13 +291,13 @@ class GlassTileV1(BaseOpenEpdHierarchicalSpec):
 
 
 class GypsumSupportsV1(BaseOpenEpdHierarchicalSpec):
-    """Gypsum supports performance specification."""
+    """Supports for suspended and furred gypsum wall and ceiling assemblies."""
 
     _EXT_VERSION = "1.0"
 
 
 class FlooringV1(BaseOpenEpdHierarchicalSpec):
-    """Flooring performance specification."""
+    """General category - finishes for floors."""
 
     _EXT_VERSION = "1.0"
 
@@ -294,7 +312,7 @@ class FlooringV1(BaseOpenEpdHierarchicalSpec):
 
 
 class CeilingPanelV1(BaseOpenEpdHierarchicalSpec):
-    """Ceiling panel performance specification."""
+    """Acoustical and other specialty ceiling panels."""
 
     _EXT_VERSION = "1.0"
     """Modular Ceiling Panels"""
@@ -318,13 +336,13 @@ class CeilingPanelV1(BaseOpenEpdHierarchicalSpec):
 
 
 class BackingAndUnderlayV1(BaseOpenEpdHierarchicalSpec):
-    """Backing and underlay performance specification."""
+    """Cementitious, glass-mat faced gypsum, and fibered gypsum backing boards to support finish materials."""
 
     _EXT_VERSION = "1.0"
 
 
 class CementBoardV1(BaseOpenEpdHierarchicalSpec):
-    """Cement board performance specification."""
+    """Hard cementitious boards, typically used as a tile backer."""
 
     _EXT_VERSION = "1.0"
 
@@ -339,7 +357,11 @@ class CementBoardV1(BaseOpenEpdHierarchicalSpec):
 
 
 class TilingV1(BaseOpenEpdHierarchicalSpec):
-    """Tiling performance specification."""
+    """
+    Decorative building materials that includes a variety of ceramic, porcelain, and glass tiles.
+
+    Used for covering and enhancing surfaces such as floors, walls, and countertops.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -398,7 +420,7 @@ class TilingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class DeckingBoardsV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
-    """Decking boards performance specification."""
+    """Decking boards provide the finished surface of a deck and support the weight of people and furniture."""
 
     _EXT_VERSION = "1.0"
 
@@ -413,13 +435,13 @@ class DeckingBoardsV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers)
 
 
 class GlassFiberReinforcedGypsumFabricationsV1(BaseOpenEpdHierarchicalSpec):
-    """Glass fiber reinforced gypsum fabrications performance specification."""
+    """Gypsum with integrated glass fiber reinforcement, which may be fabricated in complex shapes or as a board."""
 
     _EXT_VERSION = "1.0"
 
 
 class GypsumV1(BaseOpenEpdHierarchicalSpec):
-    """Gypsum Sheet and Board."""
+    """Gypsum board used for interior walls, ceilings, and similar applications."""
 
     _EXT_VERSION = "1.0"
 
@@ -446,19 +468,19 @@ class GypsumV1(BaseOpenEpdHierarchicalSpec):
 
 
 class MirrorsV1(BaseOpenEpdHierarchicalSpec):
-    """Mirrors performance specification."""
+    """Mirrors."""
 
     _EXT_VERSION = "1.0"
 
 
 class PaintingAndCoatingV1(BaseOpenEpdHierarchicalSpec):
-    """Painting and coating performance specification."""
+    """Paintings and coatings."""
 
     _EXT_VERSION = "1.0"
 
 
 class WallFinishesV1(BaseOpenEpdHierarchicalSpec):
-    """Wall finishes performance specification."""
+    """Interior wall coverings including fabric, textile, wood, stone, and metal products."""
 
     _EXT_VERSION = "1.0"
 
@@ -467,7 +489,7 @@ class WallFinishesV1(BaseOpenEpdHierarchicalSpec):
 
 
 class FinishesV1(BaseOpenEpdHierarchicalSpec):
-    """Finishes performance specification."""
+    """General category - finishes for interior ceilings, floors, walls."""
 
     _EXT_VERSION = "1.0"
 
