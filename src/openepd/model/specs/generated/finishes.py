@@ -443,7 +443,7 @@ class GlassFiberReinforcedGypsumFabricationsV1(BaseOpenEpdHierarchicalSpec):
 class GypsumV1(BaseOpenEpdHierarchicalSpec):
     """Gypsum board used for interior walls, ceilings, and similar applications."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Own fields:
     fire_rating: GypsumFireRating | None = pyd.Field(default=None, description="", example="-")

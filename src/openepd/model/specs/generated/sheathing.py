@@ -48,7 +48,7 @@ class GypsumSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
     Gypsum board used for sheathing exteriors, shaft walls, and interior walls/ceilings requiring moisture resistance.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Own fields:
     fire_rating: GypsumFireRating | None = pyd.Field(default=None, description="", example="-")
