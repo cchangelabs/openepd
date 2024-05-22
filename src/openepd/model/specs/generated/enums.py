@@ -201,6 +201,7 @@ class GypsumFireRating(StrEnum):
      - X: X
      - C: C
      - F: F
+     - OTHER: Other
 
     """
 
