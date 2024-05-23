@@ -18,7 +18,7 @@
 #  Find out more at www.BuildingTransparency.org
 #
 from collections import defaultdict
-from typing import TYPE_CHECKING, Any, Iterable, Self, Type
+from typing import TYPE_CHECKING, Any, Iterable, Self, Type, TypeVar
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
@@ -165,6 +165,9 @@ class BaseOpenEpdHierarchicalSpec(BaseOpenEpdSpec, WithExtVersionMixin, WithHier
     )
 
 
+TSpec = TypeVar("TSpec", bound=BaseOpenEpdHierarchicalSpec)
+
+
 def setup_external_validators(quantity_validator: QuantityValidator):
     """Set the implementation unit validator for specs."""
     BaseOpenEpdHierarchicalSpec._QUANTITY_VALIDATOR = quantity_validator
@@ -218,7 +221,7 @@ class SpecsFactory:
 
     def get_full_name_for_spec(self, spec: BaseOpenEpdHierarchicalSpec | Type[BaseOpenEpdHierarchicalSpec]) -> str:
         """Get the full name of the spec."""
-        spec_cls = spec if isinstance(spec, type) else type(spec)
+        spec_cls: Type[BaseOpenEpdHierarchicalSpec] = spec if isinstance(spec, type) else spec.__class__  # type: ignore
         try:
             return self._spec_to_full_name[spec_cls]
         except KeyError:
