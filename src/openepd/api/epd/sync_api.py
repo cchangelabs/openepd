@@ -17,9 +17,14 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
+from typing import Literal, overload
+
+from requests import Response
+
 from openepd.api.base_sync_client import BaseApiMethodGroup
 from openepd.api.common import StreamingListResponse
 from openepd.api.epd.dto import EpdSearchResponse, EpdStatisticsResponse, StatisticsDto
+from openepd.api.utils import encode_path_param
 from openepd.model.epd import Epd
 
 
@@ -103,3 +108,84 @@ class EpdApi(BaseApiMethodGroup):
         :return: statistics wrapped in OpenEpdApiResponse
         """
         return self.get_statistics_raw(omf).payload
+
+    @overload
+    def post_with_refs(self, epd: Epd, with_response: Literal[True]) -> tuple[Epd, Response]:
+        ...
+
+    @overload
+    def post_with_refs(self, epd: Epd, with_response: Literal[False] = False) -> Epd:
+        ...
+
+    def post_with_refs(self, epd: Epd, with_response: bool = False) -> Epd | tuple[Epd, Response]:
+        """
+        Post an EPD with references.
+
+        :param epd: EPD
+        :param with_response: return the response object togather with the EPD
+        :return: EPD or EPD with HTTP Response object depending on parameter
+        """
+        response = self._client.do_request(
+            "patch",
+            "/epds/post-with-refs",
+            json=epd.to_serializable(exclude_unset=True, exclude_defaults=True, by_alias=True),
+        )
+        content = response.json()
+        if with_response:
+            return Epd.parse_obj(content), response
+        return Epd.parse_obj(content)
+
+    @overload
+    def create(self, epd: Epd, with_response: Literal[True]) -> tuple[Epd, Response]:
+        ...
+
+    @overload
+    def create(self, epd: Epd, with_response: Literal[False] = False) -> Epd:
+        ...
+
+    def create(self, epd: Epd, with_response: bool = False) -> Epd | tuple[Epd, Response]:
+        """
+        Create an EPD.
+
+        :param epd: EPD
+        :param with_response: return the response object together with the EPD
+        :return: EPD or EPD with HTTP Response object depending on parameter
+        """
+        response = self._client.do_request(
+            "post",
+            "/epds",
+            json=epd.to_serializable(exclude_unset=True, exclude_defaults=True, by_alias=True),
+        )
+        content = response.json()
+        if with_response:
+            return Epd.parse_obj(content), response
+        return Epd.parse_obj(content)
+
+    @overload
+    def edit(self, epd: Epd, with_response: Literal[True]) -> tuple[Epd, Response]:
+        ...
+
+    @overload
+    def edit(self, epd: Epd, with_response: Literal[False] = False) -> Epd:
+        ...
+
+    def edit(self, epd: Epd, with_response: bool = False) -> Epd | tuple[Epd, Response]:
+        """
+        Edit an EPD.
+
+        :param epd: EPD
+        :param with_response: return the response object together with the EPD
+        :return: EPD or EPD with HTTP Response object depending on parameter
+        """
+        epd_id = epd.id
+        if not epd_id:
+            raise ValueError("The EPD ID must be set to edit an EPD.")
+        response = self._client.do_request(
+            "put",
+            f"/epds/{encode_path_param(epd_id)}",
+            json=epd.to_serializable(exclude_unset=True, exclude_defaults=True, by_alias=True),
+        )
+        content = response.json()
+        if with_response:
+            return Epd.parse_obj(content), response
+        return Epd.parse_obj(content)

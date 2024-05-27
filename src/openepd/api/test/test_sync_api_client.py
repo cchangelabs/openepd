@@ -21,8 +21,11 @@ from os import environ
 from typing import cast
 import unittest
 
+from requests import Response
+
 from openepd.api.errors import ApiError, AuthError, ValidationError
 from openepd.api.sync_client import OpenEpdApiClientSync
+from openepd.model.epd import Epd
 from openepd.model.pcr import Pcr
 
 
@@ -118,3 +121,62 @@ class SyncClientApiTestCase(unittest.TestCase):
                 "invalid-token",
             )
             api_client.epds.get_by_openxpd_uuid("ec3b9j5t")
+
+
+@unittest.skip("This test is for local debugging only")
+@unittest.skipUnless(
+    environ.get("OPENEPD_API_URL") and environ.get("OPENEPD_API_TOKEN"),
+    "OPENEPD_API_URL and OPENEPD_API_TOKEN must be set to run this test",
+)
+class LocalOnlySyncClientApiTestCase(unittest.TestCase):
+    api_client: OpenEpdApiClientSync
+
+    def setUp(self):
+        self.api_client = OpenEpdApiClientSync(
+            environ.get("OPENEPD_API_URL"),
+            environ.get("OPENEPD_API_TOKEN"),
+        )
+
+    def test_post_with_refs(self):
+        epd = self.api_client.epds.get_by_openxpd_uuid("ec3r59df")
+        epd_dict = epd.to_serializable(exclude_unset=True, exclude_none=True)
+        epd_dict.update(
+            {
+                "openepd_version": "0.1",
+                "doctype": "OpenEPD",
+                "id": "ec3r59df",
+                "product_name": "4F0Z95E1 UPDATED FOR TESTING",
+            }
+        )
+        epd = Epd.parse_obj(epd_dict)
+        epd_updated = self.api_client.epds.post_with_refs(epd)
+        self.assertIsNotNone(epd_updated)
+
+    def test_post_with_refs_invalid_epd(self):
+        epd = self.api_client.epds.get_by_openxpd_uuid("ec3r59df")
+        epd_dict = epd.to_serializable(exclude_unset=True, exclude_none=True)
+        epd_dict.update(
+            {
+                "openepd_version": "0.1",
+                "doctype": "OpenEPD",
+                "id": "ec3r59df",
+                "valid_until": "2023-04-20",
+                "date_of_issue": "2025-04-20",
+                "product_name": "4F0Z95E1 UPDATED FOR TESTING",
+            }
+        )
+        try:
+            self.api_client.epds.post_with_refs(Epd.parse_obj(epd_dict))
+        except Exception as e:
+            self.assertIsInstance(e.errors(), list)  # type: ignore
+        else:
+            self.assertFalse(True, "Should not reach this point")  # NOSONAR
+
+    def test_post_with_refs_return_response(self):
+        epd = self.api_client.epds.get_by_openxpd_uuid("ec3r59df")
+        epd_updated, response = self.api_client.epds.post_with_refs(epd, with_response=True)
+        self.assertIsNotNone(response)
+        self.assertIsNotNone(epd_updated)
+        self.assertIsInstance(response, Response)
+        self.assertTrue(epd_updated, Epd)
+        self.assertTrue(response.ok)
