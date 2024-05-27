@@ -201,6 +201,7 @@ class GypsumFireRating(StrEnum):
      - X: X
      - C: C
      - F: F
+     - Other: Not one of the listed options
 
     """
 
@@ -208,6 +209,7 @@ class GypsumFireRating(StrEnum):
     X = "X"
     C = "C"
     F = "F"
+    OTHER = "Other"
 
 
 class MembraneRoofingReinforcement(StrEnum):

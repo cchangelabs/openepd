@@ -24,13 +24,18 @@ from openepd.model.validation.quantity import LengthMmStr, MassPerLengthStr
 
 
 class BuildingHeatingPipingV1(BaseOpenEpdHierarchicalSpec):
-    """Building heating piping performance specification."""
+    """
+    Heating piping.
+
+    System of pipes used to supply heated fluids (liquids or steam) for purposes of controlling temperature inside a
+    home, business, or other building facility.
+    """
 
     _EXT_VERSION = "1.0"
 
 
 class BuriedPipingV1(BaseOpenEpdHierarchicalSpec):
-    """Buried piping performance specification."""
+    """System of pipes used to provide or transport fluids (liquids and gases) underground."""
 
     _EXT_VERSION = "1.0"
 
@@ -41,7 +46,12 @@ class BuriedPipingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class UtilityPipingV1(BaseOpenEpdHierarchicalSpec):
-    """Utility piping performance specification."""
+    """
+    Utility piping.
+
+    System of pipes used to convey fluids (liquids and gases) from one location to another. Piping can be metal,
+    plastic, concrete, fiberglass, or other materials.
+    """
 
     _EXT_VERSION = "1.0"
 

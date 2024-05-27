@@ -21,6 +21,6 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
 class OtherElectricalEquipmentV1(BaseOpenEpdHierarchicalSpec):
-    """Other electrical equipment performance specification."""
+    """Other Electrical Equipment."""
 
     _EXT_VERSION = "1.0"

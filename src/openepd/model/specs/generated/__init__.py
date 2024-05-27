@@ -17,10 +17,3 @@
 #  Charles Pankow Foundation, Microsoft Sustainability Fund, Interface, MKA Foundation, and others.
 #  Find out more at www.BuildingTransparency.org
 #
-from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-
-
-class BulkMaterialsV1(BaseOpenEpdHierarchicalSpec):
-    """A generic category for materials whose declared unit is mass and which are not in another category."""
-
-    _EXT_VERSION = "1.0"

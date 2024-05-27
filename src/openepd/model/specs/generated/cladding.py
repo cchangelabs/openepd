@@ -24,31 +24,31 @@ from openepd.model.validation.quantity import LengthMmStr, LengthMStr, RValueStr
 
 
 class AluminiumSidingV1(BaseOpenEpdHierarchicalSpec):
-    """Aluminium siding performance specification."""
+    """Exterior siding product made primarily from aluminium."""
 
     _EXT_VERSION = "1.0"
 
 
 class SteelSidingV1(BaseOpenEpdHierarchicalSpec):
-    """Steel siding performance specification."""
+    """Exterior siding product made primarily from steel."""
 
     _EXT_VERSION = "1.0"
 
 
 class ZincSidingV1(BaseOpenEpdHierarchicalSpec):
-    """Zinc siding performance specification."""
+    """Exterior siding product made primarily from zinc."""
 
     _EXT_VERSION = "1.0"
 
 
 class ShingleAndShakeSidingV1(BaseOpenEpdHierarchicalSpec):
-    """Shingle and shake siding performance specification."""
+    """Shingle & shake siding."""
 
     _EXT_VERSION = "1.0"
 
 
 class MetalSidingV1(BaseOpenEpdHierarchicalSpec):
-    """Metal siding performance specification."""
+    """Exterior siding product made of metal such as steel, aluminum, etc."""
 
     _EXT_VERSION = "1.0"
 
@@ -59,19 +59,19 @@ class MetalSidingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class CompositionSidingV1(BaseOpenEpdHierarchicalSpec):
-    """Composition siding performance specification."""
+    """Composite wood siding composed of wood wafers and resin."""
 
     _EXT_VERSION = "1.0"
 
 
 class FiberCementSidingV1(BaseOpenEpdHierarchicalSpec):
-    """Fiber cement siding performance specification."""
+    """Composite siding product made of cement and cellulose fibers."""
 
     _EXT_VERSION = "1.0"
 
 
 class InsulatedVinylSidingV1(BaseOpenEpdHierarchicalSpec):
-    """Insulated vinyl siding performance specification."""
+    """Vinyl cladding product integrated with manufacturer-installed insulation."""
 
     _EXT_VERSION = "1.0"
 
@@ -84,19 +84,19 @@ class InsulatedVinylSidingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class PlywoodSidingV1(BaseOpenEpdHierarchicalSpec):
-    """Plywood siding performance specification."""
+    """Siding made of plywood boards."""
 
     _EXT_VERSION = "1.0"
 
 
 class PolypropyleneSidingV1(BaseOpenEpdHierarchicalSpec):
-    """Polypropylene siding performance specification."""
+    """Exterior wall cladding made from polypropylene, which may contain fillers or reinforcements."""
 
     _EXT_VERSION = "1.0"
 
 
 class SolidWoodSidingV1(BaseOpenEpdHierarchicalSpec):
-    """Solid wood siding performance specification."""
+    """Siding products made of wood including shingle & shake siding."""
 
     _EXT_VERSION = "1.0"
 
@@ -105,7 +105,7 @@ class SolidWoodSidingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class VinylSidingV1(BaseOpenEpdHierarchicalSpec):
-    """Vinyl siding performance specification."""
+    """Exterior wall cladding made principally from rigid polyvinyl chloride (PVC)."""
 
     _EXT_VERSION = "1.0"
 
@@ -118,7 +118,11 @@ class VinylSidingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class SidingV1(BaseOpenEpdHierarchicalSpec):
-    """Siding performance specification."""
+    """
+    Long narrow products for exterior wall face of building.
+
+    Typically made of, e.g., metal, solid wood, plywood, plastic, composition, fiber cement, etc.
+    """
 
     _EXT_VERSION = "1.0"
 

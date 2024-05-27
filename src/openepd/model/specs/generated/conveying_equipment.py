@@ -24,7 +24,7 @@ from openepd.model.validation.quantity import LengthMStr, MassKgStr, SpeedStr
 
 
 class ElevatorsV1(BaseOpenEpdHierarchicalSpec):
-    """Elevators performance specification."""
+    """Car that moves in a vertical shaft to carry passengers or freight between the levels of a multistory building."""
 
     _EXT_VERSION = "1.0"
 
@@ -39,7 +39,7 @@ class ElevatorsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class ConveyingEquipmentV1(BaseOpenEpdHierarchicalSpec):
-    """Conveying equipment performance specification."""
+    """Conveying Equipment."""
 
     _EXT_VERSION = "1.0"
 

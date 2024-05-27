@@ -35,13 +35,13 @@ from openepd.model.validation.quantity import AirflowStr, FlowRateStr, PowerStr,
 
 
 class HvacVrfControlV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac vrf control performance specification."""
+    """Controller for adjusting airflow across the VRF system."""
 
     _EXT_VERSION = "1.0"
 
 
 class HvacVrfIndoorV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac vrf indoor performance specification."""
+    """Heating and cooling unit located on the inside of a building and supplies air to specific indoor zones."""
 
     _EXT_VERSION = "1.0"
 
@@ -54,7 +54,7 @@ class HvacVrfIndoorV1(BaseOpenEpdHierarchicalSpec):
 
 
 class HvacVrfOutdoorV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac vrf outdoor performance specification."""
+    """Heating and cooling unit that is on the outside of a building and distributes air to the indoor units."""
 
     _EXT_VERSION = "1.0"
 
@@ -67,13 +67,13 @@ class HvacVrfOutdoorV1(BaseOpenEpdHierarchicalSpec):
 
 
 class HvacAirDiffusersV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac air diffusers performance specification."""
+    """Room-side terminals for air distribution. This is different from Terminal Heating & Cooling Units."""
 
     _EXT_VERSION = "1.0"
 
 
 class HvacAirFiltersV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac air filters performance specification."""
+    """Device for filtering particles of dust, soot, etc., from the air passing through it."""
 
     _EXT_VERSION = "1.0"
 
@@ -83,7 +83,12 @@ class HvacAirFiltersV1(BaseOpenEpdHierarchicalSpec):
 
 
 class HvacAHUsV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac a h us performance specification."""
+    """
+    Device which provides healthy, dust free air to buildings with a good energy efficiency.
+
+    Usually a large metal box containing a blower, heating or cooling elements, filter racks or chambers, sound
+    attenuators, and dampers.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -99,7 +104,7 @@ class HvacAHUsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class HvacBoilersV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac boilers performance specification."""
+    """Closed vessel for heating fluid."""
 
     _EXT_VERSION = "1.0"
 
@@ -111,7 +116,12 @@ class HvacBoilersV1(BaseOpenEpdHierarchicalSpec):
 
 
 class HvacChillersV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac chillers performance specification."""
+    """
+    Machine that removes heat from a liquid coolant.
+
+    Uses a vapor-compression, adsorption refrigeration, or absorption refrigeration cycles. Incldues centrifugal,
+    water-cooled chillers, etc.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -125,13 +135,13 @@ class HvacChillersV1(BaseOpenEpdHierarchicalSpec):
 
 
 class HvacFansV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac fans performance specification."""
+    """Apparatus with rotating blades that creates a current of air for cooling or ventilation."""
 
     _EXT_VERSION = "1.0"
 
 
 class HvacHeatPumpsV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac heat pumps performance specification."""
+    """Device that transfers thermal energy between spaces, including ground and air source heat pumps."""
 
     _EXT_VERSION = "1.0"
 
@@ -145,7 +155,12 @@ class HvacHeatPumpsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class HvacHeatExV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac heat exchangers performance specification."""
+    """
+    HVAC heat exchangers.
+
+    Systems that with heat exchange cell which recovers and retains the heat that would otherwise be lost from the
+    extracted air.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -157,7 +172,12 @@ class HvacHeatExV1(BaseOpenEpdHierarchicalSpec):
 
 
 class HvacPumpsV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac pumps performance specification."""
+    """
+    Pumps.
+
+    Mechanical device using suction or pressure to raise or move liquids, compress gases, or force air into
+    inflatable objects such as tires.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -168,13 +188,18 @@ class HvacPumpsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class HvacRTUsV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac r t us performance specification."""
+    """An air handler designed for outdoor use, typically on roofs."""
 
     _EXT_VERSION = "1.0"
 
 
 class HvacVrfSystemsV1(BaseOpenEpdHierarchicalSpec):
-    """Hvac vrf systems performance specification."""
+    """
+    Variable refrigerant flow (VRF).
+
+    Also known as variable refrigerant volume (VRV), is an HVAC technology that allows for varying degrees of cooling
+    in more specific areas.
+    """
 
     _EXT_VERSION = "1.0"
 

@@ -34,19 +34,19 @@ from openepd.model.validation.quantity import (
 
 
 class LowVoltBusesV1(BaseOpenEpdHierarchicalSpec):
-    """Low volt buses performance specification."""
+    """Busbars and Busways of 600V or less."""
 
     _EXT_VERSION = "1.0"
 
 
 class MedVoltBusesV1(BaseOpenEpdHierarchicalSpec):
-    """Med volt buses performance specification."""
+    """Busbars and Busways over 600V."""
 
     _EXT_VERSION = "1.0"
 
 
 class BatteriesV1(BaseOpenEpdHierarchicalSpec):
-    """Batteries performance specification."""
+    """Battery equipment, including central batteries, battery charging, and UPS."""
 
     _EXT_VERSION = "1.0"
 
@@ -58,7 +58,7 @@ class OtherElectricalPowerStorageV1(BaseOpenEpdHierarchicalSpec):
 
 
 class CableTraysV1(BaseOpenEpdHierarchicalSpec):
-    """Cable trays performance specification."""
+    """Mechanical support for electrial or communications cabling, typically suspended from a roof or wall."""
 
     _EXT_VERSION = "1.0"
 
@@ -74,7 +74,12 @@ class CableTraysV1(BaseOpenEpdHierarchicalSpec):
 
 
 class ElectricalBusesV1(BaseOpenEpdHierarchicalSpec):
-    """Electrical buses performance specification."""
+    """
+    Power distribution, in the form of busbars or of insulted ducts made of copper or aluminum busbars.
+
+    It is an alternative means of conducting electricity compared toto power cables or cable bus. Also called
+    bus ducts.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -84,19 +89,19 @@ class ElectricalBusesV1(BaseOpenEpdHierarchicalSpec):
 
 
 class FloorEquipmentBoxesV1(BaseOpenEpdHierarchicalSpec):
-    """Floor equipment boxes performance specification."""
+    """Equipment boxes for power or electronic equipment embedded in an accessible floor."""
 
     _EXT_VERSION = "1.0"
 
 
 class PowerDistributionUnitsV1(BaseOpenEpdHierarchicalSpec):
-    """Power distribution units performance specification."""
+    """Switched electrical distribution units placed very close to the point of consumption, for example inside a rack of electronic equipment."""
 
     _EXT_VERSION = "1.0"
 
 
 class RacewaysV1(BaseOpenEpdHierarchicalSpec):
-    """Raceways performance specification."""
+    """Mechanical guideways for eletrical communications cabling, typically embedded in an accessible floor."""
 
     _EXT_VERSION = "1.0"
 
@@ -109,37 +114,37 @@ class RacewaysV1(BaseOpenEpdHierarchicalSpec):
 
 
 class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
-    """Fueled electrical generators performance specification."""
+    """Fueled electrical generators."""
 
     _EXT_VERSION = "1.0"
 
 
 class OtherGenerationV1(BaseOpenEpdHierarchicalSpec):
-    """Other generation performance specification."""
+    """Other generation."""
 
     _EXT_VERSION = "1.0"
 
 
 class PhotovoltaicsV1(BaseOpenEpdHierarchicalSpec):
-    """Photovoltaics performance specification."""
+    """Solar photovoltaics, rated on a nameplate capacity basis."""
 
     _EXT_VERSION = "1.0"
 
 
 class WindTurbinesV1(BaseOpenEpdHierarchicalSpec):
-    """Wind turbines performance specification."""
+    """Wind generators, rated on a nameplate capacity basis."""
 
     _EXT_VERSION = "1.0"
 
 
 class ElectricityFromPowerGridV1(BaseOpenEpdHierarchicalSpec):
-    """Electricity from power grid performance specification."""
+    """Electrical energy drawn from a specific utility grid."""
 
     _EXT_VERSION = "1.0"
 
 
 class ElectricityFromSpecificGeneratorV1(BaseOpenEpdHierarchicalSpec):
-    """Electricity from specific generator performance specification."""
+    """Electrical energy from a specific power plant, such as a wind farm using a specific type of turbine."""
 
     _EXT_VERSION = "1.0"
 
@@ -148,7 +153,11 @@ class ElectricityFromSpecificGeneratorV1(BaseOpenEpdHierarchicalSpec):
 
 
 class PowerPurchaseAgreementsV1(BaseOpenEpdHierarchicalSpec):
-    """Power purchase agreements performance specification."""
+    """
+    Electrical energy subject to a verified power purchase agreement.
+
+    The impact of electricity generation is allocated specifically to the agreement and not to the general grid.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -157,43 +166,43 @@ class PowerPurchaseAgreementsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class LightbulbsV1(BaseOpenEpdHierarchicalSpec):
-    """Lightbulbs performance specification."""
+    """Various types of light bulbs, including LED, CFL, halogen, and incandescent."""
 
     _EXT_VERSION = "1.0"
 
 
 class LightingControlsV1(BaseOpenEpdHierarchicalSpec):
-    """Lighting controls performance specification."""
+    """Devices used to control the operation of lighting, including dimmers, sensors, and smart controls."""
 
     _EXT_VERSION = "1.0"
 
 
 class LightingFixturesV1(BaseOpenEpdHierarchicalSpec):
-    """Lighting fixtures performance specification."""
+    """Permanent lighting fixtures for interior spaces, including ceiling, wall-mounted, and pendant fixtures."""
 
     _EXT_VERSION = "1.0"
 
 
 class OutdoorLightingV1(BaseOpenEpdHierarchicalSpec):
-    """Outdoor lighting performance specification."""
+    """Lighting products designed for outdoor use, including landscape and security lighting."""
 
     _EXT_VERSION = "1.0"
 
 
 class SpecialtyLightingV1(BaseOpenEpdHierarchicalSpec):
-    """Specialty lighting performance specification."""
+    """Specialized lighting for niche applications like emergency, medical, or theatrical lighting."""
 
     _EXT_VERSION = "1.0"
 
 
 class TaskLightingV1(BaseOpenEpdHierarchicalSpec):
-    """Task lighting performance specification."""
+    """Lighting designed for specific tasks such as desk lamps, under-cabinet lighting, and reading lamps."""
 
     _EXT_VERSION = "1.0"
 
 
 class ElectricalPowerStorageV1(BaseOpenEpdHierarchicalSpec):
-    """Electrical power storage performance specification."""
+    """Electrical Power Storage."""
 
     _EXT_VERSION = "1.0"
 
@@ -203,7 +212,7 @@ class ElectricalPowerStorageV1(BaseOpenEpdHierarchicalSpec):
 
 
 class LowVoltageElectricalDistributionV1(BaseOpenEpdHierarchicalSpec):
-    """Low voltage electrical distribution performance specification."""
+    """Low Voltage Electrical Distribution."""
 
     _EXT_VERSION = "1.0"
 
@@ -216,7 +225,11 @@ class LowVoltageElectricalDistributionV1(BaseOpenEpdHierarchicalSpec):
 
 
 class ElectricalGenerationEquipmentV1(BaseOpenEpdHierarchicalSpec):
-    """Electrical generation equipment performance specification."""
+    """
+    Equipment for generating electrical power.
+
+    This category is primarily for smaller-scale. (e.g. on premises) generation, rather than utility-scale equipment.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -228,7 +241,7 @@ class ElectricalGenerationEquipmentV1(BaseOpenEpdHierarchicalSpec):
 
 
 class ElectricPowerV1(BaseOpenEpdHierarchicalSpec):
-    """Electric power performance specification."""
+    """Electrical energy drawn from a utility grid."""
 
     _EXT_VERSION = "1.0"
 
@@ -239,7 +252,7 @@ class ElectricPowerV1(BaseOpenEpdHierarchicalSpec):
 
 
 class LightingV1(BaseOpenEpdHierarchicalSpec):
-    """Lighting performance specification."""
+    """Lamps and lightbulbs and lamp components."""
 
     _EXT_VERSION = "1.0"
 
@@ -282,7 +295,7 @@ class LightingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class ElectricalV1(BaseOpenEpdHierarchicalSpec):
-    """Electrical performance specification."""
+    """Electric power and equipment."""
 
     _EXT_VERSION = "1.0"
 

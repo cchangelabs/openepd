@@ -35,7 +35,7 @@ from openepd.model.validation.quantity import ElectricalCurrentStr, LengthMmStr,
 
 
 class PDUV1(BaseOpenEpdHierarchicalSpec):
-    """P d u performance specification."""
+    """Devices with multiple outputs designed to distribute power, often in a data center cabinet."""
 
     _EXT_VERSION = "1.0"
 
@@ -50,7 +50,7 @@ class PDUV1(BaseOpenEpdHierarchicalSpec):
 
 
 class CabinetsRacksAndEnclosuresV1(BaseOpenEpdHierarchicalSpec):
-    """Cabinets racks and enclosures performance specification."""
+    """Physical support upon which network equipment is mounted. Includes cabinets, racks, frames, and enclosures."""
 
     _EXT_VERSION = "1.0"
 
@@ -61,7 +61,7 @@ class CabinetsRacksAndEnclosuresV1(BaseOpenEpdHierarchicalSpec):
 
 
 class DataCablingV1(BaseOpenEpdHierarchicalSpec):
-    """Data cabling performance specification."""
+    """Telecommunications cabling for buildings."""
 
     _EXT_VERSION = "1.0"
 
@@ -94,7 +94,11 @@ class DataCablingV1(BaseOpenEpdHierarchicalSpec):
 
 
 class FloorBoxesAndAccessoriesV1(BaseOpenEpdHierarchicalSpec):
-    """Floor boxes and accessories performance specification."""
+    """
+    Electrical boxes that are installed in the floor.
+
+    Used to provide power and/or data connections to devices in a room or space.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -125,7 +129,12 @@ class FloorBoxesAndAccessoriesV1(BaseOpenEpdHierarchicalSpec):
 
 
 class NetworkingCableTraysV1(BaseOpenEpdHierarchicalSpec):
-    """Networking cable trays performance specification."""
+    """
+    Cable trays.
+
+    Mechanical support systems that provide a rigid structural system for cables used for communication and
+    power distribution.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -141,7 +150,11 @@ class NetworkingCableTraysV1(BaseOpenEpdHierarchicalSpec):
 
 
 class NetworkingRacewaysV1(BaseOpenEpdHierarchicalSpec):
-    """Networking raceways performance specification."""
+    """
+    Surface-mounted systems along the perimeter of walls to route, conceal, and protect cables.
+
+    Often called trunking.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -158,7 +171,7 @@ class NetworkingRacewaysV1(BaseOpenEpdHierarchicalSpec):
 
 
 class NetworkInfrastructureV1(BaseOpenEpdHierarchicalSpec):
-    """Network infrastructure performance specification."""
+    """General category for network infrastructure products for data centers and commercial and residential buildings."""
 
     _EXT_VERSION = "1.0"
 

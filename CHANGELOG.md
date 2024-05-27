@@ -1,3 +1,13 @@
+## 3.2.0 (2024-05-27)
+
+### Feat
+
+- **specs**: add `Other` as a GypsumFireRating value
+
+### Fix
+
+- add descriptions to all specs
+
 ## 3.1.4 (2024-05-03)
 
 ### Fix

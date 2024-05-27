@@ -24,7 +24,7 @@ from openepd.model.validation.quantity import GwpKgCo2eStr, PressureMPaStr
 
 
 class CMUV1(BaseOpenEpdHierarchicalSpec):
-    """CMU performance specification."""
+    """Pre-manufactured concrete masonry blocks."""
 
     _EXT_VERSION = "1.0"
 

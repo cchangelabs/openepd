@@ -34,7 +34,11 @@ from openepd.model.specs.generated.enums import (
 
 
 class CementV1(BaseOpenEpdHierarchicalSpec):
-    """Cement performance specification."""
+    """
+    Cements.
+
+    Includes Portland and blended cements, that can serve as the primary binder in a concrete mix.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -49,7 +53,11 @@ class CementV1(BaseOpenEpdHierarchicalSpec):
 
 
 class MasonryCementV1(BaseOpenEpdHierarchicalSpec):
-    """Masonry cement performance specification."""
+    """
+    A cementitious product typically composed of Portland cement and hydrated lime.
+
+    Masonry cement is combined with sand to make mortar.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -58,7 +66,7 @@ class MasonryCementV1(BaseOpenEpdHierarchicalSpec):
 
 
 class SupplementaryCementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):
-    """Supplementary cementitious materials performance specification."""
+    """Cementitious materials that are not effective binders when used on their own."""
 
     _EXT_VERSION = "1.0"
 
@@ -67,7 +75,12 @@ class SupplementaryCementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class AccessFlooringPedestalsV1(BaseOpenEpdHierarchicalSpec):
-    """Access flooring pedestals performance specification."""
+    """
+    Part of an access floor system.
+
+    Pedestals are laid out on top of a floor slab and support access floor panels, creating a void space between the
+    floor slab and finish floor.
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -100,7 +113,13 @@ class CementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class ConcreteAdmixturesV1(BaseOpenEpdHierarchicalSpec):
-    """Concrete admixtures performance specification."""
+    """
+    Concrete admixtures.
+
+    Chemical additives that are added to fresh concrete immediately before or during mixing. Admixtures have distinct
+    functions and are categorized as: air-entraining, water-reducing, retarding, accelerating, and plasticizers
+    (i.e., superplasticizers).
+    """
 
     _EXT_VERSION = "1.0"
 
@@ -109,7 +128,7 @@ class ConcreteAdmixturesV1(BaseOpenEpdHierarchicalSpec):
 
 
 class TextilesV1(BaseOpenEpdHierarchicalSpec):
-    """Textiles performance specification."""
+    """Textiles for use in manufacturing end products."""
 
     _EXT_VERSION = "1.0"
 
@@ -118,7 +137,12 @@ class TextilesV1(BaseOpenEpdHierarchicalSpec):
 
 
 class ManufacturingInputsV1(BaseOpenEpdHierarchicalSpec):
-    """Manufacturing inputs performance specification."""
+    """
+    Manufacturing inputs.
+
+    Broad category for collecting materials primarily used as manufacturing inputs, rather than directly used in
+    a construction.
+    """
 
     _EXT_VERSION = "1.0"
 

@@ -21,6 +21,11 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
 class GroutingV1(BaseOpenEpdHierarchicalSpec):
-    """Grouting performance specification."""
+    """
+    Grouting.
+
+    Water-cement-sand mixture for embedding rebar in masonry walls, connecting sections of precast concrete, and
+    filling joints and voids.
+    """
 
     _EXT_VERSION = "1.0"
