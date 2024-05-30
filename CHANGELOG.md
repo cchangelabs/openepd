@@ -1,3 +1,10 @@
+## 3.3.0 (2024-05-30)
+
+### Feat
+
+- **specs**: add `element_type` property to PrecastConcrete specification
+- **specs**: add `CivilPrecast` subtype to PrecastConcrete
+
 ## 3.2.0 (2024-05-27)
 
 ### Feat
