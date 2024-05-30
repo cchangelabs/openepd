@@ -41,10 +41,16 @@ class UtilityUndergroundPrecastV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class CivilPrecastV1(BaseOpenEpdHierarchicalSpec):
+    """Precast concrete used for civil engineering applications including bridges, highways, and railroads."""
+
+    _EXT_VERSION = "1.0"
+
+
 class PrecastConcreteV1(BaseOpenEpdHierarchicalSpec):
     """General category for precast concrete components."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Own fields:
     lightweight: bool | None = pyd.Field(default=None, description="", example=True)
@@ -62,3 +68,4 @@ class PrecastConcreteV1(BaseOpenEpdHierarchicalSpec):
     ArchitecturalPrecast: ArchitecturalPrecastV1 | None = None
     StructuralPrecast: StructuralPrecastV1 | None = None
     UtilityUndergroundPrecast: UtilityUndergroundPrecastV1 | None = None
+    CivilPrecast: CivilPrecastV1 | None = None
