@@ -20,7 +20,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import ElevatorsBuildingRise, ElevatorsUsageIntensity
-from openepd.model.validation.quantity import LengthMStr, MassKgStr, SpeedStr
+from openepd.model.validation.quantity import CapacityPerHourStr, LengthMStr, MassKgStr, SpeedStr
 
 
 class EscalatorsV1(BaseOpenEpdHierarchicalSpec):
@@ -30,6 +30,23 @@ class EscalatorsV1(BaseOpenEpdHierarchicalSpec):
     A moving staircase consisting of a circulating belt of steps driven by a motor,
     which conveys people between the floors of a building.
     """
+
+    vertical_rize: LengthMStr | None = pyd.Field(
+        default=None,
+        description="The vertical distance between the top and bottom landings of an escalator",
+        example="1 m",
+    )
+    speed: SpeedStr | None = pyd.Field(default=None, description="Reference speed of the escalator", example="1 m / s")
+    step_width: LengthMStr | None = pyd.Field(default=None, description="Width of the escalator steps", example="1 m")
+    max_capacity: CapacityPerHourStr | None = pyd.Field(
+        default=None, description="Max capacity of escalator in persons per hour", example="1 hour^-1"
+    )
+    indoor: bool | None = pyd.Field(
+        default=None, description="Escalator can be used for indoor applications", example=True
+    )
+    outdoor: bool | None = pyd.Field(
+        default=None, description="Escalator can be used for outdoor applications", example=True
+    )
 
     _EXT_VERSION = "1.0"
 

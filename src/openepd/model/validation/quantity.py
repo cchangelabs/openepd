@@ -214,6 +214,12 @@ class GwpKgCo2eStr(QuantityStr):
     unit = OpenEPDUnit.kg_co2
 
 
+class CapacityPerHourStr(QuantityStr):
+    """Capacity per-hour quantity type."""
+
+    unit = f"{OpenEPDUnit.hour}^-1"
+
+
 class RValueStr(QuantityStr):
     """R-Value quantity type."""
 
