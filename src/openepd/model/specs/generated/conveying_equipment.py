@@ -23,6 +23,17 @@ from openepd.model.specs.generated.enums import ElevatorsBuildingRise, Elevators
 from openepd.model.validation.quantity import LengthMStr, MassKgStr, SpeedStr
 
 
+class EscalatorsV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Escalators category performance specification.
+
+    A moving staircase consisting of a circulating belt of steps driven by a motor,
+    which conveys people between the floors of a building.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class ElevatorsV1(BaseOpenEpdHierarchicalSpec):
     """Car that moves in a vertical shaft to carry passengers or freight between the levels of a multistory building."""
 
@@ -41,7 +52,8 @@ class ElevatorsV1(BaseOpenEpdHierarchicalSpec):
 class ConveyingEquipmentV1(BaseOpenEpdHierarchicalSpec):
     """Conveying Equipment."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Nested specs:
     Elevators: ElevatorsV1 | None = None
+    Escalators: EscalatorsV1 | None = None
