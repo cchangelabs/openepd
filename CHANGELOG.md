@@ -1,3 +1,10 @@
+## 3.4.0 (2024-06-03)
+
+### Feat
+
+- **specs**: add `EscalatorsV1` properties
+- **specs**: add `EscalatorsV1` category specs
+
 ## 3.3.0 (2024-05-30)
 
 ### Feat
