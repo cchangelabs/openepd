@@ -1,3 +1,9 @@
+## 3.4.1 (2024-06-05)
+
+### Fix
+
+- **specs**: resolve typo in `vertical_rize` -> `vertical_rise`
+
 ## 3.4.0 (2024-06-03)
 
 ### Feat
