@@ -31,7 +31,7 @@ class EscalatorsV1(BaseOpenEpdHierarchicalSpec):
     which conveys people between the floors of a building.
     """
 
-    vertical_rize: LengthMStr | None = pyd.Field(
+    vertical_rise: LengthMStr | None = pyd.Field(
         default=None,
         description="The vertical distance between the top and bottom landings of an escalator",
         example="1 m",
@@ -48,7 +48,7 @@ class EscalatorsV1(BaseOpenEpdHierarchicalSpec):
         default=None, description="Escalator can be used for outdoor applications", example=True
     )
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
 
 class ElevatorsV1(BaseOpenEpdHierarchicalSpec):
