@@ -110,12 +110,10 @@ class EpdApi(BaseApiMethodGroup):
         return self.get_statistics_raw(omf).payload
 
     @overload
-    def post_with_refs(self, epd: Epd, with_response: Literal[True]) -> tuple[Epd, Response]:
-        ...
+    def post_with_refs(self, epd: Epd, with_response: Literal[True]) -> tuple[Epd, Response]: ...
 
     @overload
-    def post_with_refs(self, epd: Epd, with_response: Literal[False] = False) -> Epd:
-        ...
+    def post_with_refs(self, epd: Epd, with_response: Literal[False] = False) -> Epd: ...
 
     def post_with_refs(self, epd: Epd, with_response: bool = False) -> Epd | tuple[Epd, Response]:
         """
@@ -136,12 +134,10 @@ class EpdApi(BaseApiMethodGroup):
         return Epd.parse_obj(content)
 
     @overload
-    def create(self, epd: Epd, with_response: Literal[True]) -> tuple[Epd, Response]:
-        ...
+    def create(self, epd: Epd, with_response: Literal[True]) -> tuple[Epd, Response]: ...
 
     @overload
-    def create(self, epd: Epd, with_response: Literal[False] = False) -> Epd:
-        ...
+    def create(self, epd: Epd, with_response: Literal[False] = False) -> Epd: ...
 
     def create(self, epd: Epd, with_response: bool = False) -> Epd | tuple[Epd, Response]:
         """
@@ -162,12 +158,10 @@ class EpdApi(BaseApiMethodGroup):
         return Epd.parse_obj(content)
 
     @overload
-    def edit(self, epd: Epd, with_response: Literal[True]) -> tuple[Epd, Response]:
-        ...
+    def edit(self, epd: Epd, with_response: Literal[True]) -> tuple[Epd, Response]: ...
 
     @overload
-    def edit(self, epd: Epd, with_response: Literal[False] = False) -> Epd:
-        ...
+    def edit(self, epd: Epd, with_response: Literal[False] = False) -> Epd: ...
 
     def edit(self, epd: Epd, with_response: bool = False) -> Epd | tuple[Epd, Response]:
         """
