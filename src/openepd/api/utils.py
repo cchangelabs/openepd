@@ -13,10 +13,16 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from typing import Annotated
+__all__ = ("encode_path_param",)
 
-from openepd.compat.pydantic import pyd
+from urllib.parse import quote
 
-# todo when move to pydantic 2, check that validators are being enforced.
-RatioFloat = Annotated[float, pyd.Field(ge=0, le=1, example=0.5)]
-PositiveInt = Annotated[int, pyd.Field(ge=0, example=1)]
+
+def encode_path_param(value: str) -> str:
+    """
+    Encode a path parameter value.
+
+    :param value: parameter value
+    :return: encoded value
+    """
+    return quote(value, safe="")
