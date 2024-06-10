@@ -1,3 +1,9 @@
+## 3.5.0 (2024-06-10)
+
+### Feat
+
+- **api**: extend API client with EPD manipulation methods
+
 ## 3.4.1 (2024-06-05)
 
 ### Fix
