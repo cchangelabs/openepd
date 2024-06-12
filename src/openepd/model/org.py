@@ -50,15 +50,15 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
     )
     # TODO: NEW field, not in the spec
 
-    owner: Optional["Org"] = pyd.Field(description="Organization that controls this organization", default=None)
-    subsidiaries: Annotated[list[str], pyd.conlist(pyd.constr(max_length=200), max_items=255)] | None = pyd.Field(
+    owner: Optional["OrgRef"] = pyd.Field(description="Organization that controls this organization", default=None)
+    subsidiaries: Annotated[list["OrgRef"], pyd.conlist(pyd.constr(max_length=200), max_items=255)] | None = pyd.Field(
         description="Organizations controlled by this organization",
         example=["cqd.io", "supplychaincarbonpricing.org"],
         default=None,
     )
     hq_location: Location | None = pyd.Field(
         default=None,
-        description="Location of a place of business, prefereably the corporate headquarters.",
+        description="Location of a place of business, preferably the corporate headquarters.",
     )
 
 
