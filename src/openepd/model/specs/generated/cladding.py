@@ -72,7 +72,7 @@ class InsulatedVinylSidingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="1 mm")
+    thickness: LengthMmStr | None = pyd.Field(default=None, description="Material thickness", example="1 mm")
 
     _vinyl_siding_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
         validate_unit_factory("m")
@@ -106,7 +106,7 @@ class VinylSidingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="5 mm")
+    thickness: LengthMmStr | None = pyd.Field(default=None, description="Thickness", example="5 mm")
 
     _vinyl_siding_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
         validate_unit_factory("m")
@@ -123,11 +123,22 @@ class SidingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    insulated: bool | None = pyd.Field(default=None, description="", example=True)
-    ventilated: bool | None = pyd.Field(default=None, description="", example=True)
-    paint_or_stain_required: bool | None = pyd.Field(default=None, description="", example=True)
-    r_value: RValueStr | None = pyd.Field(default=None, description="")
-    form_factor: SidingFormFactor | None = pyd.Field(default=None, description="", example="Lap")
+    insulated: bool | None = pyd.Field(
+        default=None, description="Product integrates thermal and/or acoustic insulation.", example=True
+    )
+    ventilated: bool | None = pyd.Field(
+        default=None,
+        description="Product provides for ventilation, for example to allow evaporation of moisture behind it.",
+        example=True,
+    )
+    paint_or_stain_required: bool | None = pyd.Field(
+        default=None,
+        description="Product should be painted or stained. For best accuracy, impact of paint or "
+        "stain should be accounted for.",
+        example=True,
+    )
+    r_value: RValueStr | None = pyd.Field(default=None, description="Insulative value of material")
+    form_factor: SidingFormFactor | None = pyd.Field(default=None, description="Form factor of material", example="Lap")
 
     # Nested specs:
     MetalSiding: MetalSidingV1 | None = None
@@ -146,9 +157,9 @@ class InsulatedRoofPanelsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    r_value: RValueStr | None = pyd.Field(default=None, description="")
+    r_value: RValueStr | None = pyd.Field(default=None, description="Insulative value of material")
     insulating_material: CladdingInsulatingMaterial | None = pyd.Field(
-        default=None, description="", example="No Insulation"
+        default=None, description="Insulating material", example="No Insulation"
     )
 
 
@@ -158,9 +169,9 @@ class InsulatedWallPanelsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    r_value: RValueStr | None = pyd.Field(default=None, description="")
+    r_value: RValueStr | None = pyd.Field(default=None, description="Insulative value of material")
     insulating_material: CladdingInsulatingMaterial | None = pyd.Field(
-        default=None, description="", example="No Insulation"
+        default=None, description="Insulating material", example="No Insulation"
     )
 
 
@@ -188,8 +199,10 @@ class CladdingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMStr | None = pyd.Field(default=None, description="", example="10 mm")
-    facing_material: CladdingFacingMaterial | None = pyd.Field(default=None, description="", example="Steel")
+    thickness: LengthMStr | None = pyd.Field(default=None, description="Thickness", example="10 mm")
+    facing_material: CladdingFacingMaterial | None = pyd.Field(
+        default=None, description="Facing material", example="Steel"
+    )
 
     _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
 

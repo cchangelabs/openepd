@@ -33,7 +33,12 @@ class AluminiumExtrusionsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thermally_improved: bool | None = pyd.Field(default=None, description="", example=True)
+    thermally_improved: bool | None = pyd.Field(
+        default=None,
+        description='Includes a polymer thermal barrier to improve insulation. Often machined to remove any "bridge" '
+        "of aluminium from one side to the other.",
+        example=True,
+    )
 
 
 class AluminiumSheetGoodsV1(BaseOpenEpdHierarchicalSpec):
@@ -54,9 +59,11 @@ class AluminiumV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    alloy: AluminiumAlloy | None = pyd.Field(default=None, description="", example=str(AluminiumAlloy.ALLOY_1XXX))
-    anodized: bool | None = pyd.Field(default=None, description="", example=True)
-    painted: bool | None = pyd.Field(default=None, description="", example=True)
+    alloy: AluminiumAlloy | None = pyd.Field(
+        default=None, description="Alloy group.", example=str(AluminiumAlloy.ALLOY_1XXX)
+    )
+    anodized: bool | None = pyd.Field(default=None, description="Anodized", example=True)
+    painted: bool | None = pyd.Field(default=None, description="Painted", example=True)
 
     # Nested specs:
     AluminiumBillets: AluminiumBilletsV1 | None = None

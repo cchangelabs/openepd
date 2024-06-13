@@ -59,14 +59,16 @@ class CableTraysV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    height: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
-    width: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
-    depth: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
-    static_load: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
+    height: LengthMmStr | None = pyd.Field(default=None, description="Height", example="100 mm")
+    width: LengthMmStr | None = pyd.Field(default=None, description="Width", example="100 mm")
+    depth: LengthMmStr | None = pyd.Field(default=None, description="Depth", example="100 mm")
+    static_load: MassKgStr | None = pyd.Field(default=None, description="Mass that the unit can hold", example="1 kg")
     ventilated: bool | None = pyd.Field(
         default=None, description="At least 40% of the tray base is open to air flow", example=True
     )
-    cable_trays_material: CableTraysMaterial | None = pyd.Field(default=None, description="", example="Stainless Steel")
+    cable_trays_material: CableTraysMaterial | None = pyd.Field(
+        default=None, description="Material", example="Stainless Steel"
+    )
 
 
 class ElectricalBusesV1(BaseOpenEpdHierarchicalSpec):
@@ -102,11 +104,21 @@ class RacewaysV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    width: LengthMStr | None = pyd.Field(default=None, description="", example="100 mm")
-    depth: LengthMStr | None = pyd.Field(default=None, description="", example="100 mm")
-    painted: bool | None = pyd.Field(default=None, description="", example=True)
-    divided: bool | None = pyd.Field(default=None, description="", example=True)
-    raceways_material: RacewaysMaterial | None = pyd.Field(default=None, description="", example="Aluminum")
+    width: LengthMStr | None = pyd.Field(default=None, description="Width", example="100 mm")
+    depth: LengthMStr | None = pyd.Field(default=None, description="Depth", example="100 mm")
+    painted: bool | None = pyd.Field(
+        default=None,
+        description="Cover made of fiberglass, plastic, concrete or similar nonmetallic materials.",
+        example=True,
+    )
+    divided: bool | None = pyd.Field(
+        default=None,
+        description="Dual service raceway for high and low voltage data and power applications",
+        example=True,
+    )
+    raceways_material: RacewaysMaterial | None = pyd.Field(
+        default=None, description="Raceways material", example="Aluminum"
+    )
 
 
 class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
@@ -145,7 +157,7 @@ class ElectricityFromSpecificGeneratorV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    energy_source: EnergySource | None = pyd.Field(default=None, description="", example="Grid")
+    energy_source: EnergySource | None = pyd.Field(default=None, description="Source", example="Grid")
 
 
 class PowerPurchaseAgreementsV1(BaseOpenEpdHierarchicalSpec):
@@ -158,7 +170,7 @@ class PowerPurchaseAgreementsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    energy_source: EnergySource | None = pyd.Field(default=None, description="", example="Grid")
+    energy_source: EnergySource | None = pyd.Field(default=None, description="Source", example="Grid")
 
 
 class LightbulbsV1(BaseOpenEpdHierarchicalSpec):
@@ -253,12 +265,32 @@ class LightingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    color_temperature: ColorTemperatureStr | None = pyd.Field(default=None, description="", example="1 K")
-    typical_utilization: str | None = pyd.Field(default=None, description="", example="1 h / yr")
-    luminosity: LuminosityStr | None = pyd.Field(default=None, description="", example="1 lumen")
-    wattage: PowerStr | None = pyd.Field(default=None, description="")
-    color_rendering_index: float | None = pyd.Field(default=None, description="", example=2.3)
-    dimmable: bool | None = pyd.Field(default=None, description="", example=True)
+    color_temperature: ColorTemperatureStr | None = pyd.Field(
+        default=None,
+        description="Color of light produced, measured in Kelvin.  In units of Kelvin (K)",
+        example="5000 K",
+    )
+    typical_utilization: str | None = pyd.Field(
+        default=None, description="Typical number of hours per year the light is on.", example="1 h / yr"
+    )
+    luminosity: LuminosityStr | None = pyd.Field(
+        default=None,
+        description="Measure of the total quantity of visible light emitted. In units of Lumens (lm)",
+        example="100 lumen",
+    )
+    wattage: PowerStr | None = pyd.Field(
+        default=None, description="Power consumption of the lighting fixture, in Watts (W)"
+    )
+    color_rendering_index: float | None = pyd.Field(
+        default=None,
+        description="Ability of the light to reveal the colors of objects. Index value from 0 to 100.",
+        example=2.3,
+    )
+    dimmable: bool | None = pyd.Field(
+        default=None,
+        description="Light, fixture, bulb, or controller able to adjust the amount of produced light.",
+        example=True,
+    )
 
     _color_temperature_quantity_ge_validator = pyd.validator("color_temperature", allow_reuse=True)(
         validate_quantity_ge_factory("1E+03 K")

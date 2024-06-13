@@ -66,21 +66,37 @@ class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    core_material: AccessFlooringCoreMaterial | None = pyd.Field(default=None, description="", example="Cementitious")
-    finish_material: AccessFlooringFinishMaterial | None = pyd.Field(default=None, description="", example="Linoleum")
-    stringers: AccessFlooringStringers | None = pyd.Field(default=None, description="", example="Standard")
-    seismic_rating: AccessFlooringSeismicRating | None = pyd.Field(default=None, description="", example="Type 0")
-    magnetically_attached_finish: bool | None = pyd.Field(default=None, description="", example=True)
-    permanent_finish: bool | None = pyd.Field(default=None, description="", example=True)
-    drylay: bool | None = pyd.Field(default=None, description="", example=True)
-    adjustable_height: bool | None = pyd.Field(default=None, description="", example=True)
-    fixed_height: bool | None = pyd.Field(default=None, description="", example=True)
-    finished_floor_height: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
-    panel_thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
-    concentrated_load: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    uniform_load: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    rolling_load_10_pass: str | None = pyd.Field(default=None, description="", example="1 N")
-    rolling_load_10000_pass: str | None = pyd.Field(default=None, description="", example="1 N")
+    core_material: AccessFlooringCoreMaterial | None = pyd.Field(
+        default=None, description="Core material", example="Cementitious"
+    )
+    finish_material: AccessFlooringFinishMaterial | None = pyd.Field(
+        default=None, description="Finish material", example="Linoleum"
+    )
+    stringers: AccessFlooringStringers | None = pyd.Field(default=None, description="Stringers", example="Standard")
+    seismic_rating: AccessFlooringSeismicRating | None = pyd.Field(
+        default=None, description="Seismic rating", example="Type 0"
+    )
+    magnetically_attached_finish: bool | None = pyd.Field(
+        default=None, description="Magnetically Attached Finish", example=True
+    )
+    permanent_finish: bool | None = pyd.Field(default=None, description="Permanent Finish", example=True)
+    drylay: bool | None = pyd.Field(default=None, description="Drylay", example=True)
+    adjustable_height: bool | None = pyd.Field(default=None, description="Adjustable Height", example=True)
+    fixed_height: bool | None = pyd.Field(default=None, description="Fixed Height", example=True)
+    finished_floor_height: LengthMmStr | None = pyd.Field(
+        default=None,
+        description="Total height of the system from the top of the slab to top of the access floor panel.",
+        example="1 m",
+    )
+    panel_thickness: LengthMmStr | None = pyd.Field(
+        default=None, description="Thickness of the top panel.", example="1 m"
+    )
+    concentrated_load: PressureMPaStr | None = pyd.Field(default=None, description="Concentrated load", example="1 MPa")
+    uniform_load: PressureMPaStr | None = pyd.Field(default=None, description="Uniform load", example="1 MPa")
+    rolling_load_10_pass: str | None = pyd.Field(default=None, description="Rolling load (10 Pass)", example="1 N")
+    rolling_load_10000_pass: str | None = pyd.Field(
+        default=None, description="Rolling load (10,000 Pass)", example="1 N"
+    )
 
     _access_flooring_rolling_load_10_pass_is_quantity_validator = pyd.validator(
         "rolling_load_10_pass", allow_reuse=True

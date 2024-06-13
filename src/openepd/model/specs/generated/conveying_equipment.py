@@ -56,10 +56,16 @@ class ElevatorsV1(BaseOpenEpdHierarchicalSpec):
     usage_intensity: list[ElevatorsUsageIntensity] | None = pyd.Field(
         default=None, description="", example=["Very low"]
     )
-    travel_length: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    rated_load: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
-    rated_speed: SpeedStr | None = pyd.Field(default=None, description="", example="1 m / s")
-    building_rise: ElevatorsBuildingRise | None = pyd.Field(default=None, description="", example="Low-rise")
+    travel_length: LengthMStr | None = pyd.Field(default=None, description="Total height of building", example="1 m")
+    rated_load: MassKgStr | None = pyd.Field(
+        default=None, description="The maximum load for an elevator as designed by the manufacturer", example="1 kg"
+    )
+    rated_speed: SpeedStr | None = pyd.Field(
+        default=None, description="The maximum speed for an elevator", example="1 m / s"
+    )
+    building_rise: ElevatorsBuildingRise | None = pyd.Field(
+        default=None, description="Building rise", example="Low-rise"
+    )
 
 
 class ConveyingEquipmentV1(BaseOpenEpdHierarchicalSpec):
