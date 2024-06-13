@@ -112,7 +112,7 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     lightweight: bool | None = pyd.Field(default=None, description="Product is lightweight", example=True)
 
     strength_28d: PressureMPaStr | None = pyd.Field(
-        default=None, description="Concrete strength after 28 days", example="1 MPa"
+        default=None, description="Concrete strength after 28 days. Required for concretes.", example="1 MPa"
     )
     strength_other: PressureMPaStr | None = pyd.Field(
         default=None,
