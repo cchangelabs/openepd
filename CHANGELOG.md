@@ -1,3 +1,9 @@
+## 3.5.1 (2024-06-13)
+
+### Fix
+
+- correct org/subsidiaries structure
+
 ## 3.5.0 (2024-06-10)
 
 ### Feat
