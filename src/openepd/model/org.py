@@ -35,7 +35,7 @@ class OrgRef(BaseOpenEpdSchema):
     )
     ref: ReferenceStr | None = pyd.Field(
         default=None,
-        example="https://buildingtransparency.org/ec3/epds/1u7zsed8",
+        example="https://openepd.buildingtransparency.org/api/orgs/c-change-labs.com",
         description="Reference to this Org's JSON object",
     )
 

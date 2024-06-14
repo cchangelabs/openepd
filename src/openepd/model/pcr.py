@@ -19,7 +19,7 @@ from typing import Annotated, Optional
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
+from openepd.model.common import Amount, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.org import Org
 
 
@@ -59,6 +59,11 @@ class Pcr(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         default=None,
         description="A shortened name without boilerplate text.",
         example="Concrete and Concrete Elements",
+    )
+    declared_units: list[Amount] | None = pyd.Field(
+        description="SI declared units for this PCR.  If a functional unit is "
+        "utilized, the declared unit shall refer to the amount of "
+        "product associated with the A1-A3 life cycle stage."
     )
     version: str | None = pyd.Field(
         description="Document version, as expressed in document.",
