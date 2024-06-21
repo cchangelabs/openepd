@@ -33,6 +33,26 @@ class PcrStatus(StrEnum):
     Sunset = "Sunset"
 
 
+class PcrRef(BaseOpenEpdSchema):
+    """Reference to a PCR."""
+
+    id: str | None = pyd.Field(
+        description="The unique ID for this PCR.  To ensure global uniqueness, should be registered "
+        "at open-xpd-uuid.cqd.io/register or a coordinating registry.",
+        example="ec3xpgq2",
+        default=None,
+    )
+    name: str | None = pyd.Field(
+        max_length=200,
+        description="Full document name as listed in source document",
+        example="c-PCR-003 Concrete and concrete elements (EN 16757)",
+    )
+    ref: pyd.AnyUrl | None = pyd.Field(
+        description="Reference to this PCR's JSON object",
+        example="https://openepd.buildingtransparency.org/api/pcrs/1u7zsed8",
+    )
+
+
 class Pcr(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     """Represent a PCR (Product Category Rules)."""
 
