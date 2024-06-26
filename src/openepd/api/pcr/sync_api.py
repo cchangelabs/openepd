@@ -14,8 +14,7 @@
 #  limitations under the License.
 #
 from openepd.api.base_sync_client import BaseApiMethodGroup
-from openepd.api.pcr.dto import PcrRef
-from openepd.model.pcr import Pcr
+from openepd.model.pcr import Pcr, PcrRef
 
 
 class PcrApi(BaseApiMethodGroup):

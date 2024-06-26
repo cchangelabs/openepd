@@ -35,7 +35,7 @@ class OrgRef(BaseOpenEpdSchema):
     )
     ref: ReferenceStr | None = pyd.Field(
         default=None,
-        example="https://buildingtransparency.org/ec3/epds/1u7zsed8",
+        example="https://openepd.buildingtransparency.org/api/orgs/c-change-labs.com",
         description="Reference to this Org's JSON object",
     )
 
@@ -53,7 +53,6 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
     owner: Optional["OrgRef"] = pyd.Field(description="Organization that controls this organization", default=None)
     subsidiaries: Annotated[list["OrgRef"], pyd.conlist(pyd.constr(max_length=200), max_items=255)] | None = pyd.Field(
         description="Organizations controlled by this organization",
-        example=["cqd.io", "supplychaincarbonpricing.org"],
         default=None,
     )
     hq_location: Location | None = pyd.Field(
