@@ -27,7 +27,7 @@ from openepd.model.standard import Standard
 from openepd.model.versioning import OpenEpdVersions, Version
 
 
-class BaseEpd(RootDocument):
+class BaseDeclaration(RootDocument):
     """
     Base class for EPD documents.
 
@@ -44,10 +44,23 @@ class BaseEpd(RootDocument):
         example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.timezone.utc),
         description="Date the EPD was issued. This should be the first day on which the EPD is valid.",
     )
+    valid_until: datetime.datetime | None = pyd.Field(
+        example=datetime.datetime(day=11, month=9, year=2028, tzinfo=datetime.timezone.utc),
+        description="Last date the EPD is valid on, including any extensions.",
+    )
+
     declared_unit: Amount | None = pyd.Field(
         description="SI declared unit for this EPD.  If a functional unit is "
         "utilized, the declared unit shall refer to the amount of "
         "product associated with the A1-A3 life cycle stage."
+    )
+    kg_per_declared_unit: Amount | None = pyd.Field(
+        default=None,
+        description="Mass of the product, in kilograms, per declared unit",
+        example=Amount(qty=12.5, unit="kg"),
+    )
+    compliance: list[Standard] = pyd.Field(
+        description="Standard(s) to which this declaration is compliant.", default_factory=list
     )
 
     # TODO: add product_alt_names? E.g. ILCD has a list of synonymous names
@@ -77,6 +90,11 @@ class BaseEpd(RootDocument):
     resource_uses: ResourceUseSet | None = pyd.Field(
         description="Set of Resource Use Indicators, over various LCA scopes"
     )
+    output_flows: OutputFlowSet | None = pyd.Field(
+        description="Set of Waste and Output Flow indicators which describe the waste categories "
+        "and other material output flows derived from the LCI."
+    )
+
     pcr: Pcr | None = pyd.Field(
         description="JSON object for product category rules. Should point to the "
         "most-specific PCR that applies; the PCR entry should point to any "
@@ -112,7 +130,7 @@ class BaseEpd(RootDocument):
     )
 
 
-class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
+class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseDeclaration):
     """Represent an EPD."""
 
     _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
@@ -180,15 +198,6 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
     third_party_verifier_email: pyd.EmailStr | None = pyd.Field(
         description="Email address of the third party verifier", example="john.doe@example.com", default=None
     )
-    valid_until: datetime.datetime | None = pyd.Field(
-        example=datetime.datetime(day=11, month=9, year=2028, tzinfo=datetime.timezone.utc),
-        description="Last date the EPD is valid on, including any extensions.",
-    )
-    kg_per_declared_unit: Amount | None = pyd.Field(
-        default=None,
-        description="Mass of the product, in kilograms, per declared unit",
-        example=Amount(qty=12.5, unit="kg"),
-    )
     kg_C_per_declared_unit: Amount | None = pyd.Field(
         default=None,
         description="Mass of elemental carbon, per declared unit, contained in the product itself at the manufacturing "
@@ -247,13 +256,7 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
     manufacturing_image: pyd.AnyUrl | None = pyd.Field(
         description="Pointer (url) to an image illustrating the manufacturing process. No more than 10MB.", default=None
     )
-    output_flows: OutputFlowSet | None = pyd.Field(
-        description="Set of Waste and Output Flow indicators which describe the waste categories "
-        "and other material output flows derived from the LCI."
-    )
-    compliance: list[Standard] = pyd.Field(
-        description="Standard(s) to which this declaration is compliant.", default_factory=list
-    )
+
     specs: Specs = pyd.Field(
         default_factory=Specs,
         description="Data structure(s) describing performance specs of product. Unique for each material type.",
@@ -288,8 +291,8 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
 Epd = EpdV0
 
 
-class EpdFactory(BaseDocumentFactory[BaseEpd]):
+class EpdFactory(BaseDocumentFactory[BaseDeclaration]):
     """Factory for EPD objects."""
 
     DOCTYPE_CONSTRAINT = "openEPD"
-    VERSION_MAP: dict[Version, type[BaseEpd]] = {OpenEpdVersions.Version0: EpdV0}
+    VERSION_MAP: dict[Version, type[BaseDeclaration]] = {OpenEpdVersions.Version0: EpdV0}

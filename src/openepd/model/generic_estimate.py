@@ -18,7 +18,7 @@ from enum import StrEnum
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseDocumentFactory, RootDocument
 from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
-from openepd.model.epd import BaseEpd
+from openepd.model.epd import BaseDeclaration
 from openepd.model.org import Org
 from openepd.model.versioning import OpenEpdVersions, Version
 
@@ -35,7 +35,7 @@ class Geography(StrEnum):
     US = "US-CA"
 
 
-class GenericEstimateV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
+class GenericEstimateV0(WithAttachmentsMixin, WithAltIdsMixin, BaseDeclaration):
     """Represent a Generic Estimate."""
 
     _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
@@ -46,6 +46,10 @@ class GenericEstimateV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
     )
 
     name: str | None = pyd.Field(max_length=200, description="", default=None)
+    description: str | None = pyd.Field(
+        max_length=2000,
+        description="1-paragraph description of the Generic Estimate. Supports plain text or github flavored markdown.",
+    )
 
     publisher: Org | None = pyd.Field(description="Organization that published the LCA results.")
     reviewer_email: pyd.EmailStr | None = pyd.Field(
@@ -56,6 +60,9 @@ class GenericEstimateV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
     geography: list[Geography] | None = pyd.Field(
         "Jurisdiction(s) in which the LCA result is applicable.  An empty array, or absent properties, implies global applicability."
     )
+    model_repository: pyd.AnyUrl | None = pyd.Field(
+        default=None, description="A link to the shared git repository containing the LCA model used for this estimate."
+    )
 
 
 GenericEstimate = GenericEstimateV0
@@ -65,4 +72,4 @@ class GenericEstimateFactory(BaseDocumentFactory[GenericEstimate]):
     """Factory for EPD objects."""
 
     DOCTYPE_CONSTRAINT = "openGenericEstimate"
-    VERSION_MAP: dict[Version, type[BaseEpd]] = {OpenEpdVersions.Version0: GenericEstimateV0}
+    VERSION_MAP: dict[Version, type[BaseDeclaration]] = {OpenEpdVersions.Version0: GenericEstimateV0}
