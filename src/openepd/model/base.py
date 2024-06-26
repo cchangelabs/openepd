@@ -36,6 +36,7 @@ class OpenEpdDoctypes(StrEnum):
     """Enum of supported openEPD document types."""
 
     Epd = "openEPD"
+    GenericEstimate = "openGenericEstimate"
 
 
 def modify_pydantic_schema(schema_dict: dict, cls: type) -> dict:

@@ -15,6 +15,7 @@
 #
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes, RootDocument
 from openepd.model.epd import EpdFactory
+from openepd.model.generic_estimate import GenericEstimateFactory
 
 
 class DocumentFactory:
@@ -22,6 +23,7 @@ class DocumentFactory:
 
     DOCTYPE_TO_FACTORY: dict[str, type[BaseDocumentFactory]] = {
         OpenEpdDoctypes.Epd: EpdFactory,
+        OpenEpdDoctypes.GenericEstimate: GenericEstimateFactory,
     }
 
     @classmethod
