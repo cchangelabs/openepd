@@ -1,3 +1,17 @@
+## 4.0.0 (2024-06-26)
+
+### Feat
+
+- add declared_units field for PCR
+
+### Fix
+
+- correct examples for Org.subsidiaries for openapi
+
+### Refactor
+
+- move PcrRef to models
+
 ## 3.5.1 (2024-06-13)
 
 ### Fix
