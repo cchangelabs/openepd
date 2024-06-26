@@ -484,10 +484,22 @@ class WallFinishesV1(BaseOpenEpdHierarchicalSpec):
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
 
 
+class PlasterV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Plaster, Stucco, & Render
+
+    Used for the protective or decorative coating of walls and ceilings and for
+    moulding and casting decorative elements. These are typically gypsum-, lime-,
+    or cement-based. Products in this category refer to dry mix.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class FinishesV1(BaseOpenEpdHierarchicalSpec):
     """General category - finishes for interior ceilings, floors, walls."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Nested specs:
     Flooring: FlooringV1 | None = None
@@ -501,3 +513,4 @@ class FinishesV1(BaseOpenEpdHierarchicalSpec):
     Mirrors: MirrorsV1 | None = None
     PaintingAndCoating: PaintingAndCoatingV1 | None = None
     WallFinishes: WallFinishesV1 | None = None
+    Plaster: PlasterV1 | None = None
