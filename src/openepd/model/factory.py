@@ -15,14 +15,35 @@
 #
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes, RootDocument
 from openepd.model.epd import EpdFactory
+from openepd.model.generic_estimate import GenericEstimateFactory
 
 
 class DocumentFactory:
     """A factory for creating documents regardless of the type."""
 
-    DOCTYPE_TO_FACTORY: dict[str, type[BaseDocumentFactory]] = {
+    DOCTYPE_TO_FACTORY: dict[OpenEpdDoctypes, type[BaseDocumentFactory]] = {
         OpenEpdDoctypes.Epd: EpdFactory,
+        OpenEpdDoctypes.GenericEstimate: GenericEstimateFactory,
     }
+
+    @classmethod
+    def get_factory(cls, doctype: OpenEpdDoctypes | None) -> type[BaseDocumentFactory]:
+        """
+        Get a document factory by given doctype.
+
+        :param doctype: doctype
+        :return document factory
+        :raise ValueError if doctype not supported or not found.
+        """
+        if doctype is None:
+            raise ValueError("The document type is not specified.")
+        factory = cls.DOCTYPE_TO_FACTORY.get(doctype)
+        if factory is None:
+            raise ValueError(
+                f"The document of type `{doctype}` is not supported. Supported documents are: "
+                + ", ".join(cls.DOCTYPE_TO_FACTORY.keys())
+            )
+        return factory
 
     @classmethod
     def from_dict(cls, data: dict) -> RootDocument:
@@ -33,12 +54,11 @@ class DocumentFactory:
         :raise ValueError: if the document type is not specified or not supported.
         """
         doctype = data.get("doctype")
-        if doctype is None:
-            raise ValueError("The document type is not specified.")
-        factory = cls.DOCTYPE_TO_FACTORY.get(doctype)
-        if factory is None:
+        if doctype is None or not isinstance(doctype, (str, OpenEpdDoctypes)):
             raise ValueError(
-                f"The document of type `{doctype}` is not supported. Supported documents are: "
-                + ", ".join(cls.DOCTYPE_TO_FACTORY.keys())
+                f"The document type is not specified or not supported. "
+                f"Please specify it in `doctype` field. Supported are: {','.join(cls.DOCTYPE_TO_FACTORY)}"
             )
+
+        factory = cls.get_factory(OpenEpdDoctypes(doctype))
         return factory.from_dict(data)

@@ -17,7 +17,7 @@ import datetime
 from typing import Annotated
 
 from openepd.compat.pydantic import pyd
-from openepd.model.base import BaseDocumentFactory, RootDocument
+from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes, RootDocument
 from openepd.model.common import Amount, Ingredient, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.lcia import Impacts, OutputFlowSet, ResourceUseSet
 from openepd.model.org import Org, Plant
@@ -27,54 +27,47 @@ from openepd.model.standard import Standard
 from openepd.model.versioning import OpenEpdVersions, Version
 
 
-class BaseEpd(RootDocument):
+class BaseDeclaration(RootDocument):
     """
     Base class for EPD documents.
 
     This class should not be used directly.  Use Epd or EpdVx instead.
     """
 
-    pass
-
-
-class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
-    """Represent an EPD."""
-
-    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
-
-    # TODO: Add validator for open-xpd-uuid on this field
     id: str | None = pyd.Field(
         description="The unique ID for this EPD.  To ensure global uniqueness, should be registered at "
         "open-xpd-uuid.cqd.io/register or a coordinating registry.",
         example="1u7zsed8",
         default=None,
     )
-    product_name: str | None = pyd.Field(
-        max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC", default=None
+    date_of_issue: datetime.datetime | None = pyd.Field(
+        example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.timezone.utc),
+        description="Date the EPD was issued. This should be the first day on which the EPD is valid.",
     )
-    product_sku: str | None = pyd.Field(
-        max_length=200, description="Unique stock keeping identifier assigned by manufacturer"
+    valid_until: datetime.datetime | None = pyd.Field(
+        example=datetime.datetime(day=11, month=9, year=2028, tzinfo=datetime.timezone.utc),
+        description="Last date the EPD is valid on, including any extensions.",
     )
-    product_description: str | None = pyd.Field(
-        max_length=2000,
-        description="1-paragraph description of product. Supports plain text or github flavored markdown.",
+
+    declared_unit: Amount | None = pyd.Field(
+        description="SI declared unit for this EPD.  If a functional unit is "
+        "utilized, the declared unit shall refer to the amount of "
+        "product associated with the A1-A3 life cycle stage."
     )
+    kg_per_declared_unit: Amount | None = pyd.Field(
+        default=None,
+        description="Mass of the product, in kilograms, per declared unit",
+        example=Amount(qty=12.5, unit="kg"),
+    )
+    compliance: list[Standard] = pyd.Field(
+        description="Standard(s) to which this declaration is compliant.", default_factory=list
+    )
+
     # TODO: add product_alt_names? E.g. ILCD has a list of synonymous names
     product_classes: dict[str, str | list[str]] = pyd.Field(
         description="List of classifications, including Masterformat and UNSPC", default_factory=dict
     )
-    product_image_small: pyd.AnyUrl | None = pyd.Field(
-        description="Pointer to image illustrating the product, which is no more than 200x200 pixels", default=None
-    )
-    product_image: pyd.AnyUrl | pyd.FileUrl | None = pyd.Field(
-        description="pointer to image illustrating the product no more than 10MB", default=None
-    )
-    version: pyd.PositiveInt | None = pyd.Field(
-        description="Version of this document. The document's issuer should increment it anytime even a single "
-        "character changes, as this value is used to determine the most recent version.",
-        example=1,
-        default=None,
-    )
+
     language: str | None = pyd.Field(
         min_length=2,
         max_length=2,
@@ -90,6 +83,80 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
         "Null is treated as false (public).  Private (draft) entries have a reduced "
         "number of required fields, to allow for multiple systems to coordinate "
         "incomplete EPDs.",
+    )
+    impacts: Impacts | None = pyd.Field(
+        description="List of environmental impacts, compiled per one of the standard Impact Assessment methods"
+    )
+    resource_uses: ResourceUseSet | None = pyd.Field(
+        description="Set of Resource Use Indicators, over various LCA scopes"
+    )
+    output_flows: OutputFlowSet | None = pyd.Field(
+        description="Set of Waste and Output Flow indicators which describe the waste categories "
+        "and other material output flows derived from the LCI."
+    )
+
+    pcr: Pcr | None = pyd.Field(
+        description="JSON object for product category rules. Should point to the "
+        "most-specific PCR that applies; the PCR entry should point to any "
+        "parent PCR.",
+        default=None,
+    )
+    lca_discussion: str | None = pyd.Field(
+        max_length=20000,
+        description="""A rich text description containing information for experts reviewing the EPD contents.
+    Text descriptions required by ISO 14025, ISO 21930, EN 15804,, relevant PCRs, or program instructions and which do not
+    have specific openEPD fields should be entered here.  This field may be large, and may contain multiple sections
+    separated by github flavored markdown formatting.""",
+        example="""# Packaging
+
+    Information on product-specific packaging: type, composition and possible reuse of packaging materials (paper,
+    strapping, pallets, foils, drums, etc.) shall be included in this Section. The EPD shall describe specific packaging
+    scenario assumptions, including disposition pathways for each packaging material by reuse, recycling, or landfill
+    disposal based on packaging type.*
+
+    # Product Installation
+
+    A description of the type of processing, machinery, tools, dust extraction equipment, auxiliary materials, etc.
+    to be used during installation shall be included. Information on industrial and environmental protection may be
+    included in this section. Any waste treatment included within the system boundary of installation waste should be
+    specified.
+
+    # Use Conditions
+
+    Use-stage environmental impacts of flooring products during building operations depend on product cleaning assumptions.
+    Information on cleaning frequency and cleaning products shall be provided based on the manufacturer’s recommendations.
+    In the absence of primary data, cleaning assumptions shall be documented.
+    """,
+    )
+
+
+class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseDeclaration):
+    """Represent an EPD."""
+
+    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
+
+    # TODO: Add validator for open-xpd-uuid on this field
+    product_name: str | None = pyd.Field(
+        max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC", default=None
+    )
+    product_sku: str | None = pyd.Field(
+        max_length=200, description="Unique stock keeping identifier assigned by manufacturer"
+    )
+    product_description: str | None = pyd.Field(
+        max_length=2000,
+        description="1-paragraph description of product. Supports plain text or github flavored markdown.",
+    )
+    product_image_small: pyd.AnyUrl | None = pyd.Field(
+        description="Pointer to image illustrating the product, which is no more than 200x200 pixels", default=None
+    )
+    product_image: pyd.AnyUrl | pyd.FileUrl | None = pyd.Field(
+        description="pointer to image illustrating the product no more than 10MB", default=None
+    )
+    version: pyd.PositiveInt | None = pyd.Field(
+        description="Version of this document. The document's issuer should increment it anytime even a single "
+        "character changes, as this value is used to determine the most recent version.",
+        example=1,
+        default=None,
     )
     declaration_url: str | None = pyd.Field(
         description="Link to data object on original registrar's site",
@@ -130,30 +197,6 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
     )
     third_party_verifier_email: pyd.EmailStr | None = pyd.Field(
         description="Email address of the third party verifier", example="john.doe@example.com", default=None
-    )
-    date_of_issue: datetime.datetime | None = pyd.Field(
-        example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.timezone.utc),
-        description="Date the EPD was issued. This should be the first day on which the EPD is valid.",
-    )
-    valid_until: datetime.datetime | None = pyd.Field(
-        example=datetime.datetime(day=11, month=9, year=2028, tzinfo=datetime.timezone.utc),
-        description="Last date the EPD is valid on, including any extensions.",
-    )
-    pcr: Pcr | None = pyd.Field(
-        description="JSON object for product category rules. Should point to the "
-        "most-specific PCR that applies; the PCR entry should point to any "
-        "parent PCR.",
-        default=None,
-    )
-    declared_unit: Amount | None = pyd.Field(
-        description="SI declared unit for this EPD.  If a functional unit is "
-        "utilized, the declared unit shall refer to the amount of "
-        "product associated with the A1-A3 life cycle stage."
-    )
-    kg_per_declared_unit: Amount | None = pyd.Field(
-        default=None,
-        description="Mass of the product, in kilograms, per declared unit",
-        example=Amount(qty=12.5, unit="kg"),
     )
     kg_C_per_declared_unit: Amount | None = pyd.Field(
         default=None,
@@ -213,19 +256,7 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
     manufacturing_image: pyd.AnyUrl | None = pyd.Field(
         description="Pointer (url) to an image illustrating the manufacturing process. No more than 10MB.", default=None
     )
-    impacts: Impacts | None = pyd.Field(
-        description="List of environmental impacts, compiled per one of the standard Impact Assessment methods"
-    )
-    resource_uses: ResourceUseSet | None = pyd.Field(
-        description="Set of Resource Use Indicators, over various LCA scopes"
-    )
-    output_flows: OutputFlowSet | None = pyd.Field(
-        description="Set of Waste and Output Flow indicators which describe the waste categories "
-        "and other material output flows derived from the LCI."
-    )
-    compliance: list[Standard] = pyd.Field(
-        description="Standard(s) to which this declaration is compliant.", default_factory=list
-    )
+
     specs: Specs = pyd.Field(
         default_factory=Specs,
         description="Data structure(s) describing performance specs of product. Unique for each material type.",
@@ -235,33 +266,6 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
         description="List of JSON objects pointing to product components. "
         "Each one should be an EPD or digitized LCI process.",
         default_factory=list,
-    )
-    lca_discussion: str | None = pyd.Field(
-        max_length=20000,
-        description="""A rich text description containing information for experts reviewing the EPD contents.
-    Text descriptions required by ISO 14025, ISO 21930, EN 15804,, relevant PCRs, or program instructions and which do not
-    have specific openEPD fields should be entered here.  This field may be large, and may contain multiple sections
-    separated by github flavored markdown formatting.""",
-        example="""# Packaging
-
-    Information on product-specific packaging: type, composition and possible reuse of packaging materials (paper,
-    strapping, pallets, foils, drums, etc.) shall be included in this Section. The EPD shall describe specific packaging
-    scenario assumptions, including disposition pathways for each packaging material by reuse, recycling, or landfill
-    disposal based on packaging type.*
-
-    # Product Installation
-
-    A description of the type of processing, machinery, tools, dust extraction equipment, auxiliary materials, etc.
-    to be used during installation shall be included. Information on industrial and environmental protection may be
-    included in this section. Any waste treatment included within the system boundary of installation waste should be
-    specified.
-
-    # Use Conditions
-
-    Use-stage environmental impacts of flooring products during building operations depend on product cleaning assumptions.
-    Information on cleaning frequency and cleaning products shall be provided based on the manufacturer’s recommendations.
-    In the absence of primary data, cleaning assumptions shall be documented.
-    """,
     )
 
     @classmethod
@@ -287,8 +291,8 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
 Epd = EpdV0
 
 
-class EpdFactory(BaseDocumentFactory[BaseEpd]):
+class EpdFactory(BaseDocumentFactory[BaseDeclaration]):
     """Factory for EPD objects."""
 
-    DOCTYPE_CONSTRAINT = "openEPD"
-    VERSION_MAP: dict[Version, type[BaseEpd]] = {OpenEpdVersions.Version0: EpdV0}
+    DOCTYPE_CONSTRAINT = OpenEpdDoctypes.Epd
+    VERSION_MAP: dict[Version, type[BaseDeclaration]] = {OpenEpdVersions.Version0: EpdV0}

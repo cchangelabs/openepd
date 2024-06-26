@@ -36,6 +36,7 @@ class OpenEpdDoctypes(StrEnum):
     """Enum of supported openEPD document types."""
 
     Epd = "openEPD"
+    GenericEstimate = "openGenericEstimate"
 
 
 def modify_pydantic_schema(schema_dict: dict, cls: type) -> dict:
@@ -206,7 +207,7 @@ class BaseDocumentFactory(Generic[TRootDocument]):
     Extend it to create a factory for a specific document type e.g. for industry epd, epd, etc.
     """
 
-    DOCTYPE_CONSTRAINT: str = ""
+    DOCTYPE_CONSTRAINT: OpenEpdDoctypes
     VERSION_MAP: dict[Version, type[TRootDocument]] = {}
 
     @classmethod
