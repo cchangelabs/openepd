@@ -34,6 +34,7 @@ from openepd.model.specs.generated.enums import (
     GypsumFacing,
     GypsumFireRating,
     GypsumThickness,
+    PlasterComposition,
     ResilientFlooringFormFactor,
     ResilientFlooringMaterial,
     ResilientFlooringThickness,
@@ -45,6 +46,7 @@ from openepd.model.specs.generated.enums import (
 )
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import (
+    AreaPerVolumeStr,
     GwpKgCo2eStr,
     LengthMmStr,
     LengthMStr,
@@ -486,7 +488,7 @@ class WallFinishesV1(BaseOpenEpdHierarchicalSpec):
 
 class PlasterV1(BaseOpenEpdHierarchicalSpec):
     """
-    Plaster, Stucco, & Render
+    Plaster, Stucco, & Render.
 
     Used for the protective or decorative coating of walls and ceilings and for
     moulding and casting decorative elements. These are typically gypsum-, lime-,
@@ -494,6 +496,14 @@ class PlasterV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+
+    # Own fields:
+    composition: PlasterComposition | None = pyd.Field(default=None, description="", example="Cement")
+    application_rate: AreaPerVolumeStr | None = pyd.Field(
+        default=None,
+        description="Typical or reference amount of material covering a unit of a host surface.",
+        example="10 m2/l",
+    )
 
 
 class FinishesV1(BaseOpenEpdHierarchicalSpec):

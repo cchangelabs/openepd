@@ -274,3 +274,9 @@ class MassPerLengthStr(QuantityStr):
     """Mass per unit of length quantity type."""
 
     unit = "kg / m"
+
+
+class AreaPerVolumeStr(QuantityStr):
+    """Area per unit of volume quantity type."""
+
+    unit = "m2 / l"
