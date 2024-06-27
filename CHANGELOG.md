@@ -1,3 +1,9 @@
+## 4.1.0 (2024-06-27)
+
+### Feat
+
+- **specs**: add PlasterV1 category specs
+
 ## 4.0.0 (2024-06-26)
 
 ### Feat
