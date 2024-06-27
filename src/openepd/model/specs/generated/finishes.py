@@ -34,6 +34,7 @@ from openepd.model.specs.generated.enums import (
     GypsumFacing,
     GypsumFireRating,
     GypsumThickness,
+    PlasterComposition,
     ResilientFlooringFormFactor,
     ResilientFlooringMaterial,
     ResilientFlooringThickness,
@@ -45,6 +46,7 @@ from openepd.model.specs.generated.enums import (
 )
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import (
+    AreaPerVolumeStr,
     GwpKgCo2eStr,
     LengthMmStr,
     LengthMStr,
@@ -484,10 +486,30 @@ class WallFinishesV1(BaseOpenEpdHierarchicalSpec):
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
 
 
+class PlasterV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Plaster, Stucco, & Render.
+
+    Used for the protective or decorative coating of walls and ceilings and for
+    moulding and casting decorative elements. These are typically gypsum-, lime-,
+    or cement-based. Products in this category refer to dry mix.
+    """
+
+    _EXT_VERSION = "1.0"
+
+    # Own fields:
+    composition: PlasterComposition | None = pyd.Field(default=None, description="", example="Cement")
+    application_rate: AreaPerVolumeStr | None = pyd.Field(
+        default=None,
+        description="Typical or reference amount of material covering a unit of a host surface.",
+        example="10 m2/l",
+    )
+
+
 class FinishesV1(BaseOpenEpdHierarchicalSpec):
     """General category - finishes for interior ceilings, floors, walls."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Nested specs:
     Flooring: FlooringV1 | None = None
@@ -501,3 +523,4 @@ class FinishesV1(BaseOpenEpdHierarchicalSpec):
     Mirrors: MirrorsV1 | None = None
     PaintingAndCoating: PaintingAndCoatingV1 | None = None
     WallFinishes: WallFinishesV1 | None = None
+    Plaster: PlasterV1 | None = None

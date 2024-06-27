@@ -2422,3 +2422,13 @@ class NAFSPerformanceGrade(StrEnum):
     GRADE_200_PSF = "200 psf"
     GRADE_205_PSF = "205 psf"
     GRADE_210_PSF = "210 psf"
+
+
+class PlasterComposition(StrEnum):
+    """Plaster Composition."""
+
+    CEMENT = "Cement"
+    GYPSUM = "Gypsum"
+    ACRYLIC = "Acrylic"
+    LIME = "Lime"
+    OTHER = "Other"
