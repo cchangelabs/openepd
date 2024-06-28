@@ -14,7 +14,6 @@
 #  limitations under the License.
 #
 from openepd.compat.pydantic import pyd
-from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.common import HasForestPracticesCertifiers
 from openepd.model.specs.generated.enums import (
@@ -154,9 +153,6 @@ class WoodV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
         default=None, description="Timber species", example="Alaska Cedar"
     )
     fabrication: AllFabrication | None = pyd.Field(default=None, description="Timber fabrication", example="LVL")
-    forest_practices_certifiers: list[OrgRef] | None = pyd.Field(
-        default=None, description="List of organizations that certify forest practices."
-    )
     weather_exposed: bool | None = pyd.Field(default=None, description="Weather exposed", example=True)
     fire_retardant: bool | None = pyd.Field(default=None, description="Fire retardant", example=True)
     decay_resistant: bool | None = pyd.Field(default=None, description="Decay resistant", example=True)
