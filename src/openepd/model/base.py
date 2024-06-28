@@ -56,7 +56,28 @@ def modify_pydantic_schema(schema_dict: dict, cls: type) -> dict:
     return schema_dict
 
 
-class BaseOpenEpdSchema(pyd.BaseModel):
+class PydanticClassAttributeExposeModelMetaclass(pyd.main.ModelMetaclass):
+    """
+    Extension of the pydantic's ModelMetaclass which restores class attribute lookup for fields.
+
+    In pydantic, while the model fields are defined in the model as class-level attributes, in runtime they disappear
+    due to ModelMetaclass logic. ModelMetaclass takes the defined attributes, removes them from class dict and puts
+    into a special __fields__ attribute to avoid naming conflict.
+
+    We would like to be able to access the attributes via dot notation in the runtimes, since it makes refactoring
+    easier.
+
+    This class exposes the original fields when accessed via class name. For example, one can call `Pcr.name` and get
+    `ModelField`, in addition to calling `pcr.__fields__` on an instance.
+    """
+
+    def __getattr__(cls, name: str) -> Any:
+        if name in cls.__fields__:
+            return cls.__fields__[name]
+        return getattr(super, name)
+
+
+class BaseOpenEpdSchema(pyd.BaseModel, metaclass=PydanticClassAttributeExposeModelMetaclass):
     """Base class for all OpenEPD models."""
 
     ext: dict[str, AnySerializable] | None = pyd.Field(alias="ext", default=None)
