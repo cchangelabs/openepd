@@ -1,3 +1,13 @@
+## 4.2.0 (2024-07-02)
+
+### Feat
+
+- expose Pydantic fields via class dot access
+
+### Refactor
+
+- remove duplication in `forest_practices_certifiers` field
+
 ## 4.1.0 (2024-06-27)
 
 ### Feat
