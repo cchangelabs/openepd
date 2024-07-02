@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.org import OrgRef
 
@@ -20,4 +21,6 @@ from openepd.model.org import OrgRef
 class HasForestPracticesCertifiers(BaseOpenEpdSchema):
     """An interface for models which are linked to forest practices certifiers."""
 
-    forest_practices_certifiers: list[OrgRef] | None
+    forest_practices_certifiers: list[OrgRef] | None = pyd.Field(
+        default=None, description="List of organizations that certify forest practices."
+    )
