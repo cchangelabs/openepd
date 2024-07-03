@@ -118,6 +118,13 @@ with DefaultBundleWriter("my-bundle.epb") as writer, open("test-pcr.pdf", "rb") 
     writer.write_blob_asset(pcr_pdf_file, "application/pdf", pcr_asset, RelType.Pdf)
 ```
 
+### Mypy
+
+OpenEPD uses a small modification to standard pydantic models (see PydanticClassAttributeExposeModelMetaclass). Mypy,
+in order to work correctly, requires a modified pydantic plugin. To enable it, add an 
+`openepd.mypy.custom_pydantic_plugin` to list of mypy plugins in your `pyproject.toml` or other mypy-related config
+file. See [Mypy configuration](https://mypy.readthedocs.io/en/stable/extending_mypy.html)
+
 # Credits
 
 This library has been written and maintained by [C-Change Labs](https://c-change-labs.com/).
