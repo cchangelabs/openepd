@@ -1,3 +1,9 @@
+## 4.3.0 (2024-07-04)
+
+### Feat
+
+- add mypy plugin for modified Pydantic base model metaclass
+
 ## 4.2.0 (2024-07-02)
 
 ### Feat
