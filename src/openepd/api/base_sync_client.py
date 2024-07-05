@@ -20,8 +20,10 @@ __all__ = (
     "RetryHandler",
     "BaseApiMethodGroup",
     "USER_AGENT_DEFAULT",
+    "TokenAuth",
 )
 
+from collections.abc import Callable
 import datetime
 from functools import partial, wraps
 from io import IOBase
@@ -29,7 +31,7 @@ import logging
 import random
 import shutil
 import time
-from typing import IO, Any, BinaryIO, Callable, Final, NamedTuple
+from typing import IO, Any, BinaryIO, Final, NamedTuple
 
 import requests
 from requests import PreparedRequest, Response, Session, Timeout
@@ -130,7 +132,7 @@ class TokenAuth(AuthBase):
         super().__init__()
         self.token = token
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         if other is None:
             return False
         if other.__class__ is not self.__class__:
@@ -138,6 +140,7 @@ class TokenAuth(AuthBase):
         return self.token == other.token
 
     def __call__(self, r: PreparedRequest) -> PreparedRequest:
+        """Attach token to the request headers."""
         r.headers["Authorization"] = f"Bearer {self.token}"
         return r
 
@@ -203,7 +206,7 @@ class SyncHttpClient:
         return self._base_url
 
     @base_url.setter
-    def base_url(self, new_value: str):
+    def base_url(self, new_value: str) -> None:
         """Set base URL for all requests."""
         self._base_url = no_trailing_slash(new_value)
 
@@ -219,7 +222,7 @@ class SyncHttpClient:
         """Reset current session (if any). This will clear all cookies and other session data."""
         self._session = None
 
-    def read_bytes_from_url(self, url: str, method: str = "get", **kwargs) -> bytes:
+    def read_bytes_from_url(self, url: str, method: str = "get", **kwargs: Any) -> bytes:
         """
         Perform query to the given endpoint and returns response body as bytes.
 
@@ -237,7 +240,7 @@ class SyncHttpClient:
         return content
 
     def read_url_write_to_stream(
-        self, url: str, target_stream: IO[bytes], method: str = "get", chunk_size: int = 1024, **kwargs
+        self, url: str, target_stream: IO[bytes], method: str = "get", chunk_size: int = 1024, **kwargs: Any
     ) -> int:
         """
         Perform query to the given endpoint and writes response body to the given stream.
@@ -256,7 +259,7 @@ class SyncHttpClient:
                 size += len(chunk)
             return size
 
-    def read_stream_from_url(self, url: str, method: str = "get", **kwargs) -> HttpStreamReader | IO[bytes]:
+    def read_stream_from_url(self, url: str, method: str = "get", **kwargs: Any) -> HttpStreamReader | IO[bytes]:
         """
         Perform query to the given endpoint and returns response body as a stream.
 
@@ -337,15 +340,15 @@ class SyncHttpClient:
         self,
         method: str,
         endpoint: str,
-        params=None,
-        data=None,
-        json=None,
-        files=None,
-        headers=None,
+        params: dict[str, Any] | None = None,
+        data: dict[str, Any] | str | bytes | None = None,
+        json: dict[str, Any] | None = None,
+        files: dict[str, Any] | None = None,
+        headers: dict[str, str] | None = None,
         session: Session | None = None,
         auth: AuthBase | None = None,
         raise_for_status: bool = True,
-        **kwargs,
+        **kwargs: Any,
     ) -> Response:
         """
         Perform request to the given endpoint.
@@ -388,7 +391,7 @@ class SyncHttpClient:
 
         error_handler = self._http_error_handlers.get(response.status_code, None)
         if error_handler:
-            response = error_handler(response, raise_for_status)
+            response = error_handler(response, raise_for_status)  # type: ignore[assignment]
 
         if response.ok or not raise_for_status:
             return response
@@ -413,7 +416,7 @@ class SyncHttpClient:
             self._session = Session()
         return self._session
 
-    def _on_before_do_request(self):
+    def _on_before_do_request(self) -> None:
         """
         Perform any actions before request is sent.
 
@@ -436,9 +439,11 @@ class SyncHttpClient:
                 return default
 
     @staticmethod
-    def _handle_service_unavailable(method: str, url: str, retry_count: int, func: Callable):
+    def _handle_service_unavailable(
+        method: str, url: str, retry_count: int, func: Callable[..., Response]
+    ) -> Callable[..., Response]:
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args: Any, **kwargs: Any) -> Response:
             attempts = retry_count
             response = None
             exception = None
@@ -449,7 +454,7 @@ class SyncHttpClient:
                 except (requests.exceptions.ConnectionError, ConnectionError, Timeout) as e:
                     exception = e
 
-                if exception or response.status_code == requests_codes.service_unavailable:
+                if exception or response.status_code == requests_codes.service_unavailable:  # type: ignore[union-attr]
                     secs = random.randint(60, 60 * 5)
                     logger.warning(
                         "%s %s is unavailable. Attempts left: %s. Waiting %s seconds...", method, url, attempts, secs
@@ -462,6 +467,7 @@ class SyncHttpClient:
                     break
             if exception:
                 raise exception
+            assert response is not None, "Response cannot be None at this point"
             return response
 
         return wrapper

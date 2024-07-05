@@ -119,19 +119,19 @@ class DefaultBundleWriter(BaseBundleWriter):
         self.__register_entry(asset_info)
         return asset_info
 
-    def commit(self):
+    def commit(self) -> None:
         """Write the manifest and TOC to the bundle. This will be called automatically when the bundle is closed."""
         with self._bundle_archive.open("manifest", "w") as manifest_stream:
             manifest_stream.write(self.__manifest.json(indent=2, exclude_none=True).encode("utf-8"))
         with self._bundle_archive.open("toc", "w") as toc_stream:
             toc_stream.write(self.__toc_buffer.getvalue().encode("utf-8"))
 
-    def close(self):
+    def close(self) -> None:
         """Write the manifest and TOC and close the bundle stream."""
         self.commit()
         self._bundle_archive.close()
 
-    def __register_entry(self, asset_info: AssetInfo):
+    def __register_entry(self, asset_info: AssetInfo) -> None:
         if asset_info.ref in self.__added_entries:
             raise ValueError(f"Asset {asset_info.ref} already exists in the bundle.")
         self._toc_writer.writerow(asset_info.dict(exclude_unset=True, exclude_none=True))
@@ -152,7 +152,7 @@ class DefaultBundleWriter(BaseBundleWriter):
         else:
             return f"{asset_type}/{file_name}"
 
-    def __mkdir_for_type(self, asset_type: str):
+    def __mkdir_for_type(self, asset_type: str) -> None:
         try:
             info = self._bundle_archive.getinfo(f"{asset_type}/")
             if info.is_dir():
@@ -161,7 +161,7 @@ class DefaultBundleWriter(BaseBundleWriter):
         except KeyError:
             self._bundle_archive.mkdir(str(asset_type))
 
-    def __write_data_stream(self, asset_info: AssetInfo, data: IO[bytes]):
+    def __write_data_stream(self, asset_info: AssetInfo, data: IO[bytes]) -> None:
         self.__mkdir_for_type(asset_info.type)
         with self._bundle_archive.open(asset_info.ref, "w") as asset_stream:
             shutil.copyfileobj(data, asset_stream, 1024 * 8)  # type: ignore

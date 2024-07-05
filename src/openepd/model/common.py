@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 from enum import StrEnum
-from typing import Annotated, Any
+from typing import Annotated, Any, cast
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
@@ -27,13 +27,13 @@ class Amount(BaseOpenEpdSchema):
     unit: str | None = pyd.Field(description="Which unit.  SI units are preferred.", example="kg", default=None)
 
     @pyd.root_validator
-    def check_qty_or_unit(cls, values: dict[str, Any]):
+    def check_qty_or_unit(cls, values: dict[str, Any]) -> dict[str, Any]:
         """Ensure that qty or unit is provided."""
         if values["qty"] is None and values["unit"] is None:
             raise ValueError("Either qty or unit must be provided.")
         return values
 
-    def to_quantity_str(self):
+    def to_quantity_str(self) -> str:
         """Return a string representation of the amount."""
         return f"{self.qty or ''} {self.unit or 'str'}".strip()
 
@@ -99,13 +99,14 @@ class WithAttachmentsMixin(pyd.BaseModel):
         default=None,
     )
 
-    def set_attachment(self, name: str, url: str):
+    def set_attachment(self, name: str, url: str) -> None:
         """Set an attachment."""
+        url = cast(pyd.AnyUrl, url)
         if self.attachments is None:
-            self.attachments = {}  # type: ignore
-        self.attachments[name] = url  # type: ignore
+            self.attachments = {}
+        self.attachments[name] = url
 
-    def set_attachment_if_any(self, name: str, url: str | None):
+    def set_attachment_if_any(self, name: str, url: str | None) -> None:
         """Set an attachment if url is not None."""
         if url is not None:
             self.set_attachment(name, url)
@@ -122,13 +123,13 @@ class WithAltIdsMixin(pyd.BaseModel):
         default=None,
     )
 
-    def set_alt_id(self, domain_name: str, value: str):
+    def set_alt_id(self, domain_name: str, value: str) -> None:
         """Set an alt_id."""
         if self.alt_ids is None:
             self.alt_ids = {}
         self.alt_ids[domain_name] = value
 
-    def set_alt_id_if_any(self, domain_name: str, value: str | None):
+    def set_alt_id_if_any(self, domain_name: str, value: str | None) -> None:
         """Set an alt_id if value is not None."""
         if value is not None:
             self.set_alt_id(domain_name, value)

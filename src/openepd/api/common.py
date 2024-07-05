@@ -13,12 +13,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable, Iterator
 from contextlib import contextmanager
 from datetime import datetime, timedelta
 import threading
 from time import sleep
-from typing import Callable, Generic, Iterator, cast
+from typing import Generic, cast
 
 from openepd.api.dto.common import DEFAULT_PAGE_SIZE, MetaCollectionDto, OpenEpdApiResponse
 from openepd.api.dto.meta import PagingMeta, PagingMetaMixin
@@ -41,12 +41,12 @@ class Throttler:
         self.__count_lock = threading.Lock()
         self.__time_lock = threading.Lock()
 
-        self.__count = 0
+        self.__count: float = 0
         self.__start = datetime.now()
         self.__time_limit = timedelta(seconds=1)
 
     @contextmanager
-    def throttle(self):
+    def throttle(self) -> Iterator[None]:
         """Create context manager which throttles inside the context."""
         with self.__count_lock:
             count = self.__count
@@ -180,7 +180,7 @@ class StreamingListResponse(Iterable[TOpenEpdObject], Generic[TOpenEpdObject]):
         """Check if there is a next page."""
         return self.current_page < self.get_total_pages()
 
-    def reset(self):
+    def reset(self) -> None:
         """Reset iterator to the very beginning, cleanup internal buffers."""
         self.__current_page = 0
         self.__recent_response = None
@@ -204,21 +204,20 @@ class StreamingListResponse(Iterable[TOpenEpdObject], Generic[TOpenEpdObject]):
         self.goto_page(start_from_page)
         while True:
             items = self.goto_page(self.current_page)
-            for x in items:
-                yield x
+            yield from items
             if not self.has_next_page():
                 return  # no more pages
             else:
                 self.goto_page(self.current_page + 1)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return self.get_total_count()
 
     def _is_initialized(self) -> bool:
         """Check if object is initialized (at least one page was retrieved)."""
         return self.__recent_response is not None
 
-    def _ensure_initialized(self):
+    def _ensure_initialized(self) -> None:
         """Ensure that object is initialized, if not - request the first page."""
         if not self._is_initialized():
             self.goto_page(1)

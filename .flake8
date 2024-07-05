@@ -35,11 +35,16 @@ ignore =
     #F403 'from module import *' used; unable to detect undefined names (F403)
     F403,
     ##### DOCSTRINGS #####
-    D100, # Missing docstring in public module
-    D107, # Missing docstring in __init__
-    D105, # Missing docstring in magic method
-    D104, # Missing docstring in public package
-    D106, # Missing docstring in public nested class
+    # Missing docstring in public module
+    D100,
+    # Missing docstring in __init__
+    D107,
+    # Missing docstring in magic method
+    D105,
+    # Missing docstring in public package
+    D104,
+    # Missing docstring in public nested class
+    D106,
 
 per-file-ignores =
     # imported but unused

@@ -13,10 +13,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from collections.abc import Callable, Iterator, Sequence
 import csv
 import io
 from os import PathLike
-from typing import IO, Callable, Iterator, Sequence, Type, cast
+from typing import IO, cast
 import zipfile
 
 from openepd.bundle.base import AssetFilter, AssetRef, BaseBundleReader
@@ -39,7 +40,7 @@ class DefaultBundleReader(BaseBundleReader):
         except Exception as e:
             raise ValueError("The bundle file is not valid. TOC reading error: " + str(e)) from e
 
-    def close(self):
+    def close(self) -> None:
         """Close the reader."""
         self._bundle_archive.close()
 
@@ -55,7 +56,7 @@ class DefaultBundleReader(BaseBundleReader):
         ref_type: str | None = None,
         is_translated: bool | None = None,
     ) -> AssetFilter:
-        def _filter(a: AssetInfo):
+        def _filter(a: AssetInfo) -> bool:
             if asset_type is not None and a.type != asset_type:
                 return False
             if name is not None and a.name != name:
@@ -84,7 +85,7 @@ class DefaultBundleReader(BaseBundleReader):
             for x in toc_reader:
                 yield AssetInfo.parse_obj(self.__preprocess_csv_dict(x))
 
-    def __check_toc(self):
+    def __check_toc(self) -> None:
         with self._bundle_archive.open("toc", "r") as toc_stream:
             toc_reader = csv.DictReader(io.TextIOWrapper(toc_stream, encoding="utf-8"), dialect="toc")
             if not toc_reader.fieldnames or len(toc_reader.fieldnames) < len(self._TOC_FIELDS):
@@ -144,7 +145,7 @@ class DefaultBundleReader(BaseBundleReader):
             raise ValueError("Asset not found")
         return self._bundle_archive.open(asset.ref, "r")
 
-    def read_object_asset(self, obj_class: Type[TOpenEpdObject], asset_ref: AssetRef) -> TOpenEpdObject:
+    def read_object_asset(self, obj_class: type[TOpenEpdObject], asset_ref: AssetRef) -> TOpenEpdObject:
         """Read the object asset."""
         asset = self.get_asset_by_ref(asset_ref)
         if asset is None:
