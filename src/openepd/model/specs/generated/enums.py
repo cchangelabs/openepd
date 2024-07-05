@@ -982,6 +982,65 @@ class HvacHeatExchangersType(StrEnum):
     SPIRAL = "Spiral"
 
 
+class HvacDuctType(StrEnum):
+    """
+    Hvac duct type.
+
+    - Flexible: Duckwork that can be bent or adjusted easily. Suitable for tricky, tight spaces where rigid
+                ducts cannot be used.
+    - Rigid: Stiff ductwork, typically in fixed shapes. Commonly used for main duct runs due to its durability
+             and airflow efficiency.
+    - Semi-rigid: Less flexible than flexible ducts but not fixed. Balances flexibility and sturdiness,
+                  useful for certain architectural constraints. Used mostly in residential applications.
+    - Ductboard: Insulated panel-type ductwork made from fiberglass or other materials. It provides thermal insulation
+                 and is used where space is not a constraint.
+    """
+
+    FLEXIBLE = "Flexible"
+    RIGID = "Rigid"
+    SEMI_RIGID = "Semi-rigid"
+    DUCTBOARD = "Ductboard"
+
+
+class HvacDuctMaterial(StrEnum):
+    """
+    Hvac duct material.
+
+    - Galvanized Steel: coated with a layer of zinc to prevent rust. Very durable and common for both residential
+                        and commercial HVAC systems.
+    - Aluminum: lightweight and resistant to corrosion. Uncommon but preferred for special applications due
+                to its ease of handling and installation.
+    - PVC: Plastic ducts suitable for specific environments. Uncommon but used where moisture or chemical resistance
+           is needed. Not for high temperatures.
+    - Fiberglass: Insulated ducts that also absorb sound. Reduces noise and heat loss. Uncommon but suitable
+                  for sensitive environments.
+    - Fabric: Ducts made from specialized fabric materials. Used for distributing air uniformly, and in places
+              requiring diffused airflow.
+    """
+
+    GALVANIZED_STEEL = "Galvanized Steel"
+    ALUMINUM = "Aluminum"
+    PVC = "PVC"
+    FIBERGLASS = "Fiberglass"
+    FABRIC = "Fabric"
+
+
+class HvacDuctShape(StrEnum):
+    """
+    Hvac duct shape.
+
+    - Round: Cylindrical ducts providing efficient airflow. Minimizes friction losses, making it effective for long runs.
+    - Rectangular: Square or rectangular ducts, versatile installation. Common in commercial settings, easier
+                   to install in flat spaces.
+    - Oval: Combines attributes of round and rectangular shapes. Provides the benefits of round ducts
+            where space is limited.
+    """
+
+    ROUND = "Round"
+    RECTANGULAR = "Rectangular"
+    OVAL = "Oval"
+
+
 class HeatPumpType(StrEnum):
     """
     Heat pump type.

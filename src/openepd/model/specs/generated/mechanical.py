@@ -23,6 +23,9 @@ from openepd.model.specs.generated.enums import (
     BoilerConfiguration,
     BoilerEquipmentFuelType,
     HeatPumpType,
+    HvacDuctMaterial,
+    HvacDuctShape,
+    HvacDuctType,
     HvacHeatExchangersType,
     MechanicalInstallation,
     MechanicalRefrigerants,
@@ -205,10 +208,22 @@ class HvacVrfSystemsV1(BaseOpenEpdHierarchicalSpec):
     HvacVrfOutdoor: HvacVrfOutdoorV1 | None = None
 
 
+class HvacDuctsV1(BaseOpenEpdHierarchicalSpec):
+    """Ducts for HVAC systems performance specification."""
+
+    _EXT_VERSION = "1.0"
+
+    shape: HvacDuctShape | None = pyd.Field(default=None, description="Hvac duct shape", example="Rectangular")
+    material: HvacDuctMaterial | None = pyd.Field(
+        default=None, description="Hvac duct material", example="Galvanized Steel"
+    )
+    type: HvacDuctType | None = pyd.Field(default=None, description="Hvac duct type", example="Flexible")
+
+
 class MechanicalV1(BaseOpenEpdHierarchicalSpec):
     """Mechanical performance specification."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Nested specs:
     HvacAirDiffusers: HvacAirDiffusersV1 | None = None
@@ -222,3 +237,4 @@ class MechanicalV1(BaseOpenEpdHierarchicalSpec):
     HvacPumps: HvacPumpsV1 | None = None
     HvacRTUs: HvacRTUsV1 | None = None
     HvacVrfSystems: HvacVrfSystemsV1 | None = None
+    HvacDucts: HvacDuctsV1 | None = None
