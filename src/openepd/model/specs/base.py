@@ -16,10 +16,10 @@
 from typing import Any
 
 from openepd.compat.pydantic import pyd
-from openepd.model.base import BaseOpenEpdSchema, Version
+from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
 from openepd.model.validation.quantity import QuantityValidator
-from openepd.model.versioning import WithExtVersionMixin
+from openepd.model.versioning import Version, WithExtVersionMixin
 
 
 class BaseOpenEpdSpec(BaseOpenEpdSchema):
@@ -51,6 +51,6 @@ class BaseOpenEpdHierarchicalSpec(BaseOpenEpdSpec, WithExtVersionMixin):
     )
 
 
-def setup_external_validators(quantity_validator: QuantityValidator):
+def setup_external_validators(quantity_validator: QuantityValidator) -> None:
     """Set the implementation unit validator for specs."""
     BaseOpenEpdHierarchicalSpec._QUANTITY_VALIDATOR = quantity_validator

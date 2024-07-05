@@ -132,11 +132,11 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
         description="Email address of the third party verifier", example="john.doe@example.com", default=None
     )
     date_of_issue: datetime.datetime | None = pyd.Field(
-        example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.timezone.utc),
+        example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.UTC),
         description="Date the EPD was issued. This should be the first day on which the EPD is valid.",
     )
     valid_until: datetime.datetime | None = pyd.Field(
-        example=datetime.datetime(day=11, month=9, year=2028, tzinfo=datetime.timezone.utc),
+        example=datetime.datetime(day=11, month=9, year=2028, tzinfo=datetime.UTC),
         description="Last date the EPD is valid on, including any extensions.",
     )
     pcr: Pcr | None = pyd.Field(
@@ -270,14 +270,14 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseEpd):
         return "epd"
 
     @pyd.validator("compliance", always=True, pre=True)
-    def validate_compliance(cls, v: list | None):
+    def validate_compliance(cls, v: list | None) -> list:
         """Handle correctly None values for compliance field."""
         if v is None:
             return []
         return v
 
     @pyd.validator("includes", always=True, pre=True)
-    def validate_includes(cls, v: list | None):
+    def validate_includes(cls, v: list | None) -> list:
         """Handle correctly None values for includes field."""
         if v is None:
             return []

@@ -13,8 +13,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Callable, ClassVar
+from collections.abc import Callable, Iterable
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from openepd.model.common import OpenEPDUnit
 
@@ -78,10 +81,10 @@ class QuantityValidator(ABC):
         pass
 
 
-def validate_unit_factory(dimensionality: OpenEPDUnit | str) -> "QuantityValidatorType":
+def validate_unit_factory(dimensionality: OpenEPDUnit | str) -> QuantityValidatorType:
     """Create validator for quantity field to check unit matching."""
 
-    def validator(cls: "type[BaseOpenEpdHierarchicalSpec]", value: str) -> str:
+    def validator(cls: type[BaseOpenEpdHierarchicalSpec], value: str) -> str:
         if hasattr(cls, "_QUANTITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
             cls._QUANTITY_VALIDATOR.validate_unit_correctness(value, dimensionality)
         return value
@@ -89,10 +92,10 @@ def validate_unit_factory(dimensionality: OpenEPDUnit | str) -> "QuantityValidat
     return validator
 
 
-def validate_quantity_ge_factory(min_value: str) -> "QuantityValidatorType":
+def validate_quantity_ge_factory(min_value: str) -> QuantityValidatorType:
     """Create validator to check that quantity is greater than or equal to min_value."""
 
-    def validator(cls: "type[BaseOpenEpdHierarchicalSpec]", value: str) -> str:
+    def validator(cls: type[BaseOpenEpdHierarchicalSpec], value: str) -> str:
         if hasattr(cls, "_QUANTITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
             cls._QUANTITY_VALIDATOR.validate_quantity_greater_or_equal(value, min_value)
         return value
@@ -100,10 +103,10 @@ def validate_quantity_ge_factory(min_value: str) -> "QuantityValidatorType":
     return validator
 
 
-def validate_quantity_le_factory(max_value: str) -> "QuantityValidatorType":
+def validate_quantity_le_factory(max_value: str) -> QuantityValidatorType:
     """Create validator to check that quantity is less than or equal to max_value."""
 
-    def validator(cls: "type[BaseOpenEpdHierarchicalSpec]", value: str) -> str:
+    def validator(cls: type[BaseOpenEpdHierarchicalSpec], value: str) -> str:
         if hasattr(cls, "_QUANTITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
             cls._QUANTITY_VALIDATOR.validate_quantity_less_or_equal(value, max_value)
         return value
@@ -139,12 +142,12 @@ class QuantityStr(str):
     unit: ClassVar[str]
 
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> Iterable[Callable[[type[BaseOpenEpdHierarchicalSpec], str], str]]:
         yield validate_unit_factory(cls.unit)
         yield validate_quantity_ge_factory(f"0 {cls.unit}")
 
     @classmethod
-    def __modify_schema__(cls, field_schema):
+    def __modify_schema__(cls, field_schema: dict[str, Any]) -> None:
         field_schema.update(
             example=f"1 {cls.unit}",
         )
@@ -180,7 +183,7 @@ class LengthMmStr(QuantityStr):
     unit = OpenEPDUnit.m
 
     @classmethod
-    def __modify_schema__(cls, field_schema):
+    def __modify_schema__(cls, field_schema: dict[str, Any]) -> None:
         field_schema.update(
             example="6 mm",
         )
@@ -192,7 +195,7 @@ class LengthInchStr(QuantityStr):
     unit = OpenEPDUnit.m
 
     @classmethod
-    def __modify_schema__(cls, field_schema):
+    def __modify_schema__(cls, field_schema: dict[str, Any]) -> None:
         field_schema.update(
             example="2.5 inch",
         )

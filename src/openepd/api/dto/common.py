@@ -108,4 +108,4 @@ class OpenEpdApiResponse(pyd_generics.GenericModel, BaseOpenEpdApiModel, Generic
     # there is an issue with using covariant type variables as parameters when used for container mutable types,
     # as described in https://github.com/python/mypy/issues/7049
     # However, in our workflow TMeta is not a container type which is further returned back to caller.
-    meta: TMeta  # type: ignore[misc]
+    meta: TMeta

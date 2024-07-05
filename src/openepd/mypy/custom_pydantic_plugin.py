@@ -86,6 +86,6 @@ class CustomMetaclassPydanticPlugin(PydanticPlugin):
         return transformer.transform()
 
 
-def plugin(version: str):
+def plugin(version: str) -> type[CustomMetaclassPydanticPlugin]:
     """Entry point to the mypy plugin."""
     return CustomMetaclassPydanticPlugin

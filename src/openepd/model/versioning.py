@@ -26,11 +26,11 @@ class WithExtVersionMixin(ABC, pyd.BaseModel):
     _EXT_VERSION: ClassVar[str]
     """Exact version (major, minor) of the spec extension"""
 
-    def __init_subclass__(cls):
+    def __init_subclass__(self) -> None:
         """Set the default value for the ext_version field from _EXT_VERSION class var."""
         super().__init_subclass__()
-        if hasattr(cls, "_EXT_VERSION"):
-            cls.__fields__["ext_version"].default = cls._EXT_VERSION
+        if hasattr(self, "_EXT_VERSION"):
+            self.__fields__["ext_version"].default = self._EXT_VERSION
 
     # Note: default is set programmatically in __init_subclass__
     ext_version: str | None = pyd.Field(description="Extension version", example="3.22", default=None)
@@ -121,5 +121,5 @@ class OpenEpdVersions(Version, ReprEnum):
         """Return the most recent stable version of the format."""
         return cls.get_most_recent_version()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"[OpenEpdVesion] {self.name} - {self.value}"

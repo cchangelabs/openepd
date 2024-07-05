@@ -14,9 +14,10 @@
 #  limitations under the License.
 #
 import abc
+from collections.abc import Callable
 from enum import StrEnum
 import json
-from typing import Any, Callable, Generic, Optional, Type, TypeAlias, TypeVar
+from typing import Any, Generic, Optional, TypeAlias, TypeVar
 
 from openepd.compat.pydantic import pyd, pyd_generics
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
@@ -89,7 +90,7 @@ class BaseOpenEpdSchema(pyd.BaseModel, metaclass=PydanticClassAttributeExposeMod
         use_enum_values = True
         schema_extra: Callable | dict = modify_pydantic_schema
 
-    def to_serializable(self, *args, **kwargs) -> dict[str, Any]:
+    def to_serializable(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
         """
         Return a serializable dict representation of the DTO.
 
@@ -123,7 +124,7 @@ class BaseOpenEpdSchema(pyd.BaseModel, metaclass=PydanticClassAttributeExposeMod
         return self.ext.get(key, default)
 
     def get_typed_ext_field(
-        self, key: str, target_type: Type[TAnySerializable], default: Optional[TAnySerializable] = None
+        self, key: str, target_type: type[TAnySerializable], default: TAnySerializable | None = None
     ) -> TAnySerializable:
         """
         Get an extension field from the model and convert it to the target type.
@@ -139,11 +140,11 @@ class BaseOpenEpdSchema(pyd.BaseModel, metaclass=PydanticClassAttributeExposeMod
             return value
         raise ValueError(f"Cannot convert {value} to {target_type}")
 
-    def get_ext(self, ext_type: Type["TOpenEpdExtension"]) -> Optional["TOpenEpdExtension"]:
+    def get_ext(self, ext_type: type["TOpenEpdExtension"]) -> Optional["TOpenEpdExtension"]:
         """Get an extension field from the model or None if it doesn't exist."""
         return self.get_typed_ext_field(ext_type.get_extension_name(), ext_type, None)
 
-    def get_ext_or_empty(self, ext_type: Type["TOpenEpdExtension"]) -> "TOpenEpdExtension":
+    def get_ext_or_empty(self, ext_type: type["TOpenEpdExtension"]) -> "TOpenEpdExtension":
         """Get an extension field from the model or an empty instance if it doesn't exist."""
         return self.get_typed_ext_field(ext_type.get_extension_name(), ext_type, ext_type.construct(**{}))
 
@@ -191,7 +192,7 @@ class OpenEpdExtension(BaseOpenEpdSchema, metaclass=abc.ABCMeta):
 
 TOpenEpdExtension = TypeVar("TOpenEpdExtension", bound=OpenEpdExtension)
 TOpenEpdObject = TypeVar("TOpenEpdObject", bound=BaseOpenEpdSchema)
-TOpenEpdObjectClass = TypeVar("TOpenEpdObjectClass", bound=Type[BaseOpenEpdSchema])
+TOpenEpdObjectClass = TypeVar("TOpenEpdObjectClass", bound=type[BaseOpenEpdSchema])
 
 
 class RootDocument(abc.ABC, BaseOpenEpdSchema):

@@ -14,10 +14,9 @@
 #  limitations under the License.
 #
 try:
-    from pydantic import functional_validators  # type: ignore
-    from pydantic import v1 as pyd  # type: ignore
-    from pydantic.v1 import generics as pyd_generics  # type: ignore
-
+    from pydantic import functional_validators
+    from pydantic import v1 as pyd
+    from pydantic.v1 import generics as pyd_generics
 except ImportError:
     import pydantic as pyd  # type: ignore[no-redef]
     from pydantic import generics as pyd_generics  # type: ignore[no-redef]

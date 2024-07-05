@@ -15,6 +15,9 @@
 #
 __all__ = ("OpenEpdApiClientSync",)
 
+import datetime
+from typing import NotRequired, TypedDict, Unpack
+
 from requests.auth import AuthBase
 
 from openepd.api.base_sync_client import SyncHttpClient, TokenAuth
@@ -23,10 +26,18 @@ from openepd.api.epd.sync_api import EpdApi
 from openepd.api.pcr.sync_api import PcrApi
 
 
+class OpenEpdApiClientSyncKwargs(TypedDict):
+    throttle_retry_timeout: NotRequired[float | int | datetime.timedelta]
+    requests_per_sec: NotRequired[float]
+    retry_count: NotRequired[int]
+    user_agent: NotRequired[str | None]
+    timeout_sec: NotRequired[float | tuple[float, float] | None]
+
+
 class OpenEpdApiClientSync:
     """Synchronous API client for OpenEPD."""
 
-    def __init__(self, base_url: str, auth_token: str | None, **kwargs) -> None:
+    def __init__(self, base_url: str, auth_token: str | None, **kwargs: Unpack[OpenEpdApiClientSyncKwargs]) -> None:
         """
         Construct an API client.
 
@@ -36,7 +47,7 @@ class OpenEpdApiClientSync:
         """
         super().__init__()
         auth: AuthBase | None = TokenAuth(auth_token) if auth_token is not None else None
-        self._http_client = SyncHttpClient(base_url, auth=auth, **kwargs)
+        self._http_client = SyncHttpClient(base_url=base_url, auth=auth, **kwargs)
         self.__epd_api: EpdApi | None = None
         self.__pcr_api: PcrApi | None = None
         self.__category_api: CategoryApi | None = None

@@ -296,11 +296,11 @@ class Impacts(pyd.BaseModel):
 
     __root__: dict[LCIAMethod, ImpactSet]
 
-    def set_unknown_lcia(self, impact_set: ImpactSet):
+    def set_unknown_lcia(self, impact_set: ImpactSet) -> None:
         """Set the impact set as an unknown LCIA method."""
         self.__root__[LCIAMethod.UNKNOWN] = impact_set
 
-    def set_impact_set(self, lcia_method: LCIAMethod | str | None, impact_set: ImpactSet):
+    def set_impact_set(self, lcia_method: LCIAMethod | str | None, impact_set: ImpactSet) -> None:
         """
         Set the impact set for the given LCIA method.
 
