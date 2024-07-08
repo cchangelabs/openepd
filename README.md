@@ -132,6 +132,12 @@ This behaviour is enabled by default. To disable, run the code with `OPENEPD_DIS
 
 See src/openepd/patch_pydantic.py for details.
 
+### Generated enums
+
+The geography and country enums are generated from several sources, including pycountry list of 2-character country
+codes, UN m49 codification, and special regions. To update the enums, first update any of these sources, then use
+`make codegen`. See 'tools/openepd/codegen' for details.
+
 # Credits
 
 This library has been written and maintained by [C-Change Labs](https://c-change-labs.com/).
