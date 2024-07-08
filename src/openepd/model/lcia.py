@@ -268,6 +268,7 @@ class LCIAMethod(StrEnum):
     CML_1992 = "CML 1992"
     RECIPE_2016 = "ReCiPe 2016"
     RECIPE_2008 = "ReCiPe 2008"
+    LIME2 = "LIME2"
 
     @classmethod
     def is_method_supported(cls, method_name: str | None) -> bool:
