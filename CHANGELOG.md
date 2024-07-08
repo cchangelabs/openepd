@@ -1,3 +1,9 @@
+## 4.4.0 (2024-07-08)
+
+### Feat
+
+- add LIME2 LCIA method to supported methods
+
 ## 4.3.0 (2024-07-04)
 
 ### Feat
