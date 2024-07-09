@@ -16,11 +16,13 @@
 import unittest
 
 from openepd.model.base import OPENEPD_VERSION_FIELD, OpenEpdDoctypes
-from openepd.model.epd import EpdFactory
+from openepd.model.factory import DocumentFactory
 from openepd.model.versioning import OpenEpdVersions
 
 
 class DocumentFactoryTestCase(unittest.TestCase):
     def test_document_factory_supports_all_doc_types(self):
         for doctype in OpenEpdDoctypes:
-            EpdFactory.from_dict({OPENEPD_VERSION_FIELD: OpenEpdVersions.get_current().as_str(), "doctype": doctype})
+            DocumentFactory.from_dict(
+                {OPENEPD_VERSION_FIELD: OpenEpdVersions.get_current().as_str(), "doctype": doctype}
+            )

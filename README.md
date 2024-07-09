@@ -34,9 +34,7 @@ documenting supply-chain specific data.
 
 ## Usage
 
-## Usage
-
-**❗ ATTENTION**: Pick the right version. The cornerstone of this library models package representing openEPD models. 
+**❗ ATTENTION**: Pick the right version. The cornerstone of this library models package representing openEPD models.
 Models are defined with Pydantic library which is a dependency for openepd package. If you use Pydantic in your project
 carefully pick the version:
 
@@ -50,9 +48,11 @@ module. For mode details on the usage please refer to Pydantic documentation.
 
 ### API Client
 
-The library provides the API client to work with the OpenEPD API. The client is available in the `openepd.client` module.
+The library provides the API client to work with the OpenEPD API. The client is available in the `openepd.client`
+module.
 Currently, the only available implementation is based on synchronous [requests]() library. Client provides the following
 features:
+
 * Error handling - depending on HTTP status code the client raises different exceptions allowing to handle errors
   in a more granular way.
 * Throttling - the client is able to throttle the requests to the API to avoid hitting the rate limits.
@@ -118,12 +118,25 @@ with DefaultBundleWriter("my-bundle.epb") as writer, open("test-pcr.pdf", "rb") 
     writer.write_blob_asset(pcr_pdf_file, "application/pdf", pcr_asset, RelType.Pdf)
 ```
 
-### Mypy
+### Model attribute access
 
-OpenEPD uses a small modification to standard pydantic models (see PydanticClassAttributeExposeModelMetaclass). Mypy,
-in order to work correctly, requires a modified pydantic plugin. To enable it, add an 
-`openepd.mypy.custom_pydantic_plugin` to list of mypy plugins in your `pyproject.toml` or other mypy-related config
-file. See [Mypy configuration](https://mypy.readthedocs.io/en/stable/extending_mypy.html)
+OpenEPD extends its pydantic models with extra functionality: field descriptors can be accessed via dot notation from
+class name:
+
+* Usual pydantic way: TheModel().__field__["the_field"]
+* In openEPD: TheModel.the_field
+
+Instances hold data as usual.
+
+This behaviour is enabled by default. To disable, run the code with `OPENEPD_DISABLE_PYDANTIC_PATCH` set to `true`.
+
+See src/openepd/patch_pydantic.py for details.
+
+### Generated enums
+
+The geography and country enums are generated from several sources, including pycountry list of 2-character country
+codes, UN m49 codification, and special regions. To update the enums, first update any of these sources, then use
+`make codegen`. See 'tools/openepd/codegen' for details.
 
 # Credits
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openepd"
-version = "4.4.0"
+version = "4.5.0"
 license = "Apache-2.0"
 description = "Python library to work with OpenEPD format"
 authors = ["C-Change Labs <support@c-change-labs.com>"]
@@ -16,7 +16,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 readme = "README.md"
-packages = [{include = "openepd", from = "src"}]
+packages = [{ include = "openepd", from = "src" }]
 exclude = ["**/test_*.py", "**/tests/**"]
 
 [tool.poetry.dependencies]
@@ -53,6 +53,12 @@ commitizen = "~=3.16.0"
 types-dateparser = ">=1.1.3"
 types-deprecated = ">=1.2.9"
 types-requests = ">=2.0"
+
+# Code generation
+# For list of countries
+pycountry = ">=24.6.1"
+jinja2 = ">=2.10.3"
+
 
 [tool.poetry.extras]
 api_client = ["requests"]

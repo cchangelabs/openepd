@@ -212,3 +212,12 @@ print-version:
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
 		cz version --project; \
 	)
+
+codegen:
+	@( \
+       if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
+       echo "Generating code..."; \
+       python ./tools/openepd/codegen/generate_geography_enum.py > ./src/openepd/model/geography.py; \
+       \
+       echo "DONE: Generating code"; \
+    )
