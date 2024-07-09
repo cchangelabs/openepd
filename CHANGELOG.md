@@ -1,3 +1,14 @@
+## 4.5.0 (2024-07-09)
+
+### Feat
+
+- add GenericEstimate object to openEPD
+- auto-generate geography definitions
+
+### Fix
+
+- correct the implementation of model type field attribute access
+
 ## 4.4.0 (2024-07-08)
 
 ### Feat
