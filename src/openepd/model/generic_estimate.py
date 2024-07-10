@@ -18,7 +18,7 @@ from enum import StrEnum
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
 from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
-from openepd.model.epd import BaseDeclaration
+from openepd.model.declaration import BaseDeclaration
 from openepd.model.geography import Geography
 from openepd.model.org import Org
 from openepd.model.versioning import OpenEpdVersions, Version
