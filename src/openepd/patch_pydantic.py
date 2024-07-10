@@ -66,6 +66,13 @@ def patch_pydantic_metaclass_validator():
         pass
 
     try:
+        from pydantic.fields import ModelField as ModelFieldPydanticV1
+
+        model_field_classes.append(ModelFieldPydanticV1)
+    except ImportError:
+        pass
+
+    try:
         from pydantic_core.core_schema import ModelField as ModelFieldV2
 
         model_field_classes.append(ModelFieldV2)
