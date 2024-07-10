@@ -1,3 +1,9 @@
+## 4.5.1 (2024-07-10)
+
+### Fix
+
+- preserve pydantic 1 compatibility
+
 ## 4.5.0 (2024-07-09)
 
 ### Feat
