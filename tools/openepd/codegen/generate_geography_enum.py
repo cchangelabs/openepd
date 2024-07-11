@@ -23,7 +23,10 @@ import os
 import jinja2
 import pycountry
 
-special_regions = {"EU27": "27 members of the Euro bloc", "NAFTA": "North American Free Trade Agreement"}
+special_regions = {
+    "EU27": "27 members of the Euro bloc",
+    "NAFTA": "North American Free Trade Agreement",
+}
 
 
 def filter__to_python_name(n: str) -> str:
@@ -64,11 +67,13 @@ def generate_enums() -> None:
 
     us_canada_subdivisions = {
         c.code: f"{c.name}, {c.country.name}"
-        for c in [*pycountry.subdivisions.lookup("US"), *pycountry.subdivisions.lookup("CA")]
+        for c in sorted(
+            [*pycountry.subdivisions.lookup("US"), *pycountry.subdivisions.lookup("CA")], key=lambda c: c.code
+        )
     }
     print(
         template.render(
-            countries={c.alpha_2: c.name for c in pycountry.countries},
+            countries={c.alpha_2: c.name for c in sorted(pycountry.countries, key=lambda c: c.alpha_2)},
             us_canada_subdivisions=us_canada_subdivisions,
             special_regions=special_regions,
             m49_codes=__get_m49_codes(),
