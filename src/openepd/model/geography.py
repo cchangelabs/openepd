@@ -29,101 +29,99 @@ class Geography(StrEnum):
 
     Country geography regions, see https://en.wikipedia.org/wiki/ISO_3166-1
 
-     * AW: Aruba
-     * AF: Afghanistan
-     * AO: Angola
-     * AI: Anguilla
-     * AX: Åland Islands
-     * AL: Albania
      * AD: Andorra
      * AE: United Arab Emirates
-     * AR: Argentina
-     * AM: Armenia
-     * AS: American Samoa
-     * AQ: Antarctica
-     * TF: French Southern Territories
+     * AF: Afghanistan
      * AG: Antigua and Barbuda
-     * AU: Australia
+     * AI: Anguilla
+     * AL: Albania
+     * AM: Armenia
+     * AO: Angola
+     * AQ: Antarctica
+     * AR: Argentina
+     * AS: American Samoa
      * AT: Austria
+     * AU: Australia
+     * AW: Aruba
+     * AX: Åland Islands
      * AZ: Azerbaijan
-     * BI: Burundi
-     * BE: Belgium
-     * BJ: Benin
-     * BQ: Bonaire, Sint Eustatius and Saba
-     * BF: Burkina Faso
+     * BA: Bosnia and Herzegovina
+     * BB: Barbados
      * BD: Bangladesh
+     * BE: Belgium
+     * BF: Burkina Faso
      * BG: Bulgaria
      * BH: Bahrain
-     * BS: Bahamas
-     * BA: Bosnia and Herzegovina
+     * BI: Burundi
+     * BJ: Benin
      * BL: Saint Barthélemy
-     * BY: Belarus
-     * BZ: Belize
      * BM: Bermuda
-     * BO: Bolivia, Plurinational State of
-     * BR: Brazil
-     * BB: Barbados
      * BN: Brunei Darussalam
+     * BO: Bolivia, Plurinational State of
+     * BQ: Bonaire, Sint Eustatius and Saba
+     * BR: Brazil
+     * BS: Bahamas
      * BT: Bhutan
      * BV: Bouvet Island
      * BW: Botswana
-     * CF: Central African Republic
+     * BY: Belarus
+     * BZ: Belize
      * CA: Canada
      * CC: Cocos (Keeling) Islands
-     * CH: Switzerland
-     * CL: Chile
-     * CN: China
-     * CI: Côte d'Ivoire
-     * CM: Cameroon
      * CD: Congo, The Democratic Republic of the
+     * CF: Central African Republic
      * CG: Congo
+     * CH: Switzerland
+     * CI: Côte d'Ivoire
      * CK: Cook Islands
+     * CL: Chile
+     * CM: Cameroon
+     * CN: China
      * CO: Colombia
-     * KM: Comoros
-     * CV: Cabo Verde
      * CR: Costa Rica
      * CU: Cuba
+     * CV: Cabo Verde
      * CW: Curaçao
      * CX: Christmas Island
-     * KY: Cayman Islands
      * CY: Cyprus
      * CZ: Czechia
      * DE: Germany
      * DJ: Djibouti
-     * DM: Dominica
      * DK: Denmark
+     * DM: Dominica
      * DO: Dominican Republic
      * DZ: Algeria
      * EC: Ecuador
-     * EG: Egypt
-     * ER: Eritrea
-     * EH: Western Sahara
-     * ES: Spain
      * EE: Estonia
+     * EG: Egypt
+     * EH: Western Sahara
+     * ER: Eritrea
+     * ES: Spain
      * ET: Ethiopia
      * FI: Finland
      * FJ: Fiji
      * FK: Falkland Islands (Malvinas)
-     * FR: France
-     * FO: Faroe Islands
      * FM: Micronesia, Federated States of
+     * FO: Faroe Islands
+     * FR: France
      * GA: Gabon
      * GB: United Kingdom
+     * GD: Grenada
      * GE: Georgia
+     * GF: French Guiana
      * GG: Guernsey
      * GH: Ghana
      * GI: Gibraltar
+     * GL: Greenland
+     * GM: Gambia
      * GN: Guinea
      * GP: Guadeloupe
-     * GM: Gambia
-     * GW: Guinea-Bissau
      * GQ: Equatorial Guinea
      * GR: Greece
-     * GD: Grenada
-     * GL: Greenland
+     * GS: South Georgia and the South Sandwich Islands
      * GT: Guatemala
-     * GF: French Guiana
      * GU: Guam
+     * GW: Guinea-Bissau
      * GY: Guyana
      * HK: Hong Kong
      * HM: Heard Island and McDonald Islands
@@ -132,138 +130,139 @@ class Geography(StrEnum):
      * HT: Haiti
      * HU: Hungary
      * ID: Indonesia
+     * IE: Ireland
+     * IL: Israel
      * IM: Isle of Man
      * IN: India
      * IO: British Indian Ocean Territory
-     * IE: Ireland
-     * IR: Iran, Islamic Republic of
      * IQ: Iraq
+     * IR: Iran, Islamic Republic of
      * IS: Iceland
-     * IL: Israel
      * IT: Italy
-     * JM: Jamaica
      * JE: Jersey
+     * JM: Jamaica
      * JO: Jordan
      * JP: Japan
-     * KZ: Kazakhstan
      * KE: Kenya
      * KG: Kyrgyzstan
      * KH: Cambodia
      * KI: Kiribati
+     * KM: Comoros
      * KN: Saint Kitts and Nevis
+     * KP: Korea, Democratic People's Republic of
      * KR: Korea, Republic of
      * KW: Kuwait
+     * KY: Cayman Islands
+     * KZ: Kazakhstan
      * LA: Lao People's Democratic Republic
      * LB: Lebanon
-     * LR: Liberia
-     * LY: Libya
      * LC: Saint Lucia
      * LI: Liechtenstein
      * LK: Sri Lanka
+     * LR: Liberia
      * LS: Lesotho
      * LT: Lithuania
      * LU: Luxembourg
      * LV: Latvia
-     * MO: Macao
-     * MF: Saint Martin (French part)
+     * LY: Libya
      * MA: Morocco
      * MC: Monaco
      * MD: Moldova, Republic of
+     * ME: Montenegro
+     * MF: Saint Martin (French part)
      * MG: Madagascar
-     * MV: Maldives
-     * MX: Mexico
      * MH: Marshall Islands
      * MK: North Macedonia
      * ML: Mali
-     * MT: Malta
      * MM: Myanmar
-     * ME: Montenegro
      * MN: Mongolia
+     * MO: Macao
      * MP: Northern Mariana Islands
-     * MZ: Mozambique
+     * MQ: Martinique
      * MR: Mauritania
      * MS: Montserrat
-     * MQ: Martinique
+     * MT: Malta
      * MU: Mauritius
+     * MV: Maldives
      * MW: Malawi
+     * MX: Mexico
      * MY: Malaysia
-     * YT: Mayotte
+     * MZ: Mozambique
      * NA: Namibia
      * NC: New Caledonia
      * NE: Niger
      * NF: Norfolk Island
      * NG: Nigeria
      * NI: Nicaragua
-     * NU: Niue
      * NL: Netherlands
      * NO: Norway
      * NP: Nepal
      * NR: Nauru
+     * NU: Niue
      * NZ: New Zealand
      * OM: Oman
-     * PK: Pakistan
      * PA: Panama
-     * PN: Pitcairn
      * PE: Peru
-     * PH: Philippines
-     * PW: Palau
-     * PG: Papua New Guinea
-     * PL: Poland
-     * PR: Puerto Rico
-     * KP: Korea, Democratic People's Republic of
-     * PT: Portugal
-     * PY: Paraguay
-     * PS: Palestine, State of
      * PF: French Polynesia
+     * PG: Papua New Guinea
+     * PH: Philippines
+     * PK: Pakistan
+     * PL: Poland
+     * PM: Saint Pierre and Miquelon
+     * PN: Pitcairn
+     * PR: Puerto Rico
+     * PS: Palestine, State of
+     * PT: Portugal
+     * PW: Palau
+     * PY: Paraguay
      * QA: Qatar
      * RE: Réunion
      * RO: Romania
+     * RS: Serbia
      * RU: Russian Federation
      * RW: Rwanda
      * SA: Saudi Arabia
-     * SD: Sudan
-     * SN: Senegal
-     * SG: Singapore
-     * GS: South Georgia and the South Sandwich Islands
-     * SH: Saint Helena, Ascension and Tristan da Cunha
-     * SJ: Svalbard and Jan Mayen
      * SB: Solomon Islands
+     * SC: Seychelles
+     * SD: Sudan
+     * SE: Sweden
+     * SG: Singapore
+     * SH: Saint Helena, Ascension and Tristan da Cunha
+     * SI: Slovenia
+     * SJ: Svalbard and Jan Mayen
+     * SK: Slovakia
      * SL: Sierra Leone
-     * SV: El Salvador
      * SM: San Marino
+     * SN: Senegal
      * SO: Somalia
-     * PM: Saint Pierre and Miquelon
-     * RS: Serbia
+     * SR: Suriname
      * SS: South Sudan
      * ST: Sao Tome and Principe
-     * SR: Suriname
-     * SK: Slovakia
-     * SI: Slovenia
-     * SE: Sweden
-     * SZ: Eswatini
+     * SV: El Salvador
      * SX: Sint Maarten (Dutch part)
-     * SC: Seychelles
      * SY: Syrian Arab Republic
+     * SZ: Eswatini
      * TC: Turks and Caicos Islands
      * TD: Chad
+     * TF: French Southern Territories
      * TG: Togo
      * TH: Thailand
      * TJ: Tajikistan
      * TK: Tokelau
-     * TM: Turkmenistan
      * TL: Timor-Leste
-     * TO: Tonga
-     * TT: Trinidad and Tobago
+     * TM: Turkmenistan
      * TN: Tunisia
+     * TO: Tonga
      * TR: Türkiye
+     * TT: Trinidad and Tobago
      * TV: Tuvalu
      * TW: Taiwan, Province of China
      * TZ: Tanzania, United Republic of
-     * UG: Uganda
      * UA: Ukraine
+     * UG: Uganda
      * UM: United States Minor Outlying Islands
-     * UY: Uruguay
      * US: United States
+     * UY: Uruguay
      * UZ: Uzbekistan
      * VA: Holy See (Vatican City State)
      * VC: Saint Vincent and the Grenadines
@@ -275,82 +274,83 @@ class Geography(StrEnum):
      * WF: Wallis and Futuna
      * WS: Samoa
      * YE: Yemen
+     * YT: Mayotte
      * ZA: South Africa
      * ZM: Zambia
      * ZW: Zimbabwe
 
     USA states and Canada provinces, see https://en.wikipedia.org/wiki/ISO_3166-1:
 
+     * CA-AB: Alberta, Canada
+     * CA-BC: British Columbia, Canada
+     * CA-MB: Manitoba, Canada
+     * CA-NB: New Brunswick, Canada
+     * CA-NL: Newfoundland and Labrador, Canada
+     * CA-NS: Nova Scotia, Canada
+     * CA-NT: Northwest Territories, Canada
+     * CA-NU: Nunavut, Canada
+     * CA-ON: Ontario, Canada
+     * CA-PE: Prince Edward Island, Canada
+     * CA-QC: Quebec, Canada
+     * CA-SK: Saskatchewan, Canada
+     * CA-YT: Yukon, Canada
      * US-AK: Alaska, United States
-     * US-DC: District of Columbia, United States
-     * US-IL: Illinois, United States
-     * US-MI: Michigan, United States
-     * US-NE: Nebraska, United States
-     * US-OR: Oregon, United States
-     * US-UM: United States Minor Outlying Islands, United States
-     * US-WY: Wyoming, United States
      * US-AL: Alabama, United States
-     * US-IN: Indiana, United States
-     * US-DE: Delaware, United States
-     * US-MN: Minnesota, United States
-     * US-NH: New Hampshire, United States
-     * US-PA: Pennsylvania, United States
-     * US-UT: Utah, United States
      * US-AR: Arkansas, United States
-     * US-FL: Florida, United States
-     * US-KS: Kansas, United States
-     * US-MO: Missouri, United States
-     * US-NJ: New Jersey, United States
-     * US-PR: Puerto Rico, United States
-     * US-VA: Virginia, United States
      * US-AS: American Samoa, United States
-     * US-GA: Georgia, United States
-     * US-KY: Kentucky, United States
-     * US-MP: Northern Mariana Islands, United States
-     * US-NM: New Mexico, United States
-     * US-RI: Rhode Island, United States
-     * US-VI: Virgin Islands, U.S., United States
      * US-AZ: Arizona, United States
-     * US-GU: Guam, United States
-     * US-LA: Louisiana, United States
-     * US-MS: Mississippi, United States
-     * US-NV: Nevada, United States
-     * US-SC: South Carolina, United States
-     * US-VT: Vermont, United States
      * US-CA: California, United States
-     * US-HI: Hawaii, United States
-     * US-MA: Massachusetts, United States
-     * US-MT: Montana, United States
-     * US-NY: New York, United States
-     * US-SD: South Dakota, United States
-     * US-WA: Washington, United States
      * US-CO: Colorado, United States
-     * US-ME: Maine, United States
+     * US-CT: Connecticut, United States
+     * US-DC: District of Columbia, United States
+     * US-DE: Delaware, United States
+     * US-FL: Florida, United States
+     * US-GA: Georgia, United States
+     * US-GU: Guam, United States
+     * US-HI: Hawaii, United States
      * US-IA: Iowa, United States
+     * US-ID: Idaho, United States
+     * US-IL: Illinois, United States
+     * US-IN: Indiana, United States
+     * US-KS: Kansas, United States
+     * US-KY: Kentucky, United States
+     * US-LA: Louisiana, United States
+     * US-MA: Massachusetts, United States
      * US-MD: Maryland, United States
+     * US-ME: Maine, United States
+     * US-MI: Michigan, United States
+     * US-MN: Minnesota, United States
+     * US-MO: Missouri, United States
+     * US-MP: Northern Mariana Islands, United States
+     * US-MS: Mississippi, United States
+     * US-MT: Montana, United States
      * US-NC: North Carolina, United States
      * US-ND: North Dakota, United States
+     * US-NE: Nebraska, United States
+     * US-NH: New Hampshire, United States
+     * US-NJ: New Jersey, United States
+     * US-NM: New Mexico, United States
+     * US-NV: Nevada, United States
+     * US-NY: New York, United States
      * US-OH: Ohio, United States
      * US-OK: Oklahoma, United States
+     * US-OR: Oregon, United States
+     * US-PA: Pennsylvania, United States
+     * US-PR: Puerto Rico, United States
+     * US-RI: Rhode Island, United States
+     * US-SC: South Carolina, United States
+     * US-SD: South Dakota, United States
      * US-TN: Tennessee, United States
-     * US-WI: Wisconsin, United States
      * US-TX: Texas, United States
-     * US-CT: Connecticut, United States
+     * US-UM: United States Minor Outlying Islands, United States
+     * US-UT: Utah, United States
+     * US-VA: Virginia, United States
+     * US-VI: Virgin Islands, U.S., United States
+     * US-VT: Vermont, United States
+     * US-WA: Washington, United States
+     * US-WI: Wisconsin, United States
      * US-WV: West Virginia, United States
-     * US-ID: Idaho, United States
-     * CA-AB: Alberta, Canada
-     * CA-NL: Newfoundland and Labrador, Canada
-     * CA-NT: Northwest Territories, Canada
-     * CA-ON: Ontario, Canada
-     * CA-QC: Quebec, Canada
-     * CA-YT: Yukon, Canada
-     * CA-BC: British Columbia, Canada
-     * CA-NB: New Brunswick, Canada
-     * CA-NS: Nova Scotia, Canada
-     * CA-NU: Nunavut, Canada
-     * CA-PE: Prince Edward Island, Canada
-     * CA-SK: Saskatchewan, Canada
-     * CA-MB: Manitoba, Canada
+     * US-WY: Wyoming, United States
 
     UN m49 codes for countries and regions (i.e. both Egypt and Northern Africa)
     See https://unstats.un.org/unsd/methodology/m49/overview/
@@ -634,101 +634,99 @@ class Geography(StrEnum):
     NAFTA = "NAFTA"
 
     # Countries
-    AW = "AW"
-    AF = "AF"
-    AO = "AO"
-    AI = "AI"
-    AX = "AX"
-    AL = "AL"
     AD = "AD"
     AE = "AE"
-    AR = "AR"
-    AM = "AM"
-    AS = "AS"
-    AQ = "AQ"
-    TF = "TF"
+    AF = "AF"
     AG = "AG"
-    AU = "AU"
+    AI = "AI"
+    AL = "AL"
+    AM = "AM"
+    AO = "AO"
+    AQ = "AQ"
+    AR = "AR"
+    AS = "AS"
     AT = "AT"
+    AU = "AU"
+    AW = "AW"
+    AX = "AX"
     AZ = "AZ"
-    BI = "BI"
-    BE = "BE"
-    BJ = "BJ"
-    BQ = "BQ"
-    BF = "BF"
+    BA = "BA"
+    BB = "BB"
     BD = "BD"
+    BE = "BE"
+    BF = "BF"
     BG = "BG"
     BH = "BH"
-    BS = "BS"
-    BA = "BA"
+    BI = "BI"
+    BJ = "BJ"
     BL = "BL"
-    BY = "BY"
-    BZ = "BZ"
     BM = "BM"
-    BO = "BO"
-    BR = "BR"
-    BB = "BB"
     BN = "BN"
+    BO = "BO"
+    BQ = "BQ"
+    BR = "BR"
+    BS = "BS"
     BT = "BT"
     BV = "BV"
     BW = "BW"
-    CF = "CF"
+    BY = "BY"
+    BZ = "BZ"
     CA = "CA"
     CC = "CC"
-    CH = "CH"
-    CL = "CL"
-    CN = "CN"
-    CI = "CI"
-    CM = "CM"
     CD = "CD"
+    CF = "CF"
     CG = "CG"
+    CH = "CH"
+    CI = "CI"
     CK = "CK"
+    CL = "CL"
+    CM = "CM"
+    CN = "CN"
     CO = "CO"
-    KM = "KM"
-    CV = "CV"
     CR = "CR"
     CU = "CU"
+    CV = "CV"
     CW = "CW"
     CX = "CX"
-    KY = "KY"
     CY = "CY"
     CZ = "CZ"
     DE = "DE"
     DJ = "DJ"
-    DM = "DM"
     DK = "DK"
+    DM = "DM"
     DO = "DO"
     DZ = "DZ"
     EC = "EC"
-    EG = "EG"
-    ER = "ER"
-    EH = "EH"
-    ES = "ES"
     EE = "EE"
+    EG = "EG"
+    EH = "EH"
+    ER = "ER"
+    ES = "ES"
     ET = "ET"
     FI = "FI"
     FJ = "FJ"
     FK = "FK"
-    FR = "FR"
-    FO = "FO"
     FM = "FM"
+    FO = "FO"
+    FR = "FR"
     GA = "GA"
     GB = "GB"
+    GD = "GD"
     GE = "GE"
+    GF = "GF"
     GG = "GG"
     GH = "GH"
     GI = "GI"
+    GL = "GL"
+    GM = "GM"
     GN = "GN"
     GP = "GP"
-    GM = "GM"
-    GW = "GW"
     GQ = "GQ"
     GR = "GR"
-    GD = "GD"
-    GL = "GL"
+    GS = "GS"
     GT = "GT"
-    GF = "GF"
     GU = "GU"
+    GW = "GW"
     GY = "GY"
     HK = "HK"
     HM = "HM"
@@ -737,138 +735,139 @@ class Geography(StrEnum):
     HT = "HT"
     HU = "HU"
     ID = "ID"
+    IE = "IE"
+    IL = "IL"
     IM = "IM"
     IN = "IN"
     IO = "IO"
-    IE = "IE"
-    IR = "IR"
     IQ = "IQ"
+    IR = "IR"
     IS = "IS"
-    IL = "IL"
     IT = "IT"
-    JM = "JM"
     JE = "JE"
+    JM = "JM"
     JO = "JO"
     JP = "JP"
-    KZ = "KZ"
     KE = "KE"
     KG = "KG"
     KH = "KH"
     KI = "KI"
+    KM = "KM"
     KN = "KN"
+    KP = "KP"
     KR = "KR"
     KW = "KW"
+    KY = "KY"
+    KZ = "KZ"
     LA = "LA"
     LB = "LB"
-    LR = "LR"
-    LY = "LY"
     LC = "LC"
     LI = "LI"
     LK = "LK"
+    LR = "LR"
     LS = "LS"
     LT = "LT"
     LU = "LU"
     LV = "LV"
-    MO = "MO"
-    MF = "MF"
+    LY = "LY"
     MA = "MA"
     MC = "MC"
     MD = "MD"
+    ME = "ME"
+    MF = "MF"
     MG = "MG"
-    MV = "MV"
-    MX = "MX"
     MH = "MH"
     MK = "MK"
     ML = "ML"
-    MT = "MT"
     MM = "MM"
-    ME = "ME"
     MN = "MN"
+    MO = "MO"
     MP = "MP"
-    MZ = "MZ"
+    MQ = "MQ"
     MR = "MR"
     MS = "MS"
-    MQ = "MQ"
+    MT = "MT"
     MU = "MU"
+    MV = "MV"
     MW = "MW"
+    MX = "MX"
     MY = "MY"
-    YT = "YT"
+    MZ = "MZ"
     NA = "NA"
     NC = "NC"
     NE = "NE"
     NF = "NF"
     NG = "NG"
     NI = "NI"
-    NU = "NU"
     NL = "NL"
     NO = "NO"
     NP = "NP"
     NR = "NR"
+    NU = "NU"
     NZ = "NZ"
     OM = "OM"
-    PK = "PK"
     PA = "PA"
-    PN = "PN"
     PE = "PE"
-    PH = "PH"
-    PW = "PW"
-    PG = "PG"
-    PL = "PL"
-    PR = "PR"
-    KP = "KP"
-    PT = "PT"
-    PY = "PY"
-    PS = "PS"
     PF = "PF"
+    PG = "PG"
+    PH = "PH"
+    PK = "PK"
+    PL = "PL"
+    PM = "PM"
+    PN = "PN"
+    PR = "PR"
+    PS = "PS"
+    PT = "PT"
+    PW = "PW"
+    PY = "PY"
     QA = "QA"
     RE = "RE"
     RO = "RO"
+    RS = "RS"
     RU = "RU"
     RW = "RW"
     SA = "SA"
-    SD = "SD"
-    SN = "SN"
-    SG = "SG"
-    GS = "GS"
-    SH = "SH"
-    SJ = "SJ"
     SB = "SB"
+    SC = "SC"
+    SD = "SD"
+    SE = "SE"
+    SG = "SG"
+    SH = "SH"
+    SI = "SI"
+    SJ = "SJ"
+    SK = "SK"
     SL = "SL"
-    SV = "SV"
     SM = "SM"
+    SN = "SN"
     SO = "SO"
-    PM = "PM"
-    RS = "RS"
+    SR = "SR"
     SS = "SS"
     ST = "ST"
-    SR = "SR"
-    SK = "SK"
-    SI = "SI"
-    SE = "SE"
-    SZ = "SZ"
+    SV = "SV"
     SX = "SX"
-    SC = "SC"
     SY = "SY"
+    SZ = "SZ"
     TC = "TC"
     TD = "TD"
+    TF = "TF"
     TG = "TG"
     TH = "TH"
     TJ = "TJ"
     TK = "TK"
-    TM = "TM"
     TL = "TL"
-    TO = "TO"
-    TT = "TT"
+    TM = "TM"
     TN = "TN"
+    TO = "TO"
     TR = "TR"
+    TT = "TT"
     TV = "TV"
     TW = "TW"
     TZ = "TZ"
-    UG = "UG"
     UA = "UA"
+    UG = "UG"
     UM = "UM"
-    UY = "UY"
     US = "US"
+    UY = "UY"
     UZ = "UZ"
     VA = "VA"
     VC = "VC"
@@ -880,81 +879,82 @@ class Geography(StrEnum):
     WF = "WF"
     WS = "WS"
     YE = "YE"
+    YT = "YT"
     ZA = "ZA"
     ZM = "ZM"
     ZW = "ZW"
 
     # USA and Canada subdivisions
+    CA_AB = "CA-AB"
+    CA_BC = "CA-BC"
+    CA_MB = "CA-MB"
+    CA_NB = "CA-NB"
+    CA_NL = "CA-NL"
+    CA_NS = "CA-NS"
+    CA_NT = "CA-NT"
+    CA_NU = "CA-NU"
+    CA_ON = "CA-ON"
+    CA_PE = "CA-PE"
+    CA_QC = "CA-QC"
+    CA_SK = "CA-SK"
+    CA_YT = "CA-YT"
     US_AK = "US-AK"
-    US_DC = "US-DC"
-    US_IL = "US-IL"
-    US_MI = "US-MI"
-    US_NE = "US-NE"
-    US_OR = "US-OR"
-    US_UM = "US-UM"
-    US_WY = "US-WY"
     US_AL = "US-AL"
-    US_IN = "US-IN"
-    US_DE = "US-DE"
-    US_MN = "US-MN"
-    US_NH = "US-NH"
-    US_PA = "US-PA"
-    US_UT = "US-UT"
     US_AR = "US-AR"
-    US_FL = "US-FL"
-    US_KS = "US-KS"
-    US_MO = "US-MO"
-    US_NJ = "US-NJ"
-    US_PR = "US-PR"
-    US_VA = "US-VA"
     US_AS = "US-AS"
-    US_GA = "US-GA"
-    US_KY = "US-KY"
-    US_MP = "US-MP"
-    US_NM = "US-NM"
-    US_RI = "US-RI"
-    US_VI = "US-VI"
     US_AZ = "US-AZ"
-    US_GU = "US-GU"
-    US_LA = "US-LA"
-    US_MS = "US-MS"
-    US_NV = "US-NV"
-    US_SC = "US-SC"
-    US_VT = "US-VT"
     US_CA = "US-CA"
-    US_HI = "US-HI"
-    US_MA = "US-MA"
-    US_MT = "US-MT"
-    US_NY = "US-NY"
-    US_SD = "US-SD"
-    US_WA = "US-WA"
     US_CO = "US-CO"
-    US_ME = "US-ME"
+    US_CT = "US-CT"
+    US_DC = "US-DC"
+    US_DE = "US-DE"
+    US_FL = "US-FL"
+    US_GA = "US-GA"
+    US_GU = "US-GU"
+    US_HI = "US-HI"
     US_IA = "US-IA"
+    US_ID = "US-ID"
+    US_IL = "US-IL"
+    US_IN = "US-IN"
+    US_KS = "US-KS"
+    US_KY = "US-KY"
+    US_LA = "US-LA"
+    US_MA = "US-MA"
     US_MD = "US-MD"
+    US_ME = "US-ME"
+    US_MI = "US-MI"
+    US_MN = "US-MN"
+    US_MO = "US-MO"
+    US_MP = "US-MP"
+    US_MS = "US-MS"
+    US_MT = "US-MT"
     US_NC = "US-NC"
     US_ND = "US-ND"
+    US_NE = "US-NE"
+    US_NH = "US-NH"
+    US_NJ = "US-NJ"
+    US_NM = "US-NM"
+    US_NV = "US-NV"
+    US_NY = "US-NY"
     US_OH = "US-OH"
     US_OK = "US-OK"
+    US_OR = "US-OR"
+    US_PA = "US-PA"
+    US_PR = "US-PR"
+    US_RI = "US-RI"
+    US_SC = "US-SC"
+    US_SD = "US-SD"
     US_TN = "US-TN"
-    US_WI = "US-WI"
     US_TX = "US-TX"
-    US_CT = "US-CT"
+    US_UM = "US-UM"
+    US_UT = "US-UT"
+    US_VA = "US-VA"
+    US_VI = "US-VI"
+    US_VT = "US-VT"
+    US_WA = "US-WA"
+    US_WI = "US-WI"
     US_WV = "US-WV"
-    US_ID = "US-ID"
-    CA_AB = "CA-AB"
-    CA_NL = "CA-NL"
-    CA_NT = "CA-NT"
-    CA_ON = "CA-ON"
-    CA_QC = "CA-QC"
-    CA_YT = "CA-YT"
-    CA_BC = "CA-BC"
-    CA_NB = "CA-NB"
-    CA_NS = "CA-NS"
-    CA_NU = "CA-NU"
-    CA_PE = "CA-PE"
-    CA_SK = "CA-SK"
-    CA_MB = "CA-MB"
+    US_WY = "US-WY"
 
     # m49 codification
     m49_001 = "001"
@@ -1236,101 +1236,99 @@ class Country(StrEnum):
 
     Countries, see https://en.wikipedia.org/wiki/ISO_3166-1
 
-     * AW: Aruba
-     * AF: Afghanistan
-     * AO: Angola
-     * AI: Anguilla
-     * AX: Åland Islands
-     * AL: Albania
      * AD: Andorra
      * AE: United Arab Emirates
-     * AR: Argentina
-     * AM: Armenia
-     * AS: American Samoa
-     * AQ: Antarctica
-     * TF: French Southern Territories
+     * AF: Afghanistan
      * AG: Antigua and Barbuda
-     * AU: Australia
+     * AI: Anguilla
+     * AL: Albania
+     * AM: Armenia
+     * AO: Angola
+     * AQ: Antarctica
+     * AR: Argentina
+     * AS: American Samoa
      * AT: Austria
+     * AU: Australia
+     * AW: Aruba
+     * AX: Åland Islands
      * AZ: Azerbaijan
-     * BI: Burundi
-     * BE: Belgium
-     * BJ: Benin
-     * BQ: Bonaire, Sint Eustatius and Saba
-     * BF: Burkina Faso
+     * BA: Bosnia and Herzegovina
+     * BB: Barbados
      * BD: Bangladesh
+     * BE: Belgium
+     * BF: Burkina Faso
      * BG: Bulgaria
      * BH: Bahrain
-     * BS: Bahamas
-     * BA: Bosnia and Herzegovina
+     * BI: Burundi
+     * BJ: Benin
      * BL: Saint Barthélemy
-     * BY: Belarus
-     * BZ: Belize
      * BM: Bermuda
-     * BO: Bolivia, Plurinational State of
-     * BR: Brazil
-     * BB: Barbados
      * BN: Brunei Darussalam
+     * BO: Bolivia, Plurinational State of
+     * BQ: Bonaire, Sint Eustatius and Saba
+     * BR: Brazil
+     * BS: Bahamas
      * BT: Bhutan
      * BV: Bouvet Island
      * BW: Botswana
-     * CF: Central African Republic
+     * BY: Belarus
+     * BZ: Belize
      * CA: Canada
      * CC: Cocos (Keeling) Islands
-     * CH: Switzerland
-     * CL: Chile
-     * CN: China
-     * CI: Côte d'Ivoire
-     * CM: Cameroon
      * CD: Congo, The Democratic Republic of the
+     * CF: Central African Republic
      * CG: Congo
+     * CH: Switzerland
+     * CI: Côte d'Ivoire
      * CK: Cook Islands
+     * CL: Chile
+     * CM: Cameroon
+     * CN: China
      * CO: Colombia
-     * KM: Comoros
-     * CV: Cabo Verde
      * CR: Costa Rica
      * CU: Cuba
+     * CV: Cabo Verde
      * CW: Curaçao
      * CX: Christmas Island
-     * KY: Cayman Islands
      * CY: Cyprus
      * CZ: Czechia
      * DE: Germany
      * DJ: Djibouti
-     * DM: Dominica
      * DK: Denmark
+     * DM: Dominica
      * DO: Dominican Republic
      * DZ: Algeria
      * EC: Ecuador
-     * EG: Egypt
-     * ER: Eritrea
-     * EH: Western Sahara
-     * ES: Spain
      * EE: Estonia
+     * EG: Egypt
+     * EH: Western Sahara
+     * ER: Eritrea
+     * ES: Spain
      * ET: Ethiopia
      * FI: Finland
      * FJ: Fiji
      * FK: Falkland Islands (Malvinas)
-     * FR: France
-     * FO: Faroe Islands
      * FM: Micronesia, Federated States of
+     * FO: Faroe Islands
+     * FR: France
      * GA: Gabon
      * GB: United Kingdom
+     * GD: Grenada
      * GE: Georgia
+     * GF: French Guiana
      * GG: Guernsey
      * GH: Ghana
      * GI: Gibraltar
+     * GL: Greenland
+     * GM: Gambia
      * GN: Guinea
      * GP: Guadeloupe
-     * GM: Gambia
-     * GW: Guinea-Bissau
      * GQ: Equatorial Guinea
      * GR: Greece
-     * GD: Grenada
-     * GL: Greenland
+     * GS: South Georgia and the South Sandwich Islands
      * GT: Guatemala
-     * GF: French Guiana
      * GU: Guam
+     * GW: Guinea-Bissau
      * GY: Guyana
      * HK: Hong Kong
      * HM: Heard Island and McDonald Islands
@@ -1339,138 +1337,139 @@ class Country(StrEnum):
      * HT: Haiti
      * HU: Hungary
      * ID: Indonesia
+     * IE: Ireland
+     * IL: Israel
      * IM: Isle of Man
      * IN: India
      * IO: British Indian Ocean Territory
-     * IE: Ireland
-     * IR: Iran, Islamic Republic of
      * IQ: Iraq
+     * IR: Iran, Islamic Republic of
      * IS: Iceland
-     * IL: Israel
      * IT: Italy
-     * JM: Jamaica
      * JE: Jersey
+     * JM: Jamaica
      * JO: Jordan
      * JP: Japan
-     * KZ: Kazakhstan
      * KE: Kenya
      * KG: Kyrgyzstan
      * KH: Cambodia
      * KI: Kiribati
+     * KM: Comoros
      * KN: Saint Kitts and Nevis
+     * KP: Korea, Democratic People's Republic of
      * KR: Korea, Republic of
      * KW: Kuwait
+     * KY: Cayman Islands
+     * KZ: Kazakhstan
      * LA: Lao People's Democratic Republic
      * LB: Lebanon
-     * LR: Liberia
-     * LY: Libya
      * LC: Saint Lucia
      * LI: Liechtenstein
      * LK: Sri Lanka
+     * LR: Liberia
      * LS: Lesotho
      * LT: Lithuania
      * LU: Luxembourg
      * LV: Latvia
-     * MO: Macao
-     * MF: Saint Martin (French part)
+     * LY: Libya
      * MA: Morocco
      * MC: Monaco
      * MD: Moldova, Republic of
+     * ME: Montenegro
+     * MF: Saint Martin (French part)
      * MG: Madagascar
-     * MV: Maldives
-     * MX: Mexico
      * MH: Marshall Islands
      * MK: North Macedonia
      * ML: Mali
-     * MT: Malta
      * MM: Myanmar
-     * ME: Montenegro
      * MN: Mongolia
+     * MO: Macao
      * MP: Northern Mariana Islands
-     * MZ: Mozambique
+     * MQ: Martinique
      * MR: Mauritania
      * MS: Montserrat
-     * MQ: Martinique
+     * MT: Malta
      * MU: Mauritius
+     * MV: Maldives
      * MW: Malawi
+     * MX: Mexico
      * MY: Malaysia
-     * YT: Mayotte
+     * MZ: Mozambique
      * NA: Namibia
      * NC: New Caledonia
      * NE: Niger
      * NF: Norfolk Island
      * NG: Nigeria
      * NI: Nicaragua
-     * NU: Niue
      * NL: Netherlands
      * NO: Norway
      * NP: Nepal
      * NR: Nauru
+     * NU: Niue
      * NZ: New Zealand
      * OM: Oman
-     * PK: Pakistan
      * PA: Panama
-     * PN: Pitcairn
      * PE: Peru
-     * PH: Philippines
-     * PW: Palau
-     * PG: Papua New Guinea
-     * PL: Poland
-     * PR: Puerto Rico
-     * KP: Korea, Democratic People's Republic of
-     * PT: Portugal
-     * PY: Paraguay
-     * PS: Palestine, State of
      * PF: French Polynesia
+     * PG: Papua New Guinea
+     * PH: Philippines
+     * PK: Pakistan
+     * PL: Poland
+     * PM: Saint Pierre and Miquelon
+     * PN: Pitcairn
+     * PR: Puerto Rico
+     * PS: Palestine, State of
+     * PT: Portugal
+     * PW: Palau
+     * PY: Paraguay
      * QA: Qatar
      * RE: Réunion
      * RO: Romania
+     * RS: Serbia
      * RU: Russian Federation
      * RW: Rwanda
      * SA: Saudi Arabia
-     * SD: Sudan
-     * SN: Senegal
-     * SG: Singapore
-     * GS: South Georgia and the South Sandwich Islands
-     * SH: Saint Helena, Ascension and Tristan da Cunha
-     * SJ: Svalbard and Jan Mayen
      * SB: Solomon Islands
+     * SC: Seychelles
+     * SD: Sudan
+     * SE: Sweden
+     * SG: Singapore
+     * SH: Saint Helena, Ascension and Tristan da Cunha
+     * SI: Slovenia
+     * SJ: Svalbard and Jan Mayen
+     * SK: Slovakia
      * SL: Sierra Leone
-     * SV: El Salvador
      * SM: San Marino
+     * SN: Senegal
      * SO: Somalia
-     * PM: Saint Pierre and Miquelon
-     * RS: Serbia
+     * SR: Suriname
      * SS: South Sudan
      * ST: Sao Tome and Principe
-     * SR: Suriname
-     * SK: Slovakia
-     * SI: Slovenia
-     * SE: Sweden
-     * SZ: Eswatini
+     * SV: El Salvador
      * SX: Sint Maarten (Dutch part)
-     * SC: Seychelles
      * SY: Syrian Arab Republic
+     * SZ: Eswatini
      * TC: Turks and Caicos Islands
      * TD: Chad
+     * TF: French Southern Territories
      * TG: Togo
      * TH: Thailand
      * TJ: Tajikistan
      * TK: Tokelau
-     * TM: Turkmenistan
      * TL: Timor-Leste
-     * TO: Tonga
-     * TT: Trinidad and Tobago
+     * TM: Turkmenistan
      * TN: Tunisia
+     * TO: Tonga
      * TR: Türkiye
+     * TT: Trinidad and Tobago
      * TV: Tuvalu
      * TW: Taiwan, Province of China
      * TZ: Tanzania, United Republic of
-     * UG: Uganda
      * UA: Ukraine
+     * UG: Uganda
      * UM: United States Minor Outlying Islands
-     * UY: Uruguay
      * US: United States
+     * UY: Uruguay
      * UZ: Uzbekistan
      * VA: Holy See (Vatican City State)
      * VC: Saint Vincent and the Grenadines
@@ -1482,107 +1481,106 @@ class Country(StrEnum):
      * WF: Wallis and Futuna
      * WS: Samoa
      * YE: Yemen
+     * YT: Mayotte
      * ZA: South Africa
      * ZM: Zambia
      * ZW: Zimbabwe
     """
 
     # Countries
-    AW = "AW"
-    AF = "AF"
-    AO = "AO"
-    AI = "AI"
-    AX = "AX"
-    AL = "AL"
     AD = "AD"
     AE = "AE"
-    AR = "AR"
-    AM = "AM"
-    AS = "AS"
-    AQ = "AQ"
-    TF = "TF"
+    AF = "AF"
     AG = "AG"
-    AU = "AU"
+    AI = "AI"
+    AL = "AL"
+    AM = "AM"
+    AO = "AO"
+    AQ = "AQ"
+    AR = "AR"
+    AS = "AS"
     AT = "AT"
+    AU = "AU"
+    AW = "AW"
+    AX = "AX"
     AZ = "AZ"
-    BI = "BI"
-    BE = "BE"
-    BJ = "BJ"
-    BQ = "BQ"
-    BF = "BF"
+    BA = "BA"
+    BB = "BB"
     BD = "BD"
+    BE = "BE"
+    BF = "BF"
     BG = "BG"
     BH = "BH"
-    BS = "BS"
-    BA = "BA"
+    BI = "BI"
+    BJ = "BJ"
     BL = "BL"
-    BY = "BY"
-    BZ = "BZ"
     BM = "BM"
-    BO = "BO"
-    BR = "BR"
-    BB = "BB"
     BN = "BN"
+    BO = "BO"
+    BQ = "BQ"
+    BR = "BR"
+    BS = "BS"
     BT = "BT"
     BV = "BV"
     BW = "BW"
-    CF = "CF"
+    BY = "BY"
+    BZ = "BZ"
     CA = "CA"
     CC = "CC"
-    CH = "CH"
-    CL = "CL"
-    CN = "CN"
-    CI = "CI"
-    CM = "CM"
     CD = "CD"
+    CF = "CF"
     CG = "CG"
+    CH = "CH"
+    CI = "CI"
     CK = "CK"
+    CL = "CL"
+    CM = "CM"
+    CN = "CN"
     CO = "CO"
-    KM = "KM"
-    CV = "CV"
     CR = "CR"
     CU = "CU"
+    CV = "CV"
     CW = "CW"
     CX = "CX"
-    KY = "KY"
     CY = "CY"
     CZ = "CZ"
     DE = "DE"
     DJ = "DJ"
-    DM = "DM"
     DK = "DK"
+    DM = "DM"
     DO = "DO"
     DZ = "DZ"
     EC = "EC"
-    EG = "EG"
-    ER = "ER"
-    EH = "EH"
-    ES = "ES"
     EE = "EE"
+    EG = "EG"
+    EH = "EH"
+    ER = "ER"
+    ES = "ES"
     ET = "ET"
     FI = "FI"
     FJ = "FJ"
     FK = "FK"
-    FR = "FR"
-    FO = "FO"
     FM = "FM"
+    FO = "FO"
+    FR = "FR"
     GA = "GA"
     GB = "GB"
+    GD = "GD"
     GE = "GE"
+    GF = "GF"
     GG = "GG"
     GH = "GH"
     GI = "GI"
+    GL = "GL"
+    GM = "GM"
     GN = "GN"
     GP = "GP"
-    GM = "GM"
-    GW = "GW"
     GQ = "GQ"
     GR = "GR"
-    GD = "GD"
-    GL = "GL"
+    GS = "GS"
     GT = "GT"
-    GF = "GF"
     GU = "GU"
+    GW = "GW"
     GY = "GY"
     HK = "HK"
     HM = "HM"
@@ -1591,138 +1589,139 @@ class Country(StrEnum):
     HT = "HT"
     HU = "HU"
     ID = "ID"
+    IE = "IE"
+    IL = "IL"
     IM = "IM"
     IN = "IN"
     IO = "IO"
-    IE = "IE"
-    IR = "IR"
     IQ = "IQ"
+    IR = "IR"
     IS = "IS"
-    IL = "IL"
     IT = "IT"
-    JM = "JM"
     JE = "JE"
+    JM = "JM"
     JO = "JO"
     JP = "JP"
-    KZ = "KZ"
     KE = "KE"
     KG = "KG"
     KH = "KH"
     KI = "KI"
+    KM = "KM"
     KN = "KN"
+    KP = "KP"
     KR = "KR"
     KW = "KW"
+    KY = "KY"
+    KZ = "KZ"
     LA = "LA"
     LB = "LB"
-    LR = "LR"
-    LY = "LY"
     LC = "LC"
     LI = "LI"
     LK = "LK"
+    LR = "LR"
     LS = "LS"
     LT = "LT"
     LU = "LU"
     LV = "LV"
-    MO = "MO"
-    MF = "MF"
+    LY = "LY"
     MA = "MA"
     MC = "MC"
     MD = "MD"
+    ME = "ME"
+    MF = "MF"
     MG = "MG"
-    MV = "MV"
-    MX = "MX"
     MH = "MH"
     MK = "MK"
     ML = "ML"
-    MT = "MT"
     MM = "MM"
-    ME = "ME"
     MN = "MN"
+    MO = "MO"
     MP = "MP"
-    MZ = "MZ"
+    MQ = "MQ"
     MR = "MR"
     MS = "MS"
-    MQ = "MQ"
+    MT = "MT"
     MU = "MU"
+    MV = "MV"
     MW = "MW"
+    MX = "MX"
     MY = "MY"
-    YT = "YT"
+    MZ = "MZ"
     NA = "NA"
     NC = "NC"
     NE = "NE"
     NF = "NF"
     NG = "NG"
     NI = "NI"
-    NU = "NU"
     NL = "NL"
     NO = "NO"
     NP = "NP"
     NR = "NR"
+    NU = "NU"
     NZ = "NZ"
     OM = "OM"
-    PK = "PK"
     PA = "PA"
-    PN = "PN"
     PE = "PE"
-    PH = "PH"
-    PW = "PW"
-    PG = "PG"
-    PL = "PL"
-    PR = "PR"
-    KP = "KP"
-    PT = "PT"
-    PY = "PY"
-    PS = "PS"
     PF = "PF"
+    PG = "PG"
+    PH = "PH"
+    PK = "PK"
+    PL = "PL"
+    PM = "PM"
+    PN = "PN"
+    PR = "PR"
+    PS = "PS"
+    PT = "PT"
+    PW = "PW"
+    PY = "PY"
     QA = "QA"
     RE = "RE"
     RO = "RO"
+    RS = "RS"
     RU = "RU"
     RW = "RW"
     SA = "SA"
-    SD = "SD"
-    SN = "SN"
-    SG = "SG"
-    GS = "GS"
-    SH = "SH"
-    SJ = "SJ"
     SB = "SB"
+    SC = "SC"
+    SD = "SD"
+    SE = "SE"
+    SG = "SG"
+    SH = "SH"
+    SI = "SI"
+    SJ = "SJ"
+    SK = "SK"
     SL = "SL"
-    SV = "SV"
     SM = "SM"
+    SN = "SN"
     SO = "SO"
-    PM = "PM"
-    RS = "RS"
+    SR = "SR"
     SS = "SS"
     ST = "ST"
-    SR = "SR"
-    SK = "SK"
-    SI = "SI"
-    SE = "SE"
-    SZ = "SZ"
+    SV = "SV"
     SX = "SX"
-    SC = "SC"
     SY = "SY"
+    SZ = "SZ"
     TC = "TC"
     TD = "TD"
+    TF = "TF"
     TG = "TG"
     TH = "TH"
     TJ = "TJ"
     TK = "TK"
-    TM = "TM"
     TL = "TL"
-    TO = "TO"
-    TT = "TT"
+    TM = "TM"
     TN = "TN"
+    TO = "TO"
     TR = "TR"
+    TT = "TT"
     TV = "TV"
     TW = "TW"
     TZ = "TZ"
-    UG = "UG"
     UA = "UA"
+    UG = "UG"
     UM = "UM"
-    UY = "UY"
     US = "US"
+    UY = "UY"
     UZ = "UZ"
     VA = "VA"
     VC = "VC"
@@ -1734,6 +1733,7 @@ class Country(StrEnum):
     WF = "WF"
     WS = "WS"
     YE = "YE"
+    YT = "YT"
     ZA = "ZA"
     ZM = "ZM"
     ZW = "ZW"
