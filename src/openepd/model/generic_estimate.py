@@ -20,7 +20,8 @@ from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
 from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import BaseDeclaration
 from openepd.model.geography import Geography
-from openepd.model.org import Org
+from openepd.model.lcia import WithLciaMixin
+from openepd.model.org import Org, OrgRef
 from openepd.model.versioning import OpenEpdVersions, Version
 
 
@@ -45,27 +46,30 @@ class LicenseTerms(StrEnum):
     """
 
 
-class GenericEstimateV0(WithAttachmentsMixin, WithAltIdsMixin, BaseDeclaration):
-    """Represent a Generic Estimate."""
+class GenericEstimatePreviewV0(WithAttachmentsMixin, BaseDeclaration, title="Generic Estimate (preview)"):
+    """
+    Generic Estimate preview, used in API list responses and where there is no need for a full object.
 
-    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
+    Excludes LCIA data.
+    """
 
     doctype: str = pyd.Field(
         description='Describes the type and schema of the document. Must always be "openGenericEstimate"',
         default="openGenericEstimate",
     )
 
-    name: str | None = pyd.Field(max_length=200, description="", default=None)
+    name: str | None = pyd.Field(max_length=200, description="Name of the generic estimate", default=None)
+
     description: str | None = pyd.Field(
         max_length=2000,
         description="1-paragraph description of the Generic Estimate. Supports plain text or github flavored markdown.",
     )
 
-    publisher: Org | None = pyd.Field(description="Organization that published the LCA results.")
+    publisher: OrgRef | None = pyd.Field(description="Organization that published the LCA results.")
     reviewer_email: pyd.EmailStr | None = pyd.Field(
         description="Email address of the third party verifier", example="john.doe@example.com", default=None
     )
-    reviewer: Org | None = pyd.Field(description="Org that performed a critical review of the LCA.")
+    reviewer: OrgRef | None = pyd.Field(description="Org that performed a critical review of the LCA.")
     license_terms: LicenseTerms | None = pyd.Field(description="The license terms for use of the data.")
     geography: list[Geography] | None = pyd.Field(
         "Jurisdiction(s) in which the LCA result is applicable.  An empty array, or absent properties, implies global applicability."
@@ -75,7 +79,36 @@ class GenericEstimateV0(WithAttachmentsMixin, WithAltIdsMixin, BaseDeclaration):
     )
 
 
+GenericEstimatePreview = GenericEstimatePreviewV0
+
+
+class GenericEstimateV0(GenericEstimatePreviewV0, WithLciaMixin, WithAltIdsMixin, title="Generic Estimate (Full)"):
+    """
+    Represent a full Generic Estimate object.
+
+    This is considered the most complete valid openEPD object for GenericEstimate. In addition to it, several related
+    models are defined, either with fewer fields (to be used in APIs for list requests) or with more relaxed structure
+    to support related entities matching.
+    """
+
+    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
+
+
 GenericEstimate = GenericEstimateV0
+
+
+class GenericEstimateWithDepsV0(GenericEstimateV0, title="Generic Estimate (with Dependencies)"):
+    """
+    Expanded version of the GenericEstimate.
+
+    Contains related entities - orgs - with full fields, to support object matching in implementations.
+    """
+
+    publisher: Org | None = pyd.Field(description="Organization that published the LCA results.")
+    reviewer: Org | None = pyd.Field(description="Org that performed a critical review of the LCA.")
+
+
+GenericEstimateWithDeps = GenericEstimateWithDepsV0
 
 
 class GenericEstimateFactory(BaseDocumentFactory[GenericEstimate]):

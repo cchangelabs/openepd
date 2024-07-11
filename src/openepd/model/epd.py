@@ -19,17 +19,27 @@ from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
 from openepd.model.common import Amount, Ingredient, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import BaseDeclaration
-from openepd.model.org import Org, Plant
+from openepd.model.lcia import WithLciaMixin
+from openepd.model.org import Org, OrgRef, Plant
 from openepd.model.specs import Specs
 from openepd.model.versioning import OpenEpdVersions, Version
 
+MANUFACTURER_DESCRIPTION = (
+    'JSON object for declaring Org. Sometimes called the "Declaration Holder" or "Declaration Owner".'
+)
+DEVELOPER_DESCRIPTION = "The organization responsible for the underlying LCA (and subsequent summarization as EPD)."
+PROGRAM_OPERATOR_DESCRIPTION = "JSON object for program operator Org"
+THIRD_PARTY_VERIFIER_DESCRIPTION = "JSON object for Org that performed a critical review of the EPD data"
 
-class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseDeclaration):
-    """Represent an EPD."""
 
-    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
+class EpdPreviewV0(WithAttachmentsMixin, WithAltIdsMixin, BaseDeclaration, title="EPD (Preview)"):
+    """
+    EPD preview, used in API list responses and where there is no need for a full object.
 
-    # TODO: Add validator for open-xpd-uuid on this field
+    Excludes LCIA data.
+
+    """
+
     product_name: str | None = pyd.Field(
         max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC", default=None
     )
@@ -56,12 +66,9 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseDeclaration):
         description="Link to data object on original registrar's site",
         example="https://epd-online.com/EmbeddedEpdList/Download/6029",
     )
-    manufacturer: Org | None = pyd.Field(
-        description="JSON object for declaring Org. Sometimes called the "
-        '"Declaration Holder" or "Declaration Owner".'
-    )
-    epd_developer: Org | None = pyd.Field(
-        description="The organization responsible for the underlying LCA (and subsequent summarization as EPD).",
+    manufacturer: OrgRef | None = pyd.Field(description=MANUFACTURER_DESCRIPTION)
+    epd_developer: OrgRef | None = pyd.Field(
+        description=DEVELOPER_DESCRIPTION,
         default=None,
     )
     epd_developer_email: pyd.EmailStr | None = pyd.Field(
@@ -75,16 +82,14 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseDeclaration):
         description="List of object(s) for one or more plant(s) that this declaration applies to.",
         default_factory=list,
     )
-    program_operator: Org | None = pyd.Field(description="JSON object for program operator Org")
+    program_operator: OrgRef | None = pyd.Field(description=PROGRAM_OPERATOR_DESCRIPTION)
     program_operator_doc_id: str | None = pyd.Field(
         max_length=200, description="Document identifier from Program Operator.", example="123-456.789/b"
     )
     program_operator_version: str | None = pyd.Field(
         max_length=200, description="Document version number from Program Operator.", example="4.3.0"
     )
-    third_party_verifier: Org | None = pyd.Field(
-        description="JSON object for Org that performed a critical review of the EPD data"
-    )
+    third_party_verifier: OrgRef | None = pyd.Field(description=THIRD_PARTY_VERIFIER_DESCRIPTION)
     third_party_verification_url: pyd.AnyUrl | None = pyd.Field(
         description="Optional link to a verification statement.",
         example="https://we-verify-epds.com/en/letters/123-456.789b.pdf",
@@ -162,6 +167,15 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseDeclaration):
         default_factory=list,
     )
 
+
+EpdPreview = EpdPreviewV0
+
+
+class EpdV0(WithLciaMixin, EpdPreviewV0, title="EPD (Full)"):
+    """Represent an EPD."""
+
+    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
+
     @classmethod
     def get_asset_type(cls) -> str | None:
         """Return the asset type of this class (see BaseOpenEpdSchema.get_asset_type for details)."""
@@ -183,6 +197,22 @@ class EpdV0(WithAttachmentsMixin, WithAltIdsMixin, BaseDeclaration):
 
 
 Epd = EpdV0
+
+
+class EpdWithDepsV0(EpdV0, title="EPD (with Dependencies)"):
+    """
+    Expanded version of the EPD.
+
+    Contains related entities - orgs - with full fields, to support object matching in implementations.
+    """
+
+    manufacturer: Org | None = pyd.Field(description=MANUFACTURER_DESCRIPTION)
+    epd_developer: Org | None = pyd.Field(description=DEVELOPER_DESCRIPTION, default=None)
+    program_operator: Org | None = pyd.Field(description=PROGRAM_OPERATOR_DESCRIPTION)
+    third_party_verifier: Org | None = pyd.Field(description=THIRD_PARTY_VERIFIER_DESCRIPTION)
+
+
+EpdWithDeps = EpdWithDepsV0
 
 
 class EpdFactory(BaseDocumentFactory[BaseDeclaration]):
