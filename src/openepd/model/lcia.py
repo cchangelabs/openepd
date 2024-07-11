@@ -469,3 +469,18 @@ class OutputFlowSet(BaseOpenEpdSchema):
         description="Exported heat",
         default=None,
     )
+
+
+class WithLciaMixin(BaseOpenEpdSchema):
+    """Mixin for LCIA data."""
+
+    impacts: Impacts | None = pyd.Field(
+        description="List of environmental impacts, compiled per one of the standard Impact Assessment methods"
+    )
+    resource_uses: ResourceUseSet | None = pyd.Field(
+        description="Set of Resource Use Indicators, over various LCA scopes"
+    )
+    output_flows: OutputFlowSet | None = pyd.Field(
+        description="Set of Waste and Output Flow indicators which describe the waste categories "
+        "and other material output flows derived from the LCI."
+    )

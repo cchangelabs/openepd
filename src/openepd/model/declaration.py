@@ -19,7 +19,6 @@ import datetime
 from openepd.compat.pydantic import pyd
 from openepd.model.base import RootDocument
 from openepd.model.common import Amount
-from openepd.model.lcia import Impacts, OutputFlowSet, ResourceUseSet
 from openepd.model.pcr import Pcr
 from openepd.model.standard import Standard
 
@@ -27,6 +26,7 @@ from openepd.model.standard import Standard
 class BaseDeclaration(RootDocument, abc.ABC):
     """Base class for declaration-related documents (EPDs, Industry-wide EPDs, Generic Estimates)."""
 
+    # TODO: Add validator for open-xpd-uuid on this field
     id: str | None = pyd.Field(
         description="The unique ID for this document.  To ensure global uniqueness, should be registered at "
         "open-xpd-uuid.cqd.io/register or a coordinating registry.",
@@ -76,16 +76,6 @@ class BaseDeclaration(RootDocument, abc.ABC):
         "Null is treated as false (public).  Private (draft) entries have a reduced "
         "number of required fields, to allow for multiple systems to coordinate "
         "incomplete EPDs.",
-    )
-    impacts: Impacts | None = pyd.Field(
-        description="List of environmental impacts, compiled per one of the standard Impact Assessment methods"
-    )
-    resource_uses: ResourceUseSet | None = pyd.Field(
-        description="Set of Resource Use Indicators, over various LCA scopes"
-    )
-    output_flows: OutputFlowSet | None = pyd.Field(
-        description="Set of Waste and Output Flow indicators which describe the waste categories "
-        "and other material output flows derived from the LCI."
     )
 
     pcr: Pcr | None = pyd.Field(
