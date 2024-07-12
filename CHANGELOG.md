@@ -1,3 +1,14 @@
+## 4.6.0 (2024-07-12)
+
+### Feat
+
+- split EPD and GenericEstimate to an hierarchy
+
+### Fix
+
+- add stable ordering for Geography code generation
+- update documentation for base declaration
+
 ## 4.5.1 (2024-07-10)
 
 ### Fix
