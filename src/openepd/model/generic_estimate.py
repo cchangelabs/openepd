@@ -21,7 +21,7 @@ from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import BaseDeclaration
 from openepd.model.geography import Geography
 from openepd.model.lcia import WithLciaMixin
-from openepd.model.org import Org, OrgRef
+from openepd.model.org import Org
 from openepd.model.versioning import OpenEpdVersions, Version
 
 
@@ -65,11 +65,11 @@ class GenericEstimatePreviewV0(WithAttachmentsMixin, BaseDeclaration, title="Gen
         description="1-paragraph description of the Generic Estimate. Supports plain text or github flavored markdown.",
     )
 
-    publisher: OrgRef | None = pyd.Field(description="Organization that published the LCA results.")
+    publisher: Org | None = pyd.Field(description="Organization that published the LCA results.")
     reviewer_email: pyd.EmailStr | None = pyd.Field(
         description="Email address of the third party verifier", example="john.doe@example.com", default=None
     )
-    reviewer: OrgRef | None = pyd.Field(description="Org that performed a critical review of the LCA.")
+    reviewer: Org | None = pyd.Field(description="Org that performed a critical review of the LCA.")
     license_terms: LicenseTerms | None = pyd.Field(description="The license terms for use of the data.")
     geography: list[Geography] | None = pyd.Field(
         "Jurisdiction(s) in which the LCA result is applicable.  An empty array, or absent properties, implies global applicability."
@@ -102,6 +102,10 @@ class GenericEstimateWithDepsV0(GenericEstimateV0, title="Generic Estimate (with
     Expanded version of the GenericEstimate.
 
     Contains related entities - orgs - with full fields, to support object matching in implementations.
+
+    For now the implementation matches the above GenericEstimate entity, but they will diverge as normal GE would have
+    some required fields in Org (like web_domain), and WithDeps would not.
+
     """
 
     publisher: Org | None = pyd.Field(description="Organization that published the LCA results.")
