@@ -16,7 +16,7 @@
 import abc
 from enum import StrEnum
 import json
-from typing import Any, Callable, Generic, Optional, Type, TypeAlias, TypeVar
+from typing import Any, Callable, ClassVar, Generic, Optional, Type, TypeAlias, TypeVar
 
 from openepd.compat.pydantic import pyd, pyd_generics
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
@@ -177,7 +177,7 @@ TOpenEpdObjectClass = TypeVar("TOpenEpdObjectClass", bound=Type[BaseOpenEpdSchem
 class RootDocument(abc.ABC, BaseOpenEpdSchema):
     """Base class for all objects representing openEPD root element. E.g. Epd, IndustryEpd, GenericEstimate, etc."""
 
-    _FORMAT_VERSION: str
+    _FORMAT_VERSION: ClassVar[str]
     """Version of this document format. Must be defined in the concrete class."""
 
     doctype: str = pyd.Field(
