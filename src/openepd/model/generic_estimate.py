@@ -16,12 +16,13 @@
 from enum import StrEnum
 
 from openepd.compat.pydantic import pyd
-from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
+from openepd.model.base import BaseDocumentFactory, BaseOpenEpdSchema, OpenEpdDoctypes
 from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import BaseDeclaration
 from openepd.model.geography import Geography
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org
+from openepd.model.validation.common import ReferenceStr
 from openepd.model.versioning import OpenEpdVersions, Version
 
 
@@ -46,7 +47,26 @@ class LicenseTerms(StrEnum):
     """
 
 
-class GenericEstimatePreviewV0(WithAttachmentsMixin, BaseDeclaration, title="Generic Estimate (preview)"):
+class GenericEstimateRef(BaseOpenEpdSchema, title="Generic Estimate(ref)"):
+    id: str | None = pyd.Field(
+        description="The unique ID for this document.  To ensure global uniqueness, should be registered at "
+        "open-xpd-uuid.cqd.io/register or a coordinating registry.",
+        example="1u7zsed8",
+        default=None,
+    )
+
+    name: str | None = pyd.Field(max_length=200, description="Name of the generic estimate", default=None)
+
+    ref: ReferenceStr | None = pyd.Field(
+        default=None,
+        example="https://openepd.buildingtransparency.org/api/generic_estimates/EC300001",
+        description="Reference to this GenericEstimate JSON object",
+    )
+
+
+class GenericEstimatePreviewV0(
+    WithAttachmentsMixin, GenericEstimateRef, BaseDeclaration, title="Generic Estimate (preview)"
+):
     """
     Generic Estimate preview, used in API list responses and where there is no need for a full object.
 
@@ -57,8 +77,6 @@ class GenericEstimatePreviewV0(WithAttachmentsMixin, BaseDeclaration, title="Gen
         description='Describes the type and schema of the document. Must always be "openGenericEstimate"',
         default="openGenericEstimate",
     )
-
-    name: str | None = pyd.Field(max_length=200, description="Name of the generic estimate", default=None)
 
     description: str | None = pyd.Field(
         max_length=2000,
