@@ -1,3 +1,9 @@
+## 4.7.0 (2024-07-16)
+
+### Feat
+
+- **specs**: add HvacDuctsV1 specification
+
 ## 4.6.1 (2024-07-12)
 
 ### Fix
