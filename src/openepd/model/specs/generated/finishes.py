@@ -468,10 +468,44 @@ class MirrorsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class PaintingByMassV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Paintings and coatings by mass.
+
+    Expected declared unit for products is mass of ready to use product.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class PaintingByVolumeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Paintings and coatings by volume.
+
+    Expecting declared unit for products is volume of ready to use product.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class PaintingByAreaV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Paintings and coatings by area.
+
+    Expected declared unit is area of host surface covered by the product.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class PaintingAndCoatingV1(BaseOpenEpdHierarchicalSpec):
     """Paintings and coatings."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
+
+    PaintingByMass: PaintingByMassV1 | None = None
+    PaintingByVolume: PaintingByVolumeV1 | None = None
+    PaintingByArea: PaintingByAreaV1 | None = None
 
 
 class WallFinishesV1(BaseOpenEpdHierarchicalSpec):
