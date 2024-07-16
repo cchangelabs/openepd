@@ -166,10 +166,16 @@ class NetworkingRacewaysV1(BaseOpenEpdHierarchicalSpec):
     raceways_material: RacewaysMaterial | None = pyd.Field(default=None, description="", example="Aluminum")
 
 
+class CommunicationsConduitV1(BaseOpenEpdHierarchicalSpec):
+    """Tubing used to protect and route communications wiring in a building or structure."""
+
+    _EXT_VERSION = "1.0"
+
+
 class NetworkInfrastructureV1(BaseOpenEpdHierarchicalSpec):
     """General category for network infrastructure products for data centers and commercial and residential buildings."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Nested specs:
     PDU: PDUV1 | None = None
@@ -178,3 +184,4 @@ class NetworkInfrastructureV1(BaseOpenEpdHierarchicalSpec):
     FloorBoxesAndAccessories: FloorBoxesAndAccessoriesV1 | None = None
     NetworkingCableTrays: NetworkingCableTraysV1 | None = None
     NetworkingRaceways: NetworkingRacewaysV1 | None = None
+    CommunicationsConduit: CommunicationsConduitV1 | None = None

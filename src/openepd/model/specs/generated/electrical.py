@@ -290,10 +290,16 @@ class LightingV1(BaseOpenEpdHierarchicalSpec):
     TaskLighting: TaskLightingV1 | None = None
 
 
+class ElectricalConduitV1(BaseOpenEpdHierarchicalSpec):
+    """Tubing used to protect and route electrical wiring in a building or structure."""
+
+    _EXT_VERSION = "1.0"
+
+
 class ElectricalV1(BaseOpenEpdHierarchicalSpec):
     """Electric power and equipment."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Nested specs:
     ElectricalPowerStorage: ElectricalPowerStorageV1 | None = None
@@ -301,3 +307,4 @@ class ElectricalV1(BaseOpenEpdHierarchicalSpec):
     ElectricalGenerationEquipment: ElectricalGenerationEquipmentV1 | None = None
     ElectricPower: ElectricPowerV1 | None = None
     Lighting: LightingV1 | None = None
+    ElectricalConduit: ElectricalConduitV1 | None = None
