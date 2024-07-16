@@ -38,7 +38,7 @@ class StreamingListResponseTestCase(unittest.TestCase):
 
         response = OpenEpdApiResponse(
             payload=payload,
-            meta=PagingMetaResponseForTest(),
+            meta=PagingMetaResponseForTest(),  # type: ignore[call-arg]
         )
         response.meta.paging = PagingMeta(
             total_count=len(cls.DATA), total_pages=math.ceil(len(cls.DATA) / page_size), page_size=page_size
