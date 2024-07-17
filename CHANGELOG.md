@@ -1,3 +1,14 @@
+## 4.8.0 (2024-07-17)
+
+### Feat
+
+- **specs**: add Painting subcategories
+- **specs**: add Conduit categories
+
+### Fix
+
+- **specs**: resolve typo in Paint subcategories
+
 ## 4.7.0 (2024-07-16)
 
 ### Feat
