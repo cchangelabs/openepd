@@ -47,7 +47,9 @@ class LicenseTerms(StrEnum):
     """
 
 
-class GenericEstimateRef(BaseOpenEpdSchema, title="Generic Estimate(ref)"):
+class GenericEstimateRef(BaseOpenEpdSchema, title="Generic Estimate (Ref)"):
+    """Reference (short) version of Generic Estimate object."""
+
     id: str | None = pyd.Field(
         description="The unique ID for this document.  To ensure global uniqueness, should be registered at "
         "open-xpd-uuid.cqd.io/register or a coordinating registry.",
