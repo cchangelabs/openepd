@@ -195,7 +195,34 @@ class ScopeSet(BaseOpenEpdSchema):
     )
 
 
-class ImpactSet(BaseOpenEpdSchema):
+class ScopesetByNameBase(BaseOpenEpdSchema):
+    """Base class for the data structures presented as typed name:scopeset mapping ."""
+
+    def get_scopeset_names(self) -> list[str]:
+        """
+        Get the names of scopesets which have been set by model (not defaults).
+
+        :return: set of names, for example ['gwp', 'odp]
+        """
+        return [self.__fields__[f].alias or f for f in self.__fields_set__]
+
+    def get_scopeset_by_name(self, name: str) -> ScopeSet | None:
+        """
+        Get scopeset by name.
+
+        :param name: The name of the scopeset.
+        :return: A scopeset if found, None otherwise
+        """
+        for f_name, f in self.__fields__.items():
+            if f.alias == name:
+                return getattr(self, f_name)
+            if f_name == name:
+                return getattr(self, f_name)
+
+        return None
+
+
+class ImpactSet(ScopesetByNameBase):
     """A set of impacts, such as GWP, ODP, AP, EP, POCP, EP-marine, EP-terrestrial, EP-freshwater, etc."""
 
     gwp: ScopeSet | None = pyd.Field(
@@ -345,7 +372,7 @@ class Impacts(pyd.BaseModel):
         return self.__root__
 
 
-class ResourceUseSet(BaseOpenEpdSchema):
+class ResourceUseSet(ScopesetByNameBase):
     """A set of resource use indicators, such as RPRec, RPRm, etc."""
 
     RPRec: ScopeSet | None = pyd.Field(
@@ -418,7 +445,7 @@ class ResourceUseSet(BaseOpenEpdSchema):
     )
 
 
-class OutputFlowSet(BaseOpenEpdSchema):
+class OutputFlowSet(ScopesetByNameBase):
     """A set of output flows, such as waste, emissions, etc."""
 
     twd: ScopeSet | None = pyd.Field(
