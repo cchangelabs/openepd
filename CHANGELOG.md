@@ -1,3 +1,10 @@
+## 4.9.0 (2024-07-19)
+
+### Feat
+
+- implement function to access ScopeSet by name in ImpactSet and related
+- extract GenericEstimateRef superclass
+
 ## 4.8.0 (2024-07-17)
 
 ### Feat
