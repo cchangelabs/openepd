@@ -20,6 +20,7 @@ from openepd.model.specs.generated.enums import (
     CablingCategory,
     CablingFireRating,
     CablingJacketMaterial,
+    ConduitMaterial,
     FloorBoxCoverMaterial,
     FloorBoxFloorMaterial,
     FloorBoxMaterial,
@@ -169,7 +170,26 @@ class NetworkingRacewaysV1(BaseOpenEpdHierarchicalSpec):
 class CommunicationsConduitV1(BaseOpenEpdHierarchicalSpec):
     """Tubing used to protect and route communications wiring in a building or structure."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
+
+    nominal_diameter: LengthMmStr | None = pyd.Field(
+        default=None,
+        description="Nominal Diameter is also known as the mean or average outside diameter.",
+        example="100 mm",
+    )
+    outer_diameter: LengthMmStr | None = pyd.Field(
+        default=None,
+        description="The measurement of the distance of a straight line from one point on the outer wall of the pipe.",
+        example="100 mm",
+    )
+    inner_diameter: LengthMmStr | None = pyd.Field(
+        default=None,
+        description="The measurement of the distance of a straight line from one point on the inner wall of the pipe.",
+        example="100 mm",
+    )
+    wall_thickness: LengthMmStr | None = pyd.Field(default=None, description="Conduit wall thickness", example="100 mm")
+
+    material: ConduitMaterial | None = pyd.Field(default=None, description="Material of the conduit", example="PVC")
 
 
 class NetworkInfrastructureV1(BaseOpenEpdHierarchicalSpec):
