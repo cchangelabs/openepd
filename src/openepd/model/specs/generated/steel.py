@@ -243,7 +243,10 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     yield_tensile_str: PressureMPaStr | None = pyd.Field(
-        default=None, description="Yield Tensile strength (Mpa) per unit area", example="100 MPa"
+        default=None,
+        description="Yield Tensile strength (Mpa) per unit area. Yield strength is the point at which a material "
+        "begins to permanently deform or change shape due to applied stress.",
+        example="100 MPa",
     )
     bar_elongation: float | None = pyd.Field(
         default=None, description="Increase in length at break, in percent. Typically 10%-20%", example=0.2
