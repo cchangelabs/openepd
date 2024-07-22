@@ -28,6 +28,15 @@ special_regions = {
     "NAFTA": "North American Free Trade Agreement",
 }
 
+special_m49_codes = {
+    "001": "Global",
+    "003": "North America. The continent of North America (numerical code 003) comprises Northern America "
+    "(numerical code 021), Caribbean (numerical code 029), and Central America (numerical code 013).",
+}
+
+
+# Some of the codes (like North America Continent - 003 - are not given in data file).
+
 
 def filter__to_python_name(n: str) -> str:
     """Jinja filter to clean up the names."""
@@ -37,17 +46,16 @@ def filter__to_python_name(n: str) -> str:
 def __get_m49_codes() -> dict[str, str]:
     """Read attached CSV and return m49code:name for regions, subregions, world, and countries"""
     result = {}
-    regions = {"001": "Global"}
     with open(os.path.join(os.path.dirname(__file__), "UNSD — Methodology.csv"), "r") as csv_file:
         reader = csv.DictReader(csv_file, delimiter=";")
         for row in reader:
             result[row["M49 Code"]] = row["Country or Area"]
             if row["Region Code"]:
-                regions[row["Region Code"]] = row["Region Name"]
+                special_m49_codes[row["Region Code"]] = row["Region Name"]
             if row["Sub-region Code"]:
-                regions[row["Sub-region Code"]] = row["Sub-region Name"]
+                special_m49_codes[row["Sub-region Code"]] = row["Sub-region Name"]
 
-    return {**regions, **result}
+    return {**special_m49_codes, **result}
 
 
 def generate_enums() -> None:
