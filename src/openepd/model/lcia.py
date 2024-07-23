@@ -322,6 +322,16 @@ class LCIAMethod(StrEnum):
 class Impacts(pyd.BaseModel):
     """List of environmental impacts, compiled per one of the standard Impact Assessment methods."""
 
+    class Config:
+        # pydantic schema generator gets lost in this structure, so we need to re-establish it manually for openapi
+        schema_extra = {
+            "properties": {
+                str(lm): {"description": str(lm), "allOf": [{"$ref": "#/components/schemas/ImpactSet"}]}
+                for lm in LCIAMethod
+            },
+            "additionalProperties": None,
+        }
+
     __root__: dict[LCIAMethod, ImpactSet]
 
     def set_unknown_lcia(self, impact_set: ImpactSet):

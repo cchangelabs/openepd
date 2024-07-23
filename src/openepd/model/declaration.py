@@ -57,7 +57,7 @@ class BaseDeclaration(RootDocument, abc.ABC):
     kg_per_declared_unit: Amount | None = pyd.Field(
         default=None,
         description="Mass of the product, in kilograms, per declared unit",
-        example=Amount(qty=12.5, unit="kg"),
+        example=Amount(qty=12.5, unit="kg").to_serializable(exclude_unset=True),
     )
     compliance: list[Standard] = pyd.Field(
         description="Standard(s) to which this document is compliant.", default_factory=list
@@ -129,7 +129,8 @@ class AverageDatasetMixin(pyd.BaseModel, title="Average Dataset"):
     )
 
     geography: list[Geography] | None = pyd.Field(
-        "Jurisdiction(s) in which the LCA result is applicable.  An empty array, or absent properties, implies global applicability."
+        description="Jurisdiction(s) in which the LCA result is applicable.  An empty array, or absent properties, "
+        "implies global applicability.",
     )
 
 
