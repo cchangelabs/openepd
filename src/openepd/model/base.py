@@ -37,6 +37,7 @@ class OpenEpdDoctypes(StrEnum):
 
     Epd = "openEPD"
     GenericEstimate = "openGenericEstimate"
+    IndustryEpd = "openIndustryEpd"
 
 
 def modify_pydantic_schema(schema_dict: dict, cls: type) -> dict:

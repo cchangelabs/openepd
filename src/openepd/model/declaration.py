@@ -17,10 +17,17 @@ import abc
 import datetime
 
 from openepd.compat.pydantic import pyd
-from openepd.model.base import RootDocument
+from openepd.model.base import BaseOpenEpdSchema, RootDocument
 from openepd.model.common import Amount
+from openepd.model.geography import Geography
+from openepd.model.org import Org
 from openepd.model.pcr import Pcr
 from openepd.model.standard import Standard
+from openepd.model.validation.common import ReferenceStr
+
+DEVELOPER_DESCRIPTION = "The organization responsible for the underlying LCA (and subsequent summarization as EPD)."
+PROGRAM_OPERATOR_DESCRIPTION = "JSON object for program operator Org"
+THIRD_PARTY_VERIFIER_DESCRIPTION = "JSON object for Org that performed a critical review of the EPD data"
 
 
 class BaseDeclaration(RootDocument, abc.ABC):
@@ -110,4 +117,76 @@ class BaseDeclaration(RootDocument, abc.ABC):
     Information on cleaning frequency and cleaning products shall be provided based on the manufacturer’s recommendations.
     In the absence of primary data, cleaning assumptions shall be documented.
     """,
+    )
+
+
+class AverageDatasetMixin(pyd.BaseModel, title="Average Dataset"):
+    """Fields common for average dataset (Industry-wide EPDs, Generic Estimates)."""
+
+    description: str | None = pyd.Field(
+        max_length=2000,
+        description="1-paragraph description of the average dataset. Supports plain text or github flavored markdown.",
+    )
+
+    geography: list[Geography] | None = pyd.Field(
+        "Jurisdiction(s) in which the LCA result is applicable.  An empty array, or absent properties, implies global applicability."
+    )
+
+
+class WithProgramOperatorMixin(pyd.BaseModel):
+    """Object which has a connection to ProgramOperator."""
+
+    program_operator: Org | None = pyd.Field(description=PROGRAM_OPERATOR_DESCRIPTION)
+    program_operator_doc_id: str | None = pyd.Field(
+        max_length=200, description="Document identifier from Program Operator.", example="123-456.789/b"
+    )
+    program_operator_version: str | None = pyd.Field(
+        max_length=200, description="Document version number from Program Operator.", example="4.3.0"
+    )
+
+
+class WithVerifierMixin(pyd.BaseModel):
+    """Set of fields related to verifier."""
+
+    third_party_verifier: Org | None = pyd.Field(description=THIRD_PARTY_VERIFIER_DESCRIPTION)
+    third_party_verification_url: pyd.AnyUrl | None = pyd.Field(
+        description="Optional link to a verification statement.",
+        example="https://we-verify-epds.com/en/letters/123-456.789b.pdf",
+    )
+    third_party_verifier_email: pyd.EmailStr | None = pyd.Field(
+        description="Email address of the third party verifier", example="john.doe@example.com", default=None
+    )
+
+
+class WithEpdDeveloperMixin(pyd.BaseModel):
+    """Set of fields related to EPD Developer."""
+
+    epd_developer: Org | None = pyd.Field(
+        description=DEVELOPER_DESCRIPTION,
+        default=None,
+    )
+    epd_developer_email: pyd.EmailStr | None = pyd.Field(
+        default=None,
+        example="john.doe@we-do-lca.com",
+        description="Email contact for inquiries about development of this EPD. "
+        "This must be an email which can be publicly shared.",
+    )
+
+
+class RefBase(BaseOpenEpdSchema, title="Ref Object"):
+    """Base class for reference-style objects."""
+
+    id: str | None = pyd.Field(
+        description="The unique ID for this object. To ensure global uniqueness, should be registered at "
+        "open-xpd-uuid.cqd.io/register or a coordinating registry.",
+        example="1u7zsed8",
+        default=None,
+    )
+
+    name: str | None = pyd.Field(max_length=200, description="Name of the object", default=None)
+
+    ref: ReferenceStr | None = pyd.Field(
+        default=None,
+        example="https://openepd.buildingtransparency.org/api/generic_estimates/EC300001",
+        description="Reference to this JSON object",
     )

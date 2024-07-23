@@ -1,3 +1,15 @@
+## 4.10.0 (2024-07-23)
+
+### Feat
+
+- add openIndustryEPD models
+- extend Geography with North America continent (003)
+- **specs**: add Conduit category properties
+
+### Fix
+
+- correct description for Steel.yield_tensile_str
+
 ## 4.9.0 (2024-07-19)
 
 ### Feat

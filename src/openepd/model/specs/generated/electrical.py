@@ -16,6 +16,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import CableTraysMaterial, EnergySource, RacewaysMaterial
+from openepd.model.specs.generated.mixins.conduit_mixin import ConduitMixin
 from openepd.model.validation.quantity import (
     ColorTemperatureStr,
     LengthMmStr,
@@ -290,10 +291,10 @@ class LightingV1(BaseOpenEpdHierarchicalSpec):
     TaskLighting: TaskLightingV1 | None = None
 
 
-class ElectricalConduitV1(BaseOpenEpdHierarchicalSpec):
+class ElectricalConduitV1(BaseOpenEpdHierarchicalSpec, ConduitMixin):
     """Tubing used to protect and route electrical wiring in a building or structure."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
 
 class ElectricalV1(BaseOpenEpdHierarchicalSpec):

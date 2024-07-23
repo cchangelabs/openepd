@@ -35,7 +35,7 @@ class Geography(StrEnum):
     {{code | to_python_name}}= "{{code}}"{% endfor %}
 
     # m49 codification{% for code, description in m49_codes.items() %}
-    m49_{{code | to_python_name}}= "{{code}}"{% endfor %}
+    m49_{{code | to_python_name}}= "{{code}}" # {{description}}{% endfor %}
 
 class Country(StrEnum):
     """

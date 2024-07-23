@@ -27,6 +27,7 @@ from openepd.model.specs.generated.enums import (
     RacewaysMaterial,
     RackType,
 )
+from openepd.model.specs.generated.mixins.conduit_mixin import ConduitMixin
 from openepd.model.validation.quantity import ElectricalCurrentStr, LengthMmStr, MassKgStr, validate_unit_factory
 
 
@@ -166,10 +167,10 @@ class NetworkingRacewaysV1(BaseOpenEpdHierarchicalSpec):
     raceways_material: RacewaysMaterial | None = pyd.Field(default=None, description="", example="Aluminum")
 
 
-class CommunicationsConduitV1(BaseOpenEpdHierarchicalSpec):
+class CommunicationsConduitV1(BaseOpenEpdHierarchicalSpec, ConduitMixin):
     """Tubing used to protect and route communications wiring in a building or structure."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
 
 class NetworkInfrastructureV1(BaseOpenEpdHierarchicalSpec):

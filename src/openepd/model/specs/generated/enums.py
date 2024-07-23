@@ -2491,3 +2491,27 @@ class PlasterComposition(StrEnum):
     ACRYLIC = "Acrylic"
     LIME = "Lime"
     OTHER = "Other"
+
+
+class ConduitMaterial(StrEnum):
+    """
+    Material of the conduit.
+
+    - PVC: Polyvinyl chloride piping
+    - PEX: Cross-linked polethylene piping
+    - HDPE: High density polyethylene piping
+    - PP: Polypropylene
+    - Stainless Steel: Stainless steel conduit
+    - Galvanized Steel: Galvanized steel conduit
+    - Aluminum: Aluminum conduit
+    - Other: Other piping material
+    """
+
+    PVC = "PVC"
+    PEX = "PEX"
+    HDPE = "HDPE"
+    PP = "PP"
+    STAINLESS_STEEL = "Stainless Steel"
+    GALVANIZED_STEEL = "Galvanized Steel"
+    ALUMINUM = "Aluminum"
+    OTHER = "Other"
