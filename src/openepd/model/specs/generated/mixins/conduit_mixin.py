@@ -35,14 +35,16 @@ class ConduitMixin(BaseOpenEpdSpec):
     )
     outer_diameter: LengthMmStr | None = pyd.Field(
         default=None,
-        description="The measurement of the distance of a straight line from one point on the outer wall of the pipe.",
+        description="The measurement of the distance of a straight line between points on the outer walls of the pipe.",
         example="100 mm",
     )
     inner_diameter: LengthMmStr | None = pyd.Field(
         default=None,
-        description="The measurement of the distance of a straight line from one point on the inner wall of the pipe.",
+        description="The measurement of the distance of a straight line between points on the inner walls of the pipe.",
         example="100 mm",
     )
-    wall_thickness: LengthMmStr | None = pyd.Field(default=None, description="Conduit wall thickness", example="100 mm")
+    wall_thickness: LengthMmStr | None = pyd.Field(
+        default=None, description="Conduit wall thickness.", example="100 mm"
+    )
 
-    material: ConduitMaterial | None = pyd.Field(default=None, description="Material of the conduit", example="PVC")
+    material: ConduitMaterial | None = pyd.Field(default=None, description="Material of the conduit.", example="PVC")
