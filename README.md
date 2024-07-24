@@ -138,6 +138,11 @@ The geography and country enums are generated from several sources, including py
 codes, UN m49 codification, and special regions. To update the enums, first update any of these sources, then use
 `make codegen`. See 'tools/openepd/codegen' for details.
 
+## Development
+
+Windows is not supported for development. You can use WSL2 with Ubuntu 20.04 or higher.
+Instructions are the same as for regular GNU/Linux installation.
+
 # Credits
 
 This library has been written and maintained by [C-Change Labs](https://c-change-labs.com/).
