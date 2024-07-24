@@ -58,6 +58,8 @@ class GenericEstimatePreviewV0(
     Excludes LCIA data.
     """
 
+    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
+
     doctype: str = pyd.Field(
         description='Describes the type and schema of the document. Must always be "openGenericEstimate"',
         default="openGenericEstimate",
@@ -80,8 +82,6 @@ GenericEstimatePreview = GenericEstimatePreviewV0
 
 class GenericEstimateV0(GenericEstimatePreviewV0, WithLciaMixin, WithAltIdsMixin, title="Generic Estimate (Full)"):
     """Full Generic Estimate object."""
-
-    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
 
 
 GenericEstimate = GenericEstimateV0
