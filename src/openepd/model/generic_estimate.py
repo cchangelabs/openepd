@@ -79,13 +79,7 @@ GenericEstimatePreview = GenericEstimatePreviewV0
 
 
 class GenericEstimateV0(GenericEstimatePreviewV0, WithLciaMixin, WithAltIdsMixin, title="Generic Estimate (Full)"):
-    """
-    Full Generic Estimate object.
-
-    This is considered the most complete valid openEPD object for GenericEstimate. In addition to it, several related
-    models are defined, either with fewer fields (to be used in APIs for list requests) or with more relaxed structure
-    to support related entities matching.
-    """
+    """Full Generic Estimate object."""
 
     _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
 
@@ -98,10 +92,6 @@ class GenericEstimateWithDepsV0(GenericEstimateV0, title="Generic Estimate (with
     Expanded version of the GenericEstimate.
 
     Contains related entities - orgs - with full fields, to support object matching in implementations.
-
-    For now the implementation matches the above GenericEstimate entity, but they will diverge as normal GE would have
-    some required fields in Org (like web_domain), and WithDeps would not.
-
     """
 
     publisher: Org | None = pyd.Field(description="Organization that published the LCA results.")

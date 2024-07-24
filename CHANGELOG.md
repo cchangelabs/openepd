@@ -1,3 +1,10 @@
+## 4.10.1 (2024-07-24)
+
+### Fix
+
+- correct descriptions in GenericEstimate
+- correct models for openAPI compatibility
+
 ## 4.10.0 (2024-07-23)
 
 ### Feat
