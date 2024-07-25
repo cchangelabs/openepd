@@ -1,3 +1,9 @@
+## 4.11.2 (2024-07-25)
+
+### Fix
+
+- generalize `version` field from EPD
+
 ## 4.11.1 (2024-07-25)
 
 ### Fix
