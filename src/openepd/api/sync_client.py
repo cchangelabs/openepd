@@ -18,6 +18,7 @@ __all__ = ("OpenEpdApiClientSync",)
 from requests.auth import AuthBase
 
 from openepd.api.average_dataset.generic_estimate_sync_api import GenericEstimateApi
+from openepd.api.average_dataset.industry_epd_sync_api import IndustryEpdApi
 from openepd.api.base_sync_client import SyncHttpClient, TokenAuth
 from openepd.api.category.sync_api import CategoryApi
 from openepd.api.epd.sync_api import EpdApi
@@ -42,6 +43,7 @@ class OpenEpdApiClientSync:
         self.__pcr_api: PcrApi | None = None
         self.__category_api: CategoryApi | None = None
         self.__generic_estimate_api: GenericEstimateApi | None = None
+        self.__industry_epd_api: IndustryEpdApi | None = None
 
     @property
     def epds(self) -> EpdApi:
@@ -63,6 +65,13 @@ class OpenEpdApiClientSync:
         if self.__category_api is None:
             self.__category_api = CategoryApi(self._http_client)
         return self.__category_api
+
+    @property
+    def industry_epds(self) -> IndustryEpdApi:
+        """Get the Category API."""
+        if self.__industry_epd_api is None:
+            self.__industry_epd_api = IndustryEpdApi(self._http_client)
+        return self.__industry_epd_api
 
     @property
     def generic_estimates(self) -> GenericEstimateApi:
