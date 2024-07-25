@@ -279,7 +279,7 @@ class Geography(StrEnum):
      * ZM: Zambia
      * ZW: Zimbabwe
 
-    USA states and Canada provinces, see https://en.wikipedia.org/wiki/ISO_3166-1:
+    USA and Canada subdivisions, see https://en.wikipedia.org/wiki/ISO_3166-1:
 
      * CA-AB: Alberta, Canada
      * CA-BC: British Columbia, Canada
