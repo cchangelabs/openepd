@@ -29,14 +29,12 @@ class IndustryEpdApi(BaseApiMethodGroup):
     """API methods for Industry EPD."""
 
     @overload
-    def get_by_open_xpd_uuid(self, uuid: str, with_response: Literal[True]) -> tuple[IndustryEpd, Response]: ...
+    def get_by_openxpd_uuid(self, uuid: str, with_response: Literal[True]) -> tuple[IndustryEpd, Response]: ...
 
     @overload
-    def get_by_open_xpd_uuid(self, uuid: str, with_response: Literal[False] = False) -> IndustryEpd: ...
+    def get_by_openxpd_uuid(self, uuid: str, with_response: Literal[False] = False) -> IndustryEpd: ...
 
-    def get_by_open_xpd_uuid(
-        self, uuid: str, with_response: bool = False
-    ) -> IndustryEpd | tuple[IndustryEpd, Response]:
+    def get_by_openxpd_uuid(self, uuid: str, with_response: bool = False) -> IndustryEpd | tuple[IndustryEpd, Response]:
         """
         Get Industry EPD by OpenEPD UUID.
 

@@ -34,12 +34,12 @@ class GenericEstimateApi(BaseApiMethodGroup):
     """API methods for Generic Estimates."""
 
     @overload
-    def get_by_open_xpd_uuid(self, uuid: str, with_response: Literal[True]) -> tuple[GenericEstimate, Response]: ...
+    def get_by_openxpd_uuid(self, uuid: str, with_response: Literal[True]) -> tuple[GenericEstimate, Response]: ...
 
     @overload
-    def get_by_open_xpd_uuid(self, uuid: str, with_response: Literal[False] = False) -> GenericEstimate: ...
+    def get_by_openxpd_uuid(self, uuid: str, with_response: Literal[False] = False) -> GenericEstimate: ...
 
-    def get_by_open_xpd_uuid(
+    def get_by_openxpd_uuid(
         self, uuid: str, with_response: bool = False
     ) -> GenericEstimate | tuple[GenericEstimate, Response]:
         """
