@@ -69,12 +69,6 @@ class EpdPreviewV0(
     product_image: pyd.AnyUrl | pyd.FileUrl | None = pyd.Field(
         description="pointer to image illustrating the product no more than 10MB", default=None
     )
-    version: pyd.PositiveInt | None = pyd.Field(
-        description="Version of this document. The document's issuer should increment it anytime even a single "
-        "character changes, as this value is used to determine the most recent version.",
-        example=1,
-        default=None,
-    )
     declaration_url: str | None = pyd.Field(
         description="Link to data object on original registrar's site",
         example="https://epd-online.com/EmbeddedEpdList/Download/6029",
