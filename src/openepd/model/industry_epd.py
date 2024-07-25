@@ -49,6 +49,8 @@ class IndustryEpdPreviewV0(
     Used in lists and other cases where full LCIA data is not required.
     """
 
+    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
+
     doctype: str = pyd.Field(
         description='Describes the type and schema of the document. Must always be "openIndustryEpd"',
         default="openIndustryEpd",
@@ -69,8 +71,6 @@ class IndustryEpdV0(IndustryEpdPreviewV0, WithLciaMixin, WithAltIdsMixin, title=
     models are defined, either with fewer fields (to be used in APIs for list requests) or with more relaxed structure
     to support related entities matching.
     """
-
-    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
 
 
 IndustryEpd = IndustryEpdV0
