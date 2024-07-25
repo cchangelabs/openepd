@@ -126,7 +126,7 @@ class SyncClientApiTestCase(unittest.TestCase):
         self.assertEqual(3, len(list(first_three)))
 
     def test_get_generic_estimate_by_id(self):
-        ge, resp = self.api_client.generic_estimates.get_by_open_xpd_uuid("EC34BT54", with_response=True)
+        ge, resp = self.api_client.generic_estimates.get_by_openxpd_uuid("EC34BT54", with_response=True)
         self.assertEqual(ge.id, "EC34BT54")
         self.assertEqual(resp.status_code, 200)
 
@@ -138,7 +138,7 @@ class SyncClientApiTestCase(unittest.TestCase):
             self.assertIsInstance(e, IndustryEpdPreview)
 
     def test_get_industry_epd_by_id(self):
-        ge, resp = self.api_client.industry_epds.get_by_open_xpd_uuid("EC3GGJEJ", with_response=True)
+        ge, resp = self.api_client.industry_epds.get_by_openxpd_uuid("EC3GGJEJ", with_response=True)
         self.assertEqual(ge.id, "EC3GGJEJ")
         self.assertEqual(resp.status_code, 200)
 

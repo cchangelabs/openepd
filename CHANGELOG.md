@@ -1,3 +1,9 @@
+## 4.11.1 (2024-07-25)
+
+### Fix
+
+- make naming in GE, IEPD api consistent with the rest of the API
+
 ## 4.11.0 (2024-07-25)
 
 ### Feat
