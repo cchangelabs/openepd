@@ -1,3 +1,10 @@
+## 4.11.0 (2024-07-25)
+
+### Feat
+
+- **api**: add IndustryEPD openEPD API client
+- **api**: add GenericEstimate openEPD API client
+
 ## 4.10.1 (2024-07-24)
 
 ### Fix

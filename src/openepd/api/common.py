@@ -20,6 +20,8 @@ import threading
 from time import sleep
 from typing import Callable, Generic, Iterator, cast
 
+from requests import Response
+
 from openepd.api.dto.common import DEFAULT_PAGE_SIZE, MetaCollectionDto, OpenEpdApiResponse
 from openepd.api.dto.meta import PagingMeta, PagingMetaMixin
 from openepd.model.base import TOpenEpdObject
@@ -233,3 +235,12 @@ def no_trailing_slash(val: str) -> str:
     while val.endswith("/"):
         val = val[:-1]
     return val
+
+
+def paging_meta_from_v1_api(r: Response) -> PagingMeta:
+    """Return a PagingMeta dto from v1 API format with data in headers."""
+    return PagingMeta(
+        total_count=int(r.headers["X-Total-Count"]),
+        total_pages=int(r.headers["X-Total-Pages"]),
+        page_size=int(r.headers["X-Page-Size"]),
+    )

@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+import itertools
 from os import environ
 from typing import cast
 import unittest
@@ -22,6 +23,8 @@ from requests import Response
 from openepd.api.errors import ApiError, AuthError, ValidationError
 from openepd.api.sync_client import OpenEpdApiClientSync
 from openepd.model.epd import Epd
+from openepd.model.generic_estimate import GenericEstimateWithDeps
+from openepd.model.industry_epd import IndustryEpd, IndustryEpdPreview
 from openepd.model.pcr import Pcr
 
 
@@ -118,6 +121,27 @@ class SyncClientApiTestCase(unittest.TestCase):
             )
             api_client.epds.get_by_openxpd_uuid("ec3b9j5t")
 
+    def test_list_generic_estimates(self):
+        first_three = itertools.islice(self.api_client.generic_estimates.list(), 0, 3)
+        self.assertEqual(3, len(list(first_three)))
+
+    def test_get_generic_estimate_by_id(self):
+        ge, resp = self.api_client.generic_estimates.get_by_open_xpd_uuid("EC34BT54", with_response=True)
+        self.assertEqual(ge.id, "EC34BT54")
+        self.assertEqual(resp.status_code, 200)
+
+    def test_list_industry_epds(self):
+        first_three = list(itertools.islice(self.api_client.industry_epds.list(), 0, 3))
+
+        self.assertEqual(3, len(first_three))
+        for e in first_three:
+            self.assertIsInstance(e, IndustryEpdPreview)
+
+    def test_get_industry_epd_by_id(self):
+        ge, resp = self.api_client.industry_epds.get_by_open_xpd_uuid("EC3GGJEJ", with_response=True)
+        self.assertEqual(ge.id, "EC3GGJEJ")
+        self.assertEqual(resp.status_code, 200)
+
 
 @unittest.skip("This test is for local debugging only")
 @unittest.skipUnless(
@@ -176,3 +200,31 @@ class LocalOnlySyncClientApiTestCase(unittest.TestCase):
         self.assertIsInstance(response, Response)
         self.assertTrue(epd_updated, Epd)
         self.assertTrue(response.ok)
+
+    def test_create_generic_estimate_with_refs(self):
+        new_ge = GenericEstimateWithDeps.parse_obj(
+            {
+                "publisher": {"web_domain": "a_test_publisher.com", "name": "A test publisher"},
+                "name": "Test GE name",
+                "product_classes": {"EC3": "Steel"},
+                "declared_unit": {"qty": 1, "unit": "t"},
+                "license_terms": "Government",
+                "version": "1",
+            }
+        )
+        ge_resp = self.api_client.generic_estimates.post_with_refs(new_ge)
+        self.assertEqual("Test GE name", ge_resp.name)
+        self.assertIsNotNone(ge_resp.id)
+
+    def test_create_industry_epd(self):
+        new_iepd = IndustryEpd.parse_obj(
+            {
+                "name": "Test IEPD name",
+                "product_classes": {"EC3": "Steel"},
+                "declared_unit": {"qty": 1, "unit": "t"},
+                "version": "1",
+            }
+        )
+        resp = self.api_client.industry_epds.create(new_iepd)
+        self.assertEqual("Test IEPD name", resp.name)
+        self.assertIsNotNone(resp.id)
