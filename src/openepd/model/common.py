@@ -29,7 +29,7 @@ class Amount(BaseOpenEpdSchema):
     @pyd.root_validator
     def check_qty_or_unit(cls, values: dict[str, Any]):
         """Ensure that qty or unit is provided."""
-        if values["qty"] is None and values["unit"] is None:
+        if values.get("qty") is None and values.get("unit") is None:
             raise ValueError("Either qty or unit must be provided.")
         return values
 
