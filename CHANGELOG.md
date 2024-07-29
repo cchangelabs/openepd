@@ -1,3 +1,9 @@
+## 4.11.3 (2024-07-29)
+
+### Fix
+
+- fix root validator for Amount
+
 ## 4.11.2 (2024-07-25)
 
 ### Fix
