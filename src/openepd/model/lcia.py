@@ -204,7 +204,7 @@ class ScopesetByNameBase(BaseOpenEpdSchema):
 
         :return: set of names, for example ['gwp', 'odp]
         """
-        return [self.__fields__[f].alias or f for f in self.__fields_set__]
+        return [self.__fields__[f].alias or f for f in self.__fields_set__ if f not in ("ext",)]
 
     def get_scopeset_by_name(self, name: str) -> ScopeSet | None:
         """
