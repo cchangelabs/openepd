@@ -53,6 +53,11 @@ class EpdPreviewV0(
 
     """
 
+    doctype: str = pyd.Field(
+        description='Describes the type and schema of the document. Must always always read "openEPD".',
+        default="openEPD",
+    )
+
     product_name: str | None = pyd.Field(
         max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC", default=None
     )
@@ -148,6 +153,17 @@ class EpdPreviewV0(
         "Each one should be an EPD or digitized LCI process.",
         default_factory=list,
     )
+
+    @pyd.validator("doctype")
+    def validate_doctype(cls, v: str | None) -> str:
+        """
+        Handle possible mixed case options for doctype.
+
+        Required for backward compatibility as some code might have already used 'doctype: OpenEPD' instead of 'openEPD'
+        """
+        if not v or v.lower() == "openepd":
+            return "openEPD"
+        raise ValueError("Invalid doctype")
 
 
 EpdPreview = EpdPreviewV0
