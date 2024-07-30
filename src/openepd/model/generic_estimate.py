@@ -14,6 +14,7 @@
 #  limitations under the License.
 #
 from enum import StrEnum
+from typing import Literal
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
@@ -60,7 +61,7 @@ class GenericEstimatePreviewV0(
 
     _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
 
-    doctype: str = pyd.Field(
+    doctype: Literal["openGenericEstimate"] = pyd.Field(
         description='Describes the type and schema of the document. Must always be "openGenericEstimate"',
         default="openGenericEstimate",
     )

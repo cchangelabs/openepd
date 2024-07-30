@@ -183,7 +183,7 @@ class RootDocument(abc.ABC, BaseOpenEpdSchema):
 
     doctype: str = pyd.Field(
         description='Describes the type and schema of the document. Must always always read "openEPD".',
-        default="OpenEPD",
+        default="openEPD",
     )
     openepd_version: str = pyd.Field(
         description="Version of the document format, related to /doctype",

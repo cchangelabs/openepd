@@ -13,6 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from typing import Literal
+
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
 from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
@@ -51,7 +53,7 @@ class IndustryEpdPreviewV0(
 
     _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
 
-    doctype: str = pyd.Field(
+    doctype: Literal["openIndustryEpd"] = pyd.Field(
         description='Describes the type and schema of the document. Must always be "openIndustryEpd"',
         default="openIndustryEpd",
     )

@@ -15,8 +15,9 @@
 #
 import unittest
 
+from openepd.compat.pydantic import pyd
 from openepd.model.base import OPENEPD_VERSION_FIELD, OpenEpdDoctypes, Version
-from openepd.model.epd import Epd, EpdFactory, EpdV0
+from openepd.model.epd import Epd, EpdFactory, EpdPreviewV0, EpdV0
 from openepd.model.versioning import OpenEpdVersions
 
 OPENEPD_VERSION = OpenEpdVersions.get_current()
@@ -71,3 +72,11 @@ class EPDTestCase(unittest.TestCase):
     def test_factory_supports_all_versions(self):
         for version in OpenEpdVersions.get_supported_versions():
             EpdFactory.from_dict({OPENEPD_VERSION_FIELD: version.as_str(), "doctype": OpenEpdDoctypes.Epd})
+
+    def test_legacy_openepd_doctype(self):
+        for o in [{}, {"id": "abc"}, {"doctype": "openEPD"}, {"doctype": "OpenEPD"}]:
+            self.assertEqual(EpdPreviewV0.parse_obj(o).doctype, "openEPD")
+
+        for o in [{"doctype": "abc"}, {"doctype": "openIndustryEpd"}, {"doctype": "openGenericEstimate"}]:
+            with self.assertRaises(pyd.ValidationError):
+                self.assertEqual(EpdPreviewV0.parse_obj(o).doctype, "openEPD")
