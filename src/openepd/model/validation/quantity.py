@@ -14,9 +14,10 @@
 #  limitations under the License.
 #
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Callable, ClassVar
+from typing import TYPE_CHECKING, Any, Callable, ClassVar
 
-from openepd.model.common import OpenEPDUnit
+from openepd.compat.pydantic import pyd
+from openepd.model.common import Amount, OpenEPDUnit
 
 if TYPE_CHECKING:
     from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
@@ -125,6 +126,32 @@ def validate_quantity_for_new_validator(max_value: str) -> Callable:
 
 # for arbitrary non-standard quantity
 # todo these types should be replaced by Annotated[str, AfterValidator...] as we move completely to pydantic 2
+
+
+class AmountWithDimensionality(Amount, ABC):
+    """Class for dimensionality-validated amounts."""
+
+    dimensionality_unit: ClassVar[str | None] = None
+
+    # Unit for dimensionality to validate against, for example "kg"
+
+    @pyd.root_validator
+    def check_dimensionality_matches(cls, values: dict[str, Any]) -> dict[str, Any]:
+        """Check that this amount conforms to the same dimensionality as dimensionality_unit."""
+        if not cls.dimensionality_unit:
+            return values
+
+        from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+
+        str_repr = f"{values['qty']} {values['unit']}"
+        validate_unit_factory(cls.dimensionality_unit)(BaseOpenEpdHierarchicalSpec, str_repr)
+        return values
+
+
+class AmountMass(AmountWithDimensionality):
+    """Amount of mass, measured in kg, t, etc."""
+
+    dimensionality_unit = OpenEPDUnit.kg
 
 
 class QuantityStr(str):
