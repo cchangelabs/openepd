@@ -30,6 +30,7 @@ from openepd.model.declaration import (
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org, Plant
 from openepd.model.specs import Specs
+from openepd.model.validation.quantity import AmountMass
 from openepd.model.versioning import OpenEpdVersions, Version
 
 MANUFACTURER_DESCRIPTION = (
@@ -84,14 +85,14 @@ class EpdPreviewV0(
         description="List of object(s) for one or more plant(s) that this declaration applies to.",
         default_factory=list,
     )
-    kg_C_per_declared_unit: Amount | None = pyd.Field(
+    kg_C_per_declared_unit: AmountMass | None = pyd.Field(
         default=None,
         description="Mass of elemental carbon, per declared unit, contained in the product itself at the manufacturing "
         "facility gate.  Used (among other things) to check a carbon balance or calculate incineration "
         "emissions.  The source of carbon (e.g. biogenic) is not relevant in this field.",
         example=Amount(qty=8.76, unit="kg"),
     )
-    kg_C_biogenic_per_declared_unit: Amount | None = pyd.Field(
+    kg_C_biogenic_per_declared_unit: AmountMass | None = pyd.Field(
         default=None,
         description="Mass of elemental carbon from biogenic sources, per declared unit, contained in the product "
         "itself at the manufacturing facility gate.  It may be presumed that any biogenic carbon content "
