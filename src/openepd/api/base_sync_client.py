@@ -151,6 +151,7 @@ class SyncHttpClient:
 
     HTTP_DATE_TIME_FORMAT = "%a, %d %b %Y %H:%M:%S %Z"
     DEFAULT_RETRY_INTERVAL_SEC = 10
+    DEFAULT_TIMEOUT_SEC = (15, 2 * 60)
 
     def __init__(
         self,
@@ -183,7 +184,7 @@ class SyncHttpClient:
             else throttle_retry_timeout.total_seconds()
         )
         self.user_agent = user_agent
-        self.timeout = timeout_sec
+        self.timeout = timeout_sec or self.DEFAULT_TIMEOUT_SEC
         self._session: Session | None = None
         self._auth: AuthBase | None = auth
         self._retry_count: int = retry_count
