@@ -55,9 +55,22 @@ class ValidationError(ApiError):
         super().__init__(http_status, error_summary, response, error_code)
         self.validation_errors: dict[str, list[str]] = validation_errors or {}
 
+    @staticmethod
+    def __flatten(nested_errors: dict[str, Any], parent_key: str = "") -> dict[str, list[str]]:
+        result: dict[str, list[str]] = {}
+        for key, value in nested_errors.items():
+            full_key = f"{parent_key}.{key}" if parent_key else key
+            if isinstance(value, dict):
+                nested_result = ValidationError.__flatten(value, full_key)
+                for nested_key, nested_errors in nested_result.items():  # type: ignore[assignment]
+                    result.setdefault(nested_key, []).extend(nested_errors)
+            else:
+                result.setdefault(full_key, []).extend(value)
+        return result
+
     def __str__(self) -> str:
         result: list[str] = ["Validation errors:"]
-        for code, errors in self.validation_errors.items():
+        for code, errors in self.__flatten(self.validation_errors).items():  # type: ignore[arg-type]
             result.append(f"{code}:")
             for e in errors:
                 result.append(f"  {e}")

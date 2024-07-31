@@ -19,6 +19,7 @@ import unittest
 from openepd.api.common import StreamingListResponse
 from openepd.api.dto.common import MetaCollectionDto, OpenEpdApiResponse
 from openepd.api.dto.meta import PagingMeta, PagingMetaMixin
+from openepd.api.errors import ValidationError
 
 
 class PagingMetaResponseForTest(PagingMetaMixin, MetaCollectionDto):
@@ -65,3 +66,35 @@ class StreamingListResponseTestCase(unittest.TestCase):
         for x in sl.iterator(start_from_page=4):
             result.append(x)
         self.assertEqual(result, self.DATA[(4 - 1) * page_size :])
+
+
+class TestValidationErrorSerialization(unittest.TestCase):
+
+    TEST_CASES: list[tuple[str, dict, str]] = [
+        (
+            "Advanced positive scenario",
+            {
+                "field1": ["blah"],
+                "field2": {"subfield": ["error 2"]},
+                "field3": {0: {"subfield": ["error 3"]}},
+                "field4": {"subfield1": {"subfield2": ["error 2"]}},
+            },
+            """Validation errors:
+field1:
+  blah
+field2.subfield:
+  error 2
+field3.0.subfield:
+  error 3
+field4.subfield1.subfield2:
+  error 2
+             """,
+        )
+    ]
+
+    def test_validation_errors_serialization(self):
+        for name, errors_dict, expected_output in self.TEST_CASES:
+            with self.subTest(name):
+                error = ValidationError(400, "Validation error", errors_dict, None, None)
+                print(str(error))
+                self.assertEqual(expected_output.strip(), str(error))
