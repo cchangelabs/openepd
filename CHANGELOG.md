@@ -1,3 +1,16 @@
+## 4.12.0 (2024-07-31)
+
+### Feat
+
+- add default timeout to API client
+
+### Fix
+
+- fix ValidationError to string representation
+- add strict validation for Mass amounts in declaration objects
+- fix parsing impacts with extensions
+- enforce doctype matching in Epd, GE, IEPD
+
 ## 4.11.3 (2024-07-29)
 
 ### Fix
