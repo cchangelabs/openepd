@@ -24,6 +24,7 @@ from openepd.model.org import Org
 from openepd.model.pcr import Pcr
 from openepd.model.standard import Standard
 from openepd.model.validation.common import ReferenceStr
+from openepd.model.validation.quantity import AmountMass
 
 DEVELOPER_DESCRIPTION = "The organization responsible for the underlying LCA (and subsequent summarization as EPD)."
 PROGRAM_OPERATOR_DESCRIPTION = "JSON object for program operator Org"
@@ -61,7 +62,7 @@ class BaseDeclaration(RootDocument, abc.ABC):
         "utilized, the declared unit shall refer to the amount of "
         "product associated with the A1-A3 life cycle stage."
     )
-    kg_per_declared_unit: Amount | None = pyd.Field(
+    kg_per_declared_unit: AmountMass | None = pyd.Field(
         default=None,
         description="Mass of the product, in kilograms, per declared unit",
         example=Amount(qty=12.5, unit="kg").to_serializable(exclude_unset=True),

@@ -30,6 +30,7 @@ from openepd.model.declaration import (
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org, Plant
 from openepd.model.specs import Specs
+from openepd.model.validation.quantity import AmountMass
 from openepd.model.versioning import OpenEpdVersions, Version
 
 MANUFACTURER_DESCRIPTION = (
@@ -52,6 +53,11 @@ class EpdPreviewV0(
     Excludes LCIA data.
 
     """
+
+    doctype: str = pyd.Field(
+        description='Describes the type and schema of the document. Must always always read "openEPD".',
+        default="openEPD",
+    )
 
     product_name: str | None = pyd.Field(
         max_length=200, description="The name of the product described by this EPD", example="Mix 12345AC", default=None
@@ -79,14 +85,14 @@ class EpdPreviewV0(
         description="List of object(s) for one or more plant(s) that this declaration applies to.",
         default_factory=list,
     )
-    kg_C_per_declared_unit: Amount | None = pyd.Field(
+    kg_C_per_declared_unit: AmountMass | None = pyd.Field(
         default=None,
         description="Mass of elemental carbon, per declared unit, contained in the product itself at the manufacturing "
         "facility gate.  Used (among other things) to check a carbon balance or calculate incineration "
         "emissions.  The source of carbon (e.g. biogenic) is not relevant in this field.",
         example=Amount(qty=8.76, unit="kg"),
     )
-    kg_C_biogenic_per_declared_unit: Amount | None = pyd.Field(
+    kg_C_biogenic_per_declared_unit: AmountMass | None = pyd.Field(
         default=None,
         description="Mass of elemental carbon from biogenic sources, per declared unit, contained in the product "
         "itself at the manufacturing facility gate.  It may be presumed that any biogenic carbon content "
@@ -148,6 +154,17 @@ class EpdPreviewV0(
         "Each one should be an EPD or digitized LCI process.",
         default_factory=list,
     )
+
+    @pyd.validator("doctype")
+    def validate_doctype(cls, v: str | None) -> str:
+        """
+        Handle possible mixed case options for doctype.
+
+        Required for backward compatibility as some code might have already used 'doctype: OpenEPD' instead of 'openEPD'
+        """
+        if not v or v.lower() == "openepd":
+            return "openEPD"
+        raise ValueError("Invalid doctype")
 
 
 EpdPreview = EpdPreviewV0
