@@ -18,6 +18,8 @@ from enum import StrEnum
 import json
 from typing import Any, Callable, ClassVar, Generic, Optional, Type, TypeAlias, TypeVar
 
+from cqd import open_xpd_uuid  # type:ignore[import-untyped]
+
 from openepd.compat.pydantic import pyd, pyd_generics
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
 from openepd.model.versioning import OpenEpdVersions, Version
@@ -233,3 +235,31 @@ class BaseDocumentFactory(Generic[TRootDocument]):
                     )
         supported_versions = ", ".join(f"{v.major}.x" for v in cls.VERSION_MAP.keys())
         raise ValueError(f"Version {version} is not supported. Supported versions are: {supported_versions}")
+
+
+class OpenXpdUUID(str):
+    """
+    An open xpd UUID format for IDs of openEPD documents.
+
+    See https://github.com/cchangelabs/open-xpd-uuid-lib for details.
+    """
+
+    def _validate_id(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+
+        try:
+            open_xpd_uuid.validate(open_xpd_uuid.sanitize(str(v)))
+            return v
+        except open_xpd_uuid.GuidValidationError as e:
+            raise ValueError("Invalid format") from e
+
+    @classmethod
+    def __get_validators__(cls):
+        yield cls._validate_id
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        field_schema.update(
+            example="XC300001",
+        )

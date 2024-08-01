@@ -74,9 +74,17 @@ class EPDTestCase(unittest.TestCase):
             EpdFactory.from_dict({OPENEPD_VERSION_FIELD: version.as_str(), "doctype": OpenEpdDoctypes.Epd})
 
     def test_legacy_openepd_doctype(self):
-        for o in [{}, {"id": "abc"}, {"doctype": "openEPD"}, {"doctype": "OpenEPD"}]:
+        for o in [{}, {"id": "EC300001"}, {"doctype": "openEPD"}, {"doctype": "OpenEPD"}]:
             self.assertEqual(EpdPreviewV0.parse_obj(o).doctype, "openEPD")
 
         for o in [{"doctype": "abc"}, {"doctype": "openIndustryEpd"}, {"doctype": "openGenericEstimate"}]:
             with self.assertRaises(pyd.ValidationError):
                 self.assertEqual(EpdPreviewV0.parse_obj(o).doctype, "openEPD")
+
+    def test_id_valiation_works(self):
+        for the_id in [None, "EC300001", "ec300001"]:
+            self.assertEqual(the_id, Epd.parse_obj({"id": the_id}).id)
+
+        for the_id in ["", "abc", 15, "Ec3000001"]:
+            with self.assertRaises(pyd.ValidationError):
+                Epd.parse_obj({"id": the_id})

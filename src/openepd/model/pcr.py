@@ -18,7 +18,7 @@ from enum import StrEnum
 from typing import Annotated, Optional
 
 from openepd.compat.pydantic import pyd
-from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.base import BaseOpenEpdSchema, OpenXpdUUID
 from openepd.model.common import Amount, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.org import Org
 
@@ -36,7 +36,7 @@ class PcrStatus(StrEnum):
 class PcrRef(BaseOpenEpdSchema):
     """Reference to a PCR."""
 
-    id: str | None = pyd.Field(
+    id: OpenXpdUUID | None = pyd.Field(
         description="The unique ID for this PCR.  To ensure global uniqueness, should be registered "
         "at open-xpd-uuid.cqd.io/register or a coordinating registry.",
         example="ec3xpgq2",
@@ -56,7 +56,7 @@ class PcrRef(BaseOpenEpdSchema):
 class Pcr(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     """Represent a PCR (Product Category Rules)."""
 
-    id: str | None = pyd.Field(
+    id: OpenXpdUUID | None = pyd.Field(
         description="The unique ID for this PCR.  To ensure global uniqueness, should be registered "
         "at open-xpd-uuid.cqd.io/register or a coordinating registry.",
         example="ec3xpgq2",
