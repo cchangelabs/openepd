@@ -154,6 +154,12 @@ class AmountMass(AmountWithDimensionality):
     dimensionality_unit = OpenEPDUnit.kg
 
 
+class AmountGWP(AmountWithDimensionality):
+    """Amount of Global Warming Potential, measured in kgCO2e."""
+
+    dimensionality_unit = OpenEPDUnit.kg_co2
+
+
 class QuantityStr(str):
     """
     Quantity string type.

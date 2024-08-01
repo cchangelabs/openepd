@@ -24,7 +24,7 @@ from openepd.model.org import Org
 from openepd.model.pcr import Pcr
 from openepd.model.standard import Standard
 from openepd.model.validation.common import ReferenceStr
-from openepd.model.validation.quantity import AmountMass
+from openepd.model.validation.quantity import AmountGWP, AmountMass
 
 DEVELOPER_DESCRIPTION = "The organization responsible for the underlying LCA (and subsequent summarization as EPD)."
 PROGRAM_OPERATOR_DESCRIPTION = "JSON object for program operator Org"
@@ -136,19 +136,19 @@ class BaseDeclaration(RootDocument, abc.ABC):
         description="Link to data object on original registrar's site",
         example="https://epd-online.com/EmbeddedEpdList/Download/6029",
     )
-    kg_C_per_declared_unit: AmountMass | None = pyd.Field(
+    kg_C_per_declared_unit: AmountGWP | None = pyd.Field(
         default=None,
         description="Mass of elemental carbon, per declared unit, contained in the product itself at the manufacturing "
         "facility gate.  Used (among other things) to check a carbon balance or calculate incineration "
         "emissions.  The source of carbon (e.g. biogenic) is not relevant in this field.",
-        example=Amount(qty=8.76, unit="kg"),
+        example=Amount(qty=8.76, unit="kgCO2e"),
     )
-    kg_C_biogenic_per_declared_unit: AmountMass | None = pyd.Field(
+    kg_C_biogenic_per_declared_unit: AmountGWP | None = pyd.Field(
         default=None,
         description="Mass of elemental carbon from biogenic sources, per declared unit, contained in the product "
         "itself at the manufacturing facility gate.  It may be presumed that any biogenic carbon content "
         "has been accounted for as -44/12 kgCO2e per kg C in stages A1-A3, per EN15804 and ISO 21930.",
-        example=Amount(qty=8.76, unit="kg"),
+        example=Amount(qty=8.76, unit="kgCO2e"),
     )
     product_service_life_years: float | None = pyd.Field(
         gt=0.0009,
