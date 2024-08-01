@@ -37,6 +37,7 @@ pytest-subtests = "~=0.4"
 pytest-cov = "~=4.0"
 teamcity-messages = ">=1.31"
 wheel = "~=0.40.0"
+open-xpd-uuid = "~=0.2.1"
 
 # Dev tools
 black = "~=24.3"

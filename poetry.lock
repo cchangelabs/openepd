@@ -689,6 +689,17 @@ files = [
 setuptools = "*"
 
 [[package]]
+name = "open-xpd-uuid"
+version = "0.2.1"
+description = "A library of common functions used when creating and managing open-xpd-uuid, a common, globally-unique name space (uuid) for Product Declarations, including HPDs and EPDs, to help users find all environmental and health information related to a single product."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "open-xpd-uuid-0.2.1.tar.gz", hash = "sha256:de20d38ae8d7119fecae7ae2f24efadfd0db25b99a4bc46fb4229e9317f0a05e"},
+    {file = "open_xpd_uuid-0.2.1-py3-none-any.whl", hash = "sha256:5f23fb71cc93633f564a1d2ff3ead13c0691b8b48242ef195a8e72105b7c7ecf"},
+]
+
+[[package]]
 name = "packaging"
 version = "24.0"
 description = "Core utilities for Python packages"
@@ -1375,4 +1386,4 @@ api-client = ["requests"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "99d3893abf0a484b4724307a4d4ad7ea98771de780567285e1bb3773d46474a0"
+content-hash = "bb9bfc3d87aa084e275cd45e9a22e11a28d3fdfb15db52cfef09f6923ee219c5"
