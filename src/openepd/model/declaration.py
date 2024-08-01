@@ -17,7 +17,7 @@ import abc
 import datetime
 
 from openepd.compat.pydantic import pyd
-from openepd.model.base import BaseOpenEpdSchema, RootDocument
+from openepd.model.base import BaseOpenEpdSchema, OpenXpdUUID, RootDocument
 from openepd.model.common import Amount
 from openepd.model.geography import Geography
 from openepd.model.org import Org
@@ -34,8 +34,7 @@ THIRD_PARTY_VERIFIER_DESCRIPTION = "JSON object for Org that performed a critica
 class BaseDeclaration(RootDocument, abc.ABC):
     """Base class for declaration-related documents (EPDs, Industry-wide EPDs, Generic Estimates)."""
 
-    # TODO: Add validator for open-xpd-uuid on this field
-    id: str | None = pyd.Field(
+    id: OpenXpdUUID | None = pyd.Field(
         description="The unique ID for this document.  To ensure global uniqueness, should be registered at "
         "open-xpd-uuid.cqd.io/register or a coordinating registry.",
         example="1u7zsed8",
@@ -218,7 +217,7 @@ class WithEpdDeveloperMixin(pyd.BaseModel):
 class RefBase(BaseOpenEpdSchema, title="Ref Object"):
     """Base class for reference-style objects."""
 
-    id: str | None = pyd.Field(
+    id: OpenXpdUUID | None = pyd.Field(
         description="The unique ID for this object. To ensure global uniqueness, should be registered at "
         "open-xpd-uuid.cqd.io/register or a coordinating registry.",
         example="1u7zsed8",
