@@ -17,7 +17,7 @@ import abc
 import datetime
 
 from openepd.compat.pydantic import pyd
-from openepd.model.base import BaseOpenEpdSchema, RootDocument
+from openepd.model.base import BaseOpenEpdSchema, OpenXpdUUID, RootDocument
 from openepd.model.common import Amount
 from openepd.model.geography import Geography
 from openepd.model.org import Org
@@ -34,8 +34,7 @@ THIRD_PARTY_VERIFIER_DESCRIPTION = "JSON object for Org that performed a critica
 class BaseDeclaration(RootDocument, abc.ABC):
     """Base class for declaration-related documents (EPDs, Industry-wide EPDs, Generic Estimates)."""
 
-    # TODO: Add validator for open-xpd-uuid on this field
-    id: str | None = pyd.Field(
+    id: OpenXpdUUID | None = pyd.Field(
         description="The unique ID for this document.  To ensure global uniqueness, should be registered at "
         "open-xpd-uuid.cqd.io/register or a coordinating registry.",
         example="1u7zsed8",
@@ -127,6 +126,39 @@ class BaseDeclaration(RootDocument, abc.ABC):
     """,
     )
 
+    product_image_small: pyd.AnyUrl | None = pyd.Field(
+        description="Pointer to image illustrating the product, which is no more than 200x200 pixels", default=None
+    )
+    product_image: pyd.AnyUrl | pyd.FileUrl | None = pyd.Field(
+        description="pointer to image illustrating the product no more than 10MB", default=None
+    )
+    declaration_url: str | None = pyd.Field(
+        description="Link to data object on original registrar's site",
+        example="https://epd-online.com/EmbeddedEpdList/Download/6029",
+    )
+    kg_C_per_declared_unit: AmountMass | None = pyd.Field(
+        default=None,
+        description="Mass of elemental carbon, per declared unit, contained in the product itself at the manufacturing "
+        "facility gate.  Used (among other things) to check a carbon balance or calculate incineration "
+        "emissions.  The source of carbon (e.g. biogenic) is not relevant in this field.",
+        example=Amount(qty=8.76, unit="kg"),
+    )
+    kg_C_biogenic_per_declared_unit: AmountMass | None = pyd.Field(
+        default=None,
+        description="Mass of elemental carbon from biogenic sources, per declared unit, contained in the product "
+        "itself at the manufacturing facility gate.  It may be presumed that any biogenic carbon content "
+        "has been accounted for as -44/12 kgCO2e per kg C in stages A1-A3, per EN15804 and ISO 21930.",
+        example=Amount(qty=8.76, unit="kg"),
+    )
+    product_service_life_years: float | None = pyd.Field(
+        gt=0.0009,
+        lt=101,
+        description="Reference service life of the product, in years.  Serves as a maximum for replacement interval, "
+        "which may also be constrained by usage or the service life of what the product goes into "
+        "(e.g. a building).",
+        example=50.0,
+    )
+
 
 class AverageDatasetMixin(pyd.BaseModel, title="Average Dataset"):
     """Fields common for average dataset (Industry-wide EPDs, Generic Estimates)."""
@@ -185,7 +217,7 @@ class WithEpdDeveloperMixin(pyd.BaseModel):
 class RefBase(BaseOpenEpdSchema, title="Ref Object"):
     """Base class for reference-style objects."""
 
-    id: str | None = pyd.Field(
+    id: OpenXpdUUID | None = pyd.Field(
         description="The unique ID for this object. To ensure global uniqueness, should be registered at "
         "open-xpd-uuid.cqd.io/register or a coordinating registry.",
         example="1u7zsed8",

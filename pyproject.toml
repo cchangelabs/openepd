@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openepd"
-version = "4.12.0"
+version = "4.13.0"
 license = "Apache-2.0"
 description = "Python library to work with OpenEPD format"
 authors = ["C-Change Labs <support@c-change-labs.com>"]
@@ -37,6 +37,7 @@ pytest-subtests = "~=0.4"
 pytest-cov = "~=4.0"
 teamcity-messages = ">=1.31"
 wheel = "~=0.40.0"
+open-xpd-uuid = "~=0.2.1"
 
 # Dev tools
 black = "~=24.3"

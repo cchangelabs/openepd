@@ -1,3 +1,13 @@
+## 4.13.0 (2024-08-01)
+
+### Feat
+
+- generalize certain EPD fields to other types of declarations
+
+### Fix
+
+- add validator for open_xpd_uuid id field
+
 ## 4.12.0 (2024-07-31)
 
 ### Feat
