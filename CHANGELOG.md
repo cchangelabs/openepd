@@ -1,3 +1,10 @@
+## 4.13.1 (2024-08-01)
+
+### Fix
+
+- add correct kg_C_per_declared_unit to be AmountGWP
+- fix dependencies by promoting `open-xpd-uuid` to runtime deps
+
 ## 4.13.0 (2024-08-01)
 
 ### Feat
