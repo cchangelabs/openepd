@@ -285,3 +285,33 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
     PostTensioningSteel: PostTensioningSteelV1 | None = None
     RebarSteel: RebarSteelV1 | None = None
     WireMeshSteel: WireMeshSteelV1 | None = None
+
+
+class RangeFloat(BaseOpenEpdSchema):
+    """Structure representing a range of floats."""
+
+    min: float | None = pyd.Field(default=None, description="Lower value of the range.", example="3.1")
+    max: float | None = pyd.Field(default=None, description="Lower value of the range.", example="5.8")
+
+
+class RangeAmount(RangeFloat):
+    """Structure representing a range of quantities."""
+
+    unit: str | None = pyd.Field(default=None, description="Unit of the range.", example="kg")
+
+
+class SteelRangeV1(SteelV1):
+    """Steel range spec."""
+
+    bar_elongation: RangeFloat | None = pyd.Field(
+        default=None, description="Increase in length at break, in percent. Typically 10%-20%"
+    )
+    composition: list[SteelComposition] | None = pyd.Field(
+        default=None, description="Basic chemical composition", example="Carbon"
+    )
+    yield_tensile_str: RangeAmount | None = pyd.Field(
+        default=None,
+        description="Yield Tensile strength (Mpa) per unit area. Yield strength is the point at which a material "
+        "begins to permanently deform or change shape due to applied stress.",
+        example="100 MPa",
+    )

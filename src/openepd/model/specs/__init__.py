@@ -51,6 +51,7 @@ from openepd.model.specs.generated.thermal_moisture_protection import ThermalMoi
 from openepd.model.specs.generated.utility_piping import UtilityPipingV1
 from openepd.model.specs.generated.wood import WoodV1
 from openepd.model.specs.generated.wood_joists import WoodJoistsV1
+from src.openepd.model.specs.generated.steel import SteelRangeV1
 
 
 class Specs(BaseOpenEpdSchema):
@@ -91,3 +92,9 @@ class Specs(BaseOpenEpdSchema):
     MechanicalInsulation: MechanicalInsulationV1 | None = None
     OtherElectricalEquipment: OtherElectricalEquipmentV1 | None = None
     WoodJoists: WoodJoistsV1 | None = None
+
+
+class SpecsRange(Specs):
+    """Specs with ranges instead of single values (for example, compressive strength: min, max)."""
+
+    Steel: SteelRangeV1 | None = None
