@@ -34,6 +34,19 @@ class QuantityValidator(ABC):
     """
 
     @abstractmethod
+    def validate_same_dimensionality(self, unit: str | None, dimensionality_unit: str) -> None:
+        """
+        Validate that a given unit ('kg') has the same dimesnionality as provided dimensionality_unit ('g').
+
+        :param unit: unit to validate, not quantity
+        :param dimensionality_unit: unit to check against
+        :raise:
+            ValueError if dimensionality is different
+        :return: None
+        """
+        pass
+
+    @abstractmethod
     def validate_unit_correctness(self, value: str, dimensionality: str) -> None:
         """
         Validate the given string value against the given dimensionality.
@@ -79,12 +92,23 @@ class QuantityValidator(ABC):
         pass
 
 
+class ExternalValidationConfig:
+    """
+    Configuration holder for external validator.
+
+    Since openEPD library does not provide any facility for working with quantities/units, users should do this
+    by implementing the protocol for this validator and setting it with setup_external_validators function.
+    """
+
+    QUANTITY_VALIDATOR: ClassVar[QuantityValidator | None] = None
+
+
 def validate_unit_factory(dimensionality: OpenEPDUnit | str) -> "QuantityValidatorType":
     """Create validator for quantity field to check unit matching."""
 
     def validator(cls: "type[BaseOpenEpdHierarchicalSpec]", value: str) -> str:
-        if hasattr(cls, "_QUANTITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
-            cls._QUANTITY_VALIDATOR.validate_unit_correctness(value, dimensionality)
+        if ExternalValidationConfig.QUANTITY_VALIDATOR is not None:
+            ExternalValidationConfig.QUANTITY_VALIDATOR.validate_unit_correctness(value, dimensionality)
         return value
 
     return validator
@@ -94,8 +118,8 @@ def validate_quantity_ge_factory(min_value: str) -> "QuantityValidatorType":
     """Create validator to check that quantity is greater than or equal to min_value."""
 
     def validator(cls: "type[BaseOpenEpdHierarchicalSpec]", value: str) -> str:
-        if hasattr(cls, "_QUANTITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
-            cls._QUANTITY_VALIDATOR.validate_quantity_greater_or_equal(value, min_value)
+        if ExternalValidationConfig.QUANTITY_VALIDATOR is not None:
+            ExternalValidationConfig.QUANTITY_VALIDATOR.validate_quantity_greater_or_equal(value, min_value)
         return value
 
     return validator
@@ -105,8 +129,8 @@ def validate_quantity_le_factory(max_value: str) -> "QuantityValidatorType":
     """Create validator to check that quantity is less than or equal to max_value."""
 
     def validator(cls: "type[BaseOpenEpdHierarchicalSpec]", value: str) -> str:
-        if hasattr(cls, "_QUANTITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
-            cls._QUANTITY_VALIDATOR.validate_quantity_less_or_equal(value, max_value)
+        if ExternalValidationConfig.QUANTITY_VALIDATOR is not None:
+            ExternalValidationConfig.QUANTITY_VALIDATOR.validate_quantity_less_or_equal(value, max_value)
         return value
 
     return validator
@@ -116,9 +140,8 @@ def validate_quantity_for_new_validator(max_value: str) -> Callable:
     """Create validator to check that quantity is less than or equal to max_value."""
 
     def validator(value: str) -> str:
-        cls = BaseOpenEpdHierarchicalSpec
-        if hasattr(cls, "_QUANTITY_VALIDATOR") and cls._QUANTITY_VALIDATOR is not None:
-            cls._QUANTITY_VALIDATOR.validate_quantity_less_or_equal(value, max_value)
+        if ExternalValidationConfig.QUANTITY_VALIDATOR is not None:
+            ExternalValidationConfig.QUANTITY_VALIDATOR.validate_quantity_less_or_equal(value, max_value)
         return value
 
     return validator

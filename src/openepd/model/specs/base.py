@@ -18,7 +18,7 @@ from typing import Any
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema, Version
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
-from openepd.model.validation.quantity import QuantityValidator
+from openepd.model.validation.quantity import ExternalValidationConfig, QuantityValidator
 from openepd.model.versioning import WithExtVersionMixin
 
 
@@ -31,9 +31,6 @@ class BaseOpenEpdSpec(BaseOpenEpdSchema):
 
 class BaseOpenEpdHierarchicalSpec(BaseOpenEpdSpec, WithExtVersionMixin):
     """Base class for new specs (hierarchical, versioned)."""
-
-    # external validator for quantities (e.g. length, mass, etc.) which should be setup by the user of the library.
-    _QUANTITY_VALIDATOR: QuantityValidator | None = None
 
     def __init__(self, **data: Any) -> None:
         # ensure that all the concrete spec objects fail on creations if they dont have _EXT_VERSION declared to
@@ -53,4 +50,4 @@ class BaseOpenEpdHierarchicalSpec(BaseOpenEpdSpec, WithExtVersionMixin):
 
 def setup_external_validators(quantity_validator: QuantityValidator):
     """Set the implementation unit validator for specs."""
-    BaseOpenEpdHierarchicalSpec._QUANTITY_VALIDATOR = quantity_validator
+    ExternalValidationConfig.QUANTITY_VALIDATOR = quantity_validator

@@ -14,10 +14,12 @@
 #  limitations under the License.
 #
 from enum import StrEnum
+from typing import Any, ClassVar
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Measurement
+from openepd.model.validation.quantity import ExternalValidationConfig
 
 
 class EolScenario(BaseOpenEpdSchema):
@@ -69,6 +71,8 @@ class ScopeSet(BaseOpenEpdSchema):
     Any scopes with no entry are considered 'measure not declared' (null) rather than zero.
     The 'unit' field must be consistent across all scopes in a single scopeset.
     """
+
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = None
 
     A1A2A3: Measurement | None = pyd.Field(
         description="Sum of A1..A3",
@@ -194,17 +198,56 @@ class ScopeSet(BaseOpenEpdSchema):
         description="Potential net benefits from reuse, recycling, and/or energy recovery beyond the system boundary.",
     )
 
+    @pyd.root_validator
+    def _unit_validator(cls, values: dict[str, Any]) -> dict[str, Any]:
+        all_units = set()
 
-class ScopesetByNameBase(BaseOpenEpdSchema):
+        for k, v in values.items():
+            if isinstance(v, Measurement):
+                all_units.add(v.unit)
+
+        # units should be the same across all measurements (textually)
+        if len(all_units) > 1:
+            raise ValueError("All scopes and measurements should be expressed in the same unit.")
+
+        # can correctly validate unit
+        if cls.allowed_units is not None and len(all_units) == 1 and ExternalValidationConfig.QUANTITY_VALIDATOR:
+            unit = next(iter(all_units))
+            allowed_units = cls.allowed_units if isinstance(cls.allowed_units, tuple) else (cls.allowed_units,)
+
+            matched_unit = False
+            for allowed_unit in allowed_units:
+                try:
+                    ExternalValidationConfig.QUANTITY_VALIDATOR.validate_same_dimensionality(unit, allowed_unit)
+                    matched_unit = True
+                except ValueError:
+                    ...
+            if not matched_unit:
+                raise ValueError(
+                    f"'{', '.join(allowed_units)}' is only allowed unit for this scopeset. Provided '{unit}'"
+                )
+
+        return values
+
+
+class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
     """Base class for the data structures presented as typed name:scopeset mapping ."""
 
     def get_scopeset_names(self) -> list[str]:
         """
         Get the names of scopesets which have been set by model (not defaults).
 
-        :return: set of names, for example ['gwp', 'odp]
+        :return: set of names, for example ['gwp', 'odp']
         """
-        return [self.__fields__[f].alias or f for f in self.__fields_set__ if f not in ("ext",)]
+        result = []
+        for f in self.__fields_set__:
+            if f in ("ext",):
+                continue
+            field = self.__fields__.get(f)
+            # field can be explicitly specified, or can be an unknown impact covered by extra='allow'
+            result.append(field.alias if field and field.alias else f)
+
+        return result
 
     def get_scopeset_by_name(self, name: str) -> ScopeSet | None:
         """
@@ -213,39 +256,133 @@ class ScopesetByNameBase(BaseOpenEpdSchema):
         :param name: The name of the scopeset.
         :return: A scopeset if found, None otherwise
         """
+        # check known impacts first
         for f_name, f in self.__fields__.items():
             if f.alias == name:
                 return getattr(self, f_name)
             if f_name == name:
                 return getattr(self, f_name)
+        # probably unknown impact, coming from 'extra' fields
+        return getattr(self, name, None)
 
-        return None
+    @pyd.root_validator(skip_on_failure=True)
+    def _extra_scopeset_validator(cls, values: dict[str, Any]) -> dict[str, Any]:
+        for f in values:
+            # only interested in validating the extra fields
+            if f in cls.__fields__:
+                continue
+
+            # extra impact of an unknown type - engage validation of ScopeSet
+            extra_scopeset = values.get(f)
+            match extra_scopeset:
+                case ScopeSet():
+                    continue
+                case dict():
+                    values[f] = ScopeSet(**extra_scopeset)
+                case _:
+                    raise ValueError(f"{f} must be a ScopeSet schema")
+
+        return values
+
+
+class ScopeSetGwp(ScopeSet):
+    """ScopeSet measured in kgCO2e."""
+
+    allowed_units = "kgCO2e"
+
+
+class ScopeSetOdp(ScopeSet):
+    """ScopeSet measured in kgCFC11e."""
+
+    allowed_units = "kgCFC11e"
+
+
+class ScopeSetAp(ScopeSet):
+    """ScopeSet measured in kgSO2e."""
+
+    allowed_units = ("kgSO2e", "molHe")
+
+
+class ScopeSetEpNe(ScopeSet):
+    """ScopeSet measured in kgNe."""
+
+    allowed_units = "kgNe"
+
+
+class ScopeSetPocp(ScopeSet):
+    """ScopeSet measured in kgO3e."""
+
+    allowed_units = ("kgO3e", "kgNMVOCe")
+
+
+class ScopeSetEpFresh(ScopeSet):
+    """ScopeSet measured in kgPO4e."""
+
+    allowed_units = "kgPO4e"
+
+
+class ScopeSetEpTerr(ScopeSet):
+    """ScopeSet measured in molNe."""
+
+    allowed_units = "molNe"
+
+
+class ScopeSetIrp(ScopeSet):
+    """ScopeSet measured in kilo Becquerel equivalent of u235."""
+
+    allowed_units = "kBqU235e"
+
+
+class ScopeSetCTUh(ScopeSet):
+    """ScopeSet measured in CTUh."""
+
+    allowed_units = "CTUh"
+
+
+class ScopeSetM3Aware(ScopeSet):
+    """ScopeSet measured in m3AWARE Water consumption by AWARE method."""
+
+    allowed_units = "m3AWARE"
+
+
+class ScopeSetCTUe(ScopeSet):
+    """ScopeSet measured in CTUe."""
+
+    allowed_units = "CTUe"
+
+
+class ScopeSetDiseaseIncidence(ScopeSet):
+    """ScopeSet measuring disease incidence measured in AnnualPerCapita (cases)."""
+
+    allowed_units = "AnnualPerCapita"
 
 
 class ImpactSet(ScopesetByNameBase):
     """A set of impacts, such as GWP, ODP, AP, EP, POCP, EP-marine, EP-terrestrial, EP-freshwater, etc."""
 
-    gwp: ScopeSet | None = pyd.Field(
+    gwp: ScopeSetGwp | None = pyd.Field(
         default=None,
         description="GWP100, calculated per IPCC guidelines.  If any CO2 removals are "
         "part of this figure, the gwp-fossil, gwp-bioganic, gwp-luluc, an "
         "gwp-nonCO2 fields are required, as is "
         "kg_C_biogenic_per_declared_unit.",
     )
-    odp: ScopeSet | None = pyd.Field(default=None, description="Ozone Depletion Potential")
-    ap: ScopeSet | None = pyd.Field(default=None, description="Acidification Potential")
-    ep: ScopeSet | None = pyd.Field(
+    odp: ScopeSetOdp | None = pyd.Field(default=None, description="Ozone Depletion Potential")
+    ap: ScopeSetAp | None = pyd.Field(default=None, description="Acidification Potential")
+    ep: ScopeSetEpNe | None = pyd.Field(
         default=None, description="Eutrophication Potential in Marine Ecosystems. Has the same meaning as ep-marine."
     )
-    pocp: ScopeSet | None = pyd.Field(default=None, description="Photochemical Smog (Ozone) creation potential")
-    ep_marine: ScopeSet | None = pyd.Field(alias="ep-marine", default=None, description="Has the same meaning as 'ep'")
-    ep_fresh: ScopeSet | None = pyd.Field(
+    pocp: ScopeSetPocp | None = pyd.Field(default=None, description="Photochemical Smog (Ozone) creation potential")
+    ep_marine: ScopeSetEpNe | None = pyd.Field(
+        alias="ep-marine", default=None, description="Has the same meaning as 'ep'"
+    )
+    ep_fresh: ScopeSetEpFresh | None = pyd.Field(
         alias="ep-fresh", default=None, description="Eutrophication Potential in Freshwater Ecosystems"
     )
-    ep_terr: ScopeSet | None = pyd.Field(
+    ep_terr: ScopeSetEpTerr | None = pyd.Field(
         alias="ep-terr", default=None, description="Eutrophication Potential in Terrestrial Ecosystems"
     )
-    gwp_biogenic: ScopeSet | None = pyd.Field(
+    gwp_biogenic: ScopeSetGwp | None = pyd.Field(
         alias="gwp-biogenic",
         default=None,
         description="Net GWP from removals of atmospheric CO2 into biomass and  emissions of CO2 from biomass sources. "
@@ -254,7 +391,7 @@ class ImpactSet(ScopesetByNameBase):
         "space (similar biome).  They must not have been sold, committed, or credited to any other "
         "product.  Harvesting from native forests is handled under GWP_luluc for EN15804.",
     )
-    gwp_luluc: ScopeSet | None = pyd.Field(
+    gwp_luluc: ScopeSetGwp | None = pyd.Field(
         alias="gwp-luluc",
         default=None,
         description="Climate change effects related to land use and land use change, for example biogenic carbon "
@@ -262,16 +399,48 @@ class ImpactSet(ScopesetByNameBase):
         "emissions). All related emissions for native forests are included under this category. "
         "Uptake for native forests is set to 0 kgCO2 for EN15804.",
     )
-    gwp_nonCO2: ScopeSet | None = pyd.Field(
+    gwp_nonCO2: ScopeSetGwp | None = pyd.Field(
         alias="gwp-nonCO2",
         default=None,
         description="GWP from non-CO2, non-fossil sources, such as livestock-sourced CH4 and agricultural N2O.",
     )
-    gwp_fossil: ScopeSet | None = pyd.Field(
+    gwp_fossil: ScopeSetGwp | None = pyd.Field(
         alias="gwp-fossil",
         default=None,
         description="Climate change effects due to greenhouse gas emissions originating from the oxidation or "
         "reduction of fossil fuels or materials containing fossil carbon. [Source: EN15804]",
+    )
+    WDP: ScopeSetM3Aware | None = pyd.Field(
+        default=None,
+        description="Deprivation-weighted water consumption, calculated by the AWARE method "
+        "(https://wulca-waterlca.org/aware/what-is-aware)",
+    )
+    PM: ScopeSetDiseaseIncidence | None = pyd.Field(
+        default=None,
+        description="Potential incidence of disease due to particulate matter emissions.",
+    )
+    IRP: ScopeSetIrp | None = pyd.Field(
+        default=None,
+        description="Potential ionizing radiation effect on human health, relative to U235.",
+    )
+    ETP_fw: ScopeSetCTUe | None = pyd.Field(
+        alias="ETP-fw",
+        default=None,
+        description="Ecotoxicity in freshwater, in potential Comparative Toxic Unit for ecosystems.",
+    )
+    HTP_c: ScopeSetCTUh | None = pyd.Field(
+        alias="HTP-c",
+        default=None,
+        description="Human toxicity, cancer effects in potential Comparative Toxic Units for humans.",
+    )
+    HTP_nc: ScopeSetCTUh | None = pyd.Field(
+        alias="HTP-nc",
+        default=None,
+        description="Human toxicity, noncancer effects in potential Comparative Toxic Units for humans.",
+    )
+    SQP: ScopeSet | None = pyd.Field(
+        default=None,
+        description="Land use related impacts / Soil quality, in potential soil quality parameters.",
     )
 
 
