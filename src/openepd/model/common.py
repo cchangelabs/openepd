@@ -42,7 +42,7 @@ class Measurement(BaseOpenEpdSchema):
     """A scientific value with units and uncertainty."""
 
     mean: float = pyd.Field(description="Mean (expected) value of the measurement")
-    unit: str = pyd.Field(description="Measurement unit")
+    unit: str | None = pyd.Field(description="Measurement unit")
     rsd: pyd.PositiveFloat | None = pyd.Field(
         description="Relative standard deviation, i.e. standard_deviation/mean", default=None
     )
