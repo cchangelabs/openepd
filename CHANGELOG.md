@@ -1,3 +1,9 @@
+## 5.0.0 (2024-08-15)
+
+### Feat
+
+- implement strict validation for ScopeSets
+
 ## 4.13.1 (2024-08-01)
 
 ### Fix
