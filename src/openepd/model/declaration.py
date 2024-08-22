@@ -142,14 +142,14 @@ class BaseDeclaration(RootDocument, abc.ABC):
         description="Mass of elemental carbon, per declared unit, contained in the product itself at the manufacturing "
         "facility gate.  Used (among other things) to check a carbon balance or calculate incineration "
         "emissions.  The source of carbon (e.g. biogenic) is not relevant in this field.",
-        example=Amount(qty=8.76, unit="kgCO2e"),
+        example=Amount(qty=8.76, unit="kgCO2e").to_serializable(exclude_unset=True),
     )
     kg_C_biogenic_per_declared_unit: AmountGWP | None = pyd.Field(
         default=None,
         description="Mass of elemental carbon from biogenic sources, per declared unit, contained in the product "
         "itself at the manufacturing facility gate.  It may be presumed that any biogenic carbon content "
         "has been accounted for as -44/12 kgCO2e per kg C in stages A1-A3, per EN15804 and ISO 21930.",
-        example=Amount(qty=8.76, unit="kgCO2e"),
+        example=Amount(qty=8.76, unit="kgCO2e").to_serializable(exclude_unset=True),
     )
     product_service_life_years: float | None = pyd.Field(
         gt=0.0009,
@@ -174,7 +174,9 @@ class AverageDatasetMixin(pyd.BaseModel, title="Average Dataset"):
         "implies global applicability.",
     )
 
-    specs: SpecsRange | None = pyd.Field(default=None, description="Average dataset material performance specifiction.")
+    specs: SpecsRange | None = pyd.Field(
+        default=None, description="Average dataset material performance specifications."
+    )
 
 
 class WithProgramOperatorMixin(pyd.BaseModel):
