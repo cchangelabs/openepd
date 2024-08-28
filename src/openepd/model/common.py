@@ -167,25 +167,25 @@ class RangeBase(BaseOpenEpdSchema):
 class RangeFloat(RangeBase):
     """Structure representing a range of floats."""
 
-    min: float | None = pyd.Field(default=None, example="3.1")
-    max: float | None = pyd.Field(default=None, example="5.8")
+    min: float | None = pyd.Field(default=None, example=3.1)
+    max: float | None = pyd.Field(default=None, example=5.8)
 
 
 class RangeInt(RangeBase):
     """Structure representing a range of ints1."""
 
-    min: int | None = pyd.Field(default=None, example="2")
-    max: int | None = pyd.Field(default=None, example="3")
+    min: int | None = pyd.Field(default=None, example=2)
+    max: int | None = pyd.Field(default=None, example=3)
 
 
 class RangeRatioFloat(RangeFloat):
     """Range of ratios (0-1 to 0-10)."""
 
-    min: float | None = pyd.Field(default=None, example="0.2", ge=0, le=1)
-    max: float | None = pyd.Field(default=None, example="0.65", ge=0, le=1)
+    min: float | None = pyd.Field(default=None, example=0.2, ge=0, le=1)
+    max: float | None = pyd.Field(default=None, example=0.65, ge=0, le=1)
 
 
 class RangeAmount(RangeFloat):
     """Structure representing a range of quantities."""
 
-    unit: str | None = pyd.Field(default=None, description="Unit of the range.", example="kg")
+    unit: str | None = pyd.Field(default=None, description="Unit of the range.")
