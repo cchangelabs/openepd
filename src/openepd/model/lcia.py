@@ -681,12 +681,15 @@ class WithLciaMixin(BaseOpenEpdSchema):
     """Mixin for LCIA data."""
 
     impacts: Impacts | None = pyd.Field(
-        description="List of environmental impacts, compiled per one of the standard Impact Assessment methods"
+        description="List of environmental impacts, compiled per one of the standard Impact Assessment methods",
+        example={"TRACI 2.1": {"gwp": {"A1A2A3": {"mean": 22.4, "unit": "kgCO2e"}}}},
     )
     resource_uses: ResourceUseSet | None = pyd.Field(
-        description="Set of Resource Use Indicators, over various LCA scopes"
+        description="Set of Resource Use Indicators, over various LCA scopes",
+        example={"RPRe": {"A1A2A3": {"mean": 12, "unit": "MJ", "rsd": 0.12}}},
     )
     output_flows: OutputFlowSet | None = pyd.Field(
         description="Set of Waste and Output Flow indicators which describe the waste categories "
-        "and other material output flows derived from the LCI."
+        "and other material output flows derived from the LCI.",
+        example={"hwd": {"A1A2A3": {"mean": 2300, "unit": "kg", "rsd": 0.22}}},
     )
