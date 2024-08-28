@@ -143,6 +143,11 @@ codes, UN m49 codification, and special regions. To update the enums, first upda
 Windows is not supported for development. You can use WSL2 with Ubuntu 20.04 or higher.
 Instructions are the same as for regular GNU/Linux installation.
 
+### Commit messages
+
+Commit messages should follow [Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/#specification) 
+specification as we use automatic version with [commitizen](https://commitizen-tools.github.io/commitizen/).
+
 # Credits
 
 This library has been written and maintained by [C-Change Labs](https://c-change-labs.com/).
