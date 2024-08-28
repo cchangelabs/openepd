@@ -91,12 +91,12 @@ class Pcr(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         default=None,
     )
     date_of_issue: datetime.datetime | None = pyd.Field(
-        example=datetime.date(day=11, month=2, year=2022),
+        example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.timezone.utc),
         default=None,
         description="First day on which the document is valid",
     )
     valid_until: datetime.datetime | None = pyd.Field(
-        example=datetime.date(day=11, month=2, year=2024),
+        example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.timezone.utc),
         default=None,
         description="Last day on which the document is valid",
     )

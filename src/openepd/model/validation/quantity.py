@@ -325,7 +325,13 @@ class WithDimensionalityMixin(BaseOpenEpdSchema):
 class AmountRangeWithDimensionality(RangeAmount, WithDimensionalityMixin):
     """Mass amount, range."""
 
-    pass
+    class Config:
+        """Pydantic config."""
+
+        @staticmethod
+        def schema_extra(schema: dict[str, Any], model: type["AmountRangeWithDimensionality"]) -> None:
+            """Modify json schema."""
+            schema["example"] = {"min": 1.2, "max": 3.4, "unit": str(model.dimensionality_unit) or None}
 
 
 class WithMassKgMixin(WithDimensionalityMixin):
