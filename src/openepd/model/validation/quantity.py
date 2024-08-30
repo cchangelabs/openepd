@@ -163,8 +163,10 @@ class QuantityStr(str):
 
     @classmethod
     def __get_validators__(cls):
-        yield validate_quantity_unit_factory(cls.unit)
-        yield validate_quantity_ge_factory(f"0 {cls.unit}")
+        unit = getattr(cls, "unit", None)
+        if unit:
+            yield validate_quantity_unit_factory(cls.unit)
+            yield validate_quantity_ge_factory(f"0 {cls.unit}")
 
     @classmethod
     def __modify_schema__(cls, field_schema):
