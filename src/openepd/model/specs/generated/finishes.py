@@ -52,7 +52,7 @@ from openepd.model.validation.quantity import (
     PressureMPaStr,
     validate_quantity_ge_factory,
     validate_quantity_le_factory,
-    validate_unit_factory,
+    validate_quantity_unit_factory,
 )
 
 
@@ -85,10 +85,10 @@ class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
 
     _access_flooring_rolling_load_10_pass_is_quantity_validator = pyd.validator(
         "rolling_load_10_pass", allow_reuse=True
-    )(validate_unit_factory("N"))
+    )(validate_quantity_unit_factory("N"))
     _access_flooring_rolling_load_10000_pass_is_quantity_validator = pyd.validator(
         "rolling_load_10000_pass", allow_reuse=True
-    )(validate_unit_factory("N"))
+    )(validate_quantity_unit_factory("N"))
 
 
 class CarpetV1(BaseOpenEpdHierarchicalSpec):
@@ -114,7 +114,9 @@ class CarpetV1(BaseOpenEpdHierarchicalSpec):
     gwp_factor_base: GwpKgCo2eStr | None = pyd.Field(default=None, description="", example="1 kgCO2e")
     gwp_factor_yarn: GwpKgCo2eStr | None = pyd.Field(default=None, description="", example="1 kgCO2e")
 
-    _yarn_weight_is_quantity_validator = pyd.validator("yarn_weight", allow_reuse=True)(validate_unit_factory("g / m2"))
+    _yarn_weight_is_quantity_validator = pyd.validator("yarn_weight", allow_reuse=True)(
+        validate_quantity_unit_factory("g / m2")
+    )
     _yarn_weight_ge_validator = pyd.validator("yarn_weight", allow_reuse=True)(validate_quantity_ge_factory("0 g / m2"))
 
 
@@ -348,7 +350,7 @@ class CementBoardV1(BaseOpenEpdHierarchicalSpec):
     )
 
     _cement_board_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
-        validate_unit_factory("m")
+        validate_quantity_unit_factory("m")
     )
 
 
@@ -456,7 +458,9 @@ class GypsumV1(BaseOpenEpdHierarchicalSpec):
     moisture_resistant: bool | None = pyd.Field(default=None, description="", example=True)
     abuse_resistant: bool | None = pyd.Field(default=None, description="", example=True)
 
-    _gypsum_r_factor_is_quantity_validator = pyd.validator("r_factor", allow_reuse=True)(validate_unit_factory("RSI"))
+    _gypsum_r_factor_is_quantity_validator = pyd.validator("r_factor", allow_reuse=True)(
+        validate_quantity_unit_factory("RSI")
+    )
 
     # Nested specs:
     GypsumSupports: GypsumSupportsV1 | None = None
