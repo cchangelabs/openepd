@@ -13,13 +13,15 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from typing import Annotated
+
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec, CodegenSpec
 from openepd.model.specs.generated.enums import SteelComposition, SteelRebarGrade
 from openepd.model.standard import Standard
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, validate_quantity_unit_factory
 
 
 class SteelMakingRoute(BaseOpenEpdSchema):
@@ -185,10 +187,10 @@ class StructuralSteelV1(BaseOpenEpdHierarchicalSpec):
     )
 
     _steel_thermal_expansion_is_quantity_validator = pyd.validator("thermal_expansion", allow_reuse=True)(
-        validate_unit_factory("1 / K")
+        validate_quantity_unit_factory("1 / K")
     )
     _steel_thermal_conductivity_is_quantity_validator = pyd.validator("thermal_conductivity", allow_reuse=True)(
-        validate_unit_factory("W / (m * K)")
+        validate_quantity_unit_factory("W / (m * K)")
     )
 
     # Nested specs:
@@ -252,6 +254,7 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
         default=None, description="Increase in length at break, in percent. Typically 10%-20%", example=0.2
     )
     recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
+    # todo look how to pass validation down to range fields
     post_consumer_recycled_content: RatioFloat | None = pyd.Field(
         default=None,
         description="Should be a number between zero and the Recycled Content (steel_recycled_content)",
@@ -271,7 +274,9 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
     cold_finished: bool | None = pyd.Field(default=None, example=True)
     galvanized: bool | None = pyd.Field(default=None, example=True)
     stainless: bool | None = pyd.Field(default=None, example=True)
-    making_route: SteelMakingRoute | None = pyd.Field(default=None)
+    making_route: Annotated[SteelMakingRoute | None, CodegenSpec(override_type=SteelMakingRoute)] = pyd.Field(
+        default=None
+    )
     astm_standards: list[Standard] | None = pyd.Field(default=None, description="List of ASTM standards")
     sae_standards: list[Standard] | None = pyd.Field(default=None, description="List of SAE standards")
     en_standards: list[Standard] | None = pyd.Field(default=None, description="List of EN standards")

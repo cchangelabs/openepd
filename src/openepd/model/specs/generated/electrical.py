@@ -26,7 +26,7 @@ from openepd.model.validation.quantity import (
     PowerStr,
     validate_quantity_ge_factory,
     validate_quantity_le_factory,
-    validate_unit_factory,
+    validate_quantity_unit_factory,
 )
 
 
@@ -268,7 +268,7 @@ class LightingV1(BaseOpenEpdHierarchicalSpec):
         validate_quantity_le_factory("1E+04 K")
     )
     _typical_utilization_unit_validator = pyd.validator("typical_utilization", allow_reuse=True)(
-        validate_unit_factory("h / yr")
+        validate_quantity_unit_factory("h / yr")
     )
     _typical_utilization_quantity_ge_validator = pyd.validator("typical_utilization", allow_reuse=True)(
         validate_quantity_ge_factory("25 h / yr")

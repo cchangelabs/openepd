@@ -13,10 +13,16 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from typing import Annotated
 
-from openepd.compat.pydantic import pyd
 
-# todo when move to pydantic 2, check that validators are being enforced.
-RatioFloat = Annotated[float, pyd.Field(ge=0, le=1, example=0.5)]
-PositiveInt = Annotated[int, pyd.Field(ge=0, example=1)]
+# todo when move to pydantic 2, these should change to Annotated[float, ...]
+class RatioFloat(float):
+    """Float representing a ratio (0-1)."""
+
+    pass
+
+
+class PositiveInt(int):
+    """Greater than zero integer."""
+
+    pass

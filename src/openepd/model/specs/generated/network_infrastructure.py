@@ -28,7 +28,12 @@ from openepd.model.specs.generated.enums import (
     RackType,
 )
 from openepd.model.specs.generated.mixins.conduit_mixin import ConduitMixin
-from openepd.model.validation.quantity import ElectricalCurrentStr, LengthMmStr, MassKgStr, validate_unit_factory
+from openepd.model.validation.quantity import (
+    ElectricalCurrentStr,
+    LengthMmStr,
+    MassKgStr,
+    validate_quantity_unit_factory,
+)
 
 
 class PDUV1(BaseOpenEpdHierarchicalSpec):
@@ -43,7 +48,7 @@ class PDUV1(BaseOpenEpdHierarchicalSpec):
     pdu_technology: PduTechnology | None = pyd.Field(default=None, description="", example="Basic")
     pdu_outlets: int | None = pyd.Field(default=None, description="", example=3, le=200)
 
-    _amperage_is_quantity_validator = pyd.validator("amperage", allow_reuse=True)(validate_unit_factory("A"))
+    _amperage_is_quantity_validator = pyd.validator("amperage", allow_reuse=True)(validate_quantity_unit_factory("A"))
 
 
 class CabinetsRacksAndEnclosuresV1(BaseOpenEpdHierarchicalSpec):

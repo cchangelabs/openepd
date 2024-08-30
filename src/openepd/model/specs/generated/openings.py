@@ -26,7 +26,7 @@ from openepd.model.specs.generated.enums import (
     ThermalSeparation,
 )
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, SpeedStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, SpeedStr, validate_quantity_unit_factory
 
 
 class GlazingIntendedApplication(BaseOpenEpdSchema):
@@ -197,7 +197,7 @@ class FlatGlassPanesV1(BaseOpenEpdHierarchicalSpec):
     thickness: FlatGlassPanesThickness | None = pyd.Field(default=None, example="12 mm")
 
     _flat_glass_panes_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
-        validate_unit_factory("m")
+        validate_quantity_unit_factory("m")
     )
 
 
@@ -380,10 +380,10 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin):
     )
 
     _assembly_u_factor_is_quantity_validator = pyd.validator("assembly_u_factor", allow_reuse=True)(
-        validate_unit_factory("USI")
+        validate_quantity_unit_factory("USI")
     )
     _nafs_performance_grade_is_quantity_validator = pyd.validator("performance_grade", allow_reuse=True)(
-        validate_unit_factory("psf")
+        validate_quantity_unit_factory("psf")
     )
 
     # Nested specs:
@@ -424,8 +424,12 @@ class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin)
         default=None, description="Spacer material for Integrated Glass Unit.", example="Aluminium"
     )
 
-    _dp_rating_is_quantity_validator = pyd.validator("dp_rating", allow_reuse=True)(validate_unit_factory("MPa"))
-    _cog_u_factor_is_quantity_validator = pyd.validator("cog_u_factor", allow_reuse=True)(validate_unit_factory("USI"))
+    _dp_rating_is_quantity_validator = pyd.validator("dp_rating", allow_reuse=True)(
+        validate_quantity_unit_factory("MPa")
+    )
+    _cog_u_factor_is_quantity_validator = pyd.validator("cog_u_factor", allow_reuse=True)(
+        validate_quantity_unit_factory("USI")
+    )
 
 
 class CurtainWallsV1(BaseOpenEpdHierarchicalSpec):

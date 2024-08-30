@@ -13,10 +13,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from typing import Literal
+from typing import Annotated, Literal
 
 from openepd.compat.pydantic import pyd
-from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.concrete import Cementitious, ConcreteTypicalApplication
 from openepd.model.specs.generated.enums import AciExposureClass, CsaExposureClass, EnExposureClass
 from openepd.model.validation.numbers import RatioFloat
@@ -25,7 +25,7 @@ from openepd.model.validation.quantity import (
     LengthMmStr,
     MassKgStr,
     PressureMPaStr,
-    validate_unit_factory,
+    validate_quantity_unit_factory,
 )
 
 
@@ -53,7 +53,7 @@ class ConcretePavingV1(BaseOpenEpdHierarchicalSpec):
     )
 
     _concrete_flexion_strength_is_quantity_validator = pyd.validator("flexion_strength", allow_reuse=True)(
-        validate_unit_factory("MPa")
+        validate_quantity_unit_factory("MPa")
     )
 
 
@@ -119,9 +119,10 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
         description="A strength spec which is to be reached later other 28 days (e.g. 42d)",
         example="30 MPa",
     )
-    strength_other_d: Literal[3, 7, 14, 42, 56, 72, 96, 120] | None = pyd.Field(
-        default=None, description="Test Day for strength_other", example=42
-    )
+    strength_other_d: Annotated[
+        Literal[3, 7, 14, 42, 56, 72, 96, 120] | None,
+        CodegenSpec(override_type=Literal[3, 7, 14, 42, 56, 72, 96, 120]),
+    ] = pyd.Field(default=None, description="Test Day for strength_other", example=42)
 
     slump: LengthInchStr | None = pyd.Field(default=None, description="", example="2 in")
     min_slump: LengthInchStr | None = pyd.Field(default=None, description="Minimum test slump", example="2 in")
