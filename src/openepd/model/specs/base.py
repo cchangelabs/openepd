@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+import dataclasses
 from typing import Any
 
 from openepd.compat.pydantic import pyd
@@ -51,3 +52,15 @@ class BaseOpenEpdHierarchicalSpec(BaseOpenEpdSpec, WithExtVersionMixin):
 def setup_external_validators(quantity_validator: QuantityValidator):
     """Set the implementation unit validator for specs."""
     ExternalValidationConfig.QUANTITY_VALIDATOR = quantity_validator
+
+
+@dataclasses.dataclass(kw_only=True)
+class CodegenSpec:
+    """
+    Specification for codegen when generating RangeSpecs from normal specs.
+
+    See openepd.mode.specs.README.md for details.
+    """
+
+    exclude_from_codegen: bool = False
+    override_type: type
