@@ -16,7 +16,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import CladdingFacingMaterial, CladdingInsulatingMaterial, SidingFormFactor
-from openepd.model.validation.quantity import LengthMmStr, LengthMStr, RValueStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, LengthMStr, RValueStr, validate_quantity_unit_factory
 
 
 class AluminiumSidingV1(BaseOpenEpdHierarchicalSpec):
@@ -75,7 +75,7 @@ class InsulatedVinylSidingV1(BaseOpenEpdHierarchicalSpec):
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="1 mm")
 
     _vinyl_siding_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
-        validate_unit_factory("m")
+        validate_quantity_unit_factory("m")
     )
 
 
@@ -109,7 +109,7 @@ class VinylSidingV1(BaseOpenEpdHierarchicalSpec):
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="5 mm")
 
     _vinyl_siding_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
-        validate_unit_factory("m")
+        validate_quantity_unit_factory("m")
     )
 
 
@@ -191,7 +191,7 @@ class CladdingV1(BaseOpenEpdHierarchicalSpec):
     thickness: LengthMStr | None = pyd.Field(default=None, description="", example="10 mm")
     facing_material: CladdingFacingMaterial | None = pyd.Field(default=None, description="", example="Steel")
 
-    _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
+    _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_quantity_unit_factory("m"))
 
     # Nested specs:
     Siding: SidingV1 | None = None

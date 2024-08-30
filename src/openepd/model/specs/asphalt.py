@@ -19,7 +19,7 @@ from openepd.compat.pydantic import pyd
 from openepd.model.common import OpenEPDUnit
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import LengthMmStr, TemperatureCStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, TemperatureCStr, validate_quantity_unit_factory
 
 
 class AsphaltMixType(StrEnum):
@@ -79,5 +79,5 @@ class AsphaltV1(BaseOpenEpdHierarchicalSpec):
     asphalt_pmb: bool | None = pyd.Field(default=None, description="Polymer modified bitumen (PMB)")
 
     _aggregate_size_max_validator = pyd.validator("asphalt_aggregate_size_max", allow_reuse=True)(
-        validate_unit_factory(OpenEPDUnit.m)
+        validate_quantity_unit_factory(OpenEPDUnit.m)
     )

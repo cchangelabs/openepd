@@ -16,7 +16,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.generated.enums import GypsumFacing, GypsumFireRating, GypsumThickness
-from openepd.model.validation.quantity import LengthMmStr, validate_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, validate_quantity_unit_factory
 
 
 class CementitiousSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
@@ -33,7 +33,7 @@ class CementitiousSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
     cement_board_thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
 
     _cement_board_thickness_is_quantity_validator = pyd.validator("cement_board_thickness", allow_reuse=True)(
-        validate_unit_factory("m")
+        validate_quantity_unit_factory("m")
     )
 
 
@@ -65,8 +65,12 @@ class GypsumSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
     moisture_resistant: bool | None = pyd.Field(default=None, description="", example=True)
     abuse_resistant: bool | None = pyd.Field(default=None, description="", example=True)
 
-    _gypsum_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_unit_factory("m"))
-    _gypsum_r_factor_is_quantity_validator = pyd.validator("r_factor", allow_reuse=True)(validate_unit_factory("RSI"))
+    _gypsum_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
+        validate_quantity_unit_factory("m")
+    )
+    _gypsum_r_factor_is_quantity_validator = pyd.validator("r_factor", allow_reuse=True)(
+        validate_quantity_unit_factory("RSI")
+    )
 
 
 class SheathingV1(BaseOpenEpdHierarchicalSpec):
