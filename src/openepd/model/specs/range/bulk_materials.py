@@ -13,4 +13,19 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-VERSION = "5.1.0"
+__all__ = ("BulkMaterialsRangeV1",)
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+
+
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+
+
+class BulkMaterialsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    A generic category for materials whose declared unit is mass and which are not in another category.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"

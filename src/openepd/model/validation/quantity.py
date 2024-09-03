@@ -17,12 +17,11 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, Callable, ClassVar
 
 from openepd.compat.pydantic import pyd
-from openepd.model.common import Amount, OpenEPDUnit
+from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.common import Amount, OpenEPDUnit, RangeAmount
 
 if TYPE_CHECKING:
-    from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-
-    QuantityValidatorType = Callable[[type[BaseOpenEpdHierarchicalSpec], str], str]
+    QuantityValidatorType = Callable[[type, str], str]
 
 
 class QuantityValidator(ABC):
@@ -104,9 +103,20 @@ class ExternalValidationConfig:
 
 
 def validate_unit_factory(dimensionality: OpenEPDUnit | str) -> "QuantityValidatorType":
+    """Create validator for units (not quantities) to check for dimensionality."""
+
+    def validator(cls: type | None, value: str) -> str:
+        if ExternalValidationConfig.QUANTITY_VALIDATOR is not None:
+            ExternalValidationConfig.QUANTITY_VALIDATOR.validate_same_dimensionality(value, dimensionality)
+        return value
+
+    return validator
+
+
+def validate_quantity_unit_factory(dimensionality: OpenEPDUnit | str) -> "QuantityValidatorType":
     """Create validator for quantity field to check unit matching."""
 
-    def validator(cls: "type[BaseOpenEpdHierarchicalSpec]", value: str) -> str:
+    def validator(cls: type | None, value: str) -> str:
         if ExternalValidationConfig.QUANTITY_VALIDATOR is not None:
             ExternalValidationConfig.QUANTITY_VALIDATOR.validate_unit_correctness(value, dimensionality)
         return value
@@ -117,7 +127,7 @@ def validate_unit_factory(dimensionality: OpenEPDUnit | str) -> "QuantityValidat
 def validate_quantity_ge_factory(min_value: str) -> "QuantityValidatorType":
     """Create validator to check that quantity is greater than or equal to min_value."""
 
-    def validator(cls: "type[BaseOpenEpdHierarchicalSpec]", value: str) -> str:
+    def validator(cls: type | None, value: str) -> str:
         if ExternalValidationConfig.QUANTITY_VALIDATOR is not None:
             ExternalValidationConfig.QUANTITY_VALIDATOR.validate_quantity_greater_or_equal(value, min_value)
         return value
@@ -128,18 +138,7 @@ def validate_quantity_ge_factory(min_value: str) -> "QuantityValidatorType":
 def validate_quantity_le_factory(max_value: str) -> "QuantityValidatorType":
     """Create validator to check that quantity is less than or equal to max_value."""
 
-    def validator(cls: "type[BaseOpenEpdHierarchicalSpec]", value: str) -> str:
-        if ExternalValidationConfig.QUANTITY_VALIDATOR is not None:
-            ExternalValidationConfig.QUANTITY_VALIDATOR.validate_quantity_less_or_equal(value, max_value)
-        return value
-
-    return validator
-
-
-def validate_quantity_for_new_validator(max_value: str) -> Callable:
-    """Create validator to check that quantity is less than or equal to max_value."""
-
-    def validator(value: str) -> str:
+    def validator(cls: type | None, value: str) -> str:
         if ExternalValidationConfig.QUANTITY_VALIDATOR is not None:
             ExternalValidationConfig.QUANTITY_VALIDATOR.validate_quantity_less_or_equal(value, max_value)
         return value
@@ -149,38 +148,6 @@ def validate_quantity_for_new_validator(max_value: str) -> Callable:
 
 # for arbitrary non-standard quantity
 # todo these types should be replaced by Annotated[str, AfterValidator...] as we move completely to pydantic 2
-
-
-class AmountWithDimensionality(Amount, ABC):
-    """Class for dimensionality-validated amounts."""
-
-    dimensionality_unit: ClassVar[str | None] = None
-
-    # Unit for dimensionality to validate against, for example "kg"
-
-    @pyd.root_validator
-    def check_dimensionality_matches(cls, values: dict[str, Any]) -> dict[str, Any]:
-        """Check that this amount conforms to the same dimensionality as dimensionality_unit."""
-        if not cls.dimensionality_unit:
-            return values
-
-        from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-
-        str_repr = f"{values['qty']} {values['unit']}"
-        validate_unit_factory(cls.dimensionality_unit)(BaseOpenEpdHierarchicalSpec, str_repr)
-        return values
-
-
-class AmountMass(AmountWithDimensionality):
-    """Amount of mass, measured in kg, t, etc."""
-
-    dimensionality_unit = OpenEPDUnit.kg
-
-
-class AmountGWP(AmountWithDimensionality):
-    """Amount of Global Warming Potential, measured in kgCO2e."""
-
-    dimensionality_unit = OpenEPDUnit.kg_co2
 
 
 class QuantityStr(str):
@@ -196,8 +163,10 @@ class QuantityStr(str):
 
     @classmethod
     def __get_validators__(cls):
-        yield validate_unit_factory(cls.unit)
-        yield validate_quantity_ge_factory(f"0 {cls.unit}")
+        unit = getattr(cls, "unit", None)
+        if unit:
+            yield validate_quantity_unit_factory(cls.unit)
+            yield validate_quantity_ge_factory(f"0 {cls.unit}")
 
     @classmethod
     def __modify_schema__(cls, field_schema):
@@ -245,7 +214,7 @@ class LengthMmStr(QuantityStr):
 class LengthInchStr(QuantityStr):
     """Length (inch) quantity type."""
 
-    unit = OpenEPDUnit.m
+    unit = "inch"
 
     @classmethod
     def __modify_schema__(cls, field_schema):
@@ -336,3 +305,422 @@ class AreaPerVolumeStr(QuantityStr):
     """Area per unit of volume quantity type."""
 
     unit = "m2 / l"
+
+
+class WithDimensionalityMixin(BaseOpenEpdSchema):
+    """Class for dimensionality-validated amounts."""
+
+    dimensionality_unit: ClassVar[str | None] = None
+
+    # Unit for dimensionality to validate against, for example "kg"
+
+    @pyd.root_validator
+    def check_dimensionality_matches(cls, values: dict[str, Any]) -> dict[str, Any]:
+        """Check that this amount conforms to the same dimensionality as dimensionality_unit."""
+        if not cls.dimensionality_unit:
+            return values
+
+        validate_unit_factory(cls.dimensionality_unit)(BaseOpenEpdSchema, values.get("unit"))  # type:ignore [arg-type]
+        return values
+
+
+class AmountRangeWithDimensionality(RangeAmount, WithDimensionalityMixin):
+    """Mass amount, range."""
+
+    class Config:
+        """Pydantic config."""
+
+        @staticmethod
+        def schema_extra(schema: dict[str, Any], model: type["AmountRangeWithDimensionality"]) -> None:
+            """Modify json schema."""
+            schema["example"] = {"min": 1.2, "max": 3.4, "unit": str(model.dimensionality_unit) or None}
+
+
+class WithMassKgMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = MassKgStr.unit
+
+
+class AmountMass(Amount, WithMassKgMixin):
+    """Amount of mass, measured in kg, t, etc."""
+
+    pass
+
+
+class AmountRangeMass(AmountRangeWithDimensionality, WithMassKgMixin):
+    """Range of masses."""
+
+    pass
+
+
+class WithGwpMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = GwpKgCo2eStr.unit
+
+
+class AmountGWP(Amount, WithGwpMixin):
+    """Amount of Global Warming Potential, measured in kgCO2e."""
+
+    pass
+
+
+class AmountRangeGWP(AmountRangeWithDimensionality, WithGwpMixin):
+    """Range of masses."""
+
+    pass
+
+
+class WithLengthMMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    pass
+
+
+class AmountRangeLengthM(AmountRangeWithDimensionality, WithLengthMMixin):
+    """Range of lengths (m)."""
+
+    pass
+
+
+class AmountLengthM(Amount, WithLengthMMixin):
+    """Length (m)."""
+
+    pass
+
+
+class WithLengthMmMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = LengthMmStr.unit
+
+
+class AmountLengthMm(Amount, WithLengthMMixin):
+    """Length (mm)."""
+
+    pass
+
+
+class AmountRangeLengthMm(AmountRangeWithDimensionality, WithLengthMmMixin):
+    """Range of lengths (mm)."""
+
+    pass
+
+
+class WithPressureMpaMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = PressureMPaStr.unit
+
+
+class AmountPressureMpa(Amount, WithPressureMpaMixin):
+    """Length (mm)."""
+
+    pass
+
+
+class AmountRangePressureMpa(AmountRangeWithDimensionality, WithPressureMpaMixin):
+    """Range of lengths (mm)."""
+
+    pass
+
+
+class WithAreaM2Mixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = AreaM2Str.unit
+
+
+class AmountAreaM2(Amount, WithAreaM2Mixin):
+    """Area (m2)."""
+
+    pass
+
+
+class AmountRangeAreaM2(AmountRangeWithDimensionality, WithAreaM2Mixin):
+    """Range of Area (m2)."""
+
+    pass
+
+
+class WithLengthInchStr(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = LengthInchStr.unit
+
+
+class AmountLengthInch(Amount, WithLengthInchStr):
+    """Length (inch)."""
+
+    pass
+
+
+class AmountRangeLengthInch(AmountRangeWithDimensionality, WithLengthInchStr):
+    """Range of Length (inch)."""
+
+    pass
+
+
+class WithTemperatureCMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = TemperatureCStr.unit
+
+
+class AmountTemperatureC(Amount, WithTemperatureCMixin):
+    """Temperature (degrees C)."""
+
+    pass
+
+
+class AmountRangeTemperatureC(AmountRangeWithDimensionality, WithTemperatureCMixin):
+    """Range of Temperature (degrees C)."""
+
+    pass
+
+
+class WithCapacityPerHourMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = CapacityPerHourStr.unit
+
+
+class AmountCapacityPerHour(Amount, WithCapacityPerHourMixin):
+    """Capacity per hour."""
+
+    pass
+
+
+class AmountRangeCapacityPerHour(AmountRangeWithDimensionality, WithCapacityPerHourMixin):
+    """Capacity per hour range."""
+
+    pass
+
+
+class WithRValueMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = RValueStr.unit
+
+
+class AmountRValue(Amount, WithRValueMixin):
+    """R-Value."""
+
+    pass
+
+
+class AmountRangeRValue(AmountRangeWithDimensionality, WithRValueMixin):
+    """R-Value range."""
+
+    pass
+
+
+class WithSpeedMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = SpeedStr.unit
+
+
+class AmountSpeed(Amount, WithSpeedMixin):
+    """Speed."""
+
+    pass
+
+
+class AmountRangeSpeed(AmountRangeWithDimensionality, WithSpeedMixin):
+    """Speed range."""
+
+    pass
+
+
+class WithColorTemperatureMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = ColorTemperatureStr.unit
+
+
+class AmountColorTemperature(Amount, WithColorTemperatureMixin):
+    """Color temperature."""
+
+    pass
+
+
+class AmountRangeColorTemperature(AmountRangeWithDimensionality, WithColorTemperatureMixin):
+    """Color temperature range."""
+
+    pass
+
+
+class WithLuminosityMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = LuminosityStr.unit
+
+
+class AmountLuminosity(Amount, WithLuminosityMixin):
+    """Luminosity."""
+
+    pass
+
+
+class AmountRangeLuminosity(AmountRangeWithDimensionality, WithLuminosityMixin):
+    """Luminosity range."""
+
+    pass
+
+
+class WithPowerMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = PowerStr.unit
+
+
+class AmountPower(Amount, WithPowerMixin):
+    """Power."""
+
+    pass
+
+
+class AmountRangePower(AmountRangeWithDimensionality, WithPowerMixin):
+    """Power range."""
+
+    pass
+
+
+class WithElectricalCurrentMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = ElectricalCurrentStr.unit
+
+
+class AmountElectricalCurrent(Amount, WithElectricalCurrentMixin):
+    """Current."""
+
+    pass
+
+
+class AmountRangeElectricalCurrent(AmountRangeWithDimensionality, WithElectricalCurrentMixin):
+    """Current range."""
+
+    pass
+
+
+class WithVolumeMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = VolumeStr.unit
+
+
+class AmountVolume(Amount, WithVolumeMixin):
+    """Volume."""
+
+    pass
+
+
+class AmountRangeVolume(AmountRangeWithDimensionality, WithVolumeMixin):
+    """Volume range."""
+
+    pass
+
+
+class WithAirflowMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = AirflowStr.unit
+
+
+class AmountAirflow(Amount, WithAirflowMixin):
+    """Airflow."""
+
+    pass
+
+
+class AmountRangeAirflow(AmountRangeWithDimensionality, WithAirflowMixin):
+    """Airflow range."""
+
+    pass
+
+
+class WithFlowRateMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = FlowRateStr.unit
+
+
+class AmountFlowRate(Amount, WithFlowRateMixin):
+    """Flow Rate."""
+
+    pass
+
+
+class AmountRangeFlowRate(AmountRangeWithDimensionality, WithFlowRateMixin):
+    """Flow Rate range."""
+
+    pass
+
+
+class WithMassPerLengthMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = MassPerLengthStr.unit
+
+
+class AmountMassPerLength(Amount, WithFlowRateMixin):
+    """Mass per length."""
+
+    pass
+
+
+class AmountRangeMassPerLength(AmountRangeWithDimensionality, WithFlowRateMixin):
+    """Mass per length range."""
+
+    pass
+
+
+class WithAreaPerVolumeMixin(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = AreaPerVolumeStr.unit
+
+
+class AmountAreaPerVolume(Amount, WithFlowRateMixin):
+    """Area per volume."""
+
+    pass
+
+
+class AmountRangeAreaPerVolume(AmountRangeWithDimensionality, WithFlowRateMixin):
+    """Area per volume range."""
+
+    pass
+
+
+# known range amounts
+SUPPORTED_RANGE_TYPES: tuple[type[AmountRangeWithDimensionality], ...] = (
+    AmountRangeMass,
+    AmountRangeGWP,
+    AmountRangeLengthM,
+    AmountRangeLengthMm,
+    AmountRangePressureMpa,
+    AmountRangeAreaM2,
+    AmountRangeLengthInch,
+    AmountRangeTemperatureC,
+    AmountRangeCapacityPerHour,
+    AmountRangeRValue,
+    AmountRangeSpeed,
+    AmountRangeColorTemperature,
+    AmountRangeLuminosity,
+    AmountRangePower,
+    AmountRangeElectricalCurrent,
+    AmountRangeVolume,
+    AmountRangeAirflow,
+    AmountRangeFlowRate,
+    AmountRangeMassPerLength,
+    AmountRangeAreaPerVolume,
+)
+
+# known range amount mapping by unit
+SUPPORTED_RANGES_BY_UNIT: dict[str, type[AmountRangeWithDimensionality]] = {
+    str(t.dimensionality_unit): t for t in SUPPORTED_RANGE_TYPES
+}

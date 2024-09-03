@@ -13,4 +13,22 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-VERSION = "5.1.0"
+__all__ = ("CastDecksAndUnderlaymentRangeV1",)
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+
+
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+
+
+class CastDecksAndUnderlaymentRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Cast roof deck substrate systems.
+
+    Typically made of gyspum concrete or cementitious wood fiber, that provide structural support to
+    roofing materials.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"

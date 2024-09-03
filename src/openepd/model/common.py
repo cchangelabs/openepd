@@ -150,3 +150,42 @@ class OpenEPDUnit(StrEnum):
     degree_c = "°C"
     kg_co2 = "kgCO2e"
     hour = "hour"
+
+
+class RangeBase(BaseOpenEpdSchema):
+    """Base class for range types having min and max and order between them."""
+
+    @pyd.root_validator
+    def _validate_range_bounds(cls, values: dict[str, Any]) -> dict[str, Any]:
+        min_boundary = values.get("min")
+        max_boundary = values.get("max")
+        if min_boundary is not None and max_boundary is not None and min_boundary > max_boundary:
+            raise ValueError("Max should be greater than min")
+        return values
+
+
+class RangeFloat(RangeBase):
+    """Structure representing a range of floats."""
+
+    min: float | None = pyd.Field(default=None, example=3.1)
+    max: float | None = pyd.Field(default=None, example=5.8)
+
+
+class RangeInt(RangeBase):
+    """Structure representing a range of ints1."""
+
+    min: int | None = pyd.Field(default=None, example=2)
+    max: int | None = pyd.Field(default=None, example=3)
+
+
+class RangeRatioFloat(RangeFloat):
+    """Range of ratios (0-1 to 0-10)."""
+
+    min: float | None = pyd.Field(default=None, example=0.2, ge=0, le=1)
+    max: float | None = pyd.Field(default=None, example=0.65, ge=0, le=1)
+
+
+class RangeAmount(RangeFloat):
+    """Structure representing a range of quantities."""
+
+    unit: str | None = pyd.Field(default=None, description="Unit of the range.")
