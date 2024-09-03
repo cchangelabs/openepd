@@ -1,3 +1,20 @@
+## 5.1.0 (2024-09-03)
+
+### Feat
+
+- connect the GenericEstimate, IndustryEpd to generated SpecRange
+- add tooling to generate RangeSpecs from normal Specs
+
+### Fix
+
+- allow for plain QuantityStr in modes
+- improve apidocs generation for unit-specific RangeAmounts
+- correct the examples for kg_c_per_declared_unit to work in apidocs
+
+### Refactor
+
+- rename and update validation factory methods for quantities
+
 ## 5.0.0 (2024-08-15)
 
 ### Feat
