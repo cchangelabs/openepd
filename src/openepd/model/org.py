@@ -69,7 +69,6 @@ class Plant(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         description="Plus code (aka Open Location Code) of plant's location and "
         "owner's web domain joined with `.`(dot).",
         example="865P2W3V+3W.interface.com",
-        alias="pluscode",
         default=None,
     )
     owner: Org | None = pyd.Field(description="Organization that owns the plant", default=None)
