@@ -19,6 +19,7 @@ from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.concrete import Cementitious, ConcreteTypicalApplication
 from openepd.model.specs.generated.enums import AciExposureClass, CsaExposureClass, EnExposureClass
+from openepd.model.validation.enum import exclusive_groups_validator_factory
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import (
     LengthInchStr,
@@ -172,3 +173,13 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     OilPatch: OilPatchV1 | None = None
     ReadyMix: ReadyMixV1 | None = None
     Shotcrete: ShotcreteV1 | None = None
+
+    _aci_exposure_classes_exclusive_groups_validator = pyd.validator("aci_exposure_classes", allow_reuse=True)(
+        exclusive_groups_validator_factory(AciExposureClass)
+    )
+    _en_exposure_classes_exclusive_groups_validator = pyd.validator("en_exposure_classes", allow_reuse=True)(
+        exclusive_groups_validator_factory(EnExposureClass)
+    )
+    _csa_exposure_classes_exclusive_groups_validator = pyd.validator("csa_exposure_classes", allow_reuse=True)(
+        exclusive_groups_validator_factory(CsaExposureClass)
+    )
