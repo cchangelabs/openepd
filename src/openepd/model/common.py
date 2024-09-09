@@ -189,3 +189,17 @@ class RangeAmount(RangeFloat):
     """Structure representing a range of quantities."""
 
     unit: str | None = pyd.Field(default=None, description="Unit of the range.")
+
+
+class EnumGroupingAware:
+    """
+    Mixin for enums to support groups.
+
+    With the groups, enum can group its values into more than one groups, so that the validator higher in code can check
+    for mutual exclusivity, for example that only one value from the group is permitted at the same time.
+    """
+
+    @classmethod
+    def get_groupings(cls) -> list[list]:
+        """Return logical groupings of the values."""
+        return []
