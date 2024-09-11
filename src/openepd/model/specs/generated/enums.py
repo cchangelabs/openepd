@@ -15,6 +15,8 @@
 #
 from enum import StrEnum
 
+from openepd.model.common import EnumGroupingAware
+
 # Enums used
 
 
@@ -2182,7 +2184,7 @@ class FloorBoxFloorMaterial(StrEnum):
     OTHER = "Other"
 
 
-class AciExposureClass(StrEnum):
+class AciExposureClass(EnumGroupingAware, StrEnum):
     """
     American Concrete Institute concrete exposure classes.
 
@@ -2196,6 +2198,7 @@ class AciExposureClass(StrEnum):
       * `aci.S2` - Exposed to <10000 ppm of SO4 in water and <2% SO4 in soil
       * `aci.S3` - Exposed to >10000 ppm of SO4 in water or >2% SO4 in soil
 
+      * `aci.C0` - Concrete dry or protected from moisture.
       * `aci.C1` - Concrete in contact with moisture, but the external source of chloride does not reach it.
       * `aci.C2` - Concrete subjected to moisture and an external source of chlorides such as deicing chemicals,
                     salt, brackish water, seawater, or spray from these sources.
@@ -2212,14 +2215,25 @@ class AciExposureClass(StrEnum):
     S1 = "aci.S1"
     S2 = "aci.S2"
     S3 = "aci.S3"
+    C0 = "aci.C1"
     C1 = "aci.C1"
     C2 = "aci.C2"
     W0 = "aci.W0"
     W1 = "aci.W1"
     W2 = "aci.W2"
 
+    @classmethod
+    def get_groupings(cls) -> list[list]:
+        """Return logical groupings of the values."""
+        return [
+            [AciExposureClass.F0, AciExposureClass.F1, AciExposureClass.F2, AciExposureClass.F3],
+            [AciExposureClass.S0, AciExposureClass.S1, AciExposureClass.S2, AciExposureClass.S3],
+            [AciExposureClass.W0, AciExposureClass.W1],
+            [AciExposureClass.C0, AciExposureClass.C1, AciExposureClass.C2],
+        ]
 
-class CsaExposureClass(StrEnum):
+
+class CsaExposureClass(EnumGroupingAware, StrEnum):
     """
     Canadian Standard Association concrete exposure classes.
 
@@ -2286,8 +2300,20 @@ class CsaExposureClass(StrEnum):
     A_3 = "csa.A-3"
     A_4 = "csa.A-4"
 
+    @classmethod
+    def get_groupings(cls) -> list[list]:
+        """Return logical groupings of the values."""
+        return [
+            [CsaExposureClass.C_XL],
+            [CsaExposureClass.C_1, CsaExposureClass.C_2, CsaExposureClass.C_3, CsaExposureClass.C_4],
+            [CsaExposureClass.F_1, CsaExposureClass.F2],
+            [CsaExposureClass.N],
+            [CsaExposureClass.A_1, CsaExposureClass.A_2, CsaExposureClass.A_3, CsaExposureClass.A_4],
+            [CsaExposureClass.S_1, CsaExposureClass.S_2, CsaExposureClass.S_3],
+        ]
 
-class EnExposureClass(StrEnum):
+
+class EnExposureClass(EnumGroupingAware, StrEnum):
     """
     EN 206 Class (Europe).
 
@@ -2347,6 +2373,28 @@ class EnExposureClass(StrEnum):
     en206_XA1 = "en206.XA1"
     en206_XA2 = "en206.XA2"
     en206_XA3 = "en206.XA3"
+
+    @classmethod
+    def get_groupings(cls) -> list[list]:
+        """Return logical groupings of the values."""
+        return [
+            [EnExposureClass.en206_X0],
+            [
+                EnExposureClass.en206_XC1,
+                EnExposureClass.en206_XC2,
+                EnExposureClass.en206_XC3,
+                EnExposureClass.en206_XC4,
+            ],
+            [EnExposureClass.en206_XD1, EnExposureClass.en206_XD2, EnExposureClass.en206_XD3],
+            [EnExposureClass.en206_XS1, EnExposureClass.en206_XS2, EnExposureClass.en206_XS3],
+            [
+                EnExposureClass.en206_XF1,
+                EnExposureClass.en206_XF2,
+                EnExposureClass.en206_XF3,
+                EnExposureClass.en206_XF4,
+            ],
+            [EnExposureClass.en206_XA1, EnExposureClass.en206_XA2, EnExposureClass.en206_XA3],
+        ]
 
 
 class AggregateWeightClassification(StrEnum):

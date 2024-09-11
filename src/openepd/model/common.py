@@ -38,6 +38,32 @@ class Amount(BaseOpenEpdSchema):
         return f"{self.qty or ''} {self.unit or 'str'}".strip()
 
 
+class Distribution(StrEnum):
+    """
+    Distribution of the measured value.
+
+     * log-normal: Probability distribution of any random parameter whose natural log is normally distributed (the
+       PDF is gaussian).
+     * normal: Probability distribution of any random parameter whose value is normally distributed around the mean
+       (the PDF is gaussian).
+     * Continuous uniform probability distribution between minimum value and maximum value and "0" probability beyond
+       these.
+     * Probability distribution of any random parameter between minimum value and maximum value with the highest
+       probability at the average value of minimum plus maximum value. Linear change of probability between minimum,
+       maximum and average value.
+     * Means Impact is not known, but with >95% certainty the true value is below the declared value.
+       So [1e-6,"kgCFC11e",0,"max"] means the ODP was not exactly measured, but it is guaranteed to be below
+       1E-6 kg CO2e.  It is acceptable to treat a 'max' distribution a normal or lognormal distribution with variation
+       0.1%.  This is conservative, because the 'max' value is usually much greater than the true impact.
+    """
+
+    LOG_NORMAL = "log-normal"
+    NORMAL = "normal"
+    UNIFORM = "uniform"
+    TRIANGULAR = "triangular"
+    MAX = "max"
+
+
 class Measurement(BaseOpenEpdSchema):
     """A scientific value with units and uncertainty."""
 
@@ -46,7 +72,9 @@ class Measurement(BaseOpenEpdSchema):
     rsd: pyd.PositiveFloat | None = pyd.Field(
         description="Relative standard deviation, i.e. standard_deviation/mean", default=None
     )
-    dist: str | None = pyd.Field(description="Statistical distribution of the measurement error.", default=None)
+    dist: Distribution | None = pyd.Field(
+        description="Statistical distribution of the measurement error.", default=None
+    )
 
 
 class Ingredient(BaseOpenEpdSchema):
@@ -189,3 +217,17 @@ class RangeAmount(RangeFloat):
     """Structure representing a range of quantities."""
 
     unit: str | None = pyd.Field(default=None, description="Unit of the range.")
+
+
+class EnumGroupingAware:
+    """
+    Mixin for enums to support groups.
+
+    With the groups, enum can group its values into more than one groups, so that the validator higher in code can check
+    for mutual exclusivity, for example that only one value from the group is permitted at the same time.
+    """
+
+    @classmethod
+    def get_groupings(cls) -> list[list]:
+        """Return logical groupings of the values."""
+        return []
