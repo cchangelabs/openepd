@@ -1,3 +1,10 @@
+## 5.2.0 (2024-09-11)
+
+### Feat
+
+- limit Distribution options of Measurement objects to a known set
+- add exclusive group validator for exposure classes
+
 ## 5.1.1 (2024-09-05)
 
 ### Fix
