@@ -29,7 +29,7 @@ from openepd.model.declaration import (
 )
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org, Plant
-from openepd.model.specs import Specs
+from openepd.model.specs.singular import Specs
 from openepd.model.versioning import OpenEpdVersions, Version
 
 MANUFACTURER_DESCRIPTION = (

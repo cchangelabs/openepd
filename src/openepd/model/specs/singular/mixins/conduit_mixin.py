@@ -17,7 +17,7 @@ __all__ = ["ConduitMixin"]
 
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdSpec
-from openepd.model.specs.generated.enums import ConduitMaterial
+from openepd.model.specs.enums import ConduitMaterial
 from openepd.model.validation.quantity import LengthMmStr
 
 

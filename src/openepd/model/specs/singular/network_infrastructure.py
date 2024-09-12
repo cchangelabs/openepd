@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import (
+from openepd.model.specs.enums import (
     CableTraysMaterial,
     CablingCategory,
     CablingFireRating,
@@ -27,7 +27,7 @@ from openepd.model.specs.generated.enums import (
     RacewaysMaterial,
     RackType,
 )
-from openepd.model.specs.generated.mixins.conduit_mixin import ConduitMixin
+from openepd.model.specs.singular.mixins.conduit_mixin import ConduitMixin
 from openepd.model.validation.quantity import (
     ElectricalCurrentStr,
     LengthMmStr,

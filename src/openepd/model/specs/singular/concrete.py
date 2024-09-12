@@ -18,7 +18,7 @@ from typing import Annotated, Literal
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.concrete import Cementitious, ConcreteTypicalApplication
-from openepd.model.specs.generated.enums import AciExposureClass, CsaExposureClass, EnExposureClass
+from openepd.model.specs.enums import AciExposureClass, CsaExposureClass, EnExposureClass
 from openepd.model.validation.enum import exclusive_groups_validator_factory
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import (

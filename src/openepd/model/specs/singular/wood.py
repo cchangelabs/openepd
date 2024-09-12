@@ -15,8 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.common import HasForestPracticesCertifiers
-from openepd.model.specs.generated.enums import (
+from openepd.model.specs.enums import (
     AllFabrication,
     AllTimberSpecies,
     CompositeLumberFabrication,
@@ -25,6 +24,7 @@ from openepd.model.specs.generated.enums import (
     SawnTimberSpecies,
     SheathingPanelsFabrication,
 )
+from openepd.model.specs.singular.common import HasForestPracticesCertifiers
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMmStr
 

@@ -17,7 +17,7 @@ import unittest
 
 from openepd.compat.pydantic import pyd
 from openepd.model.specs import ConcreteV1
-from openepd.model.specs.generated.enums import AciExposureClass, CsaExposureClass, EnExposureClass
+from openepd.model.specs.enums import AciExposureClass, CsaExposureClass, EnExposureClass
 
 
 class SpecValidationTestCase(unittest.TestCase):

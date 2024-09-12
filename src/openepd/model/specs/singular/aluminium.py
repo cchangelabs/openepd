@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import AluminiumAlloy
+from openepd.model.specs.enums import AluminiumAlloy
 
 
 class AluminiumBilletsV1(BaseOpenEpdHierarchicalSpec):

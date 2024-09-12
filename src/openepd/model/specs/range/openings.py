@@ -50,7 +50,7 @@ __all__ = (
 from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeInt, RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import (
+from openepd.model.specs.enums import (
     FlatGlassPanesThickness,
     FrameMaterial,
     HardwareFunction,
@@ -58,7 +58,7 @@ from openepd.model.specs.generated.enums import (
     Spacer,
     ThermalSeparation,
 )
-from openepd.model.specs.generated.openings import GlazingIntendedApplication, NAFSPerformanceClass
+from openepd.model.specs.singular.openings import GlazingIntendedApplication, NAFSPerformanceClass
 from openepd.model.validation.quantity import AmountRangeLengthMm, AmountRangePressureMpa, AmountRangeSpeed
 
 
