@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import GypsumFacing, GypsumFireRating, GypsumThickness
+from openepd.model.specs.enums import GypsumFacing, GypsumFireRating, GypsumThickness
 from openepd.model.validation.quantity import LengthMmStr, validate_quantity_unit_factory
 
 

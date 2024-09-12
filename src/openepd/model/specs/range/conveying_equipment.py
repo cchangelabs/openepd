@@ -24,7 +24,7 @@ __all__ = (
 
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import ElevatorsBuildingRise, ElevatorsUsageIntensity
+from openepd.model.specs.enums import ElevatorsBuildingRise, ElevatorsUsageIntensity
 from openepd.model.validation.quantity import (
     AmountRangeCapacityPerHour,
     AmountRangeLengthMm,

@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import AsphaltGradation, AsphaltMixType
+from openepd.model.specs.enums import AsphaltGradation, AsphaltMixType
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMmStr, TemperatureCStr
 

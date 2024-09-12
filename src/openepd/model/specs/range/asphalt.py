@@ -21,7 +21,7 @@ __all__ = ("AsphaltRangeV1",)
 from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import AsphaltGradation, AsphaltMixType
+from openepd.model.specs.enums import AsphaltGradation, AsphaltMixType
 from openepd.model.validation.quantity import AmountRangeLengthMm, AmountRangeTemperatureC
 
 

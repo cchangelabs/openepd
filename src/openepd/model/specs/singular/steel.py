@@ -18,7 +18,7 @@ from typing import Annotated
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec, CodegenSpec
-from openepd.model.specs.generated.enums import SteelComposition, SteelRebarGrade
+from openepd.model.specs.enums import SteelComposition, SteelRebarGrade
 from openepd.model.standard import Standard
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, validate_quantity_unit_factory

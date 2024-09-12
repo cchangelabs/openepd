@@ -51,7 +51,7 @@ __all__ = (
 from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import CableTraysMaterial, ConduitMaterial, EnergySource, RacewaysMaterial
+from openepd.model.specs.enums import CableTraysMaterial, ConduitMaterial, EnergySource, RacewaysMaterial
 from openepd.model.validation.quantity import (
     AmountRangeColorTemperature,
     AmountRangeLengthMm,

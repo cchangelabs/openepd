@@ -21,8 +21,8 @@ __all__ = ("AggregatesRangeV1",)
 from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.aggregates import AggregateApplication
-from openepd.model.specs.generated.enums import AggregateGradation, AggregateWeightClassification
+from openepd.model.specs.enums import AggregateGradation, AggregateWeightClassification
+from openepd.model.specs.singular.aggregates import AggregateApplication
 from openepd.model.validation.quantity import AmountRangeLengthMm
 
 

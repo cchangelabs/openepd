@@ -33,7 +33,7 @@ from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.concrete import Cementitious
-from openepd.model.specs.generated.enums import (
+from openepd.model.specs.enums import (
     AdmixtureEffects,
     CarpetYarnType,
     CementAstmType,
