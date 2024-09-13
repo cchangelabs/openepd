@@ -21,7 +21,7 @@ from openepd.api.base_sync_client import BaseApiMethodGroup
 from openepd.api.common import StreamingListResponse, paging_meta_from_v1_api
 from openepd.api.dto.common import BaseMeta, OpenEpdApiResponse
 from openepd.api.dto.meta import PagingMetaMixin
-from openepd.api.utils import encode_path_param
+from openepd.api.utils import encode_path_param, remove_none_id_fields
 from openepd.model.generic_estimate import (
     GenericEstimate,
     GenericEstimatePreview,
@@ -57,26 +57,33 @@ class GenericEstimateApi(BaseApiMethodGroup):
 
     @overload
     def post_with_refs(
-        self, ge: GenericEstimateWithDeps, with_response: Literal[True]
+        self, ge: GenericEstimateWithDeps, with_response: Literal[True], exclude_defaults: bool = True
     ) -> tuple[GenericEstimate, Response]: ...
 
     @overload
-    def post_with_refs(self, ge: GenericEstimateWithDeps, with_response: Literal[False] = False) -> GenericEstimate: ...
+    def post_with_refs(
+        self, ge: GenericEstimateWithDeps, with_response: Literal[False] = False, exclude_defaults: bool = True
+    ) -> GenericEstimate: ...
 
     def post_with_refs(
-        self, ge: GenericEstimateWithDeps, with_response: bool = False
+        self, ge: GenericEstimateWithDeps, with_response: bool = False, exclude_defaults: bool = True
     ) -> GenericEstimate | tuple[GenericEstimate, Response]:
         """
         Post an GenericEstimate with references.
 
         :param ge: GenericEstimate
         :param with_response: return the response object togather with the GenericEstimate
+        :param exclude_defaults: If True, fields with default values are excluded from the payload
         :return: GenericEstimate alone, or GenericEstimate with HTTP Response object depending on parameter
         """
+        data = ge.to_serializable(exclude_unset=True, exclude_defaults=exclude_defaults, by_alias=True)
+        if exclude_defaults is False:
+            # Remove 'id' fields with None values, as 'id' cannot be None
+            data = remove_none_id_fields(data)
         response = self._client.do_request(
             "patch",
             "/generic_estimates/post_with_refs",
-            json=ge.to_serializable(exclude_unset=True, exclude_defaults=True, by_alias=True),
+            json=data,
         )
         content = response.json()
         if with_response:

@@ -26,3 +26,43 @@ def encode_path_param(value: str) -> str:
     :return: encoded value
     """
     return quote(value, safe="")
+
+
+def remove_none_id_fields(d: dict) -> dict:
+    """
+    Remove any key 'id' with a None value from the dictionary, including nested dicts.
+
+    :param d: the dict which may contain 'id' keys with None values.
+    :return: a new dict with 'id' keys that have None values removed.
+
+    :note:
+        - This function does not modify the original dictionary (no side effects).
+        - It returns a new dictionary with the necessary modifications applied.
+
+    :example:
+        >>> data = {
+        ...     "id": None,
+        ...     "name": "item1",
+        ...     "details": {
+        ...         "id": None,
+        ...         "category": "tools",
+        ...         "nested": {
+        ...             "id": None,
+        ...             "value": 42
+        ...         }
+        ...     }
+        ... }
+        >>> remove_none_id_fields(data)
+        {'name': 'item1', 'details': {'category': 'tools', 'nested': {'value': 42}}}
+    """
+    if not isinstance(d, dict):
+        return d
+
+    cleaned_dict = {}
+    for k, v in d.items():
+        if isinstance(v, dict):
+            v = remove_none_id_fields(v)
+        if not (k == "id" and v is None):
+            cleaned_dict[k] = v
+
+    return cleaned_dict

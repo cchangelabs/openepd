@@ -1,3 +1,9 @@
+## 5.3.0 (2024-09-13)
+
+### Feat
+
+- **api**: add exclude_defaults param for post with refs (#80)
+
 ## 5.2.0 (2024-09-11)
 
 ### Feat
