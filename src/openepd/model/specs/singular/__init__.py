@@ -13,7 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-
+from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.singular.accessories import AccessoriesV1
 from openepd.model.specs.singular.aggregates import AggregatesV1
 from openepd.model.specs.singular.aluminium import AluminiumV1
@@ -50,3 +50,43 @@ from openepd.model.specs.singular.thermal_moisture_protection import ThermalMois
 from openepd.model.specs.singular.utility_piping import UtilityPipingV1
 from openepd.model.specs.singular.wood import WoodV1
 from openepd.model.specs.singular.wood_joists import WoodJoistsV1
+
+
+class Specs(BaseOpenEpdSchema):
+    """Material specific specs."""
+
+    # Nested specs:
+    CMU: CMUV1 | None = None
+    Masonry: MasonryV1 | None = None
+    Steel: SteelV1 | None = None
+    NetworkInfrastructure: NetworkInfrastructureV1 | None = None
+    Finishes: FinishesV1 | None = None
+    ManufacturingInputs: ManufacturingInputsV1 | None = None
+    Accessories: AccessoriesV1 | None = None
+    ElectricalTransmissionAndDistributionEquipment: ElectricalTransmissionAndDistributionEquipmentV1 | None = None
+    Aggregates: AggregatesV1 | None = None
+    ThermalMoistureProtection: ThermalMoistureProtectionV1 | None = None
+    Mechanical: MechanicalV1 | None = None
+    Aluminium: AluminiumV1 | None = None
+    Cladding: CladdingV1 | None = None
+    FireAndSmokeProtection: FireAndSmokeProtectionV1 | None = None
+    PrecastConcrete: PrecastConcreteV1 | None = None
+    Asphalt: AsphaltV1 | None = None
+    OtherMaterials: OtherMaterialsV1 | None = None
+    Plumbing: PlumbingV1 | None = None
+    Electrical: ElectricalV1 | None = None
+    UtilityPiping: UtilityPipingV1 | None = None
+    BulkMaterials: BulkMaterialsV1 | None = None
+    CastDecksAndUnderlayment: CastDecksAndUnderlaymentV1 | None = None
+    Concrete: ConcreteV1 | None = None
+    Sheathing: SheathingV1 | None = None
+    Furnishings: FurnishingsV1 | None = None
+    Wood: WoodV1 | None = None
+    ConveyingEquipment: ConveyingEquipmentV1 | None = None
+    MaterialHandling: MaterialHandlingV1 | None = None
+    Openings: OpeningsV1 | None = None
+    Electricity: ElectricityV1 | None = None
+    Grouting: GroutingV1 | None = None
+    MechanicalInsulation: MechanicalInsulationV1 | None = None
+    OtherElectricalEquipment: OtherElectricalEquipmentV1 | None = None
+    WoodJoists: WoodJoistsV1 | None = None

@@ -21,7 +21,7 @@ __all__ = ("WoodJoistsRangeV1",)
 from openepd.compat.pydantic import pyd
 from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import AllFabrication, AllTimberSpecies
+from openepd.model.specs.enums import AllFabrication, AllTimberSpecies
 
 
 class WoodJoistsRangeV1(BaseOpenEpdHierarchicalSpec):

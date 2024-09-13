@@ -57,16 +57,18 @@ class GenericEstimateApi(BaseApiMethodGroup):
 
     @overload
     def post_with_refs(
-        self, ge: GenericEstimateWithDeps, with_response: Literal[True], exclude_defaults: bool = True
+        self, ge: GenericEstimateWithDeps, with_response: Literal[True]
     ) -> tuple[GenericEstimate, Response]: ...
 
     @overload
     def post_with_refs(
-        self, ge: GenericEstimateWithDeps, with_response: Literal[False] = False, exclude_defaults: bool = True
+        self,
+        ge: GenericEstimateWithDeps,
+        with_response: Literal[False] = False,
     ) -> GenericEstimate: ...
 
     def post_with_refs(
-        self, ge: GenericEstimateWithDeps, with_response: bool = False, exclude_defaults: bool = True
+        self, ge: GenericEstimateWithDeps, with_response: bool = False
     ) -> GenericEstimate | tuple[GenericEstimate, Response]:
         """
         Post an GenericEstimate with references.
@@ -76,10 +78,9 @@ class GenericEstimateApi(BaseApiMethodGroup):
         :param exclude_defaults: If True, fields with default values are excluded from the payload
         :return: GenericEstimate alone, or GenericEstimate with HTTP Response object depending on parameter
         """
-        data = ge.to_serializable(exclude_unset=True, exclude_defaults=exclude_defaults, by_alias=True)
-        if exclude_defaults is False:
-            # Remove 'id' fields with None values, as 'id' cannot be None
-            data = remove_none_id_fields(data)
+        data = ge.to_serializable(exclude_unset=True, by_alias=True)
+        # Remove 'id' fields with None values, as 'id' cannot be None
+        data = remove_none_id_fields(data)
         response = self._client.do_request(
             "patch",
             "/generic_estimates/post_with_refs",

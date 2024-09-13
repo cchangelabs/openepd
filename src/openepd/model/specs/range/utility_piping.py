@@ -25,7 +25,7 @@ __all__ = (
 from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import BuriedPipingType, PipingAnsiSchedule, UtilityPipingMaterial
+from openepd.model.specs.enums import BuriedPipingType, PipingAnsiSchedule, UtilityPipingMaterial
 from openepd.model.validation.quantity import AmountRangeLengthMm
 
 

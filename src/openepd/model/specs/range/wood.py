@@ -36,7 +36,7 @@ from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeFloat, RangeRatioFloat
 from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import (
+from openepd.model.specs.enums import (
     AllFabrication,
     AllTimberSpecies,
     CompositeLumberFabrication,

@@ -17,6 +17,7 @@ import unittest
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import OPENEPD_VERSION_FIELD, OpenEpdDoctypes, Version
+from openepd.model.common import Ingredient
 from openepd.model.epd import Epd, EpdFactory, EpdPreviewV0, EpdV0
 from openepd.model.versioning import OpenEpdVersions
 
@@ -88,3 +89,17 @@ class EPDTestCase(unittest.TestCase):
         for the_id in ["", "abc", 15, "Ec3000001"]:
             with self.assertRaises(pyd.ValidationError):
                 Epd.parse_obj({"id": the_id})
+
+    def test_ingredient_indirect(self) -> None:
+        epd = EpdV0.parse_obj(
+            {
+                "includes": [
+                    {"qty": 2.1, "link": "http://google.com/evidence"},
+                    {"gwp_fraction": 0.2, "evidence_type": "Product EPD", "citation": "Own data"},
+                ]
+            }
+        )
+        self.assertEqual(epd.includes[0].qty, 2.1)
+        self.assertIsInstance(epd.includes[0], Ingredient)
+        self.assertIsInstance(epd.includes[1], Ingredient)
+        self.assertEqual(epd.includes[1].gwp_fraction, 0.2)

@@ -18,6 +18,7 @@ from typing import Annotated, Any
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.validation.numbers import RatioFloat
 
 
 class Amount(BaseOpenEpdSchema):
@@ -77,6 +78,12 @@ class Measurement(BaseOpenEpdSchema):
     )
 
 
+class IngredientEvidenceTypeEnum(StrEnum):
+    """Supported types of evidence for indirect ingredient."""
+
+    PRODUCT_EPD = "Product EPD"
+
+
 class Ingredient(BaseOpenEpdSchema):
     """
     An ingredient of a product.
@@ -84,6 +91,11 @@ class Ingredient(BaseOpenEpdSchema):
     The Ingredients list gives the core data references and quantities. This list is used to document supply-chain
     transparency, such as the EPDs of major components (e.g. cement in concrete, or recycled steel
     in hot-rolled sections).
+
+    Since the exact ingredients may be viewed as a proprietary information by Manufacturers, this schema also allows
+    to pass some data about ingredient about explicitly saying what it is. Further, this data can be used to
+    calculate the supply chain specificity of the product and uncertainty adjusted factor. For this option, use
+    gwp_fraction, citation and evidence_type.
     """
 
     qty: float | None = pyd.Field(
@@ -94,6 +106,16 @@ class Ingredient(BaseOpenEpdSchema):
         "An OpenIndustryEPD or OpenLCI link is also acceptable.",
         default=None,
     )
+
+    gwp_fraction: RatioFloat | None = pyd.Field(
+        default=None,
+        description="Fraction of product's A1-A3 GWP this flow represents.  This value, along with the specificity of "
+        "the reference, are used to caclulate supply chain specificity.",
+    )
+    evidence_type: IngredientEvidenceTypeEnum | None = pyd.Field(
+        default=None, description="Type of evidence used, which can be used to calculate degree of specificity"
+    )
+    citation: str | None = pyd.Field(default=None, description="Text citation describing the data source ")
 
 
 class LatLng(BaseOpenEpdSchema):

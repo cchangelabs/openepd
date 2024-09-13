@@ -25,7 +25,7 @@ __all__ = (
 from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeInt
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import GypsumFacing, GypsumFireRating, GypsumThickness
+from openepd.model.specs.enums import GypsumFacing, GypsumFireRating, GypsumThickness
 from openepd.model.validation.quantity import AmountRangeLengthMm
 
 

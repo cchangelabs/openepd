@@ -40,7 +40,7 @@ __all__ = (
 
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import CladdingFacingMaterial, CladdingInsulatingMaterial, SidingFormFactor
+from openepd.model.specs.enums import CladdingFacingMaterial, CladdingInsulatingMaterial, SidingFormFactor
 from openepd.model.validation.quantity import AmountRangeLengthMm, AmountRangeRValue
 
 

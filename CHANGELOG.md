@@ -1,3 +1,14 @@
+## 6.0.0 (2024-09-13)
+
+### Fix
+
+- **api**: remove exclude_defaults parameter from api client
+- add support for 'indirect ingredient' schema
+
+### Refactor
+
+- **specs**: rename specs packages
+
 ## 5.3.0 (2024-09-13)
 
 ### Feat
@@ -47,7 +58,7 @@
 - add correct kg_C_per_declared_unit to be AmountGWP
 - fix dependencies by promoting `open-xpd-uuid` to runtime deps
 
-## 4.13.0 (2024-08-01)
+## 4.13.0 (2024-08-01) [YANKED]
 
 ### Feat
 
@@ -88,7 +99,7 @@
 
 - make naming in GE, IEPD api consistent with the rest of the API
 
-## 4.11.0 (2024-07-25)
+## 4.11.0 (2024-07-25) [YANKED]
 
 ### Feat
 
@@ -144,7 +155,7 @@
 
 - restore correct Org entities in EPD, GenericEstimate
 
-## 4.6.0 (2024-07-12)
+## 4.6.0 (2024-07-12) [YANKED]
 
 ### Feat
 
@@ -232,7 +243,7 @@
 
 - **specs**: resolve typo in `vertical_rize` -> `vertical_rise`
 
-## 3.4.0 (2024-06-03)
+## 3.4.0 (2024-06-03) [YANKED]
 
 ### Feat
 

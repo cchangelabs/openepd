@@ -17,7 +17,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import (
+from openepd.model.specs.enums import (
     FlatGlassPanesThickness,
     FrameMaterial,
     HardwareFunction,

@@ -30,7 +30,7 @@ __all__ = (
 
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import CountertopMaterial
+from openepd.model.specs.enums import CountertopMaterial
 from openepd.model.validation.quantity import AmountRangeLengthMm
 
 

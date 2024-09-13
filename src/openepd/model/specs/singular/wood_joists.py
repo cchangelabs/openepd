@@ -15,8 +15,8 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.common import HasForestPracticesCertifiers
-from openepd.model.specs.generated.enums import AllFabrication, AllTimberSpecies
+from openepd.model.specs.enums import AllFabrication, AllTimberSpecies
+from openepd.model.specs.singular.common import HasForestPracticesCertifiers
 
 
 class WoodJoistsV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):

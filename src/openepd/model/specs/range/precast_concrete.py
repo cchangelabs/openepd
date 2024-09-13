@@ -27,7 +27,7 @@ __all__ = (
 from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.precast_concrete import (
+from openepd.model.specs.singular.precast_concrete import (
     ArchitecturalPrecastElementType,
     CivilPrecastElementType,
     StructuralPrecastElementType,

@@ -32,7 +32,7 @@ from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.concrete import Cementitious, ConcreteTypicalApplication
-from openepd.model.specs.generated.enums import AciExposureClass, CsaExposureClass, EnExposureClass
+from openepd.model.specs.enums import AciExposureClass, CsaExposureClass, EnExposureClass
 from openepd.model.validation.quantity import (
     AmountRangeLengthInch,
     AmountRangeLengthMm,

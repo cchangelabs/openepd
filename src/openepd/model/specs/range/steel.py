@@ -41,8 +41,8 @@ __all__ = (
 from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeFloat, RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.specs.generated.enums import SteelComposition, SteelRebarGrade
-from openepd.model.specs.generated.steel import SteelMakingRoute
+from openepd.model.specs.enums import SteelComposition, SteelRebarGrade
+from openepd.model.specs.singular.steel import SteelMakingRoute
 from openepd.model.standard import Standard
 from openepd.model.validation.quantity import AmountRangeLengthMm, AmountRangePressureMpa
 
