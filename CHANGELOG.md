@@ -1,3 +1,14 @@
+## 6.0.0 (2024-09-13)
+
+### Fix
+
+- **api**: remove exclude_defaults parameter from api client
+- add support for 'indirect ingredient' schema
+
+### Refactor
+
+- **specs**: rename specs packages
+
 ## 5.3.0 (2024-09-13)
 
 ### Feat
