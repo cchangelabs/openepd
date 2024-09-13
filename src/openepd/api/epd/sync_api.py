@@ -20,7 +20,7 @@ from requests import Response
 from openepd.api.base_sync_client import BaseApiMethodGroup
 from openepd.api.common import StreamingListResponse
 from openepd.api.epd.dto import EpdSearchResponse, EpdStatisticsResponse, StatisticsDto
-from openepd.api.utils import encode_path_param
+from openepd.api.utils import encode_path_param, remove_none_id_fields
 from openepd.model.epd import Epd
 
 
@@ -106,23 +106,32 @@ class EpdApi(BaseApiMethodGroup):
         return self.get_statistics_raw(omf).payload
 
     @overload
-    def post_with_refs(self, epd: Epd, with_response: Literal[True]) -> tuple[Epd, Response]: ...
+    def post_with_refs(
+        self, epd: Epd, with_response: Literal[True], exclude_defaults: bool = True
+    ) -> tuple[Epd, Response]: ...
 
     @overload
-    def post_with_refs(self, epd: Epd, with_response: Literal[False] = False) -> Epd: ...
+    def post_with_refs(self, epd: Epd, with_response: Literal[False] = False, exclude_defaults: bool = True) -> Epd: ...
 
-    def post_with_refs(self, epd: Epd, with_response: bool = False) -> Epd | tuple[Epd, Response]:
+    def post_with_refs(
+        self, epd: Epd, with_response: bool = False, exclude_defaults: bool = True
+    ) -> Epd | tuple[Epd, Response]:
         """
         Post an EPD with references.
 
         :param epd: EPD
         :param with_response: return the response object togather with the EPD
+        :param exclude_defaults: If True, fields with default values are excluded from the payload
         :return: EPD or EPD with HTTP Response object depending on parameter
         """
+        epd_data = epd.to_serializable(exclude_unset=True, exclude_defaults=exclude_defaults, by_alias=True)
+        if exclude_defaults is False:
+            # Remove 'id' fields with None values, as 'id' cannot be None
+            epd_data = remove_none_id_fields(epd_data)
         response = self._client.do_request(
             "patch",
             "/epds/post-with-refs",
-            json=epd.to_serializable(exclude_unset=True, exclude_defaults=True, by_alias=True),
+            json=epd_data,
         )
         content = response.json()
         if with_response:
