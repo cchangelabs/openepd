@@ -46,10 +46,13 @@ from openepd.model.specs.singular.common import HasForestPracticesCertifiers
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import (
     AreaPerVolumeStr,
+    ForceNStr,
     GwpKgCo2eStr,
     LengthMmStr,
     LengthMStr,
     PressureMPaStr,
+    RFactorStr,
+    YarnWeightStr,
     validate_quantity_ge_factory,
     validate_quantity_le_factory,
     validate_quantity_unit_factory,
@@ -80,8 +83,8 @@ class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
     panel_thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
     concentrated_load: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
     uniform_load: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    rolling_load_10_pass: str | None = pyd.Field(default=None, description="", example="1 N")
-    rolling_load_10000_pass: str | None = pyd.Field(default=None, description="", example="1 N")
+    rolling_load_10_pass: ForceNStr | None = pyd.Field(default=None, description="", example="1 N")
+    rolling_load_10000_pass: ForceNStr | None = pyd.Field(default=None, description="", example="1 N")
 
     _access_flooring_rolling_load_10_pass_is_quantity_validator = pyd.validator(
         "rolling_load_10_pass", allow_reuse=True
@@ -104,7 +107,7 @@ class CarpetV1(BaseOpenEpdHierarchicalSpec):
     )
     manufacture_type: CarpetManufactureType | None = pyd.Field(default=None, description="", example="Tufted")
     form_factor: CarpetFormFactor | None = pyd.Field(default=None, description="", example="Tiles")
-    yarn_weight: str | None = pyd.Field(default=None, description="", example="1 g / m2")
+    yarn_weight: YarnWeightStr | None = pyd.Field(default=None, description="", example="1 g / m2")
     yarn_type: CarpetYarnType | None = pyd.Field(default=None, description="", example="Nylon 6,6")
     fire_radiant_panel_rating_astme648: str | None = pyd.Field(default=None, description="")
     fire_smoke_density_rating_astme648: str | None = pyd.Field(default=None, description="")
@@ -446,7 +449,7 @@ class GypsumV1(BaseOpenEpdHierarchicalSpec):
     fire_rating: GypsumFireRating | None = pyd.Field(default=None, description="", example="-")
     thickness: GypsumThickness | None = pyd.Field(default=None, description="", example="1 m")
     facing: GypsumFacing | None = pyd.Field(default=None, description="", example="Paper")
-    r_factor: str | None = pyd.Field(default=None, description="", example="1 RSI")
+    r_factor: RFactorStr | None = pyd.Field(default=None, description="", example="1 RSI")
     flame_spread_astm_e84: int | None = pyd.Field(default=None, description="", example=3)
     smoke_production_astm_e84: int | None = pyd.Field(default=None, description="", example=3)
     surface_abrasion_d4977: int | None = pyd.Field(default=None, description="", example=3)

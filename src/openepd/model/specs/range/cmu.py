@@ -18,11 +18,12 @@ __all__ = ("CMURangeV1",)
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
+from builtins import float
+
 from openepd.compat.pydantic import pyd
-from openepd.model.common import RangeFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CmuBlockType, CmuWeightClassification
-from openepd.model.validation.quantity import AmountRangeGWP, AmountRangePressureMpa
+from openepd.model.validation.quantity import AmountRangePressureMpa, GwpKgCo2eStr
 
 
 class CMURangeV1(BaseOpenEpdHierarchicalSpec):
@@ -40,5 +41,5 @@ class CMURangeV1(BaseOpenEpdHierarchicalSpec):
     block_type: list[CmuBlockType] | None = pyd.Field(default=None, description="")
     insulated: bool | None = pyd.Field(default=None, description="")
     sound_performance: bool | None = pyd.Field(default=None, description="")
-    b1_recarbonation: AmountRangeGWP | None = pyd.Field(default=None, description="")
-    b1_recarbonation_z: RangeFloat | None = pyd.Field(default=None, description="")
+    b1_recarbonation: GwpKgCo2eStr | None = pyd.Field(default=None, description="")
+    b1_recarbonation_z: float | None = pyd.Field(default=None, description="")

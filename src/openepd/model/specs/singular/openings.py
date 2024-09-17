@@ -26,7 +26,13 @@ from openepd.model.specs.enums import (
     ThermalSeparation,
 )
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, SpeedStr, validate_quantity_unit_factory
+from openepd.model.validation.quantity import (
+    LengthMmStr,
+    PressureMPaStr,
+    SpeedStr,
+    UFactorStr,
+    validate_quantity_unit_factory,
+)
 
 
 class GlazingIntendedApplication(BaseOpenEpdSchema):
@@ -346,7 +352,7 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin):
         default=None, description="The product has been designed to resist windborne debris.", example=True
     )
 
-    assembly_u_factor: str | None = pyd.Field(
+    assembly_u_factor: UFactorStr | None = pyd.Field(
         default=None,
         description="Weighted average conductance of heat across assembly (including frame).",
         example="1 USI",
@@ -417,7 +423,7 @@ class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin)
         description="Number of panes, each separated by a cavity. A 3 pane unit has 2 cavities. example: 3",
         example=3,
     )
-    cog_u_factor: str | None = pyd.Field(
+    cog_u_factor: UFactorStr | None = pyd.Field(
         default=None, description="Conductance of heat at center of glass.", example="1 USI"
     )
     spacer: Spacer | None = pyd.Field(

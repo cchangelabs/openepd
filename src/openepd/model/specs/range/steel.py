@@ -44,7 +44,12 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import SteelComposition, SteelRebarGrade
 from openepd.model.specs.singular.steel import SteelMakingRoute
 from openepd.model.standard import Standard
-from openepd.model.validation.quantity import AmountRangeLengthMm, AmountRangePressureMpa
+from openepd.model.validation.quantity import (
+    AmountRangeLengthMm,
+    AmountRangePressureMpa,
+    AmountRangeThermalConductivity,
+    AmountRangeThermalExpansion,
+)
 
 
 class ColdFormedFramingRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -224,10 +229,10 @@ class StructuralSteelRangeV1(BaseOpenEpdHierarchicalSpec):
     modulus_of_elasticity: AmountRangePressureMpa | None = pyd.Field(
         default=None, description="Modulus of Elasticity, https://en.wikipedia.org/wiki/Elastic_modulus "
     )
-    thermal_expansion: str | None = pyd.Field(
+    thermal_expansion: AmountRangeThermalExpansion | None = pyd.Field(
         default=None, description="Thermal Expansion, https://en.wikipedia.org/wiki/Thermal_expansion"
     )
-    thermal_conductivity: str | None = pyd.Field(
+    thermal_conductivity: AmountRangeThermalConductivity | None = pyd.Field(
         default=None,
         description="Thermal Conductivity, https://en.wikipedia.org/wiki/Thermal_conductivity_and_resistivity",
     )

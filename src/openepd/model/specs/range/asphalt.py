@@ -22,7 +22,7 @@ from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import AsphaltGradation, AsphaltMixType
-from openepd.model.validation.quantity import AmountRangeLengthMm, AmountRangeTemperatureC
+from openepd.model.validation.quantity import AmountRangeLengthMm, TemperatureCStr
 
 
 class AsphaltRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -44,11 +44,11 @@ class AsphaltRangeV1(BaseOpenEpdHierarchicalSpec):
     ground_tire_rubber: RangeRatioFloat | None = pyd.Field(
         default=None, description="Percent of mixture that has been replaced by ground tire rubber (GTR)."
     )
-    max_temperature: AmountRangeTemperatureC | None = pyd.Field(
+    max_temperature: TemperatureCStr | None = pyd.Field(
         default=None,
         description="The upper threshold temperature to which an asphalt binder can be heated preventing the asphalt mixture from rutting",
     )
-    min_temperature: AmountRangeTemperatureC | None = pyd.Field(
+    min_temperature: TemperatureCStr | None = pyd.Field(
         default=None,
         description="The lower threshold temperature for an asphalt binder to prevent thermal cracking of the asphalt mixture.",
     )
