@@ -58,6 +58,7 @@ from openepd.model.validation.quantity import (
     AmountRangeLuminosity,
     AmountRangeMass,
     AmountRangePower,
+    AmountRangeUtilization,
 )
 
 
@@ -376,7 +377,7 @@ class LightingRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     color_temperature: AmountRangeColorTemperature | None = pyd.Field(default=None, description="")
-    typical_utilization: str | None = pyd.Field(default=None, description="")
+    typical_utilization: AmountRangeUtilization | None = pyd.Field(default=None, description="")
     luminosity: AmountRangeLuminosity | None = pyd.Field(default=None, description="")
     wattage: AmountRangePower | None = pyd.Field(default=None, description="")
     color_rendering_index: RangeFloat | None = pyd.Field(default=None, description="")

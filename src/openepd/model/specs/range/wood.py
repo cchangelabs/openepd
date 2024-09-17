@@ -32,8 +32,9 @@ __all__ = (
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
+from builtins import float
+
 from openepd.compat.pydantic import pyd
-from openepd.model.common import RangeFloat, RangeRatioFloat
 from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
@@ -45,6 +46,7 @@ from openepd.model.specs.enums import (
     SawnTimberSpecies,
     SheathingPanelsFabrication,
 )
+from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import AmountRangeLengthMm
 
 
@@ -212,12 +214,12 @@ class WoodRangeV1(BaseOpenEpdHierarchicalSpec):
     weather_exposed: bool | None = pyd.Field(default=None, description="Weather exposed")
     fire_retardant: bool | None = pyd.Field(default=None, description="Fire retardant")
     decay_resistant: bool | None = pyd.Field(default=None, description="Decay resistant")
-    fsc_certified: RangeRatioFloat | None = pyd.Field(
+    fsc_certified: RatioFloat | None = pyd.Field(
         default=None, description="Forest Stewardship Council certified proportion"
     )
-    fsc_certified_z: RangeFloat | None = pyd.Field(default=None, description="")
-    recycled_content: RangeRatioFloat | None = pyd.Field(default=None, description="Recycled content")
-    recycled_content_z: RangeFloat | None = pyd.Field(default=None, description="")
+    fsc_certified_z: float | None = pyd.Field(default=None, description="")
+    recycled_content: RatioFloat | None = pyd.Field(default=None, description="Recycled content")
+    recycled_content_z: float | None = pyd.Field(default=None, description="")
     CompositeLumber: CompositeLumberRangeV1 | None = None
     DimensionLumber: DimensionLumberRangeV1 | None = None
     HeavyTimber: HeavyTimberRangeV1 | None = None

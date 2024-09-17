@@ -14,6 +14,7 @@
 #  limitations under the License.
 #
 from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.singular.accessories import AccessoriesV1
 from openepd.model.specs.singular.aggregates import AggregatesV1
 from openepd.model.specs.singular.aluminium import AluminiumV1
@@ -51,9 +52,13 @@ from openepd.model.specs.singular.utility_piping import UtilityPipingV1
 from openepd.model.specs.singular.wood import WoodV1
 from openepd.model.specs.singular.wood_joists import WoodJoistsV1
 
+__all__ = ("Specs",)
 
-class Specs(BaseOpenEpdSchema):
+
+class Specs(BaseOpenEpdHierarchicalSpec):
     """Material specific specs."""
+
+    _EXT_VERSION = "1.0"
 
     # Nested specs:
     CMU: CMUV1 | None = None

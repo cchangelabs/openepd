@@ -25,7 +25,7 @@ __all__ = (
 
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
-from openepd.model.validation.quantity import AmountRangePressureMpa
+from openepd.model.validation.quantity import AmountRangePressureMpa, AmountRangeThermalConductivity
 
 
 class GMURangeV1(BaseOpenEpdHierarchicalSpec):
@@ -48,7 +48,7 @@ class AutoclavedAeratedConcreteRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     strength_28d: AmountRangePressureMpa | None = pyd.Field(default=None, description="")
-    thermal_conductivity: str | None = pyd.Field(default=None, description="")
+    thermal_conductivity: AmountRangeThermalConductivity | None = pyd.Field(default=None, description="")
     white: bool | None = pyd.Field(default=None, description="")
 
 

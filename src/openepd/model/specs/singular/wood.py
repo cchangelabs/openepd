@@ -13,8 +13,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from typing import Annotated
+
 from openepd.compat.pydantic import pyd
-from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.enums import (
     AllFabrication,
     AllTimberSpecies,
@@ -156,15 +158,19 @@ class WoodV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
     weather_exposed: bool | None = pyd.Field(default=None, description="Weather exposed", example=True)
     fire_retardant: bool | None = pyd.Field(default=None, description="Fire retardant", example=True)
     decay_resistant: bool | None = pyd.Field(default=None, description="Decay resistant", example=True)
-    fsc_certified: RatioFloat | None = pyd.Field(
+    fsc_certified: Annotated[RatioFloat | None, CodegenSpec(override_type=RatioFloat)] = pyd.Field(
         default=None, description="Forest Stewardship Council certified proportion", example=0.3, ge=0, le=1
     )
-    fsc_certified_z: float | None = pyd.Field(default=None, description="", example=0.7)
+    fsc_certified_z: Annotated[float | None, CodegenSpec(override_type=float)] = pyd.Field(
+        default=None, description="", example=0.7
+    )
 
-    recycled_content: RatioFloat | None = pyd.Field(
+    recycled_content: Annotated[RatioFloat | None, CodegenSpec(override_type=RatioFloat)] = pyd.Field(
         default=None, description="Recycled content", example=0.3, ge=0, le=1
     )
-    recycled_content_z: float | None = pyd.Field(default=None, description="", example=0.7)
+    recycled_content_z: Annotated[float | None, CodegenSpec(override_type=float)] = pyd.Field(
+        default=None, description="", example=0.7
+    )
 
     # Nested specs:
     CompositeLumber: CompositeLumberV1 | None = None

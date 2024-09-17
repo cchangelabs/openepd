@@ -307,6 +307,48 @@ class AreaPerVolumeStr(QuantityStr):
     unit = "m2 / l"
 
 
+class ThermalConductivityStr(QuantityStr):
+    """Thermal conductivity quantity type."""
+
+    unit = "1 W / K / m"
+
+
+class ThermalExpansionStr(QuantityStr):
+    """Thermal conductivity quantity type."""
+
+    unit = "1 / K"
+
+
+class ForceNStr(QuantityStr):
+    """Force (N) type."""
+
+    unit = "1 N"
+
+
+class YarnWeightStr(QuantityStr):
+    """Yarn weight quantity type."""
+
+    unit = "1 g / m2"
+
+
+class UtilizationStr(QuantityStr):
+    """Utilization quantity type."""
+
+    unit = "1 h / yr"
+
+
+class UFactorStr(QuantityStr):
+    """Utilization quantity type."""
+
+    unit = "1 USI"
+
+
+class RFactorStr(QuantityStr):
+    """R-Factor type."""
+
+    unit = "1 RSI"
+
+
 class WithDimensionalityMixin(BaseOpenEpdSchema):
     """Class for dimensionality-validated amounts."""
 
@@ -696,6 +738,136 @@ class AmountRangeAreaPerVolume(AmountRangeWithDimensionality, WithFlowRateMixin)
     pass
 
 
+class WithThermalConductivity(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = ThermalConductivityStr.unit
+
+
+class AmountThermalConductivityMixin(Amount, WithThermalConductivity):
+    """Area per volume."""
+
+    pass
+
+
+class AmountRangeThermalConductivity(AmountRangeWithDimensionality, WithThermalConductivity):
+    """Area per volume range."""
+
+    pass
+
+
+class WithForce(WithDimensionalityMixin):
+    """
+    Unit validation mixin.
+
+    May the Force be with you.
+    """
+
+    dimensionality_unit = ForceNStr.unit
+
+
+class AmountForce(Amount, WithForce):
+    """Area per volume."""
+
+    pass
+
+
+class AmountRangeForce(AmountRangeWithDimensionality, WithForce):
+    """Area per volume range."""
+
+    pass
+
+
+class WithYarnWeight(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = YarnWeightStr.unit
+
+
+class AmountYarnWeight(Amount, WithYarnWeight):
+    """Yarn weight."""
+
+    pass
+
+
+class AmountRangeYarnWeight(AmountRangeWithDimensionality, WithYarnWeight):
+    """Yarn weight range."""
+
+    pass
+
+
+class WithThermalExpansion(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = ThermalExpansionStr.unit
+
+
+class AmountThermalExpansion(Amount, WithThermalExpansion):
+    """Yarn weight."""
+
+    pass
+
+
+class AmountRangeThermalExpansion(AmountRangeWithDimensionality, WithThermalExpansion):
+    """Yarn weight range."""
+
+    pass
+
+
+class WithUtilization(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = UtilizationStr.unit
+
+
+class AmountUtilization(Amount, WithUtilization):
+    """Utilization."""
+
+    pass
+
+
+class AmountRangeUtilization(AmountRangeWithDimensionality, WithUtilization):
+    """Utilization range."""
+
+    pass
+
+
+class WithUFactor(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = UFactorStr.unit
+
+
+class AmountUFactor(Amount, WithUFactor):
+    """U-Factor."""
+
+    pass
+
+
+class AmountRangeUFactor(AmountRangeWithDimensionality, WithUFactor):
+    """U-Factor range."""
+
+    pass
+
+
+class WithRFactor(WithDimensionalityMixin):
+    """Unit validation mixin."""
+
+    dimensionality_unit = RFactorStr.unit
+
+
+class AmountRFactor(Amount, WithRFactor):
+    """R-Factor."""
+
+    pass
+
+
+class AmountRangeRFactor(AmountRangeWithDimensionality, WithRFactor):
+    """R-Factor range."""
+
+    pass
+
+
 # known range amounts
 SUPPORTED_RANGE_TYPES: tuple[type[AmountRangeWithDimensionality], ...] = (
     AmountRangeMass,
@@ -718,6 +890,13 @@ SUPPORTED_RANGE_TYPES: tuple[type[AmountRangeWithDimensionality], ...] = (
     AmountRangeFlowRate,
     AmountRangeMassPerLength,
     AmountRangeAreaPerVolume,
+    AmountRangeThermalConductivity,
+    AmountRangeForce,
+    AmountRangeYarnWeight,
+    AmountRangeThermalExpansion,
+    AmountRangeUtilization,
+    AmountRangeUFactor,
+    AmountRangeRFactor,
 )
 
 # known range amount mapping by unit
