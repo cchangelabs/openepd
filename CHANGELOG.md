@@ -5,7 +5,7 @@
 - update the Spec typings for generation of RangeSpecs
 - correct codegen to look at updated specs package
 
-## 6.0.0 (2024-09-13)
+## 6.0.0 (2024-09-13) [YANKED]
 
 ### Fix
 
