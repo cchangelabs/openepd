@@ -16,7 +16,7 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import GypsumFacing, GypsumFireRating, GypsumThickness
-from openepd.model.validation.quantity import LengthMmStr, validate_quantity_unit_factory
+from openepd.model.validation.quantity import LengthMmStr, RFactorStr, validate_quantity_unit_factory
 
 
 class CementitiousSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
@@ -51,7 +51,7 @@ class GypsumSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
     thickness: GypsumThickness | None = pyd.Field(default=None, description="", example="9 mm")
     facing: GypsumFacing | None = pyd.Field(default=None, description="", example="Paper")
 
-    r_factor: str | None = pyd.Field(default=None, description="", example="1 RSI")
+    r_factor: RFactorStr | None = pyd.Field(default=None, description="", example="1 RSI")
 
     flame_spread_astm_e84: int | None = pyd.Field(default=None, description="", example=3)
     smoke_production_astm_e84: int | None = pyd.Field(default=None, description="", example=3)

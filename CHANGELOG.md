@@ -1,3 +1,10 @@
+## 6.0.1 (2024-09-20)
+
+### Fix
+
+- update the Spec typings for generation of RangeSpecs
+- correct codegen to look at updated specs package
+
 ## 6.0.0 (2024-09-13)
 
 ### Fix

@@ -14,6 +14,7 @@
 #  limitations under the License.
 #
 import dataclasses
+from types import UnionType
 from typing import Any
 
 from openepd.compat.pydantic import pyd
@@ -63,4 +64,4 @@ class CodegenSpec:
     """
 
     exclude_from_codegen: bool = False
-    override_type: type
+    override_type: type | UnionType

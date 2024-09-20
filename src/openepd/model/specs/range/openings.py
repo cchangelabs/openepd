@@ -59,7 +59,12 @@ from openepd.model.specs.enums import (
     ThermalSeparation,
 )
 from openepd.model.specs.singular.openings import GlazingIntendedApplication, NAFSPerformanceClass
-from openepd.model.validation.quantity import AmountRangeLengthMm, AmountRangePressureMpa, AmountRangeSpeed
+from openepd.model.validation.quantity import (
+    AmountRangeLengthMm,
+    AmountRangePressureMpa,
+    AmountRangeSpeed,
+    AmountRangeUFactor,
+)
 
 
 class PanelDoorsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -328,7 +333,7 @@ class NAFSFenestrationRangeV1(BaseOpenEpdHierarchicalSpec):
     hurricane_resistant: bool | None = pyd.Field(
         default=None, description="The product has been designed to resist windborne debris."
     )
-    assembly_u_factor: str | None = pyd.Field(
+    assembly_u_factor: AmountRangeUFactor | None = pyd.Field(
         default=None, description="Weighted average conductance of heat across assembly (including frame)."
     )
     air_infiltration: AmountRangeSpeed | None = pyd.Field(
@@ -386,7 +391,9 @@ class InsulatingGlazingUnitsRangeV1(BaseOpenEpdHierarchicalSpec):
         default=None,
         description="Number of panes, each separated by a cavity. A 3 pane unit has 2 cavities. example: 3",
     )
-    cog_u_factor: str | None = pyd.Field(default=None, description="Conductance of heat at center of glass.")
+    cog_u_factor: AmountRangeUFactor | None = pyd.Field(
+        default=None, description="Conductance of heat at center of glass."
+    )
     spacer: list[Spacer] | None = pyd.Field(default=None, description="Spacer material for Integrated Glass Unit.")
 
 

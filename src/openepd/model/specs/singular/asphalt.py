@@ -13,8 +13,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from typing import Annotated
+
 from openepd.compat.pydantic import pyd
-from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.enums import AsphaltGradation, AsphaltMixType
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMmStr, TemperatureCStr
@@ -48,14 +50,14 @@ class AsphaltV1(BaseOpenEpdHierarchicalSpec):
         ge=0,
         le=1,
     )
-    max_temperature: TemperatureCStr | None = pyd.Field(
+    max_temperature: Annotated[TemperatureCStr | None, CodegenSpec(override_type=TemperatureCStr)] = pyd.Field(
         default=None,
         description="The upper threshold temperature to which an asphalt "
         "binder can be heated preventing the asphalt mixture "
         "from rutting",
         example="90 °C",
     )
-    min_temperature: TemperatureCStr | None = pyd.Field(
+    min_temperature: Annotated[TemperatureCStr | None, CodegenSpec(override_type=TemperatureCStr)] = pyd.Field(
         default=None,
         description="The lower threshold temperature for an asphalt "
         "binder to prevent thermal cracking of the asphalt"

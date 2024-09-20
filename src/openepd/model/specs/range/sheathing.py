@@ -26,7 +26,7 @@ from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeInt
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import GypsumFacing, GypsumFireRating, GypsumThickness
-from openepd.model.validation.quantity import AmountRangeLengthMm
+from openepd.model.validation.quantity import AmountRangeLengthMm, AmountRangeRFactor
 
 
 class CementitiousSheathingBoardRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -58,7 +58,7 @@ class GypsumSheathingBoardRangeV1(BaseOpenEpdHierarchicalSpec):
     fire_rating: list[GypsumFireRating] | None = pyd.Field(default=None, description="")
     thickness: list[GypsumThickness] | None = pyd.Field(default=None, description="")
     facing: list[GypsumFacing] | None = pyd.Field(default=None, description="")
-    r_factor: str | None = pyd.Field(default=None, description="")
+    r_factor: AmountRangeRFactor | None = pyd.Field(default=None, description="")
     flame_spread_astm_e84: RangeInt | None = pyd.Field(default=None, description="")
     smoke_production_astm_e84: RangeInt | None = pyd.Field(default=None, description="")
     surface_abrasion_d4977: RangeInt | None = pyd.Field(default=None, description="")

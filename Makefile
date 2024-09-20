@@ -218,7 +218,7 @@ codegen-internal:
        if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
        echo "Generating code..."; \
        python ./tools/openepd/codegen/generate_geography_enum.py > ./src/openepd/model/geography.py; \
-       PYTHONPATH=$PYTHONPATH:./src python ./tools/openepd/codegen/generate_range_spec_models.py openepd.model.specs.generated ./src/openepd/model/specs/range; \
+       PYTHONPATH=$PYTHONPATH:./src python ./tools/openepd/codegen/generate_range_spec_models.py openepd.model.specs.singular ./src/openepd/model/specs/range; \
        \
        echo "DONE: Generating code"; \
     )

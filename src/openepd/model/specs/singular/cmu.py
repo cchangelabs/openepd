@@ -13,8 +13,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from typing import Annotated
+
 from openepd.compat.pydantic import pyd
-from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.enums import CmuBlockType, CmuWeightClassification
 from openepd.model.validation.quantity import GwpKgCo2eStr, PressureMPaStr
 
@@ -31,5 +33,9 @@ class CMUV1(BaseOpenEpdHierarchicalSpec):
     block_type: CmuBlockType | None = pyd.Field(default=None, description="", example="Gray")
     insulated: bool | None = pyd.Field(default=None, description="", example=True)
     sound_performance: bool | None = pyd.Field(default=None, description="", example=True)
-    b1_recarbonation: GwpKgCo2eStr | None = pyd.Field(default=None, description="", example="1 kgCO2e")
-    b1_recarbonation_z: float | None = pyd.Field(default=None, description="", example=2.3)
+    b1_recarbonation: Annotated[GwpKgCo2eStr | None, CodegenSpec(override_type=GwpKgCo2eStr)] = pyd.Field(
+        default=None, description="", example="1 kgCO2e"
+    )
+    b1_recarbonation_z: Annotated[float | None, CodegenSpec(override_type=float)] = pyd.Field(
+        default=None, description="", example=2.3
+    )

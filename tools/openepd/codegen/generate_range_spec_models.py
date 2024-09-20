@@ -36,8 +36,8 @@ from openepd.model.validation.quantity import SUPPORTED_RANGES_BY_UNIT, Quantity
 skip_fields = ("ext", "ext_version")
 skip_classes = ("BaseOpenEpdHierarchicalSpec",)
 skip_import_prefixes = (
-    "openepd.model.specs.generated",
-    "openepd.model.specs.generated.enums",
+    "openepd.model.specs.singular",
+    "openepd.model.specs.enums",
     "openepd.model.validation.quantity",
     "openepd.model.specs.base",
     "openepd.model.base",

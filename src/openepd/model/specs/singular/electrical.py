@@ -24,6 +24,7 @@ from openepd.model.validation.quantity import (
     LuminosityStr,
     MassKgStr,
     PowerStr,
+    UtilizationStr,
     validate_quantity_ge_factory,
     validate_quantity_le_factory,
     validate_quantity_unit_factory,
@@ -255,7 +256,7 @@ class LightingV1(BaseOpenEpdHierarchicalSpec):
 
     # Own fields:
     color_temperature: ColorTemperatureStr | None = pyd.Field(default=None, description="", example="1 K")
-    typical_utilization: str | None = pyd.Field(default=None, description="", example="1 h / yr")
+    typical_utilization: UtilizationStr | None = pyd.Field(default=None, description="", example="1 h / yr")
     luminosity: LuminosityStr | None = pyd.Field(default=None, description="", example="1 lumen")
     wattage: PowerStr | None = pyd.Field(default=None, description="")
     color_rendering_index: float | None = pyd.Field(default=None, description="", example=2.3)

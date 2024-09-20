@@ -21,7 +21,13 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpe
 from openepd.model.specs.enums import SteelComposition, SteelRebarGrade
 from openepd.model.standard import Standard
 from openepd.model.validation.numbers import RatioFloat
-from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr, validate_quantity_unit_factory
+from openepd.model.validation.quantity import (
+    LengthMmStr,
+    PressureMPaStr,
+    ThermalConductivityStr,
+    ThermalExpansionStr,
+    validate_quantity_unit_factory,
+)
 
 
 class SteelMakingRoute(BaseOpenEpdSchema):
@@ -175,15 +181,15 @@ class StructuralSteelV1(BaseOpenEpdHierarchicalSpec):
         description="Modulus of Elasticity, https://en.wikipedia.org/wiki/Elastic_modulus ",
         example="193 GPa",
     )
-    thermal_expansion: str | None = pyd.Field(
+    thermal_expansion: ThermalExpansionStr | None = pyd.Field(
         default=None,
         description="Thermal Expansion, https://en.wikipedia.org/wiki/Thermal_expansion",
         example="1.11E-5 / K",
     )
-    thermal_conductivity: str | None = pyd.Field(
+    thermal_conductivity: ThermalConductivityStr | None = pyd.Field(
         default=None,
         description="Thermal Conductivity, https://en.wikipedia.org/wiki/Thermal_conductivity_and_resistivity",
-        example="1.45E-5 W / (m * K)",
+        example="1.45E-5 W / m / K)",
     )
 
     _steel_thermal_expansion_is_quantity_validator = pyd.validator("thermal_expansion", allow_reuse=True)(
