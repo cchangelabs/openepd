@@ -15,15 +15,26 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.org import Org
+from openepd.model.org import OrgRef
+from openepd.model.validation.common import ReferenceStr
 
 
-class Standard(BaseOpenEpdSchema):
+class StandardRef(BaseOpenEpdSchema):
+    """Reference version (short) of Standard."""
+
+    ref: ReferenceStr | None = pyd.Field(
+        default=None,
+        example="https://openepd.buildingtransparency.org/api/standards/EN15804",
+        description="Reference to this Standard's JSON object",
+    )
+    short_name: str | None = pyd.Field(description="Short-form of name of standard.  Must be unique. Case-insensitive")
+
+
+class Standard(StandardRef):
     """A standard, such as EN 15804, ISO 14044, ISO 14024:2018, etc."""
 
-    short_name: str = pyd.Field(description="Short-form of name of standard.  Must be unique. Case-insensitive")
     name: str | None = pyd.Field(description="Full document name.  Must be unique. Case-insensitive", default=None)
     link: pyd.AnyUrl | None = pyd.Field(
         description="Link to the exact standard (including version) referred to", default=None
     )
-    issuer: Org | None = pyd.Field(description="Org that issued this standard", default=None)
+    issuer: OrgRef | None = pyd.Field(description="Org that issued this standard", default=None)
