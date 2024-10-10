@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from datetime import datetime
 from enum import StrEnum
 
 from openepd.compat.pydantic import pyd
@@ -61,6 +62,8 @@ class BundleManifest(BaseOpenEpdSchema):
     """The generator of the bundle."""
     assets: BundleManifestAssetsStats = pyd.Field(default_factory=BundleManifestAssetsStats)
     comment: str | None = pyd.Field(default=None)
+    created_at: datetime = pyd.Field(default_factory=datetime.utcnow)
+    """The date and time when the bundle was generated."""
 
 
 class AssetInfo(BaseOpenEpdSchema):
