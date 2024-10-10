@@ -1,3 +1,9 @@
+## 6.1.0 (2024-10-10)
+
+### Feat
+
+- **bundle**: add created_date into openEPDBundle manifest
+
 ## 6.0.1 (2024-09-20)
 
 ### Fix
