@@ -1,3 +1,9 @@
+## 6.2.0 (2024-10-15)
+
+### Feat
+
+- extract StandardRef model from Standard
+
 ## 6.1.0 (2024-10-10)
 
 ### Feat
