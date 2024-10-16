@@ -27,6 +27,7 @@ from openepd.model.declaration import (
     WithProgramOperatorMixin,
     WithVerifierMixin,
 )
+from openepd.model.geography import Geography
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org, Plant
 from openepd.model.specs.singular import Specs
@@ -85,7 +86,7 @@ class EpdPreviewV0(
         "product volume is 123,456 m3, a value of 120,000, 100,000 or even 87,654 would be acceptable.",
         example=10000,
     )
-    applicable_in: list[Annotated[str, pyd.Field(min_length=2, max_length=2)]] | None = pyd.Field(
+    applicable_in: list[Geography] | None = pyd.Field(
         max_items=100,
         default=None,
         description="Jurisdiction(s) in which EPD is applicable. An empty array, or absent properties, "

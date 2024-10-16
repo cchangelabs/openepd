@@ -104,7 +104,7 @@ class ScopeSet(BaseOpenEpdSchema):
     )
     B1_years: float | None = pyd.Field(
         gt=0,
-        lt=11,
+        lt=100,
         description="Timeframe over which B1 is evaluated, in years. "
         "For example, an impact of 1.23 kgCO2e per year for ten years could be B1=1.23kgCO2e, "
         "B1_years=1.0 or  B1=12.3kgCO2e, B1_years=10.0",
@@ -116,7 +116,7 @@ class ScopeSet(BaseOpenEpdSchema):
     )
     B2_years: float | None = pyd.Field(
         gt=0,
-        lt=11,
+        lt=100,
         description="Predicted Maintenance Impacts over Reference Service Life",
         default=None,
     )
@@ -126,7 +126,7 @@ class ScopeSet(BaseOpenEpdSchema):
     )
     B3_years: float | None = pyd.Field(
         gt=0,
-        lt=11,
+        lt=100,
         description="Timeframe over which B3 is evaluated, in years",
         default=None,
     )
@@ -137,7 +137,7 @@ class ScopeSet(BaseOpenEpdSchema):
     )
     B4_years: float | None = pyd.Field(
         gt=0,
-        lt=11,
+        lt=100,
         description="Timeframe over which B4 is evaluated, in years",
         default=None,
     )
@@ -148,7 +148,7 @@ class ScopeSet(BaseOpenEpdSchema):
     )
     B5_years: float | None = pyd.Field(
         gt=0,
-        lt=11,
+        lt=100,
         description="Timeframe over which B5 is evaluated, in years",
         default=None,
     )
@@ -158,7 +158,7 @@ class ScopeSet(BaseOpenEpdSchema):
     )
     B6_years: float | None = pyd.Field(
         gt=0,
-        lt=11,
+        lt=100,
         description="Timeframe over which B6 is evaluated, in years",
         default=None,
     )
@@ -168,7 +168,7 @@ class ScopeSet(BaseOpenEpdSchema):
     )
     B7_years: float | None = pyd.Field(
         gt=0,
-        lt=11,
+        lt=100,
         description="Timeframe over which B7 is evaluated, in years",
         default=None,
     )
