@@ -71,6 +71,12 @@ class Plant(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         example="865P2W3V+3W.interface.com",
         default=None,
     )
+    pluscode: str | None = pyd.Field(
+        default=None,
+        description="(deprecated) Plus code (aka Open Location Code) of plant's location",
+        deprecated="Pluscode field is deprecated. If users need a pluscode they can obtain it from "
+        "`id` like this: `id.spit('.', maxsplit=1)[0]`",
+    )
     owner: Org | None = pyd.Field(description="Organization that owns the plant", default=None)
     name: str | None = pyd.Field(
         max_length=200,
