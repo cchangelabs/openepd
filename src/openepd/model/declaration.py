@@ -138,7 +138,7 @@ class BaseDeclaration(RootDocument, abc.ABC):
         description="Link to data object on original registrar's site",
         example="https://epd-online.com/EmbeddedEpdList/Download/6029",
     )
-    kg_C_per_declared_unit: AmountGWP | None = pyd.Field(
+    kg_C_per_declared_unit: AmountMass | None = pyd.Field(
         default=None,
         description="Mass of elemental carbon, per declared unit, contained in the product itself at the manufacturing "
         "facility gate.  Used (among other things) to check a carbon balance or calculate incineration "
