@@ -50,7 +50,7 @@ class BaseDeclaration(RootDocument, abc.ABC):
         description="Last date the document is valid on, including any extensions.",
     )
 
-    version: pyd.PositiveInt | None = pyd.Field(
+    version: pyd.NonNegativeInt | None = pyd.Field(
         description="Version of this document. The document's issuer should increment it anytime even a single "
         "character changes, as this value is used to determine the most recent version.",
         example=1,
