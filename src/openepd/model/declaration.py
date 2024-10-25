@@ -15,6 +15,7 @@
 #
 import abc
 import datetime
+from enum import StrEnum
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema, OpenXpdUUID, RootDocument
@@ -236,3 +237,75 @@ class RefBase(BaseOpenEpdSchema, title="Ref Object"):
         example="https://openepd.buildingtransparency.org/api/generic_estimates/EC300001",
         description="Reference to this JSON object",
     )
+
+
+class OriginalDataFormat(StrEnum):
+    """
+    Original data format for this EPD.
+
+    A system receiving an EPD via openEPD should preserve this field if it exists.  Otherwise, it is up to the
+    receiving system to infer the original data format based on the source.
+    """
+
+    OPENEPD_1_0 = "openEPDv1.0"
+    """
+    Data was generated in an openEPD-compliant system, such as by manual entry in EC3 or generation in an openEPD
+    compliant EPD generator.
+    """
+
+    CUSTOM_API = "custom_api"
+    """
+    Data was gathered from a non-standardized API offered by a data provider.  Numerical and text data is very likely
+    to be correct and up to date, but important fields may be absent and identification of organizations, plants, and
+     addresses may be ambiguous.
+    """
+
+    ILCD_EPD_v1_2 = "ILCD+EPDv1_2"
+    """
+    Data was generated and published in ILCD+EPD format, version 1.2  Numerical and text data is very likely to be
+    correct and up to date, but important fields may be absent and identification of organizations, plants, and
+    addresses may be ambiguous.
+    """
+
+    ILCD_EPD_v1_1 = "ILCD+EPDv1_1"
+    """
+    Data was generated and published in ILCD+EPD format, version 1.1  Numerical and text data is very likely to be
+    correct and up to date, but important fields may be absent and identification of organizations, plants, and
+    addresses may be ambiguous.
+    """
+
+    ILCD_EPD_v1_0 = "ILCD+EPDv1_0"
+    """
+    Data was generated and published in ILCD+EPD format, version 1.0  Numerical and text data is very likely to be
+    correct and up to date, but important fields may be absent and identification of organizations, plants, and
+    addresses may be ambiguous.
+    """
+
+    WEB = "web"
+    """
+    Data was gathered through comprehension of a viewable HTML page, typically offered by a program operator.
+    This is more reliable than PDF, but less reliable than API or a standardized XML like ILCD+EPD.
+    """
+
+    PDF_MANUAL = "pdf_manual"
+    """
+    Data was entered by hand based on PDF and/or validated by a qualified professional.
+    """
+
+    PDF_MIXED = "pdf_mixed"
+    """
+    Data is a mix of structured data from an information system, but with significant missing data filled in by
+    extraction from a PDF.
+    """
+
+    PDF = "pdf"
+    """
+    Data was extracted by analyzing or comprehending a PDF document.  Includes documents where up to 4 fields (e.g.
+    program operator) were inferred from sources outside the PDF.  This method is prone to errors and omissions due
+    to the many different formats and terms used in these relatively unstructured documents.
+    """
+
+    OTHER = "other"
+    """
+    Data source is not of a type listed here.
+    """
