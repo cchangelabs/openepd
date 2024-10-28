@@ -1,3 +1,18 @@
+## 6.3.0 (2024-10-28)
+
+### Feat
+
+- add ec3 extension to EPD object
+- add OriginalDataFormat for EPD
+
+### Fix
+
+- add `pluscode` deprecated field to `plant`
+- correct Use scenarios years upper limit to 100 years
+- correct applicable_in from str to Geography
+- correct the kg_C_per_declared unit to be Mass
+- make declaration version allow 0
+
 ## 6.2.0 (2024-10-15)
 
 ### Feat
