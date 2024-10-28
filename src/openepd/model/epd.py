@@ -23,6 +23,7 @@ from openepd.model.declaration import (
     THIRD_PARTY_VERIFIER_DESCRIPTION,
     BaseDeclaration,
     OriginalDataFormat,
+    RefBase,
     WithEpdDeveloperMixin,
     WithProgramOperatorMixin,
     WithVerifierMixin,
@@ -118,6 +119,12 @@ class Ec3EpdExtension(BaseOpenEpdSchema):
     )
 
     original_data_format: OriginalDataFormat | None = pyd.Field(default=None)
+
+
+class EpdRef(RefBase, title="EPD (Ref)"):
+    """Reference (short) version of EPD object."""
+
+    pass
 
 
 class EpdPreviewV0(
