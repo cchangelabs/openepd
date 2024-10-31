@@ -15,6 +15,8 @@
 #
 from typing import Annotated, Optional
 
+from openlocationcode import openlocationcode
+
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Location, WithAltIdsMixin, WithAttachmentsMixin
@@ -98,6 +100,20 @@ class Plant(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     def get_asset_type(cls) -> str | None:
         """Return the asset type of this class (see BaseOpenEpdSchema.get_asset_type for details)."""
         return "org"
+
+    @pyd.validator("id")
+    def _validate_id(cls, v: str) -> str:
+        try:
+            pluscode, web_domain = v.split(".", maxsplit=1)
+        except ValueError as e:
+            raise ValueError("Incorrectly formed id: should be pluscode.owner_web_domain") from e
+
+        if not openlocationcode.isValid(pluscode):
+            raise ValueError("Incorrect pluscode for plant")
+
+        if not web_domain:
+            raise ValueError("Incorrect web_domain for plant")
+        return v
 
     class Config(BaseOpenEpdSchema.Config):
         allow_population_by_field_name = True
