@@ -700,6 +700,16 @@ files = [
 ]
 
 [[package]]
+name = "openlocationcode"
+version = "1.0.1"
+description = "Python library for Open Location Code (Plus Codes)"
+optional = false
+python-versions = "*"
+files = [
+    {file = "openlocationcode-1.0.1.tar.gz", hash = "sha256:6fc0108a8214b65d74964105bd69645a8a7529237f0de6aadcfa83cc3373b359"},
+]
+
+[[package]]
 name = "packaging"
 version = "24.0"
 description = "Core utilities for Python packages"
@@ -1386,4 +1396,4 @@ api-client = ["requests"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "1f6b3b79253f4d8cfb52cbc280679ea100f03b05659d593bb6cc739c07194095"
+content-hash = "688cdada89429575a4a105129d65ae64b67c8ed953e4bda218b764bc36a58326"

@@ -84,7 +84,7 @@ class BaseDeclaration(RootDocument, abc.ABC):
         description="Language this document is captured in, as an ISO 639-1 code",
         example="en",
     )
-    private: bool = pyd.Field(
+    private: bool | None = pyd.Field(
         default=False,
         description="This document's author does not wish the contents published. "
         "Useful for draft, partial, or confidential declarations.  "
