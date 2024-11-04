@@ -1,3 +1,10 @@
+## 6.3.1 (2024-11-04)
+
+### Fix
+
+- add advanced validation for Plant id and pluscode
+- extract EpdRef model from Epd
+
 ## 6.3.0 (2024-10-28)
 
 ### Feat
