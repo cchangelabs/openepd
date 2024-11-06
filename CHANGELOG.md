@@ -1,3 +1,9 @@
+## 6.4.0 (2024-11-06)
+
+### Feat
+
+- add location-specific properties to Plant
+
 ## 6.3.1 (2024-11-04)
 
 ### Fix
