@@ -79,6 +79,12 @@ class Plant(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         deprecated="Pluscode field is deprecated. If users need a pluscode they can obtain it from "
         "`id` like this: `id.spit('.', maxsplit=1)[0]`",
     )
+    latitude: float | None = pyd.Field(
+        default=None, description="(deprecated) Latitude of the plant location. Use 'location' fields instead."
+    )
+    longitude: float | None = pyd.Field(
+        default=None, description="(deprecated) Longitude of the plant location. Use 'location' fields instead."
+    )
     owner: Org | None = pyd.Field(description="Organization that owns the plant", default=None)
     name: str | None = pyd.Field(
         max_length=200,
@@ -89,12 +95,13 @@ class Plant(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     address: str | None = pyd.Field(
         max_length=200,
         default=None,
-        description="Text address, preferably geocoded",
+        description="(deprecated) Text address, preferably geocoded. Use 'location' fields instead",
         example="1503 Orchard Hill Rd, LaGrange, GA 30240, United States",
     )
     contact_email: pyd.EmailStr | None = pyd.Field(
         description="Email contact", example="info@interface.com", default=None
     )
+    location: Location | None = pyd.Field(description="Location of the plant", default=None)
 
     @classmethod
     def get_asset_type(cls) -> str | None:
