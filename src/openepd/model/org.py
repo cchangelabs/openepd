@@ -66,7 +66,6 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
 class Plant(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     """Represent a manufacturing plant."""
 
-    # TODO: Add proper validator
     id: str | None = pyd.Field(
         description="Plus code (aka Open Location Code) of plant's location and "
         "owner's web domain joined with `.`(dot).",
@@ -110,6 +109,8 @@ class Plant(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
 
     @pyd.validator("id")
     def _validate_id(cls, v: str) -> str:
+        if not v:
+            return v
         try:
             pluscode, web_domain = v.split(".", maxsplit=1)
         except ValueError as e:
