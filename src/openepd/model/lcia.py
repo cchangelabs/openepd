@@ -357,6 +357,30 @@ class ScopeSetDiseaseIncidence(ScopeSet):
     allowed_units = "AnnualPerCapita"
 
 
+class ScopeSetMass(ScopeSet):
+    """ScopeSet measuring mass in kg."""
+
+    allowed_units = "kg"
+
+
+class ScopeSetVolume(ScopeSet):
+    """ScopeSet measuring mass in kg."""
+
+    allowed_units = "m3"
+
+
+class ScopeSetMassOrVolume(ScopeSet):
+    """ScopeSet measuring mass in kg OR volume in m3, example: radioactive waste."""
+
+    allowed_units = ("kg", "m3")
+
+
+class ScopeSetEnergy(ScopeSet):
+    """ScopeSet measuring mass in kg."""
+
+    allowed_units = "MJ"
+
+
 class ImpactSet(ScopesetByNameBase):
     """A set of impacts, such as GWP, ODP, AP, EP, POCP, EP-marine, EP-terrestrial, EP-freshwater, etc."""
 
@@ -554,71 +578,71 @@ class Impacts(pyd.BaseModel):
 class ResourceUseSet(ScopesetByNameBase):
     """A set of resource use indicators, such as RPRec, RPRm, etc."""
 
-    RPRec: ScopeSet | None = pyd.Field(
+    RPRec: ScopeSetEnergy | None = pyd.Field(
         description="Renewable primary resources used as energy carrier (fuel). "
         "First use bio-based materials used as an energy source. Hydropower, solar and wind power used "
         "in the technosphere are also included in this indicator",
         default=None,
     )
-    RPRm: ScopeSet | None = pyd.Field(
+    RPRm: ScopeSetEnergy | None = pyd.Field(
         description="Renewable primary resources with energy content used as material. "
         "First use biobased materials used as materials (e.g. wood, hemp, etc.).",
         default=None,
     )
-    rpre: ScopeSet | None = pyd.Field(
+    rpre: ScopeSetEnergy | None = pyd.Field(
         description="Renewable primary energy resources as energy",
         default=None,
     )
-    nrpre: ScopeSet | None = pyd.Field(
+    nrpre: ScopeSetEnergy | None = pyd.Field(
         description="Non-renewable primary resources as energy (fuel)",
         default=None,
     )
-    nrprm: ScopeSet | None = pyd.Field(
+    nrprm: ScopeSetEnergy | None = pyd.Field(
         description="Non-renewable primary resources as material",
         default=None,
     )
-    fw: ScopeSet | None = pyd.Field(
+    fw: ScopeSetVolume | None = pyd.Field(
         description="Use of net fresh water",
         default=None,
     )
-    sm: ScopeSet | None = pyd.Field(
+    sm: ScopeSetMass | None = pyd.Field(
         description="Use of secondary materials",
         default=None,
     )
-    rsf: ScopeSet | None = pyd.Field(
+    rsf: ScopeSetEnergy | None = pyd.Field(
         description="Use of renewable secondary materials",
         default=None,
     )
-    nrsf: ScopeSet | None = pyd.Field(
+    nrsf: ScopeSetEnergy | None = pyd.Field(
         description="Use of non-renewable secondary fuels",
         default=None,
     )
-    re: ScopeSet | None = pyd.Field(
+    re: ScopeSetEnergy | None = pyd.Field(
         description="Renewable energy resources",
         default=None,
     )
-    pere: ScopeSet | None = pyd.Field(
+    pere: ScopeSetEnergy | None = pyd.Field(
         description="Use of renewable primary energy excluding renewable primary energy resources used as raw materials",
         default=None,
     )
-    perm: ScopeSet | None = pyd.Field(
+    perm: ScopeSetEnergy | None = pyd.Field(
         description="Use of renewable primary energy resources used as raw materials",
         default=None,
     )
-    pert: ScopeSet | None = pyd.Field(
+    pert: ScopeSetEnergy | None = pyd.Field(
         description="Total use of renewable primary energy resources",
         default=None,
     )
-    penre: ScopeSet | None = pyd.Field(
+    penre: ScopeSetEnergy | None = pyd.Field(
         description="Use of non-renewable primary energy excluding "
         "non-renewable primary energy resources used as raw materials",
         default=None,
     )
-    penrm: ScopeSet | None = pyd.Field(
+    penrm: ScopeSetEnergy | None = pyd.Field(
         description="Use of non-renewable primary energy resources used as raw materials",
         default=None,
     )
-    penrt: ScopeSet | None = pyd.Field(
+    penrt: ScopeSetEnergy | None = pyd.Field(
         description="Total use of non-renewable primary energy resources",
         default=None,
     )
@@ -627,51 +651,51 @@ class ResourceUseSet(ScopesetByNameBase):
 class OutputFlowSet(ScopesetByNameBase):
     """A set of output flows, such as waste, emissions, etc."""
 
-    twd: ScopeSet | None = pyd.Field(
+    twd: ScopeSetMass | None = pyd.Field(
         description="Total waste disposed",
         default=None,
     )
-    hwd: ScopeSet | None = pyd.Field(
+    hwd: ScopeSetMass | None = pyd.Field(
         description="Hazardous waste disposed",
         default=None,
     )
-    nhwd: ScopeSet | None = pyd.Field(
+    nhwd: ScopeSetMass | None = pyd.Field(
         description="Non-hazardous waste disposed",
         default=None,
     )
-    rwd: ScopeSet | None = pyd.Field(
+    rwd: ScopeSetMass | None = pyd.Field(
         description="Radioactive waste disposed",
         default=None,
     )
-    hlrw: ScopeSet | None = pyd.Field(
+    hlrw: ScopeSetMassOrVolume | None = pyd.Field(
         description="High level radioactive waste disposed",
         default=None,
     )
-    illrw: ScopeSet | None = pyd.Field(
+    illrw: ScopeSetMassOrVolume | None = pyd.Field(
         description="Intermediate level radioactive waste disposed",
         default=None,
     )
-    cru: ScopeSet | None = pyd.Field(
+    cru: ScopeSetMass | None = pyd.Field(
         description="Components for re-use",
         default=None,
     )
-    mr: ScopeSet | None = pyd.Field(
+    mr: ScopeSetMass | None = pyd.Field(
         description="Recycled materials",
         default=None,
     )
-    mfr: ScopeSet | None = pyd.Field(
+    mfr: ScopeSetMass | None = pyd.Field(
         description="Materials for recycling",
         default=None,
     )
-    mer: ScopeSet | None = pyd.Field(
+    mer: ScopeSetMass | None = pyd.Field(
         description="Materials for energy recovery",
         default=None,
     )
-    ee: ScopeSet | None = pyd.Field(
+    ee: ScopeSetEnergy | None = pyd.Field(
         description="Exported energy",
         default=None,
     )
-    eh: ScopeSet | None = pyd.Field(
+    eh: ScopeSetEnergy | None = pyd.Field(
         description="Exported heat",
         default=None,
     )
