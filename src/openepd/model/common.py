@@ -24,7 +24,7 @@ from openepd.model.validation.numbers import RatioFloat
 class Amount(BaseOpenEpdSchema):
     """A value-and-unit pairing for amounts that do not have an uncertainty."""
 
-    qty: float | None = pyd.Field(description="How much of this in the amount.", default=None)
+    qty: float | None = pyd.Field(description="How much of this in the amount.", ge=0, default=None)
     unit: str | None = pyd.Field(description="Which unit.  SI units are preferred.", example="kg", default=None)
 
     @pyd.root_validator
