@@ -117,6 +117,18 @@ class Ingredient(BaseOpenEpdSchema):
     )
     citation: str | None = pyd.Field(default=None, description="Text citation describing the data source ")
 
+    @pyd.root_validator(skip_on_failure=True)
+    def _validate_evidence(cls, values: dict[str, Any]) -> dict[str, Any]:
+        # gwp_fraction should be backed by some type of evidence (fraction coming from product EPD etc) to be accounted
+        # for in the calculation of uncertainty
+        if values.get("gwp_fraction"):
+            if not values.get("evidence_type"):
+                raise ValueError("evidence_type is required if gwp_fraction is provided")
+            if not (values.get("citation") or values.get("link")):
+                raise ValueError("link or citation is required if gwp_fraction is provided")
+
+        return values
+
 
 class LatLng(BaseOpenEpdSchema):
     """A latitude and longitude."""
