@@ -38,6 +38,7 @@ MANUFACTURER_DESCRIPTION = (
     'JSON object for declaring Org. Sometimes called the "Declaration Holder" or "Declaration Owner".'
 )
 
+PLANT_DESCRIPTION = "List of object(s) for one or more plant(s) that this declaration applies to."
 
 #
 #  Copyright 2024 by C Change Labs Inc. www.c-change-labs.com
@@ -161,7 +162,7 @@ class EpdPreviewV0(
     manufacturer: Org | None = pyd.Field(description=MANUFACTURER_DESCRIPTION)
     plants: list[Plant] = pyd.Field(
         max_items=32,
-        description="List of object(s) for one or more plant(s) that this declaration applies to.",
+        description=PLANT_DESCRIPTION,
         default_factory=list,
     )
 

@@ -2215,7 +2215,7 @@ class AciExposureClass(EnumGroupingAware, StrEnum):
     S1 = "aci.S1"
     S2 = "aci.S2"
     S3 = "aci.S3"
-    C0 = "aci.C1"
+    C0 = "aci.C0"
     C1 = "aci.C1"
     C2 = "aci.C2"
     W0 = "aci.W0"
