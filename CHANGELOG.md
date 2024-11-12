@@ -1,3 +1,13 @@
+## 6.4.1 (2024-11-12)
+
+### Fix
+
+- implement unit validation for resource_uses, output_flows
+- add includes/evidence or citation validator
+- correct typo in ACI exposure classes for Concretes
+- add validation to allow only positive Amounts
+- correct plant validator
+
 ## 6.4.0 (2024-11-06)
 
 ### Feat
