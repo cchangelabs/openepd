@@ -1,3 +1,9 @@
+## 6.4.2 (2024-11-13)
+
+### Fix
+
+- make known scopes validate for same-unit using dimensionality check
+
 ## 6.4.1 (2024-11-12)
 
 ### Fix
