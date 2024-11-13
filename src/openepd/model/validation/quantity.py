@@ -33,7 +33,7 @@ class QuantityValidator(ABC):
     """
 
     @abstractmethod
-    def validate_same_dimensionality(self, unit: str | None, dimensionality_unit: str) -> None:
+    def validate_same_dimensionality(self, unit: str | None, dimensionality_unit: str | None) -> None:
         """
         Validate that a given unit ('kg') has the same dimesnionality as provided dimensionality_unit ('g').
 

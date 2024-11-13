@@ -206,9 +206,17 @@ class ScopeSet(BaseOpenEpdSchema):
             if isinstance(v, Measurement):
                 all_units.add(v.unit)
 
-        # units should be the same across all measurements (textually)
-        if len(all_units) > 1:
-            raise ValueError("All scopes and measurements should be expressed in the same unit.")
+        if not cls.allowed_units:
+            # For unknown units - only units should be the same across all measurements (textually)
+            if len(all_units) > 1:
+                raise ValueError("All scopes and measurements should be expressed in the same unit.")
+        else:
+            # might be multiple variations of the same unit (kgCFC-11e, kgCFC11e)
+            if len(all_units) > 1 and ExternalValidationConfig.QUANTITY_VALIDATOR:
+                all_units_list = list(all_units)
+                first = all_units_list[0]
+                for unit in all_units_list[1:]:
+                    ExternalValidationConfig.QUANTITY_VALIDATOR.validate_same_dimensionality(first, unit)
 
         # can correctly validate unit
         if cls.allowed_units is not None and len(all_units) == 1 and ExternalValidationConfig.QUANTITY_VALIDATOR:
