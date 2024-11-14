@@ -13,62 +13,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from enum import StrEnum
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.base import BaseOpenEpdSpec
 from openepd.model.validation.numbers import RatioFloat
-
-
-class CmuWeightClassification(StrEnum):
-    """Concrete Masonry Unit weight classification."""
-
-    Normal = "Normal"
-    """Normal weight CMU has a density of 125 lbs/cu. ft."""
-    Medium = "Medium"
-    """Medium weight CMU has a density of 105-125 lbs/cu. ft."""
-    Light = "Light"
-    """Lightweight CMU has a density less than 105 lbs/cu. ft."""
-
-
-class CmuOptions(BaseOpenEpdSchema):
-    """Concrete Masonry Unit options."""
-
-    load_bearing: bool | None = pyd.Field(
-        description="Load-Bearing. CMUs intended to be loadbearing, rather than simply cosmetic",
-        example=True,
-        default=None,
-    )
-    aerated_concrete: bool | None = pyd.Field(
-        description="AAC Aerated Concrete. Aerated Autoclaved Concrete, a foam concrete.", example=True, default=None
-    )
-    insulated: bool | None = pyd.Field(
-        description="Insulated. CMUs with integral insulation", example=True, default=None
-    )
-    sound_absorbing: bool | None = pyd.Field(
-        description="Sound Absorbing. CMUs structured for sound absorbtion", example=True, default=None
-    )
-    white: bool | None = pyd.Field(
-        description="White. CMU using white cement and light-colored aggregate", example=True, default=None
-    )
-    recycled_aggregate: bool | None = pyd.Field(
-        description="Recycled aggregate. CMU using primarily reycled aggregates", example=True, default=None
-    )
-    groundface: bool | None = pyd.Field(
-        description="Ground Face. Ground or Honed facing, typically for improved appearance", example=True, default=None
-    )
-    splitface: bool | None = pyd.Field(
-        description="Splitface. Rough surface texture via splitting; aggregate can be seen", example=True, default=None
-    )
-    smoothface: bool | None = pyd.Field(
-        description="Smooth Face. Standard smooth-faced blocks", example=True, default=None
-    )
-    slumpstone: bool | None = pyd.Field(
-        description="Slumpstone. A slightly rounded, random distortion with the look of rustic adobe.",
-        example=True,
-        default=None,
-    )
 
 
 class ConcreteTypicalApplication(BaseOpenEpdSpec):
@@ -138,15 +87,6 @@ class ConcreteTypicalApplication(BaseOpenEpdSpec):
     )
 
 
-class CmuSpec(BaseOpenEpdSpec):
-    """Standardized Concrete Masonry Unit-specific extension for OpenEPD."""
-
-    strength: str = pyd.Field(description="Compressive strength", example="4000 psi")
-    options: CmuOptions = pyd.Field(
-        description="Options for CMU. List of true/false properties", default_factory=CmuOptions
-    )
-
-
 class Cementitious(BaseOpenEpdSchema):
     """List of cementitious materials, and proportion by mass."""
 
@@ -168,34 +108,3 @@ class Cementitious(BaseOpenEpdSchema):
     mk: RatioFloat | None = pyd.Field(default=None, description="Metakaolin", example=0.5, ge=0, le=1)
     CaCO3: RatioFloat | None = pyd.Field(default=None, description="Limestone", example=0.5, ge=0, le=1)
     other: RatioFloat | None = pyd.Field(default=None, description="Other SCMs", example=0.5, ge=0, le=1)
-
-
-class TypicalApplication(BaseOpenEpdSchema):
-    """Concrete typical application."""
-
-    fnd: bool | None = pyd.Field(description="Foundation", default=None)
-    sog: bool | None = pyd.Field(description="Slab on Grade", default=None)
-    hrz: bool | None = pyd.Field(description="Elevated Horizontal", default=None)
-    vrt_wall: bool | None = pyd.Field(description="Vertical Wall", default=None)
-    vrt_column: bool | None = pyd.Field(description="Vertical Column", default=None)
-    vrt_other: bool | None = pyd.Field(description="Vertical Other", default=None)
-    sht: bool | None = pyd.Field(description="Shotcrete", default=None)
-    cdf: bool | None = pyd.Field(description="Flowable Fill (CDF,default=None)", default=None)
-    sac: bool | None = pyd.Field(description="Sidewalk and Curb", default=None)
-    pav: bool | None = pyd.Field(description="Paving", default=None)
-    oil: bool | None = pyd.Field(description="Oil Patch", default=None)
-    grt: bool | None = pyd.Field(description="Cement Grout", default=None)
-    ota: bool | None = pyd.Field(description="Other", default=None)
-
-
-class ConcreteV1Options(BaseOpenEpdSchema):
-    """Concrete options."""
-
-    lightweight: bool | None = pyd.Field(description="Lightweight", default=None)
-    plc: bool | None = pyd.Field(description="Portland Limestone Cement", default=None)
-    scc: bool | None = pyd.Field(description="Self Compacting", default=None)
-    finishable: bool | None = pyd.Field(description="Finishable", default=None)
-    air: bool | None = pyd.Field(description="Air Entrainment", default=None)
-    co2: bool | None = pyd.Field(description="CO2 Curing", default=None)
-    white: bool | None = pyd.Field(description="White Cement", default=None)
-    fiber_reinforced: bool | None = pyd.Field(description="Fiber reinforced", default=None)

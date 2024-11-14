@@ -1,3 +1,9 @@
+## 6.5.0 (2024-11-14)
+
+### Feat
+
+- add compatibility layer to specs
+
 ## 6.4.2 (2024-11-13)
 
 ### Fix
