@@ -144,6 +144,8 @@ class EpdPreviewV0(
 
     """
 
+    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
+
     doctype: str = pyd.Field(
         description='Describes the type and schema of the document. Must always always read "openEPD".',
         default="openEPD",
