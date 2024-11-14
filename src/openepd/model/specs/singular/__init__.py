@@ -13,7 +13,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.model.base import BaseOpenEpdSchema
+from typing import Any, ClassVar
+
+from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.singular.accessories import AccessoriesV1
 from openepd.model.specs.singular.aggregates import AggregatesV1
@@ -25,6 +27,9 @@ from openepd.model.specs.singular.cladding import CladdingV1
 from openepd.model.specs.singular.cmu import CMUV1
 from openepd.model.specs.singular.concrete import ConcreteV1
 from openepd.model.specs.singular.conveying_equipment import ConveyingEquipmentV1
+from openepd.model.specs.singular.deprecated import BaseCompatibilitySpec, get_safely, set_safely
+from openepd.model.specs.singular.deprecated.concrete import ConcreteOldSpec
+from openepd.model.specs.singular.deprecated.steel import SteelOldSpec
 from openepd.model.specs.singular.electrical import ElectricalV1
 from openepd.model.specs.singular.electrical_transmission_and_distribution_equipment import (
     ElectricalTransmissionAndDistributionEquipmentV1,
@@ -57,6 +62,8 @@ __all__ = ("Specs",)
 
 class Specs(BaseOpenEpdHierarchicalSpec):
     """Material specific specs."""
+
+    COMPATIBILITY_SPECS: ClassVar[list[type[BaseCompatibilitySpec]]] = [ConcreteOldSpec, SteelOldSpec]
 
     _EXT_VERSION = "1.0"
 
@@ -95,3 +102,38 @@ class Specs(BaseOpenEpdHierarchicalSpec):
     MechanicalInsulation: MechanicalInsulationV1 | None = None
     OtherElectricalEquipment: OtherElectricalEquipmentV1 | None = None
     WoodJoists: WoodJoistsV1 | None = None
+
+    # historical backward-compatible specs
+    concrete: ConcreteOldSpec | None = None
+    steel: SteelOldSpec | None = None
+
+    @pyd.root_validator(pre=True)
+    def _ensure_backward_compatibiltiy(cls, values: dict[str, Any]) -> dict[str, Any]:
+        """
+        Restore the functionality for backward-compatible specs.
+
+        Originally, we used to have 'concrete' and 'steel' specs non-hierarchical and manually maintained. Since we
+        introduced hierarchical specs, there is a need to retain the key mapping to the old structure.
+
+        :return: modified values
+        """
+        for compat_spec in cls.COMPATIBILITY_SPECS:
+            if (
+                compat_spec.COMPATIBILITY_SPECS_KEY_OLD not in values
+                and compat_spec.COMPATIBILITY_SPECS_KEY_NEW not in values
+            ):
+                continue
+            for old_key_spec, new_key_spec in compat_spec.COMPATIBILITY_MAPPING.items():
+                has_new_spec, new_value = get_safely(values, new_key_spec)
+
+                # new value is set, we should not override it but should return it in old spec
+                if has_new_spec:
+                    set_safely(values, old_key_spec, new_value)
+                    continue
+
+                has_old_spec, old_value = get_safely(values, old_key_spec)
+                # nothing to back
+                if not has_old_spec:
+                    continue
+                set_safely(values, new_key_spec, old_value)
+        return values
