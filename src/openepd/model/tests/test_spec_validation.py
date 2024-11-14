@@ -16,6 +16,7 @@
 import unittest
 
 from openepd.compat.pydantic import pyd
+from openepd.model.epd import Epd
 from openepd.model.specs import ConcreteV1
 from openepd.model.specs.enums import AciExposureClass, CsaExposureClass, EnExposureClass
 
@@ -60,3 +61,149 @@ class SpecValidationTestCase(unittest.TestCase):
         for case in not_ok_cases:
             with self.assertRaises(pyd.ValidationError):
                 ConcreteV1(**case)
+
+    def test_spec_backward_compatibility(self) -> None:
+        old_spec_concrete = {
+            "concrete": {
+                "strength_28d": "2000 psi",
+                "slump": "2 in",
+                "strength_other": "3000 psi",
+                "strength_other_d": 14,
+                "w_c_ratio": 0.2,
+                "aci_exposure_classes": ["aci.F1", "aci.S0"],
+                "csa_exposure_classes": ["csa.C-1", "csa.N"],
+                "en_exposure_classes": ["en206.X0", "en206.XF4"],
+                "application": {
+                    "fnd": True,
+                    "sog": True,
+                    "hrz": True,
+                    "vrt_wall": True,
+                    "vrt_column": True,
+                    "vrt_other": True,
+                    "sht": True,
+                    "cdf": True,
+                    "sac": True,
+                    "pav": True,
+                    "oil": True,
+                    "grt": True,
+                    "ota": True,
+                },
+                "options": {
+                    "lightweight": True,
+                    "scc": True,
+                    "finishable": True,
+                    "air": True,
+                    "co2_entrain": True,
+                    "white_cement": True,
+                    "plc": True,
+                    "fiber_reinforced": True,
+                },
+            }
+        }
+        expected_new_specs_concrete = Epd.parse_obj(
+            {
+                "specs": {
+                    **old_spec_concrete,
+                    "Concrete": {
+                        "strength_28d": "2000 psi",
+                        "min_slump": "2 in",
+                        "strength_other": "3000 psi",
+                        "strength_other_d": 14,
+                        "w_c_ratio": 0.2,
+                        "aci_exposure_classes": ["aci.F1", "aci.S0"],
+                        "csa_exposure_classes": ["csa.C-1", "csa.N"],
+                        "en_exposure_classes": ["en206.X0", "en206.XF4"],
+                        "application": {
+                            "fnd": True,
+                            "sog": True,
+                            "hrz": True,
+                            "vrt_wall": True,
+                            "vrt_column": True,
+                            "vrt_other": True,
+                            "sht": True,
+                            "cdf": True,
+                            "sac": True,
+                            "pav": True,
+                            "oil": True,
+                            "grt": True,
+                            "ota": True,
+                        },
+                        "lightweight": True,
+                        "self_consolidating": True,
+                        "finishable": True,
+                        "air_entrain": True,
+                        "co2_entrain": True,
+                        "white_cement": True,
+                        "plc": True,
+                        "fiber_reinforced": True,
+                    },
+                }
+            }
+        )
+
+        old_spec_steel = {
+            "steel": {
+                "form_factor": "Sheet",
+                "steel_composition": "Carbon",
+                "Fy": "400 MPa",
+                "making_route": {"bof": True},
+                "ASTM": [{"short_name": "A36"}, {"short_name": "A572"}],
+                "SAE": [{"short_name": "1020"}, {"short_name": "1045"}],
+                "EN": [{"short_name": "S235JR"}, {"short_name": "S275JR"}],
+                "options": {"cold_finished": True, "galvanized": True, "epoxy": True, "steel_fabricated": True},
+            }
+        }
+        expected_new_specs_steel = Epd.parse_obj(
+            {
+                "specs": {
+                    **old_spec_steel,
+                    "Steel": {
+                        "yield_tensile_str": "400 MPa",
+                        "composition": "Carbon",
+                        "cold_finished": True,
+                        "galvanized": True,
+                        "making_route": {"bof": True},
+                        "astm_standards": [{"short_name": "A36"}, {"short_name": "A572"}],
+                        "sae_standards": [{"short_name": "1020"}, {"short_name": "1045"}],
+                        "en_standards": [{"short_name": "S235JR"}, {"short_name": "S275JR"}],
+                        "RebarSteel": {
+                            "epoxy_coated": True,
+                            "fabricated": True,
+                        },
+                    },
+                }
+            }
+        )
+
+        cases = (
+            ("concrete", old_spec_concrete, expected_new_specs_concrete),
+            ("steel", old_spec_steel, expected_new_specs_steel),
+        )
+        self.maxDiff = None
+        for name, old, epd_expected in cases:
+            with self.subTest(name=name):
+                epd_actual = Epd.parse_obj({"specs": old})
+
+                specs_actual = epd_actual.specs.json(exclude_unset=True, exclude_none=True, exclude_defaults=True)
+                specs_expected = epd_expected.specs.json(exclude_unset=True, exclude_none=True, exclude_defaults=True)
+
+                self.assertEqual(specs_actual, specs_expected)
+
+    def test_spec_backward_compatibility_prefers_new(self) -> None:
+
+        specs = {
+            "concrete": {"strength_28d": "2000 psi", "slump": "2 in", "w_c_ratio": 0.2},
+            "Concrete": {
+                "strength_28d": "3000 psi",  # value explicitly given - new prevails
+                "min_slump": None,  # none, but explicitly given - new prevails
+                # but w_c_ratio not given, so taking one from 'concrete' backup spec
+            },
+        }
+        expected_specs = Epd.parse_obj(
+            {"specs": {"Concrete": {"strength_28d": "3000 psi", "min_slump": None, "w_c_ratio": 0.2}}}
+        ).specs.Concrete.json(exclude_unset=True, exclude_none=True, exclude_defaults=True)
+
+        epd = Epd.parse_obj({"specs": specs})
+        actual_specs = epd.specs.Concrete.json(exclude_unset=True, exclude_none=True, exclude_defaults=True)
+
+        self.assertEqual(actual_specs, expected_specs)
