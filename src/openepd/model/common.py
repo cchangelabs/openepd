@@ -149,10 +149,55 @@ class Location(BaseOpenEpdSchema):
     )
 
 
+ATTACHMENT_KNOWN_KEYS: dict[str, str] = {
+    "OpenEPD": "A Product EPD in OpenEPD format",
+    "openEPD": "Equivalent to OpenEPD",
+    "ILCD_EPD": "A Product EPD in ILCD+EPD format.  An underscore is used in place of '+' for compatability purposes.",
+    "OpenIndustryEPD": "An Industry EPD in OpenEPD format",
+    "openIndustryEPD": "Equivalent to OpenIndustryEPD",
+    "LCA_Model": "An underlying LCA model from which one could replicate these EPD results, in LCA Commons 2.0 format",
+    "LCA_Report": "An underlying LCA report, in PDF or other document format",
+    "lca_software": "A url, optionally with an #anchor tag, pointing to the version of the software used, generally one provided by the software vendor. ",
+    "lca_dataset_reference": "A URL link to an lca dataset used in the analysis.  Multiple dataset references can be added by appending a number or string after _reference, e.g. lca_dataset_reference_3 or lca_dataset_reference_steel",
+    "EPD": "Environmental Product Declaration, verified by a third party, not in OpenEPD format.",
+    "IndustryEPD": "EPD for an industry, sector, or group of companies, not in OpenEPD format.",
+    "Datasheet": "A technical data sheet describing the product.",
+    "PCR": "Product Category Rules for EPD generation",
+    "Contact_Us": "A url to contact.  May be an email (mailto:) link.",
+    "URL": "A link to a relevant resource.  No particular format is specified.  Each URL should be uniquely named. ",
+    "VOC": "Volatile Organic Compound declaration",
+    "HPD": "Material Health Product Declaration",
+    "PEF": "Product Environmental Footprint (without 3rd party verification)",
+    "MSDS": "Material Safety Data Sheet",
+    "Developer": "Link to the website of the group who performed the LCA and/or prepared the EPD.",
+}
+
+
+class AttachmentDict(dict[str, pyd.AnyUrl]):
+    """Special form of dict for attachments."""
+
+    @classmethod
+    def __modify_schema__(cls, field_schema: dict[str, Any], field: pyd.fields.ModelField | None):
+        # This may be generalized later to combine, for example, enum descriptions and field descriptions to provide
+        # a better result.
+        field_description = field.field_info.description if field else ""
+        if field_description:
+            field_description = field_description.strip()
+            if not field_description.endswith("."):
+                field_description += "."
+            field_description += " "
+
+        field_schema["description"] = field_description + "Extra properties of string -> URL allowed."
+        field_schema["properties"] = {
+            k: {"type": "string", "format": "uri", "description": v} for k, v in ATTACHMENT_KNOWN_KEYS.items()
+        }
+        field_schema["additionalProperties"] = True
+
+
 class WithAttachmentsMixin(pyd.BaseModel):
     """Mixin for objects that can have attachments."""
 
-    attachments: dict[Annotated[str, pyd.Field(max_length=200)], pyd.AnyUrl] | None = pyd.Field(
+    attachments: AttachmentDict = pyd.Field(
         description="Dict of URLs relevant to this entry",
         example={
             "Contact Us": "https://www.c-change-labs.com/en/contact-us/",
