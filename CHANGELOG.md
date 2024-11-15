@@ -1,3 +1,9 @@
+## 6.6.0 (2024-11-15)
+
+### Feat
+
+- add sample_size to industry epd
+
 ## 6.5.1 (2024-11-15)
 
 ### Fix

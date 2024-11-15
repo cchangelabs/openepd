@@ -15,8 +15,10 @@
 #
 from typing import Literal
 
+from pydantic.v1 import NonNegativeInt
+
 from openepd.compat.pydantic import pyd
-from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
+from openepd.model.base import BaseDocumentFactory, BaseOpenEpdSchema, OpenEpdDoctypes
 from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import (
     AverageDatasetMixin,
@@ -29,6 +31,22 @@ from openepd.model.declaration import (
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org
 from openepd.model.versioning import OpenEpdVersions, Version
+
+
+class SampleSize(BaseOpenEpdSchema):
+    """Sample size."""
+
+    products: NonNegativeInt | None = pyd.Field(
+        default=None,
+        description="Count of separate products or results that were included in this industry EPD, "
+        "and over which the standard deviation was calculated",
+    )
+    plants: NonNegativeInt | None = pyd.Field(
+        default=None, description="Count of unique manufacturing plants that submitted data for this Industry EPD"
+    )
+    manufacturers: NonNegativeInt | None = pyd.Field(
+        default=None, description="Count of unique manufacturing companies that submitted data for this Industry EPD"
+    )
 
 
 class IndustryEpdRef(RefBase, title="Industry EPD (Ref)"):
@@ -57,6 +75,8 @@ class IndustryEpdPreviewV0(
         description='Describes the type and schema of the document. Must always be "openIndustryEpd"',
         default="openIndustryEpd",
     )
+
+    sample_size: SampleSize | None = None
 
     publishers: list[Org] | None = pyd.Field(description="")
     manufacturers: list[Org] | None = pyd.Field(description="Participating manufacturers")
