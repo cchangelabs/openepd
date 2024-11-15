@@ -1,3 +1,9 @@
+## 6.5.1 (2024-11-15)
+
+### Fix
+
+- add explicit format_version for EpdPreview
+
 ## 6.5.0 (2024-11-14)
 
 ### Feat
