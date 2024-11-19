@@ -1,3 +1,9 @@
+## 6.7.1 (2024-11-19)
+
+### Fix
+
+- correct the schema for attachments object
+
 ## 6.7.0 (2024-11-19)
 
 ### Feat
