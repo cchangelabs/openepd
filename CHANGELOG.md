@@ -1,3 +1,9 @@
+## 6.7.0 (2024-11-19)
+
+### Feat
+
+- extract PlantRef from Plant model
+
 ## 6.6.0 (2024-11-15)
 
 ### Feat
