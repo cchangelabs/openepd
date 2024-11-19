@@ -63,8 +63,8 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
     )
 
 
-class Plant(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
-    """Represent a manufacturing plant."""
+class PlantRef(BaseOpenEpdSchema):
+    """Represents Plant with minimal data."""
 
     id: str | None = pyd.Field(
         description="Plus code (aka Open Location Code) of plant's location and "
@@ -72,6 +72,22 @@ class Plant(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         example="865P2W3V+3W.interface.com",
         default=None,
     )
+    name: str | None = pyd.Field(
+        max_length=200,
+        description="Manufacturer's name for plant. Recommended < 40 chars",
+        example="Dalton, GA",
+        default=None,
+    )
+    ref: ReferenceStr | None = pyd.Field(
+        default=None,
+        example="https://openepd.buildingtransparency.org/api/orgs/c-change-labs.com",
+        description="Reference to this Plant's JSON object",
+    )
+
+
+class Plant(PlantRef, WithAttachmentsMixin, WithAltIdsMixin):
+    """Represent a manufacturing plant."""
+
     pluscode: str | None = pyd.Field(
         default=None,
         description="(deprecated) Plus code (aka Open Location Code) of plant's location",
@@ -85,12 +101,6 @@ class Plant(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         default=None, description="(deprecated) Longitude of the plant location. Use 'location' fields instead."
     )
     owner: Org | None = pyd.Field(description="Organization that owns the plant", default=None)
-    name: str | None = pyd.Field(
-        max_length=200,
-        description="Manufacturer's name for plant. Recommended < 40 chars",
-        example="Dalton, GA",
-        default=None,
-    )
     address: str | None = pyd.Field(
         max_length=200,
         default=None,
