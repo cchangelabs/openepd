@@ -13,9 +13,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from datetime import datetime
 
 from openepd.compat.pydantic import pyd
-from openepd.model.base import BaseDocumentFactory, BaseOpenEpdSchema, OpenEpdDoctypes
+from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes, OpenEpdExtension
 from openepd.model.common import Ingredient, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import (
     DEVELOPER_DESCRIPTION,
@@ -61,8 +62,13 @@ PLANT_DESCRIPTION = "List of object(s) for one or more plant(s) that this declar
 #
 
 
-class Ec3EpdExtension(BaseOpenEpdSchema):
+class Ec3EpdExtension(OpenEpdExtension):
     """Extension for EC3 specific fields on openEPD."""
+
+    @classmethod
+    def get_extension_name(cls) -> str:
+        """Return the name of the extension."""
+        return "ec3"
 
     # While the extensions should be stored under the 'ext' key - extension point of the BaseOpenepdModel - the EC3
     # extension was started before the introduction of extension management, and so is located at the root of the EPD
@@ -120,6 +126,116 @@ class Ec3EpdExtension(BaseOpenEpdSchema):
     )
 
     original_data_format: OriginalDataFormat | None = pyd.Field(default=None)
+
+
+class EpaEpdExtension(OpenEpdExtension):
+    """Extension for EPA specific fields on openEPD."""
+
+    @classmethod
+    def get_extension_name(cls) -> str:
+        """Return the name of the extension."""
+        return "epa"
+
+    ext_version: str = pyd.Field(
+        default="0.1",
+        description="Version of the EPA extension. Important when evolving the extension.",
+        max_length=200,
+    )
+    allocation_approach: str = pyd.Field(
+        default="Impacts from upstream production and transportation of raw materials are subdivided based on the "
+        "relative material quantities (percentages) in the mix design. For conventional asphalt plants that "
+        "produce both hot‑mix asphalt (HMA) and warm‑mix asphalt (WMA) mixtures, allocation of energy and "
+        "other resources for asphalt mix production is on a mass basis. Mix‑specific production temperatures "
+        "are not used to separately allocate energy inputs to HMA and WMA mixtures. For conventional asphalt "
+        "plants that also produce asphalt mixtures at ambient temperatures using cold central plant recycling "
+        "(CCPR) technologies, HMA and WMA mixtures are subdivided from CCPR mixtures by segregating burner "
+        "fuel consumption from CCPR mixtures. For input materials that are manufactured using processes that "
+        "produce one or more co‑products, the prescribed upstream datasets allocate the material production "
+        "impacts according to principles outlined in the PCR for Asphalt Mixtures and ISO 21930. Examples of "
+        "these processes include petroleum refining (which produces multiple co‑products including asphalt "
+        "binder, petroleum fuels, and other products) and iron and steel manufacturing (which produces iron "
+        "and steel along with slag aggregates). Waste materials and other outputs such as byproducts generated "
+        "during asphalt mixture production exit the asphalt mixture product system burden free. Materials, "
+        "energy, and environmental impacts are not allocated to waste materials or byproducts.",
+        max_length=2000,
+    )
+    result_variations_included: bool = pyd.Field(
+        default=False, description="Indicates whether additional result variations are included."
+    )
+    hazardous_substance_included: bool = pyd.Field(
+        default=True, description="Indicates if hazardous substances are included."
+    )
+    comparability_statement: str = pyd.Field(
+        default="EPDs that comply with the PCR for Asphalt Mixtures (and, by extension, ISO 21930) are comparable if "
+        "the mixtures are expected to meet similar functional and design performance criteria as specified by "
+        "the customer, such as meeting the same customer specification. Comparability may be limited by the "
+        "presence of data gaps. EPDs with data gaps should not be compared to each other unless the "
+        "composition and quantity of material ingredients with data gaps is known to be the same for all "
+        "products being compared. When asphalt mixtures have diﬀerent performance expectations, the asphalt "
+        "mixtures can only be compared by using EPDs as a data input for an LCA study that includes additional "
+        "life cycle stages relevant to the functional unit defined in the LCA.",
+        max_length=2000,
+    )
+    data_collection_method: str = pyd.Field(
+        default="Standard data collection form in Emerald Ecolabel vX.Y.Z",
+        description="Method used for data collection.",
+        max_length=2000,
+    )
+    eol_modeling_approach: str = pyd.Field(
+        default="Excluded", description="Approach for End-of-Life (EOL) modeling.", max_length=2000
+    )
+    epd_generator_name: str = pyd.Field(
+        default="Emerald EcoLabel", description="Name of the EPD generator.", max_length=200
+    )
+    epd_generator_version: str = pyd.Field(default="2.3.Z", description="Version of the EPD generator.", max_length=200)
+    renewable_energy_included: bool = pyd.Field(
+        default=False, description="Indicates if renewable electricity is included."
+    )
+    lca_software_name: str = pyd.Field(default="OpenLCA", description="Name of the LCA software.", max_length=200)
+    lca_software_version: str = pyd.Field(default="2.0.1", description="Version of the LCA software.", max_length=200)
+    lca_system_boundary: str = pyd.Field(
+        default="This is a cradle to gate EPD. It covers the raw material supply, transport, and manufacturing life "
+        "cycle stages (modules A1‑A3). It does not include construction (placement and compaction), use, "
+        "maintenance, rehabilitation, or the end‑of‑life life cycle stages (modules A4‑5, B1‑7, and C1‑4). "
+        "Materials (A1): This stage includes raw material extraction and manufacturing (e.g., quarry "
+        "operations for aggregates, petroleum extraction and refinery operations for asphalt binder "
+        "production, etc.) based on the relative proportion of ingredients in the mix design. Transport "
+        "(A2): This stage includes transport of raw materials to the asphalt plant based on actual "
+        "transportation distances and modes for ingredients in the mix design.",
+        description="System boundary for LCA.",
+        max_length=2000,
+    )
+    lci_cutoff_criteria: str = pyd.Field(
+        default="Secondary (recycled) materials are evaluated using the cut‑oﬀ approach. The cut‑oﬀ boundary is "
+        "defined as the point beginning aﬅer secondary materials are transported to a central storage or "
+        "processing location. Material flows and potential environmental impacts associated with the "
+        "previous product system, including deconstruction, demolition, disposal, and transport to the "
+        "processing location, are not accounted for in this EPD because the recycled materials are modeled "
+        "as entering the asphalt mixture product system burden‑free. In some cases, limitations in upstream "
+        "datasets require these recovery and transportation processes to be included, which is a conservative "
+        "approach. Processing of secondary materials for use in asphalt mixtures and transport to the asphalt "
+        "plant are included in modules A1 and A2, respectively. Processing and transport of secondary fuels to "
+        "the asphalt plant are included in module A3.",
+        description="Criteria for LCI cut-off.",
+        max_length=2000,
+    )
+    lci_database_names: str = pyd.Field(default="USLCI", description="Names of LCI databases.", max_length=200)
+    lci_database_versions: str = pyd.Field(default="FY2022.1", description="Versions of LCI databases.", max_length=200)
+    dangerous_substance_release: bool | None = pyd.Field(
+        default=None, description="Indicates if dangerous substances are released."
+    )
+    background_reporting_period_start: datetime | None = pyd.Field(
+        default=None, description="Start of the source reporting period for background datasets."
+    )
+    background_reporting_period_end: datetime | None = pyd.Field(
+        default=None, description="End of the source reporting period for background datasets."
+    )
+    primary_reporting_period_start: datetime | None = pyd.Field(
+        default=None, description="Start of the primary data reporting period."
+    )
+    primary_reporting_period_end: datetime | None = pyd.Field(
+        default=None, description="End of the primary data reporting period."
+    )
 
 
 class EpdRef(RefBase, title="EPD (Ref)"):
