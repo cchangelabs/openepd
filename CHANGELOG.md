@@ -1,3 +1,9 @@
+## 6.8.0 (2024-11-21)
+
+### Feat
+
+- **ext**: make ec3 epd ext an openepd ext
+
 ## 6.7.1 (2024-11-19)
 
 ### Fix
