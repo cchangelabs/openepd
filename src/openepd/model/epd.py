@@ -15,7 +15,7 @@
 #
 
 from openepd.compat.pydantic import pyd
-from openepd.model.base import BaseDocumentFactory, BaseOpenEpdSchema, OpenEpdDoctypes
+from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes, OpenEpdExtension
 from openepd.model.common import Ingredient, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import (
     DEVELOPER_DESCRIPTION,
@@ -61,8 +61,13 @@ PLANT_DESCRIPTION = "List of object(s) for one or more plant(s) that this declar
 #
 
 
-class Ec3EpdExtension(BaseOpenEpdSchema):
+class Ec3EpdExtension(OpenEpdExtension):
     """Extension for EC3 specific fields on openEPD."""
+
+    @classmethod
+    def get_extension_name(cls) -> str:
+        """Return the name of the extension."""
+        return "ec3"
 
     # While the extensions should be stored under the 'ext' key - extension point of the BaseOpenepdModel - the EC3
     # extension was started before the introduction of extension management, and so is located at the root of the EPD
