@@ -35,12 +35,15 @@ class AsphaltGradation(StrEnum):
     Dense_graded = "Dense-graded"
     Open_graded = "Open-graded"
     Gap_graded = "Gap-graded"
+    Permeable = "Permeable"
+    Porous = "Porous"
+    Other = "Other"
 
 
 class AsphaltV1(BaseOpenEpdHierarchicalSpec):
     """Asphalt spec."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     asphalt_aggregate_size_max: LengthMmStr | None = pyd.Field(
         default=None, example="5mm", description="Max aggregate size"
