@@ -1479,11 +1479,13 @@ class AsphaltMixType(StrEnum):
 
      - WMA: WMA
      - HMA: HMA
+     - CCPR: CCPR
 
     """
 
     WMA = "WMA"
     HMA = "HMA"
+    CCPR = "CCPR"
 
 
 class EngineeredTimberSpecies(StrEnum):
