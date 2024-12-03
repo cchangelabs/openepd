@@ -1,3 +1,9 @@
+## 6.9.0 (2024-12-03)
+
+### Feat
+
+- **specs**: update asphalt specification
+
 ## 6.8.0 (2024-11-21)
 
 ### Feat
