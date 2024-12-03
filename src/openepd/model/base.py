@@ -18,7 +18,7 @@ from enum import StrEnum
 import json
 from typing import Any, Callable, ClassVar, Generic, Optional, Type, TypeAlias, TypeVar
 
-from cqd import open_xpd_uuid  # type:ignore[import-untyped]
+from cqd import open_xpd_uuid  # type:ignore[import-untyped,ignore-not-found]
 
 from openepd.compat.pydantic import pyd, pyd_generics
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
