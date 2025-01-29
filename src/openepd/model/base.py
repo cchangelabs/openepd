@@ -1,5 +1,5 @@
 #
-#  Copyright 2024 by C Change Labs Inc. www.c-change-labs.com
+#  Copyright 2025 by C Change Labs Inc. www.c-change-labs.com
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -117,7 +117,7 @@ class BaseOpenEpdSchema(pyd.BaseModel):
         if value is None:
             return None  # type: ignore
         if issubclass(target_type, pyd.BaseModel) and isinstance(value, dict):
-            return target_type.construct(**value)  # type: ignore
+            return target_type.parse_obj(value)  # type: ignore[return-value]
         elif isinstance(value, target_type):
             return value
         raise ValueError(f"Cannot convert {value} to {target_type}")
