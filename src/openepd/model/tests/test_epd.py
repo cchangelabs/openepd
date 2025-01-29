@@ -1,5 +1,5 @@
 #
-#  Copyright 2024 by C Change Labs Inc. www.c-change-labs.com
+#  Copyright 2025 by C Change Labs Inc. www.c-change-labs.com
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -16,13 +16,23 @@
 import unittest
 
 from openepd.compat.pydantic import pyd
-from openepd.model.base import OPENEPD_VERSION_FIELD, OpenEpdDoctypes, Version
+from openepd.model.base import OPENEPD_VERSION_FIELD, OpenEpdDoctypes, OpenEpdExtension, Version
 from openepd.model.common import Ingredient
 from openepd.model.epd import Epd, EpdFactory, EpdPreviewV0, EpdV0
+from openepd.model.validation.quantity import AmountMass
 from openepd.model.versioning import OpenEpdVersions
 
 OPENEPD_VERSION = OpenEpdVersions.get_current()
 OPENEPD_V0_VERSION = OpenEpdVersions.get_most_recent_version(0)
+
+
+class MyExtension(OpenEpdExtension):
+
+    @classmethod
+    def get_extension_name(cls) -> str:
+        return "my_ext"
+
+    test_field: AmountMass = pyd.Field()
 
 
 class EPDTestCase(unittest.TestCase):
@@ -103,3 +113,18 @@ class EPDTestCase(unittest.TestCase):
         self.assertIsInstance(epd.includes[0], Ingredient)
         self.assertIsInstance(epd.includes[1], Ingredient)
         self.assertEqual(epd.includes[1].gwp_fraction, 0.2)
+
+    def test_parse_extension(self) -> None:
+        """Test that parsing of extensions works."""
+        epd = Epd.parse_obj(
+            {
+                "ext": {
+                    "my_ext": {
+                        "test_field": {"amount": 2, "unit": "kg"},
+                    }
+                }
+            }
+        )
+        ext = epd.get_ext(MyExtension)
+        self.assertIsInstance(ext, MyExtension)
+        self.assertIsInstance(ext.test_field, AmountMass)
