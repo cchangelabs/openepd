@@ -50,7 +50,7 @@ jobs:
           cat meta/new-changelog.md >> "$GITHUB_OUTPUT"
           echo "$EOF" >> "$GITHUB_OUTPUT"
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: bump-meta
           path: meta/*
