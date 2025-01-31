@@ -1,3 +1,9 @@
+## 6.9.1 (2025-01-31)
+
+### Fix
+
+- correct parsing of extensions containing Pydantic models
+
 ## 6.9.0 (2024-12-03)
 
 ### Feat
