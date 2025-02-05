@@ -1,5 +1,5 @@
 #
-#  Copyright 2024 by C Change Labs Inc. www.c-change-labs.com
+#  Copyright 2025 by C Change Labs Inc. www.c-change-labs.com
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ from openepd.model.specs.singular.steel import SteelV1
 class SpecVersionTestCase(unittest.TestCase):
     def test_version_is_output_by_default(self):
         steel = SteelV1(recycled_content=0.3)
-        self.assertEqual(steel.to_serializable()["ext_version"], "1.0")
+        self.assertEqual(steel.to_serializable()["ext_version"], "1.1")
 
     def test_version_validation(self):
         accepted_v1_versions = ["1.0", "1.33", "1.2"]
