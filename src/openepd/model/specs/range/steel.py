@@ -227,10 +227,12 @@ class StructuralSteelRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     modulus_of_elasticity: AmountRangePressureMpa | None = pyd.Field(
-        default=None, description="Modulus of Elasticity, https://en.wikipedia.org/wiki/Elastic_modulus "
+        default=None,
+        description="Modulus of Elasticity, https://en.wikipedia.org/wiki/Elastic_modulus ",
     )
     thermal_expansion: AmountRangeThermalExpansion | None = pyd.Field(
-        default=None, description="Thermal Expansion, https://en.wikipedia.org/wiki/Thermal_expansion"
+        default=None,
+        description="Thermal Expansion, https://en.wikipedia.org/wiki/Thermal_expansion",
     )
     thermal_conductivity: AmountRangeThermalConductivity | None = pyd.Field(
         default=None,
@@ -280,7 +282,8 @@ class RebarSteelRangeV1(BaseOpenEpdHierarchicalSpec):
     diameter_min: AmountRangeLengthMm | None = pyd.Field(default=None, description="Minimal diameter")
     bending_pin_max: RangeFloat | None = pyd.Field(default=None)
     ts_ys_ratio_max: RangeFloat | None = pyd.Field(
-        default=None, description="Max ratio of ultimate tensile to yield tensile strength"
+        default=None,
+        description="Max ratio of ultimate tensile to yield tensile strength",
     )
     epoxy_coated: bool | None = pyd.Field(default=None)
 
@@ -297,6 +300,12 @@ class WireMeshSteelRangeV1(BaseOpenEpdHierarchicalSpec):
     fabricated: bool | None = None
 
 
+class OtherSteelRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Steel products that do not fit into a defined subcategory."""
+
+    _EXT_VERSION = "1.0"
+
+
 class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Broad category for construction materials made from steel and its alloys.
@@ -304,18 +313,20 @@ class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     yield_tensile_str: AmountRangePressureMpa | None = pyd.Field(
         default=None,
         description="Yield Tensile strength (Mpa) per unit area. Yield strength is the point at which a material begins to permanently deform or change shape due to applied stress.",
     )
     bar_elongation: RangeFloat | None = pyd.Field(
-        default=None, description="Increase in length at break, in percent. Typically 10%-20%"
+        default=None,
+        description="Increase in length at break, in percent. Typically 10%-20%",
     )
     recycled_content: RangeRatioFloat | None = pyd.Field(default=None, description="")
     post_consumer_recycled_content: RangeRatioFloat | None = pyd.Field(
-        default=None, description="Should be a number between zero and the Recycled Content (steel_recycled_content)"
+        default=None,
+        description="Should be a number between zero and the Recycled Content (steel_recycled_content)",
     )
     astm_marking: str | None = pyd.Field(default=None, description="The marking to be expected on the product.")
     euro_marking: str | None = pyd.Field(default=None, description="The marking to be expected on the product.")
@@ -335,3 +346,4 @@ class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     PostTensioningSteel: PostTensioningSteelRangeV1 | None = None
     RebarSteel: RebarSteelRangeV1 | None = None
     WireMeshSteel: WireMeshSteelRangeV1 | None = None
+    OtherSteel: OtherSteelRangeV1 | None = None
