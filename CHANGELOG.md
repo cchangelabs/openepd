@@ -1,3 +1,9 @@
+## 6.10.0 (2025-02-05)
+
+### Feat
+
+- **specs**: Add `OtherSteel` category
+
 ## 6.9.1 (2025-01-31)
 
 ### Fix
