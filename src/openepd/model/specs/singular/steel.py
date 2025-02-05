@@ -244,10 +244,16 @@ class WireMeshSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
     _EXT_VERSION = "1.0"
 
 
+class OtherSteelV1(BaseOpenEpdHierarchicalSpec):
+    """Steel products that do not fit into a defined subcategory."""
+
+    _EXT_VERSION = "1.0"
+
+
 class SteelV1(BaseOpenEpdHierarchicalSpec):
     """Broad category for construction materials made from steel and its alloys."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Own fields:
     yield_tensile_str: PressureMPaStr | None = pyd.Field(
@@ -296,3 +302,4 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
     PostTensioningSteel: PostTensioningSteelV1 | None = None
     RebarSteel: RebarSteelV1 | None = None
     WireMeshSteel: WireMeshSteelV1 | None = None
+    OtherSteel: OtherSteelV1 | None = None
