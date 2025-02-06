@@ -19,9 +19,16 @@ __all__ = (
     "CountertopsRangeV1",
     "DemountablePartitionsRangeV1",
     "OtherFurnishingsRangeV1",
+    "OpenStorageRangeV1",
+    "ClosedStorageRangeV1",
+    "RetractableStorageRangeV1",
+    "MobileStorageRangeV1",
+    "WallMountedShelvingRangeV1",
+    "OtherStorageFurnitureRangeV1",
     "StorageFurnitureRangeV1",
     "TablesRangeV1",
     "WorkSurfacesRangeV1",
+    "WorkspacesRangeV1",
     "FurnishingsRangeV1",
 )
 
@@ -89,6 +96,76 @@ class OtherFurnishingsRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class OpenStorageRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Open Storage.
+
+    Open Storage furniture which is static and has no moving parts.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class ClosedStorageRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Closed Storage.
+
+    Closed storage furniture making use of doors, sliding and/or hinged parts.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class RetractableStorageRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Retractable Storage.
+
+    Storage Furniture with retractable (drawer) elements.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class MobileStorageRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Mobile Storage.
+
+    Mobile storage furniture having wheels or casters for movement.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class WallMountedShelvingRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Wall Mounted Shelving.
+
+    Storage furniture which requires usage of a vertical structure for attachment and functional support.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class OtherStorageFurnitureRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Other Storage Furniture.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class StorageFurnitureRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Storage Furniture.
@@ -96,7 +173,14 @@ class StorageFurnitureRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
+
+    OpenStorage: OpenStorageRangeV1 | None = None
+    ClosedStorage: ClosedStorageRangeV1 | None = None
+    RetractableStorage: RetractableStorageRangeV1 | None = None
+    MobileStorage: MobileStorageRangeV1 | None = None
+    WallMountedShelving: WallMountedShelvingRangeV1 | None = None
+    OtherStorageFurniture: OtherStorageFurnitureRangeV1 | None = None
 
 
 class TablesRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -119,6 +203,19 @@ class WorkSurfacesRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class WorkspacesRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Workspaces.
+
+    Office furniture and furniture systems for performing office work, such as cubicle systems.
+    Typically includes component(s) that may fit in other categories.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class FurnishingsRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Home and office furnishings.
@@ -126,7 +223,7 @@ class FurnishingsRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     Chairs: ChairsRangeV1 | None = None
     Countertops: CountertopsRangeV1 | None = None
@@ -135,3 +232,4 @@ class FurnishingsRangeV1(BaseOpenEpdHierarchicalSpec):
     StorageFurniture: StorageFurnitureRangeV1 | None = None
     Tables: TablesRangeV1 | None = None
     WorkSurfaces: WorkSurfacesRangeV1 | None = None
+    Workspaces: WorkspacesRangeV1 | None = None
