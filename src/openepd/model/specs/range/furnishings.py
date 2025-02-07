@@ -36,9 +36,10 @@ __all__ = (
 
 
 from openepd.compat.pydantic import pyd
+from openepd.model.common import RangeInt, RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CountertopMaterial
-from openepd.model.validation.quantity import AmountRangeLengthMm
+from openepd.model.validation.quantity import AmountRangeAreaM2, AmountRangeLengthMm, AmountRangeVolume
 
 
 class DemountablePartitionTrackRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -225,6 +226,25 @@ class FurnishingsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.1"
 
+    functional_floor_area_m2: AmountRangeAreaM2 | None = pyd.Field(
+        default=None, title="Functional Floor Area", description="The floor area that the product occupies."
+    )
+    work_surface_area_m2: AmountRangeAreaM2 | None = pyd.Field(
+        default=None, title="Work Surface Area", description="The usable work surface area that the product provides."
+    )
+    functional_storage_volume_m3: AmountRangeVolume | None = pyd.Field(
+        default=None, title="Functional Storage Volume", description=""
+    )
+    functional_seating_capacity: RangeInt | None = pyd.Field(
+        default=1,
+        title="Functional Seating Capacity",
+        description="Intended number of individuals the product seats. This value is used in calculating impact per functional unit.",
+    )
+    installation_waste_factor: RangeRatioFloat | None = pyd.Field(
+        default=0.01,
+        title="Installation Waste Factor",
+        description="Typical increase in impacts to account for installation waste.",
+    )
     Chairs: ChairsRangeV1 | None = None
     Countertops: CountertopsRangeV1 | None = None
     DemountablePartitions: DemountablePartitionsRangeV1 | None = None
