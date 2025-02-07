@@ -56,10 +56,74 @@ class OtherFurnishingsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class OpenStorageV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Open Storage.
+
+    Open Storage furniture which is static and has no moving parts.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class ClosedStorageV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Closed Storage.
+
+    Closed storage furniture making use of doors, sliding and/or hinged parts.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class RetractableStorageV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Retractable Storage.
+
+    Storage Furniture with retractable (drawer) elements.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class MobileStorageV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Mobile Storage.
+
+    Mobile storage furniture having wheels or casters for movement.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class WallMountedShelvingV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Wall Mounted Shelving.
+
+    Storage furniture which requires usage of a vertical structure for attachment and functional support.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class OtherStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
+    """Other Storage Furniture."""
+
+    _EXT_VERSION = "1.0"
+
+
 class StorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
     """Storage Furniture."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
+
+    # Nested specs:
+    OpenStorage: OpenStorageV1 | None = None
+    ClosedStorage: ClosedStorageV1 | None = None
+    RetractableStorage: RetractableStorageV1 | None = None
+    MobileStorage: MobileStorageV1 | None = None
+    WallMountedShelving: WallMountedShelvingV1 | None = None
+    OtherStorageFurniture: OtherStorageFurnitureV1 | None = None
 
 
 class TablesV1(BaseOpenEpdHierarchicalSpec):
@@ -74,10 +138,21 @@ class WorkSurfacesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class WorkspacesV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Workspaces.
+
+    Office furniture and furniture systems for performing office work, such as cubicle systems.
+    Typically includes component(s) that may fit in other categories.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class FurnishingsV1(BaseOpenEpdHierarchicalSpec):
     """Home and office furnishings."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Nested specs:
     Chairs: ChairsV1 | None = None
@@ -87,3 +162,4 @@ class FurnishingsV1(BaseOpenEpdHierarchicalSpec):
     StorageFurniture: StorageFurnitureV1 | None = None
     Tables: TablesV1 | None = None
     WorkSurfaces: WorkSurfacesV1 | None = None
+    Workspaces: WorkspacesV1 | None = None
