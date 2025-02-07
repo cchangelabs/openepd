@@ -1,3 +1,10 @@
+## 6.11.0 (2025-02-07)
+
+### Feat
+
+- **specs**: update `Furnishings` subcategories
+- **specs**: add `OtherSteelRangeV1` specification
+
 ## 6.10.0 (2025-02-05)
 
 ### Feat
