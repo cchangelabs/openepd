@@ -1,3 +1,9 @@
+## 6.12.0 (2025-02-11)
+
+### Feat
+
+- **specs**: add `Furnishings` category properties
+
 ## 6.11.0 (2025-02-07)
 
 ### Feat
