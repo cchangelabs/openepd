@@ -16,7 +16,8 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CountertopMaterial
-from openepd.model.validation.quantity import LengthMmStr
+from openepd.model.validation.numbers import RatioFloat
+from openepd.model.validation.quantity import AreaM2Str, LengthMmStr, VolumeStr
 
 
 class DemountablePartitionTrackV1(BaseOpenEpdHierarchicalSpec):
@@ -153,6 +154,38 @@ class FurnishingsV1(BaseOpenEpdHierarchicalSpec):
     """Home and office furnishings."""
 
     _EXT_VERSION = "1.1"
+
+    # Own fields:
+    functional_floor_area_m2: AreaM2Str | None = pyd.Field(
+        default=None,
+        title="Functional Floor Area",
+        description="The floor area that the product occupies.",
+        example="1 m2",
+    )
+    work_surface_area_m2: AreaM2Str | None = pyd.Field(
+        default=None,
+        title="Work Surface Area",
+        description="The usable work surface area that the product provides.",
+        example="1 m2",
+    )
+    functional_storage_volume_m3: VolumeStr | None = pyd.Field(
+        default=None,
+        title="Functional Storage Volume",
+        description="",
+        example="1 m3",
+    )
+    functional_seating_capacity: pyd.NonNegativeInt | None = pyd.Field(
+        default=1,
+        title="Functional Seating Capacity",
+        description="Intended number of individuals the product seats. This value is used in calculating impact per functional unit.",
+        example=1,
+    )
+    installation_waste_factor: RatioFloat | None = pyd.Field(
+        default=0.01,
+        title="Installation Waste Factor",
+        description="Typical increase in impacts to account for installation waste.",
+        example=0.01,
+    )
 
     # Nested specs:
     Chairs: ChairsV1 | None = None
