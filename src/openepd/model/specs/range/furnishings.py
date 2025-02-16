@@ -19,11 +19,11 @@ __all__ = (
     "CountertopsRangeV1",
     "DemountablePartitionsRangeV1",
     "OtherFurnishingsRangeV1",
-    "OpenStorageRangeV1",
-    "ClosedStorageRangeV1",
-    "RetractableStorageRangeV1",
-    "MobileStorageRangeV1",
-    "WallMountedShelvingRangeV1",
+    "OpenStorageFurnitureRangeV1",
+    "ClosedStorageFurnitureRangeV1",
+    "RetractableStorageFurnitureRangeV1",
+    "MobileStorageFurnitureRangeV1",
+    "WallMountedStorageShelvingRangeV1",
     "OtherStorageFurnitureRangeV1",
     "StorageFurnitureRangeV1",
     "TablesRangeV1",
@@ -97,7 +97,7 @@ class OtherFurnishingsRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
-class OpenStorageRangeV1(BaseOpenEpdHierarchicalSpec):
+class OpenStorageFurnitureRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Open Storage.
 
@@ -109,7 +109,7 @@ class OpenStorageRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
-class ClosedStorageRangeV1(BaseOpenEpdHierarchicalSpec):
+class ClosedStorageFurnitureRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Closed Storage.
 
@@ -121,7 +121,7 @@ class ClosedStorageRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
-class RetractableStorageRangeV1(BaseOpenEpdHierarchicalSpec):
+class RetractableStorageFurnitureRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Retractable Storage.
 
@@ -133,7 +133,7 @@ class RetractableStorageRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
-class MobileStorageRangeV1(BaseOpenEpdHierarchicalSpec):
+class MobileStorageFurnitureRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Mobile Storage.
 
@@ -145,7 +145,7 @@ class MobileStorageRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
-class WallMountedShelvingRangeV1(BaseOpenEpdHierarchicalSpec):
+class WallMountedStorageShelvingRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Wall Mounted Shelving.
 
@@ -176,11 +176,11 @@ class StorageFurnitureRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.1"
 
-    OpenStorage: OpenStorageRangeV1 | None = None
-    ClosedStorage: ClosedStorageRangeV1 | None = None
-    RetractableStorage: RetractableStorageRangeV1 | None = None
-    MobileStorage: MobileStorageRangeV1 | None = None
-    WallMountedShelving: WallMountedShelvingRangeV1 | None = None
+    OpenStorageFurniture: OpenStorageFurnitureRangeV1 | None = None
+    ClosedStorageFurniture: ClosedStorageFurnitureRangeV1 | None = None
+    RetractableStorageFurniture: RetractableStorageFurnitureRangeV1 | None = None
+    MobileStorageFurniture: MobileStorageFurnitureRangeV1 | None = None
+    WallMountedStorageShelving: WallMountedStorageShelvingRangeV1 | None = None
     OtherStorageFurniture: OtherStorageFurnitureRangeV1 | None = None
 
 
