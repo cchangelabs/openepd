@@ -236,12 +236,12 @@ class FurnishingsRangeV1(BaseOpenEpdHierarchicalSpec):
         default=None, title="Functional Storage Volume", description=""
     )
     functional_seating_capacity: RangeInt | None = pyd.Field(
-        default=1,
+        default=None,
         title="Functional Seating Capacity",
         description="Intended number of individuals the product seats. This value is used in calculating impact per functional unit.",
     )
     installation_waste_factor: RangeRatioFloat | None = pyd.Field(
-        default=0.01,
+        default=None,
         title="Installation Waste Factor",
         description="Typical increase in impacts to account for installation waste.",
     )

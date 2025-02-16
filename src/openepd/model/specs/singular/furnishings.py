@@ -175,13 +175,13 @@ class FurnishingsV1(BaseOpenEpdHierarchicalSpec):
         example="1 m3",
     )
     functional_seating_capacity: pyd.NonNegativeInt | None = pyd.Field(
-        default=1,
+        default=None,
         title="Functional Seating Capacity",
         description="Intended number of individuals the product seats. This value is used in calculating impact per functional unit.",
         example=1,
     )
     installation_waste_factor: RatioFloat | None = pyd.Field(
-        default=0.01,
+        default=None,
         title="Installation Waste Factor",
         description="Typical increase in impacts to account for installation waste.",
         example=0.01,
