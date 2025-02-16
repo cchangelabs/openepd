@@ -57,7 +57,7 @@ class OtherFurnishingsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
-class OpenStorageV1(BaseOpenEpdHierarchicalSpec):
+class OpenStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
     """
     Open Storage.
 
@@ -67,7 +67,7 @@ class OpenStorageV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
-class ClosedStorageV1(BaseOpenEpdHierarchicalSpec):
+class ClosedStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
     """
     Closed Storage.
 
@@ -77,7 +77,7 @@ class ClosedStorageV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
-class RetractableStorageV1(BaseOpenEpdHierarchicalSpec):
+class RetractableStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
     """
     Retractable Storage.
 
@@ -87,7 +87,7 @@ class RetractableStorageV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
-class MobileStorageV1(BaseOpenEpdHierarchicalSpec):
+class MobileStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
     """
     Mobile Storage.
 
@@ -97,7 +97,7 @@ class MobileStorageV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
-class WallMountedShelvingV1(BaseOpenEpdHierarchicalSpec):
+class WallMountedStorageShelvingV1(BaseOpenEpdHierarchicalSpec):
     """
     Wall Mounted Shelving.
 
@@ -119,11 +119,11 @@ class StorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.1"
 
     # Nested specs:
-    OpenStorage: OpenStorageV1 | None = None
-    ClosedStorage: ClosedStorageV1 | None = None
-    RetractableStorage: RetractableStorageV1 | None = None
-    MobileStorage: MobileStorageV1 | None = None
-    WallMountedShelving: WallMountedShelvingV1 | None = None
+    OpenStorageFurniture: OpenStorageFurnitureV1 | None = None
+    ClosedStorageFurniture: ClosedStorageFurnitureV1 | None = None
+    RetractableStorageFurniture: RetractableStorageFurnitureV1 | None = None
+    MobileStorageFurniture: MobileStorageFurnitureV1 | None = None
+    WallMountedStorageShelving: WallMountedStorageShelvingV1 | None = None
     OtherStorageFurniture: OtherStorageFurnitureV1 | None = None
 
 
