@@ -1,3 +1,9 @@
+## 6.12.1 (2025-02-17)
+
+### Fix
+
+- fix default values for `Furnishings` properties
+
 ## 6.12.0 (2025-02-11)
 
 ### Feat
