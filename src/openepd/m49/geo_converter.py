@@ -122,10 +122,10 @@ def openepd_to_m49(regions: Collection[str]) -> set[str]:
     Convert OpenEPD geography definitions to pure M49 region codes.
 
     :param regions: list of OpenEPD geography definitions including letter codes and aliases
-        like "EU27" or "NAFTA" (e.g., ["EU27", "NAFTA"], ["US", "CA, MX"])
+        like "EU27" or "NAFTA" (e.g., ["EU27", "NAFTA"], ["US", "CA, MX"], ["NAFTA", "051"])
     :return: Set of M49 region codes (e.g., {"040", "056", "100", "191", "196", "203", "208", "233", "246", "250",
         "276", "300", "348", "372", "380", "428", "440", "442", "470", "528", "616", "620", "642", "703", "705", "724",
-        "752", "840", "124", "484"}, {"840", "124", "484"})
+        "752", "840", "124", "484"}, {"840", "124", "484"}, {"840", "124", "484", "051"})
     :raises ValueError: If a region or country name is not found in ISO3166 or OpenEPD special regions.
     """
 
@@ -140,6 +140,8 @@ def openepd_to_m49(regions: Collection[str]) -> set[str]:
             m49_code = ISO3166_ALPHA2_TO_M49.get(region.upper())
             if m49_code:
                 result.add(m49_code)
+            elif region in M49_TO_ISO3166_ALPHA2:
+                result.add(region)
             else:
                 raise ValueError(f"Region '{region}' not found in ISO3166 or OpenEPD special regions.")
     return result
