@@ -1,3 +1,9 @@
+## 6.13.0 (2025-02-20)
+
+### Feat
+
+- **m49**: create m49 package for geography data manipulation
+
 ## 6.12.1 (2025-02-17)
 
 ### Fix
