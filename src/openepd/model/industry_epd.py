@@ -15,8 +15,6 @@
 #
 from typing import Literal
 
-from pydantic.v1 import NonNegativeInt
-
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseDocumentFactory, BaseOpenEpdSchema, OpenEpdDoctypes
 from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
@@ -36,15 +34,15 @@ from openepd.model.versioning import OpenEpdVersions, Version
 class SampleSize(BaseOpenEpdSchema):
     """Sample size."""
 
-    products: NonNegativeInt | None = pyd.Field(
+    products: pyd.NonNegativeInt | None = pyd.Field(
         default=None,
         description="Count of separate products or results that were included in this industry EPD, "
         "and over which the standard deviation was calculated",
     )
-    plants: NonNegativeInt | None = pyd.Field(
+    plants: pyd.NonNegativeInt | None = pyd.Field(
         default=None, description="Count of unique manufacturing plants that submitted data for this Industry EPD"
     )
-    manufacturers: NonNegativeInt | None = pyd.Field(
+    manufacturers: pyd.NonNegativeInt | None = pyd.Field(
         default=None, description="Count of unique manufacturing companies that submitted data for this Industry EPD"
     )
 
