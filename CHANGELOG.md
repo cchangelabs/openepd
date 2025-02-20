@@ -1,3 +1,9 @@
+## 6.13.1 (2025-02-20)
+
+### Fix
+
+- fix compatibility with pydantic 1 in model definition
+
 ## 6.13.0 (2025-02-20)
 
 ### Feat
