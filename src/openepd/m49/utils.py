@@ -150,7 +150,7 @@ def openepd_to_m49(regions: Collection[str]) -> set[str]:
             m49_code = ISO3166_ALPHA2_TO_M49.get(region.upper())
             if m49_code:
                 result.add(m49_code)
-            elif region in M49_TO_ISO3166_ALPHA2:
+            elif is_m49_code(region):
                 result.add(region)
             else:
                 raise ValueError(f"Region '{region}' not found in ISO3166 or OpenEPD special regions.")
