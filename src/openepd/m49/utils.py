@@ -13,11 +13,21 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+__all__ = [
+    "iso_to_m49",
+    "m49_to_iso",
+    "region_and_country_names_to_m49",
+    "m49_to_region_and_country_names",
+    "openepd_to_m49",
+    "m49_to_openepd",
+    "is_m49_code",
+]
 from typing import Collection
 
 from openepd.m49.const import (
     COUNTRY_VERBOSE_NAME_TO_M49,
     ISO3166_ALPHA2_TO_M49,
+    M49_AREAS,
     M49_TO_COUNTRY_VERBOSE_NAME,
     M49_TO_ISO3166_ALPHA2,
     M49_TO_REGION_VERBOSE_NAME,
@@ -178,3 +188,13 @@ def m49_to_openepd(regions: list[str]) -> set[str]:
             raise ValueError(f"Region code '{code}' not found in ISO3166 or OpenEPD special regions.")
 
     return result
+
+
+def is_m49_code(to_check: str) -> bool:
+    """
+    Check if passed string is M49 code.
+
+    :param to_check: any string
+    :return: `True` if passed string is M49 code, `False` otherwise
+    """
+    return to_check in M49_AREAS or to_check in M49_TO_ISO3166_ALPHA2
