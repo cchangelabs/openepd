@@ -13,8 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-
 from typing import NamedTuple
+import warnings
 
 M49_CODE_WORLD = "001"
 M49_CODE_AFRICA = "002"
@@ -1169,4 +1169,7 @@ def is_m49_code(to_check: str) -> bool:
     :param to_check: any string
     :return: `True` if passed string is M49 code, `False` otherwise
     """
-    return to_check in M49_AREAS or to_check in M49_TO_ISO3166_ALPHA2
+    warnings.warn("Use m49.utils.is_m49_code instead.", DeprecationWarning)
+    from . import utils
+
+    return utils.is_m49_code(to_check)

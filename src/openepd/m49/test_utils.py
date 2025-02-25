@@ -15,7 +15,7 @@
 #
 from unittest import TestCase
 
-from openepd.m49.geo_converter import (
+from openepd.m49.utils import (
     iso_to_m49,
     m49_to_iso,
     m49_to_openepd,
@@ -25,7 +25,7 @@ from openepd.m49.geo_converter import (
 )
 
 
-class GeoConverterTestCase(TestCase):
+class M49UtilsTestCase(TestCase):
     def test_iso_to_m49(self) -> None:
         positive_test_cases = [
             (["US", "CA", "MX"], ["840", "124", "484"]),
