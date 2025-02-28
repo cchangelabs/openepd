@@ -20,12 +20,12 @@ __all__ = (
     "MasonryRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.quantity import AmountRangePressureMpa, AmountRangeThermalConductivity
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class GMURangeV1(BaseOpenEpdHierarchicalSpec):
@@ -47,9 +47,9 @@ class AutoclavedAeratedConcreteRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    strength_28d: AmountRangePressureMpa | None = pyd.Field(default=None, description="")
-    thermal_conductivity: AmountRangeThermalConductivity | None = pyd.Field(default=None, description="")
-    white: bool | None = pyd.Field(default=None, description="")
+    strength_28d: AmountRangePressureMpa | None = pydantic.Field(default=None, description="")
+    thermal_conductivity: AmountRangeThermalConductivity | None = pydantic.Field(default=None, description="")
+    white: bool | None = pydantic.Field(default=None, description="")
 
 
 class BrickRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -61,15 +61,15 @@ class BrickRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    building: bool | None = pyd.Field(default=None, description="")
-    facing: bool | None = pyd.Field(default=None, description="")
-    floor: bool | None = pyd.Field(default=None, description="")
-    pedestrian: bool | None = pyd.Field(default=None, description="")
-    paving: bool | None = pyd.Field(default=None, description="")
-    other: bool | None = pyd.Field(default=None, description="")
-    chemical_resistant: bool | None = pyd.Field(default=None, description="")
-    glazed: bool | None = pyd.Field(default=None, description="")
-    tiles: bool | None = pyd.Field(default=None, description="")
+    building: bool | None = pydantic.Field(default=None, description="")
+    facing: bool | None = pydantic.Field(default=None, description="")
+    floor: bool | None = pydantic.Field(default=None, description="")
+    pedestrian: bool | None = pydantic.Field(default=None, description="")
+    paving: bool | None = pydantic.Field(default=None, description="")
+    other: bool | None = pydantic.Field(default=None, description="")
+    chemical_resistant: bool | None = pydantic.Field(default=None, description="")
+    glazed: bool | None = pydantic.Field(default=None, description="")
+    tiles: bool | None = pydantic.Field(default=None, description="")
 
 
 class MasonryRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -81,7 +81,7 @@ class MasonryRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    white_cement: bool | None = pyd.Field(default=None, description="")
+    white_cement: bool | None = pydantic.Field(default=None, description="")
     GMU: GMURangeV1 | None = None
     AutoclavedAeratedConcrete: AutoclavedAeratedConcreteRangeV1 | None = None
     Brick: BrickRangeV1 | None = None

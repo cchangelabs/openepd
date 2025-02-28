@@ -32,10 +32,8 @@ __all__ = (
     "MechanicalRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     AhuAirflowControl,
@@ -60,6 +58,8 @@ from openepd.model.validation.quantity import (
     AmountRangeVolume,
 )
 
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+
 
 class HvacVrfControlRangeV1(BaseOpenEpdHierarchicalSpec):
     """
@@ -80,11 +80,11 @@ class HvacVrfIndoorRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="")
-    heating_capacity: AmountRangePower | None = pyd.Field(default=None, description="")
-    cooling_capacity: AmountRangePower | None = pyd.Field(default=None, description="")
-    airflow_rate: AmountRangeAirflow | None = pyd.Field(default=None, description="")
-    air_volume: AmountRangeVolume | None = pyd.Field(default=None, description="")
+    refrigerants: list[MechanicalRefrigerants] | None = pydantic.Field(default=None, description="")
+    heating_capacity: AmountRangePower | None = pydantic.Field(default=None, description="")
+    cooling_capacity: AmountRangePower | None = pydantic.Field(default=None, description="")
+    airflow_rate: AmountRangeAirflow | None = pydantic.Field(default=None, description="")
+    air_volume: AmountRangeVolume | None = pydantic.Field(default=None, description="")
 
 
 class HvacVrfOutdoorRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -96,11 +96,11 @@ class HvacVrfOutdoorRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="")
-    heating_capacity: AmountRangePower | None = pyd.Field(default=None, description="")
-    cooling_capacity: AmountRangePower | None = pyd.Field(default=None, description="")
-    airflow_rate: AmountRangeAirflow | None = pyd.Field(default=None, description="")
-    air_volume: AmountRangeVolume | None = pyd.Field(default=None, description="")
+    refrigerants: list[MechanicalRefrigerants] | None = pydantic.Field(default=None, description="")
+    heating_capacity: AmountRangePower | None = pydantic.Field(default=None, description="")
+    cooling_capacity: AmountRangePower | None = pydantic.Field(default=None, description="")
+    airflow_rate: AmountRangeAirflow | None = pydantic.Field(default=None, description="")
+    air_volume: AmountRangeVolume | None = pydantic.Field(default=None, description="")
 
 
 class HvacAirDiffusersRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -122,8 +122,8 @@ class HvacAirFiltersRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    merv_rating: list[AirFiltersMervRating] | None = pyd.Field(default=None, description="")
-    media_type: list[AirFiltersMediaType] | None = pyd.Field(default=None, description="")
+    merv_rating: list[AirFiltersMervRating] | None = pydantic.Field(default=None, description="")
+    media_type: list[AirFiltersMediaType] | None = pydantic.Field(default=None, description="")
 
 
 class HvacAHUsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -138,14 +138,14 @@ class HvacAHUsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="")
-    installation: list[MechanicalInstallation] | None = pyd.Field(default=None, description="")
-    airflow_rate: AmountRangeAirflow | None = pyd.Field(default=None, description="")
-    air_volume: AmountRangeVolume | None = pyd.Field(default=None, description="")
-    cooling_capacity: AmountRangePower | None = pyd.Field(default=None, description="")
-    heating_capacity: AmountRangePower | None = pyd.Field(default=None, description="")
-    airflow_control: list[AhuAirflowControl] | None = pyd.Field(default=None, description="")
-    zone_control: list[AhuZoneControl] | None = pyd.Field(default=None, description="")
+    refrigerants: list[MechanicalRefrigerants] | None = pydantic.Field(default=None, description="")
+    installation: list[MechanicalInstallation] | None = pydantic.Field(default=None, description="")
+    airflow_rate: AmountRangeAirflow | None = pydantic.Field(default=None, description="")
+    air_volume: AmountRangeVolume | None = pydantic.Field(default=None, description="")
+    cooling_capacity: AmountRangePower | None = pydantic.Field(default=None, description="")
+    heating_capacity: AmountRangePower | None = pydantic.Field(default=None, description="")
+    airflow_control: list[AhuAirflowControl] | None = pydantic.Field(default=None, description="")
+    zone_control: list[AhuZoneControl] | None = pydantic.Field(default=None, description="")
 
 
 class HvacBoilersRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -157,10 +157,10 @@ class HvacBoilersRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    flow_rate: AmountRangeAreaPerVolume | None = pyd.Field(default=None, description="")
-    heating_capacity: AmountRangePower | None = pyd.Field(default=None, description="")
-    configuration: list[BoilerConfiguration] | None = pyd.Field(default=None, description="")
-    fuel_type: list[BoilerEquipmentFuelType] | None = pyd.Field(default=None, description="")
+    flow_rate: AmountRangeAreaPerVolume | None = pydantic.Field(default=None, description="")
+    heating_capacity: AmountRangePower | None = pydantic.Field(default=None, description="")
+    configuration: list[BoilerConfiguration] | None = pydantic.Field(default=None, description="")
+    fuel_type: list[BoilerEquipmentFuelType] | None = pydantic.Field(default=None, description="")
 
 
 class HvacChillersRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -175,12 +175,12 @@ class HvacChillersRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="")
-    installation: list[MechanicalInstallation] | None = pyd.Field(default=None, description="")
-    heating_capacity: AmountRangePower | None = pyd.Field(default=None, description="")
-    cooling_capacity: AmountRangePower | None = pyd.Field(default=None, description="")
-    air_volume: AmountRangeVolume | None = pyd.Field(default=None, description="")
-    airflow_rate: AmountRangeAirflow | None = pyd.Field(default=None, description="")
+    refrigerants: list[MechanicalRefrigerants] | None = pydantic.Field(default=None, description="")
+    installation: list[MechanicalInstallation] | None = pydantic.Field(default=None, description="")
+    heating_capacity: AmountRangePower | None = pydantic.Field(default=None, description="")
+    cooling_capacity: AmountRangePower | None = pydantic.Field(default=None, description="")
+    air_volume: AmountRangeVolume | None = pydantic.Field(default=None, description="")
+    airflow_rate: AmountRangeAirflow | None = pydantic.Field(default=None, description="")
 
 
 class HvacFansRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -202,12 +202,12 @@ class HvacHeatPumpsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="")
-    cooling_capacity: AmountRangePower | None = pyd.Field(default=None, description="")
-    heating_capacity: AmountRangePower | None = pyd.Field(default=None, description="")
-    air_volume: AmountRangeVolume | None = pyd.Field(default=None, description="")
-    airflow_rate: AmountRangeAirflow | None = pyd.Field(default=None, description="")
-    heat_pumps_type: list[HeatPumpType] | None = pyd.Field(default=None, description="")
+    refrigerants: list[MechanicalRefrigerants] | None = pydantic.Field(default=None, description="")
+    cooling_capacity: AmountRangePower | None = pydantic.Field(default=None, description="")
+    heating_capacity: AmountRangePower | None = pydantic.Field(default=None, description="")
+    air_volume: AmountRangeVolume | None = pydantic.Field(default=None, description="")
+    airflow_rate: AmountRangeAirflow | None = pydantic.Field(default=None, description="")
+    heat_pumps_type: list[HeatPumpType] | None = pydantic.Field(default=None, description="")
 
 
 class HvacHeatExRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -222,8 +222,8 @@ class HvacHeatExRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="")
-    heat_exchangers_type: list[HvacHeatExchangersType] | None = pyd.Field(default=None, description="")
+    refrigerants: list[MechanicalRefrigerants] | None = pydantic.Field(default=None, description="")
+    heat_exchangers_type: list[HvacHeatExchangersType] | None = pydantic.Field(default=None, description="")
 
 
 class HvacPumpsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -238,9 +238,9 @@ class HvacPumpsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    flow_rate: AmountRangeAreaPerVolume | None = pyd.Field(default=None, description="")
-    pump_discharge_pressure: AmountRangePressureMpa | None = pyd.Field(default=None, description="")
-    pump_horsepower: AmountRangePower | None = pyd.Field(default=None, description="")
+    flow_rate: AmountRangeAreaPerVolume | None = pydantic.Field(default=None, description="")
+    pump_discharge_pressure: AmountRangePressureMpa | None = pydantic.Field(default=None, description="")
+    pump_horsepower: AmountRangePower | None = pydantic.Field(default=None, description="")
 
 
 class HvacRTUsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -279,9 +279,9 @@ class HvacDuctsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    shape: list[HvacDuctShape] | None = pyd.Field(default=None, description="Hvac duct shape")
-    material: list[HvacDuctMaterial] | None = pyd.Field(default=None, description="Hvac duct material")
-    type: list[HvacDuctType] | None = pyd.Field(default=None, description="Hvac duct type")
+    shape: list[HvacDuctShape] | None = pydantic.Field(default=None, description="Hvac duct shape")
+    material: list[HvacDuctMaterial] | None = pydantic.Field(default=None, description="Hvac duct material")
+    type: list[HvacDuctType] | None = pydantic.Field(default=None, description="Hvac duct type")
 
 
 class MechanicalRangeV1(BaseOpenEpdHierarchicalSpec):

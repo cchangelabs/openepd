@@ -15,7 +15,8 @@
 #
 from typing import Any, ClassVar
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.singular.accessories import AccessoriesV1
 from openepd.model.specs.singular.aggregates import AggregatesV1
@@ -57,13 +58,16 @@ from openepd.model.specs.singular.utility_piping import UtilityPipingV1
 from openepd.model.specs.singular.wood import WoodV1
 from openepd.model.specs.singular.wood_joists import WoodJoistsV1
 
-__all__ = ("Specs",)
+__all__ = ("Specs", "BaseCompatibilitySpec")
 
 
 class Specs(BaseOpenEpdHierarchicalSpec):
     """Material specific specs."""
 
-    COMPATIBILITY_SPECS: ClassVar[list[type[BaseCompatibilitySpec]]] = [ConcreteOldSpec, SteelOldSpec]
+    COMPATIBILITY_SPECS: ClassVar[list[type[BaseCompatibilitySpec]]] = [
+        ConcreteOldSpec,
+        SteelOldSpec,
+    ]
 
     _EXT_VERSION = "1.0"
 
@@ -107,8 +111,8 @@ class Specs(BaseOpenEpdHierarchicalSpec):
     concrete: ConcreteOldSpec | None = None
     steel: SteelOldSpec | None = None
 
-    @pyd.root_validator(pre=True)
-    def _ensure_backward_compatibiltiy(cls, values: dict[str, Any]) -> dict[str, Any]:
+    @pydantic.model_validator(mode="before")
+    def _ensure_backward_compatibility(cls, values: dict[str, Any]) -> dict[str, Any]:
         """
         Restore the functionality for backward-compatible specs.
 

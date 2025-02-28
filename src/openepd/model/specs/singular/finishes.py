@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     AccessFlooringCoreMaterial,
@@ -43,7 +44,6 @@ from openepd.model.specs.enums import (
     WoodFlooringTimberSpecies,
 )
 from openepd.model.specs.singular.common import HasForestPracticesCertifiers
-from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import (
     AreaPerVolumeStr,
     ForceNStr,
@@ -70,28 +70,55 @@ class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    core_material: AccessFlooringCoreMaterial | None = pyd.Field(default=None, description="", example="Cementitious")
-    finish_material: AccessFlooringFinishMaterial | None = pyd.Field(default=None, description="", example="Linoleum")
-    stringers: AccessFlooringStringers | None = pyd.Field(default=None, description="", example="Standard")
-    seismic_rating: AccessFlooringSeismicRating | None = pyd.Field(default=None, description="", example="Type 0")
-    magnetically_attached_finish: bool | None = pyd.Field(default=None, description="", example=True)
-    permanent_finish: bool | None = pyd.Field(default=None, description="", example=True)
-    drylay: bool | None = pyd.Field(default=None, description="", example=True)
-    adjustable_height: bool | None = pyd.Field(default=None, description="", example=True)
-    fixed_height: bool | None = pyd.Field(default=None, description="", example=True)
-    finished_floor_height: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
-    panel_thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
-    concentrated_load: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    uniform_load: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    rolling_load_10_pass: ForceNStr | None = pyd.Field(default=None, description="", example="1 N")
-    rolling_load_10000_pass: ForceNStr | None = pyd.Field(default=None, description="", example="1 N")
+    core_material: AccessFlooringCoreMaterial | None = pydantic.Field(
+        default=None, description="", examples=["Cementitious"]
+    )
+    finish_material: AccessFlooringFinishMaterial | None = pydantic.Field(
+        default=None, description="", examples=["Linoleum"]
+    )
+    stringers: AccessFlooringStringers | None = pydantic.Field(default=None, description="", examples=["Standard"])
+    seismic_rating: AccessFlooringSeismicRating | None = pydantic.Field(
+        default=None, description="", examples=["Type 0"]
+    )
+    magnetically_attached_finish: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    permanent_finish: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    drylay: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    adjustable_height: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    fixed_height: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    finished_floor_height: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["1 m"])
+    panel_thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["1 m"])
+    concentrated_load: PressureMPaStr | None = pydantic.Field(default=None, description="", examples=["1 MPa"])
+    uniform_load: PressureMPaStr | None = pydantic.Field(default=None, description="", examples=["1 MPa"])
+    rolling_load_10_pass: ForceNStr | None = pydantic.Field(default=None, description="", examples=["1 N"])
+    rolling_load_10000_pass: ForceNStr | None = pydantic.Field(default=None, description="", examples=["1 N"])
 
-    _access_flooring_rolling_load_10_pass_is_quantity_validator = pyd.validator(
-        "rolling_load_10_pass", allow_reuse=True
-    )(validate_quantity_unit_factory("N"))
-    _access_flooring_rolling_load_10000_pass_is_quantity_validator = pyd.validator(
-        "rolling_load_10000_pass", allow_reuse=True
-    )(validate_quantity_unit_factory("N"))
+    @pydantic.field_validator("rolling_load_10_pass", mode="before", check_fields=False)
+    def _access_flooring_rolling_load_10_pass_is_quantity_validator(cls, value):
+        return validate_quantity_unit_factory("N")(cls, value)
+
+    @pydantic.field_validator("rolling_load_10000_pass", mode="before", check_fields=False)
+    def _access_flooring_rolling_load_10000_pass_is_quantity_validator(cls, value):
+        return validate_quantity_unit_factory("N")(cls, value)
 
 
 class CarpetV1(BaseOpenEpdHierarchicalSpec):
@@ -100,27 +127,40 @@ class CarpetV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    length: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    width: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    intended_application: list[CarpetIntendedApplication] | None = pyd.Field(
-        default=None, description="", example=["Res"]
+    length: LengthMStr | None = pydantic.Field(default=None, description="", examples=["1 m"])
+    width: LengthMStr | None = pydantic.Field(default=None, description="", examples=["1 m"])
+    intended_application: list[CarpetIntendedApplication] | None = pydantic.Field(
+        default=None, description="", examples=[["Res"]]
     )
-    manufacture_type: CarpetManufactureType | None = pyd.Field(default=None, description="", example="Tufted")
-    form_factor: CarpetFormFactor | None = pyd.Field(default=None, description="", example="Tiles")
-    yarn_weight: YarnWeightStr | None = pyd.Field(default=None, description="", example="1 g / m2")
-    yarn_type: CarpetYarnType | None = pyd.Field(default=None, description="", example="Nylon 6,6")
-    fire_radiant_panel_rating_astme648: str | None = pyd.Field(default=None, description="")
-    fire_smoke_density_rating_astme648: str | None = pyd.Field(default=None, description="")
-    voc_emissions: str | None = pyd.Field(default=None, description="", example="test_valueValidatedStringProperty")
-    cushioned: bool | None = pyd.Field(default=None, description="", example=True)
-    bleachable: bool | None = pyd.Field(default=None, description="", example=True)
-    gwp_factor_base: GwpKgCo2eStr | None = pyd.Field(default=None, description="", example="1 kgCO2e")
-    gwp_factor_yarn: GwpKgCo2eStr | None = pyd.Field(default=None, description="", example="1 kgCO2e")
+    manufacture_type: CarpetManufactureType | None = pydantic.Field(default=None, description="", examples=["Tufted"])
+    form_factor: CarpetFormFactor | None = pydantic.Field(default=None, description="", examples=["Tiles"])
+    yarn_weight: YarnWeightStr | None = pydantic.Field(default=None, description="", examples=["1 g / m2"])
+    yarn_type: CarpetYarnType | None = pydantic.Field(default=None, description="", examples=["Nylon 6,6"])
+    fire_radiant_panel_rating_astme648: str | None = pydantic.Field(default=None, description="")
+    fire_smoke_density_rating_astme648: str | None = pydantic.Field(default=None, description="")
+    voc_emissions: str | None = pydantic.Field(
+        default=None, description="", examples=["test_valueValidatedStringProperty"]
+    )
+    cushioned: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    bleachable: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    gwp_factor_base: GwpKgCo2eStr | None = pydantic.Field(default=None, description="", examples=["1 kgCO2e"])
+    gwp_factor_yarn: GwpKgCo2eStr | None = pydantic.Field(default=None, description="", examples=["1 kgCO2e"])
 
-    _yarn_weight_is_quantity_validator = pyd.validator("yarn_weight", allow_reuse=True)(
-        validate_quantity_unit_factory("g / m2")
-    )
-    _yarn_weight_ge_validator = pyd.validator("yarn_weight", allow_reuse=True)(validate_quantity_ge_factory("0 g / m2"))
+    @pydantic.field_validator("yarn_weight", mode="before", check_fields=False)
+    def _yarn_weight_is_quantity_validator(cls, value):
+        return validate_quantity_unit_factory("g / m2")(cls, value)
+
+    @pydantic.field_validator("yarn_weight", mode="before", check_fields=False)
+    def _yarn_weight_ge_validator(cls, value):
+        return validate_quantity_ge_factory("0 g / m2")(cls, value)
 
 
 class LaminateV1(BaseOpenEpdHierarchicalSpec):
@@ -145,19 +185,43 @@ class ResilientFlooringV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    length: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    width: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
-    form_factor: ResilientFlooringFormFactor | None = pyd.Field(default=None, description="", example="Loose Lay")
-    material: ResilientFlooringMaterial | None = pyd.Field(default=None, description="", example="VCT")
-    sheet_construction: VinylSheetConstruction | None = pyd.Field(default=None, description="", example="Homogeneous")
-    wear_layer: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
-    delta_iic: float | None = pyd.Field(default=None, description="", example=2.3)
-    thickness: ResilientFlooringThickness | None = pyd.Field(default=None, description="", example="≤ 2mm")
-    sport_flooring: bool | None = pyd.Field(default=None, description="", example=True)
-    conductive_flooring: bool | None = pyd.Field(default=None, description="", example=True)
-    zwtl: bool | None = pyd.Field(default=None, description="", example=True)
-    floor_score: bool | None = pyd.Field(default=None, description="", example=True)
-    nsf332: bool | None = pyd.Field(default=None, description="", example=True)
+    length: LengthMStr | None = pydantic.Field(default=None, description="", examples=["1 m"])
+    width: LengthMStr | None = pydantic.Field(default=None, description="", examples=["1 m"])
+    form_factor: ResilientFlooringFormFactor | None = pydantic.Field(
+        default=None, description="", examples=["Loose Lay"]
+    )
+    material: ResilientFlooringMaterial | None = pydantic.Field(default=None, description="", examples=["VCT"])
+    sheet_construction: VinylSheetConstruction | None = pydantic.Field(
+        default=None, description="", examples=["Homogeneous"]
+    )
+    wear_layer: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["1 m"])
+    delta_iic: float | None = pydantic.Field(default=None, description="", examples=[2.3])
+    thickness: ResilientFlooringThickness | None = pydantic.Field(default=None, description="", examples=["≤ 2mm"])
+    sport_flooring: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    conductive_flooring: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    zwtl: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    floor_score: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    nsf332: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
 
 
 class WallBaseV1(BaseOpenEpdHierarchicalSpec):
@@ -166,7 +230,7 @@ class WallBaseV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    wall_base_material: WallBaseMaterial | None = pyd.Field(default=None, description="", example="Rubber")
+    wall_base_material: WallBaseMaterial | None = pydantic.Field(default=None, description="", examples=["Rubber"])
 
 
 class WoodFlooringV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
@@ -180,9 +244,11 @@ class WoodFlooringV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
-    timber_species: WoodFlooringTimberSpecies | None = pyd.Field(default=None, description="", example="Oak")
-    fabrication: WoodFlooringFabrication | None = pyd.Field(default=None, description="", example="Solid hardwood")
+    thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["10 mm"])
+    timber_species: WoodFlooringTimberSpecies | None = pydantic.Field(default=None, description="", examples=["Oak"])
+    fabrication: WoodFlooringFabrication | None = pydantic.Field(
+        default=None, description="", examples=["Solid hardwood"]
+    )
 
 
 class AcousticalCeilingsV1(BaseOpenEpdHierarchicalSpec):
@@ -191,7 +257,7 @@ class AcousticalCeilingsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
+    thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["10 mm"])
 
 
 class CeramicTileV1(BaseOpenEpdHierarchicalSpec):
@@ -200,36 +266,38 @@ class CeramicTileV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    porcelain: bool | None = pyd.Field(
-        default=None, description="A dense and durable ceramic tile made from fine porcelain clay.", example=True
+    porcelain: bool | None = pydantic.Field(
+        default=None,
+        description="A dense and durable ceramic tile made from fine porcelain clay.",
+        examples=[True],
     )
-    quarry: bool | None = pyd.Field(
+    quarry: bool | None = pydantic.Field(
         default=None,
         description="A type of unglazed ceramic tile made from natural clay with a slightly rough texture.",
-        example=True,
+        examples=[True],
     )
-    pressed_floor_tile: bool | None = pyd.Field(
+    pressed_floor_tile: bool | None = pydantic.Field(
         default=None,
         description="A durable and low-maintenance type of tile made by compressing clay or "
         "other materials at high pressure.",
-        example=True,
+        examples=[True],
     )
-    wall_tile: bool | None = pyd.Field(
+    wall_tile: bool | None = pydantic.Field(
         default=None,
         description="A decorative tile designed for use on vertical surfaces such as walls or backsplashes.",
-        example=True,
+        examples=[True],
     )
-    mosaic_tile: bool | None = pyd.Field(
+    mosaic_tile: bool | None = pydantic.Field(
         default=None,
         description="A small decorative tile made of glass, stone, or ceramic, arranged in a pattern "
         "to create a design.",
-        example=True,
+        examples=[True],
     )
-    specialty: bool | None = pyd.Field(
+    specialty: bool | None = pydantic.Field(
         default=None,
         description="A unique and customized type of tile, often made from unconventional materials or with "
         "specialized designs or finishes.",
-        example=True,
+        examples=[True],
     )
 
 
@@ -243,19 +311,19 @@ class GaugedTileV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    tile_panels: bool | None = pyd.Field(
+    tile_panels: bool | None = pydantic.Field(
         default=None,
         description="Large-format porcelain or natural stone tiles that are typically over 3 feet in length and width, "
         "designed for use in floor and wall installations to create a seamless and uninterrupted "
         "appearance.",
-        example=True,
+        examples=[True],
     )
-    tile_pavers: bool | None = pyd.Field(
+    tile_pavers: bool | None = pydantic.Field(
         default=None,
         description="Thick and durable porcelain or natural stone tiles that are commonly used in outdoor "
         "applications, such as patios, walkways, and driveways, due to their high resistance to weather "
         "and wear.",
-        example=True,
+        examples=[True],
     )
 
 
@@ -265,29 +333,29 @@ class GlassTileV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    regular: bool | None = pyd.Field(
+    regular: bool | None = pydantic.Field(
         default=None,
         description="Glass tile that is typically square or rectangular in shape, and used for a variety of "
         "decorative applications, such as kitchen backsplashes, shower walls, and accent borders.",
-        example=True,
+        examples=[True],
     )
-    glass_mosaic: bool | None = pyd.Field(
+    glass_mosaic: bool | None = pydantic.Field(
         default=None,
         description="A small, decorative glass tile made in a variety of shapes and colors, used for intricate "
         "designs and patterns on walls, floors, and other surfaces.",
-        example=True,
+        examples=[True],
     )
-    miniature_mosaic: bool | None = pyd.Field(
+    miniature_mosaic: bool | None = pydantic.Field(
         default=None,
         description="Glass mosaic tile that is smaller in size than regular glass mosaic tile, often used for "
         "intricate details and designs in backsplashes, shower walls, and decorative accents.",
-        example=True,
+        examples=[True],
     )
-    large_format: bool | None = pyd.Field(
+    large_format: bool | None = pydantic.Field(
         default=None,
         description="Glass tile that is larger in size than regular glass tile, often used to create a dramatic and "
         "modern effect in commercial and residential spaces.",
-        example=True,
+        examples=[True],
     )
 
 
@@ -319,17 +387,23 @@ class CeilingPanelV1(BaseOpenEpdHierarchicalSpec):
     """Modular Ceiling Panels"""
 
     # Own fields:
-    fire_rating: CeilingPanelFireRating | None = pyd.Field(default=None, description="", example="Class A")
-    core_material: CeilingPanelCoreMaterial | None = pyd.Field(default=None, description="", example="Fiberglass")
-    nrc: RatioFloat | None = pyd.Field(
+    fire_rating: CeilingPanelFireRating | None = pydantic.Field(default=None, description="", examples=["Class A"])
+    core_material: CeilingPanelCoreMaterial | None = pydantic.Field(
+        default=None, description="", examples=["Fiberglass"]
+    )
+    nrc: float | None = pydantic.Field(
         default=None,
         description="Noise Reduction Coefficient (NRC) or Sound Absorbtion Average (SAA) per ASTM C423",
-        example=0.5,
+        examples=[0.5],
         ge=0,
         le=1,
     )
-    cac: int | None = pyd.Field(
-        default=None, description="Ceiling Attenuation Class (CAC) per ASTM E1414", example=13, ge=10, le=50
+    cac: int | None = pydantic.Field(
+        default=None,
+        description="Ceiling Attenuation Class (CAC) per ASTM E1414",
+        examples=[13],
+        ge=10,
+        le=50,
     )
 
     # Nested specs:
@@ -348,13 +422,13 @@ class CementBoardV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: CementBoardThickness | None = pyd.Field(
-        default=None, description="", example=str(CementBoardThickness.INCH_1_2)
+    thickness: CementBoardThickness | None = pydantic.Field(
+        default=None, description="", examples=[str(CementBoardThickness.INCH_1_2)]
     )
 
-    _cement_board_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
-        validate_quantity_unit_factory("m")
-    )
+    @pydantic.field_validator("thickness")
+    def _cement_board_thickness_is_quantity_validator(cls, value):
+        return validate_quantity_unit_factory("m")(cls, value)
 
 
 class TilingV1(BaseOpenEpdHierarchicalSpec):
@@ -367,52 +441,60 @@ class TilingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="9 mm")
-    flooring: bool | None = pyd.Field(default=None, description="Tiling intended for walking.", example=True)
-    wall_finish: bool | None = pyd.Field(
+    thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["9 mm"])
+    flooring: bool | None = pydantic.Field(
+        default=None,
+        description="Tiling intended for walking.",
+        examples=[True],
+    )
+    wall_finish: bool | None = pydantic.Field(
         default=None,
         description="A decorative tile designed for use on vertical surfaces such as walls or backsplashes.",
-        example=True,
+        examples=[True],
     )
-    cladding: bool | None = pyd.Field(
+    cladding: bool | None = pydantic.Field(
         default=None,
         description="Tiling for exterior use, primarily used for the walls of buildings and structures, providing a "
         "protective and decorative layer that enhances the aesthetic appearance and weather resistance "
         "of the underlying structure.",
-        example=True,
+        examples=[True],
     )
-    other: bool | None = pyd.Field(
-        default=None, description="Tiling used as countertops, ceilings, furnishings, hardscapes etc.", example=True
+    other: bool | None = pydantic.Field(
+        default=None,
+        description="Tiling used as countertops, ceilings, furnishings, hardscapes etc.",
+        examples=[True],
     )
-    residential_only: bool | None = pyd.Field(
+    residential_only: bool | None = pydantic.Field(
         default=None,
         description="All commercial tile can also be used in residential applications, but the opposite may not be "
         "true. This selection allows to filter out tiling that is not intended for commercial "
         "applications.",
-        example=True,
+        examples=[True],
     )
-    reinforced: bool | None = pyd.Field(
+    reinforced: bool | None = pydantic.Field(
         default=None,
         description="Steel-reinforced ceramic tiles or tiles with other special reinforcing technology.",
-        example=True,
+        examples=[True],
     )
-    total_recycled_content: RatioFloat | None = pyd.Field(
+    total_recycled_content: float | None = pydantic.Field(
         default=None,
         description="Proportion of this product that is sourced from recycled content. Pre-consumer recycling is "
         "given a 50% weighting, 100% for post-consumer, by mass.",
-        example=0.5,
+        examples=[0.5],
         ge=0,
         le=1,
     )
-    post_consumer_recycled_content: RatioFloat | None = pyd.Field(
+    post_consumer_recycled_content: float | None = pydantic.Field(
         default=None,
         description="Proportion of this product that is sourced from post-consumer recycled content, by mass.",
-        example=0.5,
+        examples=[0.5],
         ge=0,
         le=1,
     )
 
-    _thickness_max_validator = pyd.validator("thickness", allow_reuse=True)(validate_quantity_le_factory("50 mm"))
+    @pydantic.field_validator("thickness", mode="before")
+    def _thickness_max_validator(cls, value):
+        return validate_quantity_le_factory("50 mm")(cls, value)
 
     # Nested specs:
     CeramicTile: CeramicTileV1 | None = None
@@ -426,12 +508,24 @@ class DeckingBoardsV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers)
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    timber_species: SawnTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
-    fabrication: AllFabrication | None = pyd.Field(default=None, description="", example="LVL")
-    weather_exposed: bool | None = pyd.Field(default=None, description="", example=True)
-    fire_retardant: bool | None = pyd.Field(default=None, description="", example=True)
-    decay_resistant: bool | None = pyd.Field(default=None, description="", example=True)
-    material: DeckingBoardMaterial | None = pyd.Field(default=None, description="", example="Wood")
+    timber_species: SawnTimberSpecies | None = pydantic.Field(default=None, description="", examples=["Alaska Cedar"])
+    fabrication: AllFabrication | None = pydantic.Field(default=None, description="", examples=["LVL"])
+    weather_exposed: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    fire_retardant: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    decay_resistant: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    material: DeckingBoardMaterial | None = pydantic.Field(default=None, description="", examples=["Wood"])
 
 
 class GlassFiberReinforcedGypsumFabricationsV1(BaseOpenEpdHierarchicalSpec):
@@ -446,24 +540,40 @@ class GypsumV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.1"
 
     # Own fields:
-    fire_rating: GypsumFireRating | None = pyd.Field(default=None, description="", example="-")
-    thickness: GypsumThickness | None = pyd.Field(default=None, description="", example="1 m")
-    facing: GypsumFacing | None = pyd.Field(default=None, description="", example="Paper")
-    r_factor: RFactorStr | None = pyd.Field(default=None, description="", example="1 RSI")
-    flame_spread_astm_e84: int | None = pyd.Field(default=None, description="", example=3)
-    smoke_production_astm_e84: int | None = pyd.Field(default=None, description="", example=3)
-    surface_abrasion_d4977: int | None = pyd.Field(default=None, description="", example=3)
-    indentation_d5420: int | None = pyd.Field(default=None, description="", example=3)
-    soft_body_impact_e695: int | None = pyd.Field(default=None, description="", example=3)
-    hard_body_impact_c1929: int | None = pyd.Field(default=None, description="", example=3)
-    mold_resistant: bool | None = pyd.Field(default=None, description="", example=True)
-    foil_backing: bool | None = pyd.Field(default=None, description="", example=True)
-    moisture_resistant: bool | None = pyd.Field(default=None, description="", example=True)
-    abuse_resistant: bool | None = pyd.Field(default=None, description="", example=True)
-
-    _gypsum_r_factor_is_quantity_validator = pyd.validator("r_factor", allow_reuse=True)(
-        validate_quantity_unit_factory("RSI")
+    fire_rating: GypsumFireRating | None = pydantic.Field(default=None, description="", examples=["-"])
+    thickness: GypsumThickness | None = pydantic.Field(default=None, description="", examples=["1 m"])
+    facing: GypsumFacing | None = pydantic.Field(default=None, description="", examples=["Paper"])
+    r_factor: RFactorStr | None = pydantic.Field(default=None, description="", examples=["1 RSI"])
+    flame_spread_astm_e84: int | None = pydantic.Field(default=None, description="", examples=[3])
+    smoke_production_astm_e84: int | None = pydantic.Field(default=None, description="", examples=[3])
+    surface_abrasion_d4977: int | None = pydantic.Field(default=None, description="", examples=[3])
+    indentation_d5420: int | None = pydantic.Field(default=None, description="", examples=[3])
+    soft_body_impact_e695: int | None = pydantic.Field(default=None, description="", examples=[3])
+    hard_body_impact_c1929: int | None = pydantic.Field(default=None, description="", examples=[3])
+    mold_resistant: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
     )
+    foil_backing: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    moisture_resistant: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    abuse_resistant: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+
+    @pydantic.field_validator("r_factor")
+    def _gypsum_r_factor_is_quantity_validator(cls, value):
+        return validate_quantity_unit_factory("RSI")(cls, value)
 
     # Nested specs:
     GypsumSupports: GypsumSupportsV1 | None = None
@@ -521,7 +631,7 @@ class WallFinishesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
+    thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["10 mm"])
 
 
 class PlasterV1(BaseOpenEpdHierarchicalSpec):
@@ -536,11 +646,11 @@ class PlasterV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    composition: PlasterComposition | None = pyd.Field(default=None, description="", example="Cement")
-    application_rate: AreaPerVolumeStr | None = pyd.Field(
+    composition: PlasterComposition | None = pydantic.Field(default=None, description="", examples=["Cement"])
+    application_rate: AreaPerVolumeStr | None = pydantic.Field(
         default=None,
         description="Typical or reference amount of material covering a unit of a host surface.",
-        example="10 m2/l",
+        examples=["10 m2/l"],
     )
 
 

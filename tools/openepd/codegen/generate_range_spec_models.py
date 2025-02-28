@@ -180,7 +180,10 @@ def generate_range_spec_models(specs_source_package: str, output_folder=None) ->
     except FileExistsError:
         ...
 
-    for importer, module_name, ispkg in [*pkgutil.iter_modules(package.__path__), (None, "__init__", False)]:
+    for importer, module_name, ispkg in [
+        *pkgutil.iter_modules(package.__path__),
+        (None, "__init__", False),
+    ]:
         if ispkg:
             continue
 
@@ -214,7 +217,7 @@ def generate_range_spec_models(specs_source_package: str, output_folder=None) ->
                     if isinstance(n, ast.AnnAssign):
                         field_init_expression = n.value
                         if isinstance(field_init_expression, ast.Call):
-                            # assuming this is a rvalue of f = pyd.Field(default=..., example=...)
+                            # assuming this is a rvalue of f =pydantic.Field(default=..., examples=[...])
                             field_init_expression.keywords = [
                                 kw for kw in field_init_expression.keywords if kw.arg not in ("example", "ge", "le")
                             ]

@@ -32,14 +32,14 @@ __all__ = (
     "FurnishingsRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeInt, RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CountertopMaterial
 from openepd.model.validation.quantity import AmountRangeAreaM2, AmountRangeLengthMm, AmountRangeVolume
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class DemountablePartitionTrackRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -71,8 +71,8 @@ class CountertopsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    countertop_material: list[CountertopMaterial] | None = pyd.Field(default=None, description="")
+    thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    countertop_material: list[CountertopMaterial] | None = pydantic.Field(default=None, description="")
 
 
 class DemountablePartitionsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -226,21 +226,25 @@ class FurnishingsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.1"
 
-    functional_floor_area_m2: AmountRangeAreaM2 | None = pyd.Field(
-        default=None, title="Functional Floor Area", description="The floor area that the product occupies."
+    functional_floor_area_m2: AmountRangeAreaM2 | None = pydantic.Field(
+        default=None,
+        title="Functional Floor Area",
+        description="The floor area that the product occupies.",
     )
-    work_surface_area_m2: AmountRangeAreaM2 | None = pyd.Field(
-        default=None, title="Work Surface Area", description="The usable work surface area that the product provides."
+    work_surface_area_m2: AmountRangeAreaM2 | None = pydantic.Field(
+        default=None,
+        title="Work Surface Area",
+        description="The usable work surface area that the product provides.",
     )
-    functional_storage_volume_m3: AmountRangeVolume | None = pyd.Field(
+    functional_storage_volume_m3: AmountRangeVolume | None = pydantic.Field(
         default=None, title="Functional Storage Volume", description=""
     )
-    functional_seating_capacity: RangeInt | None = pyd.Field(
+    functional_seating_capacity: RangeInt | None = pydantic.Field(
         default=None,
         title="Functional Seating Capacity",
         description="Intended number of individuals the product seats. This value is used in calculating impact per functional unit.",
     )
-    installation_waste_factor: RangeRatioFloat | None = pyd.Field(
+    installation_waste_factor: RangeRatioFloat | None = pydantic.Field(
         default=None,
         title="Installation Waste Factor",
         description="Typical increase in impacts to account for installation waste.",

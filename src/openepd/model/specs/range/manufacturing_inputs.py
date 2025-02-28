@@ -26,10 +26,8 @@ __all__ = (
     "ManufacturingInputsRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.concrete import Cementitious
@@ -45,6 +43,8 @@ from openepd.model.specs.enums import (
     TextilesFabricType,
 )
 
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+
 
 class CementRangeV1(BaseOpenEpdHierarchicalSpec):
     """
@@ -57,13 +57,13 @@ class CementRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    cementitious: Cementitious | None = pyd.Field(default=None, description="")
-    white_cement: bool | None = pyd.Field(default=None, description="")
-    astm_type: list[CementAstmType] | None = pyd.Field(default=None, description="")
-    c1157: list[CementC1157] | None = pyd.Field(default=None, description="")
-    csa_a3001: list[CementCsaA3001] | None = pyd.Field(default=None, description="")
-    en197_1: list[CementEn197_1] | None = pyd.Field(default=None, description="")
-    oil_well_cement: bool | None = pyd.Field(default=None, description="")
+    cementitious: Cementitious | None = pydantic.Field(default=None, description="")
+    white_cement: bool | None = pydantic.Field(default=None, description="")
+    astm_type: list[CementAstmType] | None = pydantic.Field(default=None, description="")
+    c1157: list[CementC1157] | None = pydantic.Field(default=None, description="")
+    csa_a3001: list[CementCsaA3001] | None = pydantic.Field(default=None, description="")
+    en197_1: list[CementEn197_1] | None = pydantic.Field(default=None, description="")
+    oil_well_cement: bool | None = pydantic.Field(default=None, description="")
 
 
 class MasonryCementRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -77,7 +77,7 @@ class MasonryCementRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    astm_c91_type: list[MasonryCementAstmC91Type] | None = pyd.Field(default=None, description="")
+    astm_c91_type: list[MasonryCementAstmC91Type] | None = pydantic.Field(default=None, description="")
 
 
 class SupplementaryCementitiousMaterialsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -89,7 +89,7 @@ class SupplementaryCementitiousMaterialsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    cement_scm: list[CementScm] | None = pyd.Field(default=None, description="")
+    cement_scm: list[CementScm] | None = pydantic.Field(default=None, description="")
 
 
 class AccessFlooringPedestalsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -124,8 +124,8 @@ class CarpetFiberRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    yarn_material: list[CarpetYarnType] | None = pyd.Field(default=None, description="")
-    yarn_recycled_content: RangeFloat | None = pyd.Field(default=None, description="")
+    yarn_material: list[CarpetYarnType] | None = pydantic.Field(default=None, description="")
+    yarn_recycled_content: RangeFloat | None = pydantic.Field(default=None, description="")
 
 
 class CementitiousMaterialsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -155,7 +155,7 @@ class ConcreteAdmixturesRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    effects: list[AdmixtureEffects] | None = pyd.Field(default=None, description="")
+    effects: list[AdmixtureEffects] | None = pydantic.Field(default=None, description="")
 
 
 class TextilesRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -167,7 +167,7 @@ class TextilesRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    fabric_type: list[TextilesFabricType] | None = pyd.Field(default=None, description="")
+    fabric_type: list[TextilesFabricType] | None = pydantic.Field(default=None, description="")
 
 
 class ManufacturingInputsRangeV1(BaseOpenEpdHierarchicalSpec):

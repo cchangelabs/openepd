@@ -45,10 +45,8 @@ __all__ = (
     "ElectricalRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CableTraysMaterial, ConduitMaterial, EnergySource, RacewaysMaterial
@@ -60,6 +58,8 @@ from openepd.model.validation.quantity import (
     AmountRangePower,
     AmountRangeUtilization,
 )
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class LowVoltBusesRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -111,12 +111,14 @@ class CableTraysRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    height: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    width: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    depth: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    static_load: AmountRangeMass | None = pyd.Field(default=None, description="")
-    ventilated: bool | None = pyd.Field(default=None, description="At least 40% of the tray base is open to air flow")
-    cable_trays_material: list[CableTraysMaterial] | None = pyd.Field(default=None, description="")
+    height: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    width: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    depth: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    static_load: AmountRangeMass | None = pydantic.Field(default=None, description="")
+    ventilated: bool | None = pydantic.Field(
+        default=None, description="At least 40% of the tray base is open to air flow"
+    )
+    cable_trays_material: list[CableTraysMaterial] | None = pydantic.Field(default=None, description="")
 
 
 class ElectricalBusesRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -164,11 +166,11 @@ class RacewaysRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    width: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    depth: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    painted: bool | None = pyd.Field(default=None, description="")
-    divided: bool | None = pyd.Field(default=None, description="")
-    raceways_material: list[RacewaysMaterial] | None = pyd.Field(default=None, description="")
+    width: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    depth: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    painted: bool | None = pydantic.Field(default=None, description="")
+    divided: bool | None = pydantic.Field(default=None, description="")
+    raceways_material: list[RacewaysMaterial] | None = pydantic.Field(default=None, description="")
 
 
 class FueledElectricalGeneratorsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -230,7 +232,7 @@ class ElectricityFromSpecificGeneratorRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    energy_source: list[EnergySource] | None = pyd.Field(default=None, description="")
+    energy_source: list[EnergySource] | None = pydantic.Field(default=None, description="")
 
 
 class PowerPurchaseAgreementsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -244,7 +246,7 @@ class PowerPurchaseAgreementsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    energy_source: list[EnergySource] | None = pyd.Field(default=None, description="")
+    energy_source: list[EnergySource] | None = pydantic.Field(default=None, description="")
 
 
 class LightbulbsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -376,12 +378,12 @@ class LightingRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    color_temperature: AmountRangeColorTemperature | None = pyd.Field(default=None, description="")
-    typical_utilization: AmountRangeUtilization | None = pyd.Field(default=None, description="")
-    luminosity: AmountRangeLuminosity | None = pyd.Field(default=None, description="")
-    wattage: AmountRangePower | None = pyd.Field(default=None, description="")
-    color_rendering_index: RangeFloat | None = pyd.Field(default=None, description="")
-    dimmable: bool | None = pyd.Field(default=None, description="")
+    color_temperature: AmountRangeColorTemperature | None = pydantic.Field(default=None, description="")
+    typical_utilization: AmountRangeUtilization | None = pydantic.Field(default=None, description="")
+    luminosity: AmountRangeLuminosity | None = pydantic.Field(default=None, description="")
+    wattage: AmountRangePower | None = pydantic.Field(default=None, description="")
+    color_rendering_index: RangeFloat | None = pydantic.Field(default=None, description="")
+    dimmable: bool | None = pydantic.Field(default=None, description="")
     Lightbulbs: LightbulbsRangeV1 | None = None
     LightingControls: LightingControlsRangeV1 | None = None
     LightingFixtures: LightingFixturesRangeV1 | None = None

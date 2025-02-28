@@ -21,10 +21,8 @@ __all__ = (
     "PrecastConcreteRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.singular.precast_concrete import (
@@ -34,6 +32,8 @@ from openepd.model.specs.singular.precast_concrete import (
     UtilityPrecastElementType,
 )
 from openepd.model.validation.quantity import AmountRangePressureMpa
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class ArchitecturalPrecastRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -45,8 +45,9 @@ class ArchitecturalPrecastRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.1"
 
-    element_type: ArchitecturalPrecastElementType | None = pyd.Field(
-        default=None, description="Precast element type used for architectural applications."
+    element_type: ArchitecturalPrecastElementType | None = pydantic.Field(
+        default=None,
+        description="Precast element type used for architectural applications.",
     )
 
 
@@ -59,8 +60,9 @@ class StructuralPrecastRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.1"
 
-    element_type: StructuralPrecastElementType | None = pyd.Field(
-        default=None, description="Precast element type used for structural applications."
+    element_type: StructuralPrecastElementType | None = pydantic.Field(
+        default=None,
+        description="Precast element type used for structural applications.",
     )
 
 
@@ -73,8 +75,9 @@ class UtilityUndergroundPrecastRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.1"
 
-    element_type: UtilityPrecastElementType | None = pyd.Field(
-        default=None, description="Precast element type used for utility underground applications."
+    element_type: UtilityPrecastElementType | None = pydantic.Field(
+        default=None,
+        description="Precast element type used for utility underground applications.",
     )
 
 
@@ -87,8 +90,9 @@ class CivilPrecastRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    element_type: CivilPrecastElementType | None = pyd.Field(
-        default=None, description="Precast element type used as civil engineering components."
+    element_type: CivilPrecastElementType | None = pydantic.Field(
+        default=None,
+        description="Precast element type used as civil engineering components.",
     )
 
 
@@ -101,14 +105,14 @@ class PrecastConcreteRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.1"
 
-    lightweight: bool | None = pyd.Field(default=None, description="")
-    concrete_compressive_strength_28d: AmountRangePressureMpa | None = pyd.Field(default=None, description="")
-    insulated: bool | None = pyd.Field(default=None, description="")
-    gfrc: bool | None = pyd.Field(
+    lightweight: bool | None = pydantic.Field(default=None, description="")
+    concrete_compressive_strength_28d: AmountRangePressureMpa | None = pydantic.Field(default=None, description="")
+    insulated: bool | None = pydantic.Field(default=None, description="")
+    gfrc: bool | None = pydantic.Field(
         default=None,
         description="Glass Fiber Reinforced Concrete is fiber-reinforced concrete sometimes used in architectural panels",
     )
-    steel_mass_percentage: RangeRatioFloat | None = pyd.Field(default=None, description="")
+    steel_mass_percentage: RangeRatioFloat | None = pydantic.Field(default=None, description="")
     ArchitecturalPrecast: ArchitecturalPrecastRangeV1 | None = None
     StructuralPrecast: StructuralPrecastRangeV1 | None = None
     UtilityUndergroundPrecast: UtilityUndergroundPrecastRangeV1 | None = None

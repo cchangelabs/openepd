@@ -15,28 +15,47 @@
 #
 import unittest
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.generic_estimate import GenericEstimatePreview
 from openepd.model.industry_epd import IndustryEpdPreview
 
 
 class AverageDatasetTestCase(unittest.TestCase):
     def test_generic_estimate_doctype(self):
-        self.assertEqual(GenericEstimatePreview.parse_obj({}).doctype, "openGenericEstimate")
+        self.assertEqual(GenericEstimatePreview.model_validate({}).doctype, "openGenericEstimate")
         self.assertEqual(
-            GenericEstimatePreview.parse_obj({"doctype": "openGenericEstimate"}).doctype, "openGenericEstimate"
+            GenericEstimatePreview.model_validate({"doctype": "openGenericEstimate"}).doctype,
+            "openGenericEstimate",
         )
-        self.assertEqual(GenericEstimatePreview.parse_obj({"id": "EC300001"}).doctype, "openGenericEstimate")
+        self.assertEqual(
+            GenericEstimatePreview.model_validate({"id": "EC300001"}).doctype,
+            "openGenericEstimate",
+        )
 
-        for o in [{"doctype": None}, {"doctype": "openEPD"}, {"doctype": "openIndustryEpd"}]:
-            with self.assertRaises(pyd.ValidationError):
-                GenericEstimatePreview.parse_obj(o)
+        for o in [
+            {"doctype": None},
+            {"doctype": "openEPD"},
+            {"doctype": "openIndustryEpd"},
+        ]:
+            with self.assertRaises(pydantic.ValidationError):
+                GenericEstimatePreview.model_validate(o)
 
     def test_iepd_doctype(self):
-        self.assertEqual(IndustryEpdPreview.parse_obj({}).doctype, "openIndustryEpd")
-        self.assertEqual(IndustryEpdPreview.parse_obj({"doctype": "openIndustryEpd"}).doctype, "openIndustryEpd")
-        self.assertEqual(IndustryEpdPreview.parse_obj({"id": "EC300001"}).doctype, "openIndustryEpd")
+        self.assertEqual(IndustryEpdPreview.model_validate({}).doctype, "openIndustryEpd")
+        self.assertEqual(
+            IndustryEpdPreview.model_validate({"doctype": "openIndustryEpd"}).doctype,
+            "openIndustryEpd",
+        )
+        self.assertEqual(
+            IndustryEpdPreview.model_validate({"id": "EC300001"}).doctype,
+            "openIndustryEpd",
+        )
 
-        for o in [{"doctype": None}, {"doctype": "openEPD"}, {"doctype": "openGenericEstimate"}]:
-            with self.assertRaises(pyd.ValidationError):
-                IndustryEpdPreview.parse_obj(o)
+        for o in [
+            {"doctype": None},
+            {"doctype": "openEPD"},
+            {"doctype": "openGenericEstimate"},
+        ]:
+            with self.assertRaises(pydantic.ValidationError):
+                IndustryEpdPreview.model_validate(o)

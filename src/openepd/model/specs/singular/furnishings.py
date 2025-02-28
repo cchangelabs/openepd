@@ -13,10 +13,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CountertopMaterial
-from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import AreaM2Str, LengthMmStr, VolumeStr
 
 
@@ -38,8 +38,8 @@ class CountertopsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="30 mm")
-    countertop_material: CountertopMaterial | None = pyd.Field(default=None, description="", example="Stone")
+    thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["30 mm"])
+    countertop_material: CountertopMaterial | None = pydantic.Field(default=None, description="", examples=["Stone"])
 
 
 class DemountablePartitionsV1(BaseOpenEpdHierarchicalSpec):
@@ -156,35 +156,37 @@ class FurnishingsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.1"
 
     # Own fields:
-    functional_floor_area_m2: AreaM2Str | None = pyd.Field(
+    functional_floor_area_m2: AreaM2Str | None = pydantic.Field(
         default=None,
         title="Functional Floor Area",
         description="The floor area that the product occupies.",
-        example="1 m2",
+        examples=["1 m2"],
     )
-    work_surface_area_m2: AreaM2Str | None = pyd.Field(
+    work_surface_area_m2: AreaM2Str | None = pydantic.Field(
         default=None,
         title="Work Surface Area",
         description="The usable work surface area that the product provides.",
-        example="1 m2",
+        examples=["1 m2"],
     )
-    functional_storage_volume_m3: VolumeStr | None = pyd.Field(
+    functional_storage_volume_m3: VolumeStr | None = pydantic.Field(
         default=None,
         title="Functional Storage Volume",
         description="",
-        example="1 m3",
+        examples=["1 m3"],
     )
-    functional_seating_capacity: pyd.NonNegativeInt | None = pyd.Field(
+    functional_seating_capacity: pydantic.NonNegativeInt | None = pydantic.Field(
         default=None,
         title="Functional Seating Capacity",
         description="Intended number of individuals the product seats. This value is used in calculating impact per functional unit.",
-        example=1,
+        examples=[1],
     )
-    installation_waste_factor: RatioFloat | None = pyd.Field(
+    installation_waste_factor: float | None = pydantic.Field(
         default=None,
         title="Installation Waste Factor",
         description="Typical increase in impacts to account for installation waste.",
-        example=0.01,
+        examples=[0.01],
+        ge=0,
+        le=1,
     )
 
     # Nested specs:

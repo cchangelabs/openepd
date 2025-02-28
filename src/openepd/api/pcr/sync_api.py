@@ -30,7 +30,7 @@ class PcrApi(BaseApiMethodGroup):
         :raise ValidationError: if openxpd_uuid is invalid
         """
         content = self._client.do_request("get", f"/pcrs/{uuid}").json()
-        return Pcr.parse_obj(content)
+        return Pcr.model_validate(content)
 
     def create(self, pcr: Pcr) -> PcrRef:
         """
@@ -41,4 +41,4 @@ class PcrApi(BaseApiMethodGroup):
         :raise ValidationError: if given object PCR is invalid
         """
         pcr_ref_obj = self._client.do_request("post", "/pcrs", json=pcr.to_serializable()).json()
-        return PcrRef.parse_obj(pcr_ref_obj)
+        return PcrRef.model_validate(pcr_ref_obj)

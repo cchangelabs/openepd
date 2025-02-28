@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     FoamType,
@@ -23,7 +24,6 @@ from openepd.model.specs.enums import (
     RoofCoverBoardsFacing,
     RoofCoverBoardsMaterial,
 )
-from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMmStr, PressureMPaStr
 
 
@@ -95,7 +95,7 @@ class BoardInsulationV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    compressive_strength: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
+    compressive_strength: PressureMPaStr | None = pydantic.Field(default=None, description="", examples=["1 MPa"])
 
 
 class FoamedInPlaceV1(BaseOpenEpdHierarchicalSpec):
@@ -104,7 +104,7 @@ class FoamedInPlaceV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    foam_type: FoamType | None = pyd.Field(default=None, description="", example="Open-Cell")
+    foam_type: FoamType | None = pydantic.Field(default=None, description="", examples=["Open-Cell"])
 
 
 class SprayedInsulationV1(BaseOpenEpdHierarchicalSpec):
@@ -134,14 +134,30 @@ class MembraneRoofingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
-    sri: float | None = pyd.Field(default=None, description="", example=2.3)
-    total_recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
-    post_consumer_recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
-    reinforcement: MembraneRoofingReinforcement | None = pyd.Field(default=None, description="", example="Polyester")
-    felt_backing: bool | None = pyd.Field(default=None, description="", example=True)
-    nsf347: bool | None = pyd.Field(default=None, description="", example=True)
-    vantage_vinyl: bool | None = pyd.Field(default=None, description="", example=True)
+    thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["10 mm"])
+    sri: float | None = pydantic.Field(default=None, description="", examples=[2.3])
+    total_recycled_content: float | None = pydantic.Field(default=None, description="", examples=[0.5], ge=0, le=1)
+    post_consumer_recycled_content: float | None = pydantic.Field(
+        default=None, description="", examples=[0.5], ge=0, le=1
+    )
+    reinforcement: MembraneRoofingReinforcement | None = pydantic.Field(
+        default=None, description="", examples=["Polyester"]
+    )
+    felt_backing: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    nsf347: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    vantage_vinyl: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
 
     # Nested specs:
     BituminousRoofing: BituminousRoofingV1 | None = None
@@ -159,12 +175,12 @@ class InsulationV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    r_value: float | None = pyd.Field(default=None, description="", example=2.3)
-    material: InsulatingMaterial | None = pyd.Field(default=None, description="", example="Mineral Wool")
-    intended_application: list[InsulationIntendedApplication] | None = pyd.Field(
-        default=None, description="", example=["Wall & General"]
+    r_value: float | None = pydantic.Field(default=None, description="", examples=[2.3])
+    material: InsulatingMaterial | None = pydantic.Field(default=None, description="", examples=["Mineral Wool"])
+    intended_application: list[InsulationIntendedApplication] | None = pydantic.Field(
+        default=None, description="", examples=[["Wall & General"]]
     )
-    thickness_per_declared_unit: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
+    thickness_per_declared_unit: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["10 mm"])
 
     # Nested specs:
     BlanketInsulation: BlanketInsulationV1 | None = None
@@ -207,9 +223,9 @@ class RoofCoverBoardsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    material: RoofCoverBoardsMaterial | None = pyd.Field(default=None, description="", example="Gypsum Fiber")
-    facing: list[RoofCoverBoardsFacing] | None = pyd.Field(default=None, description="", example=["Paper"])
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
+    material: RoofCoverBoardsMaterial | None = pydantic.Field(default=None, description="", examples=["Gypsum Fiber"])
+    facing: list[RoofCoverBoardsFacing] | None = pydantic.Field(default=None, description="", examples=[["Paper"]])
+    thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["1 m"])
 
 
 class SteepSlopeRoofingV1(BaseOpenEpdHierarchicalSpec):

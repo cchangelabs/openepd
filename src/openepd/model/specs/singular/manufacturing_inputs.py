@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.concrete import Cementitious
 from openepd.model.specs.enums import (
@@ -39,13 +40,21 @@ class CementV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    cementitious: Cementitious | None = pyd.Field(default=None, description="")
-    white_cement: bool | None = pyd.Field(default=None, description="", example=True)
-    astm_type: CementAstmType | None = pyd.Field(default=None, description="", example="C150 Type I")
-    c1157: list[CementC1157] | None = pyd.Field(default=None, description="", example=["GU"])
-    csa_a3001: list[CementCsaA3001] | None = pyd.Field(default=None, description="", example=["A3001 GU"])
-    en197_1: CementEn197_1 | None = pyd.Field(default=None, description="", example="CEM I")
-    oil_well_cement: bool | None = pyd.Field(default=None, description="", example=True)
+    cementitious: Cementitious | None = pydantic.Field(default=None, description="")
+    white_cement: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    astm_type: CementAstmType | None = pydantic.Field(default=None, description="", examples=["C150 Type I"])
+    c1157: list[CementC1157] | None = pydantic.Field(default=None, description="", examples=[["GU"]])
+    csa_a3001: list[CementCsaA3001] | None = pydantic.Field(default=None, description="", examples=[["A3001 GU"]])
+    en197_1: CementEn197_1 | None = pydantic.Field(default=None, description="", examples=["CEM I"])
+    oil_well_cement: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
 
 
 class MasonryCementV1(BaseOpenEpdHierarchicalSpec):
@@ -58,7 +67,7 @@ class MasonryCementV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    astm_c91_type: MasonryCementAstmC91Type | None = pyd.Field(default=None, description="", example="Type N")
+    astm_c91_type: MasonryCementAstmC91Type | None = pydantic.Field(default=None, description="", examples=["Type N"])
 
 
 class SupplementaryCementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):
@@ -67,7 +76,7 @@ class SupplementaryCementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    cement_scm: list[CementScm] | None = pyd.Field(default=None, description="", example=["ggbs"])
+    cement_scm: list[CementScm] | None = pydantic.Field(default=None, description="", examples=[["ggbs"]])
 
 
 class AccessFlooringPedestalsV1(BaseOpenEpdHierarchicalSpec):
@@ -93,8 +102,8 @@ class CarpetFiberV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    yarn_material: CarpetYarnType | None = pyd.Field(default=None, description="", example="Nylon 6,6")
-    yarn_recycled_content: float | None = pyd.Field(default=None, description="", example=2.3)
+    yarn_material: CarpetYarnType | None = pydantic.Field(default=None, description="", examples=["Nylon 6,6"])
+    yarn_recycled_content: float | None = pydantic.Field(default=None, description="", examples=[2.3])
 
 
 class CementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):
@@ -120,7 +129,7 @@ class ConcreteAdmixturesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    effects: list[AdmixtureEffects] | None = pyd.Field(default=None, description="", example=["Air Entrainer"])
+    effects: list[AdmixtureEffects] | None = pydantic.Field(default=None, description="", examples=[["Air Entrainer"]])
 
 
 class TextilesV1(BaseOpenEpdHierarchicalSpec):
@@ -129,7 +138,7 @@ class TextilesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    fabric_type: list[TextilesFabricType] | None = pyd.Field(default=None, description="", example=["Leather"])
+    fabric_type: list[TextilesFabricType] | None = pydantic.Field(default=None, description="", examples=[["Leather"]])
 
 
 class ManufacturingInputsV1(BaseOpenEpdHierarchicalSpec):

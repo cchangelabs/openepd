@@ -21,10 +21,8 @@ __all__ = (
     "FireAndSmokeProtectionRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     IntumescentFireproofingMaterialType,
@@ -32,6 +30,8 @@ from openepd.model.specs.enums import (
     SprayFireproofingMaterialType,
 )
 from openepd.model.validation.quantity import AmountRangeLengthMm
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class IntumescentFireproofingRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -45,7 +45,7 @@ class IntumescentFireproofingRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    material_type: list[IntumescentFireproofingMaterialType] | None = pyd.Field(default=None, description="")
+    material_type: list[IntumescentFireproofingMaterialType] | None = pydantic.Field(default=None, description="")
 
 
 class SprayFireproofingRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -59,8 +59,8 @@ class SprayFireproofingRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    material_type: list[SprayFireproofingMaterialType] | None = pyd.Field(default=None, description="")
-    density: list[SprayFireproofingDensity] | None = pyd.Field(default=None, description="")
+    material_type: list[SprayFireproofingMaterialType] | None = pydantic.Field(default=None, description="")
+    density: list[SprayFireproofingDensity] | None = pydantic.Field(default=None, description="")
 
 
 class AppliedFireproofingRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -75,7 +75,7 @@ class AppliedFireproofingRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
+    thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
     IntumescentFireproofing: IntumescentFireproofingRangeV1 | None = None
     SprayFireproofing: SprayFireproofingRangeV1 | None = None
 

@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.quantity import (
     PressureMPaStr,
@@ -35,19 +36,23 @@ class AutoclavedAeratedConcreteV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    strength_28d: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    thermal_conductivity: ThermalConductivityStr | None = pyd.Field(
-        default=None, description="", example="1 W / (m * K)"
+    strength_28d: PressureMPaStr | None = pydantic.Field(default=None, description="", examples=["1 MPa"])
+    thermal_conductivity: ThermalConductivityStr | None = pydantic.Field(
+        default=None, description="", examples=["1 W / (m * K)"]
     )
-    white: bool | None = pyd.Field(default=None, description="", example=True)
+    white: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
 
-    _aac_thermal_conductivity_is_quantity_validator = pyd.validator("thermal_conductivity", allow_reuse=True)(
-        validate_quantity_unit_factory("W / (m * K)")
-    )
+    @pydantic.field_validator("thermal_conductivity")
+    def _aac_thermal_conductivity_is_quantity_validator(cls, value):
+        return validate_quantity_unit_factory("W / (m * K)")(value)
 
-    _aac_thermal_conductivity_min_validator = pyd.validator("thermal_conductivity", allow_reuse=True)(
-        validate_quantity_ge_factory("0 W / (m * K)")
-    )
+    @pydantic.field_validator("thermal_conductivity")
+    def _aac_thermal_conductivity_min_validator(cls, value):
+        return validate_quantity_ge_factory("0 W / (m * K)")(value)
 
 
 class BrickV1(BaseOpenEpdHierarchicalSpec):
@@ -56,15 +61,51 @@ class BrickV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    building: bool | None = pyd.Field(default=None, description="", example=True)
-    facing: bool | None = pyd.Field(default=None, description="", example=True)
-    floor: bool | None = pyd.Field(default=None, description="", example=True)
-    pedestrian: bool | None = pyd.Field(default=None, description="", example=True)
-    paving: bool | None = pyd.Field(default=None, description="", example=True)
-    other: bool | None = pyd.Field(default=None, description="", example=True)
-    chemical_resistant: bool | None = pyd.Field(default=None, description="", example=True)
-    glazed: bool | None = pyd.Field(default=None, description="", example=True)
-    tiles: bool | None = pyd.Field(default=None, description="", example=True)
+    building: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    facing: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    floor: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    pedestrian: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    paving: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    other: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    chemical_resistant: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    glazed: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    tiles: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
 
 
 class MasonryV1(BaseOpenEpdHierarchicalSpec):
@@ -73,7 +114,11 @@ class MasonryV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    white_cement: bool | None = pyd.Field(default=None, description="", example=True)
+    white_cement: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
 
     # Nested specs:
     GMU: GMUV1 | None = None

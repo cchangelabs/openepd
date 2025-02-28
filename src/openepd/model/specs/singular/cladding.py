@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CladdingFacingMaterial, CladdingInsulatingMaterial, SidingFormFactor
 from openepd.model.validation.quantity import LengthMmStr, LengthMStr, RValueStr, validate_quantity_unit_factory
@@ -72,11 +73,11 @@ class InsulatedVinylSidingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="1 mm")
+    thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["1 mm"])
 
-    _vinyl_siding_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
-        validate_quantity_unit_factory("m")
-    )
+    @pydantic.field_validator("thickness", mode="before")
+    def _vinyl_siding_thickness_is_quantity_validator(cls, value):
+        return validate_quantity_unit_factory("m")(cls, value)
 
 
 class PlywoodSidingV1(BaseOpenEpdHierarchicalSpec):
@@ -106,11 +107,11 @@ class VinylSidingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="5 mm")
+    thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["5 mm"])
 
-    _vinyl_siding_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
-        validate_quantity_unit_factory("m")
-    )
+    @pydantic.field_validator("thickness")
+    def _vinyl_siding_thickness_is_quantity_validator(cls, value):
+        return validate_quantity_unit_factory("m")(cls, value)
 
 
 class SidingV1(BaseOpenEpdHierarchicalSpec):
@@ -123,11 +124,23 @@ class SidingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    insulated: bool | None = pyd.Field(default=None, description="", example=True)
-    ventilated: bool | None = pyd.Field(default=None, description="", example=True)
-    paint_or_stain_required: bool | None = pyd.Field(default=None, description="", example=True)
-    r_value: RValueStr | None = pyd.Field(default=None, description="")
-    form_factor: SidingFormFactor | None = pyd.Field(default=None, description="", example="Lap")
+    insulated: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    ventilated: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    paint_or_stain_required: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    r_value: RValueStr | None = pydantic.Field(default=None, description="")
+    form_factor: SidingFormFactor | None = pydantic.Field(default=None, description="", examples=["Lap"])
 
     # Nested specs:
     MetalSiding: MetalSidingV1 | None = None
@@ -146,9 +159,9 @@ class InsulatedRoofPanelsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    r_value: RValueStr | None = pyd.Field(default=None, description="")
-    insulating_material: CladdingInsulatingMaterial | None = pyd.Field(
-        default=None, description="", example="No Insulation"
+    r_value: RValueStr | None = pydantic.Field(default=None, description="")
+    insulating_material: CladdingInsulatingMaterial | None = pydantic.Field(
+        default=None, description="", examples=["No Insulation"]
     )
 
 
@@ -158,9 +171,9 @@ class InsulatedWallPanelsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    r_value: RValueStr | None = pyd.Field(default=None, description="")
-    insulating_material: CladdingInsulatingMaterial | None = pyd.Field(
-        default=None, description="", example="No Insulation"
+    r_value: RValueStr | None = pydantic.Field(default=None, description="")
+    insulating_material: CladdingInsulatingMaterial | None = pydantic.Field(
+        default=None, description="", examples=["No Insulation"]
     )
 
 
@@ -188,10 +201,12 @@ class CladdingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMStr | None = pyd.Field(default=None, description="", example="10 mm")
-    facing_material: CladdingFacingMaterial | None = pyd.Field(default=None, description="", example="Steel")
+    thickness: LengthMStr | None = pydantic.Field(default=None, description="", examples=["10 mm"])
+    facing_material: CladdingFacingMaterial | None = pydantic.Field(default=None, description="", examples=["Steel"])
 
-    _thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(validate_quantity_unit_factory("m"))
+    @pydantic.field_validator("thickness")
+    def _thickness_is_quantity_validator(cls, value):
+        return validate_quantity_unit_factory("m")(cls, value)
 
     # Nested specs:
     Siding: SidingV1 | None = None

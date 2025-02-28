@@ -44,10 +44,8 @@ __all__ = (
     "FinishesRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeAmount, RangeFloat, RangeInt, RangeRatioFloat
 from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
@@ -87,6 +85,8 @@ from openepd.model.validation.quantity import (
     AmountRangeYarnWeight,
 )
 
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+
 
 class AccessFlooringRangeV1(BaseOpenEpdHierarchicalSpec):
     """
@@ -100,21 +100,21 @@ class AccessFlooringRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    core_material: list[AccessFlooringCoreMaterial] | None = pyd.Field(default=None, description="")
-    finish_material: list[AccessFlooringFinishMaterial] | None = pyd.Field(default=None, description="")
-    stringers: list[AccessFlooringStringers] | None = pyd.Field(default=None, description="")
-    seismic_rating: list[AccessFlooringSeismicRating] | None = pyd.Field(default=None, description="")
-    magnetically_attached_finish: bool | None = pyd.Field(default=None, description="")
-    permanent_finish: bool | None = pyd.Field(default=None, description="")
-    drylay: bool | None = pyd.Field(default=None, description="")
-    adjustable_height: bool | None = pyd.Field(default=None, description="")
-    fixed_height: bool | None = pyd.Field(default=None, description="")
-    finished_floor_height: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    panel_thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    concentrated_load: AmountRangePressureMpa | None = pyd.Field(default=None, description="")
-    uniform_load: AmountRangePressureMpa | None = pyd.Field(default=None, description="")
-    rolling_load_10_pass: AmountRangeForce | None = pyd.Field(default=None, description="")
-    rolling_load_10000_pass: AmountRangeForce | None = pyd.Field(default=None, description="")
+    core_material: list[AccessFlooringCoreMaterial] | None = pydantic.Field(default=None, description="")
+    finish_material: list[AccessFlooringFinishMaterial] | None = pydantic.Field(default=None, description="")
+    stringers: list[AccessFlooringStringers] | None = pydantic.Field(default=None, description="")
+    seismic_rating: list[AccessFlooringSeismicRating] | None = pydantic.Field(default=None, description="")
+    magnetically_attached_finish: bool | None = pydantic.Field(default=None, description="")
+    permanent_finish: bool | None = pydantic.Field(default=None, description="")
+    drylay: bool | None = pydantic.Field(default=None, description="")
+    adjustable_height: bool | None = pydantic.Field(default=None, description="")
+    fixed_height: bool | None = pydantic.Field(default=None, description="")
+    finished_floor_height: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    panel_thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    concentrated_load: AmountRangePressureMpa | None = pydantic.Field(default=None, description="")
+    uniform_load: AmountRangePressureMpa | None = pydantic.Field(default=None, description="")
+    rolling_load_10_pass: AmountRangeForce | None = pydantic.Field(default=None, description="")
+    rolling_load_10000_pass: AmountRangeForce | None = pydantic.Field(default=None, description="")
 
 
 class CarpetRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -126,20 +126,20 @@ class CarpetRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    length: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    width: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    intended_application: list[CarpetIntendedApplication] | None = pyd.Field(default=None, description="")
-    manufacture_type: list[CarpetManufactureType] | None = pyd.Field(default=None, description="")
-    form_factor: list[CarpetFormFactor] | None = pyd.Field(default=None, description="")
-    yarn_weight: AmountRangeYarnWeight | None = pyd.Field(default=None, description="")
-    yarn_type: list[CarpetYarnType] | None = pyd.Field(default=None, description="")
-    fire_radiant_panel_rating_astme648: str | None = pyd.Field(default=None, description="")
-    fire_smoke_density_rating_astme648: str | None = pyd.Field(default=None, description="")
-    voc_emissions: str | None = pyd.Field(default=None, description="")
-    cushioned: bool | None = pyd.Field(default=None, description="")
-    bleachable: bool | None = pyd.Field(default=None, description="")
-    gwp_factor_base: AmountRangeGWP | None = pyd.Field(default=None, description="")
-    gwp_factor_yarn: AmountRangeGWP | None = pyd.Field(default=None, description="")
+    length: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    width: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    intended_application: list[CarpetIntendedApplication] | None = pydantic.Field(default=None, description="")
+    manufacture_type: list[CarpetManufactureType] | None = pydantic.Field(default=None, description="")
+    form_factor: list[CarpetFormFactor] | None = pydantic.Field(default=None, description="")
+    yarn_weight: AmountRangeYarnWeight | None = pydantic.Field(default=None, description="")
+    yarn_type: list[CarpetYarnType] | None = pydantic.Field(default=None, description="")
+    fire_radiant_panel_rating_astme648: str | None = pydantic.Field(default=None, description="")
+    fire_smoke_density_rating_astme648: str | None = pydantic.Field(default=None, description="")
+    voc_emissions: str | None = pydantic.Field(default=None, description="")
+    cushioned: bool | None = pydantic.Field(default=None, description="")
+    bleachable: bool | None = pydantic.Field(default=None, description="")
+    gwp_factor_base: AmountRangeGWP | None = pydantic.Field(default=None, description="")
+    gwp_factor_yarn: AmountRangeGWP | None = pydantic.Field(default=None, description="")
 
 
 class LaminateRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -173,19 +173,19 @@ class ResilientFlooringRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    length: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    width: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    form_factor: list[ResilientFlooringFormFactor] | None = pyd.Field(default=None, description="")
-    material: list[ResilientFlooringMaterial] | None = pyd.Field(default=None, description="")
-    sheet_construction: list[VinylSheetConstruction] | None = pyd.Field(default=None, description="")
-    wear_layer: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    delta_iic: RangeFloat | None = pyd.Field(default=None, description="")
-    thickness: list[ResilientFlooringThickness] | None = pyd.Field(default=None, description="")
-    sport_flooring: bool | None = pyd.Field(default=None, description="")
-    conductive_flooring: bool | None = pyd.Field(default=None, description="")
-    zwtl: bool | None = pyd.Field(default=None, description="")
-    floor_score: bool | None = pyd.Field(default=None, description="")
-    nsf332: bool | None = pyd.Field(default=None, description="")
+    length: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    width: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    form_factor: list[ResilientFlooringFormFactor] | None = pydantic.Field(default=None, description="")
+    material: list[ResilientFlooringMaterial] | None = pydantic.Field(default=None, description="")
+    sheet_construction: list[VinylSheetConstruction] | None = pydantic.Field(default=None, description="")
+    wear_layer: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    delta_iic: RangeFloat | None = pydantic.Field(default=None, description="")
+    thickness: list[ResilientFlooringThickness] | None = pydantic.Field(default=None, description="")
+    sport_flooring: bool | None = pydantic.Field(default=None, description="")
+    conductive_flooring: bool | None = pydantic.Field(default=None, description="")
+    zwtl: bool | None = pydantic.Field(default=None, description="")
+    floor_score: bool | None = pydantic.Field(default=None, description="")
+    nsf332: bool | None = pydantic.Field(default=None, description="")
 
 
 class WallBaseRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -197,7 +197,7 @@ class WallBaseRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    wall_base_material: list[WallBaseMaterial] | None = pyd.Field(default=None, description="")
+    wall_base_material: list[WallBaseMaterial] | None = pydantic.Field(default=None, description="")
 
 
 class WoodFlooringRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -213,9 +213,9 @@ class WoodFlooringRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     forest_practices_certifiers: list[OrgRef] | None = None
-    thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    timber_species: list[WoodFlooringTimberSpecies] | None = pyd.Field(default=None, description="")
-    fabrication: list[WoodFlooringFabrication] | None = pyd.Field(default=None, description="")
+    thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    timber_species: list[WoodFlooringTimberSpecies] | None = pydantic.Field(default=None, description="")
+    fabrication: list[WoodFlooringFabrication] | None = pydantic.Field(default=None, description="")
 
 
 class AcousticalCeilingsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -227,7 +227,7 @@ class AcousticalCeilingsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
+    thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
 
 
 class CeramicTileRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -239,26 +239,27 @@ class CeramicTileRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    porcelain: bool | None = pyd.Field(
-        default=None, description="A dense and durable ceramic tile made from fine porcelain clay."
+    porcelain: bool | None = pydantic.Field(
+        default=None,
+        description="A dense and durable ceramic tile made from fine porcelain clay.",
     )
-    quarry: bool | None = pyd.Field(
+    quarry: bool | None = pydantic.Field(
         default=None,
         description="A type of unglazed ceramic tile made from natural clay with a slightly rough texture.",
     )
-    pressed_floor_tile: bool | None = pyd.Field(
+    pressed_floor_tile: bool | None = pydantic.Field(
         default=None,
         description="A durable and low-maintenance type of tile made by compressing clay or other materials at high pressure.",
     )
-    wall_tile: bool | None = pyd.Field(
+    wall_tile: bool | None = pydantic.Field(
         default=None,
         description="A decorative tile designed for use on vertical surfaces such as walls or backsplashes.",
     )
-    mosaic_tile: bool | None = pyd.Field(
+    mosaic_tile: bool | None = pydantic.Field(
         default=None,
         description="A small decorative tile made of glass, stone, or ceramic, arranged in a pattern to create a design.",
     )
-    specialty: bool | None = pyd.Field(
+    specialty: bool | None = pydantic.Field(
         default=None,
         description="A unique and customized type of tile, often made from unconventional materials or with specialized designs or finishes.",
     )
@@ -275,11 +276,11 @@ class GaugedTileRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    tile_panels: bool | None = pyd.Field(
+    tile_panels: bool | None = pydantic.Field(
         default=None,
         description="Large-format porcelain or natural stone tiles that are typically over 3 feet in length and width, designed for use in floor and wall installations to create a seamless and uninterrupted appearance.",
     )
-    tile_pavers: bool | None = pyd.Field(
+    tile_pavers: bool | None = pydantic.Field(
         default=None,
         description="Thick and durable porcelain or natural stone tiles that are commonly used in outdoor applications, such as patios, walkways, and driveways, due to their high resistance to weather and wear.",
     )
@@ -294,19 +295,19 @@ class GlassTileRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    regular: bool | None = pyd.Field(
+    regular: bool | None = pydantic.Field(
         default=None,
         description="Glass tile that is typically square or rectangular in shape, and used for a variety of decorative applications, such as kitchen backsplashes, shower walls, and accent borders.",
     )
-    glass_mosaic: bool | None = pyd.Field(
+    glass_mosaic: bool | None = pydantic.Field(
         default=None,
         description="A small, decorative glass tile made in a variety of shapes and colors, used for intricate designs and patterns on walls, floors, and other surfaces.",
     )
-    miniature_mosaic: bool | None = pyd.Field(
+    miniature_mosaic: bool | None = pydantic.Field(
         default=None,
         description="Glass mosaic tile that is smaller in size than regular glass mosaic tile, often used for intricate details and designs in backsplashes, shower walls, and decorative accents.",
     )
-    large_format: bool | None = pyd.Field(
+    large_format: bool | None = pydantic.Field(
         default=None,
         description="Glass tile that is larger in size than regular glass tile, often used to create a dramatic and modern effect in commercial and residential spaces.",
     )
@@ -349,12 +350,13 @@ class CeilingPanelRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    fire_rating: list[CeilingPanelFireRating] | None = pyd.Field(default=None, description="")
-    core_material: list[CeilingPanelCoreMaterial] | None = pyd.Field(default=None, description="")
-    nrc: RangeRatioFloat | None = pyd.Field(
-        default=None, description="Noise Reduction Coefficient (NRC) or Sound Absorbtion Average (SAA) per ASTM C423"
+    fire_rating: list[CeilingPanelFireRating] | None = pydantic.Field(default=None, description="")
+    core_material: list[CeilingPanelCoreMaterial] | None = pydantic.Field(default=None, description="")
+    nrc: RangeRatioFloat | None = pydantic.Field(
+        default=None,
+        description="Noise Reduction Coefficient (NRC) or Sound Absorbtion Average (SAA) per ASTM C423",
     )
-    cac: RangeInt | None = pyd.Field(default=None, description="Ceiling Attenuation Class (CAC) per ASTM E1414")
+    cac: RangeInt | None = pydantic.Field(default=None, description="Ceiling Attenuation Class (CAC) per ASTM E1414")
     AcousticalCeilings: AcousticalCeilingsRangeV1 | None = None
 
 
@@ -377,7 +379,7 @@ class CementBoardRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thickness: list[CementBoardThickness] | None = pyd.Field(default=None, description="")
+    thickness: list[CementBoardThickness] | None = pydantic.Field(default=None, description="")
 
 
 class TilingRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -391,31 +393,33 @@ class TilingRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    flooring: bool | None = pyd.Field(default=None, description="Tiling intended for walking.")
-    wall_finish: bool | None = pyd.Field(
+    thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    flooring: bool | None = pydantic.Field(default=None, description="Tiling intended for walking.")
+    wall_finish: bool | None = pydantic.Field(
         default=None,
         description="A decorative tile designed for use on vertical surfaces such as walls or backsplashes.",
     )
-    cladding: bool | None = pyd.Field(
+    cladding: bool | None = pydantic.Field(
         default=None,
         description="Tiling for exterior use, primarily used for the walls of buildings and structures, providing a protective and decorative layer that enhances the aesthetic appearance and weather resistance of the underlying structure.",
     )
-    other: bool | None = pyd.Field(
-        default=None, description="Tiling used as countertops, ceilings, furnishings, hardscapes etc."
+    other: bool | None = pydantic.Field(
+        default=None,
+        description="Tiling used as countertops, ceilings, furnishings, hardscapes etc.",
     )
-    residential_only: bool | None = pyd.Field(
+    residential_only: bool | None = pydantic.Field(
         default=None,
         description="All commercial tile can also be used in residential applications, but the opposite may not be true. This selection allows to filter out tiling that is not intended for commercial applications.",
     )
-    reinforced: bool | None = pyd.Field(
-        default=None, description="Steel-reinforced ceramic tiles or tiles with other special reinforcing technology."
+    reinforced: bool | None = pydantic.Field(
+        default=None,
+        description="Steel-reinforced ceramic tiles or tiles with other special reinforcing technology.",
     )
-    total_recycled_content: RangeRatioFloat | None = pyd.Field(
+    total_recycled_content: RangeRatioFloat | None = pydantic.Field(
         default=None,
         description="Proportion of this product that is sourced from recycled content. Pre-consumer recycling is given a 50% weighting, 100% for post-consumer, by mass.",
     )
-    post_consumer_recycled_content: RangeRatioFloat | None = pyd.Field(
+    post_consumer_recycled_content: RangeRatioFloat | None = pydantic.Field(
         default=None,
         description="Proportion of this product that is sourced from post-consumer recycled content, by mass.",
     )
@@ -434,12 +438,12 @@ class DeckingBoardsRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     forest_practices_certifiers: list[OrgRef] | None = None
-    timber_species: list[SawnTimberSpecies] | None = pyd.Field(default=None, description="")
-    fabrication: list[AllFabrication] | None = pyd.Field(default=None, description="")
-    weather_exposed: bool | None = pyd.Field(default=None, description="")
-    fire_retardant: bool | None = pyd.Field(default=None, description="")
-    decay_resistant: bool | None = pyd.Field(default=None, description="")
-    material: list[DeckingBoardMaterial] | None = pyd.Field(default=None, description="")
+    timber_species: list[SawnTimberSpecies] | None = pydantic.Field(default=None, description="")
+    fabrication: list[AllFabrication] | None = pydantic.Field(default=None, description="")
+    weather_exposed: bool | None = pydantic.Field(default=None, description="")
+    fire_retardant: bool | None = pydantic.Field(default=None, description="")
+    decay_resistant: bool | None = pydantic.Field(default=None, description="")
+    material: list[DeckingBoardMaterial] | None = pydantic.Field(default=None, description="")
 
 
 class GlassFiberReinforcedGypsumFabricationsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -461,20 +465,20 @@ class GypsumRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.1"
 
-    fire_rating: list[GypsumFireRating] | None = pyd.Field(default=None, description="")
-    thickness: list[GypsumThickness] | None = pyd.Field(default=None, description="")
-    facing: list[GypsumFacing] | None = pyd.Field(default=None, description="")
-    r_factor: AmountRangeRFactor | None = pyd.Field(default=None, description="")
-    flame_spread_astm_e84: RangeInt | None = pyd.Field(default=None, description="")
-    smoke_production_astm_e84: RangeInt | None = pyd.Field(default=None, description="")
-    surface_abrasion_d4977: RangeInt | None = pyd.Field(default=None, description="")
-    indentation_d5420: RangeInt | None = pyd.Field(default=None, description="")
-    soft_body_impact_e695: RangeInt | None = pyd.Field(default=None, description="")
-    hard_body_impact_c1929: RangeInt | None = pyd.Field(default=None, description="")
-    mold_resistant: bool | None = pyd.Field(default=None, description="")
-    foil_backing: bool | None = pyd.Field(default=None, description="")
-    moisture_resistant: bool | None = pyd.Field(default=None, description="")
-    abuse_resistant: bool | None = pyd.Field(default=None, description="")
+    fire_rating: list[GypsumFireRating] | None = pydantic.Field(default=None, description="")
+    thickness: list[GypsumThickness] | None = pydantic.Field(default=None, description="")
+    facing: list[GypsumFacing] | None = pydantic.Field(default=None, description="")
+    r_factor: AmountRangeRFactor | None = pydantic.Field(default=None, description="")
+    flame_spread_astm_e84: RangeInt | None = pydantic.Field(default=None, description="")
+    smoke_production_astm_e84: RangeInt | None = pydantic.Field(default=None, description="")
+    surface_abrasion_d4977: RangeInt | None = pydantic.Field(default=None, description="")
+    indentation_d5420: RangeInt | None = pydantic.Field(default=None, description="")
+    soft_body_impact_e695: RangeInt | None = pydantic.Field(default=None, description="")
+    hard_body_impact_c1929: RangeInt | None = pydantic.Field(default=None, description="")
+    mold_resistant: bool | None = pydantic.Field(default=None, description="")
+    foil_backing: bool | None = pydantic.Field(default=None, description="")
+    moisture_resistant: bool | None = pydantic.Field(default=None, description="")
+    abuse_resistant: bool | None = pydantic.Field(default=None, description="")
     GypsumSupports: GypsumSupportsRangeV1 | None = None
 
 
@@ -547,7 +551,7 @@ class WallFinishesRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
+    thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
 
 
 class PlasterRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -563,9 +567,10 @@ class PlasterRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    composition: list[PlasterComposition] | None = pyd.Field(default=None, description="")
-    application_rate: RangeAmount | None = pyd.Field(
-        default=None, description="Typical or reference amount of material covering a unit of a host surface."
+    composition: list[PlasterComposition] | None = pydantic.Field(default=None, description="")
+    application_rate: RangeAmount | None = pydantic.Field(
+        default=None,
+        description="Typical or reference amount of material covering a unit of a host surface.",
     )
 
 

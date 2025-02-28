@@ -15,7 +15,8 @@
 #
 from typing import ClassVar
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.enums import SteelComposition
 from openepd.model.specs.singular import BaseCompatibilitySpec
@@ -27,10 +28,22 @@ from openepd.model.validation.quantity import PressureMPaStr
 class SteelOldOptions(BaseOpenEpdSchema):
     """Legacy Steel options model."""
 
-    cold_finished: bool | None = pyd.Field(default=None, description="Cold Finished", example=True)
-    galvanized: bool | None = pyd.Field(default=None, description="Galvanized", example=True)
-    epoxy: bool | None = pyd.Field(default=None, description="Epoxy Coated", example=True)
-    steel_fabricated: bool | None = pyd.Field(default=None, example=True, description="Fabricated")
+    cold_finished: bool | None = pydantic.Field(
+        default=None,
+        description="Cold Finished",
+        examples=[True],
+    )
+    galvanized: bool | None = pydantic.Field(
+        default=None,
+        description="Galvanized",
+        examples=[True],
+    )
+    epoxy: bool | None = pydantic.Field(
+        default=None,
+        description="Epoxy Coated",
+        examples=[True],
+    )
+    steel_fabricated: bool | None = pydantic.Field(default=None, examples=[True], description="Fabricated")
 
 
 class SteelOldSpec(BaseCompatibilitySpec):
@@ -51,25 +64,25 @@ class SteelOldSpec(BaseCompatibilitySpec):
         "steel.options.steel_fabricated": "Steel.RebarSteel.fabricated",
         # last one is tricky as fabricated might be in multiple cases; thus limited support
     }
-    form_factor: str | None = pyd.Field(default=None, description="Product's form factor, read-only.")
-    steel_composition: SteelComposition | None = pyd.Field(
+    form_factor: str | None = pydantic.Field(default=None, description="Product's form factor, read-only.")
+    steel_composition: SteelComposition | None = pydantic.Field(
         default=None,
         description="Basic chemical composition. Generally the ASTM or EN grade is a subcategory of one of these.",
-        example="Carbon",
+        examples=["Carbon"],
     )
-    Fy: PressureMPaStr | None = pyd.Field(
+    Fy: PressureMPaStr | None = pydantic.Field(
         default=None,
         description="Minimum Yield Strength",
-        example="2000 psi",
+        examples=["2000 psi"],
     )
-    making_route: SteelMakingRoute | None = pyd.Field(
+    making_route: SteelMakingRoute | None = pydantic.Field(
         default=None, description="List of true/false properties for steelmaking route"
     )
-    ASTM: list[Standard] | None = pyd.Field(
+    ASTM: list[Standard] | None = pydantic.Field(
         default=None, description="ASTM standard(s) to which this product complies."
     )
-    SAE: list[Standard] | None = pyd.Field(
+    SAE: list[Standard] | None = pydantic.Field(
         default=None, description="AISA/SAE standard(s) to which this product complies."
     )
-    EN: list[Standard] | None = pyd.Field(default=None, description="EN 10027 number(s).")
-    options: SteelOldOptions | None = pyd.Field(default=None, description="List of true/false properties")
+    EN: list[Standard] | None = pydantic.Field(default=None, description="EN 10027 number(s).")
+    options: SteelOldOptions | None = pydantic.Field(default=None, description="List of true/false properties")

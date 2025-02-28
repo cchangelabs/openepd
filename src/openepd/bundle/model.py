@@ -16,7 +16,8 @@
 from datetime import datetime
 from enum import StrEnum
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.base import BaseOpenEpdSchema
 
 
@@ -29,7 +30,7 @@ class BundleManifestAssetsStats(BaseOpenEpdSchema):
     total_size: int = 0
     """The total size of assets in bytes."""
 
-    count_by_type: dict[str, int] = pyd.Field(default_factory=dict)
+    count_by_type: dict[str, int] = pydantic.Field(default_factory=dict)
     """The number of assets by type."""
 
 
@@ -60,9 +61,9 @@ class BundleManifest(BaseOpenEpdSchema):
     """The format of the bundle."""
     generator: str
     """The generator of the bundle."""
-    assets: BundleManifestAssetsStats = pyd.Field(default_factory=BundleManifestAssetsStats)
-    comment: str | None = pyd.Field(default=None)
-    created_at: datetime = pyd.Field(default_factory=datetime.utcnow)
+    assets: BundleManifestAssetsStats = pydantic.Field(default_factory=BundleManifestAssetsStats)
+    comment: str | None = pydantic.Field(default=None)
+    created_at: datetime = pydantic.Field(default_factory=datetime.utcnow)
     """The date and time when the bundle was generated."""
 
 
@@ -79,8 +80,8 @@ class AssetInfo(BaseOpenEpdSchema):
     """The language of the asset."""
     rel_type: str | None
     rel_asset: str | None
-    comment: str | None = pyd.Field(default=None)
-    content_type: str | None = pyd.Field(default=None)
-    size: int | None = pyd.Field(default=None)
-    custom_type: str | None = pyd.Field(default=None)
-    custom_data: str | None = pyd.Field(default=None)
+    comment: str | None = pydantic.Field(default=None)
+    content_type: str | None = pydantic.Field(default=None)
+    size: int | None = pydantic.Field(default=None)
+    custom_type: str | None = pydantic.Field(default=None)
+    custom_data: str | None = pydantic.Field(default=None)

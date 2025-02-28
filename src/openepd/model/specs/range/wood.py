@@ -34,7 +34,8 @@ __all__ = (
 
 from builtins import float
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
@@ -46,7 +47,6 @@ from openepd.model.specs.enums import (
     SawnTimberSpecies,
     SheathingPanelsFabrication,
 )
-from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import AmountRangeLengthMm
 
 
@@ -105,8 +105,8 @@ class CompositeLumberRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    fabrication: list[CompositeLumberFabrication] | None = pyd.Field(default=None, description="")
-    timber_species: list[EngineeredTimberSpecies] | None = pyd.Field(default=None, description="")
+    fabrication: list[CompositeLumberFabrication] | None = pydantic.Field(default=None, description="")
+    timber_species: list[EngineeredTimberSpecies] | None = pydantic.Field(default=None, description="")
 
 
 class DimensionLumberRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -118,7 +118,7 @@ class DimensionLumberRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    timber_species: list[SawnTimberSpecies] | None = pyd.Field(default=None, description="")
+    timber_species: list[SawnTimberSpecies] | None = pydantic.Field(default=None, description="")
     WoodDecking: WoodDeckingRangeV1 | None = None
     WoodFraming: WoodFramingRangeV1 | None = None
 
@@ -145,8 +145,8 @@ class MassTimberRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    fabrication: list[MassTimberFabrication] | None = pyd.Field(default=None, description="")
-    timber_species: list[EngineeredTimberSpecies] | None = pyd.Field(default=None, description="")
+    fabrication: list[MassTimberFabrication] | None = pydantic.Field(default=None, description="")
+    timber_species: list[EngineeredTimberSpecies] | None = pydantic.Field(default=None, description="")
 
 
 class NonStructuralWoodRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -184,9 +184,9 @@ class SheathingPanelsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    fabrication: list[SheathingPanelsFabrication] | None = pyd.Field(default=None, description="")
-    wood_board_thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    timber_species: list[EngineeredTimberSpecies] | None = pyd.Field(default=None, description="")
+    fabrication: list[SheathingPanelsFabrication] | None = pydantic.Field(default=None, description="")
+    wood_board_thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    timber_species: list[EngineeredTimberSpecies] | None = pydantic.Field(default=None, description="")
 
 
 class UnfinishedWoodRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -209,17 +209,17 @@ class WoodRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     forest_practices_certifiers: list[OrgRef] | None = None
-    timber_species: list[AllTimberSpecies] | None = pyd.Field(default=None, description="Timber species")
-    fabrication: list[AllFabrication] | None = pyd.Field(default=None, description="Timber fabrication")
-    weather_exposed: bool | None = pyd.Field(default=None, description="Weather exposed")
-    fire_retardant: bool | None = pyd.Field(default=None, description="Fire retardant")
-    decay_resistant: bool | None = pyd.Field(default=None, description="Decay resistant")
-    fsc_certified: RatioFloat | None = pyd.Field(
+    timber_species: list[AllTimberSpecies] | None = pydantic.Field(default=None, description="Timber species")
+    fabrication: list[AllFabrication] | None = pydantic.Field(default=None, description="Timber fabrication")
+    weather_exposed: bool | None = pydantic.Field(default=None, description="Weather exposed")
+    fire_retardant: bool | None = pydantic.Field(default=None, description="Fire retardant")
+    decay_resistant: bool | None = pydantic.Field(default=None, description="Decay resistant")
+    fsc_certified: float | None = pydantic.Field(
         default=None, description="Forest Stewardship Council certified proportion"
     )
-    fsc_certified_z: float | None = pyd.Field(default=None, description="")
-    recycled_content: RatioFloat | None = pyd.Field(default=None, description="Recycled content")
-    recycled_content_z: float | None = pyd.Field(default=None, description="")
+    fsc_certified_z: float | None = pydantic.Field(default=None, description="")
+    recycled_content: float | None = pydantic.Field(default=None, description="Recycled content")
+    recycled_content_z: float | None = pydantic.Field(default=None, description="")
     CompositeLumber: CompositeLumberRangeV1 | None = None
     DimensionLumber: DimensionLumberRangeV1 | None = None
     HeavyTimber: HeavyTimberRangeV1 | None = None

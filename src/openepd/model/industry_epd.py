@@ -15,7 +15,8 @@
 #
 from typing import Literal
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.base import BaseDocumentFactory, BaseOpenEpdSchema, OpenEpdDoctypes
 from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import (
@@ -34,16 +35,21 @@ from openepd.model.versioning import OpenEpdVersions, Version
 class SampleSize(BaseOpenEpdSchema):
     """Sample size."""
 
-    products: pyd.NonNegativeInt | None = pyd.Field(
+    products: int | None = pydantic.Field(
         default=None,
         description="Count of separate products or results that were included in this industry EPD, "
         "and over which the standard deviation was calculated",
+        ge=0,
     )
-    plants: pyd.NonNegativeInt | None = pyd.Field(
-        default=None, description="Count of unique manufacturing plants that submitted data for this Industry EPD"
+    plants: int | None = pydantic.Field(
+        default=None,
+        description="Count of unique manufacturing plants that submitted data for this Industry EPD",
+        ge=0,
     )
-    manufacturers: pyd.NonNegativeInt | None = pyd.Field(
-        default=None, description="Count of unique manufacturing companies that submitted data for this Industry EPD"
+    manufacturers: int | None = pydantic.Field(
+        default=None,
+        description="Count of unique manufacturing companies that submitted data for this Industry EPD",
+        ge=0,
     )
 
 
@@ -69,15 +75,15 @@ class IndustryEpdPreviewV0(
 
     _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
 
-    doctype: Literal["openIndustryEpd"] = pyd.Field(
+    doctype: Literal["openIndustryEpd"] = pydantic.Field(
         description='Describes the type and schema of the document. Must always be "openIndustryEpd"',
         default="openIndustryEpd",
     )
 
     sample_size: SampleSize | None = None
 
-    publishers: list[Org] | None = pyd.Field(description="")
-    manufacturers: list[Org] | None = pyd.Field(description="Participating manufacturers")
+    publishers: list[Org] | None = pydantic.Field(description="", default=None)
+    manufacturers: list[Org] | None = pydantic.Field(description="Participating manufacturers", default=None)
 
 
 IndustryEpdPreview = IndustryEpdPreviewV0

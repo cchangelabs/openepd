@@ -15,15 +15,15 @@
 #
 __all__ = ("AggregatesRangeV1",)
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import AggregateGradation, AggregateWeightClassification
 from openepd.model.specs.singular.aggregates import AggregateApplication
 from openepd.model.validation.quantity import AmountRangeLengthMm
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class AggregatesRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -37,20 +37,20 @@ class AggregatesRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    recycled_content: RangeRatioFloat | None = pyd.Field(
+    recycled_content: RangeRatioFloat | None = pydantic.Field(
         default=None, description="Percent of total mass that is recycled aggregate"
     )
-    nominal_max_size: AmountRangeLengthMm | None = pyd.Field(
+    nominal_max_size: AmountRangeLengthMm | None = pydantic.Field(
         default=None,
         description="Nominal maximum aggregate size is defined as one sieve size smaller than the maximum aggregate size. The maximum aggregate size is defined as the smallest sieve size that requires 100% passing.",
     )
-    weight_classification: list[AggregateWeightClassification] | None = pyd.Field(default=None)
-    gradation: list[AggregateGradation] | None = pyd.Field(default=None)
-    manufactured: bool | None = pyd.Field(
+    weight_classification: list[AggregateWeightClassification] | None = pydantic.Field(default=None)
+    gradation: list[AggregateGradation] | None = pydantic.Field(default=None)
+    manufactured: bool | None = pydantic.Field(
         default=None,
         description="Aggregate produced via expansion or sintering at high temperatures of the following materials: clay, shale, slate, perlite, vermiculite, or slag. Typically used to produce lightweight aggregate",
     )
-    slag: bool | None = pyd.Field(
+    slag: bool | None = pydantic.Field(
         default=None,
         description="Pelletized, foamed, and granulated blast furnace slag can be used as construction aggregate.",
     )

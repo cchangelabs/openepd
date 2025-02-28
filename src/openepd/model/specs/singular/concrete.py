@@ -15,12 +15,12 @@
 #
 from typing import Annotated, Literal
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.concrete import Cementitious, ConcreteTypicalApplication
 from openepd.model.specs.enums import AciExposureClass, CsaExposureClass, EnExposureClass
 from openepd.model.validation.enum import exclusive_groups_validator_factory
-from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import (
     LengthInchStr,
     LengthMmStr,
@@ -49,13 +49,13 @@ class ConcretePavingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    flexion_strength: PressureMPaStr | None = pyd.Field(
-        default=None, description="Concrete flexural strength.", example="30 MPa"
+    flexion_strength: PressureMPaStr | None = pydantic.Field(
+        default=None, description="Concrete flexural strength.", examples=["30 MPa"]
     )
 
-    _concrete_flexion_strength_is_quantity_validator = pyd.validator("flexion_strength", allow_reuse=True)(
-        validate_quantity_unit_factory("MPa")
-    )
+    @pydantic.field_validator("flexion_strength", mode="before", check_fields=False)
+    def _validate_flexion_strength(cls, value):
+        return validate_quantity_unit_factory("MPa")(cls, value)
 
 
 class FlowableFillV1(BaseOpenEpdHierarchicalSpec):
@@ -110,61 +110,96 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    lightweight: bool | None = pyd.Field(default=None, description="Product is lightweight", example=True)
-
-    strength_28d: PressureMPaStr | None = pyd.Field(
-        default=None, description="Concrete strength after 28 days", example="1 MPa"
+    lightweight: bool | None = pydantic.Field(
+        default=None,
+        description="Product is lightweight",
+        examples=[True],
     )
-    strength_other: PressureMPaStr | None = pyd.Field(
+
+    strength_28d: PressureMPaStr | None = pydantic.Field(
+        default=None, description="Concrete strength after 28 days", examples=["1 MPa"]
+    )
+    strength_other: PressureMPaStr | None = pydantic.Field(
         default=None,
         description="A strength spec which is to be reached later other 28 days (e.g. 42d)",
-        example="30 MPa",
+        examples=["30 MPa"],
     )
     strength_other_d: Annotated[
         Literal[3, 7, 14, 42, 56, 72, 96, 120] | None,
         CodegenSpec(override_type=Literal[3, 7, 14, 42, 56, 72, 96, 120]),
-    ] = pyd.Field(default=None, description="Test Day for strength_other", example=42)
+    ] = pydantic.Field(default=None, description="Test Day for strength_other", examples=[42])
 
-    slump: LengthInchStr | None = pyd.Field(default=None, description="", example="2 in")
-    min_slump: LengthInchStr | None = pyd.Field(default=None, description="Minimum test slump", example="2 in")
-    max_slump: LengthInchStr | None = pyd.Field(default=None, description="", example="2 in")
+    slump: LengthInchStr | None = pydantic.Field(default=None, description="", examples=["2 in"])
+    min_slump: LengthInchStr | None = pydantic.Field(default=None, description="Minimum test slump", examples=["2 in"])
+    max_slump: LengthInchStr | None = pydantic.Field(default=None, description="", examples=["2 in"])
 
-    min_pipeline_size: LengthMmStr | None = pyd.Field(
-        default=None, description="Minimum pipeline size", example="200 mm"
+    min_pipeline_size: LengthMmStr | None = pydantic.Field(
+        default=None, description="Minimum pipeline size", examples=["200 mm"]
     )
-    w_c_ratio: RatioFloat | None = pyd.Field(
-        default=None, description="Ratio of water to cement", example=0.5, ge=0, le=1
+    w_c_ratio: float | None = pydantic.Field(
+        default=None, description="Ratio of water to cement", examples=[0.5], ge=0, le=1
     )
-    air_entrain: bool | None = pyd.Field(default=None, description="Air Entrainment", example=True)
-    co2_entrain: bool | None = pyd.Field(default=None, description="CO2 Curing", example=True)
-    self_consolidating: bool | None = pyd.Field(default=None, description="Self Compacting", example=True)
-    white_cement: bool | None = pyd.Field(default=None, description="White Cement", example=True)
-    plc: bool | None = pyd.Field(default=None, description="Portland Limestone Cement", example=True)
-    finishable: bool | None = pyd.Field(default=None, description="Finishable", example=True)
-    fiber_reinforced: bool | None = pyd.Field(default=None, description="fiber_reinforced", example=True)
-
-    cementitious: Cementitious | None = pyd.Field(
-        default=None, description="List of cementitious materials, and proportion by mass"
+    air_entrain: bool | None = pydantic.Field(
+        default=None,
+        description="Air Entrainment",
+        examples=[True],
+    )
+    co2_entrain: bool | None = pydantic.Field(
+        default=None,
+        description="CO2 Curing",
+        examples=[True],
+    )
+    self_consolidating: bool | None = pydantic.Field(
+        default=None,
+        description="Self Compacting",
+        examples=[True],
+    )
+    white_cement: bool | None = pydantic.Field(
+        default=None,
+        description="White Cement",
+        examples=[True],
+    )
+    plc: bool | None = pydantic.Field(
+        default=None,
+        description="Portland Limestone Cement",
+        examples=[True],
+    )
+    finishable: bool | None = pydantic.Field(
+        default=None,
+        description="Finishable",
+        examples=[True],
+    )
+    fiber_reinforced: bool | None = pydantic.Field(
+        default=None,
+        description="fiber_reinforced",
+        examples=[True],
     )
 
-    aggregate_size_max: LengthMmStr | None = pyd.Field(
+    cementitious: Cementitious | None = pydantic.Field(
+        default=None,
+        description="List of cementitious materials, and proportion by mass",
+    )
+
+    aggregate_size_max: LengthMmStr | None = pydantic.Field(
         default=None,
         description="The smallest sieve size for which the entire amount of aggregate is able to pass. "
         "Parameter describes diameter of aggregate",
-        example="8 mm",
+        examples=["8 mm"],
     )
-    cement_content: MassKgStr | None = pyd.Field(default=None, example="1 kg")
+    cement_content: MassKgStr | None = pydantic.Field(default=None, examples=["1 kg"])
 
-    aci_exposure_classes: list[AciExposureClass] | None = pyd.Field(
-        default=None, description="List of ACI exposure classes", example=["aci.F0"]
+    aci_exposure_classes: list[AciExposureClass] | None = pydantic.Field(
+        default=None, description="List of ACI exposure classes", examples=[["aci.F0"]]
     )
-    csa_exposure_classes: list[CsaExposureClass] | None = pyd.Field(
-        default=None, description="List of CSA exposure classes", example=["csa.C-2"]
+    csa_exposure_classes: list[CsaExposureClass] | None = pydantic.Field(
+        default=None, description="List of CSA exposure classes", examples=[["csa.C-2"]]
     )
-    en_exposure_classes: list[EnExposureClass] | None = pyd.Field(
-        default=None, description="List of EN exposure classes", example=["en206.X0"]
+    en_exposure_classes: list[EnExposureClass] | None = pydantic.Field(
+        default=None, description="List of EN exposure classes", examples=[["en206.X0"]]
     )
-    typical_application: ConcreteTypicalApplication | None = pyd.Field(default=None, description="Typical Application")
+    typical_application: ConcreteTypicalApplication | None = pydantic.Field(
+        default=None, description="Typical Application"
+    )
 
     # Nested specs:
     CementGrout: CementGroutV1 | None = None
@@ -174,12 +209,14 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     ReadyMix: ReadyMixV1 | None = None
     Shotcrete: ShotcreteV1 | None = None
 
-    _aci_exposure_classes_exclusive_groups_validator = pyd.validator("aci_exposure_classes", allow_reuse=True)(
-        exclusive_groups_validator_factory(AciExposureClass)
-    )
-    _en_exposure_classes_exclusive_groups_validator = pyd.validator("en_exposure_classes", allow_reuse=True)(
-        exclusive_groups_validator_factory(EnExposureClass)
-    )
-    _csa_exposure_classes_exclusive_groups_validator = pyd.validator("csa_exposure_classes", allow_reuse=True)(
-        exclusive_groups_validator_factory(CsaExposureClass)
-    )
+    @pydantic.field_validator("aci_exposure_classes", mode="before", check_fields=False)
+    def _validate_aci_exposure_classes(cls, value):
+        return exclusive_groups_validator_factory(AciExposureClass)(cls, value)
+
+    @pydantic.field_validator("en_exposure_classes", mode="before", check_fields=False)
+    def _validate_en_exposure_classes(cls, value):
+        return exclusive_groups_validator_factory(EnExposureClass)(cls, value)
+
+    @pydantic.field_validator("csa_exposure_classes", mode="before", check_fields=False)
+    def _validate_csa_exposure_classes(cls, value):
+        return exclusive_groups_validator_factory(CsaExposureClass)(cls, value)

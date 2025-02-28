@@ -14,17 +14,20 @@
 #  limitations under the License.
 #
 import abc
+from collections.abc import Callable
 from enum import StrEnum
 import json
-from typing import Any, Callable, ClassVar, Generic, Optional, Type, TypeAlias, TypeVar
+from typing import Any, ClassVar, Generic, Optional, Type, TypeAlias, TypeVar
 
-from cqd import open_xpd_uuid  # type:ignore[import-untyped,ignore-not-found]
+from cqd import open_xpd_uuid  # type:ignore[import-untyped]
+import pydantic
+from pydantic import ConfigDict
+import pydantic_core
 
-from openepd.compat.pydantic import pyd, pyd_generics
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
 from openepd.model.versioning import OpenEpdVersions, Version
 
-AnySerializable: TypeAlias = int | str | bool | float | list | dict | pyd.BaseModel | None
+AnySerializable: TypeAlias = int | str | bool | float | list | dict | pydantic.BaseModel | None
 TAnySerializable = TypeVar("TAnySerializable", bound=AnySerializable)
 
 OPENEPD_VERSION_FIELD = "openepd_version"
@@ -60,29 +63,27 @@ def modify_pydantic_schema(schema_dict: dict, cls: type) -> dict:
     return schema_dict
 
 
-class BaseOpenEpdSchema(pyd.BaseModel):
+class BaseOpenEpdSchema(pydantic.BaseModel):
     """Base class for all OpenEPD models."""
 
-    ext: dict[str, AnySerializable] | None = pyd.Field(alias="ext", default=None)
-
-    class Config:
-        allow_mutation = True
-        validate_assignment = False
-        allow_population_by_field_name = True
-        use_enum_values = True
-        schema_extra: Callable | dict = modify_pydantic_schema
+    ext: dict[str, AnySerializable] | None = pydantic.Field(alias="ext", default=None)
+    model_config: ClassVar[ConfigDict] = ConfigDict(
+        validate_assignment=False,
+        populate_by_name=True,
+        use_enum_values=True,
+    )
 
     def to_serializable(self, *args, **kwargs) -> dict[str, Any]:
         """
         Return a serializable dict representation of the DTO.
 
-        It expects the same arguments as the pyd.BaseModel.json() method.
+        It expects the same arguments as the pydantic.BaseModel.model_dump_json() method.
         """
-        return json.loads(self.json(*args, **kwargs))
+        return json.loads(self.model_dump_json(*args, **kwargs))
 
     def has_values(self) -> bool:
         """Return True if the model has any values."""
-        return len(self.dict(exclude_unset=True, exclude_none=True)) > 0
+        return len(self.model_dump(exclude_unset=True, exclude_none=True)) > 0
 
     def set_ext(self, ext: "OpenEpdExtension") -> None:
         """Set the extension field."""
@@ -106,7 +107,10 @@ class BaseOpenEpdSchema(pyd.BaseModel):
         return self.ext.get(key, default)
 
     def get_typed_ext_field(
-        self, key: str, target_type: Type[TAnySerializable], default: Optional[TAnySerializable] = None
+        self,
+        key: str,
+        target_type: Type[TAnySerializable],
+        default: Optional[TAnySerializable] = None,
     ) -> TAnySerializable:
         """
         Get an extension field from the model and convert it to the target type.
@@ -116,8 +120,8 @@ class BaseOpenEpdSchema(pyd.BaseModel):
         value = self.get_ext_field(key, default)
         if value is None:
             return None  # type: ignore
-        if issubclass(target_type, pyd.BaseModel) and isinstance(value, dict):
-            return target_type.parse_obj(value)  # type: ignore[return-value]
+        if issubclass(target_type, pydantic.BaseModel) and isinstance(value, dict):
+            return target_type.model_validate(value)  # type: ignore[return-value]
         elif isinstance(value, target_type):
             return value
         raise ValueError(f"Cannot convert {value} to {target_type}")
@@ -128,7 +132,7 @@ class BaseOpenEpdSchema(pyd.BaseModel):
 
     def get_ext_or_empty(self, ext_type: Type["TOpenEpdExtension"]) -> "TOpenEpdExtension":
         """Get an extension field from the model or an empty instance if it doesn't exist."""
-        return self.get_typed_ext_field(ext_type.get_extension_name(), ext_type, ext_type.construct(**{}))
+        return self.get_typed_ext_field(ext_type.get_extension_name(), ext_type, ext_type.model_construct(**{}))  # type: ignore[return-value]
 
     @classmethod
     def is_allowed_field_name(cls, field_name: str) -> bool:
@@ -137,10 +141,10 @@ class BaseOpenEpdSchema(pyd.BaseModel):
 
         Both property name and aliases are checked.
         """
-        if field_name in cls.__fields__:
+        if field_name in cls.model_fields:
             return True
         else:
-            for x in cls.__fields__.values():
+            for x in cls.model_fields.values():
                 if x.alias == field_name:
                     return True
         return False
@@ -156,7 +160,7 @@ class BaseOpenEpdSchema(pyd.BaseModel):
         return None
 
 
-class BaseOpenEpdGenericSchema(pyd_generics.GenericModel, BaseOpenEpdSchema):
+class BaseOpenEpdGenericSchema(BaseOpenEpdSchema):
     """Base class for all OpenEPD generic models."""
 
     pass
@@ -183,21 +187,24 @@ class RootDocument(abc.ABC, BaseOpenEpdSchema):
     _FORMAT_VERSION: ClassVar[str]
     """Version of this document format. Must be defined in the concrete class."""
 
-    doctype: str = pyd.Field(
+    doctype: str = pydantic.Field(
         description='Describes the type and schema of the document. Must always always read "openEPD".',
         default="openEPD",
     )
-    openepd_version: str = pyd.Field(
+    openepd_version: str = pydantic.Field(
         description="Version of the document format, related to /doctype",
         default=OpenEpdVersions.get_current().as_str(),
     )
 
-    _version_format_validator = pyd.validator(OPENEPD_VERSION_FIELD, allow_reuse=True, check_fields=False)(
-        validate_version_format
-    )
-    _version_major_match_validator = pyd.validator(OPENEPD_VERSION_FIELD, allow_reuse=True, check_fields=False)(
-        validate_version_compatibility("_FORMAT_VERSION")
-    )
+    @pydantic.field_validator(OPENEPD_VERSION_FIELD)
+    def version_format_validator(cls, value: str) -> str:
+        """Validate the correctness of version format."""
+        return validate_version_format(value)
+
+    @pydantic.field_validator(OPENEPD_VERSION_FIELD)
+    def version_major_match_validator(cls, value: str) -> str:
+        """Validate that the version major matches the class version major."""
+        return validate_version_compatibility("_FORMAT_VERSION")(cls, value)  # type: ignore[arg-type]
 
 
 TRootDocument = TypeVar("TRootDocument", bound=RootDocument)
@@ -230,8 +237,7 @@ class BaseDocumentFactory(Generic[TRootDocument]):
                     return doc_cls(**data)
                 else:
                     raise ValueError(
-                        f"Unsupported version: {version}. "
-                        f"The highest supported version from branch {x.major}.x is {x}"
+                        f"Unsupported version: {version}. The highest supported version from branch {x.major}.x is {x}"
                     )
         supported_versions = ", ".join(f"{v.major}.x" for v in cls.VERSION_MAP.keys())
         raise ValueError(f"Version {version} is not supported. Supported versions are: {supported_versions}")
@@ -244,22 +250,33 @@ class OpenXpdUUID(str):
     See https://github.com/cchangelabs/open-xpd-uuid-lib for details.
     """
 
-    def _validate_id(cls, v: str | None) -> str | None:
-        if v is None:
-            return v
+    @classmethod
+    def _validate_id(cls, value: Any, _: pydantic_core.core_schema.ValidatorFunctionWrapHandler) -> Any:
+        if not isinstance(value, str | None):
+            raise ValueError(f"Invalid value type: {type(value)}")
 
         try:
-            open_xpd_uuid.validate(open_xpd_uuid.sanitize(str(v)))
-            return v
+            open_xpd_uuid.validate(open_xpd_uuid.sanitize(str(value)))
+            return value
         except open_xpd_uuid.GuidValidationError as e:
             raise ValueError("Invalid format") from e
 
     @classmethod
-    def __get_validators__(cls):
-        yield cls._validate_id
+    def __get_pydantic_core_schema__(
+        cls,
+        source_type: Any,
+        handler: Callable[[Any], pydantic_core.core_schema.CoreSchema],
+    ) -> pydantic_core.core_schema.CoreSchema:
+        # In this example we assume that the underlying type to validate is a string.
+        # If it's different, adjust the call to handler() accordingly.
+        underlying_schema = handler(str)
+        # Wrap the underlying schema with your custom validator.
+        return pydantic_core.core_schema.no_info_wrap_validator_function(cls._validate_id, underlying_schema)
 
     @classmethod
-    def __modify_schema__(cls, field_schema):
-        field_schema.update(
-            example="XC300001",
+    def __get_pydantic_json_schema__(cls, core_schema, handler):
+        json_schema = handler(core_schema)
+        json_schema.update(
+            examples=["XC300001"],
         )
+        return json_schema

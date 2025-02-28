@@ -15,30 +15,58 @@
 #
 from typing import ClassVar, Literal
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.concrete import Cementitious, ConcreteTypicalApplication
 from openepd.model.specs.enums import AciExposureClass, CsaExposureClass, EnExposureClass
 from openepd.model.specs.singular import BaseCompatibilitySpec
-from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthInchStr, PressureMPaStr
 
 
 class ConcreteOptions(BaseOpenEpdSchema):
     """Legacy Concrete options model."""
 
-    lightweight: bool | None = pyd.Field(
-        default=None, description="Lightweight. True if < 120lb/ft3 or 1900 kg/m3", example=True
+    lightweight: bool | None = pydantic.Field(
+        default=None,
+        description="Lightweight. True if < 120lb/ft3 or 1900 kg/m3",
+        examples=[True],
     )
-    scc: bool | None = pyd.Field(default=None, description="Self Compacting", example=True)
-    finishable: bool | None = pyd.Field(default=None, description="Finishable", example=True)
-    air: bool | None = pyd.Field(default=None, description="Air Entrainment", example=True)
-    co2_entrain: bool | None = pyd.Field(
-        default=None, description="CO2 Curing. Uses intentionally entrained CO2.", example=True
+    scc: bool | None = pydantic.Field(
+        default=None,
+        description="Self Compacting",
+        examples=[True],
     )
-    white_cement: bool | None = pyd.Field(default=None, description="White Cement", example=True)
-    plc: bool | None = pyd.Field(default=None, description="Portland Limestone Cement", example=True)
-    fiber_reinforced: bool | None = pyd.Field(default=None, description="fiber_reinforced", example=True)
+    finishable: bool | None = pydantic.Field(
+        default=None,
+        description="Finishable",
+        examples=[True],
+    )
+    air: bool | None = pydantic.Field(
+        default=None,
+        description="Air Entrainment",
+        examples=[True],
+    )
+    co2_entrain: bool | None = pydantic.Field(
+        default=None,
+        description="CO2 Curing. Uses intentionally entrained CO2.",
+        examples=[True],
+    )
+    white_cement: bool | None = pydantic.Field(
+        default=None,
+        description="White Cement",
+        examples=[True],
+    )
+    plc: bool | None = pydantic.Field(
+        default=None,
+        description="Portland Limestone Cement",
+        examples=[True],
+    )
+    fiber_reinforced: bool | None = pydantic.Field(
+        default=None,
+        description="fiber_reinforced",
+        examples=[True],
+    )
 
 
 class ConcreteOldSpec(BaseCompatibilitySpec):
@@ -67,34 +95,41 @@ class ConcreteOldSpec(BaseCompatibilitySpec):
         "concrete.cementitious": "Concrete.cementitious",
     }
 
-    strength_28d: PressureMPaStr | None = pyd.Field(
-        default=None, description="Compressive Strength at 28 days", example="1 MPa"
+    strength_28d: PressureMPaStr | None = pydantic.Field(
+        default=None, description="Compressive Strength at 28 days", examples=["1 MPa"]
     )
-    slump: LengthInchStr | None = pyd.Field(default=None, description="Minimum test slump", example="2 in")
-    strength_other: PressureMPaStr | None = pyd.Field(
+    slump: LengthInchStr | None = pydantic.Field(default=None, description="Minimum test slump", examples=["2 in"])
+    strength_other: PressureMPaStr | None = pydantic.Field(
         default=None,
         description="One additional strength, which can be early (e.g. 3d) or late (e.g. 96d)",
-        example="30 MPa",
+        examples=["30 MPa"],
     )
-    strength_other_d: Literal[3, 7, 14, 42, 56, 72, 96, 120] | None = pyd.Field(
+    strength_other_d: Literal[3, 7, 14, 42, 56, 72, 96, 120] | None = pydantic.Field(
         default=None,
         description="Days for the strength field above. Required IF strength_other is provided.",
-        example=42,
+        examples=[42],
     )
-    w_c_ratio: RatioFloat | None = pyd.Field(
-        default=None, description="Ratio of water to cement", example=0.5, ge=0, le=1
+    w_c_ratio: float | None = pydantic.Field(
+        default=None, description="Ratio of water to cement", examples=[0.5], ge=0, le=1
     )
-    aci_exposure_classes: list[AciExposureClass] | None = pyd.Field(
-        default=None, description="List of ACI318-19 exposure classes this product meets", example=["aci.F0"]
+    aci_exposure_classes: list[AciExposureClass] | None = pydantic.Field(
+        default=None,
+        description="List of ACI318-19 exposure classes this product meets",
+        examples=[["aci.F0"]],
     )
-    csa_exposure_classes: list[CsaExposureClass] | None = pyd.Field(
-        default=None, description="List of CSA A23.1 exposure classes this product meets", example=["csa.C-2"]
+    csa_exposure_classes: list[CsaExposureClass] | None = pydantic.Field(
+        default=None,
+        description="List of CSA A23.1 exposure classes this product meets",
+        examples=[["csa.C-2"]],
     )
-    en_exposure_classes: list[EnExposureClass] | None = pyd.Field(
-        default=None, description="List of EN206 exposure classes this product meets", example=["en206.X0"]
+    en_exposure_classes: list[EnExposureClass] | None = pydantic.Field(
+        default=None,
+        description="List of EN206 exposure classes this product meets",
+        examples=[["en206.X0"]],
     )
-    application: ConcreteTypicalApplication | None = pyd.Field(default=None, description="Typical Application")
-    options: ConcreteOptions | None = pyd.Field(default=None, description="List of true/false properties")
-    cementitious: Cementitious | None = pyd.Field(
-        default=None, description="List of cementitious materials, and proportion by mass"
+    application: ConcreteTypicalApplication | None = pydantic.Field(default=None, description="Typical Application")
+    options: ConcreteOptions | None = pydantic.Field(default=None, description="List of true/false properties")
+    cementitious: Cementitious | None = pydantic.Field(
+        default=None,
+        description="List of cementitious materials, and proportion by mass",
     )

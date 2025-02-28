@@ -27,6 +27,6 @@ class PlantTestCase(unittest.TestCase):
             "pluscode": "85644Q4R+3P",
             "address": "8203 Alabama St, Highland, CA 92346, USA",
         }
-        p = Plant.parse_obj(test_data)
+        p = Plant.model_validate(test_data)
 
         self.assertEqual(p.id, "85644Q4R+3P.cemex.com")

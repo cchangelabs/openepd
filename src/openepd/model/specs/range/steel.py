@@ -35,10 +35,8 @@ __all__ = (
     "SteelRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeFloat, RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import SteelComposition, SteelRebarGrade
@@ -50,6 +48,8 @@ from openepd.model.validation.quantity import (
     AmountRangeThermalConductivity,
     AmountRangeThermalExpansion,
 )
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class ColdFormedFramingRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -226,15 +226,15 @@ class StructuralSteelRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    modulus_of_elasticity: AmountRangePressureMpa | None = pyd.Field(
+    modulus_of_elasticity: AmountRangePressureMpa | None = pydantic.Field(
         default=None,
         description="Modulus of Elasticity, https://en.wikipedia.org/wiki/Elastic_modulus ",
     )
-    thermal_expansion: AmountRangeThermalExpansion | None = pyd.Field(
+    thermal_expansion: AmountRangeThermalExpansion | None = pydantic.Field(
         default=None,
         description="Thermal Expansion, https://en.wikipedia.org/wiki/Thermal_expansion",
     )
-    thermal_conductivity: AmountRangeThermalConductivity | None = pyd.Field(
+    thermal_conductivity: AmountRangeThermalConductivity | None = pydantic.Field(
         default=None,
         description="Thermal Conductivity, https://en.wikipedia.org/wiki/Thermal_conductivity_and_resistivity",
     )
@@ -278,14 +278,14 @@ class RebarSteelRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     fabricated: bool | None = None
-    grade: list[SteelRebarGrade] | None = pyd.Field(default=None)
-    diameter_min: AmountRangeLengthMm | None = pyd.Field(default=None, description="Minimal diameter")
-    bending_pin_max: RangeFloat | None = pyd.Field(default=None)
-    ts_ys_ratio_max: RangeFloat | None = pyd.Field(
+    grade: list[SteelRebarGrade] | None = pydantic.Field(default=None)
+    diameter_min: AmountRangeLengthMm | None = pydantic.Field(default=None, description="Minimal diameter")
+    bending_pin_max: RangeFloat | None = pydantic.Field(default=None)
+    ts_ys_ratio_max: RangeFloat | None = pydantic.Field(
         default=None,
         description="Max ratio of ultimate tensile to yield tensile strength",
     )
-    epoxy_coated: bool | None = pyd.Field(default=None)
+    epoxy_coated: bool | None = pydantic.Field(default=None)
 
 
 class WireMeshSteelRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -315,29 +315,29 @@ class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.1"
 
-    yield_tensile_str: AmountRangePressureMpa | None = pyd.Field(
+    yield_tensile_str: AmountRangePressureMpa | None = pydantic.Field(
         default=None,
         description="Yield Tensile strength (Mpa) per unit area. Yield strength is the point at which a material begins to permanently deform or change shape due to applied stress.",
     )
-    bar_elongation: RangeFloat | None = pyd.Field(
+    bar_elongation: RangeFloat | None = pydantic.Field(
         default=None,
         description="Increase in length at break, in percent. Typically 10%-20%",
     )
-    recycled_content: RangeRatioFloat | None = pyd.Field(default=None, description="")
-    post_consumer_recycled_content: RangeRatioFloat | None = pyd.Field(
+    recycled_content: RangeRatioFloat | None = pydantic.Field(default=None, description="")
+    post_consumer_recycled_content: RangeRatioFloat | None = pydantic.Field(
         default=None,
         description="Should be a number between zero and the Recycled Content (steel_recycled_content)",
     )
-    astm_marking: str | None = pyd.Field(default=None, description="The marking to be expected on the product.")
-    euro_marking: str | None = pyd.Field(default=None, description="The marking to be expected on the product.")
-    composition: list[SteelComposition] | None = pyd.Field(default=None, description="Basic chemical composition")
-    cold_finished: bool | None = pyd.Field(default=None)
-    galvanized: bool | None = pyd.Field(default=None)
-    stainless: bool | None = pyd.Field(default=None)
-    making_route: SteelMakingRoute | None = pyd.Field(default=None)
-    astm_standards: list[Standard] | None = pyd.Field(default=None, description="List of ASTM standards")
-    sae_standards: list[Standard] | None = pyd.Field(default=None, description="List of SAE standards")
-    en_standards: list[Standard] | None = pyd.Field(default=None, description="List of EN standards")
+    astm_marking: str | None = pydantic.Field(default=None, description="The marking to be expected on the product.")
+    euro_marking: str | None = pydantic.Field(default=None, description="The marking to be expected on the product.")
+    composition: list[SteelComposition] | None = pydantic.Field(default=None, description="Basic chemical composition")
+    cold_finished: bool | None = pydantic.Field(default=None)
+    galvanized: bool | None = pydantic.Field(default=None)
+    stainless: bool | None = pydantic.Field(default=None)
+    making_route: SteelMakingRoute | None = pydantic.Field(default=None)
+    astm_standards: list[Standard] | None = pydantic.Field(default=None, description="List of ASTM standards")
+    sae_standards: list[Standard] | None = pydantic.Field(default=None, description="List of SAE standards")
+    en_standards: list[Standard] | None = pydantic.Field(default=None, description="List of EN standards")
     MBQSteel: MBQSteelRangeV1 | None = None
     CoilSteel: CoilSteelRangeV1 | None = None
     ColdFormedSteel: ColdFormedSteelRangeV1 | None = None

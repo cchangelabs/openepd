@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     CableTraysMaterial,
@@ -42,13 +43,23 @@ class PDUV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    amperage: ElectricalCurrentStr | None = pyd.Field(default=None, description="", example="1 A")
-    outlet_level_metering: bool | None = pyd.Field(default=None, description="", example=True)
-    outlet_level_switching: bool | None = pyd.Field(default=None, description="", example=True)
-    pdu_technology: PduTechnology | None = pyd.Field(default=None, description="", example="Basic")
-    pdu_outlets: int | None = pyd.Field(default=None, description="", example=3, le=200)
+    amperage: ElectricalCurrentStr | None = pydantic.Field(default=None, description="", examples=["1 A"])
+    outlet_level_metering: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    outlet_level_switching: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    pdu_technology: PduTechnology | None = pydantic.Field(default=None, description="", examples=["Basic"])
+    pdu_outlets: int | None = pydantic.Field(default=None, description="", examples=[3], le=200)
 
-    _amperage_is_quantity_validator = pyd.validator("amperage", allow_reuse=True)(validate_quantity_unit_factory("A"))
+    @pydantic.field_validator("amperage", mode="before", check_fields=False)
+    def _validate_amperage(cls, value):
+        return validate_quantity_unit_factory("A")(cls, value)
 
 
 class CabinetsRacksAndEnclosuresV1(BaseOpenEpdHierarchicalSpec):
@@ -57,9 +68,9 @@ class CabinetsRacksAndEnclosuresV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    static_load: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
-    total_racking_units: int | None = pyd.Field(default=None, description="", example=3)
-    rack_type: RackType | None = pyd.Field(default=None, description="", example="Cabinet")
+    static_load: MassKgStr | None = pydantic.Field(default=None, description="", examples=["1 kg"])
+    total_racking_units: int | None = pydantic.Field(default=None, description="", examples=[3])
+    rack_type: RackType | None = pydantic.Field(default=None, description="", examples=["Cabinet"])
 
 
 class DataCablingV1(BaseOpenEpdHierarchicalSpec):
@@ -68,30 +79,52 @@ class DataCablingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    outdoor: bool | None = pyd.Field(default=None, description="", example=True)
-    cabling_category: CablingCategory | None = pyd.Field(default=None, description="", example="Cat7")
-    fire_rating: CablingFireRating | None = pyd.Field(default=None, description="", example="CMP")
-    jacket_material: CablingJacketMaterial | None = pyd.Field(default=None, description="", example="PVC")
-    shielded: bool | None = pyd.Field(
-        default=None, description="Foil or similar electromagnetic shielding", example=True
+    outdoor: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
     )
-    armored: bool | None = pyd.Field(default=None, description="Steel or similar physical armor jacket", example=True)
-    rohs: bool | None = pyd.Field(default=None, description="Certified ROHS Compliant", example=True)
-    reach: bool | None = pyd.Field(default=None, description="Certified REACH compliant", example=True)
-    zwtl: bool | None = pyd.Field(default=None, description="Certified ZWTL compliant", example=True)
-    connectorized: bool | None = pyd.Field(
+    cabling_category: CablingCategory | None = pydantic.Field(default=None, description="", examples=["Cat7"])
+    fire_rating: CablingFireRating | None = pydantic.Field(default=None, description="", examples=["CMP"])
+    jacket_material: CablingJacketMaterial | None = pydantic.Field(default=None, description="", examples=["PVC"])
+    shielded: bool | None = pydantic.Field(
+        default=None,
+        description="Foil or similar electromagnetic shielding",
+        examples=[True],
+    )
+    armored: bool | None = pydantic.Field(
+        default=None,
+        description="Steel or similar physical armor jacket",
+        examples=[True],
+    )
+    rohs: bool | None = pydantic.Field(
+        default=None,
+        description="Certified ROHS Compliant",
+        examples=[True],
+    )
+    reach: bool | None = pydantic.Field(
+        default=None,
+        description="Certified REACH compliant",
+        examples=[True],
+    )
+    zwtl: bool | None = pydantic.Field(
+        default=None,
+        description="Certified ZWTL compliant",
+        examples=[True],
+    )
+    connectorized: bool | None = pydantic.Field(
         default=None,
         description="This cable is shipped as a specific length with integrated connectors. Impacts include the "
         "connectors for the specific cable length. Connectors add impact similar to 0.1-0.5 additional "
         "meters of cable",
-        example=True,
+        examples=[True],
     )
-    thin_ethernet: bool | None = pyd.Field(
+    thin_ethernet: bool | None = pydantic.Field(
         default=None,
         description="At least part of this cable has a reduced outer diameter and thinner wires. Thin ethernet cables "
         "have handling advantages and tend to have a reduced impact, but also reduced channel length. "
         "See TIA 568.2-D Annex G.",
-        example=True,
+        examples=[True],
     )
 
 
@@ -105,29 +138,45 @@ class FloorBoxesAndAccessoriesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    painted: bool | None = pyd.Field(default=None, description="", example=True)
-    fire_classified: bool | None = pyd.Field(
-        default=None, description="Includes hardware to maintain fire rating of the floor", example=True
+    painted: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
     )
-    outdoor: bool | None = pyd.Field(default=None, description="Floor boxes installed in the ground", example=True)
-    raised: bool | None = pyd.Field(default=None, description="Used in raised or computer style flooring", example=True)
-    poke_through: bool | None = pyd.Field(
+    fire_classified: bool | None = pydantic.Field(
+        default=None,
+        description="Includes hardware to maintain fire rating of the floor",
+        examples=[True],
+    )
+    outdoor: bool | None = pydantic.Field(
+        default=None,
+        description="Floor boxes installed in the ground",
+        examples=[True],
+    )
+    raised: bool | None = pydantic.Field(
+        default=None,
+        description="Used in raised or computer style flooring",
+        examples=[True],
+    )
+    poke_through: bool | None = pydantic.Field(
         default=None,
         description="Used primarily in retrofit or renovation and will maintain fire rating of the floor",
-        example=True,
+        examples=[True],
     )
-    cover: bool | None = pyd.Field(
-        default=None, description="Floor box cover or lid for use with a separate floor box", example=True
+    cover: bool | None = pydantic.Field(
+        default=None,
+        description="Floor box cover or lid for use with a separate floor box",
+        examples=[True],
     )
-    outlets: int | None = pyd.Field(
+    outlets: int | None = pydantic.Field(
         default=None,
         description="Number of outlet ports from floor box, including power, data, video, and other connections",
-        example=3,
+        examples=[3],
         le=16,
     )
-    material: FloorBoxMaterial | None = pyd.Field(default=None, description="", example="Metallic Box")
-    cover_material: FloorBoxCoverMaterial | None = pyd.Field(default=None, description="", example="Brass")
-    floor_material: FloorBoxFloorMaterial | None = pyd.Field(default=None, description="", example="Concrete")
+    material: FloorBoxMaterial | None = pydantic.Field(default=None, description="", examples=["Metallic Box"])
+    cover_material: FloorBoxCoverMaterial | None = pydantic.Field(default=None, description="", examples=["Brass"])
+    floor_material: FloorBoxFloorMaterial | None = pydantic.Field(default=None, description="", examples=["Concrete"])
 
 
 class NetworkingCableTraysV1(BaseOpenEpdHierarchicalSpec):
@@ -141,14 +190,18 @@ class NetworkingCableTraysV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    height: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
-    width: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
-    depth: LengthMmStr | None = pyd.Field(default=None, description="Depth of enclosure system", example="1 m")
-    static_load: MassKgStr | None = pyd.Field(default=None, description="Mass that the unit can hold", example="1 kg")
-    ventilated: bool | None = pyd.Field(
-        default=None, description="At least 40% of the tray base is open to air flow", example=True
+    height: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["100 mm"])
+    width: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["100 mm"])
+    depth: LengthMmStr | None = pydantic.Field(default=None, description="Depth of enclosure system", examples=["1 m"])
+    static_load: MassKgStr | None = pydantic.Field(
+        default=None, description="Mass that the unit can hold", examples=["1 kg"]
     )
-    material: CableTraysMaterial | None = pyd.Field(default=None, description="", example="Stainless Steel")
+    ventilated: bool | None = pydantic.Field(
+        default=None,
+        description="At least 40% of the tray base is open to air flow",
+        examples=[True],
+    )
+    material: CableTraysMaterial | None = pydantic.Field(default=None, description="", examples=["Stainless Steel"])
 
 
 class NetworkingRacewaysV1(BaseOpenEpdHierarchicalSpec):
@@ -161,15 +214,21 @@ class NetworkingRacewaysV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    width: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
-    depth: LengthMmStr | None = pyd.Field(default=None, description="Depth of enclosure system", example="100 mm")
-    painted: bool | None = pyd.Field(default=None, description="", example=True)
-    divided: bool | None = pyd.Field(
+    width: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["100 mm"])
+    depth: LengthMmStr | None = pydantic.Field(
+        default=None, description="Depth of enclosure system", examples=["100 mm"]
+    )
+    painted: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    divided: bool | None = pydantic.Field(
         default=None,
         description="Dual service raceway for high and low voltage data and power applications",
-        example=True,
+        examples=[True],
     )
-    raceways_material: RacewaysMaterial | None = pyd.Field(default=None, description="", example="Aluminum")
+    raceways_material: RacewaysMaterial | None = pydantic.Field(default=None, description="", examples=["Aluminum"])
 
 
 class CommunicationsConduitV1(BaseOpenEpdHierarchicalSpec, ConduitMixin):

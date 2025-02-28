@@ -17,10 +17,10 @@ from abc import ABC
 from enum import ReprEnum
 from typing import ClassVar, NamedTuple
 
-from openepd.compat.pydantic import pyd
+import pydantic
 
 
-class WithExtVersionMixin(ABC, pyd.BaseModel):
+class WithExtVersionMixin(ABC, pydantic.BaseModel):
     """Mixin for extensions supporting versions: recommended way."""
 
     _EXT_VERSION: ClassVar[str]
@@ -30,10 +30,10 @@ class WithExtVersionMixin(ABC, pyd.BaseModel):
         """Set the default value for the ext_version field from _EXT_VERSION class var."""
         super().__init_subclass__()
         if hasattr(cls, "_EXT_VERSION"):
-            cls.__fields__["ext_version"].default = cls._EXT_VERSION
+            cls.model_fields["ext_version"].default = cls._EXT_VERSION
 
     # Note: default is set programmatically in __init_subclass__
-    ext_version: str | None = pyd.Field(description="Extension version", example="3.22", default=None)
+    ext_version: str | None = pydantic.Field(description="Extension version", examples=["3.22"], default=None)
 
 
 class Version(NamedTuple):
@@ -43,7 +43,7 @@ class Version(NamedTuple):
     minor: int
 
     @staticmethod
-    def parse_version(version: str) -> "Version":
+    def parse_version(version: str | None) -> "Version":
         """Parse the version of extension or the format.
 
         Version is expected to be major.minor
@@ -51,7 +51,10 @@ class Version(NamedTuple):
         :param version: The extension version.
         :return: A tuple of major and minor version numbers.
         """
-        splits = version.split(".", 1) if isinstance(version, str) else None
+        if isinstance(version, str):
+            splits = version.split(".", 1)
+        else:
+            splits = []
         if len(splits) != 2:
             raise ValueError(f"Invalid version: {version}")
         if not splits[0].isdigit() or not splits[1].isdigit():

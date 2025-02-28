@@ -38,10 +38,8 @@ __all__ = (
     "ThermalMoistureProtectionRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeFloat, RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
@@ -53,6 +51,8 @@ from openepd.model.specs.enums import (
     RoofCoverBoardsMaterial,
 )
 from openepd.model.validation.quantity import AmountRangeLengthMm, AmountRangePressureMpa
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class BituminousRoofingRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -158,7 +158,7 @@ class BoardInsulationRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    compressive_strength: AmountRangePressureMpa | None = pyd.Field(default=None, description="")
+    compressive_strength: AmountRangePressureMpa | None = pydantic.Field(default=None, description="")
 
 
 class FoamedInPlaceRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -170,7 +170,7 @@ class FoamedInPlaceRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    foam_type: list[FoamType] | None = pyd.Field(default=None, description="")
+    foam_type: list[FoamType] | None = pydantic.Field(default=None, description="")
 
 
 class SprayedInsulationRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -207,14 +207,14 @@ class MembraneRoofingRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    sri: RangeFloat | None = pyd.Field(default=None, description="")
-    total_recycled_content: RangeRatioFloat | None = pyd.Field(default=None, description="")
-    post_consumer_recycled_content: RangeRatioFloat | None = pyd.Field(default=None, description="")
-    reinforcement: list[MembraneRoofingReinforcement] | None = pyd.Field(default=None, description="")
-    felt_backing: bool | None = pyd.Field(default=None, description="")
-    nsf347: bool | None = pyd.Field(default=None, description="")
-    vantage_vinyl: bool | None = pyd.Field(default=None, description="")
+    thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    sri: RangeFloat | None = pydantic.Field(default=None, description="")
+    total_recycled_content: RangeRatioFloat | None = pydantic.Field(default=None, description="")
+    post_consumer_recycled_content: RangeRatioFloat | None = pydantic.Field(default=None, description="")
+    reinforcement: list[MembraneRoofingReinforcement] | None = pydantic.Field(default=None, description="")
+    felt_backing: bool | None = pydantic.Field(default=None, description="")
+    nsf347: bool | None = pydantic.Field(default=None, description="")
+    vantage_vinyl: bool | None = pydantic.Field(default=None, description="")
     BituminousRoofing: BituminousRoofingRangeV1 | None = None
     SinglePlyEPDM: SinglePlyEPDMRangeV1 | None = None
     SinglePlyKEE: SinglePlyKEERangeV1 | None = None
@@ -233,10 +233,10 @@ class InsulationRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    r_value: RangeFloat | None = pyd.Field(default=None, description="")
-    material: list[InsulatingMaterial] | None = pyd.Field(default=None, description="")
-    intended_application: list[InsulationIntendedApplication] | None = pyd.Field(default=None, description="")
-    thickness_per_declared_unit: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
+    r_value: RangeFloat | None = pydantic.Field(default=None, description="")
+    material: list[InsulatingMaterial] | None = pydantic.Field(default=None, description="")
+    intended_application: list[InsulationIntendedApplication] | None = pydantic.Field(default=None, description="")
+    thickness_per_declared_unit: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
     BlanketInsulation: BlanketInsulationRangeV1 | None = None
     BlownInsulation: BlownInsulationRangeV1 | None = None
     BoardInsulation: BoardInsulationRangeV1 | None = None
@@ -288,9 +288,9 @@ class RoofCoverBoardsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    material: list[RoofCoverBoardsMaterial] | None = pyd.Field(default=None, description="")
-    facing: list[RoofCoverBoardsFacing] | None = pyd.Field(default=None, description="")
-    thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
+    material: list[RoofCoverBoardsMaterial] | None = pydantic.Field(default=None, description="")
+    facing: list[RoofCoverBoardsFacing] | None = pydantic.Field(default=None, description="")
+    thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
 
 
 class SteepSlopeRoofingRangeV1(BaseOpenEpdHierarchicalSpec):

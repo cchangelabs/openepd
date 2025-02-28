@@ -96,7 +96,7 @@ class SyncClientApiTestCase(unittest.TestCase):
         self.assertEqual(pcr.id, "ec3c8gt7")
 
     def test_create_pcr(self):
-        new_pcr = Pcr.parse_obj(
+        new_pcr = Pcr.model_validate(
             {
                 "issuer": {"web_domain": "environdec.com"},
                 "name": "Test PCR full name",
@@ -168,7 +168,7 @@ class LocalOnlySyncClientApiTestCase(unittest.TestCase):
                 "product_name": "4F0Z95E1 UPDATED FOR TESTING",
             }
         )
-        epd = Epd.parse_obj(epd_dict)
+        epd = Epd.model_validate(epd_dict)
         epd_updated = self.api_client.epds.post_with_refs(epd)
         self.assertIsNotNone(epd_updated)
 
@@ -186,7 +186,7 @@ class LocalOnlySyncClientApiTestCase(unittest.TestCase):
             }
         )
         try:
-            self.api_client.epds.post_with_refs(Epd.parse_obj(epd_dict))
+            self.api_client.epds.post_with_refs(Epd.model_validate(epd_dict))
         except Exception as e:
             self.assertIsInstance(e.errors(), list)  # type: ignore
         else:
@@ -202,9 +202,12 @@ class LocalOnlySyncClientApiTestCase(unittest.TestCase):
         self.assertTrue(response.ok)
 
     def test_create_generic_estimate_with_refs(self):
-        new_ge = GenericEstimateWithDeps.parse_obj(
+        new_ge = GenericEstimateWithDeps.model_validate(
             {
-                "publisher": {"web_domain": "a_test_publisher.com", "name": "A test publisher"},
+                "publisher": {
+                    "web_domain": "a_test_publisher.com",
+                    "name": "A test publisher",
+                },
                 "name": "Test GE name",
                 "product_classes": {"EC3": "Steel"},
                 "declared_unit": {"qty": 1, "unit": "t"},
@@ -217,7 +220,7 @@ class LocalOnlySyncClientApiTestCase(unittest.TestCase):
         self.assertIsNotNone(ge_resp.id)
 
     def test_create_industry_epd(self):
-        new_iepd = IndustryEpd.parse_obj(
+        new_iepd = IndustryEpd.model_validate(
             {
                 "name": "Test IEPD name",
                 "product_classes": {"EC3": "Steel"},

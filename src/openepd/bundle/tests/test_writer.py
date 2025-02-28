@@ -53,7 +53,7 @@ class DefaultBundleReaderTestCase(unittest.TestCase):
             open(SRC_DATA / "test-pcr.pdf", "rb") as pcr_pdf_file,
             open(SRC_DATA / "extraction-report.txt", "rb") as report_file,
         ):
-            pcr_obj = Pcr.parse_raw(pcr_file.read())
+            pcr_obj = Pcr.model_validate_json(pcr_file.read())
             pcr_asset = writer.write_object_asset(pcr_obj)
             writer.write_blob_asset(pcr_pdf_file, "application/pdf", pcr_asset, RelType.Pdf)
             writer.write_blob_asset(report_file, "text/plain", pcr_asset, "report")
@@ -71,13 +71,27 @@ class DefaultBundleReaderTestCase(unittest.TestCase):
             open(SRC_DATA / "test-pcr.pdf", "rb") as pcr_pdf_file,
             open(SRC_DATA / "extraction-report.txt", "rb") as report_file,
         ):
-            pcr_obj = Pcr.parse_raw(pcr_file.read())
+            pcr_obj = Pcr.model_validate_json(pcr_file.read())
             pcr_asset = writer.write_object_asset(
-                pcr_obj, file_name="original-pcr.json", lang="en", comment="My comment", name="Original PCR"
+                pcr_obj,
+                file_name="original-pcr.json",
+                lang="en",
+                comment="My comment",
+                name="Original PCR",
             )
-            writer.write_blob_asset(pcr_pdf_file, "application/pdf", pcr_asset, RelType.Pdf, file_name="pcr.pdf")
             writer.write_blob_asset(
-                report_file, "text/plain", pcr_asset, "report", file_name="ec3-extraction-report.txt"
+                pcr_pdf_file,
+                "application/pdf",
+                pcr_asset,
+                RelType.Pdf,
+                file_name="pcr.pdf",
+            )
+            writer.write_blob_asset(
+                report_file,
+                "text/plain",
+                pcr_asset,
+                "report",
+                file_name="ec3-extraction-report.txt",
             )
         with self.__create_reader(file_name) as reader:
             self.assertEqual(1, len(list(reader.root_assets_iter())))

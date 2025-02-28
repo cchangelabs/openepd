@@ -21,12 +21,12 @@ __all__ = (
     "AluminiumRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import AluminiumAlloy
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class AluminiumBilletsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -51,7 +51,7 @@ class AluminiumExtrusionsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thermally_improved: bool | None = pyd.Field(default=None, description="")
+    thermally_improved: bool | None = pydantic.Field(default=None, description="")
 
 
 class AluminiumSheetGoodsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -83,9 +83,9 @@ class AluminiumRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    alloy: list[AluminiumAlloy] | None = pyd.Field(default=None, description="")
-    anodized: bool | None = pyd.Field(default=None, description="")
-    painted: bool | None = pyd.Field(default=None, description="")
+    alloy: list[AluminiumAlloy] | None = pydantic.Field(default=None, description="")
+    anodized: bool | None = pydantic.Field(default=None, description="")
+    painted: bool | None = pydantic.Field(default=None, description="")
     AluminiumBillets: AluminiumBilletsRangeV1 | None = None
     AluminiumExtrusions: AluminiumExtrusionsRangeV1 | None = None
     AluminiumSheetGoods: AluminiumSheetGoodsRangeV1 | None = None

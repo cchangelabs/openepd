@@ -16,7 +16,10 @@
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, Callable, ClassVar
 
-from openepd.compat.pydantic import pyd
+import pydantic
+from pydantic import ConfigDict
+import pydantic_core
+
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Amount, OpenEPDUnit, RangeAmount
 
@@ -113,7 +116,9 @@ def validate_unit_factory(dimensionality: OpenEPDUnit | str) -> "QuantityValidat
     return validator
 
 
-def validate_quantity_unit_factory(dimensionality: OpenEPDUnit | str) -> "QuantityValidatorType":
+def validate_quantity_unit_factory(
+    dimensionality: OpenEPDUnit | str,
+) -> "QuantityValidatorType":
     """Create validator for quantity field to check unit matching."""
 
     def validator(cls: type | None, value: str) -> str:
@@ -162,17 +167,32 @@ class QuantityStr(str):
     unit: ClassVar[str]
 
     @classmethod
-    def __get_validators__(cls):
-        unit = getattr(cls, "unit", None)
-        if unit:
-            yield validate_quantity_unit_factory(cls.unit)
-            yield validate_quantity_ge_factory(f"0 {cls.unit}")
+    def _validate(cls, value: str) -> str:
+        value = validate_quantity_unit_factory(cls.unit)(cls, value)
+        value = validate_quantity_ge_factory(f"0 {cls.unit}")(cls, value)
+        return value
 
     @classmethod
-    def __modify_schema__(cls, field_schema):
-        field_schema.update(
-            example=f"1 {cls.unit}",
+    def __get_pydantic_core_schema__(
+        cls, source: type[Any], handler: pydantic.GetCoreSchemaHandler
+    ) -> pydantic_core.core_schema.CoreSchema:
+        return pydantic_core.core_schema.no_info_after_validator_function(
+            cls._validate,
+            pydantic_core.core_schema.str_schema(),
+            serialization=pydantic_core.core_schema.plain_serializer_function_ser_schema(
+                lambda x: x,
+                info_arg=False,
+                return_schema=pydantic_core.core_schema.str_schema(),
+            ),
         )
+
+    @classmethod
+    def __get_pydantic_json_schema__(cls, core_schema, handler):
+        schema = handler(core_schema)
+        schema.update(
+            examples=[f"1 {cls.unit}"],
+        )
+        return schema
 
 
 class PressureMPaStr(QuantityStr):
@@ -205,10 +225,12 @@ class LengthMmStr(QuantityStr):
     unit = OpenEPDUnit.m
 
     @classmethod
-    def __modify_schema__(cls, field_schema):
-        field_schema.update(
-            example="6 mm",
+    def __get_pydantic_json_schema__(cls, core_schema, handler):
+        schema = handler(core_schema)
+        schema.update(
+            examples=["6 mm"],
         )
+        return schema
 
 
 class LengthInchStr(QuantityStr):
@@ -217,10 +239,12 @@ class LengthInchStr(QuantityStr):
     unit = "inch"
 
     @classmethod
-    def __modify_schema__(cls, field_schema):
-        field_schema.update(
-            example="2.5 inch",
+    def __get_pydantic_json_schema__(cls, core_schema, handler):
+        schema = handler(core_schema)
+        schema.update(
+            examples=["2.5 inch"],
         )
+        return schema
 
 
 class TemperatureCStr(QuantityStr):
@@ -356,26 +380,30 @@ class WithDimensionalityMixin(BaseOpenEpdSchema):
 
     # Unit for dimensionality to validate against, for example "kg"
 
-    @pyd.root_validator
+    @pydantic.model_validator(mode="before")
     def check_dimensionality_matches(cls, values: dict[str, Any]) -> dict[str, Any]:
         """Check that this amount conforms to the same dimensionality as dimensionality_unit."""
         if not cls.dimensionality_unit:
             return values
 
-        validate_unit_factory(cls.dimensionality_unit)(BaseOpenEpdSchema, values.get("unit"))  # type:ignore [arg-type]
+        validate_unit_factory(cls.dimensionality_unit)(BaseOpenEpdSchema, values.get("unit"))  # type: ignore[arg-type]
         return values
 
 
 class AmountRangeWithDimensionality(RangeAmount, WithDimensionalityMixin):
     """Mass amount, range."""
 
-    class Config:
-        """Pydantic config."""
-
-        @staticmethod
-        def schema_extra(schema: dict[str, Any], model: type["AmountRangeWithDimensionality"]) -> None:
-            """Modify json schema."""
-            schema["example"] = {"min": 1.2, "max": 3.4, "unit": str(model.dimensionality_unit) or None}
+    model_config = ConfigDict(
+        json_schema_extra=lambda schema, model: schema.update(
+            {
+                "example": {
+                    "min": 1.2,
+                    "max": 3.4,
+                    "unit": str(model.dimensionality_unit) or None,
+                }
+            }
+        )
+    )
 
 
 class WithMassKgMixin(WithDimensionalityMixin):
