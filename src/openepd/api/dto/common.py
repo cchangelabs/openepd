@@ -15,12 +15,14 @@
 #
 import abc
 import datetime
-from typing import Final, Generic, TypeAlias, TypeVar
+from typing import ClassVar, Final, Generic, TypeAlias, TypeVar
+
+import pydantic
+from pydantic import ConfigDict
 
 from openepd.api.dto.base import BaseMetaDto, BaseOpenEpdApiModel, MetaExtensionBase
 from openepd.api.dto.meta import PerformanceMetaMixin
-from openepd.compat.pydantic import pyd, pyd_generics
-from openepd.model.base import AnySerializable, BaseOpenEpdSchema
+from openepd.model.base import AnySerializable
 
 DEFAULT_PAGE_SIZE: Final[int] = 100
 MAX_PAGE_SIZE: Final[int] = 250
@@ -29,25 +31,25 @@ MAX_PAGE_SIZE: Final[int] = 250
 class AuditableDto(BaseOpenEpdApiModel, metaclass=abc.ABCMeta):
     """Base class for all DTOs that hold audit information."""
 
-    created_by: str = pyd.Field(
+    created_by: str = pydantic.Field(
         title="Created By",
-        example="johnsmith@cqd.io",
+        examples=["johnsmith@cqd.io"],
         description="User's email or script name that created this list.",
     )
-    updated_by: str = pyd.Field(
+    updated_by: str = pydantic.Field(
         title="Updated By",
-        example="bobbuilder@buildingtransparency.org",
+        examples=["bobbuilder@buildingtransparency.org"],
         description="User's email or script name that updated this list last time.",
     )
-    created_on: datetime.datetime = pyd.Field(
+    created_on: datetime.datetime = pydantic.Field(
         title="Created On",
-        example="2019-06-13T13:17:09+00:00",
+        examples=["2019-06-13T13:17:09+00:00"],
         description="A timestamp when this object has been created "
         "in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.",
     )
-    updated_on: datetime.datetime = pyd.Field(
+    updated_on: datetime.datetime = pydantic.Field(
         title="Updated On",
-        example="2020-07-13T13:17:09+00:00",
+        examples=["2020-07-13T13:17:09+00:00"],
         description="A timestamp when this object has been updated last time "
         "in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.",
     )
@@ -59,7 +61,7 @@ TMetaDto = TypeVar("TMetaDto", bound=BaseMetaDto)
 TMetaExtension = TypeVar("TMetaExtension", bound=MetaExtensionBase)
 
 
-class MetaCollectionDto(BaseOpenEpdApiModel, pyd_generics.GenericModel, Generic[TMetaExtension]):
+class MetaCollectionDto(BaseOpenEpdApiModel, Generic[TMetaExtension]):
     """
     This class is intended to be used as a container for different meta objects.
 
@@ -86,13 +88,19 @@ class MetaCollectionDto(BaseOpenEpdApiModel, pyd_generics.GenericModel, Generic[
 
     ext: TMetaExtension | None = None
 
-    class Config(BaseOpenEpdSchema.Config):
-        schema_extra = {
+    model_config: ClassVar[ConfigDict] = ConfigDict(
+        json_schema_extra={
             "description": "Base structure of the response meta section",
         }
+    )
 
 
-class BaseMeta(PerformanceMetaMixin, MetaCollectionDto[TMetaExtension], Generic[TMetaExtension], metaclass=abc.ABCMeta):
+class BaseMeta(
+    PerformanceMetaMixin,
+    MetaCollectionDto[TMetaExtension],
+    Generic[TMetaExtension],
+    metaclass=abc.ABCMeta,
+):
     """Base class for creating meta objects specific to a controller."""
 
     pass
@@ -101,7 +109,7 @@ class BaseMeta(PerformanceMetaMixin, MetaCollectionDto[TMetaExtension], Generic[
 TMeta = TypeVar("TMeta", bound=MetaCollectionDto, covariant=True)
 
 
-class OpenEpdApiResponse(pyd_generics.GenericModel, BaseOpenEpdApiModel, Generic[TPayload, TMeta]):
+class OpenEpdApiResponse(BaseOpenEpdApiModel, Generic[TPayload, TMeta]):
     """Standard DTO representing response from OpenEPD API server."""
 
     payload: TPayload

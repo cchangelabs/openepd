@@ -1,3 +1,8 @@
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+exclude = [".*pyi"]
+
 [tool.poetry]
 name = "openepd"
 version = "6.13.2"

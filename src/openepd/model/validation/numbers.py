@@ -13,16 +13,3 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-
-
-# todo when move to pydantic 2, these should change to Annotated[float, ...]
-class RatioFloat(float):
-    """Float representing a ratio (0-1)."""
-
-    pass
-
-
-class PositiveInt(int):
-    """Greater than zero integer."""
-
-    pass

@@ -44,10 +44,8 @@ __all__ = (
     "OpeningsRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeInt, RangeRatioFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
@@ -65,6 +63,8 @@ from openepd.model.validation.quantity import (
     AmountRangeSpeed,
     AmountRangeUFactor,
 )
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class PanelDoorsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -137,8 +137,8 @@ class FenestrationFramingRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thermal_separation: list[ThermalSeparation] | None = pyd.Field(default=None)
-    material: list[FrameMaterial] | None = pyd.Field(default=None)
+    thermal_separation: list[ThermalSeparation] | None = pydantic.Field(default=None)
+    material: list[FrameMaterial] | None = pydantic.Field(default=None)
 
 
 class FenestrationHardwareRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -150,7 +150,7 @@ class FenestrationHardwareRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    function: list[HardwareFunction] | None = pyd.Field(default=None, description="")
+    function: list[HardwareFunction] | None = pydantic.Field(default=None, description="")
 
 
 class FlatGlassPanesRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -162,7 +162,7 @@ class FlatGlassPanesRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thickness: list[FlatGlassPanesThickness] | None = pyd.Field(default=None)
+    thickness: list[FlatGlassPanesThickness] | None = pydantic.Field(default=None)
 
 
 class ProcessedNonInsulatingGlassPanesRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -289,7 +289,7 @@ class FenestrationPartsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    intended_application: GlazingIntendedApplication | None = pyd.Field(
+    intended_application: GlazingIntendedApplication | None = pydantic.Field(
         default=None, description="Intended application."
     )
     FenestrationAccessories: FenestrationAccessoriesRangeV1 | None = None
@@ -330,25 +330,28 @@ class NAFSFenestrationRangeV1(BaseOpenEpdHierarchicalSpec):
     pyrolytic_coated: bool | None = None
     sputter_coat: bool | None = None
     solar_heat_gain: RangeRatioFloat | None = None
-    hurricane_resistant: bool | None = pyd.Field(
-        default=None, description="The product has been designed to resist windborne debris."
+    hurricane_resistant: bool | None = pydantic.Field(
+        default=None,
+        description="The product has been designed to resist windborne debris.",
     )
-    assembly_u_factor: AmountRangeUFactor | None = pyd.Field(
-        default=None, description="Weighted average conductance of heat across assembly (including frame)."
+    assembly_u_factor: AmountRangeUFactor | None = pydantic.Field(
+        default=None,
+        description="Weighted average conductance of heat across assembly (including frame).",
     )
-    air_infiltration: AmountRangeSpeed | None = pyd.Field(
-        default=None, description="Air infiltration, measured at a certain level of Differential Pressure."
+    air_infiltration: AmountRangeSpeed | None = pydantic.Field(
+        default=None,
+        description="Air infiltration, measured at a certain level of Differential Pressure.",
     )
-    thermal_separation: list[ThermalSeparation] | None = pyd.Field(default=None)
-    dp_rating: AmountRangePressureMpa | None = pyd.Field(default=None, description="")
-    glass_panes: RangeInt | None = pyd.Field(
+    thermal_separation: list[ThermalSeparation] | None = pydantic.Field(default=None)
+    dp_rating: AmountRangePressureMpa | None = pydantic.Field(default=None, description="")
+    glass_panes: RangeInt | None = pydantic.Field(
         default=None,
         description="Number of panes, each separated by a cavity. A 3 pane unit has 2 cavities. example: 3",
     )
-    performance_class: NAFSPerformanceClass | None = pyd.Field(
+    performance_class: NAFSPerformanceClass | None = pydantic.Field(
         default=None, description="Performance class according to NAFS."
     )
-    performance_grade: list[NAFSPerformanceGrade] | None = pyd.Field(
+    performance_grade: list[NAFSPerformanceGrade] | None = pydantic.Field(
         default=None,
         description="NAFS Performance Grade. The NAFS Performance Grade is a number that represents the performance of the glazing product. The higher the number, the better the performance. The NAFS Performance Grade is calculated using the NAFS Performance Class, the NAFS Performance Index, and the NAFS Performance Factor. While it is expressed as pressure, there are specific values which are allowed. The values are listed in the enum.",
     )
@@ -377,24 +380,26 @@ class InsulatingGlazingUnitsRangeV1(BaseOpenEpdHierarchicalSpec):
     pyrolytic_coated: bool | None = None
     sputter_coat: bool | None = None
     solar_heat_gain: RangeRatioFloat | None = None
-    intended_application: GlazingIntendedApplication | None = pyd.Field(
+    intended_application: GlazingIntendedApplication | None = pydantic.Field(
         default=None, description="Intended application for IGUs."
     )
-    hurricane_resistant: bool | None = pyd.Field(default=None)
-    dp_rating: AmountRangePressureMpa | None = pyd.Field(
-        default=None, description="Maximum Differential Pressure, a measure of wind tolerance."
+    hurricane_resistant: bool | None = pydantic.Field(default=None)
+    dp_rating: AmountRangePressureMpa | None = pydantic.Field(
+        default=None,
+        description="Maximum Differential Pressure, a measure of wind tolerance.",
     )
-    air_infiltration: AmountRangeSpeed | None = pyd.Field(
-        default=None, description="Air infiltration, measured at a certain level of Differential Pressure."
+    air_infiltration: AmountRangeSpeed | None = pydantic.Field(
+        default=None,
+        description="Air infiltration, measured at a certain level of Differential Pressure.",
     )
-    glass_panes: RangeInt | None = pyd.Field(
+    glass_panes: RangeInt | None = pydantic.Field(
         default=None,
         description="Number of panes, each separated by a cavity. A 3 pane unit has 2 cavities. example: 3",
     )
-    cog_u_factor: AmountRangeUFactor | None = pyd.Field(
+    cog_u_factor: AmountRangeUFactor | None = pydantic.Field(
         default=None, description="Conductance of heat at center of glass."
     )
-    spacer: list[Spacer] | None = pyd.Field(default=None, description="Spacer material for Integrated Glass Unit.")
+    spacer: list[Spacer] | None = pydantic.Field(default=None, description="Spacer material for Integrated Glass Unit.")
 
 
 class CurtainWallsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -422,8 +427,8 @@ class DoorsAndFramesRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    height: AmountRangeLengthMm | None = pyd.Field(default=None)
-    width: AmountRangeLengthMm | None = pyd.Field(default=None)
+    height: AmountRangeLengthMm | None = pydantic.Field(default=None)
+    width: AmountRangeLengthMm | None = pydantic.Field(default=None)
     IntegratedDoorsOpeningAssemblies: IntegratedDoorsOpeningAssembliesRangeV1 | None = None
     MetalDoorAndFrames: MetalDoorAndFramesRangeV1 | None = None
     SpecialtyDoorsAndFrames: SpecialtyDoorsAndFramesRangeV1 | None = None
@@ -509,7 +514,7 @@ class OpeningsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thickness: AmountRangeLengthMm | None = pyd.Field(default=None)
+    thickness: AmountRangeLengthMm | None = pydantic.Field(default=None)
     CurtainWalls: CurtainWallsRangeV1 | None = None
     DoorsAndFrames: DoorsAndFramesRangeV1 | None = None
     Entrances: EntrancesRangeV1 | None = None

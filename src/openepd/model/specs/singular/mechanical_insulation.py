@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import InsulatingMaterial, InsulationIntendedApplication
 from openepd.model.validation.quantity import LengthMmStr
@@ -29,9 +30,9 @@ class MechanicalInsulationV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    r_value: float | None = pyd.Field(default=None, description="", example=2.3)
-    material: InsulatingMaterial | None = pyd.Field(default=None, description="", example="Mineral Wool")
-    intended_application: list[InsulationIntendedApplication] | None = pyd.Field(
-        default=None, description="", example=["Wall & General"]
+    r_value: float | None = pydantic.Field(default=None, description="", examples=[2.3])
+    material: InsulatingMaterial | None = pydantic.Field(default=None, description="", examples=["Mineral Wool"])
+    intended_application: list[InsulationIntendedApplication] | None = pydantic.Field(
+        default=None, description="", examples=[["Wall & General"]]
     )
-    thickness_per_declared_unit: LengthMmStr | None = pyd.Field(default=None, description="", example="20 mm")
+    thickness_per_declared_unit: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["20 mm"])

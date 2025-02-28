@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import AllFabrication, AllTimberSpecies
 from openepd.model.specs.singular.common import HasForestPracticesCertifiers
@@ -30,8 +31,20 @@ class WoodJoistsV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    timber_species: AllTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
-    fabrication: AllFabrication | None = pyd.Field(default=None, description="", example="LVL")
-    weather_exposed: bool | None = pyd.Field(default=None, description="", example=True)
-    fire_retardant: bool | None = pyd.Field(default=None, description="", example=True)
-    decay_resistant: bool | None = pyd.Field(default=None, description="", example=True)
+    timber_species: AllTimberSpecies | None = pydantic.Field(default=None, description="", examples=["Alaska Cedar"])
+    fabrication: AllFabrication | None = pydantic.Field(default=None, description="", examples=["LVL"])
+    weather_exposed: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    fire_retardant: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    decay_resistant: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )

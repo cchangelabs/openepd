@@ -17,7 +17,9 @@ import dataclasses
 from types import UnionType
 from typing import Any
 
-from openepd.compat.pydantic import pyd
+import pydantic
+from pydantic import ConfigDict
+
 from openepd.model.base import BaseOpenEpdSchema, Version
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
 from openepd.model.validation.quantity import ExternalValidationConfig, QuantityValidator
@@ -27,8 +29,7 @@ from openepd.model.versioning import WithExtVersionMixin
 class BaseOpenEpdSpec(BaseOpenEpdSchema):
     """Base class for all OpenEPD specs."""
 
-    class Config:
-        use_enum_values = False  # we need to store enums as strings and not values
+    model_config = ConfigDict(use_enum_values=False)
 
 
 class BaseOpenEpdHierarchicalSpec(BaseOpenEpdSpec, WithExtVersionMixin):
@@ -42,12 +43,13 @@ class BaseOpenEpdHierarchicalSpec(BaseOpenEpdSpec, WithExtVersionMixin):
         Version.parse_version(self._EXT_VERSION)  # validate format correctness
         super().__init__(**{"ext_version": self._EXT_VERSION, **data})
 
-    _version_format_validator = pyd.validator("ext_version", allow_reuse=True, check_fields=False)(
-        validate_version_format
-    )
-    _version_major_match_validator = pyd.validator("ext_version", allow_reuse=True, check_fields=False)(
-        validate_version_compatibility("_EXT_VERSION")
-    )
+    @pydantic.field_validator("ext_version", mode="before")
+    def _version_format_validator(cls, v: str) -> str:
+        return validate_version_format(v)
+
+    @pydantic.field_validator("ext_version", mode="before")
+    def _version_major_match_validator(cls, v: str) -> str:
+        return validate_version_compatibility("_EXT_VERSION")(cls, v)  # type: ignore[arg-type]
 
 
 def setup_external_validators(quantity_validator: QuantityValidator):

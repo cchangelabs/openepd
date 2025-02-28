@@ -16,18 +16,23 @@
 from enum import StrEnum
 from typing import Annotated, Any
 
-from openepd.compat.pydantic import pyd
+import pydantic
+import pydantic_core
+
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.validation.numbers import RatioFloat
 
 
 class Amount(BaseOpenEpdSchema):
     """A value-and-unit pairing for amounts that do not have an uncertainty."""
 
-    qty: float | None = pyd.Field(description="How much of this in the amount.", ge=0, default=None)
-    unit: str | None = pyd.Field(description="Which unit.  SI units are preferred.", example="kg", default=None)
+    qty: float | None = pydantic.Field(description="How much of this in the amount.", ge=0, default=None)
+    unit: str | None = pydantic.Field(
+        description="Which unit.  SI units are preferred.",
+        examples=["kg"],
+        default=None,
+    )
 
-    @pyd.root_validator
+    @pydantic.model_validator(mode="before")
     def check_qty_or_unit(cls, values: dict[str, Any]):
         """Ensure that qty or unit is provided."""
         if values.get("qty") is None and values.get("unit") is None:
@@ -68,12 +73,13 @@ class Distribution(StrEnum):
 class Measurement(BaseOpenEpdSchema):
     """A scientific value with units and uncertainty."""
 
-    mean: float = pyd.Field(description="Mean (expected) value of the measurement")
-    unit: str | None = pyd.Field(description="Measurement unit")
-    rsd: pyd.PositiveFloat | None = pyd.Field(
-        description="Relative standard deviation, i.e. standard_deviation/mean", default=None
+    mean: float = pydantic.Field(description="Mean (expected) value of the measurement")
+    unit: str | None = pydantic.Field(description="Measurement unit")
+    rsd: pydantic.PositiveFloat | None = pydantic.Field(
+        description="Relative standard deviation, i.e. standard_deviation/mean",
+        default=None,
     )
-    dist: Distribution | None = pyd.Field(
+    dist: Distribution | None = pydantic.Field(
         description="Statistical distribution of the measurement error.", default=None
     )
 
@@ -98,26 +104,29 @@ class Ingredient(BaseOpenEpdSchema):
     gwp_fraction, citation and evidence_type.
     """
 
-    qty: float | None = pyd.Field(
-        description="Number of declared units of this consumed. Negative values indicate an outflow."
+    qty: float | None = pydantic.Field(
+        description="Number of declared units of this consumed. Negative values indicate an outflow.",
+        default=None,
     )
-    link: pyd.AnyUrl | None = pyd.Field(
-        description="Link to this object's OpenEPD declaration. "
-        "An OpenIndustryEPD or OpenLCI link is also acceptable.",
+    link: pydantic.AnyUrl | None = pydantic.Field(
+        description="Link to this object's OpenEPD declaration. An OpenIndustryEPD or OpenLCI link is also acceptable.",
         default=None,
     )
 
-    gwp_fraction: RatioFloat | None = pyd.Field(
+    gwp_fraction: float | None = pydantic.Field(
         default=None,
         description="Fraction of product's A1-A3 GWP this flow represents.  This value, along with the specificity of "
         "the reference, are used to caclulate supply chain specificity.",
+        ge=0,
+        le=1,
     )
-    evidence_type: IngredientEvidenceTypeEnum | None = pyd.Field(
-        default=None, description="Type of evidence used, which can be used to calculate degree of specificity"
+    evidence_type: IngredientEvidenceTypeEnum | None = pydantic.Field(
+        default=None,
+        description="Type of evidence used, which can be used to calculate degree of specificity",
     )
-    citation: str | None = pyd.Field(default=None, description="Text citation describing the data source ")
+    citation: str | None = pydantic.Field(default=None, description="Text citation describing the data source ")
 
-    @pyd.root_validator(skip_on_failure=True)
+    @pydantic.model_validator(mode="before")
     def _validate_evidence(cls, values: dict[str, Any]) -> dict[str, Any]:
         # gwp_fraction should be backed by some type of evidence (fraction coming from product EPD etc) to be accounted
         # for in the calculation of uncertainty
@@ -133,19 +142,20 @@ class Ingredient(BaseOpenEpdSchema):
 class LatLng(BaseOpenEpdSchema):
     """A latitude and longitude."""
 
-    lat: float = pyd.Field(description="Latitude", example=47.6062)
-    lng: float = pyd.Field(description="Longitude", example=-122.3321)
+    lat: float = pydantic.Field(description="Latitude", examples=[47.6062])
+    lng: float = pydantic.Field(description="Longitude", examples=[-122.3321])
 
 
 class Location(BaseOpenEpdSchema):
     """A location on the Earth's surface."""
 
-    pluscode: str | None = pyd.Field(default=None, description="Open Location code of this location")
-    latlng: LatLng | None = pyd.Field(default=None, description="Latitude and longitude of this location")
-    address: str | None = pyd.Field(default=None, description="Text address, preferably geocoded")
-    country: str | None = pyd.Field(default=None, description="2-alpha country code")
-    jurisdiction: str | None = pyd.Field(
-        default=None, description="Province, State, or similar subdivision below the level of a country"
+    pluscode: str | None = pydantic.Field(default=None, description="Open Location code of this location")
+    latlng: LatLng | None = pydantic.Field(default=None, description="Latitude and longitude of this location")
+    address: str | None = pydantic.Field(default=None, description="Text address, preferably geocoded")
+    country: str | None = pydantic.Field(default=None, description="2-alpha country code")
+    jurisdiction: str | None = pydantic.Field(
+        default=None,
+        description="Province, State, or similar subdivision below the level of a country",
     )
 
 
@@ -173,36 +183,69 @@ ATTACHMENT_KNOWN_KEYS: dict[str, str] = {
 }
 
 
-class AttachmentDict(dict[str, pyd.AnyUrl]):
+class AttachmentDict(dict[str, pydantic.AnyUrl]):
     """Special form of dict for attachments."""
 
     @classmethod
-    def __modify_schema__(cls, field_schema: dict[str, Any], field: pyd.fields.ModelField | None):
-        # This may be generalized later to combine, for example, enum descriptions and field descriptions to provide
-        # a better result.
-        field_description = field.field_info.description if field else ""
+    def __get_pydantic_core_schema__(
+        cls, source: type[Any], handler: pydantic.GetCoreSchemaHandler
+    ) -> pydantic_core.core_schema.CoreSchema:
+        return pydantic_core.core_schema.no_info_after_validator_function(
+            cls._validate,
+            pydantic_core.core_schema.dict_schema(),
+            serialization=pydantic_core.core_schema.plain_serializer_function_ser_schema(
+                cls._serialize,
+                info_arg=False,
+                return_schema=pydantic_core.core_schema.dict_schema(),
+            ),
+        )
+
+    @classmethod
+    def _validate(cls, value: Any) -> "AttachmentDict":
+        # Ensure the input is a dict.
+        if not isinstance(value, dict):
+            raise TypeError("AttachmentDict must be a dict")
+
+        return cls(value)
+
+    @classmethod
+    def _serialize(cls, value: "AttachmentDict") -> dict[str, Any]:
+        # Serialize each AnyUrl value to its string representation.
+        return {k: str(v) for k, v in value.items()}
+
+    @classmethod
+    def __get_pydantic_json_schema__(cls, core_schema: dict[str, Any], handler: Any) -> dict[str, Any]:
+        # Obtain the default schema using the handler.
+        schema = handler(core_schema)
+
+        # Get the description from the default schema (if any)
+        field_description = schema.get("description", "")
         if field_description:
             field_description = field_description.strip()
             if not field_description.endswith("."):
                 field_description += "."
             field_description += " "
 
-        field_schema["description"] = field_description + "Extra properties of string -> URL allowed."
-        field_schema["properties"] = {
+        # Update the schema with our custom description and properties.
+        schema["description"] = field_description + "Extra properties of string -> URL allowed."
+        schema["properties"] = {
             k: {"type": "string", "format": "uri", "description": v} for k, v in ATTACHMENT_KNOWN_KEYS.items()
         }
-        field_schema["additionalProperties"] = True
+        schema["additionalProperties"] = True
+        return schema
 
 
-class WithAttachmentsMixin(pyd.BaseModel):
+class WithAttachmentsMixin(pydantic.BaseModel):
     """Mixin for objects that can have attachments."""
 
-    attachments: AttachmentDict = pyd.Field(
+    attachments: AttachmentDict | None = pydantic.Field(
         description="Dict of URLs relevant to this entry",
-        example={
-            "Contact Us": "https://www.c-change-labs.com/en/contact-us/",
-            "LinkedIn": "https://www.linkedin.com/company/c-change-labs/",
-        },
+        examples=[
+            {
+                "Contact Us": "https://www.c-change-labs.com/en/contact-us/",
+                "LinkedIn": "https://www.linkedin.com/company/c-change-labs/",
+            }
+        ],
         default=None,
     )
 
@@ -218,14 +261,16 @@ class WithAttachmentsMixin(pyd.BaseModel):
             self.set_attachment(name, url)
 
 
-class WithAltIdsMixin(pyd.BaseModel):
+class WithAltIdsMixin(pydantic.BaseModel):
     """Mixin for objects that can have alt_ids."""
 
-    alt_ids: dict[Annotated[str, pyd.Field(max_length=200)], str] | None = pyd.Field(
+    alt_ids: dict[Annotated[str, pydantic.Field(max_length=200)], str] | None = pydantic.Field(
         description="Dict identifiers for this entry.",
-        example={
-            "oekobau.dat": "bdda4364-451f-4df2-a68b-5912469ee4c9",
-        },
+        examples=[
+            {
+                "oekobau.dat": "bdda4364-451f-4df2-a68b-5912469ee4c9",
+            }
+        ],
         default=None,
     )
 
@@ -262,7 +307,7 @@ class OpenEPDUnit(StrEnum):
 class RangeBase(BaseOpenEpdSchema):
     """Base class for range types having min and max and order between them."""
 
-    @pyd.root_validator
+    @pydantic.model_validator(mode="before")
     def _validate_range_bounds(cls, values: dict[str, Any]) -> dict[str, Any]:
         min_boundary = values.get("min")
         max_boundary = values.get("max")
@@ -274,28 +319,28 @@ class RangeBase(BaseOpenEpdSchema):
 class RangeFloat(RangeBase):
     """Structure representing a range of floats."""
 
-    min: float | None = pyd.Field(default=None, example=3.1)
-    max: float | None = pyd.Field(default=None, example=5.8)
+    min: float | None = pydantic.Field(default=None, examples=[3.1])
+    max: float | None = pydantic.Field(default=None, examples=[5.8])
 
 
 class RangeInt(RangeBase):
     """Structure representing a range of ints1."""
 
-    min: int | None = pyd.Field(default=None, example=2)
-    max: int | None = pyd.Field(default=None, example=3)
+    min: int | None = pydantic.Field(default=None, examples=[2])
+    max: int | None = pydantic.Field(default=None, examples=[3])
 
 
 class RangeRatioFloat(RangeFloat):
     """Range of ratios (0-1 to 0-10)."""
 
-    min: float | None = pyd.Field(default=None, example=0.2, ge=0, le=1)
-    max: float | None = pyd.Field(default=None, example=0.65, ge=0, le=1)
+    min: float | None = pydantic.Field(default=None, examples=[0.2], ge=0, le=1)
+    max: float | None = pydantic.Field(default=None, examples=[0.65], ge=0, le=1)
 
 
 class RangeAmount(RangeFloat):
     """Structure representing a range of quantities."""
 
-    unit: str | None = pyd.Field(default=None, description="Unit of the range.")
+    unit: str | None = pydantic.Field(default=None, description="Unit of the range.")
 
 
 class EnumGroupingAware:

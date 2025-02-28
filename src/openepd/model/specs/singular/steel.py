@@ -15,12 +15,12 @@
 #
 from typing import Annotated
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec, CodegenSpec
 from openepd.model.specs.enums import SteelComposition, SteelRebarGrade
 from openepd.model.standard import Standard
-from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import (
     LengthMmStr,
     PressureMPaStr,
@@ -33,15 +33,19 @@ from openepd.model.validation.quantity import (
 class SteelMakingRoute(BaseOpenEpdSchema):
     """Steel making route."""
 
-    bof: bool | None = pyd.Field(default=None, description="Basic oxygen furnace")
-    eaf: bool | None = pyd.Field(default=None, description="Electric arc furnace")
-    ohf: bool | None = pyd.Field(default=None, description="Open hearth furnace")
+    bof: bool | None = pydantic.Field(default=None, description="Basic oxygen furnace")
+    eaf: bool | None = pydantic.Field(default=None, description="Electric arc furnace")
+    ohf: bool | None = pydantic.Field(default=None, description="Open hearth furnace")
 
 
 class SteelFabricatedMixin(BaseOpenEpdSpec):
     """Class with fabricated property used in different parts of steel hierarchy."""
 
-    fabricated: bool | None = pyd.Field(default=None, description="", example=True)
+    fabricated: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
 
 
 class ColdFormedFramingV1(BaseOpenEpdHierarchicalSpec):
@@ -176,28 +180,29 @@ class StructuralSteelV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    modulus_of_elasticity: PressureMPaStr | None = pyd.Field(
+    modulus_of_elasticity: PressureMPaStr | None = pydantic.Field(
         default=None,
         description="Modulus of Elasticity, https://en.wikipedia.org/wiki/Elastic_modulus ",
-        example="193 GPa",
+        examples=["193 GPa"],
     )
-    thermal_expansion: ThermalExpansionStr | None = pyd.Field(
+    thermal_expansion: ThermalExpansionStr | None = pydantic.Field(
         default=None,
         description="Thermal Expansion, https://en.wikipedia.org/wiki/Thermal_expansion",
-        example="1.11E-5 / K",
+        examples=["1.11E-5 / K"],
     )
-    thermal_conductivity: ThermalConductivityStr | None = pyd.Field(
+    thermal_conductivity: ThermalConductivityStr | None = pydantic.Field(
         default=None,
         description="Thermal Conductivity, https://en.wikipedia.org/wiki/Thermal_conductivity_and_resistivity",
-        example="1.45E-5 W / m / K)",
+        examples=["1.45E-5 W / m / K)"],
     )
 
-    _steel_thermal_expansion_is_quantity_validator = pyd.validator("thermal_expansion", allow_reuse=True)(
-        validate_quantity_unit_factory("1 / K")
-    )
-    _steel_thermal_conductivity_is_quantity_validator = pyd.validator("thermal_conductivity", allow_reuse=True)(
-        validate_quantity_unit_factory("W / (m * K)")
-    )
+    @pydantic.field_validator("thermal_expansion")
+    def _steel_thermal_expansion_is_quantity_validator(cls, value):
+        return validate_quantity_unit_factory("1 / K")(cls, value)
+
+    @pydantic.field_validator("thermal_conductivity")
+    def _steel_thermal_conductivity_is_quantity_validator(cls, value):
+        return validate_quantity_unit_factory("W / (m * K)")(cls, value)
 
     # Nested specs:
     HollowSections: HollowSectionsV1 | None = None
@@ -229,13 +234,18 @@ class RebarSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    grade: SteelRebarGrade | None = pyd.Field(default=None, example="60 ksi")
-    diameter_min: LengthMmStr | None = pyd.Field(default=None, description="Minimal diameter", example="8 mm")
-    bending_pin_max: float | None = pyd.Field(default=None, example=2.3)
-    ts_ys_ratio_max: float | None = pyd.Field(
-        default=None, description="Max ratio of ultimate tensile to yield tensile strength", example=2.3
+    grade: SteelRebarGrade | None = pydantic.Field(default=None, examples=["60 ksi"])
+    diameter_min: LengthMmStr | None = pydantic.Field(default=None, description="Minimal diameter", examples=["8 mm"])
+    bending_pin_max: float | None = pydantic.Field(default=None, examples=[2.3])
+    ts_ys_ratio_max: float | None = pydantic.Field(
+        default=None,
+        description="Max ratio of ultimate tensile to yield tensile strength",
+        examples=[2.3],
     )
-    epoxy_coated: bool | None = pyd.Field(default=None, example=True)
+    epoxy_coated: bool | None = pydantic.Field(
+        default=None,
+        examples=[True],
+    )
 
 
 class WireMeshSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
@@ -256,42 +266,56 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.1"
 
     # Own fields:
-    yield_tensile_str: PressureMPaStr | None = pyd.Field(
+    yield_tensile_str: PressureMPaStr | None = pydantic.Field(
         default=None,
         description="Yield Tensile strength (Mpa) per unit area. Yield strength is the point at which a material "
         "begins to permanently deform or change shape due to applied stress.",
-        example="100 MPa",
+        examples=["100 MPa"],
     )
-    bar_elongation: float | None = pyd.Field(
-        default=None, description="Increase in length at break, in percent. Typically 10%-20%", example=0.2
+    bar_elongation: float | None = pydantic.Field(
+        default=None,
+        description="Increase in length at break, in percent. Typically 10%-20%",
+        examples=[0.2],
     )
-    recycled_content: RatioFloat | None = pyd.Field(default=None, description="", example=0.5, ge=0, le=1)
-    # todo look how to pass validation down to range fields
-    post_consumer_recycled_content: RatioFloat | None = pyd.Field(
+    recycled_content: float | None = pydantic.Field(default=None, description="", examples=[0.5], ge=0, le=1)
+    post_consumer_recycled_content: float | None = pydantic.Field(
         default=None,
         description="Should be a number between zero and the Recycled Content (steel_recycled_content)",
-        example=0.5,
+        examples=[0.5],
         ge=0,
         le=1,
     )
-    astm_marking: str | None = pyd.Field(
-        default=None, description="The marking to be expected on the product.", example="S4S60"
+    astm_marking: str | None = pydantic.Field(
+        default=None,
+        description="The marking to be expected on the product.",
+        examples=["S4S60"],
     )
-    euro_marking: str | None = pyd.Field(
-        default=None, description="The marking to be expected on the product.", example="S4S60"
+    euro_marking: str | None = pydantic.Field(
+        default=None,
+        description="The marking to be expected on the product.",
+        examples=["S4S60"],
     )
-    composition: SteelComposition | None = pyd.Field(
-        default=None, description="Basic chemical composition", example="Carbon"
+    composition: SteelComposition | None = pydantic.Field(
+        default=None, description="Basic chemical composition", examples=["Carbon"]
     )
-    cold_finished: bool | None = pyd.Field(default=None, example=True)
-    galvanized: bool | None = pyd.Field(default=None, example=True)
-    stainless: bool | None = pyd.Field(default=None, example=True)
-    making_route: Annotated[SteelMakingRoute | None, CodegenSpec(override_type=SteelMakingRoute)] = pyd.Field(
+    cold_finished: bool | None = pydantic.Field(
+        default=None,
+        examples=[True],
+    )
+    galvanized: bool | None = pydantic.Field(
+        default=None,
+        examples=[True],
+    )
+    stainless: bool | None = pydantic.Field(
+        default=None,
+        examples=[True],
+    )
+    making_route: Annotated[SteelMakingRoute | None, CodegenSpec(override_type=SteelMakingRoute)] = pydantic.Field(
         default=None
     )
-    astm_standards: list[Standard] | None = pyd.Field(default=None, description="List of ASTM standards")
-    sae_standards: list[Standard] | None = pyd.Field(default=None, description="List of SAE standards")
-    en_standards: list[Standard] | None = pyd.Field(default=None, description="List of EN standards")
+    astm_standards: list[Standard] | None = pydantic.Field(default=None, description="List of ASTM standards")
+    sae_standards: list[Standard] | None = pydantic.Field(default=None, description="List of SAE standards")
+    en_standards: list[Standard] | None = pydantic.Field(default=None, description="List of EN standards")
 
     # Nested specs:
     MBQSteel: MBQSteelV1 | None = None

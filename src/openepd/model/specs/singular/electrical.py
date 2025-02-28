@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CableTraysMaterial, EnergySource, RacewaysMaterial
 from openepd.model.specs.singular.mixins.conduit_mixin import ConduitMixin
@@ -61,14 +62,18 @@ class CableTraysV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    height: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
-    width: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
-    depth: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
-    static_load: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
-    ventilated: bool | None = pyd.Field(
-        default=None, description="At least 40% of the tray base is open to air flow", example=True
+    height: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["100 mm"])
+    width: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["100 mm"])
+    depth: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["100 mm"])
+    static_load: MassKgStr | None = pydantic.Field(default=None, description="", examples=["1 kg"])
+    ventilated: bool | None = pydantic.Field(
+        default=None,
+        description="At least 40% of the tray base is open to air flow",
+        examples=[True],
     )
-    cable_trays_material: CableTraysMaterial | None = pyd.Field(default=None, description="", example="Stainless Steel")
+    cable_trays_material: CableTraysMaterial | None = pydantic.Field(
+        default=None, description="", examples=["Stainless Steel"]
+    )
 
 
 class ElectricalBusesV1(BaseOpenEpdHierarchicalSpec):
@@ -104,11 +109,19 @@ class RacewaysV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    width: LengthMStr | None = pyd.Field(default=None, description="", example="100 mm")
-    depth: LengthMStr | None = pyd.Field(default=None, description="", example="100 mm")
-    painted: bool | None = pyd.Field(default=None, description="", example=True)
-    divided: bool | None = pyd.Field(default=None, description="", example=True)
-    raceways_material: RacewaysMaterial | None = pyd.Field(default=None, description="", example="Aluminum")
+    width: LengthMStr | None = pydantic.Field(default=None, description="", examples=["100 mm"])
+    depth: LengthMStr | None = pydantic.Field(default=None, description="", examples=["100 mm"])
+    painted: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    divided: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    raceways_material: RacewaysMaterial | None = pydantic.Field(default=None, description="", examples=["Aluminum"])
 
 
 class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
@@ -147,7 +160,7 @@ class ElectricityFromSpecificGeneratorV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    energy_source: EnergySource | None = pyd.Field(default=None, description="", example="Grid")
+    energy_source: EnergySource | None = pydantic.Field(default=None, description="", examples=["Grid"])
 
 
 class PowerPurchaseAgreementsV1(BaseOpenEpdHierarchicalSpec):
@@ -160,7 +173,7 @@ class PowerPurchaseAgreementsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    energy_source: EnergySource | None = pyd.Field(default=None, description="", example="Grid")
+    energy_source: EnergySource | None = pydantic.Field(default=None, description="", examples=["Grid"])
 
 
 class LightbulbsV1(BaseOpenEpdHierarchicalSpec):
@@ -255,33 +268,48 @@ class LightingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    color_temperature: ColorTemperatureStr | None = pyd.Field(default=None, description="", example="1 K")
-    typical_utilization: UtilizationStr | None = pyd.Field(default=None, description="", example="1 h / yr")
-    luminosity: LuminosityStr | None = pyd.Field(default=None, description="", example="1 lumen")
-    wattage: PowerStr | None = pyd.Field(default=None, description="")
-    color_rendering_index: float | None = pyd.Field(default=None, description="", example=2.3)
-    dimmable: bool | None = pyd.Field(default=None, description="", example=True)
+    color_temperature: ColorTemperatureStr | None = pydantic.Field(default=None, description="", examples=["1 K"])
+    typical_utilization: UtilizationStr | None = pydantic.Field(default=None, description="", examples=["1 h / yr"])
+    luminosity: LuminosityStr | None = pydantic.Field(default=None, description="", examples=["1 lumen"])
+    wattage: PowerStr | None = pydantic.Field(default=None, description="")
+    color_rendering_index: float | None = pydantic.Field(default=None, description="", examples=[2.3])
+    dimmable: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
 
-    _color_temperature_quantity_ge_validator = pyd.validator("color_temperature", allow_reuse=True)(
-        validate_quantity_ge_factory("1E+03 K")
-    )
-    _color_temperature_quantity_le_validator = pyd.validator("color_temperature", allow_reuse=True)(
-        validate_quantity_le_factory("1E+04 K")
-    )
-    _typical_utilization_unit_validator = pyd.validator("typical_utilization", allow_reuse=True)(
-        validate_quantity_unit_factory("h / yr")
-    )
-    _typical_utilization_quantity_ge_validator = pyd.validator("typical_utilization", allow_reuse=True)(
-        validate_quantity_ge_factory("25 h / yr")
-    )
-    _luminosity_quantity_ge_validator = pyd.validator("luminosity", allow_reuse=True)(
-        validate_quantity_ge_factory("450 lumen")
-    )
-    _luminosity_quantity_le_validator = pyd.validator("luminosity", allow_reuse=True)(
-        validate_quantity_le_factory("2.6E+03 lumen")
-    )
-    _wattage_quantity_ge_validator = pyd.validator("wattage", allow_reuse=True)(validate_quantity_ge_factory("5 W"))
-    _wattage_quantity_le_validator = pyd.validator("wattage", allow_reuse=True)(validate_quantity_le_factory("100 W"))
+    @pydantic.field_validator("color_temperature")
+    def _color_temperature_quantity_ge_validator(cls, value):
+        return validate_quantity_ge_factory("1E+03 K")(cls, value)
+
+    @pydantic.field_validator("color_temperature")
+    def _color_temperature_quantity_le_validator(cls, value):
+        return validate_quantity_le_factory("1E+04 K")(cls, value)
+
+    @pydantic.field_validator("typical_utilization")
+    def _typical_utilization_unit_validator(cls, value):
+        return validate_quantity_unit_factory("h / yr")(cls, value)
+
+    @pydantic.field_validator("typical_utilization")
+    def _typical_utilization_quantity_ge_validator(cls, value):
+        return validate_quantity_ge_factory("25 h / yr")(cls, value)
+
+    @pydantic.field_validator("luminosity")
+    def _luminosity_quantity_ge_validator(cls, value):
+        return validate_quantity_ge_factory("450 lumen")(cls, value)
+
+    @pydantic.field_validator("luminosity")
+    def _luminosity_quantity_le_validator(cls, value):
+        return validate_quantity_le_factory("2.6E+03 lumen")(cls, value)
+
+    @pydantic.field_validator("wattage")
+    def _wattage_quantity_ge_validator(cls, value):
+        return validate_quantity_ge_factory("5 W")(cls, value)
+
+    @pydantic.field_validator("wattage")
+    def _wattage_quantity_le_validator(cls, value):
+        return validate_quantity_le_factory("100 W")(cls, value)
 
     # Nested specs:
     Lightbulbs: LightbulbsV1 | None = None

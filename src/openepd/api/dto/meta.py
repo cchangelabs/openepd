@@ -13,8 +13,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+import pydantic
+
 from openepd.api.dto.base import BaseMetaDto, BaseOpenEpdApiModel
-from openepd.compat.pydantic import pyd
 
 
 class PerformanceMeta(BaseMetaDto):
@@ -32,30 +33,33 @@ class PerformanceMetaMixin(BaseMetaDto):
 class PagingMeta(BaseMetaDto):
     """Meta for paging information."""
 
-    total_count: int = pyd.Field(
-        title="Total results", example=1233, description="Total number of records for the search"
+    total_count: int = pydantic.Field(
+        title="Total results",
+        examples=[1233],
+        description="Total number of records for the search",
     )
-    total_pages: int = pyd.Field(title="Total pages", example=20, description="Total pages available")
-    page_size: int = pyd.Field(title="Page size", example=150, description="Number of records in page")
+    total_pages: int = pydantic.Field(title="Total pages", examples=[20], description="Total pages available")
+    page_size: int = pydantic.Field(title="Page size", examples=[150], description="Number of records in page")
 
 
 class PagingMetaMixin(BaseOpenEpdApiModel):
     """Mixin for adding paging meta to MetaCollection."""
 
-    paging: PagingMeta | None
+    paging: PagingMeta | None = pydantic.Field(default=None, description="Paging information")
 
 
 class WarningMessageDto(BaseOpenEpdApiModel):
     """DTO for warning messages."""
 
-    message: str = pyd.Field(
-        title="Warning message", example="Categories limited during search, see effective_omf in meta"
+    message: str = pydantic.Field(
+        title="Warning message",
+        examples=["Categories limited during search, see effective_omf in meta"],
     )
-    code: str = pyd.Field(title="Warning code", example="CATEGORIES_LIMITED")
-    field: str | None = pyd.Field(
+    code: str = pydantic.Field(title="Warning code", examples=["CATEGORIES_LIMITED"])
+    field: str | None = pydantic.Field(
         title="Field",
         description="Field to which the warning relates",
-        example="subcategories",
+        examples=["subcategories"],
     )
 
 

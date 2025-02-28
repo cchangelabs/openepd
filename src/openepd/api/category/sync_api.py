@@ -28,7 +28,7 @@ class CategoryApi(BaseApiMethodGroup):
         :return: categories tree wrapped in OpenEpdApiResponse
         """
         response = self._client.do_request("get", "/v2/categories/tree")
-        return CategoryTreeResponse.parse_raw(response.content)
+        return CategoryTreeResponse.model_validate(response.content)
 
     def get_tree(self) -> Category:
         """

@@ -35,13 +35,13 @@ __all__ = (
     "CladdingRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CladdingFacingMaterial, CladdingInsulatingMaterial, SidingFormFactor
 from openepd.model.validation.quantity import AmountRangeLengthMm, AmountRangeRValue
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class AluminiumSidingRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -127,7 +127,7 @@ class InsulatedVinylSidingRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
+    thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
 
 
 class PlywoodSidingRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -171,7 +171,7 @@ class VinylSidingRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
+    thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
 
 
 class SidingRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -185,11 +185,11 @@ class SidingRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    insulated: bool | None = pyd.Field(default=None, description="")
-    ventilated: bool | None = pyd.Field(default=None, description="")
-    paint_or_stain_required: bool | None = pyd.Field(default=None, description="")
-    r_value: AmountRangeRValue | None = pyd.Field(default=None, description="")
-    form_factor: list[SidingFormFactor] | None = pyd.Field(default=None, description="")
+    insulated: bool | None = pydantic.Field(default=None, description="")
+    ventilated: bool | None = pydantic.Field(default=None, description="")
+    paint_or_stain_required: bool | None = pydantic.Field(default=None, description="")
+    r_value: AmountRangeRValue | None = pydantic.Field(default=None, description="")
+    form_factor: list[SidingFormFactor] | None = pydantic.Field(default=None, description="")
     MetalSiding: MetalSidingRangeV1 | None = None
     CompositionSiding: CompositionSidingRangeV1 | None = None
     FiberCementSiding: FiberCementSidingRangeV1 | None = None
@@ -209,8 +209,8 @@ class InsulatedRoofPanelsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    r_value: AmountRangeRValue | None = pyd.Field(default=None, description="")
-    insulating_material: list[CladdingInsulatingMaterial] | None = pyd.Field(default=None, description="")
+    r_value: AmountRangeRValue | None = pydantic.Field(default=None, description="")
+    insulating_material: list[CladdingInsulatingMaterial] | None = pydantic.Field(default=None, description="")
 
 
 class InsulatedWallPanelsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -222,8 +222,8 @@ class InsulatedWallPanelsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    r_value: AmountRangeRValue | None = pyd.Field(default=None, description="")
-    insulating_material: list[CladdingInsulatingMaterial] | None = pyd.Field(default=None, description="")
+    r_value: AmountRangeRValue | None = pydantic.Field(default=None, description="")
+    insulating_material: list[CladdingInsulatingMaterial] | None = pydantic.Field(default=None, description="")
 
 
 class RoofPanelsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -265,8 +265,8 @@ class CladdingRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    facing_material: list[CladdingFacingMaterial] | None = pyd.Field(default=None, description="")
+    thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    facing_material: list[CladdingFacingMaterial] | None = pydantic.Field(default=None, description="")
     Siding: SidingRangeV1 | None = None
     InsulatedRoofPanels: InsulatedRoofPanelsRangeV1 | None = None
     InsulatedWallPanels: InsulatedWallPanelsRangeV1 | None = None

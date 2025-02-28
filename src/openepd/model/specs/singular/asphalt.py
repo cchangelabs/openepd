@@ -15,10 +15,10 @@
 #
 from typing import Annotated
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.enums import AsphaltGradation, AsphaltMixType
-from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import LengthMmStr, TemperatureCStr
 
 
@@ -28,47 +28,71 @@ class AsphaltV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    aggregate_size_max: LengthMmStr | None = pyd.Field(default=None, description="Max aggregate size", example="20 mm")
-    rap: RatioFloat | None = pyd.Field(
+    aggregate_size_max: LengthMmStr | None = pydantic.Field(
+        default=None, description="Max aggregate size", examples=["20 mm"]
+    )
+    rap: float | None = pydantic.Field(
         default=None,
         description="Percent of mixture that has been replaced by recycled asphalt pavement (RAP).",
-        example=0.5,
+        examples=[0.5],
         ge=0,
         le=1,
     )
-    ras: RatioFloat | None = pyd.Field(
+    ras: float | None = pydantic.Field(
         default=None,
         description="Percent of mixture that has been replaced by recycled asphalt shingles (RAS).",
-        example=0.5,
+        examples=[0.5],
         ge=0,
         le=1,
     )
-    ground_tire_rubber: RatioFloat | None = pyd.Field(
+    ground_tire_rubber: float | None = pydantic.Field(
         default=None,
         description="Percent of mixture that has been replaced by ground tire rubber (GTR).",
-        example=0.5,
+        examples=[0.5],
         ge=0,
         le=1,
     )
-    max_temperature: Annotated[TemperatureCStr | None, CodegenSpec(override_type=TemperatureCStr)] = pyd.Field(
+    max_temperature: Annotated[TemperatureCStr | None, CodegenSpec(override_type=TemperatureCStr)] = pydantic.Field(
         default=None,
         description="The upper threshold temperature to which an asphalt "
         "binder can be heated preventing the asphalt mixture "
         "from rutting",
-        example="90 °C",
+        examples=["90 °C"],
     )
-    min_temperature: Annotated[TemperatureCStr | None, CodegenSpec(override_type=TemperatureCStr)] = pyd.Field(
+    min_temperature: Annotated[TemperatureCStr | None, CodegenSpec(override_type=TemperatureCStr)] = pydantic.Field(
         default=None,
         description="The lower threshold temperature for an asphalt "
         "binder to prevent thermal cracking of the asphalt"
         " mixture.",
-        example="-20 °C",
+        examples=["-20 °C"],
     )
-    mix_type: AsphaltMixType | None = pyd.Field(default=None, description="Asphalt mix type", example="WMA")
-    gradation: AsphaltGradation | None = pyd.Field(default=None, description="Asphalt gradation", example="Gap-graded")
+    mix_type: AsphaltMixType | None = pydantic.Field(default=None, description="Asphalt mix type", examples=["WMA"])
+    gradation: AsphaltGradation | None = pydantic.Field(
+        default=None, description="Asphalt gradation", examples=["Gap-graded"]
+    )
 
-    sbr: bool | None = pyd.Field(default=None, description="Styrene-butadiene rubber (SBR)", example=True)
-    sbs: bool | None = pyd.Field(default=None, description="Styrene-butadiene-styrene (SBS)", example=True)
-    ppa: bool | None = pyd.Field(default=None, description="Polyphosphoric acid (PPA)", example=True)
-    gtr: bool | None = pyd.Field(default=None, description="Ground tire rubber (GTR)", example=True)
-    pmb: bool | None = pyd.Field(default=None, description="Polymer modified bitumen (PMB)", example=True)
+    sbr: bool | None = pydantic.Field(
+        default=None,
+        description="Styrene-butadiene rubber (SBR)",
+        examples=[True],
+    )
+    sbs: bool | None = pydantic.Field(
+        default=None,
+        description="Styrene-butadiene-styrene (SBS)",
+        examples=[True],
+    )
+    ppa: bool | None = pydantic.Field(
+        default=None,
+        description="Polyphosphoric acid (PPA)",
+        examples=[True],
+    )
+    gtr: bool | None = pydantic.Field(
+        default=None,
+        description="Ground tire rubber (GTR)",
+        examples=[True],
+    )
+    pmb: bool | None = pydantic.Field(
+        default=None,
+        description="Polymer modified bitumen (PMB)",
+        examples=[True],
+    )

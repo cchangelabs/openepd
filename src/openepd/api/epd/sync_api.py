@@ -36,7 +36,7 @@ class EpdApi(BaseApiMethodGroup):
         :raise ObjectNotFound: if EPD is not found
         """
         content = self._client.do_request("get", f"/epds/{uuid}").json()
-        return Epd.parse_obj(content)
+        return Epd.model_validate(content)
 
     def find_raw(self, omf: str, page_num: int = 1, page_size: int = 10) -> EpdSearchResponse:
         """
@@ -59,7 +59,7 @@ class EpdApi(BaseApiMethodGroup):
                 page_size=page_size,
             ),
         ).json()
-        return EpdSearchResponse.parse_obj(content)
+        return EpdSearchResponse.model_validate(content)
 
     def find(self, omf: str, page_size: int | None = None) -> StreamingListResponse[Epd]:
         """
@@ -90,7 +90,7 @@ class EpdApi(BaseApiMethodGroup):
         :return: statistics wrapped in OpenEpdApiResponse
         """
         content = self._client.do_request("get", "/v2/epds/statistics", params=dict(omf=omf)).json()
-        return EpdStatisticsResponse.parse_obj(content)
+        return EpdStatisticsResponse.model_validate(content)
 
     def get_statistics(self, omf: str) -> StatisticsDto:
         """
@@ -130,8 +130,8 @@ class EpdApi(BaseApiMethodGroup):
         )
         content = response.json()
         if with_response:
-            return Epd.parse_obj(content), response
-        return Epd.parse_obj(content)
+            return Epd.model_validate(content), response
+        return Epd.model_validate(content)
 
     @overload
     def create(self, epd: Epd, with_response: Literal[True]) -> tuple[Epd, Response]: ...
@@ -154,8 +154,8 @@ class EpdApi(BaseApiMethodGroup):
         )
         content = response.json()
         if with_response:
-            return Epd.parse_obj(content), response
-        return Epd.parse_obj(content)
+            return Epd.model_validate(content), response
+        return Epd.model_validate(content)
 
     @overload
     def edit(self, epd: Epd, with_response: Literal[True]) -> tuple[Epd, Response]: ...
@@ -181,5 +181,5 @@ class EpdApi(BaseApiMethodGroup):
         )
         content = response.json()
         if with_response:
-            return Epd.parse_obj(content), response
-        return Epd.parse_obj(content)
+            return Epd.model_validate(content), response
+        return Epd.model_validate(content)

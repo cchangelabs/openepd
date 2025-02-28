@@ -15,21 +15,33 @@
 #
 import unittest
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.epd import Epd
 from openepd.model.specs import ConcreteV1
 from openepd.model.specs.enums import AciExposureClass, CsaExposureClass, EnExposureClass
 
 
 class SpecValidationTestCase(unittest.TestCase):
-
     def test_exclusive_list_validation(self) -> None:
         ok_cases = (
             {"aci_exposure_classes": []},
             {"aci_exposure_classes": None},
             {"aci_exposure_classes": [AciExposureClass.F0]},
-            {"aci_exposure_classes": [AciExposureClass.F0, AciExposureClass.W0, AciExposureClass.C2]},
-            {"csa_exposure_classes": [CsaExposureClass.C_XL, CsaExposureClass.C_1, CsaExposureClass.N]},
+            {
+                "aci_exposure_classes": [
+                    AciExposureClass.F0,
+                    AciExposureClass.W0,
+                    AciExposureClass.C2,
+                ]
+            },
+            {
+                "csa_exposure_classes": [
+                    CsaExposureClass.C_XL,
+                    CsaExposureClass.C_1,
+                    CsaExposureClass.N,
+                ]
+            },
             {"csa_exposure_classes": []},
             {"csa_exposure_classes": None},
             {"csa_exposure_classes": [CsaExposureClass.N]},
@@ -53,13 +65,29 @@ class SpecValidationTestCase(unittest.TestCase):
         not_ok_cases = (
             {"aci_exposure_classes": [AciExposureClass.F0, AciExposureClass.F1]},
             {"aci_exposure_classes": [AciExposureClass.S0, AciExposureClass.S1]},
-            {"csa_exposure_classes": [CsaExposureClass.C_XL, CsaExposureClass.C_1, CsaExposureClass.C_2]},
+            {
+                "csa_exposure_classes": [
+                    CsaExposureClass.C_XL,
+                    CsaExposureClass.C_1,
+                    CsaExposureClass.C_2,
+                ]
+            },
             {"csa_exposure_classes": [CsaExposureClass.S_1, CsaExposureClass.S_2]},
-            {"en_exposure_classes": [EnExposureClass.en206_XC1, EnExposureClass.en206_XC2]},
-            {"en_exposure_classes": [EnExposureClass.en206_XD1, EnExposureClass.en206_XD2]},
+            {
+                "en_exposure_classes": [
+                    EnExposureClass.en206_XC1,
+                    EnExposureClass.en206_XC2,
+                ]
+            },
+            {
+                "en_exposure_classes": [
+                    EnExposureClass.en206_XD1,
+                    EnExposureClass.en206_XD2,
+                ]
+            },
         )
         for case in not_ok_cases:
-            with self.assertRaises(pyd.ValidationError):
+            with self.assertRaises(pydantic.ValidationError):
                 ConcreteV1(**case)
 
     def test_spec_backward_compatibility(self) -> None:
@@ -100,7 +128,7 @@ class SpecValidationTestCase(unittest.TestCase):
                 },
             }
         }
-        expected_new_specs_concrete = Epd.parse_obj(
+        expected_new_specs_concrete = Epd.model_validate(
             {
                 "specs": {
                     **old_spec_concrete,
@@ -150,10 +178,15 @@ class SpecValidationTestCase(unittest.TestCase):
                 "ASTM": [{"short_name": "A36"}, {"short_name": "A572"}],
                 "SAE": [{"short_name": "1020"}, {"short_name": "1045"}],
                 "EN": [{"short_name": "S235JR"}, {"short_name": "S275JR"}],
-                "options": {"cold_finished": True, "galvanized": True, "epoxy": True, "steel_fabricated": True},
+                "options": {
+                    "cold_finished": True,
+                    "galvanized": True,
+                    "epoxy": True,
+                    "steel_fabricated": True,
+                },
             }
         }
-        expected_new_specs_steel = Epd.parse_obj(
+        expected_new_specs_steel = Epd.model_validate(
             {
                 "specs": {
                     **old_spec_steel,
@@ -163,9 +196,18 @@ class SpecValidationTestCase(unittest.TestCase):
                         "cold_finished": True,
                         "galvanized": True,
                         "making_route": {"bof": True},
-                        "astm_standards": [{"short_name": "A36"}, {"short_name": "A572"}],
-                        "sae_standards": [{"short_name": "1020"}, {"short_name": "1045"}],
-                        "en_standards": [{"short_name": "S235JR"}, {"short_name": "S275JR"}],
+                        "astm_standards": [
+                            {"short_name": "A36"},
+                            {"short_name": "A572"},
+                        ],
+                        "sae_standards": [
+                            {"short_name": "1020"},
+                            {"short_name": "1045"},
+                        ],
+                        "en_standards": [
+                            {"short_name": "S235JR"},
+                            {"short_name": "S275JR"},
+                        ],
                         "RebarSteel": {
                             "epoxy_coated": True,
                             "fabricated": True,
@@ -182,15 +224,18 @@ class SpecValidationTestCase(unittest.TestCase):
         self.maxDiff = None
         for name, old, epd_expected in cases:
             with self.subTest(name=name):
-                epd_actual = Epd.parse_obj({"specs": old})
+                epd_actual = Epd.model_validate({"specs": old})
 
-                specs_actual = epd_actual.specs.json(exclude_unset=True, exclude_none=True, exclude_defaults=True)
-                specs_expected = epd_expected.specs.json(exclude_unset=True, exclude_none=True, exclude_defaults=True)
+                specs_actual = epd_actual.specs.model_dump_json(
+                    exclude_unset=True, exclude_none=True, exclude_defaults=True
+                )
+                specs_expected = epd_expected.specs.model_dump_json(
+                    exclude_unset=True, exclude_none=True, exclude_defaults=True
+                )
 
                 self.assertEqual(specs_actual, specs_expected)
 
     def test_spec_backward_compatibility_prefers_new(self) -> None:
-
         specs = {
             "concrete": {"strength_28d": "2000 psi", "slump": "2 in", "w_c_ratio": 0.2},
             "Concrete": {
@@ -199,11 +244,19 @@ class SpecValidationTestCase(unittest.TestCase):
                 # but w_c_ratio not given, so taking one from 'concrete' backup spec
             },
         }
-        expected_specs = Epd.parse_obj(
-            {"specs": {"Concrete": {"strength_28d": "3000 psi", "min_slump": None, "w_c_ratio": 0.2}}}
-        ).specs.Concrete.json(exclude_unset=True, exclude_none=True, exclude_defaults=True)
+        expected_specs = Epd.model_validate(
+            {
+                "specs": {
+                    "Concrete": {
+                        "strength_28d": "3000 psi",
+                        "min_slump": None,
+                        "w_c_ratio": 0.2,
+                    }
+                }
+            }
+        ).specs.Concrete.model_dump_json(exclude_unset=True, exclude_none=True, exclude_defaults=True)
 
-        epd = Epd.parse_obj({"specs": specs})
-        actual_specs = epd.specs.Concrete.json(exclude_unset=True, exclude_none=True, exclude_defaults=True)
+        epd = Epd.model_validate({"specs": specs})
+        actual_specs = epd.specs.Concrete.model_dump_json(exclude_unset=True, exclude_none=True, exclude_defaults=True)
 
         self.assertEqual(actual_specs, expected_specs)

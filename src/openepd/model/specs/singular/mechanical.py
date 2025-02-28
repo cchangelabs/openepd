@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     AhuAirflowControl,
@@ -45,11 +46,11 @@ class HvacVrfIndoorV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example=["R11"])
-    heating_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
-    cooling_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
-    airflow_rate: AirflowStr | None = pyd.Field(default=None, description="", example="1 m3 / s")
-    air_volume: VolumeStr | None = pyd.Field(default=None, description="", example="1 m3")
+    refrigerants: list[MechanicalRefrigerants] | None = pydantic.Field(default=None, description="", examples=[["R11"]])
+    heating_capacity: PowerStr | None = pydantic.Field(default=None, description="", examples=["1000.0 W"])
+    cooling_capacity: PowerStr | None = pydantic.Field(default=None, description="", examples=["1000.0 W"])
+    airflow_rate: AirflowStr | None = pydantic.Field(default=None, description="", examples=["1 m3 / s"])
+    air_volume: VolumeStr | None = pydantic.Field(default=None, description="", examples=["1 m3"])
 
 
 class HvacVrfOutdoorV1(BaseOpenEpdHierarchicalSpec):
@@ -58,11 +59,11 @@ class HvacVrfOutdoorV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example=["R11"])
-    heating_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
-    cooling_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
-    airflow_rate: AirflowStr | None = pyd.Field(default=None, description="", example="1 m3 / s")
-    air_volume: VolumeStr | None = pyd.Field(default=None, description="", example="1 m3")
+    refrigerants: list[MechanicalRefrigerants] | None = pydantic.Field(default=None, description="", examples=[["R11"]])
+    heating_capacity: PowerStr | None = pydantic.Field(default=None, description="", examples=["1000.0 W"])
+    cooling_capacity: PowerStr | None = pydantic.Field(default=None, description="", examples=["1000.0 W"])
+    airflow_rate: AirflowStr | None = pydantic.Field(default=None, description="", examples=["1 m3 / s"])
+    air_volume: VolumeStr | None = pydantic.Field(default=None, description="", examples=["1 m3"])
 
 
 class HvacAirDiffusersV1(BaseOpenEpdHierarchicalSpec):
@@ -77,8 +78,8 @@ class HvacAirFiltersV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    merv_rating: AirFiltersMervRating | None = pyd.Field(default=None, description="", example="MERV 1")
-    media_type: AirFiltersMediaType | None = pyd.Field(default=None, description="", example="Acrylic")
+    merv_rating: AirFiltersMervRating | None = pydantic.Field(default=None, description="", examples=["MERV 1"])
+    media_type: AirFiltersMediaType | None = pydantic.Field(default=None, description="", examples=["Acrylic"])
 
 
 class HvacAHUsV1(BaseOpenEpdHierarchicalSpec):
@@ -92,14 +93,14 @@ class HvacAHUsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example=["R11"])
-    installation: MechanicalInstallation | None = pyd.Field(default=None, description="", example="Indoor")
-    airflow_rate: AirflowStr | None = pyd.Field(default=None, description="", example="1 m3 / s")
-    air_volume: VolumeStr | None = pyd.Field(default=None, description="", example="1 m3")
-    cooling_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
-    heating_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
-    airflow_control: AhuAirflowControl | None = pyd.Field(default=None, description="", example="CAV")
-    zone_control: AhuZoneControl | None = pyd.Field(default=None, description="", example="Single Zone")
+    refrigerants: list[MechanicalRefrigerants] | None = pydantic.Field(default=None, description="", examples=[["R11"]])
+    installation: MechanicalInstallation | None = pydantic.Field(default=None, description="", examples=["Indoor"])
+    airflow_rate: AirflowStr | None = pydantic.Field(default=None, description="", examples=["1 m3 / s"])
+    air_volume: VolumeStr | None = pydantic.Field(default=None, description="", examples=["1 m3"])
+    cooling_capacity: PowerStr | None = pydantic.Field(default=None, description="", examples=["1000.0 W"])
+    heating_capacity: PowerStr | None = pydantic.Field(default=None, description="", examples=["1000.0 W"])
+    airflow_control: AhuAirflowControl | None = pydantic.Field(default=None, description="", examples=["CAV"])
+    zone_control: AhuZoneControl | None = pydantic.Field(default=None, description="", examples=["Single Zone"])
 
 
 class HvacBoilersV1(BaseOpenEpdHierarchicalSpec):
@@ -108,10 +109,10 @@ class HvacBoilersV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    flow_rate: FlowRateStr | None = pyd.Field(default=None, description="", example="1 l / min")
-    heating_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
-    configuration: BoilerConfiguration | None = pyd.Field(default=None, description="", example="Hot water")
-    fuel_type: BoilerEquipmentFuelType | None = pyd.Field(default=None, description="", example="Coal")
+    flow_rate: FlowRateStr | None = pydantic.Field(default=None, description="", examples=["1 l / min"])
+    heating_capacity: PowerStr | None = pydantic.Field(default=None, description="", examples=["1000.0 W"])
+    configuration: BoilerConfiguration | None = pydantic.Field(default=None, description="", examples=["Hot water"])
+    fuel_type: BoilerEquipmentFuelType | None = pydantic.Field(default=None, description="", examples=["Coal"])
 
 
 class HvacChillersV1(BaseOpenEpdHierarchicalSpec):
@@ -125,12 +126,12 @@ class HvacChillersV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example=["R11"])
-    installation: MechanicalInstallation | None = pyd.Field(default=None, description="", example="Indoor")
-    heating_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
-    cooling_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
-    air_volume: VolumeStr | None = pyd.Field(default=None, description="", example="1 m3")
-    airflow_rate: AirflowStr | None = pyd.Field(default=None, description="", example="1 m3 / s")
+    refrigerants: list[MechanicalRefrigerants] | None = pydantic.Field(default=None, description="", examples=[["R11"]])
+    installation: MechanicalInstallation | None = pydantic.Field(default=None, description="", examples=["Indoor"])
+    heating_capacity: PowerStr | None = pydantic.Field(default=None, description="", examples=["1000.0 W"])
+    cooling_capacity: PowerStr | None = pydantic.Field(default=None, description="", examples=["1000.0 W"])
+    air_volume: VolumeStr | None = pydantic.Field(default=None, description="", examples=["1 m3"])
+    airflow_rate: AirflowStr | None = pydantic.Field(default=None, description="", examples=["1 m3 / s"])
 
 
 class HvacFansV1(BaseOpenEpdHierarchicalSpec):
@@ -145,12 +146,12 @@ class HvacHeatPumpsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example=["R11"])
-    cooling_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
-    heating_capacity: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
-    air_volume: VolumeStr | None = pyd.Field(default=None, description="", example="1 m3")
-    airflow_rate: AirflowStr | None = pyd.Field(default=None, description="", example="1 m3 / s")
-    heat_pumps_type: HeatPumpType | None = pyd.Field(default=None, description="", example="Air-to-Water")
+    refrigerants: list[MechanicalRefrigerants] | None = pydantic.Field(default=None, description="", examples=[["R11"]])
+    cooling_capacity: PowerStr | None = pydantic.Field(default=None, description="", examples=["1000.0 W"])
+    heating_capacity: PowerStr | None = pydantic.Field(default=None, description="", examples=["1000.0 W"])
+    air_volume: VolumeStr | None = pydantic.Field(default=None, description="", examples=["1 m3"])
+    airflow_rate: AirflowStr | None = pydantic.Field(default=None, description="", examples=["1 m3 / s"])
+    heat_pumps_type: HeatPumpType | None = pydantic.Field(default=None, description="", examples=["Air-to-Water"])
 
 
 class HvacHeatExV1(BaseOpenEpdHierarchicalSpec):
@@ -164,9 +165,9 @@ class HvacHeatExV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    refrigerants: list[MechanicalRefrigerants] | None = pyd.Field(default=None, description="", example=["R11"])
-    heat_exchangers_type: HvacHeatExchangersType | None = pyd.Field(
-        default=None, description="", example="Shell and Tube"
+    refrigerants: list[MechanicalRefrigerants] | None = pydantic.Field(default=None, description="", examples=[["R11"]])
+    heat_exchangers_type: HvacHeatExchangersType | None = pydantic.Field(
+        default=None, description="", examples=["Shell and Tube"]
     )
 
 
@@ -181,9 +182,9 @@ class HvacPumpsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    flow_rate: FlowRateStr | None = pyd.Field(default=None, description="", example="1 l / min")
-    pump_discharge_pressure: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    pump_horsepower: PowerStr | None = pyd.Field(default=None, description="", example="1000.0 W")
+    flow_rate: FlowRateStr | None = pydantic.Field(default=None, description="", examples=["1 l / min"])
+    pump_discharge_pressure: PressureMPaStr | None = pydantic.Field(default=None, description="", examples=["1 MPa"])
+    pump_horsepower: PowerStr | None = pydantic.Field(default=None, description="", examples=["1000.0 W"])
 
 
 class HvacRTUsV1(BaseOpenEpdHierarchicalSpec):
@@ -213,11 +214,11 @@ class HvacDuctsV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    shape: HvacDuctShape | None = pyd.Field(default=None, description="Hvac duct shape", example="Rectangular")
-    material: HvacDuctMaterial | None = pyd.Field(
-        default=None, description="Hvac duct material", example="Galvanized Steel"
+    shape: HvacDuctShape | None = pydantic.Field(default=None, description="Hvac duct shape", examples=["Rectangular"])
+    material: HvacDuctMaterial | None = pydantic.Field(
+        default=None, description="Hvac duct material", examples=["Galvanized Steel"]
     )
-    type: HvacDuctType | None = pyd.Field(default=None, description="Hvac duct type", example="Flexible")
+    type: HvacDuctType | None = pydantic.Field(default=None, description="Hvac duct type", examples=["Flexible"])
 
 
 class MechanicalV1(BaseOpenEpdHierarchicalSpec):

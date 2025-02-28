@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     IntumescentFireproofingMaterialType,
@@ -33,7 +34,9 @@ class IntumescentFireproofingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    material_type: IntumescentFireproofingMaterialType | None = pyd.Field(default=None, description="", example="Epoxy")
+    material_type: IntumescentFireproofingMaterialType | None = pydantic.Field(
+        default=None, description="", examples=["Epoxy"]
+    )
 
 
 class SprayFireproofingV1(BaseOpenEpdHierarchicalSpec):
@@ -46,10 +49,10 @@ class SprayFireproofingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    material_type: SprayFireproofingMaterialType | None = pyd.Field(
-        default=None, description="", example="Gypsum-based"
+    material_type: SprayFireproofingMaterialType | None = pydantic.Field(
+        default=None, description="", examples=["Gypsum-based"]
     )
-    density: SprayFireproofingDensity | None = pyd.Field(default=None, description="", example="Standard")
+    density: SprayFireproofingDensity | None = pydantic.Field(default=None, description="", examples=["Standard"])
 
 
 class AppliedFireproofingV1(BaseOpenEpdHierarchicalSpec):
@@ -63,7 +66,7 @@ class AppliedFireproofingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
+    thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["10 mm"])
 
     # Nested specs:
     IntumescentFireproofing: IntumescentFireproofingV1 | None = None

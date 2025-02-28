@@ -52,8 +52,8 @@ class GenericEstimateApi(BaseApiMethodGroup):
         """
         response = self._client.do_request("get", f"/generic_estimates/{uuid}")
         if with_response:
-            return GenericEstimate.parse_obj(response.json()), response
-        return GenericEstimate.parse_obj(response.json())
+            return GenericEstimate.model_validate(response.json()), response
+        return GenericEstimate.model_validate(response.json())
 
     @overload
     def post_with_refs(
@@ -88,8 +88,8 @@ class GenericEstimateApi(BaseApiMethodGroup):
         )
         content = response.json()
         if with_response:
-            return GenericEstimate.parse_obj(content), response
-        return GenericEstimate.parse_obj(content)
+            return GenericEstimate.model_validate(content), response
+        return GenericEstimate.model_validate(content)
 
     @overload
     def create(self, ge: GenericEstimate, with_response: Literal[True]) -> tuple[GenericEstimateRef, Response]: ...
@@ -114,8 +114,8 @@ class GenericEstimateApi(BaseApiMethodGroup):
         )
         content = response.json()
         if with_response:
-            return GenericEstimateRef.parse_obj(content), response
-        return GenericEstimateRef.parse_obj(content)
+            return GenericEstimateRef.model_validate(content), response
+        return GenericEstimateRef.model_validate(content)
 
     @overload
     def edit(self, ge: GenericEstimate, with_response: Literal[True]) -> tuple[GenericEstimateRef, Response]: ...
@@ -144,8 +144,8 @@ class GenericEstimateApi(BaseApiMethodGroup):
         )
         content = response.json()
         if with_response:
-            return GenericEstimateRef.parse_obj(content), response
-        return GenericEstimateRef.parse_obj(content)
+            return GenericEstimateRef.model_validate(content), response
+        return GenericEstimateRef.model_validate(content)
 
     @overload
     def list_raw(
@@ -177,7 +177,7 @@ class GenericEstimateApi(BaseApiMethodGroup):
                 page_size=page_size,
             ),
         )
-        data = [GenericEstimatePreview.parse_obj(o) for o in response.json()]
+        data = [GenericEstimatePreview.model_validate(o) for o in response.json()]
         if with_response:
             return data, response
         return data
@@ -193,7 +193,8 @@ class GenericEstimateApi(BaseApiMethodGroup):
         def _get_page(p_num: int, p_size: int) -> GenericEstimateListResponse:
             data_list, response = self.list_raw(page_num=p_num, page_size=p_size, with_response=True)
             return GenericEstimateListResponse(
-                payload=data_list, meta=GenericEstimateSearchMeta(paging=paging_meta_from_v1_api(response))
+                payload=data_list,
+                meta=GenericEstimateSearchMeta(paging=paging_meta_from_v1_api(response)),
             )
 
         return StreamingListResponse[GenericEstimatePreview](_get_page, page_size=page_size)

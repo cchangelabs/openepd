@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import GypsumFacing, GypsumFireRating, GypsumThickness
 from openepd.model.validation.quantity import LengthMmStr, RFactorStr, validate_quantity_unit_factory
@@ -30,11 +31,11 @@ class CementitiousSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    cement_board_thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
+    cement_board_thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["10 mm"])
 
-    _cement_board_thickness_is_quantity_validator = pyd.validator("cement_board_thickness", allow_reuse=True)(
-        validate_quantity_unit_factory("m")
-    )
+    @pydantic.field_validator("cement_board_thickness", mode="before", check_fields=False)
+    def _cement_board_thickness_is_quantity_validator(cls, v):
+        return validate_quantity_unit_factory("m")(cls, v)
 
 
 class GypsumSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
@@ -47,30 +48,49 @@ class GypsumSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.1"
 
     # Own fields:
-    fire_rating: GypsumFireRating | None = pyd.Field(default=None, description="", example="-")
-    thickness: GypsumThickness | None = pyd.Field(default=None, description="", example="9 mm")
-    facing: GypsumFacing | None = pyd.Field(default=None, description="", example="Paper")
+    fire_rating: GypsumFireRating | None = pydantic.Field(default=None, description="", examples=["-"])
+    thickness: GypsumThickness | None = pydantic.Field(default=None, description="", examples=["9 mm"])
+    facing: GypsumFacing | None = pydantic.Field(default=None, description="", examples=["Paper"])
 
-    r_factor: RFactorStr | None = pyd.Field(default=None, description="", example="1 RSI")
+    r_factor: RFactorStr | None = pydantic.Field(default=None, description="", examples=["1 RSI"])
 
-    flame_spread_astm_e84: int | None = pyd.Field(default=None, description="", example=3)
-    smoke_production_astm_e84: int | None = pyd.Field(default=None, description="", example=3)
-    surface_abrasion_d4977: int | None = pyd.Field(default=None, description="", example=3)
-    indentation_d5420: int | None = pyd.Field(default=None, description="", example=3)
-    soft_body_impact_e695: int | None = pyd.Field(default=None, description="", example=3)
-    hard_body_impact_c1929: int | None = pyd.Field(default=None, description="", example=3)
+    flame_spread_astm_e84: int | None = pydantic.Field(default=None, description="", examples=[3])
+    smoke_production_astm_e84: int | None = pydantic.Field(default=None, description="", examples=[3])
+    surface_abrasion_d4977: int | None = pydantic.Field(default=None, description="", examples=[3])
+    indentation_d5420: int | None = pydantic.Field(default=None, description="", examples=[3])
+    soft_body_impact_e695: int | None = pydantic.Field(default=None, description="", examples=[3])
+    hard_body_impact_c1929: int | None = pydantic.Field(default=None, description="", examples=[3])
 
-    mold_resistant: bool | None = pyd.Field(default=None, description="", example=True)
-    foil_backing: bool | None = pyd.Field(default=None, description="", example=True)
-    moisture_resistant: bool | None = pyd.Field(default=None, description="", example=True)
-    abuse_resistant: bool | None = pyd.Field(default=None, description="", example=True)
-
-    _gypsum_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
-        validate_quantity_unit_factory("m")
+    mold_resistant: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
     )
-    _gypsum_r_factor_is_quantity_validator = pyd.validator("r_factor", allow_reuse=True)(
-        validate_quantity_unit_factory("RSI")
+    foil_backing: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
     )
+    moisture_resistant: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    abuse_resistant: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+
+
+@pydantic.field_validator("thickness")
+def _gypsum_thickness_is_quantity_validator(cls, v):
+    return validate_quantity_unit_factory("m")(cls, v)
+
+
+@pydantic.field_validator("r_factor")
+def _gypsum_r_factor_is_quantity_validator(cls, v):
+    return validate_quantity_unit_factory("RSI")(cls, v)
 
 
 class SheathingV1(BaseOpenEpdHierarchicalSpec):

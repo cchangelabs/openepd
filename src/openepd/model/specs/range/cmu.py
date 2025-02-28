@@ -20,7 +20,8 @@ __all__ = ("CMURangeV1",)
 
 from builtins import float
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CmuBlockType, CmuWeightClassification
 from openepd.model.validation.quantity import AmountRangePressureMpa, GwpKgCo2eStr
@@ -35,11 +36,11 @@ class CMURangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    white_cement: bool | None = pyd.Field(default=None, description="")
-    strength_28d: AmountRangePressureMpa | None = pyd.Field(default=None, description="")
-    weight_classification: list[CmuWeightClassification] | None = pyd.Field(default=None, description="")
-    block_type: list[CmuBlockType] | None = pyd.Field(default=None, description="")
-    insulated: bool | None = pyd.Field(default=None, description="")
-    sound_performance: bool | None = pyd.Field(default=None, description="")
-    b1_recarbonation: GwpKgCo2eStr | None = pyd.Field(default=None, description="")
-    b1_recarbonation_z: float | None = pyd.Field(default=None, description="")
+    white_cement: bool | None = pydantic.Field(default=None, description="")
+    strength_28d: AmountRangePressureMpa | None = pydantic.Field(default=None, description="")
+    weight_classification: list[CmuWeightClassification] | None = pydantic.Field(default=None, description="")
+    block_type: list[CmuBlockType] | None = pydantic.Field(default=None, description="")
+    insulated: bool | None = pydantic.Field(default=None, description="")
+    sound_performance: bool | None = pydantic.Field(default=None, description="")
+    b1_recarbonation: GwpKgCo2eStr | None = pydantic.Field(default=None, description="")
+    b1_recarbonation_z: float | None = pydantic.Field(default=None, description="")

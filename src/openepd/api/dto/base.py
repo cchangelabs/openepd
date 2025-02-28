@@ -15,14 +15,14 @@
 #
 import abc
 
-from openepd.compat.pydantic import pyd
+import pydantic
+from pydantic import ConfigDict
 
 
-class BaseOpenEpdApiModel(pyd.BaseModel):
+class BaseOpenEpdApiModel(pydantic.BaseModel):
     """Base class for OpenEPD API DTOs."""
 
-    class Config:
-        extra = pyd.Extra.ignore
+    model_config = ConfigDict(extra="ignore")
 
 
 class BaseMetaDto(BaseOpenEpdApiModel, metaclass=abc.ABCMeta):

@@ -31,7 +31,7 @@ class DefaultBundleReader(BaseBundleReader):
         self._bundle_archive = zipfile.ZipFile(bundle_file, mode="r")
         try:
             with self._bundle_archive.open("manifest", "r") as manifest_stream:
-                self.__manifest = BundleManifest.parse_raw(manifest_stream.read())
+                self.__manifest = BundleManifest.model_validate_json(manifest_stream.read())
         except Exception as e:
             raise ValueError("The bundle file is not valid. Manifest reading error: " + str(e)) from e
         try:
@@ -45,7 +45,7 @@ class DefaultBundleReader(BaseBundleReader):
 
     def get_manifest(self) -> BundleManifest:
         """Get the manifest of the bundle. Manifest object is immutable."""
-        return self.__manifest.copy(deep=True)
+        return self.__manifest.model_copy(deep=True)
 
     def __create_asset_filter(
         self,
@@ -71,7 +71,14 @@ class DefaultBundleReader(BaseBundleReader):
         return _filter
 
     def __preprocess_csv_dict(self, input_dict: dict[str, str | None]) -> dict[str, str | None]:
-        default_to_none_fields = ("rel_type", "rel_asset", "lang", "content_type", "custom_type", "custom_data")
+        default_to_none_fields = (
+            "rel_type",
+            "rel_asset",
+            "lang",
+            "content_type",
+            "custom_type",
+            "custom_data",
+        )
         for x in default_to_none_fields:
             if input_dict[x] == "":
                 input_dict[x] = None
@@ -82,7 +89,7 @@ class DefaultBundleReader(BaseBundleReader):
         with self._bundle_archive.open("toc", "r") as toc_stream:
             toc_reader = csv.DictReader(io.TextIOWrapper(toc_stream, encoding="utf-8"), dialect="toc")
             for x in toc_reader:
-                yield AssetInfo.parse_obj(self.__preprocess_csv_dict(x))
+                yield AssetInfo.model_validate(self.__preprocess_csv_dict(x))
 
     def __check_toc(self):
         with self._bundle_archive.open("toc", "r") as toc_stream:
@@ -154,4 +161,4 @@ class DefaultBundleReader(BaseBundleReader):
         if asset.type != obj_class.get_asset_type():
             raise ValueError(f"Asset type mismatch. Expected {obj_class.get_asset_type()}, got {asset.type}")
         with self._bundle_archive.open(asset.ref, "r") as asset_stream:
-            return obj_class.parse_raw(asset_stream.read())
+            return obj_class.model_validate_json(asset_stream.read())

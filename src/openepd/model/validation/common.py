@@ -15,7 +15,8 @@
 #
 from typing import Annotated, Any, Callable, Type, TypeAlias
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.versioning import Version
 
 
@@ -33,7 +34,9 @@ def validate_version_format(v: str) -> str:
     return v
 
 
-def validate_version_compatibility(class_version_attribute_name: str) -> Callable[[Type, str], str]:
+def validate_version_compatibility(
+    class_version_attribute_name: str,
+) -> Callable[[Type, str], str]:
     """Ensure that the object which is passed for parsing and validation is compatible with the class."""
 
     # we need closure to pass property name, since actual class will only be available in runtime
@@ -51,5 +54,8 @@ def validate_version_compatibility(class_version_attribute_name: str) -> Callabl
 
 ReferenceStr: TypeAlias = Annotated[
     str,
-    pyd.Field(description="Reference to another object", example="https://buildingtransparency.org/ec3/epds/1u7zsed8"),
+    pydantic.Field(
+        description="Reference to another object",
+        examples=["https://buildingtransparency.org/ec3/epds/1u7zsed8"],
+    ),
 ]

@@ -13,8 +13,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+import pydantic
+
 from openepd.api.dto.base import BaseOpenEpdApiModel
-from openepd.compat.pydantic import pyd
 
 
 class MaterialFilterDefinition(BaseOpenEpdApiModel):
@@ -24,14 +25,14 @@ class MaterialFilterDefinition(BaseOpenEpdApiModel):
     This object includes material filter itself as well as its hash.
     """
 
-    mf: str = pyd.Field(
+    mf: str = pydantic.Field(
         title="MaterialFilter",
-        example='!EC3 search("AluminiumBillets") !pragma oMF("1.0/1")',
+        examples=['!EC3 search("AluminiumBillets") !pragma oMF("1.0/1")'],
         description="MaterialFilter in string format",
     )
-    mf_hash: str = pyd.Field(
+    mf_hash: str = pydantic.Field(
         title="MaterialFilter hash",
-        example="22bf5b78cee5b79e1c76e818873d521c3972688b",
+        examples=["22bf5b78cee5b79e1c76e818873d521c3972688b"],
         description="MaterialFilter hash. Can be used to compare filters for equality, put to cache etc.",
     )
 
@@ -39,12 +40,12 @@ class MaterialFilterDefinition(BaseOpenEpdApiModel):
 class MaterialFilterMeta(BaseOpenEpdApiModel):
     """Meta holding supplementary information about OMF query execution."""
 
-    excluded_fields: list[str] | None = pyd.Field(
-        example=["building_jurisdiction", "jurisdiction"],
+    excluded_fields: list[str] | None = pydantic.Field(
+        examples=[["building_jurisdiction", "jurisdiction"]],
         description="list of fields excluded by server process for any reason",
         default=None,
     )
-    effective_omf: MaterialFilterDefinition = pyd.Field(
+    effective_omf: MaterialFilterDefinition = pydantic.Field(
         description="Effective OpenMaterialFilter as applied to search, after transformations if any"
     )
 

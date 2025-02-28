@@ -19,14 +19,14 @@ __all__ = (
     "UtilityPipingRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import BuriedPipingType, PipingAnsiSchedule, UtilityPipingMaterial
 from openepd.model.validation.quantity import AmountRangeLengthMm
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class BuildingHeatingPipingRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -51,7 +51,7 @@ class BuriedPipingRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    buried_piping_type: list[BuriedPipingType] | None = pyd.Field(default=None, description="")
+    buried_piping_type: list[BuriedPipingType] | None = pydantic.Field(default=None, description="")
 
 
 class UtilityPipingRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -66,10 +66,10 @@ class UtilityPipingRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    piping_diameter: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    mass_per_unit_length: RangeAmount | None = pyd.Field(default=None, description="")
-    piping_ansi_schedule: list[PipingAnsiSchedule] | None = pyd.Field(default=None, description="")
-    utility_piping_material: list[UtilityPipingMaterial] | None = pyd.Field(default=None, description="")
+    thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    piping_diameter: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    mass_per_unit_length: RangeAmount | None = pydantic.Field(default=None, description="")
+    piping_ansi_schedule: list[PipingAnsiSchedule] | None = pydantic.Field(default=None, description="")
+    utility_piping_material: list[UtilityPipingMaterial] | None = pydantic.Field(default=None, description="")
     BuildingHeatingPiping: BuildingHeatingPipingRangeV1 | None = None
     BuriedPiping: BuriedPipingRangeV1 | None = None

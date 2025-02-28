@@ -16,7 +16,8 @@
 from enum import StrEnum
 from typing import Literal
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
 from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import AverageDatasetMixin, BaseDeclaration, RefBase
@@ -51,7 +52,11 @@ class GenericEstimateRef(RefBase, title="Generic Estimate (Ref)"):
 
 
 class GenericEstimatePreviewV0(
-    WithAttachmentsMixin, AverageDatasetMixin, GenericEstimateRef, BaseDeclaration, title="Generic Estimate (preview)"
+    WithAttachmentsMixin,
+    AverageDatasetMixin,
+    GenericEstimateRef,
+    BaseDeclaration,
+    title="Generic Estimate (preview)",
 ):
     """
     Generic Estimate preview, used in API list responses and where there is no need for a full object.
@@ -61,27 +66,37 @@ class GenericEstimatePreviewV0(
 
     _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
 
-    doctype: Literal["openGenericEstimate"] = pyd.Field(
+    doctype: Literal["openGenericEstimate"] = pydantic.Field(
         description='Describes the type and schema of the document. Must always be "openGenericEstimate"',
         default="openGenericEstimate",
     )
 
-    publisher: Org | None = pyd.Field(description="Organization that published the LCA results.")
-    reviewer: Org | None = pyd.Field(description="Org that performed a critical review of the LCA.")
-    reviewer_email: pyd.EmailStr | None = pyd.Field(
-        description="Email address of the third party verifier", example="john.doe@example.com", default=None
+    publisher: Org | None = pydantic.Field(description="Organization that published the LCA results.", default=None)
+    reviewer: Org | None = pydantic.Field(description="Org that performed a critical review of the LCA.", default=None)
+    reviewer_email: pydantic.EmailStr | None = pydantic.Field(
+        description="Email address of the third party verifier",
+        examples=["john.doe@example.com"],
+        default=None,
     )
 
-    license_terms: LicenseTerms | None = pyd.Field(description="The license terms for use of the data.")
-    model_repository: pyd.AnyUrl | None = pyd.Field(
-        default=None, description="A link to the shared git repository containing the LCA model used for this estimate."
+    license_terms: LicenseTerms | None = pydantic.Field(
+        description="The license terms for use of the data.", default=None
+    )
+    model_repository: pydantic.AnyUrl | None = pydantic.Field(
+        default=None,
+        description="A link to the shared git repository containing the LCA model used for this estimate.",
     )
 
 
 GenericEstimatePreview = GenericEstimatePreviewV0
 
 
-class GenericEstimateV0(GenericEstimatePreviewV0, WithLciaMixin, WithAltIdsMixin, title="Generic Estimate (Full)"):
+class GenericEstimateV0(
+    GenericEstimatePreviewV0,
+    WithLciaMixin,
+    WithAltIdsMixin,
+    title="Generic Estimate (Full)",
+):
     """Full Generic Estimate object."""
 
 
@@ -95,8 +110,8 @@ class GenericEstimateWithDepsV0(GenericEstimateV0, title="Generic Estimate (with
     Contains related entities - orgs - with full fields, to support object matching in implementations.
     """
 
-    publisher: Org | None = pyd.Field(description="Organization that published the LCA results.")
-    reviewer: Org | None = pyd.Field(description="Org that performed a critical review of the LCA.")
+    publisher: Org | None = pydantic.Field(description="Organization that published the LCA results.")
+    reviewer: Org | None = pydantic.Field(description="Org that performed a critical review of the LCA.")
 
 
 GenericEstimateWithDeps = GenericEstimateWithDepsV0

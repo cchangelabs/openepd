@@ -19,14 +19,14 @@ __all__ = (
     "SheathingRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeInt
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import GypsumFacing, GypsumFireRating, GypsumThickness
 from openepd.model.validation.quantity import AmountRangeLengthMm, AmountRangeRFactor
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class CementitiousSheathingBoardRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -41,7 +41,7 @@ class CementitiousSheathingBoardRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    cement_board_thickness: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
+    cement_board_thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
 
 
 class GypsumSheathingBoardRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -55,20 +55,20 @@ class GypsumSheathingBoardRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.1"
 
-    fire_rating: list[GypsumFireRating] | None = pyd.Field(default=None, description="")
-    thickness: list[GypsumThickness] | None = pyd.Field(default=None, description="")
-    facing: list[GypsumFacing] | None = pyd.Field(default=None, description="")
-    r_factor: AmountRangeRFactor | None = pyd.Field(default=None, description="")
-    flame_spread_astm_e84: RangeInt | None = pyd.Field(default=None, description="")
-    smoke_production_astm_e84: RangeInt | None = pyd.Field(default=None, description="")
-    surface_abrasion_d4977: RangeInt | None = pyd.Field(default=None, description="")
-    indentation_d5420: RangeInt | None = pyd.Field(default=None, description="")
-    soft_body_impact_e695: RangeInt | None = pyd.Field(default=None, description="")
-    hard_body_impact_c1929: RangeInt | None = pyd.Field(default=None, description="")
-    mold_resistant: bool | None = pyd.Field(default=None, description="")
-    foil_backing: bool | None = pyd.Field(default=None, description="")
-    moisture_resistant: bool | None = pyd.Field(default=None, description="")
-    abuse_resistant: bool | None = pyd.Field(default=None, description="")
+    fire_rating: list[GypsumFireRating] | None = pydantic.Field(default=None, description="")
+    thickness: list[GypsumThickness] | None = pydantic.Field(default=None, description="")
+    facing: list[GypsumFacing] | None = pydantic.Field(default=None, description="")
+    r_factor: AmountRangeRFactor | None = pydantic.Field(default=None, description="")
+    flame_spread_astm_e84: RangeInt | None = pydantic.Field(default=None, description="")
+    smoke_production_astm_e84: RangeInt | None = pydantic.Field(default=None, description="")
+    surface_abrasion_d4977: RangeInt | None = pydantic.Field(default=None, description="")
+    indentation_d5420: RangeInt | None = pydantic.Field(default=None, description="")
+    soft_body_impact_e695: RangeInt | None = pydantic.Field(default=None, description="")
+    hard_body_impact_c1929: RangeInt | None = pydantic.Field(default=None, description="")
+    mold_resistant: bool | None = pydantic.Field(default=None, description="")
+    foil_backing: bool | None = pydantic.Field(default=None, description="")
+    moisture_resistant: bool | None = pydantic.Field(default=None, description="")
+    abuse_resistant: bool | None = pydantic.Field(default=None, description="")
 
 
 class SheathingRangeV1(BaseOpenEpdHierarchicalSpec):

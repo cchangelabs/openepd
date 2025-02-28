@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Amount
 
@@ -21,15 +22,17 @@ from openepd.model.common import Amount
 class Category(BaseOpenEpdSchema):
     """DTO for Category model, recursive."""
 
-    id: str = pyd.Field(description="Category short ID (readable unique string)")
-    name: str = pyd.Field(description="Category display name (user-friendly)")
-    short_name: str = pyd.Field(description="Category short user-friendly name")
-    openepd_hierarchical_name: str = pyd.Field(
+    id: str = pydantic.Field(description="Category short ID (readable unique string)")
+    name: str = pydantic.Field(description="Category display name (user-friendly)")
+    short_name: str = pydantic.Field(description="Category short user-friendly name")
+    openepd_hierarchical_name: str = pydantic.Field(
         "Special form of hierarchical category ID where the >> is hierarchy separator"
     )
-    masterformat: str | None = pyd.Field(description="Default category code in Masterformat")
-    description: str | None = pyd.Field(description="Category verbose description")
-    declared_unit: Amount | None = pyd.Field(description="Declared unit of category, for example 1 kg")
-    subcategories: list["Category"] = pyd.Field(
-        description="List of subcategories. This makes categories tree-like structure"
+    masterformat: str | None = pydantic.Field(description="Default category code in Masterformat", default=None)
+    description: str | None = pydantic.Field(description="Category verbose description", default=None)
+    declared_unit: Amount | None = pydantic.Field(
+        description="Declared unit of category, for example 1 kg", default=None
+    )
+    subcategories: list["Category"] = pydantic.Field(
+        description="List of subcategories. This makes categories tree-like structure", default_factory=list
     )

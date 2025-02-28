@@ -15,7 +15,7 @@
 #
 import os
 
-from .patch_pydantic import patch_pydantic
-
-if os.environ.get("OPENEPD_DISABLE_PYDANTIC_PATCH", "false").lower() not in ("true", "1", "yes"):
-    patch_pydantic()
+# from .patch_pydantic import patch_pydantic
+#
+# if os.environ.get("OPENEPD_DISABLE_PYDANTIC_PATCH", "false").lower() not in ("true", "1", "yes"):
+#     patch_pydantic()

@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import FireProtectionPipingMaterial, PipingAnsiSchedule, PlumbingPipingMaterial
 from openepd.model.validation.quantity import LengthMmStr, MassPerLengthStr
@@ -49,12 +50,12 @@ class FireProtectionPipingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="6 mm")
-    piping_diameter: LengthMmStr | None = pyd.Field(default=None, description="", example="120 mm")
-    mass_per_unit_length: MassPerLengthStr | None = pyd.Field(default=None, description="", example="1 kg / m")
-    piping_ansi_schedule: PipingAnsiSchedule | None = pyd.Field(default=None, description="", example="5")
-    fire_protection_piping_material: FireProtectionPipingMaterial | None = pyd.Field(
-        default=None, description="", example="PVC"
+    thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["6 mm"])
+    piping_diameter: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["120 mm"])
+    mass_per_unit_length: MassPerLengthStr | None = pydantic.Field(default=None, description="", examples=["1 kg / m"])
+    piping_ansi_schedule: PipingAnsiSchedule | None = pydantic.Field(default=None, description="", examples=["5"])
+    fire_protection_piping_material: FireProtectionPipingMaterial | None = pydantic.Field(
+        default=None, description="", examples=["PVC"]
     )
 
 
@@ -109,11 +110,13 @@ class PipingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="6 mm")
-    piping_diameter: LengthMmStr | None = pyd.Field(default=None, description="", example="120 mm")
-    mass_per_unit_length: MassPerLengthStr | None = pyd.Field(default=None, description="", example="1 kg / m")
-    piping_ansi_schedule: PipingAnsiSchedule | None = pyd.Field(default=None, description="", example="5")
-    plumbing_piping_material: PlumbingPipingMaterial | None = pyd.Field(default=None, description="", example="PVC")
+    thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["6 mm"])
+    piping_diameter: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["120 mm"])
+    mass_per_unit_length: MassPerLengthStr | None = pydantic.Field(default=None, description="", examples=["1 kg / m"])
+    piping_ansi_schedule: PipingAnsiSchedule | None = pydantic.Field(default=None, description="", examples=["5"])
+    plumbing_piping_material: PlumbingPipingMaterial | None = pydantic.Field(
+        default=None, description="", examples=["PVC"]
+    )
 
 
 class PlumbingEquipmentV1(BaseOpenEpdHierarchicalSpec):

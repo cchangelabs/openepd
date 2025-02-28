@@ -45,8 +45,8 @@ class IndustryEpdApi(BaseApiMethodGroup):
         """
         response = self._client.do_request("get", f"/industry_epds/{uuid}")
         if with_response:
-            return IndustryEpd.parse_obj(response.json()), response
-        return IndustryEpd.parse_obj(response.json())
+            return IndustryEpd.model_validate(response.json()), response
+        return IndustryEpd.model_validate(response.json())
 
     @overload
     def create(self, iepd: IndustryEpd, with_response: Literal[True]) -> tuple[IndustryEpdRef, Response]: ...
@@ -71,8 +71,8 @@ class IndustryEpdApi(BaseApiMethodGroup):
         )
         content = response.json()
         if with_response:
-            return IndustryEpdRef.parse_obj(content), response
-        return IndustryEpdRef.parse_obj(content)
+            return IndustryEpdRef.model_validate(content), response
+        return IndustryEpdRef.model_validate(content)
 
     @overload
     def edit(self, iepd: IndustryEpd, with_response: Literal[True]) -> tuple[IndustryEpdRef, Response]: ...
@@ -99,8 +99,8 @@ class IndustryEpdApi(BaseApiMethodGroup):
         )
         content = response.json()
         if with_response:
-            return IndustryEpdRef.parse_obj(content), response
-        return IndustryEpdRef.parse_obj(content)
+            return IndustryEpdRef.model_validate(content), response
+        return IndustryEpdRef.model_validate(content)
 
     @overload
     def list_raw(
@@ -131,7 +131,7 @@ class IndustryEpdApi(BaseApiMethodGroup):
                 page_size=page_size,
             ),
         )
-        data = [IndustryEpdPreview.parse_obj(o) for o in response.json()]
+        data = [IndustryEpdPreview.model_validate(o) for o in response.json()]
         if with_response:
             return data, response
         return data
@@ -147,7 +147,8 @@ class IndustryEpdApi(BaseApiMethodGroup):
         def _get_page(p_num: int, p_size: int) -> IndustryEpdListResponse:
             data_list, response = self.list_raw(page_num=p_num, page_size=p_size, with_response=True)
             return IndustryEpdListResponse(
-                payload=data_list, meta=IndustryEpdSearchMeta(paging=paging_meta_from_v1_api(response))
+                payload=data_list,
+                meta=IndustryEpdSearchMeta(paging=paging_meta_from_v1_api(response)),
             )
 
         return StreamingListResponse[IndustryEpdPreview](_get_page, page_size=page_size)

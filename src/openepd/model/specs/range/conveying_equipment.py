@@ -19,10 +19,8 @@ __all__ = (
     "ConveyingEquipmentRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import ElevatorsBuildingRise, ElevatorsUsageIntensity
 from openepd.model.validation.quantity import (
@@ -31,6 +29,8 @@ from openepd.model.validation.quantity import (
     AmountRangeMass,
     AmountRangeSpeed,
 )
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class EscalatorsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -45,16 +45,17 @@ class EscalatorsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.1"
 
-    vertical_rise: AmountRangeLengthMm | None = pyd.Field(
-        default=None, description="The vertical distance between the top and bottom landings of an escalator"
+    vertical_rise: AmountRangeLengthMm | None = pydantic.Field(
+        default=None,
+        description="The vertical distance between the top and bottom landings of an escalator",
     )
-    speed: AmountRangeSpeed | None = pyd.Field(default=None, description="Reference speed of the escalator")
-    step_width: AmountRangeLengthMm | None = pyd.Field(default=None, description="Width of the escalator steps")
-    max_capacity: AmountRangeCapacityPerHour | None = pyd.Field(
+    speed: AmountRangeSpeed | None = pydantic.Field(default=None, description="Reference speed of the escalator")
+    step_width: AmountRangeLengthMm | None = pydantic.Field(default=None, description="Width of the escalator steps")
+    max_capacity: AmountRangeCapacityPerHour | None = pydantic.Field(
         default=None, description="Max capacity of escalator in persons per hour"
     )
-    indoor: bool | None = pyd.Field(default=None, description="Escalator can be used for indoor applications")
-    outdoor: bool | None = pyd.Field(default=None, description="Escalator can be used for outdoor applications")
+    indoor: bool | None = pydantic.Field(default=None, description="Escalator can be used for indoor applications")
+    outdoor: bool | None = pydantic.Field(default=None, description="Escalator can be used for outdoor applications")
 
 
 class ElevatorsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -66,11 +67,11 @@ class ElevatorsRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    usage_intensity: list[ElevatorsUsageIntensity] | None = pyd.Field(default=None, description="")
-    travel_length: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
-    rated_load: AmountRangeMass | None = pyd.Field(default=None, description="")
-    rated_speed: AmountRangeSpeed | None = pyd.Field(default=None, description="")
-    building_rise: list[ElevatorsBuildingRise] | None = pyd.Field(default=None, description="")
+    usage_intensity: list[ElevatorsUsageIntensity] | None = pydantic.Field(default=None, description="")
+    travel_length: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
+    rated_load: AmountRangeMass | None = pydantic.Field(default=None, description="")
+    rated_speed: AmountRangeSpeed | None = pydantic.Field(default=None, description="")
+    building_rise: list[ElevatorsBuildingRise] | None = pydantic.Field(default=None, description="")
 
 
 class ConveyingEquipmentRangeV1(BaseOpenEpdHierarchicalSpec):

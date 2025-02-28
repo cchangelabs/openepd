@@ -15,7 +15,8 @@
 #
 from typing import Annotated
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.enums import CmuBlockType, CmuWeightClassification
 from openepd.model.validation.quantity import GwpKgCo2eStr, PressureMPaStr
@@ -27,15 +28,29 @@ class CMUV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    white_cement: bool | None = pyd.Field(default=None, description="", example=True)
-    strength_28d: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    weight_classification: CmuWeightClassification | None = pyd.Field(default=None, description="", example="Normal")
-    block_type: CmuBlockType | None = pyd.Field(default=None, description="", example="Gray")
-    insulated: bool | None = pyd.Field(default=None, description="", example=True)
-    sound_performance: bool | None = pyd.Field(default=None, description="", example=True)
-    b1_recarbonation: Annotated[GwpKgCo2eStr | None, CodegenSpec(override_type=GwpKgCo2eStr)] = pyd.Field(
-        default=None, description="", example="1 kgCO2e"
+    white_cement: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
     )
-    b1_recarbonation_z: Annotated[float | None, CodegenSpec(override_type=float)] = pyd.Field(
-        default=None, description="", example=2.3
+    strength_28d: PressureMPaStr | None = pydantic.Field(default=None, description="", examples=["1 MPa"])
+    weight_classification: CmuWeightClassification | None = pydantic.Field(
+        default=None, description="", examples=["Normal"]
+    )
+    block_type: CmuBlockType | None = pydantic.Field(default=None, description="", examples=["Gray"])
+    insulated: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    sound_performance: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    b1_recarbonation: Annotated[GwpKgCo2eStr | None, CodegenSpec(override_type=GwpKgCo2eStr)] = pydantic.Field(
+        default=None, description="", examples=["1 kgCO2e"]
+    )
+    b1_recarbonation_z: Annotated[float | None, CodegenSpec(override_type=float)] = pydantic.Field(
+        default=None, description="", examples=[2.3]
     )

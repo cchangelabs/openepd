@@ -13,8 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+import pydantic
 
-from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
@@ -25,7 +25,6 @@ from openepd.model.specs.enums import (
     Spacer,
     ThermalSeparation,
 )
-from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import (
     LengthMmStr,
     PressureMPaStr,
@@ -38,90 +37,108 @@ from openepd.model.validation.quantity import (
 class GlazingIntendedApplication(BaseOpenEpdSchema):
     """Glass intended application mixin."""
 
-    curtain_wall: bool | None = pyd.Field(default=None, description="Intended for curtain walls. Relevant for IGUs.")
-    r_windows: bool | None = pyd.Field(
+    curtain_wall: bool | None = pydantic.Field(
+        default=None, description="Intended for curtain walls. Relevant for IGUs."
+    )
+    r_windows: bool | None = pydantic.Field(
         default=None,
         description="Intended for residential (NAFS 'R') and similar windows, doors, or skylights. Relevant for IGUs.",
     )
-    lc_windows: bool | None = pyd.Field(
-        default=None, description="Intended for light commercial (NAFS 'LC') and similar windows. Relevant for IGUs."
+    lc_windows: bool | None = pydantic.Field(
+        default=None,
+        description="Intended for light commercial (NAFS 'LC') and similar windows. Relevant for IGUs.",
     )
-    cw_windows: bool | None = pyd.Field(
-        default=None, description="Intended for commercial (NAFS 'CW') and similar windows. Relevant for IGUs."
+    cw_windows: bool | None = pydantic.Field(
+        default=None,
+        description="Intended for commercial (NAFS 'CW') and similar windows. Relevant for IGUs.",
     )
-    aw_windows: bool | None = pyd.Field(
-        default=None, description="Intended for architectural (NAFS 'AW') and similar windows. Relevant for IGUs."
+    aw_windows: bool | None = pydantic.Field(
+        default=None,
+        description="Intended for architectural (NAFS 'AW') and similar windows. Relevant for IGUs.",
     )
-    storefronts: bool | None = pyd.Field(
-        default=None, description="Intended for Storefronts and similar applications. Relevant for IGUs."
+    storefronts: bool | None = pydantic.Field(
+        default=None,
+        description="Intended for Storefronts and similar applications. Relevant for IGUs.",
     )
-    glazed_doors: bool | None = pyd.Field(
-        default=None, description="Intended for Glazed Doors and similar applications. Relevant for IGUs."
+    glazed_doors: bool | None = pydantic.Field(
+        default=None,
+        description="Intended for Glazed Doors and similar applications. Relevant for IGUs.",
     )
-    unit_skylights: bool | None = pyd.Field(
-        default=None, description="Intended for Unit Skylights and similar applications. Relevant for IGUs."
+    unit_skylights: bool | None = pydantic.Field(
+        default=None,
+        description="Intended for Unit Skylights and similar applications. Relevant for IGUs.",
     )
-    sloped_skylights: bool | None = pyd.Field(
+    sloped_skylights: bool | None = pydantic.Field(
         default=None,
         description="Intended for sloped glazing, and architectural skylights, and similar. Relevant for IGUs.",
     )
-    other: bool | None = pyd.Field(
-        default=None, description="Intended for other application not listed. Relevant for IGUs."
+    other: bool | None = pydantic.Field(
+        default=None,
+        description="Intended for other application not listed. Relevant for IGUs.",
     )
 
 
 class GlazingOptionsMixin(BaseOpenEpdSchema):
     """Common glazing options."""
 
-    low_emissivity: bool | None = pyd.Field(default=None, description="Low Emissivity coatings", example=True)
-    electrochromic: bool | None = pyd.Field(
+    low_emissivity: bool | None = pydantic.Field(
+        default=None,
+        description="Low Emissivity coatings",
+        examples=[True],
+    )
+    electrochromic: bool | None = pydantic.Field(
         default=None,
         description="Glazing with an electrically controllable solar heat gain and/or other properties.",
-        example=True,
+        examples=[True],
     )
-    acid_etched: bool | None = pyd.Field(
-        default=None, description="Flat glass that has undergone a chemical etching process.", example=True
+    acid_etched: bool | None = pydantic.Field(
+        default=None,
+        description="Flat glass that has undergone a chemical etching process.",
+        examples=[True],
     )
-    tempered: bool | None = pyd.Field(
+    tempered: bool | None = pydantic.Field(
         default=None,
         description="Consists of a single pane that has been heat-treated to give the glass increased impact "
         "resistance. Standard typically used in North America.",
-        example=True,
+        examples=[True],
     )
-    toughened: bool | None = pyd.Field(
+    toughened: bool | None = pydantic.Field(
         default=None,
         description="Consists of a single pane that has been specially heat-treated to give the glass increased impact "
         "resistance. Standard typically used in Europe.",
-        example=True,
+        examples=[True],
     )
-    laminated: bool | None = pyd.Field(
+    laminated: bool | None = pydantic.Field(
         default=None,
         description="Consists of at least two glass panes lying one on top of the other, with one or several layers of "
         "a tear-resistant, viscoelastic film positioned between the panes, which consist of polyvinyl "
         "butyral (PVB)",
-        example=True,
+        examples=[True],
     )
-    fire_resistant: bool | None = pyd.Field(default=None, example=True)
-    fire_protection: bool | None = pyd.Field(
+    fire_resistant: bool | None = pydantic.Field(
+        default=None,
+        examples=[True],
+    )
+    fire_protection: bool | None = pydantic.Field(
         default=None,
         description="Specifically tested for its ability to block flames and smoke, but not radiant heat. Ranges from"
         " specialty tempered products rated for ~20 minutes to glass ceramics rated up to 3 hours.",
-        example=True,
+        examples=[True],
     )
-    pyrolytic_coated: bool | None = pyd.Field(
+    pyrolytic_coated: bool | None = pydantic.Field(
         default=None,
         description="At least one coating is applied in a pyrolytic process, typically during float glass production.",
-        example=True,
+        examples=[True],
     )
-    sputter_coat: bool | None = pyd.Field(
+    sputter_coat: bool | None = pydantic.Field(
         default=None,
         description="At least one coating is applied using sputter (vacuum deposition) coating.",
-        example=True,
+        examples=[True],
     )
-    solar_heat_gain: RatioFloat | None = pyd.Field(
+    solar_heat_gain: float | None = pydantic.Field(
         default=None,
         description="Solar heat gain, measured at a certain level of Differential Pressure. Range is 0 to 1.",
-        example=0.5,
+        examples=[0.5],
         ge=0,
         le=1,
     )
@@ -181,8 +198,8 @@ class FenestrationFramingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thermal_separation: ThermalSeparation | None = pyd.Field(default=None, example="Aluminium")
-    material: FrameMaterial | None = pyd.Field(default=None, example="Vinyl")
+    thermal_separation: ThermalSeparation | None = pydantic.Field(default=None, examples=["Aluminium"])
+    material: FrameMaterial | None = pydantic.Field(default=None, examples=["Vinyl"])
 
 
 class FenestrationHardwareV1(BaseOpenEpdHierarchicalSpec):
@@ -191,7 +208,7 @@ class FenestrationHardwareV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    function: HardwareFunction | None = pyd.Field(default=None, description="", example="Lock")
+    function: HardwareFunction | None = pydantic.Field(default=None, description="", examples=["Lock"])
 
 
 class FlatGlassPanesV1(BaseOpenEpdHierarchicalSpec):
@@ -200,11 +217,11 @@ class FlatGlassPanesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: FlatGlassPanesThickness | None = pyd.Field(default=None, example="12 mm")
+    thickness: FlatGlassPanesThickness | None = pydantic.Field(default=None, examples=["12 mm"])
 
-    _flat_glass_panes_thickness_is_quantity_validator = pyd.validator("thickness", allow_reuse=True)(
-        validate_quantity_unit_factory("m")
-    )
+    @pydantic.field_validator("thickness")
+    def _flat_glass_panes_thickness_is_quantity_validator(cls, v):
+        return validate_quantity_unit_factory("m")(cls, v)
 
 
 class ProcessedNonInsulatingGlassPanesV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin):
@@ -295,7 +312,7 @@ class FenestrationPartsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    intended_application: GlazingIntendedApplication | None = pyd.Field(
+    intended_application: GlazingIntendedApplication | None = pydantic.Field(
         default=None, description="Intended application."
     )
 
@@ -318,27 +335,29 @@ class GlassPanesV1(BaseOpenEpdHierarchicalSpec):
 class NAFSPerformanceClass(BaseOpenEpdSchema):
     """NAFS Performance class."""
 
-    r: bool | None = pyd.Field(
-        default=None, description="Residential; commonly used in one- and two-family dwellings.", example=True
+    r: bool | None = pydantic.Field(
+        default=None,
+        description="Residential; commonly used in one- and two-family dwellings.",
+        examples=[True],
     )
-    lc: bool | None = pyd.Field(
+    lc: bool | None = pydantic.Field(
         default=None,
         description="Light Commercial: commonly used in low-rise and mid-rise multi-family dwellings and other "
         "buildings where larger sizes and higher loading requirements are expected.",
-        example=True,
+        examples=[True],
     )
-    cw: bool | None = pyd.Field(
+    cw: bool | None = pydantic.Field(
         default=None,
         description="Commercial Window: commonly used in low-rise and mid-rise buildings where larger sizes, higher "
         "loading requirements, limits on deflection, and heavy use are expected.",
-        example=True,
+        examples=[True],
     )
-    aw: bool | None = pyd.Field(
+    aw: bool | None = pydantic.Field(
         default=None,
         description="Architectural Window: commonly used in high-rise and mid-rise buildings to meet increased "
         "loading requirements and limits on deflection, and in buildings where frequent and extreme use "
         "of the fenestration products is expected.",
-        example=True,
+        examples=[True],
     )
 
 
@@ -348,49 +367,52 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    hurricane_resistant: bool | None = pyd.Field(
-        default=None, description="The product has been designed to resist windborne debris.", example=True
+    hurricane_resistant: bool | None = pydantic.Field(
+        default=None,
+        description="The product has been designed to resist windborne debris.",
+        examples=[True],
     )
 
-    assembly_u_factor: UFactorStr | None = pyd.Field(
+    assembly_u_factor: UFactorStr | None = pydantic.Field(
         default=None,
         description="Weighted average conductance of heat across assembly (including frame).",
-        example="1 USI",
+        examples=["1 USI"],
     )
-    air_infiltration: SpeedStr | None = pyd.Field(
+    air_infiltration: SpeedStr | None = pydantic.Field(
         default=None,
         description="Air infiltration, measured at a certain level of Differential Pressure.",
-        example="1 m3 / m2 / s",
+        examples=["1 m3 / m2 / s"],
     )
 
-    thermal_separation: ThermalSeparation | None = pyd.Field(default=None, example="Aluminium")
-    dp_rating: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    glass_panes: int | None = pyd.Field(
+    thermal_separation: ThermalSeparation | None = pydantic.Field(default=None, examples=["Aluminium"])
+    dp_rating: PressureMPaStr | None = pydantic.Field(default=None, description="", examples=["1 MPa"])
+    glass_panes: int | None = pydantic.Field(
         default=None,
         description="Number of panes, each separated by a cavity. A 3 pane unit has 2 cavities. example: 3",
-        example=3,
+        examples=[3],
     )
 
-    performance_class: NAFSPerformanceClass | None = pyd.Field(
+    performance_class: NAFSPerformanceClass | None = pydantic.Field(
         default=None, description="Performance class according to NAFS."
     )
 
-    performance_grade: NAFSPerformanceGrade | None = pyd.Field(
+    performance_grade: NAFSPerformanceGrade | None = pydantic.Field(
         default=None,
         description="NAFS Performance Grade. The NAFS Performance Grade is a number that represents the performance "
         "of the glazing product. The higher the number, the better the performance. The NAFS Performance "
         "Grade is calculated using the NAFS Performance Class, the NAFS Performance Index, and the NAFS "
         "Performance Factor. While it is expressed as pressure, there are specific values which are "
         "allowed. The values are listed in the enum.",
-        example="95 psf",
+        examples=["95 psf"],
     )
 
-    _assembly_u_factor_is_quantity_validator = pyd.validator("assembly_u_factor", allow_reuse=True)(
-        validate_quantity_unit_factory("USI")
-    )
-    _nafs_performance_grade_is_quantity_validator = pyd.validator("performance_grade", allow_reuse=True)(
-        validate_quantity_unit_factory("psf")
-    )
+    @pydantic.field_validator("assembly_u_factor")
+    def _assembly_u_factor_is_quantity_validator(cls, v):
+        return validate_quantity_unit_factory("USI")(cls, v)
+
+    @pydantic.field_validator("performance_grade")
+    def _nafs_performance_grade_is_quantity_validator(cls, v):
+        return validate_quantity_unit_factory("psf")(cls, v)
 
     # Nested specs:
     GlazedDoors: GlazedDoorsV1 | None = None
@@ -404,38 +426,48 @@ class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin)
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    intended_application: GlazingIntendedApplication | None = pyd.Field(
+    intended_application: GlazingIntendedApplication | None = pydantic.Field(
         default=None, description="Intended application for IGUs."
     )
 
-    hurricane_resistant: bool | None = pyd.Field(default=None, example=True)
-
-    dp_rating: PressureMPaStr | None = pyd.Field(
-        default=None, description="Maximum Differential Pressure, a measure of wind tolerance.", example="1 MPa"
+    hurricane_resistant: bool | None = pydantic.Field(
+        default=None,
+        examples=[True],
     )
-    air_infiltration: SpeedStr | None = pyd.Field(
+
+    dp_rating: PressureMPaStr | None = pydantic.Field(
+        default=None,
+        description="Maximum Differential Pressure, a measure of wind tolerance.",
+        examples=["1 MPa"],
+    )
+    air_infiltration: SpeedStr | None = pydantic.Field(
         default=None,
         description="Air infiltration, measured at a certain level of Differential Pressure.",
-        example="1 m3 / m2 / s",
+        examples=["1 m3 / m2 / s"],
     )
-    glass_panes: int | None = pyd.Field(
+    glass_panes: int | None = pydantic.Field(
         default=None,
         description="Number of panes, each separated by a cavity. A 3 pane unit has 2 cavities. example: 3",
-        example=3,
+        examples=[3],
     )
-    cog_u_factor: UFactorStr | None = pyd.Field(
-        default=None, description="Conductance of heat at center of glass.", example="1 USI"
+    cog_u_factor: UFactorStr | None = pydantic.Field(
+        default=None,
+        description="Conductance of heat at center of glass.",
+        examples=["1 USI"],
     )
-    spacer: Spacer | None = pyd.Field(
-        default=None, description="Spacer material for Integrated Glass Unit.", example="Aluminium"
+    spacer: Spacer | None = pydantic.Field(
+        default=None,
+        description="Spacer material for Integrated Glass Unit.",
+        examples=["Aluminium"],
     )
 
-    _dp_rating_is_quantity_validator = pyd.validator("dp_rating", allow_reuse=True)(
-        validate_quantity_unit_factory("MPa")
-    )
-    _cog_u_factor_is_quantity_validator = pyd.validator("cog_u_factor", allow_reuse=True)(
-        validate_quantity_unit_factory("USI")
-    )
+    @pydantic.field_validator("dp_rating")
+    def _dp_rating_is_quantity_validator(cls, v):
+        return validate_quantity_unit_factory("MPa")(cls, v)
+
+    @pydantic.field_validator("cog_u_factor")
+    def _cog_u_factor_is_quantity_validator(cls, v):
+        return validate_quantity_unit_factory("USI")(cls, v)
 
 
 class CurtainWallsV1(BaseOpenEpdHierarchicalSpec):
@@ -458,8 +490,8 @@ class DoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    height: LengthMmStr | None = pyd.Field(default=None, example="1200 mm")
-    width: LengthMmStr | None = pyd.Field(default=None, example="600 mm")
+    height: LengthMmStr | None = pydantic.Field(default=None, examples=["1200 mm"])
+    width: LengthMmStr | None = pydantic.Field(default=None, examples=["600 mm"])
 
     # Nested specs:
     IntegratedDoorsOpeningAssemblies: IntegratedDoorsOpeningAssembliesV1 | None = None
@@ -535,7 +567,7 @@ class OpeningsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, example="80 mm")
+    thickness: LengthMmStr | None = pydantic.Field(default=None, examples=["80 mm"])
 
     # Nested specs:
     CurtainWalls: CurtainWallsV1 | None = None

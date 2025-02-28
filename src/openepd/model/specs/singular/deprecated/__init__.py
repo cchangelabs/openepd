@@ -15,7 +15,8 @@
 #
 from typing import Any, ClassVar
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.base import BaseOpenEpdSchema
 
 
@@ -48,7 +49,7 @@ def get_safely(d: dict, path: str) -> tuple[bool, Any]:
                 if p not in current:
                     return False, None
                 current = current.get(p)
-            case pyd.BaseModel() as model:
+            case pydantic.BaseModel() as model:
                 if not hasattr(current, p) or p not in model.__fields_set__:
                     return False, None
                 current = getattr(current, p)

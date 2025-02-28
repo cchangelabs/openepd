@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import AluminiumAlloy
 
@@ -33,7 +34,11 @@ class AluminiumExtrusionsV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thermally_improved: bool | None = pyd.Field(default=None, description="", example=True)
+    thermally_improved: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
 
 
 class AluminiumSheetGoodsV1(BaseOpenEpdHierarchicalSpec):
@@ -54,9 +59,19 @@ class AluminiumV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    alloy: AluminiumAlloy | None = pyd.Field(default=None, description="", example=str(AluminiumAlloy.ALLOY_1XXX))
-    anodized: bool | None = pyd.Field(default=None, description="", example=True)
-    painted: bool | None = pyd.Field(default=None, description="", example=True)
+    alloy: AluminiumAlloy | None = pydantic.Field(
+        default=None, description="", examples=[str(AluminiumAlloy.ALLOY_1XXX)]
+    )
+    anodized: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
+    painted: bool | None = pydantic.Field(
+        default=None,
+        description="",
+        examples=[True],
+    )
 
     # Nested specs:
     AluminiumBillets: AluminiumBilletsV1 | None = None

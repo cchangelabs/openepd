@@ -13,11 +13,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from typing import Annotated, Optional
+from typing import Annotated, List, Optional
 
 from openlocationcode import openlocationcode
+import pydantic
+from pydantic import ConfigDict, Field, StringConstraints
 
-from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Location, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.validation.common import ReferenceStr
@@ -26,18 +27,19 @@ from openepd.model.validation.common import ReferenceStr
 class OrgRef(BaseOpenEpdSchema):
     """Represents Organisation with minimal data."""
 
-    web_domain: str | None = pyd.Field(
-        description="A web domain owned by organization. Typically is the org's home website address", default=None
+    web_domain: str | None = pydantic.Field(
+        description="A web domain owned by organization. Typically is the org's home website address",
+        default=None,
     )
-    name: str | None = pyd.Field(
+    name: str | None = pydantic.Field(
         max_length=200,
         description="Common name for organization",
-        example="C Change Labs",
+        examples=["C Change Labs"],
         default=None,
     )
-    ref: ReferenceStr | None = pyd.Field(
+    ref: ReferenceStr | None = pydantic.Field(
         default=None,
-        example="https://openepd.buildingtransparency.org/api/orgs/c-change-labs.com",
+        examples=["https://openepd.buildingtransparency.org/api/orgs/c-change-labs.com"],
         description="Reference to this Org's JSON object",
     )
 
@@ -45,19 +47,37 @@ class OrgRef(BaseOpenEpdSchema):
 class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
     """Represent an organization."""
 
-    alt_names: Annotated[list[str], pyd.conlist(pyd.constr(max_length=200), max_items=255)] | None = pyd.Field(
+    alt_names: (
+        Annotated[
+            list[str],
+            Annotated[
+                List[Annotated[str, StringConstraints(max_length=200)]],
+                Field(max_length=255),
+            ],
+        ]
+        | None
+    ) = pydantic.Field(
         description="List of other names for organization",
-        example=["C-Change Labs", "C-Change Labs inc."],
+        examples=[["C-Change Labs", "C-Change Labs inc."]],
         default=None,
     )
     # TODO: NEW field, not in the spec
 
-    owner: Optional["OrgRef"] = pyd.Field(description="Organization that controls this organization", default=None)
-    subsidiaries: Annotated[list["OrgRef"], pyd.conlist(pyd.constr(max_length=200), max_items=255)] | None = pyd.Field(
+    owner: Optional["OrgRef"] = pydantic.Field(description="Organization that controls this organization", default=None)
+    subsidiaries: (
+        Annotated[
+            list["OrgRef"],
+            Annotated[
+                List[Annotated[str, StringConstraints(max_length=200)]],
+                Field(max_length=255),
+            ],
+        ]
+        | None
+    ) = pydantic.Field(
         description="Organizations controlled by this organization",
         default=None,
     )
-    hq_location: Location | None = pyd.Field(
+    hq_location: Location | None = pydantic.Field(
         default=None,
         description="Location of a place of business, preferably the corporate headquarters.",
     )
@@ -66,21 +86,21 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
 class PlantRef(BaseOpenEpdSchema):
     """Represents Plant with minimal data."""
 
-    id: str | None = pyd.Field(
+    id: str | None = pydantic.Field(
         description="Plus code (aka Open Location Code) of plant's location and "
         "owner's web domain joined with `.`(dot).",
-        example="865P2W3V+3W.interface.com",
+        examples=["865P2W3V+3W.interface.com"],
         default=None,
     )
-    name: str | None = pyd.Field(
+    name: str | None = pydantic.Field(
         max_length=200,
         description="Manufacturer's name for plant. Recommended < 40 chars",
-        example="Dalton, GA",
+        examples=["Dalton, GA"],
         default=None,
     )
-    ref: ReferenceStr | None = pyd.Field(
+    ref: ReferenceStr | None = pydantic.Field(
         default=None,
-        example="https://openepd.buildingtransparency.org/api/orgs/c-change-labs.com",
+        examples=["https://openepd.buildingtransparency.org/api/orgs/c-change-labs.com"],
         description="Reference to this Plant's JSON object",
     )
 
@@ -88,36 +108,38 @@ class PlantRef(BaseOpenEpdSchema):
 class Plant(PlantRef, WithAttachmentsMixin, WithAltIdsMixin):
     """Represent a manufacturing plant."""
 
-    pluscode: str | None = pyd.Field(
+    pluscode: str | None = pydantic.Field(
         default=None,
         description="(deprecated) Plus code (aka Open Location Code) of plant's location",
         deprecated="Pluscode field is deprecated. If users need a pluscode they can obtain it from "
         "`id` like this: `id.spit('.', maxsplit=1)[0]`",
     )
-    latitude: float | None = pyd.Field(
-        default=None, description="(deprecated) Latitude of the plant location. Use 'location' fields instead."
+    latitude: float | None = pydantic.Field(
+        default=None,
+        description="(deprecated) Latitude of the plant location. Use 'location' fields instead.",
     )
-    longitude: float | None = pyd.Field(
-        default=None, description="(deprecated) Longitude of the plant location. Use 'location' fields instead."
+    longitude: float | None = pydantic.Field(
+        default=None,
+        description="(deprecated) Longitude of the plant location. Use 'location' fields instead.",
     )
-    owner: Org | None = pyd.Field(description="Organization that owns the plant", default=None)
-    address: str | None = pyd.Field(
+    owner: Org | None = pydantic.Field(description="Organization that owns the plant", default=None)
+    address: str | None = pydantic.Field(
         max_length=200,
         default=None,
         description="(deprecated) Text address, preferably geocoded. Use 'location' fields instead",
-        example="1503 Orchard Hill Rd, LaGrange, GA 30240, United States",
+        examples=["1503 Orchard Hill Rd, LaGrange, GA 30240, United States"],
     )
-    contact_email: pyd.EmailStr | None = pyd.Field(
-        description="Email contact", example="info@interface.com", default=None
+    contact_email: pydantic.EmailStr | None = pydantic.Field(
+        description="Email contact", examples=["info@interface.com"], default=None
     )
-    location: Location | None = pyd.Field(description="Location of the plant", default=None)
+    location: Location | None = pydantic.Field(description="Location of the plant", default=None)
 
     @classmethod
     def get_asset_type(cls) -> str | None:
         """Return the asset type of this class (see BaseOpenEpdSchema.get_asset_type for details)."""
         return "org"
 
-    @pyd.validator("id")
+    @pydantic.field_validator("id")
     def _validate_id(cls, v: str) -> str:
         if not v:
             return v
@@ -133,5 +155,4 @@ class Plant(PlantRef, WithAttachmentsMixin, WithAltIdsMixin):
             raise ValueError("Incorrect web_domain for plant")
         return v
 
-    class Config(BaseOpenEpdSchema.Config):
-        allow_population_by_field_name = True
+    model_config = ConfigDict(populate_by_name=True)

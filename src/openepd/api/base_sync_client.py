@@ -238,7 +238,12 @@ class SyncHttpClient:
         return content
 
     def read_url_write_to_stream(
-        self, url: str, target_stream: IO[bytes], method: str = "get", chunk_size: int = 1024, **kwargs
+        self,
+        url: str,
+        target_stream: IO[bytes],
+        method: str = "get",
+        chunk_size: int = 1024,
+        **kwargs,
     ) -> int:
         """
         Perform query to the given endpoint and writes response body to the given stream.
@@ -327,7 +332,12 @@ class SyncHttpClient:
                     )
                     if timeout > left_time:
                         return resp
-                    logger.info("`%s %s` has been throttled for %s second(s)", method, url, timeout)
+                    logger.info(
+                        "`%s %s` has been throttled for %s second(s)",
+                        method,
+                        url,
+                        timeout,
+                    )
                     time.sleep(timeout)
                     left_time -= timeout
                     if left_time > 0:
@@ -374,7 +384,13 @@ class SyncHttpClient:
             method,
             url,
             self._retry_count,
-            partial(self._run_throttled_request, method, url, request_kwargs, session=session),
+            partial(
+                self._run_throttled_request,
+                method,
+                url,
+                request_kwargs,
+                session=session,
+            ),
         )
 
         response = do_request()
@@ -447,13 +463,21 @@ class SyncHttpClient:
                 exception = None
                 try:
                     response = func(*args, **kwargs)
-                except (requests.exceptions.ConnectionError, ConnectionError, Timeout) as e:
+                except (
+                    requests.exceptions.ConnectionError,
+                    ConnectionError,
+                    Timeout,
+                ) as e:
                     exception = e
 
                 if exception or response.status_code == requests_codes.service_unavailable:
                     secs = random.randint(60, 60 * 5)
                     logger.warning(
-                        "%s %s is unavailable. Attempts left: %s. Waiting %s seconds...", method, url, attempts, secs
+                        "%s %s is unavailable. Attempts left: %s. Waiting %s seconds...",
+                        method,
+                        url,
+                        attempts,
+                        secs,
                     )
 
                     # wait random number of seconds and request again
@@ -509,28 +533,48 @@ class DefaultOpenApiErrorHandlers:
     def handle_not_found(response: Response, raise_for_status: bool) -> Response | None:
         if raise_for_status:
             error = DefaultOpenApiErrorHandlers._parse_error_response(response)
-            raise errors.ObjectNotFound(response.status_code, error.summary, response, error_code=error.error_code)
+            raise errors.ObjectNotFound(
+                response.status_code,
+                error.summary,
+                response,
+                error_code=error.error_code,
+            )
         return response
 
     @staticmethod
     def handle_unauthorized(response: Response, raise_for_status: bool) -> Response | None:
         if raise_for_status:
             error = DefaultOpenApiErrorHandlers._parse_error_response(response)
-            raise errors.NotAuthorizedError(response.status_code, error.summary, response, error_code=error.error_code)
+            raise errors.NotAuthorizedError(
+                response.status_code,
+                error.summary,
+                response,
+                error_code=error.error_code,
+            )
         return response
 
     @staticmethod
     def handle_access_denied(response: Response, raise_for_status: bool) -> Response | None:
         if raise_for_status:
             error = DefaultOpenApiErrorHandlers._parse_error_response(response)
-            raise errors.AccessDeniedError(response.status_code, error.summary, response, error_code=error.error_code)
+            raise errors.AccessDeniedError(
+                response.status_code,
+                error.summary,
+                response,
+                error_code=error.error_code,
+            )
         return response
 
     @staticmethod
     def handle_server_error(response: Response, raise_for_status: bool) -> Response | None:
         if raise_for_status:
             error = DefaultOpenApiErrorHandlers._parse_error_response(response)
-            raise errors.ServerError(response.status_code, error.summary, response, error_code=error.error_code)
+            raise errors.ServerError(
+                response.status_code,
+                error.summary,
+                response,
+                error_code=error.error_code,
+            )
         return response
 
 

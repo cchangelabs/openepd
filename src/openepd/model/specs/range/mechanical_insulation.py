@@ -15,14 +15,14 @@
 #
 __all__ = ("MechanicalInsulationRangeV1",)
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+import pydantic
 
-
-from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeFloat
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import InsulatingMaterial, InsulationIntendedApplication
 from openepd.model.validation.quantity import AmountRangeLengthMm
+
+# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 class MechanicalInsulationRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -36,7 +36,7 @@ class MechanicalInsulationRangeV1(BaseOpenEpdHierarchicalSpec):
 
     _EXT_VERSION = "1.0"
 
-    r_value: RangeFloat | None = pyd.Field(default=None, description="")
-    material: list[InsulatingMaterial] | None = pyd.Field(default=None, description="")
-    intended_application: list[InsulationIntendedApplication] | None = pyd.Field(default=None, description="")
-    thickness_per_declared_unit: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
+    r_value: RangeFloat | None = pydantic.Field(default=None, description="")
+    material: list[InsulatingMaterial] | None = pydantic.Field(default=None, description="")
+    intended_application: list[InsulationIntendedApplication] | None = pydantic.Field(default=None, description="")
+    thickness_per_declared_unit: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")

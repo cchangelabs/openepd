@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import BuriedPipingType, PipingAnsiSchedule, UtilityPipingMaterial
 from openepd.model.validation.quantity import LengthMmStr, MassPerLengthStr
@@ -36,8 +37,8 @@ class BuriedPipingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    buried_piping_type: list[BuriedPipingType] | None = pyd.Field(
-        default=None, description="", example=["Water Utilities"]
+    buried_piping_type: list[BuriedPipingType] | None = pydantic.Field(
+        default=None, description="", examples=[["Water Utilities"]]
     )
 
 
@@ -52,11 +53,13 @@ class UtilityPipingV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     # Own fields:
-    thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="6 m")
-    piping_diameter: LengthMmStr | None = pyd.Field(default=None, description="", example="200 mm")
-    mass_per_unit_length: MassPerLengthStr | None = pyd.Field(default=None, description="", example="1 kg / m")
-    piping_ansi_schedule: PipingAnsiSchedule | None = pyd.Field(default=None, description="", example="5")
-    utility_piping_material: UtilityPipingMaterial | None = pyd.Field(default=None, description="", example="PVC")
+    thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["6 m"])
+    piping_diameter: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["200 mm"])
+    mass_per_unit_length: MassPerLengthStr | None = pydantic.Field(default=None, description="", examples=["1 kg / m"])
+    piping_ansi_schedule: PipingAnsiSchedule | None = pydantic.Field(default=None, description="", examples=["5"])
+    utility_piping_material: UtilityPipingMaterial | None = pydantic.Field(
+        default=None, description="", examples=["PVC"]
+    )
 
     # Nested specs:
     BuildingHeatingPiping: BuildingHeatingPipingV1 | None = None

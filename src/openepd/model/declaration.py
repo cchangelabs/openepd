@@ -17,7 +17,8 @@ import abc
 import datetime
 from enum import StrEnum
 
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.base import BaseOpenEpdSchema, OpenXpdUUID, RootDocument
 from openepd.model.common import Amount
 from openepd.model.geography import Geography
@@ -36,55 +37,60 @@ THIRD_PARTY_VERIFIER_DESCRIPTION = "JSON object for Org that performed a critica
 class BaseDeclaration(RootDocument, abc.ABC):
     """Base class for declaration-related documents (EPDs, Industry-wide EPDs, Generic Estimates)."""
 
-    id: OpenXpdUUID | None = pyd.Field(
+    id: OpenXpdUUID | None = pydantic.Field(
         description="The unique ID for this document.  To ensure global uniqueness, should be registered at "
         "open-xpd-uuid.cqd.io/register or a coordinating registry.",
-        example="1u7zsed8",
+        examples=["1u7zsed8"],
         default=None,
     )
-    date_of_issue: datetime.datetime | None = pyd.Field(
-        example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.timezone.utc),
+    date_of_issue: datetime.datetime | None = pydantic.Field(
+        examples=[datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.timezone.utc)],
         description="Date the document was issued. This should be the first day on which the document is valid.",
+        default=None,
     )
-    valid_until: datetime.datetime | None = pyd.Field(
-        example=datetime.datetime(day=11, month=9, year=2028, tzinfo=datetime.timezone.utc),
+    valid_until: datetime.datetime | None = pydantic.Field(
+        examples=[datetime.datetime(day=11, month=9, year=2028, tzinfo=datetime.timezone.utc)],
         description="Last date the document is valid on, including any extensions.",
+        default=None,
     )
 
-    version: pyd.NonNegativeInt | None = pyd.Field(
+    version: pydantic.NonNegativeInt | None = pydantic.Field(
         description="Version of this document. The document's issuer should increment it anytime even a single "
         "character changes, as this value is used to determine the most recent version.",
-        example=1,
+        examples=[1],
         default=None,
     )
 
-    declared_unit: Amount | None = pyd.Field(
+    declared_unit: Amount | None = pydantic.Field(
         description="SI declared unit for this document.  If a functional unit is "
         "utilized, the declared unit shall refer to the amount of "
-        "product associated with the A1-A3 life cycle stage."
+        "product associated with the A1-A3 life cycle stage.",
+        default=None,
     )
-    kg_per_declared_unit: AmountMass | None = pyd.Field(
+    kg_per_declared_unit: AmountMass | None = pydantic.Field(
         default=None,
         description="Mass of the product, in kilograms, per declared unit",
-        example=Amount(qty=12.5, unit="kg").to_serializable(exclude_unset=True),
+        examples=[Amount(qty=12.5, unit="kg").to_serializable(exclude_unset=True)],
     )
-    compliance: list[Standard] = pyd.Field(
-        description="Standard(s) to which this document is compliant.", default_factory=list
+    compliance: list[Standard] = pydantic.Field(
+        description="Standard(s) to which this document is compliant.",
+        default_factory=list,
     )
 
     # TODO: add product_alt_names? E.g. ILCD has a list of synonymous names
-    product_classes: dict[str, str | list[str]] = pyd.Field(
-        description="List of classifications, including Masterformat and UNSPC", default_factory=dict
+    product_classes: dict[str, str | list[str]] = pydantic.Field(
+        description="List of classifications, including Masterformat and UNSPC",
+        default_factory=dict,
     )
 
-    language: str | None = pyd.Field(
+    language: str | None = pydantic.Field(
         min_length=2,
         max_length=2,
-        strip_whitespace=True,
         description="Language this document is captured in, as an ISO 639-1 code",
-        example="en",
+        examples=["en"],
+        default=None,
     )
-    private: bool | None = pyd.Field(
+    private: bool | None = pydantic.Field(
         default=False,
         description="This document's author does not wish the contents published. "
         "Useful for draft, partial, or confidential declarations.  "
@@ -94,19 +100,20 @@ class BaseDeclaration(RootDocument, abc.ABC):
         "incomplete EPDs.",
     )
 
-    pcr: Pcr | None = pyd.Field(
+    pcr: Pcr | None = pydantic.Field(
         description="JSON object for product category rules. Should point to the "
         "most-specific PCR that applies; the PCR entry should point to any "
         "parent PCR.",
         default=None,
     )
-    lca_discussion: str | None = pyd.Field(
+    lca_discussion: str | None = pydantic.Field(
         max_length=20000,
         description="""A rich text description containing information for experts reviewing the document contents.
-    Text descriptions required by ISO 14025, ISO 21930, EN 15804,, relevant PCRs, or program instructions and which do not
+    Text descriptions required by ISO 14025, ISO 21930, EN 15804, relevant PCRs, or program instructions and which do not
     have specific openEPD fields should be entered here.  This field may be large, and may contain multiple sections
     separated by github flavored markdown formatting.""",
-        example="""# Packaging
+        examples=[
+            """# Packaging
 
     Information on product-specific packaging: type, composition and possible reuse of packaging materials (paper,
     strapping, pallets, foils, drums, etc.) shall be included in this Section. The EPD shall describe specific packaging
@@ -125,96 +132,118 @@ class BaseDeclaration(RootDocument, abc.ABC):
     Use-stage environmental impacts of flooring products during building operations depend on product cleaning assumptions.
     Information on cleaning frequency and cleaning products shall be provided based on the manufacturer’s recommendations.
     In the absence of primary data, cleaning assumptions shall be documented.
-    """,
+    """
+        ],
+        default=None,
     )
 
-    product_image_small: pyd.AnyUrl | None = pyd.Field(
-        description="Pointer to image illustrating the product, which is no more than 200x200 pixels", default=None
+    product_image_small: pydantic.AnyUrl | None = pydantic.Field(
+        description="Pointer to image illustrating the product, which is no more than 200x200 pixels",
+        default=None,
     )
-    product_image: pyd.AnyUrl | pyd.FileUrl | None = pyd.Field(
-        description="pointer to image illustrating the product no more than 10MB", default=None
+    product_image: pydantic.AnyUrl | pydantic.FileUrl | None = pydantic.Field(
+        description="pointer to image illustrating the product no more than 10MB",
+        default=None,
     )
-    declaration_url: str | None = pyd.Field(
+    declaration_url: str | None = pydantic.Field(
         description="Link to data object on original registrar's site",
-        example="https://epd-online.com/EmbeddedEpdList/Download/6029",
+        examples=["https://epd-online.com/EmbeddedEpdList/Download/6029"],
+        default=None,
     )
-    kg_C_per_declared_unit: AmountMass | None = pyd.Field(
+    kg_C_per_declared_unit: AmountMass | None = pydantic.Field(
         default=None,
         description="Mass of elemental carbon, per declared unit, contained in the product itself at the manufacturing "
         "facility gate.  Used (among other things) to check a carbon balance or calculate incineration "
         "emissions.  The source of carbon (e.g. biogenic) is not relevant in this field.",
-        example=Amount(qty=8.76, unit="kgCO2e").to_serializable(exclude_unset=True),
+        examples=[Amount(qty=8.76, unit="kgCO2e").to_serializable(exclude_unset=True)],
     )
-    kg_C_biogenic_per_declared_unit: AmountGWP | None = pyd.Field(
+    kg_C_biogenic_per_declared_unit: AmountGWP | None = pydantic.Field(
         default=None,
         description="Mass of elemental carbon from biogenic sources, per declared unit, contained in the product "
         "itself at the manufacturing facility gate.  It may be presumed that any biogenic carbon content "
         "has been accounted for as -44/12 kgCO2e per kg C in stages A1-A3, per EN15804 and ISO 21930.",
-        example=Amount(qty=8.76, unit="kgCO2e").to_serializable(exclude_unset=True),
+        examples=[Amount(qty=8.76, unit="kgCO2e").to_serializable(exclude_unset=True)],
     )
-    product_service_life_years: float | None = pyd.Field(
+    product_service_life_years: float | None = pydantic.Field(
         gt=0.0009,
         lt=101,
         description="Reference service life of the product, in years.  Serves as a maximum for replacement interval, "
         "which may also be constrained by usage or the service life of what the product goes into "
         "(e.g. a building).",
-        example=50.0,
+        examples=[50.0],
+        default=None,
     )
 
+    @pydantic.field_validator("language", mode="before")
+    def strip_language(cls, value: str | None) -> str | None:
+        """Strip whitespace from language."""
+        if isinstance(value, str):
+            return value.strip()
+        return value
 
-class AverageDatasetMixin(pyd.BaseModel, title="Average Dataset"):
+
+class AverageDatasetMixin(pydantic.BaseModel, title="Average Dataset"):
     """Fields common for average dataset (Industry-wide EPDs, Generic Estimates)."""
 
-    description: str | None = pyd.Field(
+    description: str | None = pydantic.Field(
         max_length=2000,
         description="1-paragraph description of the average dataset. Supports plain text or github flavored markdown.",
+        default=None,
     )
 
-    geography: list[Geography] | None = pyd.Field(
+    geography: list[Geography] | None = pydantic.Field(
         description="Jurisdiction(s) in which the LCA result is applicable.  An empty array, or absent properties, "
         "implies global applicability.",
+        default=None,
     )
 
-    specs: SpecsRange | None = pyd.Field(
-        default=None, description="Average dataset material performance specifications."
+    specs: SpecsRange | None = pydantic.Field(
+        default=None,
+        description="Average dataset material performance specifications.",
     )
 
 
-class WithProgramOperatorMixin(pyd.BaseModel):
+class WithProgramOperatorMixin(pydantic.BaseModel):
     """Object which has a connection to ProgramOperator."""
 
-    program_operator: Org | None = pyd.Field(description=PROGRAM_OPERATOR_DESCRIPTION)
-    program_operator_doc_id: str | None = pyd.Field(
-        max_length=200, description="Document identifier from Program Operator.", example="123-456.789/b"
+    program_operator: Org | None = pydantic.Field(description=PROGRAM_OPERATOR_DESCRIPTION, default=None)
+    program_operator_doc_id: str | None = pydantic.Field(
+        max_length=200,
+        description="Document identifier from Program Operator.",
+        examples=["123-456.789/b"],
+        default=None,
     )
-    program_operator_version: str | None = pyd.Field(
-        max_length=200, description="Document version number from Program Operator.", example="4.3.0"
+    program_operator_version: str | None = pydantic.Field(
+        max_length=200, description="Document version number from Program Operator.", examples=["4.3.0"], default=None
     )
 
 
-class WithVerifierMixin(pyd.BaseModel):
+class WithVerifierMixin(pydantic.BaseModel):
     """Set of fields related to verifier."""
 
-    third_party_verifier: Org | None = pyd.Field(description=THIRD_PARTY_VERIFIER_DESCRIPTION)
-    third_party_verification_url: pyd.AnyUrl | None = pyd.Field(
+    third_party_verifier: Org | None = pydantic.Field(description=THIRD_PARTY_VERIFIER_DESCRIPTION, default=None)
+    third_party_verification_url: pydantic.AnyUrl | None = pydantic.Field(
         description="Optional link to a verification statement.",
-        example="https://we-verify-epds.com/en/letters/123-456.789b.pdf",
+        examples=["https://we-verify-epds.com/en/letters/123-456.789b.pdf"],
+        default=None,
     )
-    third_party_verifier_email: pyd.EmailStr | None = pyd.Field(
-        description="Email address of the third party verifier", example="john.doe@example.com", default=None
+    third_party_verifier_email: pydantic.EmailStr | None = pydantic.Field(
+        description="Email address of the third party verifier",
+        examples=["john.doe@example.com"],
+        default=None,
     )
 
 
-class WithEpdDeveloperMixin(pyd.BaseModel):
+class WithEpdDeveloperMixin(pydantic.BaseModel):
     """Set of fields related to EPD Developer."""
 
-    epd_developer: Org | None = pyd.Field(
+    epd_developer: Org | None = pydantic.Field(
         description=DEVELOPER_DESCRIPTION,
         default=None,
     )
-    epd_developer_email: pyd.EmailStr | None = pyd.Field(
+    epd_developer_email: pydantic.EmailStr | None = pydantic.Field(
         default=None,
-        example="john.doe@we-do-lca.com",
+        examples=["john.doe@we-do-lca.com"],
         description="Email contact for inquiries about development of this EPD. "
         "This must be an email which can be publicly shared.",
     )
@@ -223,18 +252,18 @@ class WithEpdDeveloperMixin(pyd.BaseModel):
 class RefBase(BaseOpenEpdSchema, title="Ref Object"):
     """Base class for reference-style objects."""
 
-    id: OpenXpdUUID | None = pyd.Field(
+    id: OpenXpdUUID | None = pydantic.Field(
         description="The unique ID for this object. To ensure global uniqueness, should be registered at "
         "open-xpd-uuid.cqd.io/register or a coordinating registry.",
-        example="1u7zsed8",
+        examples=["1u7zsed8"],
         default=None,
     )
 
-    name: str | None = pyd.Field(max_length=200, description="Name of the object", default=None)
+    name: str | None = pydantic.Field(max_length=200, description="Name of the object", default=None)
 
-    ref: ReferenceStr | None = pyd.Field(
+    ref: ReferenceStr | None = pydantic.Field(
         default=None,
-        example="https://openepd.buildingtransparency.org/api/generic_estimates/EC300001",
+        examples=["https://openepd.buildingtransparency.org/api/generic_estimates/EC300001"],
         description="Reference to this JSON object",
     )
 
