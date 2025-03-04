@@ -35,6 +35,13 @@ class Amount(BaseOpenEpdSchema):
     @pydantic.model_validator(mode="before")
     def check_qty_or_unit(cls, values: dict[str, Any]):
         """Ensure that qty or unit is provided."""
+
+        # TODO: Found and resolve the source of the behaviour
+        # For some reason in some cases the values here are already "Amount", not dict
+        # This is a workaround to avoid the error
+        if isinstance(values, Amount):
+            values = values.model_dump(by_alias=True)
+
         if values.get("qty") is None and values.get("unit") is None:
             raise ValueError("Either qty or unit must be provided.")
         return values

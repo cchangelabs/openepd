@@ -204,6 +204,12 @@ class ScopeSet(BaseOpenEpdSchema):
     def _unit_validator(cls, values: dict[str, Any]) -> dict[str, Any]:
         all_units = set()
 
+        # TODO: resolve source of issue with type of original values.
+        # For some reason it is not a dict in some scenarios, but ScopeSet object itself.
+        # This part is added as a workaround to handle this case.
+        if isinstance(values, ScopeSet):
+            values = values.model_dump(by_alias=True)
+
         for k, v in values.items():
             if isinstance(v, Measurement):
                 all_units.add(v.unit)
