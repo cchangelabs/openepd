@@ -1,3 +1,9 @@
+## 7.0.0 (2025-03-04)
+
+### Refactor
+
+- **core**: migrate to pydantic v2.
+
 ## 6.13.2 (2025-03-04)
 
 ### Fix
