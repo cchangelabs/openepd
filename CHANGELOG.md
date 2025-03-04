@@ -1,3 +1,14 @@
+## 6.13.2 (2025-03-04)
+
+### Fix
+
+- **m49**: fix openepd to m49 conversion to support global regions
+- **m49**: fix openepd to m49 area codes conversion
+
+### Refactor
+
+- **m49**: rename module, move utility method from const to utils
+
 ## 6.13.1 (2025-02-20)
 
 ### Fix

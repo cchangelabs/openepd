@@ -15,7 +15,7 @@
 #
 from unittest import TestCase
 
-from openepd.m49.geo_converter import (
+from openepd.m49.utils import (
     iso_to_m49,
     m49_to_iso,
     m49_to_openepd,
@@ -25,7 +25,7 @@ from openepd.m49.geo_converter import (
 )
 
 
-class GeoConverterTestCase(TestCase):
+class M49UtilsTestCase(TestCase):
     def test_iso_to_m49(self) -> None:
         positive_test_cases = [
             (["US", "CA", "MX"], ["840", "124", "484"]),
@@ -195,6 +195,43 @@ class GeoConverterTestCase(TestCase):
                     "752",
                 ],
             ),
+            (["NAFTA", "051"], ["840", "124", "484", "051"]),
+            (
+                ["051", "US", "CA", "MX", "EU27", "NAFTA"],
+                [
+                    "840",
+                    "124",
+                    "484",
+                    "040",
+                    "056",
+                    "100",
+                    "191",
+                    "196",
+                    "203",
+                    "208",
+                    "233",
+                    "246",
+                    "250",
+                    "276",
+                    "300",
+                    "348",
+                    "372",
+                    "380",
+                    "428",
+                    "440",
+                    "442",
+                    "470",
+                    "528",
+                    "616",
+                    "620",
+                    "642",
+                    "703",
+                    "705",
+                    "724",
+                    "752",
+                    "051",
+                ],
+            ),
         ]
         for input_data, expected in positive_test_cases:
             with self.subTest(input_data=input_data, expected=expected):
@@ -203,7 +240,9 @@ class GeoConverterTestCase(TestCase):
 
         negative_test_cases = [
             (["EU36", "ABCDE"], ValueError),  # invalid OpenEPD geography definitions
+            (["999"], ValueError),  # invalid OpenEPD geography definitions
             (["US", "BC", "DE"], ValueError),  # mixed valid and invalid OpenEPD geography definitions
+            (["NAFTA", "999"], ValueError),  # mixed valid and invalid OpenEPD geography definitions
             ([""], ValueError),
         ]
 
