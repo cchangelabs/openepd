@@ -279,7 +279,7 @@ class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
     def _extra_scopeset_validator(cls, values: dict[str, Any]) -> dict[str, Any]:
         for f in values:
             # only interested in validating the extra fields
-            if f in cls.__fields__:
+            if f in cls.model_fields:
                 continue
 
             # extra impact of an unknown type - engage validation of ScopeSet
