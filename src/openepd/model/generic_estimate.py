@@ -110,8 +110,8 @@ class GenericEstimateWithDepsV0(GenericEstimateV0, title="Generic Estimate (with
     Contains related entities - orgs - with full fields, to support object matching in implementations.
     """
 
-    publisher: Org | None = pydantic.Field(description="Organization that published the LCA results.")
-    reviewer: Org | None = pydantic.Field(description="Org that performed a critical review of the LCA.")
+    publisher: Org | None = pydantic.Field(description="Organization that published the LCA results.", default=None)  # type: ignore[assignment]
+    reviewer: Org | None = pydantic.Field(description="Org that performed a critical review of the LCA.", default=None)  # type: ignore[assignment]
 
 
 GenericEstimateWithDeps = GenericEstimateWithDepsV0

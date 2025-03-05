@@ -302,97 +302,97 @@ class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
 class ScopeSetGwp(ScopeSet):
     """ScopeSet measured in kgCO2e."""
 
-    allowed_units = "kgCO2e"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "kgCO2e"
 
 
 class ScopeSetOdp(ScopeSet):
     """ScopeSet measured in kgCFC11e."""
 
-    allowed_units = "kgCFC11e"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "kgCFC11e"
 
 
 class ScopeSetAp(ScopeSet):
     """ScopeSet measured in kgSO2e."""
 
-    allowed_units = ("kgSO2e", "molHe")
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = ("kgSO2e", "molHe")
 
 
 class ScopeSetEpNe(ScopeSet):
     """ScopeSet measured in kgNe."""
 
-    allowed_units = "kgNe"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "kgNe"
 
 
 class ScopeSetPocp(ScopeSet):
     """ScopeSet measured in kgO3e."""
 
-    allowed_units = ("kgO3e", "kgNMVOCe")
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = ("kgO3e", "kgNMVOCe")
 
 
 class ScopeSetEpFresh(ScopeSet):
     """ScopeSet measured in kgPO4e."""
 
-    allowed_units = "kgPO4e"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "kgPO4e"
 
 
 class ScopeSetEpTerr(ScopeSet):
     """ScopeSet measured in molNe."""
 
-    allowed_units = "molNe"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "molNe"
 
 
 class ScopeSetIrp(ScopeSet):
     """ScopeSet measured in kilo Becquerel equivalent of u235."""
 
-    allowed_units = "kBqU235e"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "kBqU235e"
 
 
 class ScopeSetCTUh(ScopeSet):
     """ScopeSet measured in CTUh."""
 
-    allowed_units = "CTUh"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "CTUh"
 
 
 class ScopeSetM3Aware(ScopeSet):
     """ScopeSet measured in m3AWARE Water consumption by AWARE method."""
 
-    allowed_units = "m3AWARE"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "m3AWARE"
 
 
 class ScopeSetCTUe(ScopeSet):
     """ScopeSet measured in CTUe."""
 
-    allowed_units = "CTUe"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "CTUe"
 
 
 class ScopeSetDiseaseIncidence(ScopeSet):
     """ScopeSet measuring disease incidence measured in AnnualPerCapita (cases)."""
 
-    allowed_units = "AnnualPerCapita"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "AnnualPerCapita"
 
 
 class ScopeSetMass(ScopeSet):
     """ScopeSet measuring mass in kg."""
 
-    allowed_units = "kg"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "kg"
 
 
 class ScopeSetVolume(ScopeSet):
     """ScopeSet measuring mass in kg."""
 
-    allowed_units = "m3"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "m3"
 
 
 class ScopeSetMassOrVolume(ScopeSet):
     """ScopeSet measuring mass in kg OR volume in m3, example: radioactive waste."""
 
-    allowed_units = ("kg", "m3")
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = ("kg", "m3")
 
 
 class ScopeSetEnergy(ScopeSet):
     """ScopeSet measuring mass in kg."""
 
-    allowed_units = "MJ"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "MJ"
 
 
 class ImpactSet(ScopesetByNameBase):

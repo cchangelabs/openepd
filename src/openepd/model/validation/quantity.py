@@ -414,7 +414,7 @@ class AmountRangeWithDimensionality(RangeAmount, WithDimensionalityMixin):
 class WithMassKgMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = MassKgStr.unit
+    dimensionality_unit: ClassVar[str | None] = MassKgStr.unit
 
 
 class AmountMass(Amount, WithMassKgMixin):
@@ -432,7 +432,7 @@ class AmountRangeMass(AmountRangeWithDimensionality, WithMassKgMixin):
 class WithGwpMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = GwpKgCo2eStr.unit
+    dimensionality_unit: ClassVar[str | None] = GwpKgCo2eStr.unit
 
 
 class AmountGWP(Amount, WithGwpMixin):
@@ -468,7 +468,7 @@ class AmountLengthM(Amount, WithLengthMMixin):
 class WithLengthMmMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = LengthMmStr.unit
+    dimensionality_unit: ClassVar[str | None] = LengthMmStr.unit
 
 
 class AmountLengthMm(Amount, WithLengthMMixin):
@@ -486,7 +486,7 @@ class AmountRangeLengthMm(AmountRangeWithDimensionality, WithLengthMmMixin):
 class WithPressureMpaMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = PressureMPaStr.unit
+    dimensionality_unit: ClassVar[str | None] = PressureMPaStr.unit
 
 
 class AmountPressureMpa(Amount, WithPressureMpaMixin):
@@ -504,7 +504,7 @@ class AmountRangePressureMpa(AmountRangeWithDimensionality, WithPressureMpaMixin
 class WithAreaM2Mixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = AreaM2Str.unit
+    dimensionality_unit: ClassVar[str | None] = AreaM2Str.unit
 
 
 class AmountAreaM2(Amount, WithAreaM2Mixin):
@@ -522,7 +522,7 @@ class AmountRangeAreaM2(AmountRangeWithDimensionality, WithAreaM2Mixin):
 class WithLengthInchStr(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = LengthInchStr.unit
+    dimensionality_unit: ClassVar[str | None] = LengthInchStr.unit
 
 
 class AmountLengthInch(Amount, WithLengthInchStr):
@@ -540,7 +540,7 @@ class AmountRangeLengthInch(AmountRangeWithDimensionality, WithLengthInchStr):
 class WithTemperatureCMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = TemperatureCStr.unit
+    dimensionality_unit: ClassVar[str | None] = TemperatureCStr.unit
 
 
 class AmountTemperatureC(Amount, WithTemperatureCMixin):
@@ -558,7 +558,7 @@ class AmountRangeTemperatureC(AmountRangeWithDimensionality, WithTemperatureCMix
 class WithCapacityPerHourMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = CapacityPerHourStr.unit
+    dimensionality_unit: ClassVar[str | None] = CapacityPerHourStr.unit
 
 
 class AmountCapacityPerHour(Amount, WithCapacityPerHourMixin):
@@ -576,7 +576,7 @@ class AmountRangeCapacityPerHour(AmountRangeWithDimensionality, WithCapacityPerH
 class WithRValueMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = RValueStr.unit
+    dimensionality_unit: ClassVar[str | None] = RValueStr.unit
 
 
 class AmountRValue(Amount, WithRValueMixin):
@@ -594,7 +594,7 @@ class AmountRangeRValue(AmountRangeWithDimensionality, WithRValueMixin):
 class WithSpeedMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = SpeedStr.unit
+    dimensionality_unit: ClassVar[str | None] = SpeedStr.unit
 
 
 class AmountSpeed(Amount, WithSpeedMixin):
@@ -612,7 +612,7 @@ class AmountRangeSpeed(AmountRangeWithDimensionality, WithSpeedMixin):
 class WithColorTemperatureMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = ColorTemperatureStr.unit
+    dimensionality_unit: ClassVar[str | None] = ColorTemperatureStr.unit
 
 
 class AmountColorTemperature(Amount, WithColorTemperatureMixin):
@@ -630,7 +630,7 @@ class AmountRangeColorTemperature(AmountRangeWithDimensionality, WithColorTemper
 class WithLuminosityMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = LuminosityStr.unit
+    dimensionality_unit: ClassVar[str | None] = LuminosityStr.unit
 
 
 class AmountLuminosity(Amount, WithLuminosityMixin):
@@ -648,7 +648,7 @@ class AmountRangeLuminosity(AmountRangeWithDimensionality, WithLuminosityMixin):
 class WithPowerMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = PowerStr.unit
+    dimensionality_unit: ClassVar[str | None] = PowerStr.unit
 
 
 class AmountPower(Amount, WithPowerMixin):
@@ -666,7 +666,7 @@ class AmountRangePower(AmountRangeWithDimensionality, WithPowerMixin):
 class WithElectricalCurrentMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = ElectricalCurrentStr.unit
+    dimensionality_unit: ClassVar[str | None] = ElectricalCurrentStr.unit
 
 
 class AmountElectricalCurrent(Amount, WithElectricalCurrentMixin):
@@ -684,7 +684,7 @@ class AmountRangeElectricalCurrent(AmountRangeWithDimensionality, WithElectrical
 class WithVolumeMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = VolumeStr.unit
+    dimensionality_unit: ClassVar[str | None] = VolumeStr.unit
 
 
 class AmountVolume(Amount, WithVolumeMixin):
@@ -702,7 +702,7 @@ class AmountRangeVolume(AmountRangeWithDimensionality, WithVolumeMixin):
 class WithAirflowMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = AirflowStr.unit
+    dimensionality_unit: ClassVar[str | None] = AirflowStr.unit
 
 
 class AmountAirflow(Amount, WithAirflowMixin):
@@ -720,7 +720,7 @@ class AmountRangeAirflow(AmountRangeWithDimensionality, WithAirflowMixin):
 class WithFlowRateMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = FlowRateStr.unit
+    dimensionality_unit: ClassVar[str | None] = FlowRateStr.unit
 
 
 class AmountFlowRate(Amount, WithFlowRateMixin):
@@ -738,7 +738,7 @@ class AmountRangeFlowRate(AmountRangeWithDimensionality, WithFlowRateMixin):
 class WithMassPerLengthMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = MassPerLengthStr.unit
+    dimensionality_unit: ClassVar[str | None] = MassPerLengthStr.unit
 
 
 class AmountMassPerLength(Amount, WithFlowRateMixin):
@@ -756,7 +756,7 @@ class AmountRangeMassPerLength(AmountRangeWithDimensionality, WithFlowRateMixin)
 class WithAreaPerVolumeMixin(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = AreaPerVolumeStr.unit
+    dimensionality_unit: ClassVar[str | None] = AreaPerVolumeStr.unit
 
 
 class AmountAreaPerVolume(Amount, WithFlowRateMixin):
@@ -774,7 +774,7 @@ class AmountRangeAreaPerVolume(AmountRangeWithDimensionality, WithFlowRateMixin)
 class WithThermalConductivity(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = ThermalConductivityStr.unit
+    dimensionality_unit: ClassVar[str | None] = ThermalConductivityStr.unit
 
 
 class AmountThermalConductivityMixin(Amount, WithThermalConductivity):
@@ -796,7 +796,7 @@ class WithForce(WithDimensionalityMixin):
     May the Force be with you.
     """
 
-    dimensionality_unit = ForceNStr.unit
+    dimensionality_unit: ClassVar[str | None] = ForceNStr.unit
 
 
 class AmountForce(Amount, WithForce):
@@ -814,7 +814,7 @@ class AmountRangeForce(AmountRangeWithDimensionality, WithForce):
 class WithYarnWeight(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = YarnWeightStr.unit
+    dimensionality_unit: ClassVar[str | None] = YarnWeightStr.unit
 
 
 class AmountYarnWeight(Amount, WithYarnWeight):
@@ -832,7 +832,7 @@ class AmountRangeYarnWeight(AmountRangeWithDimensionality, WithYarnWeight):
 class WithThermalExpansion(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = ThermalExpansionStr.unit
+    dimensionality_unit: ClassVar[str | None] = ThermalExpansionStr.unit
 
 
 class AmountThermalExpansion(Amount, WithThermalExpansion):
@@ -850,7 +850,7 @@ class AmountRangeThermalExpansion(AmountRangeWithDimensionality, WithThermalExpa
 class WithUtilization(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = UtilizationStr.unit
+    dimensionality_unit: ClassVar[str | None] = UtilizationStr.unit
 
 
 class AmountUtilization(Amount, WithUtilization):
@@ -868,7 +868,7 @@ class AmountRangeUtilization(AmountRangeWithDimensionality, WithUtilization):
 class WithUFactor(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = UFactorStr.unit
+    dimensionality_unit: ClassVar[str | None] = UFactorStr.unit
 
 
 class AmountUFactor(Amount, WithUFactor):
@@ -886,7 +886,7 @@ class AmountRangeUFactor(AmountRangeWithDimensionality, WithUFactor):
 class WithRFactor(WithDimensionalityMixin):
     """Unit validation mixin."""
 
-    dimensionality_unit = RFactorStr.unit
+    dimensionality_unit: ClassVar[str | None] = RFactorStr.unit
 
 
 class AmountRFactor(Amount, WithRFactor):

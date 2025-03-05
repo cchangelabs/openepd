@@ -234,7 +234,7 @@ class BaseDocumentFactory(Generic[TRootDocument]):
         for x, doc_cls in cls.VERSION_MAP.items():
             if x.major == version.major:
                 if version.minor <= x.minor:
-                    return doc_cls(**data)
+                    return doc_cls.model_validate(data)
                 else:
                     raise ValueError(
                         f"Unsupported version: {version}. The highest supported version from branch {x.major}.x is {x}"
