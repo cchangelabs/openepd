@@ -24,7 +24,7 @@ class DocumentFactoryTestCase(unittest.TestCase):
     def test_document_factory_supports_all_doc_types(self):
         for doctype in OpenEpdDoctypes:
             DocumentFactory.from_dict(
-                # For some reason, StrEnum is not count as str for literal values.
+                # For some reason, StrEnum is not counted as `str` for literal values.
                 # Explicitly convert to str.
                 {OPENEPD_VERSION_FIELD: OpenEpdVersions.get_current().as_str(), "doctype": str(doctype)}
             )
