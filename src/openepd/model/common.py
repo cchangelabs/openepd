@@ -32,6 +32,8 @@ class Amount(BaseOpenEpdSchema):
         default=None,
     )
 
+    model_config = pydantic.ConfigDict(from_attributes=True)
+
     @pydantic.model_validator(mode="after")
     def check_qty_or_unit(self) -> Self:
         """Ensure that qty or unit is provided."""

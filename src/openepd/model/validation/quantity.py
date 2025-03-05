@@ -19,6 +19,7 @@ from typing import TYPE_CHECKING, Any, Callable, ClassVar
 import pydantic
 from pydantic import ConfigDict
 import pydantic_core
+from typing_extensions import Self
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Amount, OpenEPDUnit, RangeAmount
@@ -377,17 +378,21 @@ class WithDimensionalityMixin(BaseOpenEpdSchema):
     """Class for dimensionality-validated amounts."""
 
     dimensionality_unit: ClassVar[str | None] = None
+    unit: str | None
 
     # Unit for dimensionality to validate against, for example "kg"
 
-    @pydantic.model_validator(mode="before")
-    def check_dimensionality_matches(cls, values: dict[str, Any]) -> dict[str, Any]:
+    @pydantic.model_validator(mode="after")
+    def check_dimensionality_matches(self) -> Self:
         """Check that this amount conforms to the same dimensionality as dimensionality_unit."""
-        if not cls.dimensionality_unit:
-            return values
+        if not self.dimensionality_unit:
+            return self
 
-        validate_unit_factory(cls.dimensionality_unit)(BaseOpenEpdSchema, values.get("unit"))  # type: ignore[arg-type]
-        return values
+        if self.unit is None:
+            raise ValueError("`unit` is required for dimensionality-validated amounts")
+
+        validate_unit_factory(self.dimensionality_unit)(BaseOpenEpdSchema, self.unit)
+        return self
 
 
 class AmountRangeWithDimensionality(RangeAmount, WithDimensionalityMixin):

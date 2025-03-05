@@ -201,6 +201,8 @@ class ScopeSet(BaseOpenEpdSchema):
         description="Potential net benefits from reuse, recycling, and/or energy recovery beyond the system boundary.",
     )
 
+    model_config = pydantic.ConfigDict(from_attributes=True)
+
     @pydantic.model_validator(mode="after")
     def _unit_validator(self) -> Self:
         all_units = set()
