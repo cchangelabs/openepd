@@ -1,3 +1,9 @@
+## 7.0.1 (2025-03-05)
+
+### Fix
+
+- **core**: resolve incompatibility issue between pydantic v1 and pydantic v2
+
 ## 7.0.0 (2025-03-04)
 
 ### Refactor
