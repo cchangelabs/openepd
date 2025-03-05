@@ -13,9 +13,3 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-import os
-
-# from .patch_pydantic import patch_pydantic
-#
-# if os.environ.get("OPENEPD_DISABLE_PYDANTIC_PATCH", "false").lower() not in ("true", "1", "yes"):
-#     patch_pydantic()

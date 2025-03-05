@@ -35,6 +35,8 @@ __all__ = (
     "SteelRangeV1",
 )
 
+from typing import ClassVar
+
 import pydantic
 
 from openepd.model.common import RangeFloat, RangeRatioFloat
@@ -313,7 +315,7 @@ class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.1"
+    _EXT_VERSION: ClassVar[str] = "1.1"
 
     yield_tensile_str: AmountRangePressureMpa | None = pydantic.Field(
         default=None,

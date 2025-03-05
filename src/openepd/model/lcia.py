@@ -18,6 +18,7 @@ from typing import Any, ClassVar
 
 import pydantic
 from pydantic import ConfigDict
+from typing_extensions import Self
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Measurement
@@ -200,15 +201,18 @@ class ScopeSet(BaseOpenEpdSchema):
         description="Potential net benefits from reuse, recycling, and/or energy recovery beyond the system boundary.",
     )
 
-    @pydantic.model_validator(mode="before")
-    def _unit_validator(cls, values: dict[str, Any]) -> dict[str, Any]:
+    model_config = pydantic.ConfigDict(from_attributes=True)
+
+    @pydantic.model_validator(mode="after")
+    def _unit_validator(self) -> Self:
         all_units = set()
 
-        for k, v in values.items():
+        for k in self.model_fields:
+            v = getattr(self, k, None)
             if isinstance(v, Measurement):
                 all_units.add(v.unit)
 
-        if not cls.allowed_units:
+        if not self.allowed_units:
             # For unknown units - only units should be the same across all measurements (textually)
             if len(all_units) > 1:
                 raise ValueError("All scopes and measurements should be expressed in the same unit.")
@@ -221,9 +225,9 @@ class ScopeSet(BaseOpenEpdSchema):
                     ExternalValidationConfig.QUANTITY_VALIDATOR.validate_same_dimensionality(first, unit)
 
         # can correctly validate unit
-        if cls.allowed_units is not None and len(all_units) == 1 and ExternalValidationConfig.QUANTITY_VALIDATOR:
+        if self.allowed_units is not None and len(all_units) == 1 and ExternalValidationConfig.QUANTITY_VALIDATOR:
             unit = next(iter(all_units))
-            allowed_units = cls.allowed_units if isinstance(cls.allowed_units, tuple) else (cls.allowed_units,)
+            allowed_units = self.allowed_units if isinstance(self.allowed_units, tuple) else (self.allowed_units,)
 
             matched_unit = False
             for allowed_unit in allowed_units:
@@ -237,7 +241,7 @@ class ScopeSet(BaseOpenEpdSchema):
                     f"'{', '.join(allowed_units)}' is only allowed unit for this scopeset. Provided '{unit}'"
                 )
 
-        return values
+        return self
 
 
 class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
@@ -279,7 +283,7 @@ class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
     def _extra_scopeset_validator(cls, values: dict[str, Any]) -> dict[str, Any]:
         for f in values:
             # only interested in validating the extra fields
-            if f in cls.__fields__:
+            if f in cls.model_fields:
                 continue
 
             # extra impact of an unknown type - engage validation of ScopeSet
@@ -298,97 +302,97 @@ class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
 class ScopeSetGwp(ScopeSet):
     """ScopeSet measured in kgCO2e."""
 
-    allowed_units = "kgCO2e"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "kgCO2e"
 
 
 class ScopeSetOdp(ScopeSet):
     """ScopeSet measured in kgCFC11e."""
 
-    allowed_units = "kgCFC11e"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "kgCFC11e"
 
 
 class ScopeSetAp(ScopeSet):
     """ScopeSet measured in kgSO2e."""
 
-    allowed_units = ("kgSO2e", "molHe")
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = ("kgSO2e", "molHe")
 
 
 class ScopeSetEpNe(ScopeSet):
     """ScopeSet measured in kgNe."""
 
-    allowed_units = "kgNe"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "kgNe"
 
 
 class ScopeSetPocp(ScopeSet):
     """ScopeSet measured in kgO3e."""
 
-    allowed_units = ("kgO3e", "kgNMVOCe")
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = ("kgO3e", "kgNMVOCe")
 
 
 class ScopeSetEpFresh(ScopeSet):
     """ScopeSet measured in kgPO4e."""
 
-    allowed_units = "kgPO4e"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "kgPO4e"
 
 
 class ScopeSetEpTerr(ScopeSet):
     """ScopeSet measured in molNe."""
 
-    allowed_units = "molNe"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "molNe"
 
 
 class ScopeSetIrp(ScopeSet):
     """ScopeSet measured in kilo Becquerel equivalent of u235."""
 
-    allowed_units = "kBqU235e"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "kBqU235e"
 
 
 class ScopeSetCTUh(ScopeSet):
     """ScopeSet measured in CTUh."""
 
-    allowed_units = "CTUh"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "CTUh"
 
 
 class ScopeSetM3Aware(ScopeSet):
     """ScopeSet measured in m3AWARE Water consumption by AWARE method."""
 
-    allowed_units = "m3AWARE"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "m3AWARE"
 
 
 class ScopeSetCTUe(ScopeSet):
     """ScopeSet measured in CTUe."""
 
-    allowed_units = "CTUe"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "CTUe"
 
 
 class ScopeSetDiseaseIncidence(ScopeSet):
     """ScopeSet measuring disease incidence measured in AnnualPerCapita (cases)."""
 
-    allowed_units = "AnnualPerCapita"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "AnnualPerCapita"
 
 
 class ScopeSetMass(ScopeSet):
     """ScopeSet measuring mass in kg."""
 
-    allowed_units = "kg"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "kg"
 
 
 class ScopeSetVolume(ScopeSet):
     """ScopeSet measuring mass in kg."""
 
-    allowed_units = "m3"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "m3"
 
 
 class ScopeSetMassOrVolume(ScopeSet):
     """ScopeSet measuring mass in kg OR volume in m3, example: radioactive waste."""
 
-    allowed_units = ("kg", "m3")
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = ("kg", "m3")
 
 
 class ScopeSetEnergy(ScopeSet):
     """ScopeSet measuring mass in kg."""
 
-    allowed_units = "MJ"
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "MJ"
 
 
 class ImpactSet(ScopesetByNameBase):
@@ -483,6 +487,8 @@ class ImpactSet(ScopesetByNameBase):
         default=None,
         description="Land use related impacts / Soil quality, in potential soil quality parameters.",
     )
+
+    model_config = pydantic.ConfigDict(from_attributes=True)
 
 
 class LCIAMethod(StrEnum):

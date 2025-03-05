@@ -282,10 +282,10 @@ class EpdWithDepsV0(EpdV0, title="EPD (with Dependencies)"):
     some required fields in Org (like web_domain), and WithDeps would not.
     """
 
-    manufacturer: Org | None = pydantic.Field(description=MANUFACTURER_DESCRIPTION)
-    epd_developer: Org | None = pydantic.Field(description=DEVELOPER_DESCRIPTION, default=None)
-    program_operator: Org | None = pydantic.Field(description=PROGRAM_OPERATOR_DESCRIPTION)
-    third_party_verifier: Org | None = pydantic.Field(description=THIRD_PARTY_VERIFIER_DESCRIPTION)
+    manufacturer: Org | None = pydantic.Field(description=MANUFACTURER_DESCRIPTION, default=None)  # type: ignore[assignment]
+    epd_developer: Org | None = pydantic.Field(description=DEVELOPER_DESCRIPTION, default=None)  # type: ignore[assignment]
+    program_operator: Org | None = pydantic.Field(description=PROGRAM_OPERATOR_DESCRIPTION, default=None)  # type: ignore[assignment]
+    third_party_verifier: Org | None = pydantic.Field(description=THIRD_PARTY_VERIFIER_DESCRIPTION, default=None)  # type: ignore[assignment]
 
 
 EpdWithDeps = EpdWithDepsV0

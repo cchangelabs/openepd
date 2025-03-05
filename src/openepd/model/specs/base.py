@@ -20,10 +20,10 @@ from typing import Any
 import pydantic
 from pydantic import ConfigDict
 
-from openepd.model.base import BaseOpenEpdSchema, Version
+from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
 from openepd.model.validation.quantity import ExternalValidationConfig, QuantityValidator
-from openepd.model.versioning import WithExtVersionMixin
+from openepd.model.versioning import Version, WithExtVersionMixin
 
 
 class BaseOpenEpdSpec(BaseOpenEpdSchema):
@@ -35,6 +35,7 @@ class BaseOpenEpdSpec(BaseOpenEpdSchema):
 class BaseOpenEpdHierarchicalSpec(BaseOpenEpdSpec, WithExtVersionMixin):
     """Base class for new specs (hierarchical, versioned)."""
 
+    # TODO: Refactor work with class-based and instance-based _EXT_VERSION
     def __init__(self, **data: Any) -> None:
         # ensure that all the concrete spec objects fail on creations if they dont have _EXT_VERSION declared to
         # something meaningful
