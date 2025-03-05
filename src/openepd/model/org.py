@@ -13,11 +13,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from typing import Annotated, List, Optional
+from typing import Any, Optional
 
 from openlocationcode import openlocationcode
 import pydantic
-from pydantic import ConfigDict, Field, StringConstraints
+from pydantic import ConfigDict
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Location, WithAltIdsMixin, WithAttachmentsMixin
@@ -47,36 +47,46 @@ class OrgRef(BaseOpenEpdSchema):
 class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
     """Represent an organization."""
 
-    alt_names: (
-        Annotated[
-            list[str],
-            Annotated[
-                List[Annotated[str, StringConstraints(max_length=200)]],
-                Field(max_length=255),
-            ],
-        ]
-        | None
-    ) = pydantic.Field(
+    alt_names: list[str] | None = pydantic.Field(
         description="List of other names for organization",
         examples=[["C-Change Labs", "C-Change Labs inc."]],
         default=None,
+        max_length=255,
     )
     # TODO: NEW field, not in the spec
 
+    @pydantic.field_validator("alt_names", mode="before")
+    def _validate_alt_names(cls, value: Any) -> list[str] | None:
+        if value is None:
+            return value
+
+        if not isinstance(value, list):
+            raise TypeError(f"Expected type list or None, got {type(value)}")
+
+        if any((len(item) > 200) for item in value):
+            raise ValueError("One or more alt_names are longer than 200 characters")
+
+        return value
+
     owner: Optional["OrgRef"] = pydantic.Field(description="Organization that controls this organization", default=None)
-    subsidiaries: (
-        Annotated[
-            list["OrgRef"],
-            Annotated[
-                List[Annotated[str, StringConstraints(max_length=200)]],
-                Field(max_length=255),
-            ],
-        ]
-        | None
-    ) = pydantic.Field(
-        description="Organizations controlled by this organization",
-        default=None,
+    subsidiaries: list["OrgRef"] | None = pydantic.Field(
+        description="Organizations controlled by this organization", default=None, max_length=255
     )
+
+    @pydantic.field_validator("subsidiaries", mode="before")
+    def _validate_subsidiaries(cls, value: Any) -> list[str] | None:
+        if value is None:
+            return value
+
+        if not isinstance(value, list):
+            raise TypeError(f"Expected type list or None, got {type(value)}")
+
+        for item in value:
+            if len(item.name) > 200:
+                raise ValueError("One or more subsidiaries name are longer than 200 characters")
+
+        return value
+
     hq_location: Location | None = pydantic.Field(
         default=None,
         description="Location of a place of business, preferably the corporate headquarters.",
