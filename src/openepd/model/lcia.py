@@ -18,6 +18,7 @@ from typing import Any, ClassVar
 
 import pydantic
 from pydantic import ConfigDict
+from typing_extensions import Self
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Measurement
@@ -200,21 +201,16 @@ class ScopeSet(BaseOpenEpdSchema):
         description="Potential net benefits from reuse, recycling, and/or energy recovery beyond the system boundary.",
     )
 
-    @pydantic.model_validator(mode="before")
-    def _unit_validator(cls, values: dict[str, Any]) -> dict[str, Any]:
+    @pydantic.model_validator(mode="after")
+    def _unit_validator(self) -> Self:
         all_units = set()
 
-        # TODO: resolve source of issue with type of original values.
-        # For some reason it is not a dict in some scenarios, but ScopeSet object itself.
-        # This part is added as a workaround to handle this case.
-        if isinstance(values, ScopeSet):
-            values = values.model_dump(by_alias=True)
-
-        for k, v in values.items():
+        for k in self.model_fields:
+            v = getattr(self, k, None)
             if isinstance(v, Measurement):
                 all_units.add(v.unit)
 
-        if not cls.allowed_units:
+        if not self.allowed_units:
             # For unknown units - only units should be the same across all measurements (textually)
             if len(all_units) > 1:
                 raise ValueError("All scopes and measurements should be expressed in the same unit.")
@@ -227,9 +223,9 @@ class ScopeSet(BaseOpenEpdSchema):
                     ExternalValidationConfig.QUANTITY_VALIDATOR.validate_same_dimensionality(first, unit)
 
         # can correctly validate unit
-        if cls.allowed_units is not None and len(all_units) == 1 and ExternalValidationConfig.QUANTITY_VALIDATOR:
+        if self.allowed_units is not None and len(all_units) == 1 and ExternalValidationConfig.QUANTITY_VALIDATOR:
             unit = next(iter(all_units))
-            allowed_units = cls.allowed_units if isinstance(cls.allowed_units, tuple) else (cls.allowed_units,)
+            allowed_units = self.allowed_units if isinstance(self.allowed_units, tuple) else (self.allowed_units,)
 
             matched_unit = False
             for allowed_unit in allowed_units:
@@ -243,7 +239,7 @@ class ScopeSet(BaseOpenEpdSchema):
                     f"'{', '.join(allowed_units)}' is only allowed unit for this scopeset. Provided '{unit}'"
                 )
 
-        return values
+        return self
 
 
 class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
@@ -489,6 +485,8 @@ class ImpactSet(ScopesetByNameBase):
         default=None,
         description="Land use related impacts / Soil quality, in potential soil quality parameters.",
     )
+
+    model_config = pydantic.ConfigDict(from_attributes=True)
 
 
 class LCIAMethod(StrEnum):
