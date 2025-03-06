@@ -77,7 +77,7 @@ class Measurement(BaseOpenEpdSchema):
     """A scientific value with units and uncertainty."""
 
     mean: float = pydantic.Field(description="Mean (expected) value of the measurement")
-    unit: str | None = pydantic.Field(description="Measurement unit")
+    unit: str | None = pydantic.Field(description="Measurement unit", default=None)
     rsd: pydantic.PositiveFloat | None = pydantic.Field(
         description="Relative standard deviation, i.e. standard_deviation/mean",
         default=None,

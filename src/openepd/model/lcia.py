@@ -538,6 +538,8 @@ class LCIAMethod(StrEnum):
 class Impacts(pydantic.RootModel[dict[LCIAMethod, ImpactSet]]):
     """List of environmental impacts, compiled per one of the standard Impact Assessment methods."""
 
+    root: dict[LCIAMethod, ImpactSet]
+
     @staticmethod
     def _update_schema_extra(schema, model):
         schema.update(
