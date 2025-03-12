@@ -359,6 +359,18 @@ class ScopeSetCTUe(ScopeSet):
     allowed_units = "CTUe"
 
 
+class ScopeSetKgSbe(ScopeSet):
+    """ScopeSet measured in kgSbe."""
+
+    allowed_units = "kgSbe"
+
+
+class ScopeSetMJ(ScopeSet):
+    """ScopeSet measured in MJ."""
+
+    allowed_units = "MJ"
+
+
 class ScopeSetDiseaseIncidence(ScopeSet):
     """ScopeSet measuring disease incidence measured in AnnualPerCapita (cases)."""
 
@@ -473,6 +485,17 @@ class ImpactSet(ScopesetByNameBase):
     SQP: ScopeSet | None = pyd.Field(
         default=None,
         description="Land use related impacts / Soil quality, in potential soil quality parameters.",
+    )
+    ADP_mineral: ScopeSetKgSbe | None = pyd.Field(
+        alias="ADP-mineral",
+        default=None,
+        description='Abiotic depletion potential for non-fossil resources. EN15804 calls this "ADP - minerals and metals".',
+    )
+
+    ADP_fossil: ScopeSetMJ | None = pyd.Field(
+        alias="ADP-fossil",
+        default=None,
+        description="Abiotic depletion potential for fossil resources",
     )
 
 
