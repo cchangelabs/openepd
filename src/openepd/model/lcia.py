@@ -365,6 +365,12 @@ class ScopeSetCTUe(ScopeSet):
     allowed_units: ClassVar[str | tuple[str, ...] | None] = "CTUe"
 
 
+class ScopeSetKgSbe(ScopeSet):
+    """ScopeSet measured in kgSbe."""
+
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "kgSbe"
+
+
 class ScopeSetDiseaseIncidence(ScopeSet):
     """ScopeSet measuring disease incidence measured in AnnualPerCapita (cases)."""
 
@@ -486,6 +492,17 @@ class ImpactSet(ScopesetByNameBase):
     SQP: ScopeSet | None = pydantic.Field(
         default=None,
         description="Land use related impacts / Soil quality, in potential soil quality parameters.",
+    )
+    ADP_mineral: ScopeSetKgSbe | None = pydantic.Field(
+        alias="ADP-mineral",
+        default=None,
+        description='Abiotic depletion potential for non-fossil resources. EN15804 calls this "ADP - minerals and metals".',
+    )
+
+    ADP_fossil: ScopeSetEnergy | None = pydantic.Field(
+        alias="ADP-fossil",
+        default=None,
+        description="Abiotic depletion potential for fossil resources",
     )
 
     model_config = pydantic.ConfigDict(from_attributes=True)
