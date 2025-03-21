@@ -36,13 +36,13 @@
     - `StorageFurnitureRangeV1.MobileStorage` -> `StorageFurnitureRangeV1.MobileStorageFurniture`
     - `StorageFurnitureRangeV1.WallMountedShelving` -> `StorageFurnitureRangeV1.WallMountedStorageShelving`
 
-## 7.0.1 (2025-03-05)
+## 7.0.1 (2025-03-05) [YANKED]
 
 ### Fix
 
 - **core**: resolve incompatibility issue between pydantic v1 and pydantic v2
 
-## 7.0.0 (2025-03-04)
+## 7.0.0 (2025-03-04) [YANKED]
 
 ### Refactor
 
