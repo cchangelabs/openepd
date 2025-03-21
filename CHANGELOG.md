@@ -1,3 +1,41 @@
+## 6.14.0 (2025-03-21)
+
+### Feat
+
+- add ADP impacts
+
+### Fix
+
+- fix names of StorageFurniture subcategories.
+
+  **IMPORTANT**: Some class names and property names have changed. Ensure you update any references to these 
+  classes and properties in your code before upgrading to this version. Not updating your code will result in 
+  references to non-existent classes and properties, causing compilation errors.
+
+  Class names that were changed:
+    - `OpenStorageV1` -> `OpenStorageFurnitureV1`
+    - `ClosedStorageV1` -> `ClosedStorageFurnitureV1`
+    - `RetractableStorageV1` -> `RetractableStorageFurnitureV1`
+    - `MobileStorageV1` -> `MobileStorageFurnitureV1`
+    - `WallMountedShelvingV1` -> `WallMountedStorageShelvingV1`
+    - `OpenStorageRangeV1` -> `OpenStorageFurnitureRangeV1`
+    - `ClosedStorageRangeV1` -> `ClosedStorageFurnitureRangeV1`
+    - `RetractableStorageRangeV1` -> `RetractableStorageFurnitureRangeV1`
+    - `MobileStorageRangeV1` -> `MobileStorageFurnitureRangeV1`
+    - `WallMountedShelvingRangeV1` -> `WallMountedStorageShelvingRangeV1`
+  
+  Property names that were changed:
+    - `StorageFurnitureV1.OpenStorage` -> `StorageFurnitureV1.OpenStorageFurniture`
+    - `StorageFurnitureV1.ClosedStorage` -> `StorageFurnitureV1.ClosedStorageFurniture`
+    - `StorageFurnitureV1.RetractableStorage` -> `StorageFurnitureV1.RetractableStorageFurniture`
+    - `StorageFurnitureV1.MobileStorage` -> `StorageFurnitureV1.MobileStorageFurniture`
+    - `StorageFurnitureV1.WallMountedShelving` -> `StorageFurnitureV1.WallMountedStorageShelving`
+    - `StorageFurnitureRangeV1.OpenStorage` -> `StorageFurnitureRangeV1.OpenStorageFurniture`
+    - `StorageFurnitureRangeV1.ClosedStorage` -> `StorageFurnitureRangeV1.ClosedStorageFurniture`
+    - `StorageFurnitureRangeV1.RetractableStorage` -> `StorageFurnitureRangeV1.RetractableStorageFurniture`
+    - `StorageFurnitureRangeV1.MobileStorage` -> `StorageFurnitureRangeV1.MobileStorageFurniture`
+    - `StorageFurnitureRangeV1.WallMountedShelving` -> `StorageFurnitureRangeV1.WallMountedStorageShelving`
+
 ## 6.13.2 (2025-03-04)
 
 ### Fix
