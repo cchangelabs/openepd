@@ -135,7 +135,8 @@ class GenericEstimateApi(BaseApiMethodGroup):
         """
         ge_id = ge.id
         if not ge_id:
-            raise ValueError("The ID must be set to edit a GenericEstimate.")
+            msg = "The ID must be set to edit a GenericEstimate."
+            raise ValueError(msg)
 
         response = self._client.do_request(
             "put",

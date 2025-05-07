@@ -86,10 +86,11 @@ def patch_pydantic_metaclass_validator():
                 if isinstance(attr, model_field_classes_tuple):
                     continue
 
-                raise NameError(
+                msg = (
                     f'Field name "{field_name}" shadows a BaseModel attribute; '
                     f"use a different field name with \"alias='{field_name}'\"."
                 )
+                raise NameError(msg)
 
     pyd.main.validate_field_name = pydantic_utils__validate_field_name
     pydantic_utils.validate_field_name = pydantic_utils__validate_field_name

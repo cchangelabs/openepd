@@ -231,7 +231,8 @@ class EpdPreviewV0(
         """
         if not v or v.lower() == "openepd":
             return "openEPD"
-        raise ValueError("Invalid doctype")
+        msg = "Invalid doctype"
+        raise ValueError(msg)
 
 
 EpdPreview = EpdPreviewV0

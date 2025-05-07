@@ -14,9 +14,9 @@
 #  limitations under the License.
 #
 __all__ = (
-    "GMURangeV1",
     "AutoclavedAeratedConcreteRangeV1",
     "BrickRangeV1",
+    "GMURangeV1",
     "MasonryRangeV1",
 )
 

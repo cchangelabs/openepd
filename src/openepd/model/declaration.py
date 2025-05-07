@@ -43,11 +43,11 @@ class BaseDeclaration(RootDocument, abc.ABC):
         default=None,
     )
     date_of_issue: datetime.datetime | None = pyd.Field(
-        example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.timezone.utc),
+        example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.UTC),
         description="Date the document was issued. This should be the first day on which the document is valid.",
     )
     valid_until: datetime.datetime | None = pyd.Field(
-        example=datetime.datetime(day=11, month=9, year=2028, tzinfo=datetime.timezone.utc),
+        example=datetime.datetime(day=11, month=9, year=2028, tzinfo=datetime.UTC),
         description="Last date the document is valid on, including any extensions.",
     )
 

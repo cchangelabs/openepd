@@ -14,14 +14,15 @@
 #  limitations under the License.
 #
 __all__ = (
-    "HttpStreamReader",
-    "SyncHttpClient",
-    "DoRequest",
-    "RetryHandler",
-    "BaseApiMethodGroup",
     "USER_AGENT_DEFAULT",
+    "BaseApiMethodGroup",
+    "DoRequest",
+    "HttpStreamReader",
+    "RetryHandler",
+    "SyncHttpClient",
 )
 
+from collections.abc import Callable
 import datetime
 from functools import partial, wraps
 from io import IOBase
@@ -29,7 +30,7 @@ import logging
 import random
 import shutil
 import time
-from typing import IO, Any, BinaryIO, Callable, Final, NamedTuple
+from typing import IO, Any, BinaryIO, Final, NamedTuple
 
 import requests
 from requests import PreparedRequest, Response, Session, Timeout
@@ -180,7 +181,7 @@ class SyncHttpClient:
         self._throttler = Throttler(rate_per_sec=requests_per_sec)
         self._throttle_retry_timeout: float = (
             float(throttle_retry_timeout)
-            if isinstance(throttle_retry_timeout, (float, int))
+            if isinstance(throttle_retry_timeout, float | int)
             else throttle_retry_timeout.total_seconds()
         )
         self.user_agent = user_agent
@@ -396,7 +397,8 @@ class SyncHttpClient:
 
         response.raise_for_status()
         # This can't be handled by static checker because of the dynamic nature of the raise_for_status method
-        raise RuntimeError("This line should never be reached")
+        msg = "This line should never be reached"
+        raise RuntimeError(msg)
 
     def _get_url_for_request(self, path_or_url: str) -> str:
         """
@@ -451,7 +453,7 @@ class SyncHttpClient:
                     exception = e
 
                 if exception or response.status_code == requests_codes.service_unavailable:
-                    secs = random.randint(60, 60 * 5)
+                    secs = random.randint(60, 60 * 5)  # noqa: S311
                     logger.warning(
                         "%s %s is unavailable. Attempts left: %s. Waiting %s seconds...", method, url, attempts, secs
                     )

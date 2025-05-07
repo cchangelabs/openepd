@@ -22,7 +22,6 @@ from openepd.model.specs.enums import AciExposureClass, CsaExposureClass, EnExpo
 
 
 class SpecValidationTestCase(unittest.TestCase):
-
     def test_exclusive_list_validation(self) -> None:
         ok_cases = (
             {"aci_exposure_classes": []},
@@ -190,7 +189,6 @@ class SpecValidationTestCase(unittest.TestCase):
                 self.assertEqual(specs_actual, specs_expected)
 
     def test_spec_backward_compatibility_prefers_new(self) -> None:
-
         specs = {
             "concrete": {"strength_28d": "2000 psi", "slump": "2 in", "w_c_ratio": 0.2},
             "Concrete": {

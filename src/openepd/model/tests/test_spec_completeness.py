@@ -13,11 +13,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from collections.abc import Iterable
 import importlib
 import inspect
 import pkgutil
 from types import ModuleType
-from typing import Iterable
 import unittest
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
@@ -25,9 +25,8 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 class SpecVersionTestCase(unittest.TestCase):
     def test_ext_version_defined_for_all_specs(self):
-
         modules = list(self.__find_iteratively("..specs", relative_to=__package__))
-        for name, module in modules:
+        for _name, module in modules:
             material_specs_in_module = [
                 cls
                 for _, cls in inspect.getmembers(module, inspect.isclass)

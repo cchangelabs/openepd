@@ -31,7 +31,8 @@ class Amount(BaseOpenEpdSchema):
     def check_qty_or_unit(cls, values: dict[str, Any]):
         """Ensure that qty or unit is provided."""
         if values.get("qty") is None and values.get("unit") is None:
-            raise ValueError("Either qty or unit must be provided.")
+            msg = "Either qty or unit must be provided."
+            raise ValueError(msg)
         return values
 
     def to_quantity_str(self):
@@ -43,19 +44,19 @@ class Distribution(StrEnum):
     """
     Distribution of the measured value.
 
-     * log-normal: Probability distribution of any random parameter whose natural log is normally distributed (the
-       PDF is gaussian).
-     * normal: Probability distribution of any random parameter whose value is normally distributed around the mean
-       (the PDF is gaussian).
-     * Continuous uniform probability distribution between minimum value and maximum value and "0" probability beyond
-       these.
-     * Probability distribution of any random parameter between minimum value and maximum value with the highest
-       probability at the average value of minimum plus maximum value. Linear change of probability between minimum,
-       maximum and average value.
-     * Means Impact is not known, but with >95% certainty the true value is below the declared value.
-       So [1e-6,"kgCFC11e",0,"max"] means the ODP was not exactly measured, but it is guaranteed to be below
-       1E-6 kg CO2e.  It is acceptable to treat a 'max' distribution a normal or lognormal distribution with variation
-       0.1%.  This is conservative, because the 'max' value is usually much greater than the true impact.
+    * log-normal: Probability distribution of any random parameter whose natural log is normally distributed (the
+      PDF is gaussian).
+    * normal: Probability distribution of any random parameter whose value is normally distributed around the mean
+      (the PDF is gaussian).
+    * Continuous uniform probability distribution between minimum value and maximum value and "0" probability beyond
+      these.
+    * Probability distribution of any random parameter between minimum value and maximum value with the highest
+      probability at the average value of minimum plus maximum value. Linear change of probability between minimum,
+      maximum and average value.
+    * Means Impact is not known, but with >95% certainty the true value is below the declared value.
+      So [1e-6,"kgCFC11e",0,"max"] means the ODP was not exactly measured, but it is guaranteed to be below
+      1E-6 kg CO2e.  It is acceptable to treat a 'max' distribution a normal or lognormal distribution with variation
+      0.1%.  This is conservative, because the 'max' value is usually much greater than the true impact.
     """
 
     LOG_NORMAL = "log-normal"
@@ -102,8 +103,7 @@ class Ingredient(BaseOpenEpdSchema):
         description="Number of declared units of this consumed. Negative values indicate an outflow."
     )
     link: pyd.AnyUrl | None = pyd.Field(
-        description="Link to this object's OpenEPD declaration. "
-        "An OpenIndustryEPD or OpenLCI link is also acceptable.",
+        description="Link to this object's OpenEPD declaration. An OpenIndustryEPD or OpenLCI link is also acceptable.",
         default=None,
     )
 
@@ -123,9 +123,11 @@ class Ingredient(BaseOpenEpdSchema):
         # for in the calculation of uncertainty
         if values.get("gwp_fraction"):
             if not values.get("evidence_type"):
-                raise ValueError("evidence_type is required if gwp_fraction is provided")
+                msg = "evidence_type is required if gwp_fraction is provided"
+                raise ValueError(msg)
             if not (values.get("citation") or values.get("link")):
-                raise ValueError("link or citation is required if gwp_fraction is provided")
+                msg = "link or citation is required if gwp_fraction is provided"
+                raise ValueError(msg)
 
         return values
 
@@ -267,7 +269,8 @@ class RangeBase(BaseOpenEpdSchema):
         min_boundary = values.get("min")
         max_boundary = values.get("max")
         if min_boundary is not None and max_boundary is not None and min_boundary > max_boundary:
-            raise ValueError("Max should be greater than min")
+            msg = "Max should be greater than min"
+            raise ValueError(msg)
         return values
 
 
