@@ -22,16 +22,26 @@ repos:
     hooks:
       - id: yamllint
         name: Check YAML files with yamllint
-  - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.11.8
     hooks:
-      - id: isort
-        name: Check imports order (isort)
-  - repo: https://github.com/psf/black
-    rev: 24.4.0
-    hooks:
-      - id: black
-        name: Check format (black)
+      # Run the import sorting.
+      - id: ruff
+        name: Run import sorting using ruff isort linter
+        args: [ "check", "--select", "I", "--fix" ]
+      # Run the pyUpgrade.
+      - id: ruff
+        alias: ruff-pyupgrade
+        name: Run safe pyupgrade using ruff pyupgrade linter
+        args: [ "check", "--select", "UP", "--fix" ]
+      - id: ruff
+        alias: ruff-order-all
+        name: Reordering __all__ according to RUF022 rules
+        args: [ "check", "--select", "RUF022", "--fix" ]
+      # Run the formatter.
+      - id: ruff-format
+        name: Format code using ruff code formatter
   - repo: https://gitlab.com/smop/pre-commit-hooks
     rev: v1.0.0
     hooks:
