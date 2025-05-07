@@ -87,6 +87,10 @@ class GenericEstimatePreviewV0(
         description="A link to the shared git repository containing the LCA model used for this estimate.",
     )
 
+    model_config = pydantic.ConfigDict(
+        protected_namespaces=(),
+    )
+
 
 GenericEstimatePreview = GenericEstimatePreviewV0
 

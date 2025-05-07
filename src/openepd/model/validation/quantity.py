@@ -174,10 +174,10 @@ class QuantityStr(str):
     unit: ClassVar[str]
 
     @classmethod
-    def _validate(cls, value: str) -> str:
+    def _validate(cls, value: str) -> Self:
         value = validate_quantity_unit_factory(cls.unit)(cls, value)
         value = validate_quantity_ge_factory(f"0 {cls.unit}")(cls, value)
-        return value
+        return cls(value)
 
     @classmethod
     def __get_pydantic_core_schema__(

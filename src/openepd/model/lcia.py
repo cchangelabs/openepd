@@ -253,10 +253,10 @@ class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
         :return: set of names, for example ['gwp', 'odp']
         """
         result = []
-        for f in self.__fields_set__:
+        for f in self.model_fields_set:
             if f in ("ext",):
                 continue
-            field = self.__fields__.get(f)
+            field = self.model_fields.get(f)
             # field can be explicitly specified, or can be an unknown impact covered by extra='allow'
             result.append(field.alias if field and field.alias else f)
 

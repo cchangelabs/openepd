@@ -50,7 +50,7 @@ def get_safely(d: dict, path: str) -> tuple[bool, Any]:
                     return False, None
                 current = current.get(p)
             case pydantic.BaseModel() as model:
-                if not hasattr(current, p) or p not in model.__fields_set__:
+                if not hasattr(current, p) or p not in model.model_fields_set:
                     return False, None
                 current = getattr(current, p)
             case _:
