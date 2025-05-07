@@ -17,6 +17,7 @@ __all__ = (
     "CoilSteelRangeV1",
     "ColdFormedFramingRangeV1",
     "ColdFormedSteelRangeV1",
+    "CrudeSteelRangeV1",
     "DeckingSteelRangeV1",
     "HollowSectionsRangeV1",
     "HotRolledSectionsRangeV1",
@@ -25,6 +26,7 @@ __all__ = (
     "MetalStairsRangeV1",
     "MiscMetalFabricationRangeV1",
     "OpenWebMembranesRangeV1",
+    "OtherSteelRangeV1",
     "PlateSteelRangeV1",
     "PostTensioningSteelRangeV1",
     "PrefabricatedSteelAssembliesRangeV1",
@@ -308,6 +310,12 @@ class OtherSteelRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class CrudeSteelRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Crude steel products."""
+
+    _EXT_VERSION = "1.0"
+
+
 class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Broad category for construction materials made from steel and its alloys.
@@ -315,7 +323,7 @@ class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION: ClassVar[str] = "1.1"
+    _EXT_VERSION: ClassVar[str] = "1.2"
 
     yield_tensile_str: AmountRangePressureMpa | None = pydantic.Field(
         default=None,
@@ -349,3 +357,4 @@ class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     RebarSteel: RebarSteelRangeV1 | None = None
     WireMeshSteel: WireMeshSteelRangeV1 | None = None
     OtherSteel: OtherSteelRangeV1 | None = None
+    CrudeSteel: CrudeSteelRangeV1 | None = None
