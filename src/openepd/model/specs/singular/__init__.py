@@ -13,9 +13,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from typing import Any, ClassVar
+from collections.abc import Sequence
+import types
+from typing import Any, ClassVar, TypeVar
 
 import pydantic
+from pydantic.fields import FieldInfo
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.singular.accessories import AccessoriesV1
@@ -59,6 +62,8 @@ from openepd.model.specs.singular.wood import WoodV1
 from openepd.model.specs.singular.wood_joists import WoodJoistsV1
 
 __all__ = ("BaseCompatibilitySpec", "Specs")
+
+TValue = TypeVar("TValue")
 
 
 class Specs(BaseOpenEpdHierarchicalSpec):
@@ -141,3 +146,109 @@ class Specs(BaseOpenEpdHierarchicalSpec):
                     continue
                 set_safely(values, new_key_spec, old_value)
         return values
+
+    def get_by_spec_path(
+        self,
+        path: str | Sequence[str],
+        *,
+        delimiter: str = ".",
+        asserted_type: type[TValue] | None = None,
+        ensure_path: bool = True,
+    ) -> TValue | None:
+        """
+        Access specific property of the spec by a path, which can be string-separated or sequence of keys.
+
+        :param path: The path to access, either as a string with delimiters (e.g. "Concrete.strength_28d")
+                    or sequence of keys (e.g. ["Concrete", "strength_28d"])
+        :param delimiter: String separator used when path is provided as a string (default ".")
+        :param asserted_type: Type to validate the returned value against (optional)
+        :param ensure_path: If True, validates that path exists in the spec schema before accessing (default True)
+        :return: Value at the specified path if found, None if path resolves to None
+        :raises KeyError: If ensure_path=True and path does not exist in schema
+        :raises TypeError: If asserted_type is provided and value type doesn't match
+        :raises ValueError: If path is not string or sequence
+
+        Example usage:
+            >>> specs.get_by_spec_path("Concrete.strength_28d")
+            >>> specs.get_by_spec_path(["Concrete", "strength_28d"])
+            >>> specs.get_by_spec_path("Concrete.strength_28d", asserted_type=str)
+        """
+        keys = self._path_to_keys(path, delimiter)
+
+        if ensure_path:
+            self._ensure_path(keys)
+
+        result: Any = self
+        for key in self._path_to_keys(path, delimiter):
+            result = getattr(result, key, None)
+            if result is None:
+                return None
+
+        if not asserted_type:
+            return result
+
+        if isinstance(result, asserted_type):
+            return result
+
+        msg = f"Expected {asserted_type} but got {type(result)}"
+        raise TypeError(msg)
+
+    def _ensure_path(self, keys: Sequence[str]) -> None:
+        """
+        Validate if a sequence of keys exists in the spec schema structure.
+
+        :param keys: Sequence of string keys representing path in spec schema
+        :raises KeyError: If path specified by keys does not exist in schema
+
+        This internal method walks through the schema structure following the provided keys
+        sequence, checking if each key exists at the corresponding level. For UnionType fields,
+        it extracts the non-None type and continues validation if it's a BaseModel.
+        """
+        klass = self.__class__
+
+        fields: dict[str, FieldInfo] = klass.model_fields
+
+        field: FieldInfo | None
+        for i, key in enumerate(keys, start=1):
+            field = fields.get(key)
+            if field is None:
+                msg = f"Path {'.'.join(keys)} does not exist in {klass.__name__} spec"
+                raise KeyError(msg)
+
+            assert hasattr(field, "annotation"), "Annotation field is required"
+            if isinstance(field.annotation, types.UnionType):
+                target_type = next(item for item in field.annotation.__args__ if item is not None)
+            else:
+                target_type = field.annotation
+
+            if target_type is None:
+                msg = f"Path {'.'.join(keys)} does not exist in {klass.__name__} spec"
+                raise KeyError(msg)
+
+            if issubclass(target_type, pydantic.BaseModel):
+                fields = target_type.model_fields
+            elif i == len(keys):
+                return None
+            else:
+                msg = f"Path {'.'.join(keys)} does not exist in {klass.__name__} spec"
+                raise KeyError(msg)
+
+        return None
+
+    def _path_to_keys(self, path: str | Sequence[str], delimiter: str) -> Sequence[str]:
+        """
+        Convert path parameter to sequence of keys.
+
+        :param path: Path to convert, either string to split by delimiter or sequence of keys
+        :param delimiter: String separator used to split path if string is provided
+        :return: Sequence of string keys
+        :raises ValueError: If a path is not string or sequence
+        """
+        match path:
+            case str():
+                return path.split(delimiter)
+            case Sequence():
+                return path
+            case _:
+                msg = f"Unsupported path type: {type(path)}"
+                raise ValueError(msg)
