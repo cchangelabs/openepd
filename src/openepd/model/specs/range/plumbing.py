@@ -16,17 +16,17 @@
 __all__ = (
     "BathtubsRangeV1",
     "FaucetsRangeV1",
-    "OtherPlumbingFixturesRangeV1",
-    "WaterClosetsRangeV1",
     "FireProtectionPipingRangeV1",
     "FireSprinklersRangeV1",
-    "StorageTanksRangeV1",
-    "WaterHeatersRangeV1",
-    "PlumbingFixturesRangeV1",
     "FireSuppressionRangeV1",
+    "OtherPlumbingFixturesRangeV1",
     "PipingRangeV1",
     "PlumbingEquipmentRangeV1",
+    "PlumbingFixturesRangeV1",
     "PlumbingRangeV1",
+    "StorageTanksRangeV1",
+    "WaterClosetsRangeV1",
+    "WaterHeatersRangeV1",
 )
 
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md

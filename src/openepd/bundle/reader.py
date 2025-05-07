@@ -13,10 +13,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from collections.abc import Callable, Iterator, Sequence
 import csv
 import io
 from os import PathLike
-from typing import IO, Callable, Iterator, Sequence, Type, cast
+from typing import IO, cast
 import zipfile
 
 from openepd.bundle.base import AssetFilter, AssetRef, BaseBundleReader
@@ -88,7 +89,8 @@ class DefaultBundleReader(BaseBundleReader):
         with self._bundle_archive.open("toc", "r") as toc_stream:
             toc_reader = csv.DictReader(io.TextIOWrapper(toc_stream, encoding="utf-8"), dialect="toc")
             if not toc_reader.fieldnames or len(toc_reader.fieldnames) < len(self._TOC_FIELDS):
-                raise ValueError("The bundle file is not valid. TOC reading error: wrong number of fields")
+                msg = "The bundle file is not valid. TOC reading error: wrong number of fields"
+                raise ValueError(msg)
 
     def root_assets_iter(
         self,
@@ -141,17 +143,21 @@ class DefaultBundleReader(BaseBundleReader):
         """Read the blob asset."""
         asset = self.get_asset_by_ref(asset_ref)
         if asset is None:
-            raise ValueError("Asset not found")
+            msg = "Asset not found"
+            raise ValueError(msg)
         return self._bundle_archive.open(asset.ref, "r")
 
-    def read_object_asset(self, obj_class: Type[TOpenEpdObject], asset_ref: AssetRef) -> TOpenEpdObject:
+    def read_object_asset(self, obj_class: type[TOpenEpdObject], asset_ref: AssetRef) -> TOpenEpdObject:
         """Read the object asset."""
         asset = self.get_asset_by_ref(asset_ref)
         if asset is None:
-            raise ValueError("Asset not found")
+            msg = "Asset not found"
+            raise ValueError(msg)
         if obj_class.get_asset_type() is None:
-            raise ValueError(f"Target object {obj_class.__name__} is not supported asset")
+            msg = f"Target object {obj_class.__name__} is not supported asset"
+            raise ValueError(msg)
         if asset.type != obj_class.get_asset_type():
-            raise ValueError(f"Asset type mismatch. Expected {obj_class.get_asset_type()}, got {asset.type}")
+            msg = f"Asset type mismatch. Expected {obj_class.get_asset_type()}, got {asset.type}"
+            raise ValueError(msg)
         with self._bundle_archive.open(asset.ref, "r") as asset_stream:
             return obj_class.parse_raw(asset_stream.read())

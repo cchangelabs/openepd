@@ -16,9 +16,9 @@
 __all__ = (
     "AluminiumBilletsRangeV1",
     "AluminiumExtrusionsRangeV1",
+    "AluminiumRangeV1",
     "AluminiumSheetGoodsRangeV1",
     "AluminiumSuspensionAssemblyRangeV1",
-    "AluminiumRangeV1",
 )
 
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md

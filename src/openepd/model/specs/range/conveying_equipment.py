@@ -14,9 +14,9 @@
 #  limitations under the License.
 #
 __all__ = (
-    "EscalatorsRangeV1",
-    "ElevatorsRangeV1",
     "ConveyingEquipmentRangeV1",
+    "ElevatorsRangeV1",
+    "EscalatorsRangeV1",
 )
 
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md

@@ -14,8 +14,9 @@
 #  limitations under the License.
 #
 import abc
+from collections.abc import Callable, Iterator, Sequence
 import csv
-from typing import IO, Callable, Iterator, Self, Sequence, Type
+from typing import IO, Self
 
 from openepd.bundle.model import AssetInfo, AssetType, BundleManifest, RelType
 from openepd.model.base import TOpenEpdObject
@@ -70,7 +71,7 @@ class BaseBundleReader(BundleMixin, metaclass=abc.ABCMeta):
     def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, type, value, traceback):  # noqa: A002
         self.close()
 
     @abc.abstractmethod
@@ -133,7 +134,7 @@ class BaseBundleReader(BundleMixin, metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def read_object_asset(self, obj_class: Type[TOpenEpdObject], asset_ref: AssetRef) -> TOpenEpdObject:
+    def read_object_asset(self, obj_class: type[TOpenEpdObject], asset_ref: AssetRef) -> TOpenEpdObject:
         """Read an object asset by given reference."""
         pass
 
@@ -171,7 +172,7 @@ class BaseBundleWriter(BundleMixin, metaclass=abc.ABCMeta):
     def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, type, value, traceback):  # noqa: A002
         self.close()
 
     @abc.abstractmethod

@@ -14,9 +14,10 @@
 #  limitations under the License.
 #
 import abc
+from collections.abc import Callable
 from enum import StrEnum
 import json
-from typing import Any, Callable, ClassVar, Generic, Optional, Type, TypeAlias, TypeVar
+from typing import Any, ClassVar, Generic, Optional, TypeAlias, TypeVar
 
 from cqd import open_xpd_uuid  # type:ignore[import-untyped,ignore-not-found]
 
@@ -106,7 +107,7 @@ class BaseOpenEpdSchema(pyd.BaseModel):
         return self.ext.get(key, default)
 
     def get_typed_ext_field(
-        self, key: str, target_type: Type[TAnySerializable], default: Optional[TAnySerializable] = None
+        self, key: str, target_type: type[TAnySerializable], default: TAnySerializable | None = None
     ) -> TAnySerializable:
         """
         Get an extension field from the model and convert it to the target type.
@@ -120,13 +121,14 @@ class BaseOpenEpdSchema(pyd.BaseModel):
             return target_type.parse_obj(value)  # type: ignore[return-value]
         elif isinstance(value, target_type):
             return value
-        raise ValueError(f"Cannot convert {value} to {target_type}")
+        msg = f"Cannot convert {value} to {target_type}"
+        raise ValueError(msg)
 
-    def get_ext(self, ext_type: Type["TOpenEpdExtension"]) -> Optional["TOpenEpdExtension"]:
+    def get_ext(self, ext_type: type["TOpenEpdExtension"]) -> Optional["TOpenEpdExtension"]:
         """Get an extension field from the model or None if it doesn't exist."""
         return self.get_typed_ext_field(ext_type.get_extension_name(), ext_type, None)
 
-    def get_ext_or_empty(self, ext_type: Type["TOpenEpdExtension"]) -> "TOpenEpdExtension":
+    def get_ext_or_empty(self, ext_type: type["TOpenEpdExtension"]) -> "TOpenEpdExtension":
         """Get an extension field from the model or an empty instance if it doesn't exist."""
         return self.get_typed_ext_field(ext_type.get_extension_name(), ext_type, ext_type.construct(**{}))
 
@@ -174,7 +176,7 @@ class OpenEpdExtension(BaseOpenEpdSchema, metaclass=abc.ABCMeta):
 
 TOpenEpdExtension = TypeVar("TOpenEpdExtension", bound=OpenEpdExtension)
 TOpenEpdObject = TypeVar("TOpenEpdObject", bound=BaseOpenEpdSchema)
-TOpenEpdObjectClass = TypeVar("TOpenEpdObjectClass", bound=Type[BaseOpenEpdSchema])
+TOpenEpdObjectClass = TypeVar("TOpenEpdObjectClass", bound=type[BaseOpenEpdSchema])
 
 
 class RootDocument(abc.ABC, BaseOpenEpdSchema):
@@ -218,23 +220,24 @@ class BaseDocumentFactory(Generic[TRootDocument]):
         """Create a document from a dictionary."""
         doctype: str | None = data.get("doctype")
         if doctype is None:
-            raise ValueError("Doctype not found in the data.")
+            msg = "Doctype not found in the data."
+            raise ValueError(msg)
         if doctype.lower() != cls.DOCTYPE_CONSTRAINT.lower():
-            raise ValueError(
-                f"Document type {doctype} not supported. This factory supports {cls.DOCTYPE_CONSTRAINT} only."
-            )
+            msg = f"Document type {doctype} not supported. This factory supports {cls.DOCTYPE_CONSTRAINT} only."
+            raise ValueError(msg)
         version = Version.parse_version(data.get(OPENEPD_VERSION_FIELD, ""))
         for x, doc_cls in cls.VERSION_MAP.items():
             if x.major == version.major:
                 if version.minor <= x.minor:
                     return doc_cls(**data)
                 else:
-                    raise ValueError(
-                        f"Unsupported version: {version}. "
-                        f"The highest supported version from branch {x.major}.x is {x}"
+                    msg = (
+                        f"Unsupported version: {version}. The highest supported version from branch {x.major}.x is {x}"
                     )
+                    raise ValueError(msg)
         supported_versions = ", ".join(f"{v.major}.x" for v in cls.VERSION_MAP.keys())
-        raise ValueError(f"Version {version} is not supported. Supported versions are: {supported_versions}")
+        msg = f"Version {version} is not supported. Supported versions are: {supported_versions}"
+        raise ValueError(msg)
 
 
 class OpenXpdUUID(str):
@@ -252,7 +255,8 @@ class OpenXpdUUID(str):
             open_xpd_uuid.validate(open_xpd_uuid.sanitize(str(v)))
             return v
         except open_xpd_uuid.GuidValidationError as e:
-            raise ValueError("Invalid format") from e
+            msg = "Invalid format"
+            raise ValueError(msg) from e
 
     @classmethod
     def __get_validators__(cls):

@@ -15,10 +15,10 @@
 #
 __all__ = (
     "ArchitecturalPrecastRangeV1",
-    "StructuralPrecastRangeV1",
-    "UtilityUndergroundPrecastRangeV1",
     "CivilPrecastRangeV1",
     "PrecastConcreteRangeV1",
+    "StructuralPrecastRangeV1",
+    "UtilityUndergroundPrecastRangeV1",
 )
 
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md

@@ -13,12 +13,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable, Iterator
 from contextlib import contextmanager
 from datetime import datetime, timedelta
 import threading
 from time import sleep
-from typing import Callable, Generic, Iterator, cast
+from typing import Generic, cast
 
 from requests import Response
 
@@ -126,20 +126,26 @@ class StreamingListResponse(Iterable[TOpenEpdObject], Generic[TOpenEpdObject]):
         :return: list of items on the page
         """
         if page_num <= 0:
-            raise ValueError("Page number must be positive")
+            msg = "Page number must be positive"
+            raise ValueError(msg)
         if self.__current_page != page_num or force_reload:
             self.__recent_response = self.__fetch_handler(page_num, self.__page_size)
             self.__current_page = page_num
         if self.__recent_response is None:
-            raise RuntimeError("Response is empty, this should not happen, check if fetch_handler is compatible")
+            msg = "Response is empty, this should not happen, check if fetch_handler is compatible"
+            raise RuntimeError(msg)
         if self.__recent_response.payload is None:
-            raise ValueError("Response does not contain payload")
+            msg = "Response does not contain payload"
+            raise ValueError(msg)
         if not isinstance(self.__recent_response.payload, list):
-            raise ValueError("Response does not contain a list")
+            msg = "Response does not contain a list"
+            raise ValueError(msg)
         if self.__recent_response.meta is None:
-            raise ValueError("Response does not contain meta")
+            msg = "Response does not contain meta"
+            raise ValueError(msg)
         if not isinstance(self.__recent_response.meta, PagingMetaMixin):
-            raise ValueError("Response does not contain paging meta")
+            msg = "Response does not contain paging meta"
+            raise ValueError(msg)
         return self.__recent_response.payload
 
     def get_paging_meta(self) -> PagingMeta:
@@ -152,7 +158,8 @@ class StreamingListResponse(Iterable[TOpenEpdObject], Generic[TOpenEpdObject]):
         """
         paging_meta = cast(PagingMetaMixin, self.get_meta()).paging
         if paging_meta is None:
-            raise ValueError("Response does not contain paging meta")
+            msg = "Response does not contain paging meta"
+            raise ValueError(msg)
         return paging_meta
 
     def get_meta(self) -> MetaCollectionDto:
@@ -206,8 +213,7 @@ class StreamingListResponse(Iterable[TOpenEpdObject], Generic[TOpenEpdObject]):
         self.goto_page(start_from_page)
         while True:
             items = self.goto_page(self.current_page)
-            for x in items:
-                yield x
+            yield from items
             if not self.has_next_page():
                 return  # no more pages
             else:

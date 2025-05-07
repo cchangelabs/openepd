@@ -17,17 +17,17 @@ __all__ = (
     "AuxiliariesRangeV1",
     "CleaningProductsRangeV1",
     "ClothingRangeV1",
-    "FoodBeverageRangeV1",
-    "TransportationInfrastructureRangeV1",
-    "UnsupportedRangeV1",
     "CopperRangeV1",
     "EarthworkRangeV1",
     "ExteriorSunControlDevicesRangeV1",
+    "FoodBeverageRangeV1",
     "GypsumFinishingCompoundsRangeV1",
-    "ProfilesRangeV1",
-    "UnknownRangeV1",
-    "ZincRangeV1",
     "OtherMaterialsRangeV1",
+    "ProfilesRangeV1",
+    "TransportationInfrastructureRangeV1",
+    "UnknownRangeV1",
+    "UnsupportedRangeV1",
+    "ZincRangeV1",
 )
 
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md

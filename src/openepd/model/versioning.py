@@ -44,7 +44,8 @@ class Version(NamedTuple):
 
     @staticmethod
     def parse_version(version: str) -> "Version":
-        """Parse the version of extension or the format.
+        """
+        Parse the version of extension or the format.
 
         Version is expected to be major.minor
 
@@ -53,9 +54,11 @@ class Version(NamedTuple):
         """
         splits = version.split(".", 1) if isinstance(version, str) else None
         if len(splits) != 2:
-            raise ValueError(f"Invalid version: {version}")
+            msg = f"Invalid version: {version}"
+            raise ValueError(msg)
         if not splits[0].isdigit() or not splits[1].isdigit():
-            raise ValueError(f"Invalid version: {version}")
+            msg = f"Invalid version: {version}"
+            raise ValueError(msg)
         return Version(major=int(splits[0]), minor=int(splits[1]))
 
     def __str__(self) -> str:
@@ -112,9 +115,8 @@ class OpenEpdVersions(Version, ReprEnum):
         for x in cls:
             if x.value.major == branch:
                 return x.value
-        raise ValueError(
-            f"No version {branch}.x is not supported. Supported versions are: {', '.join(str(x.value) for x in cls)}"
-        )
+        msg = f"No version {branch}.x is not supported. Supported versions are: {', '.join(str(x.value) for x in cls)}"
+        raise ValueError(msg)
 
     @classmethod
     def get_current(cls) -> Version:

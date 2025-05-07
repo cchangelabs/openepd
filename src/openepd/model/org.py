@@ -124,13 +124,16 @@ class Plant(PlantRef, WithAttachmentsMixin, WithAltIdsMixin):
         try:
             pluscode, web_domain = v.split(".", maxsplit=1)
         except ValueError as e:
-            raise ValueError("Incorrectly formed id: should be pluscode.owner_web_domain") from e
+            msg = "Incorrectly formed id: should be pluscode.owner_web_domain"
+            raise ValueError(msg) from e
 
         if not openlocationcode.isValid(pluscode):
-            raise ValueError("Incorrect pluscode for plant")
+            msg = "Incorrect pluscode for plant"
+            raise ValueError(msg)
 
         if not web_domain:
-            raise ValueError("Incorrect web_domain for plant")
+            msg = "Incorrect web_domain for plant"
+            raise ValueError(msg)
         return v
 
     class Config(BaseOpenEpdSchema.Config):

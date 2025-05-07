@@ -27,7 +27,6 @@ OPENEPD_V0_VERSION = OpenEpdVersions.get_most_recent_version(0)
 
 
 class MyExtension(OpenEpdExtension):
-
     @classmethod
     def get_extension_name(cls) -> str:
         return "my_ext"

@@ -82,7 +82,7 @@ class MetaCollectionDto(BaseOpenEpdApiModel, pyd_generics.GenericModel, Generic[
 
     It is generified by the extension type of similar structure (key-dict value), which should not be a part of OpenEPD
     spec. This allows to add custom meta objects to the response, which would be ignored by OpenEPD implementors.
-    """
+    """  # noqa: D404
 
     ext: TMetaExtension | None = None
 
