@@ -35,8 +35,6 @@ __all__ = (
     "WireMeshSteelRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
-
 
 from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeFloat, RangeRatioFloat
@@ -306,6 +304,12 @@ class OtherSteelRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class CurdeSteelRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Curde steel products."""
+
+    _EXT_VERSION = "1.0"
+
+
 class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Broad category for construction materials made from steel and its alloys.
@@ -313,7 +317,7 @@ class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.1"
+    _EXT_VERSION = "1.2"
 
     yield_tensile_str: AmountRangePressureMpa | None = pyd.Field(
         default=None,
@@ -347,3 +351,4 @@ class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     RebarSteel: RebarSteelRangeV1 | None = None
     WireMeshSteel: WireMeshSteelRangeV1 | None = None
     OtherSteel: OtherSteelRangeV1 | None = None
+    CrudeSteel: CurdeSteelRangeV1 | None = None
