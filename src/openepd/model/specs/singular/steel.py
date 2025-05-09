@@ -85,7 +85,8 @@ class HotRolledSectionsV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
 
 
 class PlateSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
-    """Plate Steels.
+    """
+    Plate Steels.
 
     Flat hot-rolled steel, typically thicker than 'sheet', made by compressing multiple steel
     layers together into one.
@@ -250,10 +251,16 @@ class OtherSteelV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class CrudeSteelV1(BaseOpenEpdHierarchicalSpec):
+    """Steel ingots, billets, blooms, and slabs for use in manufacturing steel products."""
+
+    _EXT_VERSION = "1.0"
+
+
 class SteelV1(BaseOpenEpdHierarchicalSpec):
     """Broad category for construction materials made from steel and its alloys."""
 
-    _EXT_VERSION = "1.1"
+    _EXT_VERSION = "1.2"
 
     # Own fields:
     yield_tensile_str: PressureMPaStr | None = pyd.Field(
@@ -303,3 +310,4 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
     RebarSteel: RebarSteelV1 | None = None
     WireMeshSteel: WireMeshSteelV1 | None = None
     OtherSteel: OtherSteelV1 | None = None
+    CrudeSteel: CrudeSteelV1 | None = None

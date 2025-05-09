@@ -14,14 +14,14 @@
 #  limitations under the License.
 #
 __all__ = (
-    "PDURangeV1",
     "CabinetsRacksAndEnclosuresRangeV1",
+    "CommunicationsConduitRangeV1",
     "DataCablingRangeV1",
     "FloorBoxesAndAccessoriesRangeV1",
+    "NetworkInfrastructureRangeV1",
     "NetworkingCableTraysRangeV1",
     "NetworkingRacewaysRangeV1",
-    "CommunicationsConduitRangeV1",
-    "NetworkInfrastructureRangeV1",
+    "PDURangeV1",
 )
 
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md

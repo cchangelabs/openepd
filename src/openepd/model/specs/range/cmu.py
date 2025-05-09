@@ -17,9 +17,6 @@ __all__ = ("CMURangeV1",)
 
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
-
-from builtins import float
-
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CmuBlockType, CmuWeightClassification

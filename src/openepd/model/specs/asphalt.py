@@ -50,13 +50,13 @@ class AsphaltV1(BaseOpenEpdHierarchicalSpec):
     )
 
     asphalt_rap: RatioFloat | None = pyd.Field(
-        default=None, description="Percent of mixture that has been replaced by recycled " "asphalt pavement (RAP)."
+        default=None, description="Percent of mixture that has been replaced by recycled asphalt pavement (RAP)."
     )
     asphalt_ras: RatioFloat | None = pyd.Field(
-        default=None, description="Percent of mixture that has been replaced by recycled " "asphalt shingles (RAS)."
+        default=None, description="Percent of mixture that has been replaced by recycled asphalt shingles (RAS)."
     )
     asphalt_ground_tire_rubber: RatioFloat | None = pyd.Field(
-        default=None, description="Percent of mixture that has been replaced " "by ground tire rubber (GTR)."
+        default=None, description="Percent of mixture that has been replaced by ground tire rubber (GTR)."
     )
 
     asphalt_max_temperature: TemperatureCStr | None = pyd.Field(

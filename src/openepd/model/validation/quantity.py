@@ -14,7 +14,8 @@
 #  limitations under the License.
 #
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Any, Callable, ClassVar
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
@@ -55,8 +56,10 @@ class QuantityValidator(ABC):
             dimensionality: The dimensionality to validate against, like "kg"
         Returns:
             None if the value is valid, raises an error otherwise.
+
         Raises:
             ValueError: If the value is not valid.
+
         """
         pass
 
@@ -70,8 +73,10 @@ class QuantityValidator(ABC):
             min_value: The value to compare with, like "102.4 kg"
         Returns:
             None if the value is valid, raises an error otherwise.
+
         Raises:
             ValueError: If the value is not valid.
+
         """
         pass
 
@@ -85,8 +90,10 @@ class QuantityValidator(ABC):
             max_value: The value to compare with, like "0.4 kg"
         Returns:
             None if the value is valid, raises an error otherwise.
+
         Raises:
             ValueError: If the value is not valid.
+
         """
         pass
 

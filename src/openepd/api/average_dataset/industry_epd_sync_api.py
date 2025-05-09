@@ -90,7 +90,8 @@ class IndustryEpdApi(BaseApiMethodGroup):
         """
         iepd_id = iepd.id
         if not iepd_id:
-            raise ValueError("The ID must be set to edit a IndustryEpd.")
+            msg = "The ID must be set to edit a IndustryEpd."
+            raise ValueError(msg)
 
         response = self._client.do_request(
             "put",

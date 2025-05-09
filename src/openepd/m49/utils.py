@@ -14,15 +14,15 @@
 #  limitations under the License.
 #
 __all__ = [
+    "is_m49_code",
     "iso_to_m49",
     "m49_to_iso",
-    "region_and_country_names_to_m49",
+    "m49_to_openepd",
     "m49_to_region_and_country_names",
     "openepd_to_m49",
-    "m49_to_openepd",
-    "is_m49_code",
+    "region_and_country_names_to_m49",
 ]
-from typing import Collection
+from collections.abc import Collection
 
 from openepd.m49.const import (
     COUNTRY_VERBOSE_NAME_TO_M49,
@@ -54,7 +54,8 @@ def iso_to_m49(regions: Collection[str]) -> set[str]:
         if m49_code:
             result.add(m49_code)
         else:
-            raise ValueError(f"Country code '{code}' not found in M49 region codes.")
+            msg = f"Country code '{code}' not found in M49 region codes."
+            raise ValueError(msg)
 
     return result
 
@@ -77,7 +78,8 @@ def m49_to_iso(regions: Collection[str]) -> set[str]:
         if iso_code:
             result.add(iso_code)
         else:
-            raise ValueError(f"Region code '{code}' not found in ISO3166.")
+            msg = f"Region code '{code}' not found in ISO3166."
+            raise ValueError(msg)
 
     return result
 
@@ -99,7 +101,8 @@ def region_and_country_names_to_m49(regions: Collection[str]) -> set[str]:
     for name in regions:
         m49_code = REGION_VERBOSE_NAME_TO_M49.get(name.title()) or COUNTRY_VERBOSE_NAME_TO_M49.get(name.title())
         if not m49_code:
-            raise ValueError(f"Region or country name '{name}' not found in M49 region codes.")
+            msg = f"Region or country name '{name}' not found in M49 region codes."
+            raise ValueError(msg)
         result.add(m49_code)
 
     return result
@@ -120,7 +123,8 @@ def m49_to_region_and_country_names(regions: Collection[str]) -> set[str]:
     result = set()
     for code in regions:
         if code not in M49_TO_REGION_VERBOSE_NAME and code not in M49_TO_COUNTRY_VERBOSE_NAME:
-            raise ValueError(f"Region code '{code}' not found in M49 region codes.")
+            msg = f"Region code '{code}' not found in M49 region codes."
+            raise ValueError(msg)
 
         name = M49_TO_REGION_VERBOSE_NAME.get(code) or M49_TO_COUNTRY_VERBOSE_NAME.get(code, code)
         result.add(name)
@@ -153,7 +157,8 @@ def openepd_to_m49(regions: Collection[str]) -> set[str]:
             elif is_m49_code(region):
                 result.add(region)
             else:
-                raise ValueError(f"Region '{region}' not found in ISO3166 or OpenEPD special regions.")
+                msg = f"Region '{region}' not found in ISO3166 or OpenEPD special regions."
+                raise ValueError(msg)
     return result
 
 
@@ -185,7 +190,8 @@ def m49_to_openepd(regions: list[str]) -> set[str]:
         if iso_code:
             result.add(iso_code)
         else:
-            raise ValueError(f"Region code '{code}' not found in ISO3166 or OpenEPD special regions.")
+            msg = f"Region code '{code}' not found in ISO3166 or OpenEPD special regions."
+            raise ValueError(msg)
 
     return result
 

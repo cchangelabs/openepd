@@ -24,8 +24,8 @@ class AhuZoneControl(StrEnum):
     """
     Ahu zone control.
 
-     - Single Zone: Single Zone
-     - Multi Zone: Multi Zone
+    - Single Zone: Single Zone
+    - Multi Zone: Multi Zone
 
     """
 
@@ -37,20 +37,20 @@ class UtilityPipingMaterial(StrEnum):
     """
     Utility piping material.
 
-     - PVC: PVC
-     - PEX: PEX
-     - HDPE: HDPE
-     - Galvanized Steel: Galvanized Steel
-     - Cast iron: Cast iron
-     - PVCO: PVCO
-     - Ductile Iron: Ductile Iron
-     - Steel: Steel
-     - Reinforced Concrete: Reinforced Concrete
-     - Unreinforced Concrete: Unreinforced Concrete
-     - Fiberglass: Fiberglass
-     - PP: PP
-     - Stainless Steel: Stainless Steel
-     - Other: Other
+    - PVC: PVC
+    - PEX: PEX
+    - HDPE: HDPE
+    - Galvanized Steel: Galvanized Steel
+    - Cast iron: Cast iron
+    - PVCO: PVCO
+    - Ductile Iron: Ductile Iron
+    - Steel: Steel
+    - Reinforced Concrete: Reinforced Concrete
+    - Unreinforced Concrete: Unreinforced Concrete
+    - Fiberglass: Fiberglass
+    - PP: PP
+    - Stainless Steel: Stainless Steel
+    - Other: Other
 
     """
 
@@ -74,16 +74,16 @@ class ResilientFlooringThickness(StrEnum):
     """
     Resilient flooring thickness.
 
-     - ≤ 2mm: ≤ 2mm
-     - ~ 2.5mm: ~ 2.5mm
-     - ~ 3.2mm: ~ 3.2mm
-     - ~ 4mm: ~ 4mm
-     - ~ 4.5mm: ~ 4.5mm
-     - ~ 5mm: ~ 5mm
-     - ~ 5.5mm: ~ 5.5mm
-     - ~ 6mm: ~ 6mm
-     - ~ 8mm: ~ 8mm
-     - ≥ 10mm: ≥ 10mm
+    - ≤ 2mm: ≤ 2mm
+    - ~ 2.5mm: ~ 2.5mm
+    - ~ 3.2mm: ~ 3.2mm
+    - ~ 4mm: ~ 4mm
+    - ~ 4.5mm: ~ 4.5mm
+    - ~ 5mm: ~ 5mm
+    - ~ 5.5mm: ~ 5.5mm
+    - ~ 6mm: ~ 6mm
+    - ~ 8mm: ~ 8mm
+    - ≥ 10mm: ≥ 10mm
 
     """
 
@@ -103,12 +103,12 @@ class CablingFireRating(StrEnum):
     """
     Cabling fire rating.
 
-     - CMP: CMP
-     - CMR: CMR
-     - CMG: CMG
-     - CM: CM
-     - OFNP/CP: OFNP/CP
-     - OFNR/CR: OFNR/CR
+    - CMP: CMP
+    - CMR: CMR
+    - CMG: CMG
+    - CM: CM
+    - OFNP/CP: OFNP/CP
+    - OFNR/CR: OFNR/CR
 
     """
 
@@ -124,9 +124,9 @@ class ElevatorsBuildingRise(StrEnum):
     """
     Elevators building rise.
 
-     - Low-rise: Low-rise
-     - Mid-rise: Mid-rise
-     - High-rise: High-rise
+    - Low-rise: Low-rise
+    - Mid-rise: Mid-rise
+    - High-rise: High-rise
 
     """
 
@@ -139,16 +139,16 @@ class ResilientFlooringMaterial(StrEnum):
     """
     Resilient flooring material.
 
-     - VCT: VCT
-     - LVT: LVT
-     - Rubber: Rubber
-     - Linoleum: Linoleum
-     - Cork: Cork
-     - Rigid: Rigid
-     - Vinyl: Vinyl
-     - SVT: SVT
-     - Composite: Composite
-     - Other: Other
+    - VCT: VCT
+    - LVT: LVT
+    - Rubber: Rubber
+    - Linoleum: Linoleum
+    - Cork: Cork
+    - Rigid: Rigid
+    - Vinyl: Vinyl
+    - SVT: SVT
+    - Composite: Composite
+    - Other: Other
 
     """
 
@@ -168,15 +168,15 @@ class AirFiltersMediaType(StrEnum):
     """
     Air filters media type.
 
-     - Acrylic: Acrylic
-     - Activated Carbon / Charcoal: Activated Carbon / Charcoal
-     - Aluminum Screen Wire: Aluminum Screen Wire
-     - Electrostatic: Electrostatic
-     - Fiberglass: Fiberglass
-     - Paper: Paper
-     - Polyurethane Foam: Polyurethane Foam
-     - Polyester: Polyester
-     - Poly / Cotton Nonwoven Media: Poly / Cotton Nonwoven Media
+    - Acrylic: Acrylic
+    - Activated Carbon / Charcoal: Activated Carbon / Charcoal
+    - Aluminum Screen Wire: Aluminum Screen Wire
+    - Electrostatic: Electrostatic
+    - Fiberglass: Fiberglass
+    - Paper: Paper
+    - Polyurethane Foam: Polyurethane Foam
+    - Polyester: Polyester
+    - Poly / Cotton Nonwoven Media: Poly / Cotton Nonwoven Media
 
     """
 
@@ -195,11 +195,11 @@ class GypsumFireRating(StrEnum):
     """
     Gypsum fire rating.
 
-     - -: -
-     - X: X
-     - C: C
-     - F: F
-     - Other: Not one of the listed options
+    - -: -
+    - X: X
+    - C: C
+    - F: F
+    - Other: Not one of the listed options
 
     """
 
@@ -214,10 +214,10 @@ class MembraneRoofingReinforcement(StrEnum):
     """
     Membrane roofing reinforcement.
 
-     - Polyester: Polyester
-     - Fiberglass: Fiberglass
-     - None: None
-     - Other: Other
+    - Polyester: Polyester
+    - Fiberglass: Fiberglass
+    - None: None
+    - Other: Other
 
     """
 
@@ -231,23 +231,23 @@ class AirFiltersMervRating(StrEnum):
     """
     Air filters merv rating.
 
-     - MERV 1: MERV 1
-     - MERV 2: MERV 2
-     - MERV 3: MERV 3
-     - MERV 4: MERV 4
-     - MERV 5: MERV 5
-     - MERV 6: MERV 6
-     - MERV 7: MERV 7
-     - MERV 8: MERV 8
-     - MERV 9: MERV 9
-     - MERV 10: MERV 10
-     - MERV 11: MERV 11
-     - MERV 12: MERV 12
-     - MERV 13: MERV 13
-     - MERV 14: MERV 14
-     - MERV 15: MERV 15
-     - MERV 16: MERV 16
-     - HEPA: HEPA
+    - MERV 1: MERV 1
+    - MERV 2: MERV 2
+    - MERV 3: MERV 3
+    - MERV 4: MERV 4
+    - MERV 5: MERV 5
+    - MERV 6: MERV 6
+    - MERV 7: MERV 7
+    - MERV 8: MERV 8
+    - MERV 9: MERV 9
+    - MERV 10: MERV 10
+    - MERV 11: MERV 11
+    - MERV 12: MERV 12
+    - MERV 13: MERV 13
+    - MERV 14: MERV 14
+    - MERV 15: MERV 15
+    - MERV 16: MERV 16
+    - HEPA: HEPA
 
     """
 
@@ -274,11 +274,11 @@ class PduTechnology(StrEnum):
     """
     Pdu technology.
 
-     - Basic: Basic
-     - Intelligent: Intelligent
-     - Intelligent with Outlet Control: Intelligent with Outlet Control
-     - Intelligent with Outlet Monitoring: Intelligent with Outlet Monitoring
-     - Outlet Control and Monitoring: Outlet Control and Monitoring
+    - Basic: Basic
+    - Intelligent: Intelligent
+    - Intelligent with Outlet Control: Intelligent with Outlet Control
+    - Intelligent with Outlet Monitoring: Intelligent with Outlet Monitoring
+    - Outlet Control and Monitoring: Outlet Control and Monitoring
 
     """
 
@@ -293,9 +293,9 @@ class IntumescentFireproofingMaterialType(StrEnum):
     """
     Intumescent fireproofing material type.
 
-     - Epoxy: Epoxy
-     - Water-based: Water-based
-     - Solvent-based: Solvent-based
+    - Epoxy: Epoxy
+    - Water-based: Water-based
+    - Solvent-based: Solvent-based
 
     """
 
@@ -308,11 +308,11 @@ class AccessFlooringCoreMaterial(StrEnum):
     """
     Access flooring core material.
 
-     - Cementitious: Cementitious
-     - Wood: Wood
-     - Other: Other
-     - Concrete: Concrete
-     - Hollow: Hollow
+    - Cementitious: Cementitious
+    - Wood: Wood
+    - Other: Other
+    - Concrete: Concrete
+    - Hollow: Hollow
 
     """
 
@@ -327,10 +327,10 @@ class BuriedPipingType(StrEnum):
     """
     Buried piping type.
 
-     - Water Utilities: Water Utilities
-     - Sanitary Sewer: Sanitary Sewer
-     - Storm Drainage: Storm Drainage
-     - Fuel Distribution: Fuel Distribution
+    - Water Utilities: Water Utilities
+    - Sanitary Sewer: Sanitary Sewer
+    - Storm Drainage: Storm Drainage
+    - Fuel Distribution: Fuel Distribution
 
     """
 
@@ -344,9 +344,9 @@ class RackType(StrEnum):
     """
     Rack type.
 
-     - Cabinet: Cabinet
-     - Rack: Rack
-     - Enclosure: Enclosure
+    - Cabinet: Cabinet
+    - Rack: Rack
+    - Enclosure: Enclosure
 
     """
 
@@ -359,8 +359,8 @@ class FoamType(StrEnum):
     """
     Foam type.
 
-     - Open-Cell: Open-Cell
-     - Closed-Cell: Closed-Cell
+    - Open-Cell: Open-Cell
+    - Closed-Cell: Closed-Cell
 
     """
 
@@ -372,14 +372,14 @@ class FrameMaterial(StrEnum):
     """
     Frame material.
 
-     - Vinyl: PVC and similar polymer frames
-     - Aluminium: Aluminium, with optional thermal improvement. Does not include aluminium clad.
-     - Steel: Steel, with optional thermal improvement
-     - Wood: Wood with optional cladding
-     - Fiberglass: Fiber reinforced plastic
-     - Composite: Plastic and Wood Fiber composite.
-     - None: This EPD does not cover the frame.
-     - Other: Other framing material not listed
+    - Vinyl: PVC and similar polymer frames
+    - Aluminium: Aluminium, with optional thermal improvement. Does not include aluminium clad.
+    - Steel: Steel, with optional thermal improvement
+    - Wood: Wood with optional cladding
+    - Fiberglass: Fiber reinforced plastic
+    - Composite: Plastic and Wood Fiber composite.
+    - None: This EPD does not cover the frame.
+    - Other: Other framing material not listed
 
     """
 
@@ -397,17 +397,17 @@ class PipingAnsiSchedule(StrEnum):
     """
     Piping ansi schedule.
 
-     - 5: 5
-     - 10: 10
-     - 20: 20
-     - 30: 30
-     - 40: 40
-     - 60: 60
-     - 80: 80
-     - 100: 100
-     - 120: 120
-     - 140: 140
-     - 160: 160
+    - 5: 5
+    - 10: 10
+    - 20: 20
+    - 30: 30
+    - 40: 40
+    - 60: 60
+    - 80: 80
+    - 100: 100
+    - 120: 120
+    - 140: 140
+    - 160: 160
 
     """
 
@@ -428,9 +428,9 @@ class CmuWeightClassification(StrEnum):
     """
     Cmu weight classification.
 
-     - Normal: Normal
-     - Medium: Medium
-     - Light: Light
+    - Normal: Normal
+    - Medium: Medium
+    - Light: Light
 
     """
 
@@ -443,34 +443,34 @@ class CementEn197_1(StrEnum):
     """
     CementEn197 1.
 
-     - CEM I: CEM I
-     - CEM II/A-S: CEM II/A-S
-     - CEM II/A-P: CEM II/A-P
-     - CEM II/A-Q: CEM II/A-Q
-     - CEM II/A-V: CEM II/A-V
-     - CEM II/A-W: CEM II/A-W
-     - CEM II/A-T: CEM II/A-T
-     - CEM II/A-L: CEM II/A-L
-     - CEM II/A-LL: CEM II/A-LL
-     - CEM II/A-M: CEM II/A-M
-     - CEM II/A-D: CEM II/A-D
-     - CEM II/B-S: CEM II/B-S
-     - CEM II/B-P: CEM II/B-P
-     - CEM II/B-Q: CEM II/B-Q
-     - CEM II/B-V: CEM II/B-V
-     - CEM II/B-W: CEM II/B-W
-     - CEM II/B-T: CEM II/B-T
-     - CEM II/B-L: CEM II/B-L
-     - CEM II/B-LL: CEM II/B-LL
-     - CEM II/B-M: CEM II/B-M
-     - CEM II/C: CEM II/C
-     - CEM III/A: CEM III/A
-     - CEM III/B: CEM III/B
-     - CEM III/C: CEM III/C
-     - CEM IV/A: CEM IV/A
-     - CEM IV/B: CEM IV/B
-     - CEM V/A: CEM V/A
-     - CEM V/B: CEM V/B
+    - CEM I: CEM I
+    - CEM II/A-S: CEM II/A-S
+    - CEM II/A-P: CEM II/A-P
+    - CEM II/A-Q: CEM II/A-Q
+    - CEM II/A-V: CEM II/A-V
+    - CEM II/A-W: CEM II/A-W
+    - CEM II/A-T: CEM II/A-T
+    - CEM II/A-L: CEM II/A-L
+    - CEM II/A-LL: CEM II/A-LL
+    - CEM II/A-M: CEM II/A-M
+    - CEM II/A-D: CEM II/A-D
+    - CEM II/B-S: CEM II/B-S
+    - CEM II/B-P: CEM II/B-P
+    - CEM II/B-Q: CEM II/B-Q
+    - CEM II/B-V: CEM II/B-V
+    - CEM II/B-W: CEM II/B-W
+    - CEM II/B-T: CEM II/B-T
+    - CEM II/B-L: CEM II/B-L
+    - CEM II/B-LL: CEM II/B-LL
+    - CEM II/B-M: CEM II/B-M
+    - CEM II/C: CEM II/C
+    - CEM III/A: CEM III/A
+    - CEM III/B: CEM III/B
+    - CEM III/C: CEM III/C
+    - CEM IV/A: CEM IV/A
+    - CEM IV/B: CEM IV/B
+    - CEM V/A: CEM V/A
+    - CEM V/B: CEM V/B
 
     """
 
@@ -508,10 +508,10 @@ class CementCsaA3001(StrEnum):
     """
     Csa a3001.
 
-     - A3001 GU: A3001 GU
-     - A3001 HE: A3001 HE
-     - A3001 MS: A3001 MS
-     - A3001 HS: A3001 HS
+    - A3001 GU: A3001 GU
+    - A3001 HE: A3001 HE
+    - A3001 MS: A3001 MS
+    - A3001 HS: A3001 HS
 
     """
 
@@ -525,8 +525,8 @@ class BoilerConfiguration(StrEnum):
     """
     Boiler configuration.
 
-     - Hot water: Hot water
-     - Steam: Steam
+    - Hot water: Hot water
+    - Steam: Steam
 
     """
 
@@ -538,12 +538,12 @@ class FloorBoxCoverMaterial(StrEnum):
     """
     Floor box cover material.
 
-     - Brass: Brass
-     - Aluminum: Aluminum
-     - Other Metallic: Other Metallic
-     - Non-metallic: Non-metallic
-     - Heavy Duty: Heavy Duty
-     - None (box only): None (box only)
+    - Brass: Brass
+    - Aluminum: Aluminum
+    - Other Metallic: Other Metallic
+    - Non-metallic: Non-metallic
+    - Heavy Duty: Heavy Duty
+    - None (box only): None (box only)
 
     """
 
@@ -559,11 +559,11 @@ class SteelComposition(StrEnum):
     """
     Steel composition.
 
-     - Carbon: Carbon
-     - Alloy: Alloy
-     - Stainless: Stainless
-     - Tool: Tool
-     - Other: Other
+    - Carbon: Carbon
+    - Alloy: Alloy
+    - Stainless: Stainless
+    - Tool: Tool
+    - Other: Other
 
     """
 
@@ -578,10 +578,10 @@ class CeilingPanelFireRating(StrEnum):
     """
     Ceiling panel fire rating.
 
-     - Class A: Class A
-     - Class B: Class B
-     - Class C: Class C
-     - Class D: Class D
+    - Class A: Class A
+    - Class B: Class B
+    - Class C: Class C
+    - Class D: Class D
 
     """
 
@@ -595,8 +595,8 @@ class VinylSheetConstruction(StrEnum):
     """
     Sheet construction.
 
-     - Homogeneous: Homogeneous
-     - Heterogeneous: Heterogeneous
+    - Homogeneous: Homogeneous
+    - Heterogeneous: Heterogeneous
 
     """
 
@@ -608,9 +608,9 @@ class FloorBoxMaterial(StrEnum):
     """
     Floor box material.
 
-     - Metallic Box: Metallic Box
-     - Non-metallic Box: Non-metallic Box
-     - None (cover only): None (cover only)
+    - Metallic Box: Metallic Box
+    - Non-metallic Box: Non-metallic Box
+    - None (cover only): None (cover only)
 
     """
 
@@ -623,12 +623,12 @@ class FireProtectionPipingMaterial(StrEnum):
     """
     Fire protection piping material.
 
-     - PVC: PVC
-     - Copper: Copper
-     - PEX: PEX
-     - HDPE: HDPE
-     - Ductile Iron: Ductile Iron
-     - Steel: Steel
+    - PVC: PVC
+    - Copper: Copper
+    - PEX: PEX
+    - HDPE: HDPE
+    - Ductile Iron: Ductile Iron
+    - Steel: Steel
 
     """
 
@@ -644,18 +644,18 @@ class MechanicalRefrigerants(StrEnum):
     """
     Mechanical refrigerants.
 
-     - R11: R11
-     - R22: R22
-     - R407c: R407c
-     - R410a: R410a
-     - R134a: R134a
-     - R32: R32
-     - R1234yf: R1234yf
-     - R1234ze: R1234ze
-     - R290: R290
-     - R744: R744
-     - R717: R717
-     - R718: R718
+    - R11: R11
+    - R22: R22
+    - R407c: R407c
+    - R410a: R410a
+    - R134a: R134a
+    - R32: R32
+    - R1234yf: R1234yf
+    - R1234ze: R1234ze
+    - R290: R290
+    - R744: R744
+    - R717: R717
+    - R718: R718
 
     """
 
@@ -677,9 +677,9 @@ class RacewaysMaterial(StrEnum):
     """
     Raceways material.
 
-     - Aluminum: Aluminum
-     - Steel: Steel
-     - Non-metallic: Non-metallic
+    - Aluminum: Aluminum
+    - Steel: Steel
+    - Non-metallic: Non-metallic
 
     """
 
@@ -692,14 +692,14 @@ class CountertopMaterial(StrEnum):
     """
     Countertop material.
 
-     - Stone: Stone
-     - Concrete: Concrete
-     - Plastic: Plastic
-     - Glass: Glass
-     - Wood: Wood
-     - Metal: Metal
-     - Ceramic: Ceramic
-     - Other: Other
+    - Stone: Stone
+    - Concrete: Concrete
+    - Plastic: Plastic
+    - Glass: Glass
+    - Wood: Wood
+    - Metal: Metal
+    - Ceramic: Ceramic
+    - Other: Other
 
     """
 
@@ -717,14 +717,14 @@ class SteelRebarGrade(StrEnum):
     """
     Steel rebar grade.
 
-     - 60 ksi: 60 ksi
-     - 75 ksi: 75 ksi
-     - 80 ksi: 80 ksi
-     - 90 ksi: 90 ksi
-     - 100 ksi: 100 ksi
-     - 120 ksi: 120 ksi
-     - 40 ksi: 40 ksi
-     - 50 ksi: 50 ksi
+    - 60 ksi: 60 ksi
+    - 75 ksi: 75 ksi
+    - 80 ksi: 80 ksi
+    - 90 ksi: 90 ksi
+    - 100 ksi: 100 ksi
+    - 120 ksi: 120 ksi
+    - 40 ksi: 40 ksi
+    - 50 ksi: 50 ksi
 
     """
 
@@ -742,9 +742,9 @@ class AsphaltGradation(StrEnum):
     """
     Asphalt gradation.
 
-     - Gap-graded: Gap-graded
-     - Open-graded: Open-graded
-     - Dense-graded: Dense-graded
+    - Gap-graded: Gap-graded
+    - Open-graded: Open-graded
+    - Dense-graded: Dense-graded
 
     """
 
@@ -757,10 +757,10 @@ class RoofCoverBoardsFacing(StrEnum):
     """
     Roof cover boards facing.
 
-     - Paper: Paper
-     - Glass mat: Glass mat
-     - Fiberglass: Fiberglass
-     - Other: Other
+    - Paper: Paper
+    - Glass mat: Glass mat
+    - Fiberglass: Fiberglass
+    - Other: Other
 
     """
 
@@ -774,13 +774,13 @@ class PlumbingPipingMaterial(StrEnum):
     """
     Plumbing piping material.
 
-     - PVC: PVC
-     - Copper: Copper
-     - PEX: PEX
-     - HDPE: HDPE
-     - Galvanized Steel: Galvanized Steel
-     - Cast iron: Cast iron
-     - Stainless Steel: Stainless Steel
+    - PVC: PVC
+    - Copper: Copper
+    - PEX: PEX
+    - HDPE: HDPE
+    - Galvanized Steel: Galvanized Steel
+    - Cast iron: Cast iron
+    - Stainless Steel: Stainless Steel
 
     """
 
@@ -797,9 +797,9 @@ class AccessFlooringStringers(StrEnum):
     """
     Access flooring stringers.
 
-     - Standard: Standard
-     - Heavy-duty: Heavy-duty
-     - None: None
+    - Standard: Standard
+    - Heavy-duty: Heavy-duty
+    - None: None
 
     """
 
@@ -812,14 +812,14 @@ class ResilientFlooringFormFactor(StrEnum):
     """
     Resilient flooring form factor.
 
-     - Loose Lay: Loose Lay
-     - Gluedown: Gluedown
-     - Underlayment: Underlayment
-     - Interlocking: Interlocking
-     - Self Adhering: Self Adhering
-     - Tile: Tile
-     - Sheet: Sheet
-     - Other: Other
+    - Loose Lay: Loose Lay
+    - Gluedown: Gluedown
+    - Underlayment: Underlayment
+    - Interlocking: Interlocking
+    - Self Adhering: Self Adhering
+    - Tile: Tile
+    - Sheet: Sheet
+    - Other: Other
 
     """
 
@@ -837,15 +837,15 @@ class EnergySource(StrEnum):
     """
     Energy source.
 
-     - Grid: Grid
-     - Wind: Wind
-     - Solar: Solar
-     - Hydro: Hydro
-     - Biomass: Biomass
-     - Coal: Coal
-     - Natgas: Natgas
-     - Nuclear: Nuclear
-     - Other: Other
+    - Grid: Grid
+    - Wind: Wind
+    - Solar: Solar
+    - Hydro: Hydro
+    - Biomass: Biomass
+    - Coal: Coal
+    - Natgas: Natgas
+    - Nuclear: Nuclear
+    - Other: Other
 
     """
 
@@ -864,14 +864,14 @@ class CablingCategory(StrEnum):
     """
     Cabling category.
 
-     - Cat7: Cat7
-     - Cat6A: Cat6A
-     - Cat6: Cat6
-     - Cat5/5e: Cat5/5e
-     - Cat3: Cat3
-     - Coax: Coax
-     - Fiber: Fiber
-     - Other: Other
+    - Cat7: Cat7
+    - Cat6A: Cat6A
+    - Cat6: Cat6
+    - Cat5/5e: Cat5/5e
+    - Cat3: Cat3
+    - Coax: Coax
+    - Fiber: Fiber
+    - Other: Other
 
     """
 
@@ -889,8 +889,8 @@ class MechanicalInstallation(StrEnum):
     """
     Mechanical installation.
 
-     - Indoor: Indoor
-     - Outdoor: Outdoor
+    - Indoor: Indoor
+    - Outdoor: Outdoor
 
     """
 
@@ -902,11 +902,11 @@ class DeckingBoardMaterial(StrEnum):
     """
     Decking board material.
 
-     - Wood: Wood
-     - Composite: Composite
-     - Vinyl: Vinyl
-     - Aluminum: Aluminum
-     - Other: Other
+    - Wood: Wood
+    - Composite: Composite
+    - Vinyl: Vinyl
+    - Aluminum: Aluminum
+    - Other: Other
 
     """
 
@@ -921,13 +921,13 @@ class BoilerEquipmentFuelType(StrEnum):
     """
     Boiler equipment fuel type.
 
-     - Coal: Coal
-     - Electric: Electric
-     - Natural Gas: Natural Gas
-     - Propane: Propane
-     - Oil: Oil
-     - Wood: Wood
-     - Other: Other
+    - Coal: Coal
+    - Electric: Electric
+    - Natural Gas: Natural Gas
+    - Propane: Propane
+    - Oil: Oil
+    - Wood: Wood
+    - Other: Other
 
     """
 
@@ -944,13 +944,13 @@ class Spacer(StrEnum):
     """
     Spacer.
 
-     - Aluminium: Aluminium
-     - Stainless steel: Stainless steel
-     - Plastic and stainless steel: Plastic and stainless steel
-     - Thermoplastic: Thermoplastic
-     - Foam: Foam
-     - Stainless steel or tin plate U-channel: Stainless steel or tin plate U-channel
-     - Plastic: Plastic
+    - Aluminium: Aluminium
+    - Stainless steel: Stainless steel
+    - Plastic and stainless steel: Plastic and stainless steel
+    - Thermoplastic: Thermoplastic
+    - Foam: Foam
+    - Stainless steel or tin plate U-channel: Stainless steel or tin plate U-channel
+    - Plastic: Plastic
 
     """
 
@@ -967,12 +967,12 @@ class HvacHeatExchangersType(StrEnum):
     """
     Hvac heat exchangers type.
 
-     - Shell and Tube: Shell and Tube
-     - Plate: Plate
-     - Finned Tube: Finned Tube
-     - Double-Pipe: Double-Pipe
-     - Plate-Fin: Plate-Fin
-     - Spiral: Spiral
+    - Shell and Tube: Shell and Tube
+    - Plate: Plate
+    - Finned Tube: Finned Tube
+    - Double-Pipe: Double-Pipe
+    - Plate-Fin: Plate-Fin
+    - Spiral: Spiral
 
     """
 
@@ -1047,8 +1047,8 @@ class HeatPumpType(StrEnum):
     """
     Heat pump type.
 
-     - Air-to-Water: Air-to-Water
-     - Water-to-Water: Water-to-Water
+    - Air-to-Water: Air-to-Water
+    - Water-to-Water: Water-to-Water
 
     """
 
@@ -1060,16 +1060,16 @@ class RoofCoverBoardsMaterial(StrEnum):
     """
     Roof cover boards material.
 
-     - Gypsum Fiber: Gypsum Fiber
-     - Gypsum: Gypsum
-     - Wood Fiber: Wood Fiber
-     - Cement: Cement
-     - Polyiso: Polyiso
-     - Perlite: Perlite
-     - Asphaltic: Asphaltic
-     - Mineral Fiber: Mineral Fiber
-     - Plywood/OSB: Plywood/OSB
-     - Other: Other
+    - Gypsum Fiber: Gypsum Fiber
+    - Gypsum: Gypsum
+    - Wood Fiber: Wood Fiber
+    - Cement: Cement
+    - Polyiso: Polyiso
+    - Perlite: Perlite
+    - Asphaltic: Asphaltic
+    - Mineral Fiber: Mineral Fiber
+    - Plywood/OSB: Plywood/OSB
+    - Other: Other
 
     """
 
@@ -1089,12 +1089,12 @@ class CablingJacketMaterial(StrEnum):
     """
     Cabling jacket material.
 
-     - PVC: PVC
-     - FEP: FEP
-     - LSHF: LSHF
-     - PVDF: PVDF
-     - Polyolefin: Polyolefin
-     - Other: Other
+    - PVC: PVC
+    - FEP: FEP
+    - LSHF: LSHF
+    - PVDF: PVDF
+    - Polyolefin: Polyolefin
+    - Other: Other
 
     """
 
@@ -1110,12 +1110,12 @@ class CeilingPanelCoreMaterial(StrEnum):
     """
     Ceiling panel core material.
 
-     - Fiberglass: Fiberglass
-     - Mineral Fiber: Mineral Fiber
-     - Wood: Wood
-     - Aluminium: Aluminium
-     - Steel: Steel
-     - Other: Other
+    - Fiberglass: Fiberglass
+    - Mineral Fiber: Mineral Fiber
+    - Wood: Wood
+    - Aluminium: Aluminium
+    - Steel: Steel
+    - Other: Other
 
     """
 
@@ -1131,9 +1131,9 @@ class CableTraysMaterial(StrEnum):
     """
     Cable trays material.
 
-     - Stainless Steel: Stainless Steel
-     - Electroplated Zinc: Electroplated Zinc
-     - Hot Dip Galvanized: Hot Dip Galvanized
+    - Stainless Steel: Stainless Steel
+    - Electroplated Zinc: Electroplated Zinc
+    - Hot Dip Galvanized: Hot Dip Galvanized
 
     """
 
@@ -1146,12 +1146,12 @@ class InsulationIntendedApplication(StrEnum):
     """
     Insulation intended application.
 
-     - Wall & General: Wall & General
-     - Exterior Wall: Exterior Wall
-     - Roof: Roof
-     - Below Grade: Below Grade
-     - Duct: Duct
-     - Other: Other
+    - Wall & General: Wall & General
+    - Exterior Wall: Exterior Wall
+    - Roof: Roof
+    - Below Grade: Below Grade
+    - Duct: Duct
+    - Other: Other
 
     """
 
@@ -1167,9 +1167,9 @@ class SprayFireproofingDensity(StrEnum):
     """
     Spray fireproofing density.
 
-     - Standard: Standard
-     - Medium: Medium
-     - High: High
+    - Standard: Standard
+    - Medium: Medium
+    - High: High
 
     """
 
@@ -1182,12 +1182,12 @@ class ElevatorsUsageIntensity(StrEnum):
     """
     Elevators usage intensity.
 
-     - Very low: Very low
-     - Low: Low
-     - Medium: Medium
-     - High: High
-     - Very high: Very high
-     - Extremely high: Extremely high
+    - Very low: Very low
+    - Low: Low
+    - Medium: Medium
+    - High: High
+    - Very high: Very high
+    - Extremely high: Extremely high
 
     """
 
@@ -1203,10 +1203,10 @@ class CladdingFacingMaterial(StrEnum):
     """
     Cladding facing material.
 
-     - Steel: Steel
-     - Stone: Stone
-     - Aluminium: Aluminium
-     - Other: Other
+    - Steel: Steel
+    - Stone: Stone
+    - Aluminium: Aluminium
+    - Other: Other
 
     """
 
@@ -1220,9 +1220,9 @@ class WallBaseMaterial(StrEnum):
     """
     Wall base material.
 
-     - Rubber: Rubber
-     - Vinyl: Vinyl
-     - Other: Other
+    - Rubber: Rubber
+    - Vinyl: Vinyl
+    - Other: Other
 
     """
 
@@ -1235,9 +1235,9 @@ class SprayFireproofingMaterialType(StrEnum):
     """
     Spray fireproofing material type.
 
-     - Gypsum-based: Gypsum-based
-     - Portland: Portland
-     - Gypsum and Portland: Gypsum and Portland
+    - Gypsum-based: Gypsum-based
+    - Portland: Portland
+    - Gypsum and Portland: Gypsum and Portland
 
     """
 
@@ -1250,10 +1250,10 @@ class MasonryCementAstmC91Type(StrEnum):
     """
     Masonry cement astm c91 type.
 
-     - Type N: Type N
-     - Type S: Type S
-     - Type O: Type O
-     - Type M: Type M
+    - Type N: Type N
+    - Type S: Type S
+    - Type O: Type O
+    - Type M: Type M
 
     """
 
@@ -1267,13 +1267,13 @@ class CementAstmType(StrEnum):
     """
     Cement astm type.
 
-     - C150 Type I: C150 Type I
-     - C150 Type I/II: C150 Type I/II
-     - C150 Type III: C150 Type III
-     - C150 Type IV: C150 Type IV
-     - C150 Type II/V: C150 Type II/V
-     - C595 PLC: C595 PLC
-     - C595 Blended: C595 Blended
+    - C150 Type I: C150 Type I
+    - C150 Type I/II: C150 Type I/II
+    - C150 Type III: C150 Type III
+    - C150 Type IV: C150 Type IV
+    - C150 Type II/V: C150 Type II/V
+    - C595 PLC: C595 PLC
+    - C595 Blended: C595 Blended
 
     """
 
@@ -1290,8 +1290,8 @@ class CmuBlockType(StrEnum):
     """
     Cmu block type.
 
-     - Gray: Gray
-     - Architectural: Architectural
+    - Gray: Gray
+    - Architectural: Architectural
 
     """
 
@@ -1303,12 +1303,12 @@ class CarpetYarnType(StrEnum):
     """
     Carpet yarn type.
 
-     - Nylon 6,6: Nylon 6,6
-     - Nylon 6: Nylon 6
-     - Wool: Wool
-     - Recycled PET: Recycled PET
-     - Polyester (PET): Polyester (PET)
-     - Olefin: Olefin
+    - Nylon 6,6: Nylon 6,6
+    - Nylon 6: Nylon 6
+    - Wool: Wool
+    - Recycled PET: Recycled PET
+    - Polyester (PET): Polyester (PET)
+    - Olefin: Olefin
 
     """
 
@@ -1324,22 +1324,22 @@ class AluminiumAlloy(StrEnum):
     """
     AluminiumAlloy.
 
-     - 1xxx: 1xxx
-     - 2xxx: 2xxx
-     - 3xxx: 3xxx
-     - 4xxx: 4xxx
-     - 5xxx: 5xxx
-     - 6xxx: 6xxx
-     - 7xxx: 7xxx
-     - 8xxx: 8xxx
-     - 1xx.x: 1xx.x
-     - 2xx.x: 2xx.x
-     - 3xx.x: 3xx.x
-     - 4xx.x: 4xx.x
-     - 5xx.x: 5xx.x
-     - 7xx.x: 7xx.x
-     - 8xx.x: 8xx.x
-     - 9xx.x: 9xx.x
+    - 1xxx: 1xxx
+    - 2xxx: 2xxx
+    - 3xxx: 3xxx
+    - 4xxx: 4xxx
+    - 5xxx: 5xxx
+    - 6xxx: 6xxx
+    - 7xxx: 7xxx
+    - 8xxx: 8xxx
+    - 1xx.x: 1xx.x
+    - 2xx.x: 2xx.x
+    - 3xx.x: 3xx.x
+    - 4xx.x: 4xx.x
+    - 5xx.x: 5xx.x
+    - 7xx.x: 7xx.x
+    - 8xx.x: 8xx.x
+    - 9xx.x: 9xx.x
 
     """
 
@@ -1365,9 +1365,9 @@ class CarpetIntendedApplication(StrEnum):
     """
     Intended application.
 
-     - Res: Res
-     - Com: Com
-     - Ind: Ind
+    - Res: Res
+    - Com: Com
+    - Ind: Ind
 
     """
 
@@ -1380,11 +1380,11 @@ class WoodFlooringFabrication(StrEnum):
     """
     Wood Flooring Fabrication.
 
-     - Solid hardwood: Solid hardwood
-     - Engineered hardwood: Engineered hardwood
-     - Bamboo: Bamboo
-     - Parquet: Parquet
-     - Cork: Cork
+    - Solid hardwood: Solid hardwood
+    - Engineered hardwood: Engineered hardwood
+    - Bamboo: Bamboo
+    - Parquet: Parquet
+    - Cork: Cork
 
     """
 
@@ -1399,8 +1399,8 @@ class CompositeLumberFabrication(StrEnum):
     """
     Composite Lumber Fabrication.
 
-     - LVL: LVL
-     - Bonded Strand: Bonded Strand
+    - LVL: LVL
+    - Bonded Strand: Bonded Strand
     """
 
     LVL = "LVL"
@@ -1411,10 +1411,10 @@ class MassTimberFabrication(StrEnum):
     """
     Composite Lumber Fabrication.
 
-     - CLT: CLT
-     - GLT: GLT
-     - NLT: NLT
-     - DLT: DLT
+    - CLT: CLT
+    - GLT: GLT
+    - NLT: NLT
+    - DLT: DLT
     """
 
     CLT = "CLT"
@@ -1427,9 +1427,9 @@ class SheathingPanelsFabrication(StrEnum):
     """
     Sheathing Panels Fabrication.
 
-     - Plywood: Plywood
-     - OSB: OSB
-     - Fiberboard: Fiberboard
+    - Plywood: Plywood
+    - OSB: OSB
+    - Fiberboard: Fiberboard
     """
 
     PLYWOOD = "Plywood"
@@ -1441,20 +1441,20 @@ class AllFabrication(StrEnum):
     """
     Wood fabrication enumeration.
 
-     - Plywood: Plywood
-     - OSB: OSB
-     - Fiberboard: Fiberboard
-     - CLT: CLT
-     - GLT: GLT
-     - NLT: NLT
-     - DLT: DLT
-     - LVL: LVL
-     - Bonded Strand: Bonded Strand
-     - Solid hardwood: Solid hardwood
-     - Engineered hardwood: Engineered hardwood
-     - Bamboo: Bamboo
-     - Parquet: Parquet
-     - Cork: Cork
+    - Plywood: Plywood
+    - OSB: OSB
+    - Fiberboard: Fiberboard
+    - CLT: CLT
+    - GLT: GLT
+    - NLT: NLT
+    - DLT: DLT
+    - LVL: LVL
+    - Bonded Strand: Bonded Strand
+    - Solid hardwood: Solid hardwood
+    - Engineered hardwood: Engineered hardwood
+    - Bamboo: Bamboo
+    - Parquet: Parquet
+    - Cork: Cork
     """
 
     PLYWOOD = "Plywood"
@@ -1477,9 +1477,9 @@ class AsphaltMixType(StrEnum):
     """
     Asphalt mix type.
 
-     - WMA: WMA
-     - HMA: HMA
-     - CCPR: CCPR
+    - WMA: WMA
+    - HMA: HMA
+    - CCPR: CCPR
 
     """
 
@@ -1569,17 +1569,17 @@ class WoodFlooringTimberSpecies(StrEnum):
     """
     Engineered Timber species.
 
-     - Oak: Oak
-     - Maple: Maple
-     - Cherry: Cherry
-     - Walnut: Walnut
-     - Ash: Ash
-     - Mahogany: Mahogany
-     - Hickory: Hickory
-     - Teak: Teak
-     - Jarrah: Jarrah
-     - Mesquite: Mesquite
-     - Bamboo: Bamboo
+    - Oak: Oak
+    - Maple: Maple
+    - Cherry: Cherry
+    - Walnut: Walnut
+    - Ash: Ash
+    - Mahogany: Mahogany
+    - Hickory: Hickory
+    - Teak: Teak
+    - Jarrah: Jarrah
+    - Mesquite: Mesquite
+    - Bamboo: Bamboo
 
     """
 
@@ -1600,57 +1600,57 @@ class SawnTimberSpecies(StrEnum):
     """
     Sawn Timber species.
 
-     - Alaska Cedar: Alaska Cedar
-     - Alaska Hemlock: Alaska Hemlock
-     - Alaska Spruce: Alaska Spruce
-     - Alaska Yellow Cedar: Alaska Yellow Cedar
-     - Aspen: Aspen
-     - Baldcypress: Baldcypress
-     - Balsam Fir: Balsam Fir
-     - Beech-Birch-Hickory: Beech-Birch-Hickory
-     - Coast Sitka Spruce: Coast Sitka Spruce
-     - Coast Species: Coast Species
-     - Cottonwood: Cottonwood
-     - Douglas Fir-Larch: Douglas Fir-Larch
-     - Douglas Fir-Larch (North): Douglas Fir-Larch (North)
-     - Douglas Fir-South: Douglas Fir-South
-     - Eastern Hemlock: Eastern Hemlock
-     - Eastern Hemlock-Balsam Fir: Eastern Hemlock-Balsam Fir
-     - Eastern Hemlock-Tamarack: Eastern Hemlock-Tamarack
-     - Eastern Hemlock-Tamarack (North): Eastern Hemlock-Tamarack (North)
-     - Eastern Softwoods: Eastern Softwoods
-     - Eastern Spruce: Eastern Spruce
-     - Eastern White Pine: Eastern White Pine
-     - Eastern White Pine (North): Eastern White Pine (North)
-     - Hem-Fir: Hem-Fir
-     - Hem-Fir (North): Hem-Fir (North)
-     - Mixed Maple: Mixed Maple
-     - Mixed Oak: Mixed Oak
-     - Mixed Southern Pine: Mixed Southern Pine
-     - Mountain Hemlock: Mountain Hemlock
-     - Northern Pine: Northern Pine
-     - Northern Red Oak: Northern Red Oak
-     - Northern Species: Northern Species
-     - Northern White Cedar: Northern White Cedar
-     - Ponderosa Pine: Ponderosa Pine
-     - Red Maple: Red Maple
-     - Red Oak: Red Oak
-     - Red Pine: Red Pine
-     - Redwood: Redwood
-     - Sitka Spruce: Sitka Spruce
-     - Southern Pine: Southern Pine
-     - Spruce-Pine-Fir: Spruce-Pine-Fir
-     - Scots Pine: Scots Pine
-     - Spruce-Pine-Fir (South): Spruce-Pine-Fir (South)
-     - Western Cedars: Western Cedars
-     - Western Cedars (North): Western Cedars (North)
-     - Western Hemlock: Western Hemlock
-     - Western Hemlock (North): Western Hemlock (North)
-     - Western White Pine: Western White Pine
-     - Western Woods: Western Woods
-     - White Oak: White Oak
-     - Yellow Cedar: Yellow Cedar
-     - Yellow Poplar: Yellow Poplar
+    - Alaska Cedar: Alaska Cedar
+    - Alaska Hemlock: Alaska Hemlock
+    - Alaska Spruce: Alaska Spruce
+    - Alaska Yellow Cedar: Alaska Yellow Cedar
+    - Aspen: Aspen
+    - Baldcypress: Baldcypress
+    - Balsam Fir: Balsam Fir
+    - Beech-Birch-Hickory: Beech-Birch-Hickory
+    - Coast Sitka Spruce: Coast Sitka Spruce
+    - Coast Species: Coast Species
+    - Cottonwood: Cottonwood
+    - Douglas Fir-Larch: Douglas Fir-Larch
+    - Douglas Fir-Larch (North): Douglas Fir-Larch (North)
+    - Douglas Fir-South: Douglas Fir-South
+    - Eastern Hemlock: Eastern Hemlock
+    - Eastern Hemlock-Balsam Fir: Eastern Hemlock-Balsam Fir
+    - Eastern Hemlock-Tamarack: Eastern Hemlock-Tamarack
+    - Eastern Hemlock-Tamarack (North): Eastern Hemlock-Tamarack (North)
+    - Eastern Softwoods: Eastern Softwoods
+    - Eastern Spruce: Eastern Spruce
+    - Eastern White Pine: Eastern White Pine
+    - Eastern White Pine (North): Eastern White Pine (North)
+    - Hem-Fir: Hem-Fir
+    - Hem-Fir (North): Hem-Fir (North)
+    - Mixed Maple: Mixed Maple
+    - Mixed Oak: Mixed Oak
+    - Mixed Southern Pine: Mixed Southern Pine
+    - Mountain Hemlock: Mountain Hemlock
+    - Northern Pine: Northern Pine
+    - Northern Red Oak: Northern Red Oak
+    - Northern Species: Northern Species
+    - Northern White Cedar: Northern White Cedar
+    - Ponderosa Pine: Ponderosa Pine
+    - Red Maple: Red Maple
+    - Red Oak: Red Oak
+    - Red Pine: Red Pine
+    - Redwood: Redwood
+    - Sitka Spruce: Sitka Spruce
+    - Southern Pine: Southern Pine
+    - Spruce-Pine-Fir: Spruce-Pine-Fir
+    - Scots Pine: Scots Pine
+    - Spruce-Pine-Fir (South): Spruce-Pine-Fir (South)
+    - Western Cedars: Western Cedars
+    - Western Cedars (North): Western Cedars (North)
+    - Western Hemlock: Western Hemlock
+    - Western Hemlock (North): Western Hemlock (North)
+    - Western White Pine: Western White Pine
+    - Western Woods: Western Woods
+    - White Oak: White Oak
+    - Yellow Cedar: Yellow Cedar
+    - Yellow Poplar: Yellow Poplar
 
     """
 
@@ -1711,73 +1711,73 @@ class AllTimberSpecies(StrEnum):
     """
     All timber species.
 
-     - Softwood Species: Softwood Species
-     - Group A Hardwoods: Group A Hardwoods
-     - Group B Hardwoods: Group B Hardwoods
-     - Group C Hardwoods: Group C Hardwoods
-     - Group D Hardwoods: Group D Hardwoods
-     - Oak: Oak
-     - Maple: Maple
-     - Cherry: Cherry
-     - Walnut: Walnut
-     - Ash: Ash
-     - Mahogany: Mahogany
-     - Hickory: Hickory
-     - Teak: Teak
-     - Jarrah: Jarrah
-     - Mesquite: Mesquite
-     - Bamboo: Bamboo
-     - Alaska Cedar: Alaska Cedar
-     - Alaska Hemlock: Alaska Hemlock
-     - Alaska Spruce: Alaska Spruce
-     - Alaska Yellow Cedar: Alaska Yellow Cedar
-     - Aspen: Aspen
-     - Baldcypress: Baldcypress
-     - Balsam Fir: Balsam Fir
-     - Beech-Birch-Hickory: Beech-Birch-Hickory
-     - Coast Sitka Spruce: Coast Sitka Spruce
-     - Coast Species: Coast Species
-     - Cottonwood: Cottonwood
-     - Douglas Fir-Larch: Douglas Fir-Larch
-     - Douglas Fir-Larch (North): Douglas Fir-Larch (North)
-     - Douglas Fir-South: Douglas Fir-South
-     - Eastern Hemlock: Eastern Hemlock
-     - Eastern Hemlock-Balsam Fir: Eastern Hemlock-Balsam Fir
-     - Eastern Hemlock-Tamarack: Eastern Hemlock-Tamarack
-     - Eastern Hemlock-Tamarack (North): Eastern Hemlock-Tamarack (North)
-     - Eastern Softwoods: Eastern Softwoods
-     - Eastern Spruce: Eastern Spruce
-     - Eastern White Pine: Eastern White Pine
-     - Eastern White Pine (North): Eastern White Pine (North)
-     - Hem-Fir: Hem-Fir
-     - Hem-Fir (North): Hem-Fir (North)
-     - Mixed Maple: Mixed Maple
-     - Mixed Oak: Mixed Oak
-     - Mixed Southern Pine: Mixed Southern Pine
-     - Mountain Hemlock: Mountain Hemlock
-     - Northern Pine: Northern Pine
-     - Northern Red Oak: Northern Red Oak
-     - Northern Species: Northern Species
-     - Northern White Cedar: Northern White Cedar
-     - Ponderosa Pine: Ponderosa Pine
-     - Red Maple: Red Maple
-     - Red Oak: Red Oak
-     - Red Pine: Red Pine
-     - Redwood: Redwood
-     - Sitka Spruce: Sitka Spruce
-     - Southern Pine: Southern Pine
-     - Spruce-Pine-Fir: Spruce-Pine-Fir
-     - Scots Pine: Scots Pine
-     - Spruce-Pine-Fir (South): Spruce-Pine-Fir (South)
-     - Western Cedars: Western Cedars
-     - Western Cedars (North): Western Cedars (North)
-     - Western Hemlock: Western Hemlock
-     - Western Hemlock (North): Western Hemlock (North)
-     - Western White Pine: Western White Pine
-     - Western Woods: Western Woods
-     - White Oak: White Oak
-     - Yellow Cedar: Yellow Cedar
-     - Yellow Poplar: Yellow Poplar
+    - Softwood Species: Softwood Species
+    - Group A Hardwoods: Group A Hardwoods
+    - Group B Hardwoods: Group B Hardwoods
+    - Group C Hardwoods: Group C Hardwoods
+    - Group D Hardwoods: Group D Hardwoods
+    - Oak: Oak
+    - Maple: Maple
+    - Cherry: Cherry
+    - Walnut: Walnut
+    - Ash: Ash
+    - Mahogany: Mahogany
+    - Hickory: Hickory
+    - Teak: Teak
+    - Jarrah: Jarrah
+    - Mesquite: Mesquite
+    - Bamboo: Bamboo
+    - Alaska Cedar: Alaska Cedar
+    - Alaska Hemlock: Alaska Hemlock
+    - Alaska Spruce: Alaska Spruce
+    - Alaska Yellow Cedar: Alaska Yellow Cedar
+    - Aspen: Aspen
+    - Baldcypress: Baldcypress
+    - Balsam Fir: Balsam Fir
+    - Beech-Birch-Hickory: Beech-Birch-Hickory
+    - Coast Sitka Spruce: Coast Sitka Spruce
+    - Coast Species: Coast Species
+    - Cottonwood: Cottonwood
+    - Douglas Fir-Larch: Douglas Fir-Larch
+    - Douglas Fir-Larch (North): Douglas Fir-Larch (North)
+    - Douglas Fir-South: Douglas Fir-South
+    - Eastern Hemlock: Eastern Hemlock
+    - Eastern Hemlock-Balsam Fir: Eastern Hemlock-Balsam Fir
+    - Eastern Hemlock-Tamarack: Eastern Hemlock-Tamarack
+    - Eastern Hemlock-Tamarack (North): Eastern Hemlock-Tamarack (North)
+    - Eastern Softwoods: Eastern Softwoods
+    - Eastern Spruce: Eastern Spruce
+    - Eastern White Pine: Eastern White Pine
+    - Eastern White Pine (North): Eastern White Pine (North)
+    - Hem-Fir: Hem-Fir
+    - Hem-Fir (North): Hem-Fir (North)
+    - Mixed Maple: Mixed Maple
+    - Mixed Oak: Mixed Oak
+    - Mixed Southern Pine: Mixed Southern Pine
+    - Mountain Hemlock: Mountain Hemlock
+    - Northern Pine: Northern Pine
+    - Northern Red Oak: Northern Red Oak
+    - Northern Species: Northern Species
+    - Northern White Cedar: Northern White Cedar
+    - Ponderosa Pine: Ponderosa Pine
+    - Red Maple: Red Maple
+    - Red Oak: Red Oak
+    - Red Pine: Red Pine
+    - Redwood: Redwood
+    - Sitka Spruce: Sitka Spruce
+    - Southern Pine: Southern Pine
+    - Spruce-Pine-Fir: Spruce-Pine-Fir
+    - Scots Pine: Scots Pine
+    - Spruce-Pine-Fir (South): Spruce-Pine-Fir (South)
+    - Western Cedars: Western Cedars
+    - Western Cedars (North): Western Cedars (North)
+    - Western Hemlock: Western Hemlock
+    - Western Hemlock (North): Western Hemlock (North)
+    - Western White Pine: Western White Pine
+    - Western Woods: Western Woods
+    - White Oak: White Oak
+    - Yellow Cedar: Yellow Cedar
+    - Yellow Poplar: Yellow Poplar
 
     """
 
@@ -1854,12 +1854,12 @@ class HardwareFunction(StrEnum):
     """
     Hardware function.
 
-     - Lock: Locks, Keepers, and similar items that resist opening.
-     - Hinge: Hinges, Pivots, and similar items that secure glazing to the frame while it moves.
-     - Handle: Handles, knobs, and similar items for directly manipulating a window.
-     - Operator: Arms, Cranks, and other hardware that moves a window.
-     - Balance: Springs, Sash Balances, and other items that counter the weight of an operable sash.
-     - Other: Other hardware not described above.
+    - Lock: Locks, Keepers, and similar items that resist opening.
+    - Hinge: Hinges, Pivots, and similar items that secure glazing to the frame while it moves.
+    - Handle: Handles, knobs, and similar items for directly manipulating a window.
+    - Operator: Arms, Cranks, and other hardware that moves a window.
+    - Balance: Springs, Sash Balances, and other items that counter the weight of an operable sash.
+    - Other: Other hardware not described above.
 
     """
 
@@ -1875,18 +1875,18 @@ class AccessFlooringFinishMaterial(StrEnum):
     """
     Access flooring finish material.
 
-     - Linoleum: Linoleum
-     - Vinyl: Vinyl
-     - HPL: HPL
-     - Solid hardwood: Solid hardwood
-     - Engineered hardwood: Engineered hardwood
-     - Poured Terrazzo: Poured Terrazzo
-     - Epoxy Terrazzo: Epoxy Terrazzo
-     - Concrete Terrazzo: Concrete Terrazzo
-     - Rubber: Rubber
-     - Porcelain: Porcelain
-     - Other: Other
-     - None: None
+    - Linoleum: Linoleum
+    - Vinyl: Vinyl
+    - HPL: HPL
+    - Solid hardwood: Solid hardwood
+    - Engineered hardwood: Engineered hardwood
+    - Poured Terrazzo: Poured Terrazzo
+    - Epoxy Terrazzo: Epoxy Terrazzo
+    - Concrete Terrazzo: Concrete Terrazzo
+    - Rubber: Rubber
+    - Porcelain: Porcelain
+    - Other: Other
+    - None: None
 
     """
 
@@ -1908,12 +1908,12 @@ class AccessFlooringSeismicRating(StrEnum):
     """
     Access flooring seismic rating.
 
-     - Type 0: Type 0
-     - Type 1: Type 1
-     - Type 2: Type 2
-     - Type 3: Type 3
-     - Type 4: Type 4
-     - Type 5: Type 5
+    - Type 0: Type 0
+    - Type 1: Type 1
+    - Type 2: Type 2
+    - Type 3: Type 3
+    - Type 4: Type 4
+    - Type 5: Type 5
 
     """
 
@@ -1929,8 +1929,8 @@ class CarpetManufactureType(StrEnum):
     """
     Carpet manufacture type.
 
-     - Tufted: Tufted
-     - Needlefelt: Needlefelt
+    - Tufted: Tufted
+    - Needlefelt: Needlefelt
 
     """
 
@@ -1942,14 +1942,14 @@ class AdmixtureEffects(StrEnum):
     """
     Admixture effects.
 
-     - Air Entrainer: Air Entrainer
-     - Water Reducer: Water Reducer
-     - Retarding: Retarding
-     - Accelerating: Accelerating
-     - Superplasticizer: Superplasticizer
-     - Corrosion Inhibitor: Corrosion Inhibitor
-     - Shrinkage Control: Shrinkage Control
-     - Other: Other
+    - Air Entrainer: Air Entrainer
+    - Water Reducer: Water Reducer
+    - Retarding: Retarding
+    - Accelerating: Accelerating
+    - Superplasticizer: Superplasticizer
+    - Corrosion Inhibitor: Corrosion Inhibitor
+    - Shrinkage Control: Shrinkage Control
+    - Other: Other
 
     """
 
@@ -1967,16 +1967,16 @@ class TextilesFabricType(StrEnum):
     """
     Textiles fabric type.
 
-     - Leather: Leather
-     - Cotton: Cotton
-     - Wool: Wool
-     - Polyester: Polyester
-     - Acrylic: Acrylic
-     - Nylon: Nylon
-     - HMW Polymer: HMW Polymer
-     - Other Plant Fiber: Other Plant Fiber
-     - Mineral Fiber: Mineral Fiber
-     - Other Synthetic Fiber: Other Synthetic Fiber
+    - Leather: Leather
+    - Cotton: Cotton
+    - Wool: Wool
+    - Polyester: Polyester
+    - Acrylic: Acrylic
+    - Nylon: Nylon
+    - HMW Polymer: HMW Polymer
+    - Other Plant Fiber: Other Plant Fiber
+    - Mineral Fiber: Mineral Fiber
+    - Other Synthetic Fiber: Other Synthetic Fiber
 
     """
 
@@ -1996,8 +1996,8 @@ class GypsumFacing(StrEnum):
     """
     Gypsum facing.
 
-     - Paper: Paper
-     - Glass mat: Glass mat
+    - Paper: Paper
+    - Glass mat: Glass mat
 
     """
 
@@ -2009,15 +2009,15 @@ class InsulatingMaterial(StrEnum):
     """
     Insulating material.
 
-     - Mineral Wool: Mineral Wool
-     - Cellulose: Cellulose
-     - Fiberglass: Fiberglass
-     - XPS: XPS
-     - GPS: GPS
-     - Polyisocyanurate: Polyisocyanurate
-     - Expanded Polyethylene: Expanded Polyethylene
-     - EPS: EPS
-     - Other: Other
+    - Mineral Wool: Mineral Wool
+    - Cellulose: Cellulose
+    - Fiberglass: Fiberglass
+    - XPS: XPS
+    - GPS: GPS
+    - Polyisocyanurate: Polyisocyanurate
+    - Expanded Polyethylene: Expanded Polyethylene
+    - EPS: EPS
+    - Other: Other
 
     """
 
@@ -2036,17 +2036,17 @@ class ThermalSeparation(StrEnum):
     """
     Thermal separation.
 
-     - Aluminium: Aluminium System members with less than 1.6 mm (0.062 in) or no separation between metal or system
-       members to provide a resistance heat transfer path from exterior to interior.
-     - Steel: Steel System members with less than 1.6 mm (0.062 in) or no separation between metal or system members to
-       provide a resistance heat transfer path from exterior to interior.
-     - Thermally Improved Metal: Metal System members with a separation ≥ 1.60 mm (0.062 in) provided by either a
-       thermal break or open air space that may be interrupted by short thermal bridges between the interior and
-       exterior surfaces.
-     - Thermally Broken Metal: Aluminium System members with a minimum of 5.30 mm (0.210 in) separation provided by
-       a thermal break.
-     - Nonmetal: Nonmetal material where the path from inside to outside inherently has low thermal conductivity,
-       such as wood, vinyl, and fiberglass. Aluminium-clad or split windows fall in this category.
+    - Aluminium: Aluminium System members with less than 1.6 mm (0.062 in) or no separation between metal or system
+      members to provide a resistance heat transfer path from exterior to interior.
+    - Steel: Steel System members with less than 1.6 mm (0.062 in) or no separation between metal or system members to
+      provide a resistance heat transfer path from exterior to interior.
+    - Thermally Improved Metal: Metal System members with a separation ≥ 1.60 mm (0.062 in) provided by either a
+      thermal break or open air space that may be interrupted by short thermal bridges between the interior and
+      exterior surfaces.
+    - Thermally Broken Metal: Aluminium System members with a minimum of 5.30 mm (0.210 in) separation provided by
+      a thermal break.
+    - Nonmetal: Nonmetal material where the path from inside to outside inherently has low thermal conductivity,
+      such as wood, vinyl, and fiberglass. Aluminium-clad or split windows fall in this category.
 
     """
 
@@ -2061,14 +2061,14 @@ class CementScm(StrEnum):
     """
     Cement scm.
 
-     - ggbs: ggbs
-     - flyAsh: flyAsh
-     - natPoz: natPoz
-     - siFume: siFume
-     - gg45: gg45
-     - mk: mk
-     - CaCO3: CaCO3
-     - other: other
+    - ggbs: ggbs
+    - flyAsh: flyAsh
+    - natPoz: natPoz
+    - siFume: siFume
+    - gg45: gg45
+    - mk: mk
+    - CaCO3: CaCO3
+    - other: other
 
     """
 
@@ -2086,12 +2086,12 @@ class CementC1157(StrEnum):
     """
     CementC1157.
 
-     - GU: GU
-     - HE: HE
-     - MS: MS
-     - HS: HS
-     - MH: MH
-     - LH: LH
+    - GU: GU
+    - HE: HE
+    - MS: MS
+    - HS: HS
+    - MH: MH
+    - LH: LH
 
     """
 
@@ -2107,8 +2107,8 @@ class AhuAirflowControl(StrEnum):
     """
     Ahu airflow control.
 
-     - CAV: CAV
-     - VAV: VAV
+    - CAV: CAV
+    - VAV: VAV
 
     """
 
@@ -2120,8 +2120,8 @@ class CarpetFormFactor(StrEnum):
     """
     Carpet form factor.
 
-     - Tiles: Tiles
-     - Broadloom: Broadloom
+    - Tiles: Tiles
+    - Broadloom: Broadloom
 
     """
 
@@ -2133,15 +2133,15 @@ class CladdingInsulatingMaterial(StrEnum):
     """
     Cladding insulating material.
 
-     - No Insulation: No Insulation
-     - Mineral Wool: Mineral Wool
-     - Gypsum: Gypsum
-     - EPS: EPS
-     - XPS: XPS
-     - GPS: GPS
-     - Polyiso: Polyiso
-     - PE: PE
-     - Other: Other
+    - No Insulation: No Insulation
+    - Mineral Wool: Mineral Wool
+    - Gypsum: Gypsum
+    - EPS: EPS
+    - XPS: XPS
+    - GPS: GPS
+    - Polyiso: Polyiso
+    - PE: PE
+    - Other: Other
 
     """
 
@@ -2160,9 +2160,9 @@ class SidingFormFactor(StrEnum):
     """
     Siding form factor.
 
-     - Lap: Lap
-     - Vertical: Vertical
-     - Shake & Shingle: Shake & Shingle
+    - Lap: Lap
+    - Vertical: Vertical
+    - Shake & Shingle: Shake & Shingle
 
     """
 
@@ -2175,9 +2175,9 @@ class FloorBoxFloorMaterial(StrEnum):
     """
     Floor box floor material.
 
-     - Concrete: Concrete
-     - Wood: Wood
-     - Other: Other
+    - Concrete: Concrete
+    - Wood: Wood
+    - Other: Other
 
     """
 
@@ -2190,23 +2190,23 @@ class AciExposureClass(EnumGroupingAware, StrEnum):
     """
     American Concrete Institute concrete exposure classes.
 
-      * `aci.F0` - Concrete not subjected to freezing-and-thawing cycles
-      * `aci.F1` - Concrete experiences freezing-and-thawing cycles with limited exposure to water
-      * `aci.F2` - Concrete exposed to freezing-and-thawing cycles with frequent exposure to water
-      * `aci.F3` - Concrete exposed to freezing-and-thawing cycles with continual exposure to water
-                    and exposure to deicing chemicals
-      * `aci.S0` - Exposed to <150 ppm of SO4 in water and <0.1% SO4 in soil
-      * `aci.S1` - Exposed to <1500 ppm of SO4 in water and <0.2% SO4 in soil
-      * `aci.S2` - Exposed to <10000 ppm of SO4 in water and <2% SO4 in soil
-      * `aci.S3` - Exposed to >10000 ppm of SO4 in water or >2% SO4 in soil
+    * `aci.F0` - Concrete not subjected to freezing-and-thawing cycles
+    * `aci.F1` - Concrete experiences freezing-and-thawing cycles with limited exposure to water
+    * `aci.F2` - Concrete exposed to freezing-and-thawing cycles with frequent exposure to water
+    * `aci.F3` - Concrete exposed to freezing-and-thawing cycles with continual exposure to water
+                  and exposure to deicing chemicals
+    * `aci.S0` - Exposed to <150 ppm of SO4 in water and <0.1% SO4 in soil
+    * `aci.S1` - Exposed to <1500 ppm of SO4 in water and <0.2% SO4 in soil
+    * `aci.S2` - Exposed to <10000 ppm of SO4 in water and <2% SO4 in soil
+    * `aci.S3` - Exposed to >10000 ppm of SO4 in water or >2% SO4 in soil
 
-      * `aci.C0` - Concrete dry or protected from moisture.
-      * `aci.C1` - Concrete in contact with moisture, but the external source of chloride does not reach it.
-      * `aci.C2` - Concrete subjected to moisture and an external source of chlorides such as deicing chemicals,
-                    salt, brackish water, seawater, or spray from these sources.
-      * `aci.W0` - Concrete dry in service
-      * `aci.W1` - Concrete in contact with water, no requirement for low permeability
-      * `aci.W2` - Concrete in contact with water where low permeability is required
+    * `aci.C0` - Concrete dry or protected from moisture.
+    * `aci.C1` - Concrete in contact with moisture, but the external source of chloride does not reach it.
+    * `aci.C2` - Concrete subjected to moisture and an external source of chlorides such as deicing chemicals,
+                  salt, brackish water, seawater, or spray from these sources.
+    * `aci.W0` - Concrete dry in service
+    * `aci.W1` - Concrete in contact with water, no requirement for low permeability
+    * `aci.W2` - Concrete in contact with water where low permeability is required
     """
 
     F0 = "aci.F0"
@@ -2239,51 +2239,51 @@ class CsaExposureClass(EnumGroupingAware, StrEnum):
     """
     Canadian Standard Association concrete exposure classes.
 
-      * `csa.C-XL` - Structurally reinforced concrete exposed to chlorides or other severe environment with or without
-                     freezing and thawing conditions, with higher durability performance expectations than the C-1, A-1
-                     or S-1 classes.
+    * `csa.C-XL` - Structurally reinforced concrete exposed to chlorides or other severe environment with or without
+                   freezing and thawing conditions, with higher durability performance expectations than the C-1, A-1
+                   or S-1 classes.
 
-      * `csa.C-1` - Structurally reinforced concrete exposed to chlorides with or without freezing and thawing conditions.
-                    Examples: bridge decks, parking decks and ramps, portions of marine structures located within the tidal
-                    and splash zones, concrete exposed to seawater spray, and salt water pools.
-      * `csa.C-2` - Non-structurally reinforced (i.e. plain) concrete exposed to chlorides and freezing and thawing.
-                    Examples: garage floors, porches, steps, pavements, sidewalks curbs and gutters.
-      * `csa.C-3` - Continuously submerged concrete exposed to chlorides but not to freezing and thawing.
-                    Example: underwater portions of marine structures.
-      * `csa.C-4` - Non-structurally reinforced concrete exposed to chlorides but not to freezing and thawing.
-                    Examples: underground parking slabs on grade.
+    * `csa.C-1` - Structurally reinforced concrete exposed to chlorides with or without freezing and thawing conditions.
+                  Examples: bridge decks, parking decks and ramps, portions of marine structures located within the tidal
+                  and splash zones, concrete exposed to seawater spray, and salt water pools.
+    * `csa.C-2` - Non-structurally reinforced (i.e. plain) concrete exposed to chlorides and freezing and thawing.
+                  Examples: garage floors, porches, steps, pavements, sidewalks curbs and gutters.
+    * `csa.C-3` - Continuously submerged concrete exposed to chlorides but not to freezing and thawing.
+                  Example: underwater portions of marine structures.
+    * `csa.C-4` - Non-structurally reinforced concrete exposed to chlorides but not to freezing and thawing.
+                  Examples: underground parking slabs on grade.
 
-      * `csa.F-1` - Concrete exposed to freezing and thawing in a saturated condition but not to chlorides.
-                    Examples: pool decks, patios, tennis courts, freshwater pools and fresh water control structures.
-      * `csa.F-2` - Concrete in an unsaturated condition exposed to freezing and thawing but not to chlorides.
-                    Examples: exterior walls and columns.
+    * `csa.F-1` - Concrete exposed to freezing and thawing in a saturated condition but not to chlorides.
+                  Examples: pool decks, patios, tennis courts, freshwater pools and fresh water control structures.
+    * `csa.F-2` - Concrete in an unsaturated condition exposed to freezing and thawing but not to chlorides.
+                  Examples: exterior walls and columns.
 
-      * `csa.N` - Concrete not exposed to chlorides nor to freezing and thawing.
-                  Examples: footings and interior slabs, walls and columns.
+    * `csa.N` - Concrete not exposed to chlorides nor to freezing and thawing.
+                Examples: footings and interior slabs, walls and columns.
 
-      * `csa.A-1` - Structurally reinforced concrete exposed to severe manure and/or silage gases, with or without
-                    freeze-thaw exposure. Concrete exposed to the vapour above municipal sewage or industrial effluent,
-                    where hydrogen sulphide gas may be generated.
-                    Examples: reinforced beams, slabs, and columns over manure pits and silos, canals, and pig slats;
-                    and access holes, enclosed chambers and pipes that are partially filled with effluents.
-      * `csa.A-2` - Structurally reinforced concrete exposed to moderate to severe manure and/or silage gases and liquids,
-                    with or without freeze-thaw exposure.
-                    Examples: reinforced walls in exterior manure tanks, silos and feed bunkers, and exterior slabs.
-      * `csa.A-3` - Structurally reinforced concrete exposed to moderate to severe manure and/or silage gases and liquids,
-                    with or without freeze-thaw exposure in a continuously submerged condition. Concrete continuously
-                    submerged in municipal or industrial effluents.
-                    Examples: interior gutter walls, beams, slabs and columns; sewage pipes that are continuously full
-                    (e.g. force mains); and submerged portions of sewage treatment structures.
-      * `csa.A-4` - Non-structurally reinforced concrete exposed to moderate manure and/or silage gases and liquids, without
-                    freeze-thaw exposure.
-                    Examples: interior slabs on grade.
+    * `csa.A-1` - Structurally reinforced concrete exposed to severe manure and/or silage gases, with or without
+                  freeze-thaw exposure. Concrete exposed to the vapour above municipal sewage or industrial effluent,
+                  where hydrogen sulphide gas may be generated.
+                  Examples: reinforced beams, slabs, and columns over manure pits and silos, canals, and pig slats;
+                  and access holes, enclosed chambers and pipes that are partially filled with effluents.
+    * `csa.A-2` - Structurally reinforced concrete exposed to moderate to severe manure and/or silage gases and liquids,
+                  with or without freeze-thaw exposure.
+                  Examples: reinforced walls in exterior manure tanks, silos and feed bunkers, and exterior slabs.
+    * `csa.A-3` - Structurally reinforced concrete exposed to moderate to severe manure and/or silage gases and liquids,
+                  with or without freeze-thaw exposure in a continuously submerged condition. Concrete continuously
+                  submerged in municipal or industrial effluents.
+                  Examples: interior gutter walls, beams, slabs and columns; sewage pipes that are continuously full
+                  (e.g. force mains); and submerged portions of sewage treatment structures.
+    * `csa.A-4` - Non-structurally reinforced concrete exposed to moderate manure and/or silage gases and liquids, without
+                  freeze-thaw exposure.
+                  Examples: interior slabs on grade.
 
-      * `csa.S-1` - Concrete subjected to very severe sulphate exposures.
-                    Exposed to >10000 ppm of SO4 in water or >2% SO4 in soil
-      * `csa.S-2` - Concrete subjected to severe sulphate exposure.
-                    Exposed to <10000 ppm of SO4 in water and <2% SO4 in soil
-      * `csa.S-3` - Concrete subjected to moderate sulphate exposure.
-                    Exposed to <1500 ppm of SO4 in water and <0.2% SO4 in soil
+    * `csa.S-1` - Concrete subjected to very severe sulphate exposures.
+                  Exposed to >10000 ppm of SO4 in water or >2% SO4 in soil
+    * `csa.S-2` - Concrete subjected to severe sulphate exposure.
+                  Exposed to <10000 ppm of SO4 in water and <2% SO4 in soil
+    * `csa.S-3` - Concrete subjected to moderate sulphate exposure.
+                  Exposed to <1500 ppm of SO4 in water and <0.2% SO4 in soil
     """
 
     C_XL = "csa.C-XL"

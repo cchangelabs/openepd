@@ -14,28 +14,26 @@
 #  limitations under the License.
 #
 __all__ = (
+    "CoilSteelRangeV1",
     "ColdFormedFramingRangeV1",
+    "ColdFormedSteelRangeV1",
     "DeckingSteelRangeV1",
-    "SteelSuspensionAssemblyRangeV1",
     "HollowSectionsRangeV1",
     "HotRolledSectionsRangeV1",
-    "PlateSteelRangeV1",
+    "MBQSteelRangeV1",
     "MetalRailingsRangeV1",
     "MetalStairsRangeV1",
     "MiscMetalFabricationRangeV1",
     "OpenWebMembranesRangeV1",
-    "MBQSteelRangeV1",
-    "CoilSteelRangeV1",
-    "ColdFormedSteelRangeV1",
-    "StructuralSteelRangeV1",
-    "PrefabricatedSteelAssembliesRangeV1",
+    "PlateSteelRangeV1",
     "PostTensioningSteelRangeV1",
+    "PrefabricatedSteelAssembliesRangeV1",
     "RebarSteelRangeV1",
-    "WireMeshSteelRangeV1",
     "SteelRangeV1",
+    "SteelSuspensionAssemblyRangeV1",
+    "StructuralSteelRangeV1",
+    "WireMeshSteelRangeV1",
 )
-
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
 from openepd.compat.pydantic import pyd
@@ -306,6 +304,12 @@ class OtherSteelRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class CurdeSteelRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Curde steel products."""
+
+    _EXT_VERSION = "1.0"
+
+
 class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Broad category for construction materials made from steel and its alloys.
@@ -313,7 +317,7 @@ class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.1"
+    _EXT_VERSION = "1.2"
 
     yield_tensile_str: AmountRangePressureMpa | None = pyd.Field(
         default=None,
@@ -347,3 +351,4 @@ class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     RebarSteel: RebarSteelRangeV1 | None = None
     WireMeshSteel: WireMeshSteelRangeV1 | None = None
     OtherSteel: OtherSteelRangeV1 | None = None
+    CrudeSteel: CurdeSteelRangeV1 | None = None

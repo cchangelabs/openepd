@@ -49,7 +49,7 @@ class DefaultBundleReaderTestCase(unittest.TestCase):
         file_name, writer = self.__create_writer()
         with (
             writer,
-            open(SRC_DATA / "test-pcr.json", "r") as pcr_file,
+            open(SRC_DATA / "test-pcr.json") as pcr_file,
             open(SRC_DATA / "test-pcr.pdf", "rb") as pcr_pdf_file,
             open(SRC_DATA / "extraction-report.txt", "rb") as report_file,
         ):
@@ -67,7 +67,7 @@ class DefaultBundleReaderTestCase(unittest.TestCase):
         file_name, writer = self.__create_writer()
         with (
             writer,
-            open(SRC_DATA / "test-pcr.json", "r") as pcr_file,
+            open(SRC_DATA / "test-pcr.json") as pcr_file,
             open(SRC_DATA / "test-pcr.pdf", "rb") as pcr_pdf_file,
             open(SRC_DATA / "extraction-report.txt", "rb") as report_file,
         ):

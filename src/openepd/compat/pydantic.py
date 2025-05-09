@@ -27,4 +27,4 @@ except ImportError:
 
 pydantic = pyd
 
-__all__ = ["pyd", "pydantic", "pyd_generics", "functional_validators"]
+__all__ = ["functional_validators", "pyd", "pyd_generics", "pydantic"]

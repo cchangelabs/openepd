@@ -1,3 +1,10 @@
+## 6.15.0 (2025-05-09)
+
+### Feat
+
+- **specs**: add CrudeSteel category
+- **specs**: add safe navigation functionality for Specs object
+
 ## 6.14.0 (2025-03-21)
 
 ### Feat

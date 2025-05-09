@@ -14,22 +14,22 @@
 #  limitations under the License.
 #
 __all__ = (
-    "DemountablePartitionTrackRangeV1",
     "ChairsRangeV1",
-    "CountertopsRangeV1",
-    "DemountablePartitionsRangeV1",
-    "OtherFurnishingsRangeV1",
-    "OpenStorageFurnitureRangeV1",
     "ClosedStorageFurnitureRangeV1",
-    "RetractableStorageFurnitureRangeV1",
+    "CountertopsRangeV1",
+    "DemountablePartitionTrackRangeV1",
+    "DemountablePartitionsRangeV1",
+    "FurnishingsRangeV1",
     "MobileStorageFurnitureRangeV1",
-    "WallMountedStorageShelvingRangeV1",
+    "OpenStorageFurnitureRangeV1",
+    "OtherFurnishingsRangeV1",
     "OtherStorageFurnitureRangeV1",
+    "RetractableStorageFurnitureRangeV1",
     "StorageFurnitureRangeV1",
     "TablesRangeV1",
+    "WallMountedStorageShelvingRangeV1",
     "WorkSurfacesRangeV1",
     "WorkspacesRangeV1",
-    "FurnishingsRangeV1",
 )
 
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md

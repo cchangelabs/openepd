@@ -69,7 +69,6 @@ class StreamingListResponseTestCase(unittest.TestCase):
 
 
 class TestValidationErrorSerialization(unittest.TestCase):
-
     TEST_CASES: list[tuple[str, dict, str]] = [
         (
             "Advanced positive scenario",
