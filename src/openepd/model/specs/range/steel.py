@@ -17,6 +17,7 @@ __all__ = (
     "CoilSteelRangeV1",
     "ColdFormedFramingRangeV1",
     "ColdFormedSteelRangeV1",
+    "CrudeSteelRangeV1",
     "DeckingSteelRangeV1",
     "HollowSectionsRangeV1",
     "HotRolledSectionsRangeV1",
@@ -25,6 +26,7 @@ __all__ = (
     "MetalStairsRangeV1",
     "MiscMetalFabricationRangeV1",
     "OpenWebMembranesRangeV1",
+    "OtherSteelRangeV1",
     "PlateSteelRangeV1",
     "PostTensioningSteelRangeV1",
     "PrefabricatedSteelAssembliesRangeV1",
@@ -304,8 +306,8 @@ class OtherSteelRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
-class CurdeSteelRangeV1(BaseOpenEpdHierarchicalSpec):
-    """Curde steel products."""
+class CrudeSteelRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Crude steel products."""
 
     _EXT_VERSION = "1.0"
 
@@ -351,4 +353,4 @@ class SteelRangeV1(BaseOpenEpdHierarchicalSpec):
     RebarSteel: RebarSteelRangeV1 | None = None
     WireMeshSteel: WireMeshSteelRangeV1 | None = None
     OtherSteel: OtherSteelRangeV1 | None = None
-    CrudeSteel: CurdeSteelRangeV1 | None = None
+    CrudeSteel: CrudeSteelRangeV1 | None = None
