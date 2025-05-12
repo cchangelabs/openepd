@@ -1,3 +1,9 @@
+## 6.15.1 (2025-05-12)
+
+### Fix
+
+- **specs**: resolve typo in CrudeSteelRangeV1 name
+
 ## 6.15.0 (2025-05-09)
 
 ### Feat
