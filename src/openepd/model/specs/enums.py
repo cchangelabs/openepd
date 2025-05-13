@@ -2017,7 +2017,8 @@ class InsulatingMaterial(StrEnum):
      - Polyisocyanurate: Polyisocyanurate
      - Expanded Polyethylene: Expanded Polyethylene
      - EPS: EPS
-     - Other: Other
+     - Wood Fiber = Wood Fiber
+    - Other: Other
 
     """
 
@@ -2029,6 +2030,7 @@ class InsulatingMaterial(StrEnum):
     POLYISOCYANURATE = "Polyisocyanurate"
     EXPANDED_POLYETHYLENE = "Expanded Polyethylene"
     EPS = "EPS"
+    WOOD_FIBER = "Wood Fiber"
     OTHER = "Other"
 
 
