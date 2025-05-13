@@ -18,6 +18,7 @@ classifiers = [
 readme = "README.md"
 packages = [{ include = "openepd", from = "src" }]
 exclude = ["**/test_*.py", "**/tests/**"]
+requires-poetry = ">=2.0.0"
 
 [tool.poetry.dependencies]
 python = "^3.11"
