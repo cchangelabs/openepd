@@ -10,6 +10,7 @@ POETRY_GROUPS := dev
 FORMAT_PATH := $(SRC_ROOT)
 LINT_PATH := $(SRC_ROOT)
 MYPY_PATH := $(SRC_ROOT)
+POETRY := poetry
 
 # Helper function to activate virtual environment if not skipped
 define activate_venv
@@ -39,7 +40,7 @@ deps:
 	@( \
 		set -e; \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
-		poetry install --all-extras --no-root; \
+		$(POETRY) install --all-extras --no-root; \
 	)
 
 # Synchronize installed dependencies to match the lock file
@@ -49,20 +50,20 @@ deps-sync:
 		$(call activate_venv) \
 		set -e; \
 		echo "Syncing dependencies..."; \
-		poetry install --all-extras --no-root --sync --with "$(POETRY_GROUPS)"; \
+		$(POETRY) sync --all-extras --no-root --with "$(POETRY_GROUPS)"; \
 		echo "DONE: all dependencies are synchronized"; \
 	)
 
 deps-lock:
 	@( \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
-		poetry lock --no-update; \
+		$(POETRY) lock; \
 	)
 
 deps-update:
 	@( \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
-		poetry lock; \
+		$(POETRY) update; \
 	)
 
 .PHONY: venv
@@ -161,7 +162,7 @@ build:
 		set -e; \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
 		rm -rf dist/*; \
-		poetry build; \
+		$(POETRY) build; \
 		echo "DONE: Building packages"; \
 	)
 
@@ -170,7 +171,7 @@ publish: build
 		echo "Publishing packages"; \
 		set -e; \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
-		poetry publish; \
+		$(POETRY) publish; \
 		echo "DONE: Publishing packages"; \
 	)
 
@@ -179,7 +180,7 @@ test-publish: build
 		echo "Publishing packages to the TEST PYPI"; \
 		set -e; \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
-		poetry publish -r test-pypi; \
+		$(POETRY) publish -r test-pypi; \
 		echo "DONE: Publishing packages (TEST PYPI)"; \
 	)
 
@@ -188,7 +189,7 @@ private-publish: build
 		echo "Publishing packages"; \
 		set -e; \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
-		poetry publish  --repository private; \
+		$(POETRY) publish  --repository private; \
 		echo "DONE: Publishing packages"; \
 	)
 coverage:
