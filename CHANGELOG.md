@@ -1,3 +1,9 @@
+## 6.15.2 (2025-05-13)
+
+### Fix
+
+- **specs**: add missing Wood Fiber insulating material
+
 ## 6.15.1 (2025-05-12)
 
 ### Fix
