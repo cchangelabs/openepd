@@ -2441,13 +2441,18 @@ class CementBoardThickness(StrEnum):
     INCH_3_8 = '3/8"'
     INCH_1_2 = '1/2"'
     INCH_5_8 = '5/8"'
+    MM_4 = "4 mm"
+    MM_6 = "6 mm"
     MM_6_5 = "6.5 mm"
     MM_8_0 = "8.0 mm"
     MM_9_0 = "9.0 mm"
     MM_9_5 = "9.5 mm"
+    MM_10 = "10 mm"
+    MM_12 = "12 mm"
     MM_12_5 = "12.5 mm"
     MM_13 = "13 mm"
     MM_15 = "15 mm"
+    MM_16 = "16 mm"
     MM_18 = "18 mm"
 
 
