@@ -345,7 +345,7 @@ class BackingAndUnderlayV1(BaseOpenEpdHierarchicalSpec):
 class CementBoardV1(BaseOpenEpdHierarchicalSpec):
     """Hard cementitious boards, typically used as a tile backer."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Own fields:
     thickness: CementBoardThickness | None = pyd.Field(
