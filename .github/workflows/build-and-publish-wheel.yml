@@ -43,7 +43,7 @@ jobs:
 
       - name: Build and publish packages to private PYPI
         run: |
-          export POETRY_HTTP_BASIC_PRIVATE_USERNAME=
+          export POETRY_HTTP_BASIC_PRIVATE_USERNAME=AzureDevOps
           export POETRY_HTTP_BASIC_PRIVATE_PASSWORD="${{ secrets.pypi_private_token }}"
           export POETRY_REPOSITORIES_PRIVATE_URL="${{ secrets.pypi_private_url }}"
           make private-publish
