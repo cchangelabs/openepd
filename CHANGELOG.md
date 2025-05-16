@@ -1,3 +1,9 @@
+## 6.16.0 (2025-05-16)
+
+### Feat
+
+- **specs**: allow additional CementBoard thicknesses
+
 ## 6.15.2 (2025-05-13)
 
 ### Fix
