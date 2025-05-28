@@ -13,9 +13,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-__all__ = ("SpecsRange",)
-
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
+__all__ = [
+    "SpecsRange",
+]
 
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
@@ -33,6 +33,7 @@ from .conveying_equipment import ConveyingEquipmentRangeV1
 from .electrical import ElectricalRangeV1
 from .electrical_transmission_and_distribution_equipment import ElectricalTransmissionAndDistributionEquipmentRangeV1
 from .electricity import ElectricityRangeV1
+from .exterior_improvements import ExteriorImprovementsV1
 from .finishes import FinishesRangeV1
 from .fire_and_smoke_protection import FireAndSmokeProtectionRangeV1
 from .furnishings import FurnishingsRangeV1
@@ -99,3 +100,4 @@ class SpecsRange(BaseOpenEpdHierarchicalSpec):
     MechanicalInsulation: MechanicalInsulationRangeV1 | None = None
     OtherElectricalEquipment: OtherElectricalEquipmentRangeV1 | None = None
     WoodJoists: WoodJoistsRangeV1 | None = None
+    ExteriorImprovements: ExteriorImprovementsV1 | None = None
