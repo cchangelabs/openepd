@@ -4,7 +4,7 @@
 
 - **specs**: resolve incorrect name of ExteriorImprovements range specifications
 
-## 6.17.0 (2025-05-29)
+## 6.17.0 (2025-05-29) [YANKED]
 
 ### Feat
 
