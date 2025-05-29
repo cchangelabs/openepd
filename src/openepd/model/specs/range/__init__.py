@@ -33,7 +33,7 @@ from .conveying_equipment import ConveyingEquipmentRangeV1
 from .electrical import ElectricalRangeV1
 from .electrical_transmission_and_distribution_equipment import ElectricalTransmissionAndDistributionEquipmentRangeV1
 from .electricity import ElectricityRangeV1
-from .exterior_improvements import ExteriorImprovementsV1
+from .exterior_improvements import ExteriorImprovementsRangeV1
 from .finishes import FinishesRangeV1
 from .fire_and_smoke_protection import FireAndSmokeProtectionRangeV1
 from .furnishings import FurnishingsRangeV1
@@ -100,4 +100,4 @@ class SpecsRange(BaseOpenEpdHierarchicalSpec):
     MechanicalInsulation: MechanicalInsulationRangeV1 | None = None
     OtherElectricalEquipment: OtherElectricalEquipmentRangeV1 | None = None
     WoodJoists: WoodJoistsRangeV1 | None = None
-    ExteriorImprovements: ExteriorImprovementsV1 | None = None
+    ExteriorImprovements: ExteriorImprovementsRangeV1 | None = None

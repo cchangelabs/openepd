@@ -18,7 +18,7 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.quantity import AmountRangePressureMpa
 
 
-class ConcretePaversV1(BaseOpenEpdHierarchicalSpec):
+class ConcretePaversRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Segmental units of concrete of standardized sizes and shapes for use in paving applications.
 
@@ -38,9 +38,9 @@ class ConcretePaversV1(BaseOpenEpdHierarchicalSpec):
     white_cement: bool | None = pyd.Field(default=None, description="CMU using some portion of white cement")
 
 
-class ExteriorImprovementsV1(BaseOpenEpdHierarchicalSpec):
+class ExteriorImprovementsRangeV1(BaseOpenEpdHierarchicalSpec):
     """Products that alter the exterior appearance of a lot or its structures."""
 
     _EXT_VERSION = "1.0"
 
-    ConcretePavers: ConcretePaversV1 | None = None
+    ConcretePavers: ConcretePaversRangeV1 | None = None
