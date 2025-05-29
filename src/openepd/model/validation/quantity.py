@@ -464,7 +464,7 @@ class WithPressureMpaMixin(WithDimensionalityMixin):
 
 
 class AmountPressureMpa(Amount, WithPressureMpaMixin):
-    """Length (mm)."""
+    """Pressure (MPa)."""
 
     pass
 
