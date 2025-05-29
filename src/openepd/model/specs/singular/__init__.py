@@ -13,6 +13,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+__all__ = [
+    "BaseCompatibilitySpec",
+    "Specs",
+]
+
+
 from collections.abc import Sequence
 import types
 from typing import Any, ClassVar, TypeVar
@@ -39,6 +45,7 @@ from openepd.model.specs.singular.electrical_transmission_and_distribution_equip
     ElectricalTransmissionAndDistributionEquipmentV1,
 )
 from openepd.model.specs.singular.electricity import ElectricityV1
+from openepd.model.specs.singular.exterior_improvements import ExteriorImprovementsV1
 from openepd.model.specs.singular.finishes import FinishesV1
 from openepd.model.specs.singular.fire_and_smoke_protection import FireAndSmokeProtectionV1
 from openepd.model.specs.singular.furnishings import FurnishingsV1
@@ -60,8 +67,6 @@ from openepd.model.specs.singular.thermal_moisture_protection import ThermalMois
 from openepd.model.specs.singular.utility_piping import UtilityPipingV1
 from openepd.model.specs.singular.wood import WoodV1
 from openepd.model.specs.singular.wood_joists import WoodJoistsV1
-
-__all__ = ("BaseCompatibilitySpec", "Specs")
 
 TValue = TypeVar("TValue")
 
@@ -111,6 +116,7 @@ class Specs(BaseOpenEpdHierarchicalSpec):
     MechanicalInsulation: MechanicalInsulationV1 | None = None
     OtherElectricalEquipment: OtherElectricalEquipmentV1 | None = None
     WoodJoists: WoodJoistsV1 | None = None
+    ExteriorImprovements: ExteriorImprovementsV1 | None = None
 
     # historical backward-compatible specs
     concrete: ConcreteOldSpec | None = None
