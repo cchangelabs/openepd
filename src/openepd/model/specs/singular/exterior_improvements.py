@@ -31,7 +31,7 @@ class ConcretePaversV1(BaseOpenEpdHierarchicalSpec):
         default=None,
         description=(
             "Unit strength in MPa, ksi, or psi. "
-            "This is the net compressive strength, also known as unit strength, as opposed to f'm which is "
+            "This is the net compressive strength, also known as unit strength, as opposed to f′ₘ (f prime m) which is "
             "the strength of the completed wall module."
         ),
     )
