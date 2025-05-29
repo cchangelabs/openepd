@@ -1,3 +1,9 @@
+## 6.17.0 (2025-05-29)
+
+### Feat
+
+- **specs**: add Exterior Improvements category
+
 ## 6.16.0 (2025-05-16)
 
 ### Feat

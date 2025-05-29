@@ -30,7 +30,7 @@ including uniqueness of organizations/plants, precise PCR references, and dated 
 The openEPD format is **extensible**. Standard extensions exist for concrete products, and for
 documenting supply-chain specific data.
 
-[Read More about OpenEPD format here](https://www.buildingtransparency.org/programs/openepd/).
+[Read More about OpenEPD format here](https://www.open-epd-forum.org).
 
 ## Usage
 
