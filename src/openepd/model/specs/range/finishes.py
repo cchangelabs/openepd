@@ -50,10 +50,6 @@ from openepd.model.common import RangeAmount, RangeFloat, RangeInt, RangeRatioFl
 from openepd.model.org import OrgRef
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
-    AccessFlooringCoreMaterial,
-    AccessFlooringFinishMaterial,
-    AccessFlooringSeismicRating,
-    AccessFlooringStringers,
     AllFabrication,
     CarpetFormFactor,
     CarpetIntendedApplication,
@@ -76,11 +72,10 @@ from openepd.model.specs.enums import (
     WoodFlooringFabrication,
     WoodFlooringTimberSpecies,
 )
+from openepd.model.specs.range.mixins.access_flooring_mixin import AccessFlooringRangeMixin
 from openepd.model.validation.quantity import (
-    AmountRangeForce,
     AmountRangeGWP,
     AmountRangeLengthMm,
-    AmountRangePressureMpa,
     AmountRangeRFactor,
     AmountRangeYarnWeight,
 )
@@ -88,7 +83,7 @@ from openepd.model.validation.quantity import (
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
-class AccessFlooringRangeV1(BaseOpenEpdHierarchicalSpec):
+class AccessFlooringRangeV1(BaseOpenEpdHierarchicalSpec, AccessFlooringRangeMixin):
     """
     Elevated floor system built on top of concrete slab surface.
 
@@ -99,22 +94,6 @@ class AccessFlooringRangeV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
-
-    core_material: list[AccessFlooringCoreMaterial] | None = pydantic.Field(default=None, description="")
-    finish_material: list[AccessFlooringFinishMaterial] | None = pydantic.Field(default=None, description="")
-    stringers: list[AccessFlooringStringers] | None = pydantic.Field(default=None, description="")
-    seismic_rating: list[AccessFlooringSeismicRating] | None = pydantic.Field(default=None, description="")
-    magnetically_attached_finish: bool | None = pydantic.Field(default=None, description="")
-    permanent_finish: bool | None = pydantic.Field(default=None, description="")
-    drylay: bool | None = pydantic.Field(default=None, description="")
-    adjustable_height: bool | None = pydantic.Field(default=None, description="")
-    fixed_height: bool | None = pydantic.Field(default=None, description="")
-    finished_floor_height: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
-    panel_thickness: AmountRangeLengthMm | None = pydantic.Field(default=None, description="")
-    concentrated_load: AmountRangePressureMpa | None = pydantic.Field(default=None, description="")
-    uniform_load: AmountRangePressureMpa | None = pydantic.Field(default=None, description="")
-    rolling_load_10_pass: AmountRangeForce | None = pydantic.Field(default=None, description="")
-    rolling_load_10000_pass: AmountRangeForce | None = pydantic.Field(default=None, description="")
 
 
 class CarpetRangeV1(BaseOpenEpdHierarchicalSpec):

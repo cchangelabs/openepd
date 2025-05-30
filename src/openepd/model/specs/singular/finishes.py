@@ -17,10 +17,6 @@ import pydantic
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
-    AccessFlooringCoreMaterial,
-    AccessFlooringFinishMaterial,
-    AccessFlooringSeismicRating,
-    AccessFlooringStringers,
     AllFabrication,
     CarpetFormFactor,
     CarpetIntendedApplication,
@@ -44,13 +40,12 @@ from openepd.model.specs.enums import (
     WoodFlooringTimberSpecies,
 )
 from openepd.model.specs.singular.common import HasForestPracticesCertifiers
+from openepd.model.specs.singular.mixins.access_flooring_mixin import AccessFlooringMixin
 from openepd.model.validation.quantity import (
     AreaPerVolumeStr,
-    ForceNStr,
     GwpKgCo2eStr,
     LengthMmStr,
     LengthMStr,
-    PressureMPaStr,
     RFactorStr,
     YarnWeightStr,
     validate_quantity_ge_factory,
@@ -59,7 +54,7 @@ from openepd.model.validation.quantity import (
 )
 
 
-class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
+class AccessFlooringV1(BaseOpenEpdHierarchicalSpec, AccessFlooringMixin):
     """
     Elevated floor system built on top of concrete slab surface.
 
@@ -68,57 +63,6 @@ class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
-
-    # Own fields:
-    core_material: AccessFlooringCoreMaterial | None = pydantic.Field(
-        default=None, description="", examples=["Cementitious"]
-    )
-    finish_material: AccessFlooringFinishMaterial | None = pydantic.Field(
-        default=None, description="", examples=["Linoleum"]
-    )
-    stringers: AccessFlooringStringers | None = pydantic.Field(default=None, description="", examples=["Standard"])
-    seismic_rating: AccessFlooringSeismicRating | None = pydantic.Field(
-        default=None, description="", examples=["Type 0"]
-    )
-    magnetically_attached_finish: bool | None = pydantic.Field(
-        default=None,
-        description="",
-        examples=[True],
-    )
-    permanent_finish: bool | None = pydantic.Field(
-        default=None,
-        description="",
-        examples=[True],
-    )
-    drylay: bool | None = pydantic.Field(
-        default=None,
-        description="",
-        examples=[True],
-    )
-    adjustable_height: bool | None = pydantic.Field(
-        default=None,
-        description="",
-        examples=[True],
-    )
-    fixed_height: bool | None = pydantic.Field(
-        default=None,
-        description="",
-        examples=[True],
-    )
-    finished_floor_height: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["1 m"])
-    panel_thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["1 m"])
-    concentrated_load: PressureMPaStr | None = pydantic.Field(default=None, description="", examples=["1 MPa"])
-    uniform_load: PressureMPaStr | None = pydantic.Field(default=None, description="", examples=["1 MPa"])
-    rolling_load_10_pass: ForceNStr | None = pydantic.Field(default=None, description="", examples=["1 N"])
-    rolling_load_10000_pass: ForceNStr | None = pydantic.Field(default=None, description="", examples=["1 N"])
-
-    @pydantic.field_validator("rolling_load_10_pass", mode="before", check_fields=False)
-    def _access_flooring_rolling_load_10_pass_is_quantity_validator(cls, value):
-        return validate_quantity_unit_factory("N")(cls, value)
-
-    @pydantic.field_validator("rolling_load_10000_pass", mode="before", check_fields=False)
-    def _access_flooring_rolling_load_10000_pass_is_quantity_validator(cls, value):
-        return validate_quantity_unit_factory("N")(cls, value)
 
 
 class CarpetV1(BaseOpenEpdHierarchicalSpec):
