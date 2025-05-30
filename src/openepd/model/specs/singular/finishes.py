@@ -16,10 +16,6 @@
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
-    AccessFlooringCoreMaterial,
-    AccessFlooringFinishMaterial,
-    AccessFlooringSeismicRating,
-    AccessFlooringStringers,
     AllFabrication,
     CarpetFormFactor,
     CarpetIntendedApplication,
@@ -43,14 +39,13 @@ from openepd.model.specs.enums import (
     WoodFlooringTimberSpecies,
 )
 from openepd.model.specs.singular.common import HasForestPracticesCertifiers
+from openepd.model.specs.singular.mixins.access_flooring_mixin import AccessFlooringMixin
 from openepd.model.validation.numbers import RatioFloat
 from openepd.model.validation.quantity import (
     AreaPerVolumeStr,
-    ForceNStr,
     GwpKgCo2eStr,
     LengthMmStr,
     LengthMStr,
-    PressureMPaStr,
     RFactorStr,
     YarnWeightStr,
     validate_quantity_ge_factory,
@@ -59,7 +54,7 @@ from openepd.model.validation.quantity import (
 )
 
 
-class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
+class AccessFlooringV1(BaseOpenEpdHierarchicalSpec, AccessFlooringMixin):
     """
     Elevated floor system built on top of concrete slab surface.
 
@@ -68,30 +63,6 @@ class AccessFlooringV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
-
-    # Own fields:
-    core_material: AccessFlooringCoreMaterial | None = pyd.Field(default=None, description="", example="Cementitious")
-    finish_material: AccessFlooringFinishMaterial | None = pyd.Field(default=None, description="", example="Linoleum")
-    stringers: AccessFlooringStringers | None = pyd.Field(default=None, description="", example="Standard")
-    seismic_rating: AccessFlooringSeismicRating | None = pyd.Field(default=None, description="", example="Type 0")
-    magnetically_attached_finish: bool | None = pyd.Field(default=None, description="", example=True)
-    permanent_finish: bool | None = pyd.Field(default=None, description="", example=True)
-    drylay: bool | None = pyd.Field(default=None, description="", example=True)
-    adjustable_height: bool | None = pyd.Field(default=None, description="", example=True)
-    fixed_height: bool | None = pyd.Field(default=None, description="", example=True)
-    finished_floor_height: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
-    panel_thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="1 m")
-    concentrated_load: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    uniform_load: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
-    rolling_load_10_pass: ForceNStr | None = pyd.Field(default=None, description="", example="1 N")
-    rolling_load_10000_pass: ForceNStr | None = pyd.Field(default=None, description="", example="1 N")
-
-    _access_flooring_rolling_load_10_pass_is_quantity_validator = pyd.validator(
-        "rolling_load_10_pass", allow_reuse=True
-    )(validate_quantity_unit_factory("N"))
-    _access_flooring_rolling_load_10000_pass_is_quantity_validator = pyd.validator(
-        "rolling_load_10000_pass", allow_reuse=True
-    )(validate_quantity_unit_factory("N"))
 
 
 class CarpetV1(BaseOpenEpdHierarchicalSpec):
