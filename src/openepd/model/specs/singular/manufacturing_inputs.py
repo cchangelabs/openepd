@@ -27,6 +27,7 @@ from openepd.model.specs.enums import (
     MasonryCementAstmC91Type,
     TextilesFabricType,
 )
+from openepd.model.specs.singular.mixins.access_flooring_mixin import AccessFlooringMixin
 
 
 class CementV1(BaseOpenEpdHierarchicalSpec):
@@ -132,6 +133,16 @@ class TextilesV1(BaseOpenEpdHierarchicalSpec):
     fabric_type: list[TextilesFabricType] | None = pyd.Field(default=None, description="", example=["Leather"])
 
 
+class AccessFlooringPanelsV1(BaseOpenEpdHierarchicalSpec, AccessFlooringMixin):
+    """
+    Part of an access floor system.
+
+    Panels are laid on top of an access floor pedestal, creating a finish floor.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class ManufacturingInputsV1(BaseOpenEpdHierarchicalSpec):
     """
     Manufacturing inputs.
@@ -140,7 +151,7 @@ class ManufacturingInputsV1(BaseOpenEpdHierarchicalSpec):
     a construction.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Nested specs:
     AccessFlooringPedestals: AccessFlooringPedestalsV1 | None = None
@@ -149,3 +160,4 @@ class ManufacturingInputsV1(BaseOpenEpdHierarchicalSpec):
     CementitiousMaterials: CementitiousMaterialsV1 | None = None
     ConcreteAdmixtures: ConcreteAdmixturesV1 | None = None
     Textiles: TextilesV1 | None = None
+    AccessFlooringPanels: AccessFlooringPanelsV1 | None = None
