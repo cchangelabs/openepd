@@ -1,3 +1,9 @@
+## 6.18.0 (2025-05-30)
+
+### Feat
+
+- **specs**: add `Access Floor Panels` category
+
 ## 6.17.1 (2025-05-29)
 
 ### Fix
