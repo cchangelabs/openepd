@@ -2031,6 +2031,7 @@ class InsulatingMaterial(StrEnum):
     EXPANDED_POLYETHYLENE = "Expanded Polyethylene"
     EPS = "EPS"
     WOOD_FIBER = "Wood Fiber"
+    POLYURETHANE = "Polyurethane"
     OTHER = "Other"
 
 
