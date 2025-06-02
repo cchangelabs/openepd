@@ -121,6 +121,16 @@ class ShotcreteRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class OtherConcreteRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Other Concrete.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class ConcreteRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Concrete.
@@ -177,3 +187,4 @@ class ConcreteRangeV1(BaseOpenEpdHierarchicalSpec):
     OilPatch: OilPatchRangeV1 | None = None
     ReadyMix: ReadyMixRangeV1 | None = None
     Shotcrete: ShotcreteRangeV1 | None = None
+    OtherConcrete: OtherConcreteRangeV1 | None = None

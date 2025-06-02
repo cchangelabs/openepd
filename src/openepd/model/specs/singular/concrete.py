@@ -99,6 +99,17 @@ class ShotcreteV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class OtherConcreteV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Other Concrete Products.
+
+    Other types of concrete products that are not captured by existing concrete categories.
+    Could include products such as patching concrete or additives
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     """
     Concrete.
@@ -107,7 +118,7 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     hardens over time.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Own fields:
     lightweight: bool | None = pyd.Field(default=None, description="Product is lightweight", example=True)
@@ -173,6 +184,7 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     OilPatch: OilPatchV1 | None = None
     ReadyMix: ReadyMixV1 | None = None
     Shotcrete: ShotcreteV1 | None = None
+    OtherConcrete: OtherConcreteV1 | None = None
 
     _aci_exposure_classes_exclusive_groups_validator = pyd.validator("aci_exposure_classes", allow_reuse=True)(
         exclusive_groups_validator_factory(AciExposureClass)
