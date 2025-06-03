@@ -99,6 +99,17 @@ class ShotcreteV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class CellularConcreteV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Cellular concrete is typically composed of cementitious material, water, and pre-formed foam with air entrainment.
+
+    Such a product is a homogeneous void or cell structure.
+    It is self-compacting and can be pumped over extensive heights and distances.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class OtherConcreteV1(BaseOpenEpdHierarchicalSpec):
     """
     Other Concrete Products.
@@ -185,6 +196,7 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
     ReadyMix: ReadyMixV1 | None = None
     Shotcrete: ShotcreteV1 | None = None
     OtherConcrete: OtherConcreteV1 | None = None
+    CellularConcrete: CellularConcreteV1 | None = None
 
     _aci_exposure_classes_exclusive_groups_validator = pyd.validator("aci_exposure_classes", allow_reuse=True)(
         exclusive_groups_validator_factory(AciExposureClass)
