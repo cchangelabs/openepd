@@ -134,6 +134,17 @@ class OtherConcreteRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class CellularConcreteRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Cellular concrete is typically composed of cementitious material, water, and pre-formed foam with air entrainment.
+
+    Such a product is a homogeneous void or cell structure.
+    It is self-compacting and can be pumped over extensive heights and distances.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class ConcreteRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Concrete.
@@ -144,7 +155,7 @@ class ConcreteRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     lightweight: bool | None = pydantic.Field(default=None, description="Product is lightweight")
     strength_28d: AmountRangePressureMpa | None = pydantic.Field(
@@ -197,3 +208,4 @@ class ConcreteRangeV1(BaseOpenEpdHierarchicalSpec):
     ReadyMix: ReadyMixRangeV1 | None = None
     Shotcrete: ShotcreteRangeV1 | None = None
     OtherConcrete: OtherConcreteRangeV1 | None = None
+    CellularConcrete: CellularConcreteRangeV1 | None = None
