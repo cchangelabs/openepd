@@ -13,4 +13,4 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-VERSION = "6.18.0"
+VERSION = "6.19.0"

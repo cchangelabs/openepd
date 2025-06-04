@@ -1,3 +1,11 @@
+## 6.19.0 (2025-06-04)
+
+### Feat
+
+- **specs**: add `CellularConcrete` category
+- **specs**: add `OtherConcrete` category
+- **specs**: add `Polyurethane` for InsulatingMaterial choices
+
 ## 6.18.0 (2025-05-30)
 
 ### Feat
