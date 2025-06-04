@@ -13,7 +13,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from typing import Literal, overload
+
+from requests import Response
+
 from openepd.api.base_sync_client import BaseApiMethodGroup
+from openepd.api.utils import encode_path_param
 from openepd.model.pcr import Pcr, PcrRef
 
 
@@ -42,3 +47,33 @@ class PcrApi(BaseApiMethodGroup):
         """
         pcr_ref_obj = self._client.do_request("post", "/pcrs", json=pcr.to_serializable()).json()
         return PcrRef.parse_obj(pcr_ref_obj)
+
+    @overload
+    def edit(self, to_edit: Pcr, with_response: Literal[True]) -> tuple[PcrRef, Response]: ...
+
+    @overload
+    def edit(self, to_edit: Pcr, with_response: Literal[False] = False) -> PcrRef: ...
+
+    def edit(self, to_edit: Pcr, with_response: bool = False) -> PcrRef | tuple[PcrRef, Response]:
+        """
+        Edit a pcr.
+
+        :param to_edit: Pcr to edit
+        :param with_response: if True, return a tuple of (PcrRef, Response), otherwise return only PcrRef
+        :return: Pcr reference or Pcr reference with HTTP Response object depending on parameter
+        :raise ValueError: if the pcr ID is not set
+        """
+        entity_id = to_edit.id
+        if not entity_id:
+            msg = "The pcr ID must be set to edit a pcr."
+            raise ValueError(msg)
+        response = self._client.do_request(
+            "put",
+            f"/pcrs/{encode_path_param(entity_id)}",
+            json=to_edit.to_serializable(exclude_unset=True, exclude_defaults=True, by_alias=True),
+        )
+        content = response.json()
+        ref = PcrRef.parse_obj(content)
+        if with_response:
+            return ref, response
+        return ref
