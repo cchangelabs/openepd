@@ -22,7 +22,10 @@ from openepd.api.average_dataset.industry_epd_sync_api import IndustryEpdApi
 from openepd.api.base_sync_client import SyncHttpClient, TokenAuth
 from openepd.api.category.sync_api import CategoryApi
 from openepd.api.epd.sync_api import EpdApi
+from openepd.api.org.sync_api import OrgApi
 from openepd.api.pcr.sync_api import PcrApi
+from openepd.api.plant.sync_api import PlantApi
+from openepd.api.standard.sync_api import StandardApi
 
 
 class OpenEpdApiClientSync:
@@ -41,6 +44,9 @@ class OpenEpdApiClientSync:
         self._http_client = SyncHttpClient(base_url, auth=auth, **kwargs)
         self.__epd_api: EpdApi | None = None
         self.__pcr_api: PcrApi | None = None
+        self.__org_api: OrgApi | None = None
+        self.__plant_api: PlantApi | None = None
+        self.__standard_api: StandardApi | None = None
         self.__category_api: CategoryApi | None = None
         self.__generic_estimate_api: GenericEstimateApi | None = None
         self.__industry_epd_api: IndustryEpdApi | None = None
@@ -58,6 +64,27 @@ class OpenEpdApiClientSync:
         if self.__pcr_api is None:
             self.__pcr_api = PcrApi(self._http_client)
         return self.__pcr_api
+
+    @property
+    def orgs(self) -> OrgApi:
+        """Get the Org API."""
+        if self.__org_api is None:
+            self.__org_api = OrgApi(self._http_client)
+        return self.__org_api
+
+    @property
+    def plants(self) -> PlantApi:
+        """Get the Plant API."""
+        if self.__plant_api is None:
+            self.__plant_api = PlantApi(self._http_client)
+        return self.__plant_api
+
+    @property
+    def standards(self) -> StandardApi:
+        """Get the Standard API."""
+        if self.__standard_api is None:
+            self.__standard_api = StandardApi(self._http_client)
+        return self.__standard_api
 
     @property
     def categories(self) -> CategoryApi:
