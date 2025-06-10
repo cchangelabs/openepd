@@ -89,7 +89,8 @@ class HotRolledSectionsV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
 
 
 class PlateSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
-    """Plate Steels.
+    """
+    Plate Steels.
 
     Flat hot-rolled steel, typically thicker than 'sheet', made by compressing multiple steel
     layers together into one.

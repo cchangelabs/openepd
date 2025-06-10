@@ -63,7 +63,7 @@ TMetaExtension = TypeVar("TMetaExtension", bound=MetaExtensionBase)
 
 class MetaCollectionDto(BaseOpenEpdApiModel, Generic[TMetaExtension]):
     """
-    This class is intended to be used as a container for different meta objects.
+    Use this class as a container for different meta objects.
 
     From a specific controller, you should return a specific subclass of MetaCollectionDto and appropriate mixins. This
     would allow to retain type information to generate schema for meta section of response.

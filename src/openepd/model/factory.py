@@ -38,7 +38,8 @@ class DocumentFactory:
         :raise ValueError if doctype not supported or not found.
         """
         if doctype is None:
-            raise ValueError("The document type is not specified.")
+            msg = "The document type is not specified."
+            raise ValueError(msg)
         factory = cls.DOCTYPE_TO_FACTORY.get(doctype)
         if factory is None:
             raise ValueError(
@@ -56,11 +57,12 @@ class DocumentFactory:
         :raise ValueError: if the document type is not specified or not supported.
         """
         doctype = data.get("doctype")
-        if doctype is None or not isinstance(doctype, (str, OpenEpdDoctypes)):
-            raise ValueError(
+        if doctype is None or not isinstance(doctype, str | OpenEpdDoctypes):
+            msg = (
                 f"The document type is not specified or not supported. "
                 f"Please specify it in `doctype` field. Supported are: {','.join(cls.DOCTYPE_TO_FACTORY)}"
             )
+            raise ValueError(msg)
 
         factory = cls.get_factory(OpenEpdDoctypes(doctype))
         return factory.from_dict(data)

@@ -18,8 +18,8 @@ __all__ = (
     "ElectricalInsulatorsRangeV1",
     "ElectricalSubstationsRangeV1",
     "ElectricalSwitchgearRangeV1",
-    "PowerCablingRangeV1",
     "ElectricalTransmissionAndDistributionEquipmentRangeV1",
+    "PowerCablingRangeV1",
 )
 
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md

@@ -51,19 +51,19 @@ class AsphaltV1(BaseOpenEpdHierarchicalSpec):
 
     asphalt_rap: float | None = pydantic.Field(
         default=None,
-        description="Percent of mixture that has been replaced by recycled " "asphalt pavement (RAP).",
+        description="Percent of mixture that has been replaced by recycled asphalt pavement (RAP).",
         ge=0,
         le=1,
     )
     asphalt_ras: float | None = pydantic.Field(
         default=None,
-        description="Percent of mixture that has been replaced by recycled " "asphalt shingles (RAS).",
+        description="Percent of mixture that has been replaced by recycled asphalt shingles (RAS).",
         ge=0,
         le=1,
     )
     asphalt_ground_tire_rubber: float | None = pydantic.Field(
         default=None,
-        description="Percent of mixture that has been replaced " "by ground tire rubber (GTR).",
+        description="Percent of mixture that has been replaced by ground tire rubber (GTR).",
         ge=0,
         le=1,
     )

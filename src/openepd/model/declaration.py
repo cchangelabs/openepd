@@ -44,12 +44,12 @@ class BaseDeclaration(RootDocument, abc.ABC):
         default=None,
     )
     date_of_issue: datetime.datetime | None = pydantic.Field(
-        examples=[datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.timezone.utc)],
+        examples=[datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.UTC)],
         description="Date the document was issued. This should be the first day on which the document is valid.",
         default=None,
     )
     valid_until: datetime.datetime | None = pydantic.Field(
-        examples=[datetime.datetime(day=11, month=9, year=2028, tzinfo=datetime.timezone.utc)],
+        examples=[datetime.datetime(day=11, month=9, year=2028, tzinfo=datetime.UTC)],
         description="Last date the document is valid on, including any extensions.",
         default=None,
     )

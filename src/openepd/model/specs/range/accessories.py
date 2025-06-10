@@ -14,12 +14,12 @@
 #  limitations under the License.
 #
 __all__ = (
+    "AccessoriesRangeV1",
     "BlanketFacingRangeV1",
     "DoorsHardwareRangeV1",
     "FlooringAccessoriesRangeV1",
     "MortarRangeV1",
     "TileGroutRangeV1",
-    "AccessoriesRangeV1",
 )
 
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md

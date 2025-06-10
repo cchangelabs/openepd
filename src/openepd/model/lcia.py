@@ -14,11 +14,10 @@
 #  limitations under the License.
 #
 from enum import StrEnum
-from typing import Any, ClassVar
+from typing import Any, ClassVar, Self
 
 import pydantic
 from pydantic import ConfigDict
-from typing_extensions import Self
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Measurement
@@ -215,7 +214,8 @@ class ScopeSet(BaseOpenEpdSchema):
         if not self.allowed_units:
             # For unknown units - only units should be the same across all measurements (textually)
             if len(all_units) > 1:
-                raise ValueError("All scopes and measurements should be expressed in the same unit.")
+                msg = "All scopes and measurements should be expressed in the same unit."
+                raise ValueError(msg)
         else:
             # might be multiple variations of the same unit (kgCFC-11e, kgCFC11e)
             if len(all_units) > 1 and ExternalValidationConfig.QUANTITY_VALIDATOR:
@@ -237,9 +237,8 @@ class ScopeSet(BaseOpenEpdSchema):
                 except ValueError:
                     ...
             if not matched_unit:
-                raise ValueError(
-                    f"'{', '.join(allowed_units)}' is only allowed unit for this scopeset. Provided '{unit}'"
-                )
+                msg = f"'{', '.join(allowed_units)}' is only allowed unit for this scopeset. Provided '{unit}'"
+                raise ValueError(msg)
 
         return self
 
@@ -294,7 +293,8 @@ class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
                 case dict():
                     values[f] = ScopeSet(**extra_scopeset)
                 case _:
-                    raise ValueError(f"{f} must be a ScopeSet schema")
+                    msg = f"{f} must be a ScopeSet schema"
+                    raise ValueError(msg)
 
         return values
 

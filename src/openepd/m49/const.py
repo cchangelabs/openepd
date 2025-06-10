@@ -1169,7 +1169,7 @@ def is_m49_code(to_check: str) -> bool:
     :param to_check: any string
     :return: `True` if passed string is M49 code, `False` otherwise
     """
-    warnings.warn("Use m49.utils.is_m49_code instead.", DeprecationWarning)
+    warnings.warn("Use m49.utils.is_m49_code instead.", DeprecationWarning, stacklevel=2)
     from . import utils
 
     return utils.is_m49_code(to_check)

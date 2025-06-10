@@ -16,11 +16,11 @@
 __all__ = (
     "CementGroutRangeV1",
     "ConcretePavingRangeV1",
+    "ConcreteRangeV1",
     "FlowableFillRangeV1",
     "OilPatchRangeV1",
     "ReadyMixRangeV1",
     "ShotcreteRangeV1",
-    "ConcreteRangeV1",
 )
 
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md

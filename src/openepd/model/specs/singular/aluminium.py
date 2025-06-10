@@ -26,7 +26,8 @@ class AluminiumBilletsV1(BaseOpenEpdHierarchicalSpec):
 
 
 class AluminiumExtrusionsV1(BaseOpenEpdHierarchicalSpec):
-    """Extruded aluminum products used in construction.
+    """
+    Extruded aluminum products used in construction.
 
     Includes range of finish options including mill finish, painted, and anodized.
     """

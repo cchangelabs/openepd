@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 from openepd.model.common import EnumGroupingAware
 
@@ -35,7 +36,8 @@ def exclusive_groups_validator_factory(enum_type: type[EnumGroupingAware]) -> Ca
         for grouping in enum_type.get_groupings():
             matching_from_group = [v for v in (value or []) if v in grouping]
             if len(matching_from_group) > 1:
-                raise ValueError(f"Values {', '.join(matching_from_group)} are not allowed together.")
+                msg = f"Values {', '.join(matching_from_group)} are not allowed together."
+                raise ValueError(msg)
 
         return value
 
