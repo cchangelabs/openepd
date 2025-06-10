@@ -39,7 +39,8 @@ class Amount(BaseOpenEpdSchema):
         """Ensure that qty or unit is provided."""
 
         if self.qty is None and self.unit is None:
-            raise ValueError("Either qty or unit must be provided.")
+            msg = "Either qty or unit must be provided."
+            raise ValueError(msg)
         return self
 
     def to_quantity_str(self):
@@ -135,9 +136,11 @@ class Ingredient(BaseOpenEpdSchema):
         # for in the calculation of uncertainty
         if values.get("gwp_fraction"):
             if not values.get("evidence_type"):
-                raise ValueError("evidence_type is required if gwp_fraction is provided")
+                msg = "evidence_type is required if gwp_fraction is provided"
+                raise ValueError(msg)
             if not (values.get("citation") or values.get("link")):
-                raise ValueError("link or citation is required if gwp_fraction is provided")
+                msg = "link or citation is required if gwp_fraction is provided"
+                raise ValueError(msg)
 
         return values
 
@@ -207,7 +210,8 @@ class AttachmentDict(dict[str, pydantic.AnyUrl]):
     def _validate(cls, value: Any) -> "AttachmentDict":
         # Ensure the input is a dict.
         if not isinstance(value, dict):
-            raise TypeError("AttachmentDict must be a dict")
+            msg = "AttachmentDict must be a dict"
+            raise TypeError(msg)
 
         return cls(value)
 
@@ -315,7 +319,8 @@ class RangeBase(BaseOpenEpdSchema):
         min_boundary = values.get("min")
         max_boundary = values.get("max")
         if min_boundary is not None and max_boundary is not None and min_boundary > max_boundary:
-            raise ValueError("Max should be greater than min")
+            msg = "Max should be greater than min"
+            raise ValueError(msg)
         return values
 
 

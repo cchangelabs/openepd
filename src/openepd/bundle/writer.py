@@ -31,8 +31,9 @@ class DefaultBundleWriter(BaseBundleWriter):
     """Default bundle writer implementation. Writes the bundle to a ZIP file."""
 
     def __init__(self, bundle_file: str | PathLike | IO[bytes], comment: str | None = None):
-        if isinstance(bundle_file, (PathLike, str)) and Path(bundle_file).exists():
-            raise ValueError("Amending existing files is not supported yet.")
+        if isinstance(bundle_file, PathLike | str) and Path(bundle_file).exists():
+            msg = "Amending existing files is not supported yet."
+            raise ValueError(msg)
         self._bundle_archive = zipfile.ZipFile(bundle_file, mode="w")
         self.__manifest = BundleManifest(
             format="openEPD Bundle/1.0",
@@ -96,7 +97,8 @@ class DefaultBundleWriter(BaseBundleWriter):
         """Write an object asset to the bundle. Object means subclass of BaseOpenEpdSchem."""
         asset_type_str = obj.get_asset_type()
         if asset_type_str is None:
-            raise ValueError(f"Object {obj} does not have a valid asset type and can't be written to a bundle.")
+            msg = f"Object {obj} does not have a valid asset type and can't be written to a bundle."
+            raise ValueError(msg)
         asset_type = AssetType(asset_type_str)
         rel_ref_str = self._asset_ref_to_str(rel_asset) if rel_asset is not None else None
         ref_str = self.__generate_entry_name(
@@ -139,14 +141,16 @@ class DefaultBundleWriter(BaseBundleWriter):
 
     def __register_entry(self, asset_info: AssetInfo):
         if asset_info.ref in self.__added_entries:
-            raise ValueError(f"Asset {asset_info.ref} already exists in the bundle.")
+            msg = f"Asset {asset_info.ref} already exists in the bundle."
+            raise ValueError(msg)
         self._toc_writer.writerow(asset_info.model_dump(exclude_unset=True, exclude_none=True))
         self.__added_entries.add(asset_info.ref)
         type_counter = self.__manifest.assets.count_by_type.get(asset_info.type, 0) + 1
         self.__manifest.assets.count_by_type[asset_info.type] = type_counter
         self.__manifest.assets.total_count += 1
         if asset_info.size is None:
-            raise ValueError("Size of asset is not set.")
+            msg = "Size of asset is not set."
+            raise ValueError(msg)
         self.__manifest.assets.total_size += asset_info.size
 
     def __generate_entry_name(
@@ -168,7 +172,8 @@ class DefaultBundleWriter(BaseBundleWriter):
             info = self._bundle_archive.getinfo(f"{asset_type}/")
             if info.is_dir():
                 return
-            raise ValueError(f"Object with name {asset_type} already exists in the bundle.")
+            msg = f"Object with name {asset_type} already exists in the bundle."
+            raise ValueError(msg)
         except KeyError:
             self._bundle_archive.mkdir(str(asset_type))
 

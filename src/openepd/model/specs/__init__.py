@@ -14,6 +14,43 @@
 #  limitations under the License.
 #
 
+__all__ = [
+    "CMUV1",
+    "AccessoriesV1",
+    "AggregatesV1",
+    "AluminiumV1",
+    "AsphaltV1",
+    "BulkMaterialsV1",
+    "CastDecksAndUnderlaymentV1",
+    "CladdingV1",
+    "ConcreteV1",
+    "ConveyingEquipmentV1",
+    "ElectricalTransmissionAndDistributionEquipmentV1",
+    "ElectricalV1",
+    "ElectricityV1",
+    "FinishesV1",
+    "FireAndSmokeProtectionV1",
+    "FurnishingsV1",
+    "GroutingV1",
+    "ManufacturingInputsV1",
+    "MasonryV1",
+    "MaterialHandlingV1",
+    "MechanicalInsulationV1",
+    "MechanicalV1",
+    "NetworkInfrastructureV1",
+    "OpeningsV1",
+    "OtherElectricalEquipmentV1",
+    "OtherMaterialsV1",
+    "PlumbingV1",
+    "PrecastConcreteV1",
+    "SheathingV1",
+    "SteelV1",
+    "ThermalMoistureProtectionV1",
+    "UtilityPipingV1",
+    "WoodJoistsV1",
+    "WoodV1",
+]
+
 from openepd.model.specs.singular.accessories import AccessoriesV1
 from openepd.model.specs.singular.aggregates import AggregatesV1
 from openepd.model.specs.singular.aluminium import AluminiumV1

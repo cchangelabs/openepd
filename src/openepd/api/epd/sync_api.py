@@ -173,7 +173,8 @@ class EpdApi(BaseApiMethodGroup):
         """
         epd_id = epd.id
         if not epd_id:
-            raise ValueError("The EPD ID must be set to edit an EPD.")
+            msg = "The EPD ID must be set to edit an EPD."
+            raise ValueError(msg)
         response = self._client.do_request(
             "put",
             f"/epds/{encode_path_param(epd_id)}",

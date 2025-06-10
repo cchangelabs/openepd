@@ -58,7 +58,7 @@ from openepd.model.specs.singular.utility_piping import UtilityPipingV1
 from openepd.model.specs.singular.wood import WoodV1
 from openepd.model.specs.singular.wood_joists import WoodJoistsV1
 
-__all__ = ("Specs", "BaseCompatibilitySpec")
+__all__ = ("BaseCompatibilitySpec", "Specs")
 
 
 class Specs(BaseOpenEpdHierarchicalSpec):

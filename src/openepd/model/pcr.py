@@ -93,12 +93,12 @@ class Pcr(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         default=None,
     )
     date_of_issue: datetime.datetime | None = pydantic.Field(
-        examples=[datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.timezone.utc)],
+        examples=[datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.UTC)],
         default=None,
         description="First day on which the document is valid",
     )
     valid_until: datetime.datetime | None = pydantic.Field(
-        examples=[datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.timezone.utc)],
+        examples=[datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.UTC)],
         default=None,
         description="Last day on which the document is valid",
     )

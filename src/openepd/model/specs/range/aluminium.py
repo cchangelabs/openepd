@@ -16,9 +16,9 @@
 __all__ = (
     "AluminiumBilletsRangeV1",
     "AluminiumExtrusionsRangeV1",
+    "AluminiumRangeV1",
     "AluminiumSheetGoodsRangeV1",
     "AluminiumSuspensionAssemblyRangeV1",
-    "AluminiumRangeV1",
 )
 
 import pydantic

@@ -18,8 +18,6 @@ __all__ = ("CMURangeV1",)
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
 
-from builtins import float
-
 import pydantic
 
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec

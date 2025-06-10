@@ -14,25 +14,23 @@
 #  limitations under the License.
 #
 __all__ = (
-    "WoodDeckingRangeV1",
-    "WoodFramingRangeV1",
-    "PrefabricatedWoodInsulatedPanelsRangeV1",
-    "PrefabricatedWoodTrussRangeV1",
     "CompositeLumberRangeV1",
     "DimensionLumberRangeV1",
     "HeavyTimberRangeV1",
     "MassTimberRangeV1",
     "NonStructuralWoodRangeV1",
+    "PrefabricatedWoodInsulatedPanelsRangeV1",
     "PrefabricatedWoodRangeV1",
+    "PrefabricatedWoodTrussRangeV1",
     "SheathingPanelsRangeV1",
     "UnfinishedWoodRangeV1",
+    "WoodDeckingRangeV1",
+    "WoodFramingRangeV1",
     "WoodRangeV1",
 )
 
 # NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
 
-
-from builtins import float
 
 import pydantic
 
