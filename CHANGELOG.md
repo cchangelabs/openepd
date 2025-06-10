@@ -1,3 +1,10 @@
+## 6.20.0 (2025-06-10)
+
+### Feat
+
+- **api**: add edit method for PcrApi with optional response
+- **api**: add create and edit methods for Org, Plant, and Standard APIs
+
 ## 6.19.0 (2025-06-04)
 
 ### Feat
