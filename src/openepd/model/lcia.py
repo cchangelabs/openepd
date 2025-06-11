@@ -270,7 +270,7 @@ class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
         :return: A scopeset if found, None otherwise
         """
         # check known impacts first
-        for f_name, f in self.__fields__.items():
+        for f_name, f in self.model_fields.items():
             if f.alias == name:
                 return getattr(self, f_name)
             if f_name == name:

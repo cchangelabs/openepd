@@ -42,7 +42,7 @@ class StandardApi(BaseApiMethodGroup):
         """
         response = self._client.do_request("post", "/standards", json=to_create.to_serializable())
         content = response.json()
-        ref = StandardRef.parse_obj(content)
+        ref = StandardRef.model_validate(content)
         if with_response:
             return ref, response
         return ref
@@ -73,7 +73,7 @@ class StandardApi(BaseApiMethodGroup):
         )
         response.raise_for_status()
         content = response.json()
-        ref = StandardRef.parse_obj(content)
+        ref = StandardRef.model_validate(content)
         if with_response:
             return ref, response
         return ref
