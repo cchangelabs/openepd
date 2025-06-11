@@ -73,7 +73,7 @@ class PcrApi(BaseApiMethodGroup):
             json=to_edit.to_serializable(exclude_unset=True, exclude_defaults=True, by_alias=True),
         )
         content = response.json()
-        ref = PcrRef.parse_obj(content)
+        ref = PcrRef.model_validate(content)
         if with_response:
             return ref, response
         return ref

@@ -42,7 +42,7 @@ class OrgApi(BaseApiMethodGroup):
         """
         response = self._client.do_request("post", "/orgs", json=to_create.to_serializable())
         content = response.json()
-        ref = OrgRef.parse_obj(content)
+        ref = OrgRef.model_validate(content)
         if with_response:
             return ref, response
         return ref
@@ -73,7 +73,7 @@ class OrgApi(BaseApiMethodGroup):
         )
         response.raise_for_status()
         content = response.json()
-        ref = OrgRef.parse_obj(content)
+        ref = OrgRef.model_validate(content)
         if with_response:
             return ref, response
         return ref
