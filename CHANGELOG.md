@@ -1,3 +1,26 @@
+## 7.2.0 (2025-06-11)
+
+### Feat
+
+- **api**: add edit method for PcrApi with optional response
+- **api**: add create and edit methods for Org, Plant, and Standard APIs
+- **specs**: add `CellularConcrete` category
+- **specs**: add `OtherConcrete` category
+- **specs**: add `Polyurethane` for InsulatingMaterial choices
+- **specs**: add `Access Floor Panels` category
+- **specs**: add Exterior Improvements category
+- **specs**: allow additional CementBoard thicknesses
+- **specs**: add CrudeSteel category
+- **specs**: add safe navigation functionality for Specs object
+
+### Fix
+
+- **specs**: add missing Wood Fiber insulating material
+
+### Refactor
+
+- migrate calls from pydantic v1 to pydantic v2
+
 ## 7.1.0 (2025-03-21)
 
 ### Feat
