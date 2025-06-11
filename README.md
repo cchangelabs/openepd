@@ -15,6 +15,24 @@
 
 This library is a Python library to work with OpenEPD format.
 
+> ⚠️ **Version Warning**
+>
+> This application is currently developed in **two major versions** in parallel:
+>
+> - **v6.x (>=6.0.0)** — Stable and production-ready. Maintains support for Pydantic v1 and v2 through a compatibility layer.
+> - **v7.x (>=7.0.0)** — Public beta. Fully functional, with native support for Pydantic v2. Still experimental and may introduce breaking changes in **internal and integration interfaces**.
+>
+> ⚠️ No breaking changes are expected in the **public standard or data model**, only in internal APIs and integration points.
+> 
+> Both versions currently offer the same set of features.  
+> We recommend using **v6** for most production use cases as the more mature and stable option.  
+> **v7** is suitable for production environments that can tolerate some level of interface instability and want to adopt the latest internals.
+>
+> 💡 Only the **latest version of v7** is guaranteed to contain all the features and updates from v6. Earlier v7 releases may lack some recent improvements.
+>
+> Once **v7 is promoted to stable**, all earlier **pre-stable (beta) v7 releases** will be **marked as yanked** to prevent accidental usage in production.
+>
+
 ## About OpenEPD
 
 [openEPD](https://www.buildingtransparency.org/programs/openepd/) is an open data format for passing digital
@@ -33,13 +51,6 @@ documenting supply-chain specific data.
 [Read More about OpenEPD format here](https://www.open-epd-forum.org).
 
 ## Usage
-
-**❗ ATTENTION**: Pick the right version. The cornerstone of this library models package representing openEPD models.
-Models are defined with Pydantic library which is a dependency for openepd package. If you use Pydantic in your project
-carefully pick the version:
-
-* Use version **below** `2.0.0` if your project uses Pydantic version below `2.0.0`
-* Use version `2.x.x` or higher if your project uses Pydantic version `2.0.0` or above
 
 ### Models
 
