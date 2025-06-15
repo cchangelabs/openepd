@@ -61,8 +61,12 @@ class DefaultBundleReader(BaseBundleReader):
                 return False
             if name is not None and a.name != name:
                 return False
-            if parent_ref is not None and a.rel_asset != parent_ref:
-                return False
+            if parent_ref is not None:
+                parent_ref_str = self._asset_ref_to_str(parent_ref)
+                # Get the actual list of related assets
+                rel_asset_list = self._get_rel_asset_list(a)
+                if parent_ref_str not in rel_asset_list:
+                    return False
             if ref_type is not None and a.rel_type != ref_type:
                 return False
             if is_translated is not None and a.lang is not None and "translated" in a.lang:
@@ -77,6 +81,20 @@ class DefaultBundleReader(BaseBundleReader):
             if input_dict[x] == "":
                 input_dict[x] = None
         return input_dict
+
+    def _get_rel_asset_list(self, asset_info: AssetInfo) -> list[str]:
+        """Get the list of related asset references from an AssetInfo object."""
+        if asset_info.rel_asset is None:
+            return []
+
+        # Deserialize from CSV format (semicolon-separated values)
+        deserialized = self._deserialize_rel_asset_from_csv(asset_info.rel_asset)
+        if isinstance(deserialized, list):
+            return deserialized
+        elif isinstance(deserialized, str):
+            return [deserialized]
+        else:
+            return []
 
     def assets_iter(self) -> Iterator[AssetInfo]:
         """Iterate over all assets in the bundle."""
@@ -125,7 +143,8 @@ class DefaultBundleReader(BaseBundleReader):
             rel_type = [rel_type]
         asset_ref = self._asset_ref_to_str(asset)
         for x in self.assets_iter():
-            if x.rel_asset == asset_ref:
+            rel_asset_list = self._get_rel_asset_list(x)
+            if asset_ref in rel_asset_list:
                 if rel_type is None or x.rel_type in rel_type:
                     yield x
 
