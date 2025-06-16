@@ -1339,4 +1339,4 @@ api-client = ["requests"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "01b44593a48627076fd97eef1fb6fd0843e49c8427975572a5fed2bce9eceb6a"
+content-hash = "7cee45ee8b546e1aa88f9a5b22d540d1debc7f06191cd24d1f257e2679870be9"
