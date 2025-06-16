@@ -50,7 +50,7 @@ class DefaultBundleWriter(BaseBundleWriter):
         self,
         data: IO[bytes],
         content_type: str | None = None,
-        rel_asset: AssetRef | None = None,
+        rel_asset: AssetRef | list[AssetRef] | None = None,
         rel_type: str | None = None,
         file_name: str | None = None,
         name: str | None = None,
@@ -60,7 +60,9 @@ class DefaultBundleWriter(BaseBundleWriter):
         custom_data: str | None = None,
     ) -> AssetInfo:
         """Write a blob asset to the bundle."""
-        rel_ref_str = self._asset_ref_to_str(rel_asset) if rel_asset is not None else None
+        # Convert multiple rel_asset to proper format and serialize for storage
+        rel_ref_converted = self._asset_refs_to_str(rel_asset)
+        rel_ref_serialized = self._serialize_rel_asset_for_csv(rel_ref_converted)
         ref_str = self.__generate_entry_name(
             AssetType.Blob,
             self.__get_ext_for_content_type(content_type, "bin"),
@@ -72,7 +74,7 @@ class DefaultBundleWriter(BaseBundleWriter):
             type=AssetType.Blob,
             lang=lang,
             rel_type=rel_type,
-            rel_asset=rel_ref_str,
+            rel_asset=rel_ref_serialized,
             content_type=content_type,
             comment=comment,
             custom_type=custom_type,
@@ -85,7 +87,7 @@ class DefaultBundleWriter(BaseBundleWriter):
     def write_object_asset(
         self,
         obj: TOpenEpdObject,
-        rel_asset: AssetRef | None = None,
+        rel_asset: list[AssetRef] | AssetRef | None = None,
         rel_type: str | None = None,
         file_name: str | None = None,
         name: str | None = None,
@@ -100,7 +102,9 @@ class DefaultBundleWriter(BaseBundleWriter):
             msg = f"Object {obj} does not have a valid asset type and can't be written to a bundle."
             raise ValueError(msg)
         asset_type = AssetType(asset_type_str)
-        rel_ref_str = self._asset_ref_to_str(rel_asset) if rel_asset is not None else None
+        # Convert multiple rel_asset to proper format and serialize for storage
+        rel_ref_converted = self._asset_refs_to_str(rel_asset)
+        rel_ref_serialized = self._serialize_rel_asset_for_csv(rel_ref_converted)
         ref_str = self.__generate_entry_name(
             asset_type,
             self.__get_ext_for_content_type("application/json", "json"),
@@ -111,7 +115,7 @@ class DefaultBundleWriter(BaseBundleWriter):
             name=name,
             type=asset_type,
             lang=lang,
-            rel_asset=rel_ref_str,
+            rel_asset=rel_ref_serialized,
             rel_type=rel_type,
             content_type="application/json",
             comment=comment,

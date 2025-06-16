@@ -80,6 +80,7 @@ class AssetInfo(BaseOpenEpdSchema):
     """The language of the asset."""
     rel_type: str | None
     rel_asset: str | None
+    """The related asset reference (serialized as semicolon-separated for multiple assets)."""
     comment: str | None = pydantic.Field(default=None)
     content_type: str | None = pydantic.Field(default=None)
     size: int | None = pydantic.Field(default=None)
