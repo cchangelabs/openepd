@@ -153,9 +153,7 @@ class AccessFlooringPanelsV1(BaseOpenEpdHierarchicalSpec, AccessFlooringMixin):
 
 
 class AsphaltInputsV1(BaseOpenEpdHierarchicalSpec):
-    """
-    Binders, additives, and other non-aggregate-like ingredients for asphalt.
-    """
+    """Binders, additives, and other non-aggregate-like ingredients for asphalt."""
 
     _EXT_VERSION = "1.0"
 
