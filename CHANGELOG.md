@@ -1,3 +1,10 @@
+## 7.3.0 (2025-06-18)
+
+### Feat
+
+- **asset**: support multiple assets
+- **deps**: extend range of supported `open-xpd-uuid` lib versions
+
 ## 7.2.0 (2025-06-11)
 
 ### Feat
