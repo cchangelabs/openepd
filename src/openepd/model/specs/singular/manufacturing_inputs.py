@@ -152,15 +152,23 @@ class AccessFlooringPanelsV1(BaseOpenEpdHierarchicalSpec, AccessFlooringMixin):
     _EXT_VERSION = "1.0"
 
 
+class AsphaltInputsV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Binders, additives, and other non-aggregate-like ingredients for asphalt.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class ManufacturingInputsV1(BaseOpenEpdHierarchicalSpec):
     """
     Manufacturing inputs.
 
     Broad category for collecting materials primarily used as manufacturing inputs, rather than directly used in
-    a construction.
+    construction.
     """
 
-    _EXT_VERSION = "1.1"
+    _EXT_VERSION = "1.2"
 
     # Nested specs:
     AccessFlooringPedestals: AccessFlooringPedestalsV1 | None = None
@@ -170,3 +178,4 @@ class ManufacturingInputsV1(BaseOpenEpdHierarchicalSpec):
     ConcreteAdmixtures: ConcreteAdmixturesV1 | None = None
     Textiles: TextilesV1 | None = None
     AccessFlooringPanels: AccessFlooringPanelsV1 | None = None
+    AsphaltInputs: AsphaltInputsV1 | None = None

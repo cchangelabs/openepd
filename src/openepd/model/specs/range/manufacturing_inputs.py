@@ -44,8 +44,6 @@ from openepd.model.specs.enums import (
 )
 from openepd.model.specs.range.mixins.access_flooring_mixin import AccessFlooringRangeMixin
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
-
 
 class CementRangeV1(BaseOpenEpdHierarchicalSpec):
     """
@@ -181,17 +179,27 @@ class AccessFlooringPanelsRangeV1(BaseOpenEpdHierarchicalSpec, AccessFlooringRan
     _EXT_VERSION = "1.0"
 
 
+class AsphaltInputsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Binders, additives, and other non-aggregate-like ingredients for asphalt.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class ManufacturingInputsRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Manufacturing inputs.
 
     Broad category for collecting materials primarily used as manufacturing inputs, rather than directly used in
-    a construction.
+    construction.
 
     Range version.
     """
 
-    _EXT_VERSION = "1.1"
+    _EXT_VERSION = "1.2"
 
     AccessFlooringPedestals: AccessFlooringPedestalsRangeV1 | None = None
     CarpetBacking: CarpetBackingRangeV1 | None = None
@@ -200,3 +208,4 @@ class ManufacturingInputsRangeV1(BaseOpenEpdHierarchicalSpec):
     ConcreteAdmixtures: ConcreteAdmixturesRangeV1 | None = None
     Textiles: TextilesRangeV1 | None = None
     AccessFlooringPanels: AccessFlooringPanelsRangeV1 | None = None
+    AsphaltInputs: AsphaltInputsRangeV1 | None = None
