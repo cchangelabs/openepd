@@ -64,6 +64,46 @@ class BundleMixin:
         else:
             return asset_ref
 
+    @classmethod
+    def _asset_refs_to_str(cls, asset_refs: AssetRef | list[AssetRef] | None) -> list[str] | str | None:
+        """Convert single or multiple asset references to strings."""
+        if asset_refs is None:
+            return None
+        if isinstance(asset_refs, list):
+            return [cls._asset_ref_to_str(asset_ref) for asset_ref in asset_refs]
+        else:
+            return cls._asset_ref_to_str(asset_refs)
+
+    @classmethod
+    def _serialize_rel_asset_for_csv(cls, rel_asset: list[str] | str | None) -> str | None:
+        """
+        Serialize rel_asset for CSV storage.
+
+        Multiple assets are joined with semicolons.
+        """
+        if rel_asset is None:
+            return None
+        if isinstance(rel_asset, list):
+            # For empty list, return None. For non-empty list, join with semicolons
+            return ";".join(rel_asset) if rel_asset else None
+        else:
+            # Single asset - return as string
+            return str(rel_asset)
+
+    @classmethod
+    def _deserialize_rel_asset_from_csv(cls, rel_asset_str: str | None) -> list[str] | str | None:
+        """
+        Deserialize rel_asset from CSV storage.
+
+        Semicolon-separated values become lists.
+        """
+        if rel_asset_str is None or rel_asset_str == "":
+            return None
+        if ";" in rel_asset_str:
+            return rel_asset_str.split(";")
+        else:
+            return rel_asset_str
+
 
 class BaseBundleReader(BundleMixin, metaclass=abc.ABCMeta):
     """Base class for bundle readers."""
@@ -180,7 +220,7 @@ class BaseBundleWriter(BundleMixin, metaclass=abc.ABCMeta):
         self,
         data: IO[bytes],
         content_type: str | None,
-        rel_asset: AssetRef | None = None,
+        rel_asset: AssetRef | list[AssetRef] | None = None,
         rel_type: str | None = None,
         file_name: str | None = None,
         name: str | None = None,
@@ -196,7 +236,7 @@ class BaseBundleWriter(BundleMixin, metaclass=abc.ABCMeta):
     def write_object_asset(
         self,
         obj: TOpenEpdObject,
-        rel_asset: AssetRef | None = None,
+        rel_asset: AssetRef | list[AssetRef] | None = None,
         rel_type: str | None = None,
         file_name: str | None = None,
         name: str | None = None,
