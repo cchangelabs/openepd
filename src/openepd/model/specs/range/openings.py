@@ -44,8 +44,6 @@ __all__ = (
     "WoodDoorsRangeV1",
 )
 
-# NB! This is a generated code. Do not edit it manually. Please see src/openepd/model/specs/README.md
-
 
 from openepd.compat.pydantic import pyd
 from openepd.model.common import RangeInt, RangeRatioFloat
@@ -218,7 +216,15 @@ class UnitSkylightsRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
+
+    roof_window: bool | None = pyd.Field(
+        default=None,
+        description=(
+            "Similar to a skylight but has an outward opening that extends from a roof, and is therefore not fixed"
+        ),
+        example=True,
+    )
 
 
 class WindowsRangeV1(BaseOpenEpdHierarchicalSpec):
