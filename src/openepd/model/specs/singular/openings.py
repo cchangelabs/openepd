@@ -242,7 +242,15 @@ class UnitSkylightsV1(BaseOpenEpdHierarchicalSpec):
     by hand (cf. roof window). Includes frame(s) and possibly operating hardware.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
+
+    roof_window: bool | None = pyd.Field(
+        default=None,
+        description=(
+            "Similar to a skylight but has an outward opening that extends from a roof, and is therefore not fixed"
+        ),
+        example=True,
+    )
 
 
 class WindowsV1(BaseOpenEpdHierarchicalSpec):
