@@ -1,3 +1,11 @@
+## 7.4.0 (2025-06-19)
+
+### Feat
+
+- **specs**: add `AsphaltInputs` specification
+- **specs**: add `AsphaltInputs` specification
+- **specs**: add `roof_window` property for `UnitSkylights`
+
 ## 7.3.0 (2025-06-18)
 
 ### Feat
