@@ -126,8 +126,7 @@ class Plant(PlantRef, WithAttachmentsMixin, WithAltIdsMixin):
         default=None,
         description="(deprecated) Plus code (aka Open Location Code) of plant's location",
         json_schema_extra={
-            "deprecated": "Pluscode field is deprecated. If users need a pluscode they can obtain it from "
-            "`id` like this: `id.spit('.', maxsplit=1)[0]`",
+            "deprecated": True,
         },
     )
     latitude: float | None = pydantic.Field(

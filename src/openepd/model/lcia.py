@@ -555,24 +555,45 @@ class LCIAMethod(StrEnum):
 class Impacts(pydantic.RootModel[dict[LCIAMethod, ImpactSet]]):
     """List of environmental impacts, compiled per one of the standard Impact Assessment methods."""
 
-    @staticmethod
-    def _update_schema_extra(schema, model):
-        schema.update(
-            {
-                "properties": {
-                    str(lm): {
-                        "description": str(lm),
-                        # This is an internal representation of the reference which exists in Pydantic during
-                        # generation process
-                        "allOf": [{"$ref": "#/components/schemas/openepd__model__lcia__ImpactSet-Input__1"}],
-                    }
-                    for lm in LCIAMethod
-                },
-                "additionalProperties": None,
-            }
-        )
+    @classmethod
+    def __get_pydantic_json_schema__(
+        cls, core_schema, handler, *, mode='validation'
+    ):
+        """Custom JSON schema generation for Pydantic v2 compatibility."""
+        # Get the base schema from the handler
+        json_schema = handler(core_schema)
 
-    model_config: ClassVar[ConfigDict] = ConfigDict(json_schema_extra=_update_schema_extra)
+        # Resolve the reference to get the actual ImpactSet schema
+        json_schema = handler.resolve_ref_schema(json_schema)
+
+        # Get the ImpactSet reference dynamically
+        impact_set_ref = None
+        if hasattr(handler, 'definitions') and handler.definitions:
+            # Look for ImpactSet in the definitions
+            for def_name, def_schema in handler.definitions.items():
+                if 'ImpactSet' in def_name:
+                    # Use the correct OpenAPI reference format
+                    impact_set_ref = f"#/components/schemas/{def_name}"
+                    break
+
+        # Fallback: use a generic reference if we can't find the specific one
+        if not impact_set_ref:
+            impact_set_ref = "#/components/schemas/ImpactSet"
+
+        # Update the schema with explicit properties for each LCIA method
+        json_schema.update({
+            "type": "object",
+            "properties": {
+                str(lm): {
+                    "description": str(lm),
+                    "allOf": [{"$ref": impact_set_ref}],
+                }
+                for lm in LCIAMethod
+            },
+            "additionalProperties": False,
+        })
+
+        return json_schema
 
     def set_unknown_lcia(self, impact_set: ImpactSet):
         """Set the impact set as an unknown LCIA method."""
