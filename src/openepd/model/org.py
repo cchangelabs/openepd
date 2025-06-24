@@ -57,6 +57,30 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
         description="Organizations controlled by this organization",
         default=None,
     )
+    description: str | None = pyd.Field(
+        default=None,
+        max_length=2000,
+        description=(
+            "Text that describes the company, its products, or its sustainability commitments, "
+            'similar to "about us" or "sustainability commitment" text on a corporate website.  '
+            "Typically used for publication in EPDs and for viewing by users.  "
+            "Supports plain text or github flavored markdown."
+        ),
+        example=(
+            "# Our Mission\n"
+            "Driven by the mission to design and make the world's best products in the most sustainable way, "
+            "MillerKnoll's sustainability strategy focuses on three key areas:\n"
+            "* Carbon : Design the lowest carbon footprint products "
+            "and commit to achieving net-zero carbon emissions by 20501.\n"
+            "* Materials : Use sustainable, 100% bio-based or recycled materials by 2050.\n"
+            "* Circularity : Design timeless, durable products with zero waste by 2050.\n"
+            "# Supplier Support\n"
+            "At MillerKnoll, we are committed to working closely with our suppliers "
+            "to reduce our collective impact on the environment. "
+            "We encourage our suppliers to minimize their operations' environmental impacts "
+            "and require they assist us in decreasing our facilities' environmental effects."
+        ),
+    )
     hq_location: Location | None = pyd.Field(
         default=None,
         description="Location of a place of business, preferably the corporate headquarters.",
