@@ -1,3 +1,9 @@
+## 6.23.0 (2025-06-25)
+
+### Feat
+
+- add company description field to organization model
+
 ## 6.22.0 (2025-06-19)
 
 ### Feat
