@@ -1,3 +1,10 @@
+## 7.5.0 (2025-06-27)
+
+### Feat
+
+- **specs**: add support for TRACI 2.2 and IPCC AR6
+- add company description field to organization model
+
 ## 7.4.0 (2025-06-19)
 
 ### Feat
