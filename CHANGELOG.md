@@ -1,3 +1,13 @@
+## 6.25.0 (2025-06-27)
+
+### Feat
+
+- **utils**: introduce `openepd.utils` package as part of OpenEPD library
+
+### Fix
+
+- resolve explicit reference to pydantic v2 interfaces
+
 ## 6.24.0 (2025-06-27)
 
 ### Feat

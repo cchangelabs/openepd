@@ -22,8 +22,6 @@ from collections.abc import Sequence
 import types
 from typing import Any, ClassVar, TypeVar
 
-from pydantic.v1.fields import FieldInfo
-
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.singular.accessories import AccessoriesV1
@@ -208,9 +206,9 @@ class Specs(BaseOpenEpdHierarchicalSpec):
         """
         klass = self.__class__
 
-        fields: dict[str, FieldInfo] = klass.__fields__  # type: ignore[assignment]
+        fields: dict[str, pyd.fields.FieldInfo] = klass.__fields__  # type: ignore[assignment]
 
-        field: FieldInfo | None
+        field: pyd.fields.FieldInfo | None
         for i, key in enumerate(keys, start=1):
             field = fields.get(key)
             if field is None:
