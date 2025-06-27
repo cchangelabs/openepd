@@ -1,3 +1,9 @@
+## 7.6.0 (2025-06-27)
+
+### Feat
+
+- **utils**: introduce `openepd.utils` package as part of OpenEPD library
+
 ## 7.5.0 (2025-06-27)
 
 ### Feat
