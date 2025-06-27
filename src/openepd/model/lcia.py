@@ -504,10 +504,12 @@ class LCIAMethod(StrEnum):
     """A list of available LCA methods."""
 
     UNKNOWN = "Unknown LCIA"
+    TRACI_2_2 = "TRACI 2.2"
     TRACI_2_1 = "TRACI 2.1"
     TRACI_2_0 = "TRACI 2.0"
     TRACI_1_0 = "TRACI 1.0"
     IPCC_AR5 = "IPCC AR5"
+    IPCC_AR6 = "IPCC AR6"
     EF_3_0 = "EF 3.0"
     EF_3_1 = "EF 3.1"
     EF_2_0 = "EF 2.0"
