@@ -1,3 +1,9 @@
+## 6.24.0 (2025-06-27)
+
+### Feat
+
+- **specs**: add support for TRACI 2.2 and IPCC AR6
+
 ## 6.23.0 (2025-06-25)
 
 ### Feat
