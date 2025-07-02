@@ -124,6 +124,16 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
             exclude_fields = {"doctype", "openepd_version"}
         return len(self.model_dump(exclude_unset=True, exclude_none=True, exclude=exclude_fields)) > 0
 
+    def revalidate(self, strict: bool | None = None) -> Self:
+        """
+        Re-run validation against current model and return a new validated instance.
+
+        Note: This method returns a validated _COPY_ of the object.
+
+        :param strict: If True, will raise an error if any field is missing or has an invalid value.
+        """
+        return self.model_validate(self.to_dict(), strict=strict)
+
     def set_ext(self, ext: "OpenEpdExtension") -> None:
         """Set the extension field."""
         self.set_ext_field(ext.get_extension_name(), ext)

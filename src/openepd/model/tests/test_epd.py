@@ -18,8 +18,9 @@ import unittest
 import pydantic
 
 from openepd.model.base import OPENEPD_VERSION_FIELD, OpenEpdDoctypes, OpenEpdExtension, Version
-from openepd.model.common import Ingredient
+from openepd.model.common import Ingredient, Measurement
 from openepd.model.epd import Epd, EpdFactory, EpdPreviewV0, EpdV0
+from openepd.model.lcia import Impacts, ImpactSet, ScopeSet, ScopeSetGwp
 from openepd.model.validation.quantity import AmountMass
 from openepd.model.versioning import OpenEpdVersions
 
@@ -159,3 +160,21 @@ class EPDTestCase(unittest.TestCase):
         ext = epd.get_ext(MyExtension)
         self.assertIsInstance(ext, MyExtension)
         self.assertIsInstance(ext.test_field, AmountMass)
+
+    def test_revalidate(self):
+        epd = Epd(
+            impacts=Impacts(
+                {
+                    "TRACI 2.1": ImpactSet(
+                        gwp=ScopeSet(A1=Measurement(mean=1.0, unit="kgCO2e")),
+                        # In this example we're setting generic scopeset with WRONG unit. It should allow to set it,
+                        # but resulting object won't pass validation
+                        # (if ExternalValidationConfig.QUANTITY_VALIDATOR is set)
+                    )
+                }
+            ),
+        )
+        revalidated = epd.revalidate()
+        self.assertIsInstance(
+            revalidated.impacts.get_impact_set("TRACI 2.1").gwp, ScopeSetGwp
+        )  # ScopeSet must be replaced
