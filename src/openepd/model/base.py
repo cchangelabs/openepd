@@ -81,9 +81,11 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
         """
         return json.loads(self.model_dump_json(*args, **kwargs))
 
-    def has_values(self) -> bool:
+    def has_values(self, exclude_fields: set[str] | None = None) -> bool:
         """Return True if the model has any values."""
-        return len(self.model_dump(exclude_unset=True, exclude_none=True)) > 0
+        if isinstance(self, RootDocument) and exclude_fields is None:
+            exclude_fields = {"doctype", "openepd_version"}
+        return len(self.model_dump(exclude_unset=True, exclude_none=True, exclude=exclude_fields)) > 0
 
     def set_ext(self, ext: "OpenEpdExtension") -> None:
         """Set the extension field."""
@@ -196,6 +198,15 @@ class RootDocument(abc.ABC, BaseOpenEpdSchema):
         description="Version of the document format, related to /doctype",
         default=OpenEpdVersions.get_current().as_str(),
     )
+
+    def __init__(self, **data: Any) -> None:
+        super().__init__(**data)
+        if not hasattr(self, "_FORMAT_VERSION"):
+            msg = f"RootDocument subclass {self.__class__.__name__} must define _FORMAT_VERSION class variable."
+            raise ValueError(msg)
+        if "openepd_version" not in self.model_fields_set:
+            self.openepd_version = self._FORMAT_VERSION
+        self.doctype = self.model_fields["doctype"].default  # type: ignore[assignment]
 
     @pydantic.field_validator(OPENEPD_VERSION_FIELD)
     def version_format_validator(cls, value: str) -> str:
