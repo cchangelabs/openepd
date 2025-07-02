@@ -16,8 +16,7 @@
 import abc
 from collections.abc import Callable
 from enum import StrEnum
-import json
-from typing import Any, ClassVar, Generic, Optional, TypeAlias, TypeVar
+from typing import Any, ClassVar, Generic, Literal, NotRequired, Optional, Self, TypeAlias, TypedDict, TypeVar, Unpack
 
 from cqd import open_xpd_uuid  # type:ignore[import-untyped]
 import pydantic
@@ -63,6 +62,17 @@ def modify_pydantic_schema(schema_dict: dict, cls: type) -> dict:
     return schema_dict
 
 
+class SerializingArgs(TypedDict):
+    include: NotRequired[set[int] | set[str] | dict[int, Any] | dict[str, Any] | None]
+    exclude: NotRequired[set[int] | set[str] | dict[int, Any] | dict[str, Any] | None]
+    by_alias: NotRequired[bool]
+    exclude_unset: NotRequired[bool]
+    exclude_defaults: NotRequired[bool]
+    exclude_none: NotRequired[bool]
+    round_trip: NotRequired[bool]
+    warnings: NotRequired[bool]
+
+
 class BaseOpenEpdSchema(pydantic.BaseModel):
     """Base class for all OpenEPD models."""
 
@@ -73,13 +83,40 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
         use_enum_values=True,
     )
 
-    def to_serializable(self, *args, **kwargs) -> dict[str, Any]:
+    def to_serializable(
+        self, mode: Literal["json", "python"] | str = "json", **kwargs: Unpack[SerializingArgs]
+    ) -> dict[str, Any]:
         """
         Return a serializable dict representation of the DTO.
 
         It expects the same arguments as the pydantic.BaseModel.model_dump_json() method.
         """
-        return json.loads(self.model_dump_json(*args, **kwargs))
+        kwargs.setdefault("exclude_none", True)
+        kwargs.setdefault("exclude_unset", True)
+        kwargs.setdefault("by_alias", True)
+        return self.model_dump(mode=mode, **kwargs)
+
+    def to_json(self, indent: int = 0, **kwargs: Unpack[SerializingArgs]):
+        """
+        Return a JSON string representation of the DTO.
+
+        It expects the same arguments as the pydantic.BaseModel.model_dump_json() method.
+        """
+        kwargs.setdefault("exclude_none", True)
+        kwargs.setdefault("exclude_unset", True)
+        kwargs.setdefault("by_alias", True)
+        return self.model_dump_json(indent=indent, **kwargs)
+
+    def to_dict(self, **kwargs: Unpack[SerializingArgs]) -> dict[str, Any]:
+        """
+        Return a dictionary representation of the DTO.
+
+        The main difference with `to_serializable` is that it doesn't convert all native python types
+        (e.g. datetime won't be converted into string) into JSON-compatible types.
+
+        Method expects the same kwargs as the pydantic.BaseModel.model_dump() method.
+        """
+        return self.to_serializable(mode="python", **kwargs)
 
     def has_values(self, exclude_fields: set[str] | None = None) -> bool:
         """Return True if the model has any values."""
