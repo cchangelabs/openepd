@@ -159,6 +159,7 @@ extend-ignore = [
     "E501", # E501: line too long
     "E203", # E704: Multiple statements on one line (def)
     "F403", #F403 'from module import *' used; unable to detect undefined names (F403)
+    "EM102", # EM102: Exception must not use an f-string literal, assign to variable first
     ##### DOCSTRINGS #####
     "D100", # Missing docstring in public module
     "D101", # Missing docstring in public class
