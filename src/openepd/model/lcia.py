@@ -13,8 +13,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from collections.abc import Generator
 from enum import StrEnum
-from typing import Any, ClassVar, Self
+from typing import Any, ClassVar, Self, cast
 
 import pydantic
 from pydantic import ConfigDict
@@ -246,10 +247,12 @@ class ScopeSet(BaseOpenEpdSchema):
 class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
     """Base class for the data structures presented as typed name:scopeset mapping ."""
 
-    def get_scopeset_names(self) -> list[str]:
+    def get_scopeset_names(self, exclude_none: bool = False, only_standard: bool = False) -> list[str]:
         """
         Get the names of scopesets which have been set by model (not defaults).
 
+        :param exclude_none: If True, exclude scopesets with None values.
+        :param only_standard: If True, include only standard scopesets (those defined in model_fields_set).
         :return: set of names, for example ['gwp', 'odp']
         """
         result = []
@@ -260,7 +263,74 @@ class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
             # field can be explicitly specified, or can be an unknown impact covered by extra='allow'
             result.append(field.alias if field and field.alias else f)
 
+        # add extra fields
+        if not only_standard and self.model_extra:
+            for name in self.model_extra.keys():
+                if name not in result:
+                    result.append(name)
+
+        if exclude_none:
+            # filter out names with None values
+            result = [name for name in result if self.get_scopeset_by_name(name) is not None]
+
         return result
+
+    def set_scopeset_by_name(self, name: str, scopeset: ScopeSet | None) -> None:
+        """
+        Set scopeset by name.
+
+        :param name: The name of the scopeset.
+        :param scopeset: The scopeset to set.
+        """
+        # check known impacts first
+        for f_name, f in self.model_fields.items():
+            if f.alias == name:
+                setattr(self, f_name, scopeset)
+                return
+            if f_name == name:
+                setattr(self, f_name, scopeset)
+                return
+        # probably unknown impact, coming from 'extra' fields
+        setattr(self, name, scopeset)
+
+    def __getitem__(self, scopeset_name: str) -> ScopeSet:
+        """Get scopeset by name or raise KeyError."""
+        if not isinstance(scopeset_name, str):
+            raise TypeError(f"Key must be a string, got {type(scopeset_name)}")
+        result = self.get_scopeset_by_name(scopeset_name)
+        if result is None:
+            raise KeyError(f"Scopeset '{scopeset_name}' not found")
+        return result
+
+    def __setitem__(self, key: str, value: ScopeSet | None) -> None:
+        """Set scopeset by name."""
+        if not isinstance(key, str):
+            raise TypeError(f"Key must be a string, got {type(key)}")
+        if value is not None and not isinstance(value, ScopeSet):
+            raise TypeError(f"Value must be a ScopeSet, got {type(value)}")
+        self.set_scopeset_by_name(key, value)
+
+    def __contains__(self, item: str) -> bool:
+        """Check if scopeset with the given name exists (was set and is not None)."""
+        if not isinstance(item, str):
+            return False
+        return item in self.get_scopeset_names(exclude_none=True)
+
+    def __iter__(self) -> Generator[tuple[str, ScopeSet], None, None]:
+        """Iterate over existing (set and not None) scopesets and yield tuples of scopeset name and scopeset."""
+        for name in self.get_scopeset_names(exclude_none=True):
+            yield name, cast(ScopeSet, self.get_scopeset_by_name(name))
+
+    def __len__(self) -> int:
+        """Get the number of existing (set and not None) scopesets."""
+        return len(self.get_scopeset_names(exclude_none=True))
+
+    def items(self) -> list[tuple[str, ScopeSet]]:
+        """Get all scopeset names and their values."""
+        return [
+            (name, cast(ScopeSet, self.get_scopeset_by_name(name)))
+            for name in self.get_scopeset_names(exclude_none=True)
+        ]
 
     def get_scopeset_by_name(self, name: str) -> ScopeSet | None:
         """
