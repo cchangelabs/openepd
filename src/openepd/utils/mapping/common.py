@@ -52,6 +52,31 @@ class BaseDataMapper(Generic[T, K], abc.ABC):
         """
         pass
 
+    def map_or_keep(self, input_value: T) -> K:
+        """
+        Map the input value to the output value or keep the input value if there is no mapping.
+
+        This is a convenience method equivalent to calling `map` with `default_value=input_value`
+        and `raise_if_missing=False`.
+
+        :param input_value: The input value to map.
+        :return: The mapped value or the input value if there is no mapping.
+        """
+        return cast(K, self.map(input_value, default_value=cast(K, input_value), raise_if_missing=False))
+
+    def map_or_raise(self, input_value: T) -> K:
+        """
+        Map the input value to the output value or raise an exception if there is no mapping.
+
+        This is a convenience method equivalent to calling `map` with `default_value=None`
+        and `raise_if_missing=True`.
+
+        :param input_value: The input value to map.
+        :return: The mapped value.
+        :raise ValueError: If there is no mapping for the input value.
+        """
+        return cast(K, self.map(input_value, default_value=None, raise_if_missing=True))
+
 
 class SimpleDataMapper(BaseDataMapper[T, T], Generic[T]):
     """A data mapper that does not change the type of the input value."""
