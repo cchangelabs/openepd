@@ -79,6 +79,9 @@ class M49UtilsTestCase(TestCase):
             (["Europe", "North America", "Austria", "Germany"], ["150", "003", "040", "276"]),
             (["europe", "north america", "austria", "germany"], ["150", "003", "040", "276"]),
             (["Bolivia"], ["068"]),
+            (["United States"], ["840"]),
+            (["United States of America"], ["840"]),
+            (["USA"], ["840"]),
         ]
         for input_data, expected in positive_test_cases:
             with self.subTest(input_data=input_data, expected=expected):

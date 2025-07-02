@@ -695,6 +695,8 @@ REGION_VERBOSE_NAME_TO_M49 = {
     "Polynesia": "061",
 }
 
+REGION_VERBOSE_NAME_TO_M49_LOWER = {k.lower(): v for k, v in REGION_VERBOSE_NAME_TO_M49.items()}
+
 M49_TO_REGION_VERBOSE_NAME = {
     M49_CODE_WORLD: "World",
     M49_CODE_AFRICA: "Africa",
@@ -769,7 +771,7 @@ COUNTRY_VERBOSE_NAME_TO_M49 = {
     "Colombia": "170",
     "Comoros": "174",
     "Congo": "178",
-    "Congo (Democratic Republic of the)": "180",
+    "Congo (Democratic Republic of the Congo)": "180",
     "Costa Rica": "188",
     "Croatia": "191",
     "Cuba": "192",
@@ -905,6 +907,7 @@ COUNTRY_VERBOSE_NAME_TO_M49 = {
     "Trinidad and Tobago": "780",
     "Tunisia": "788",
     "Türkiye": "792",
+    "Turkey": "792",
     "Turkmenistan": "795",
     "Tuvalu": "798",
     "Uganda": "800",
@@ -913,6 +916,8 @@ COUNTRY_VERBOSE_NAME_TO_M49 = {
     "United Kingdom of Great Britain and Northern Ireland": "826",
     "United Republic of Tanzania": "834",
     "United States of America": "840",
+    "United States": "840",
+    "USA": "840",
     "Uruguay": "858",
     "Uzbekistan": "860",
     "Vanuatu": "548",
@@ -922,6 +927,8 @@ COUNTRY_VERBOSE_NAME_TO_M49 = {
     "Zambia": "894",
     "Zimbabwe": "716",
 }
+
+COUNTRY_VERBOSE_NAME_TO_M49_LOWER = {k.lower(): v for k, v in COUNTRY_VERBOSE_NAME_TO_M49.items()}
 
 M49_TO_COUNTRY_VERBOSE_NAME = {
     "004": "Afghanistan",
