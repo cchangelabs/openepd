@@ -18,7 +18,9 @@ from enum import StrEnum
 from typing import Any, ClassVar, Self, cast
 
 import pydantic
-from pydantic import ConfigDict
+from pydantic.annotated_handlers import GetJsonSchemaHandler
+from pydantic.json_schema import GenerateJsonSchema
+from pydantic_core import CoreSchema
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import Measurement
@@ -627,25 +629,6 @@ class LCIAMethod(StrEnum):
 class Impacts(pydantic.RootModel[dict[LCIAMethod, ImpactSet]]):
     """List of environmental impacts, compiled per one of the standard Impact Assessment methods."""
 
-    @staticmethod
-    def _update_schema_extra(schema, model):
-        schema.update(
-            {
-                "properties": {
-                    str(lm): {
-                        "description": str(lm),
-                        # This is an internal representation of the reference which exists in Pydantic during
-                        # generation process
-                        "allOf": [{"$ref": "#/components/schemas/openepd__model__lcia__ImpactSet-Input__1"}],
-                    }
-                    for lm in LCIAMethod
-                },
-                "additionalProperties": None,
-            }
-        )
-
-    model_config: ClassVar[ConfigDict] = ConfigDict(json_schema_extra=_update_schema_extra)
-
     def set_unknown_lcia(self, impact_set: ImpactSet):
         """Set the impact set as an unknown LCIA method."""
         self.root[LCIAMethod.UNKNOWN] = impact_set
@@ -692,6 +675,61 @@ class Impacts(pydantic.RootModel[dict[LCIAMethod, ImpactSet]]):
     def as_dict(self) -> dict[LCIAMethod, ImpactSet]:
         """Return the impacts as a dictionary."""
         return self.root
+
+    @classmethod
+    def __get_pydantic_json_schema__(cls, core_schema: CoreSchema, handler: GetJsonSchemaHandler, *, mode="validation"):
+        # Get the base schema from the handler
+        json_schema: dict[str, Any] = handler(core_schema)
+        # Resolve the reference to get the actual ImpactSet schema
+        json_schema = handler.resolve_ref_schema(json_schema)
+        json_schema_generator: GenerateJsonSchema | None = None
+        if hasattr(handler, "generate_json_schema") and handler.generate_json_schema:
+            json_schema_generator = handler.generate_json_schema
+
+        ref_template = ""
+        if json_schema_generator and json_schema_generator.ref_template:
+            ref_template = json_schema_generator.ref_template
+        elif json_schema.get("propertyNames", {}).get("$ref") is not None:
+            template_path, _ = json_schema.get("propertyNames", {}).get("$ref", "").rsplit("/", maxsplit=2)
+            if template_path:
+                ref_template = f"{template_path}/{{model}}"
+        if not ref_template:
+            ref_template = "#/components/schemas/{model}"
+
+        # Get the ImpactSet reference dynamically
+        impact_set_ref = None
+        if (
+            json_schema_generator
+            and hasattr(json_schema_generator, "definitions")
+            and json_schema_generator.definitions
+        ):
+            # Look for ImpactSet in the definitions
+            for def_name, _ in json_schema_generator.definitions.items():
+                if "ImpactSet" in def_name:
+                    # Use the correct OpenAPI reference format
+                    impact_set_ref = ref_template.format(model=def_name)
+                    break
+
+        # Fallback: use a generic reference if we can't find the specific one (
+        if not impact_set_ref:
+            impact_set_ref = ref_template.format(model="ImpactSet")
+
+        # Update the schema with explicit properties for each LCIA method
+        json_schema.update(
+            {
+                "type": "object",
+                "properties": {
+                    str(lm): {
+                        "description": str(lm),
+                        "allOf": [{"$ref": impact_set_ref}],
+                    }
+                    for lm in LCIAMethod
+                },
+            }
+        )
+        json_schema.pop("additionalProperties")
+
+        return json_schema
 
 
 class ResourceUseSet(ScopesetByNameBase):
