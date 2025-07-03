@@ -209,7 +209,7 @@ class ScopeSet(BaseOpenEpdSchema):
     def _unit_validator(self) -> Self:
         all_units = set()
 
-        for k in self.model_fields:
+        for k in self.__class__.model_fields:
             v = getattr(self, k, None)
             if isinstance(v, Measurement):
                 all_units.add(v.unit)
@@ -261,7 +261,7 @@ class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
         for f in self.model_fields_set:
             if f in ("ext",):
                 continue
-            field = self.model_fields.get(f)
+            field = self.__class__.model_fields.get(f)
             # field can be explicitly specified, or can be an unknown impact covered by extra='allow'
             result.append(field.alias if field and field.alias else f)
 
@@ -285,7 +285,7 @@ class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
         :param scopeset: The scopeset to set.
         """
         # check known impacts first
-        for f_name, f in self.model_fields.items():
+        for f_name, f in self.__class__.model_fields.items():
             if f.alias == name:
                 setattr(self, f_name, scopeset)
                 return
@@ -342,7 +342,7 @@ class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
         :return: A scopeset if found, None otherwise
         """
         # check known impacts first
-        for f_name, f in self.model_fields.items():
+        for f_name, f in self.__class__.model_fields.items():
             if f.alias == name:
                 return getattr(self, f_name)
             if f_name == name:

@@ -253,7 +253,7 @@ class RootDocument(abc.ABC, BaseOpenEpdSchema):
             raise ValueError(msg)
         if "openepd_version" not in self.model_fields_set:
             self.openepd_version = self._FORMAT_VERSION
-        self.doctype = self.model_fields["doctype"].default  # type: ignore[assignment]
+        self.doctype = self.__class__.model_fields["doctype"].default  # type: ignore[assignment]
 
     @pydantic.field_validator(OPENEPD_VERSION_FIELD)
     def version_format_validator(cls, value: str) -> str:
