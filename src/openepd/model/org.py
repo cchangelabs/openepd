@@ -150,26 +150,35 @@ class Plant(PlantRef, WithAttachmentsMixin, WithAltIdsMixin):
 
     pluscode: str | None = pydantic.Field(
         default=None,
-        description="(deprecated) Plus code (aka Open Location Code) of plant's location",
+        description="(DEPRECATED) Plus code (aka Open Location Code) of plant's location. "
+        "This field is deprecated. If users need a pluscode they can obtain it from `id`.",
         json_schema_extra={
-            "deprecated": "Pluscode field is deprecated. If users need a pluscode they can obtain it from "
-            "`id` like this: `id.spit('.', maxsplit=1)[0]`",
+            "deprecated": True,
         },
     )
     latitude: float | None = pydantic.Field(
         default=None,
-        description="(deprecated) Latitude of the plant location. Use 'location' fields instead.",
+        description="(DEPRECATED) Latitude of the plant location. Use 'location' fields instead.",
+        json_schema_extra={
+            "deprecated": True,
+        },
     )
     longitude: float | None = pydantic.Field(
         default=None,
-        description="(deprecated) Longitude of the plant location. Use 'location' fields instead.",
+        description="(DEPRECATED) Longitude of the plant location. Use 'location' fields instead.",
+        json_schema_extra={
+            "deprecated": True,
+        },
     )
     owner: Org | None = pydantic.Field(description="Organization that owns the plant", default=None)
     address: str | None = pydantic.Field(
         max_length=200,
         default=None,
-        description="(deprecated) Text address, preferably geocoded. Use 'location' fields instead",
+        description="(DEPRECATED) Text address, preferably geocoded. Use 'location' fields instead",
         examples=["1503 Orchard Hill Rd, LaGrange, GA 30240, United States"],
+        json_schema_extra={
+            "deprecated": True,
+        },
     )
     contact_email: pydantic.EmailStr | None = pydantic.Field(
         description="Email contact", examples=["info@interface.com"], default=None
