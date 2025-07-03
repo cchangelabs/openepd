@@ -30,7 +30,7 @@ class WithExtVersionMixin(ABC, pydantic.BaseModel):
         """Set the default value for the ext_version field from _EXT_VERSION class var."""
         super().__init_subclass__()
         if hasattr(cls, "_EXT_VERSION"):
-            cls.model_fields["ext_version"].default = cls._EXT_VERSION
+            cls.model_fields["ext_version"].default_factory = lambda: cls._EXT_VERSION
 
     # Note: default is set programmatically in __init_subclass__
     ext_version: str | None = pydantic.Field(description="Extension version", examples=["3.22"], default=None)

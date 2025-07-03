@@ -21,6 +21,8 @@ from openepd.model.base import OPENEPD_VERSION_FIELD, OpenEpdDoctypes, OpenEpdEx
 from openepd.model.common import Ingredient, Measurement
 from openepd.model.epd import Epd, EpdFactory, EpdPreviewV0, EpdV0
 from openepd.model.lcia import Impacts, ImpactSet, ScopeSet, ScopeSetGwp
+from openepd.model.specs import ConcreteV1
+from openepd.model.specs.singular.concrete import ReadyMixV1
 from openepd.model.validation.quantity import AmountMass
 from openepd.model.versioning import OpenEpdVersions
 
@@ -178,3 +180,13 @@ class EPDTestCase(unittest.TestCase):
         self.assertIsInstance(
             revalidated.impacts.get_impact_set("TRACI 2.1").gwp, ScopeSetGwp
         )  # ScopeSet must be replaced
+
+    def test_epp_ext_version(self):
+        epd = Epd()
+        epd.specs.Concrete = ConcreteV1(ReadyMix=ReadyMixV1())
+        epd.specs = epd.specs
+        self.assertEqual(epd.specs.Concrete.ReadyMix.ext_version, epd.specs.Concrete.ReadyMix._EXT_VERSION)
+        serialized_epd = epd.to_serializable()
+        self.assertEqual(
+            serialized_epd["specs"]["Concrete"]["ReadyMix"]["ext_version"], epd.specs.Concrete.ReadyMix._EXT_VERSION
+        )
