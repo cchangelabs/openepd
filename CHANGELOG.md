@@ -1,3 +1,23 @@
+## 7.7.0 (2025-07-03)
+
+### Feat
+
+- **core**: add convenience methods for objects serialization with reasonable defaults
+- **core**: add a bunch on convenience methods for impact sets manipulations
+- **utils**: add geography mapper
+- **utils**: improve BaseDataMapper interface
+- **utils**: add markdown section builder
+
+### Fix
+
+- **core**: remove instance calls to `model_fields` to avoid warnings on pydantic 2.11+
+- **docs**: update Impacts schema generation rules to improve compatibility with pydantic 2
+- **docs**: make `deprecated` json schema property compatible with OpenAPI Spec
+- **core**: set ext_version via factory to avoid pydantic 2 warnings
+- **core**: add revalidate method to the base model class
+- **core**: fix issue which prevented documents created by args to get doctype and openepd_version
+- **m49**: fix verbose name to m49 transformation
+
 ## 7.6.0 (2025-06-27)
 
 ### Feat
