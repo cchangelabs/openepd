@@ -173,3 +173,7 @@ extend-ignore = [
     "D212", # We want to require second line for multiline docstrings
 ]
 extend-select = ["S", "E", "B", "A", "EM", "UP", "LOG", "G", "I", "D"]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
