@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openepd"
-version = "6.25.0"
+version = "6.26.0"
 license = "Apache-2.0"
 description = "Python library to work with OpenEPD format"
 authors = ["C-Change Labs <support@c-change-labs.com>"]
@@ -172,3 +172,7 @@ extend-ignore = [
     "D212", # We want to require second line for multiline docstrings
 ]
 extend-select = ["S", "E", "B", "A", "EM", "UP", "LOG", "G", "I", "D"]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

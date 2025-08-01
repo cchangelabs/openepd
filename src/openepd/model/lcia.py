@@ -522,6 +522,7 @@ class LCIAMethod(StrEnum):
     CML_1992 = "CML 1992"
     RECIPE_2016 = "ReCiPe 2016"
     RECIPE_2008 = "ReCiPe 2008"
+    GWP_GHG = "GWP-GHG"
     LIME2 = "LIME2"
 
     @classmethod
