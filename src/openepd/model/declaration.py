@@ -232,6 +232,9 @@ class WithVerifierMixin(pydantic.BaseModel):
         examples=["john.doe@example.com"],
         default=None,
     )
+    third_party_verifier_name: str | None = pydantic.Field(
+        description="The publishable name of the third party verifier", examples=["John Doe"], default=None
+    )
 
 
 class WithEpdDeveloperMixin(pydantic.BaseModel):
