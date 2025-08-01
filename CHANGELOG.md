@@ -1,3 +1,11 @@
+## 6.26.0 (2025-08-01)
+
+### Feat
+
+- add third party verifier name field to declaration model
+- add GWP-GHG LCIA method
+- **openepd**: add constants module and classproperty decorator
+
 ## 6.25.0 (2025-06-27)
 
 ### Feat
