@@ -203,6 +203,9 @@ class WithVerifierMixin(pyd.BaseModel):
     third_party_verifier_email: pyd.EmailStr | None = pyd.Field(
         description="Email address of the third party verifier", example="john.doe@example.com", default=None
     )
+    third_party_verifier_name: str | None = pyd.Field(
+        description="The publishable name of the third party verifier", example="John Doe", default=None
+    )
 
 
 class WithEpdDeveloperMixin(pyd.BaseModel):
