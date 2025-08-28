@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 import math
-from typing import Annotated, Optional
+from typing import Annotated, Final, Optional
 
 from openlocationcode import openlocationcode
 
@@ -23,7 +23,7 @@ from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import DataUrl, Location, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.validation.common import ReferenceStr
 
-ORG_LOGO_MAX_LENGTH = math.ceil(32 * 1024 * 4 / 3)
+ORG_LOGO_MAX_LENGTH: Final[int] = math.ceil(32 * 1024 * 4 / 3)
 """
 Maximum length of Org.logo field.
 
