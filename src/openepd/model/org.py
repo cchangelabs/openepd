@@ -13,15 +13,25 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from typing import Any, Optional
+import math
+import re
+from typing import Any, Final, Optional
 
 from openlocationcode import openlocationcode
 import pydantic
 from pydantic import ConfigDict
 
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import Location, WithAltIdsMixin, WithAttachmentsMixin
+from openepd.model.common import DATA_URL_REGEX, Location, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.validation.common import ReferenceStr
+
+ORG_LOGO_MAX_LENGTH: Final[int] = math.ceil(32 * 1024 * 4 / 3)
+"""
+Maximum length of Org.logo field.
+
+Logo file size must be less than 32KB. Base64 encoding overhead (approximately 33%) requires 
+limiting the encoded string length to 4/3 of the file size limit.
+"""
 
 
 class OrgRef(BaseOpenEpdSchema):
@@ -121,6 +131,24 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
         default=None,
         description="Location of a place of business, preferably the corporate headquarters.",
     )
+    logo: pydantic.AnyUrl | None = pydantic.Field(
+        default=None,
+        description=(
+            "URL pointer to, or dataURL, for a square logo for the company, preferably 300x300 pixels."
+            "A logo of the type used on social media platforms such as LinkedIn is recommended."
+        ),
+        examples=["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA", "https://example.com/logo.png"],
+    )
+
+    @pydantic.field_validator("logo")
+    def _validate_logo(cls, v: pydantic.AnyUrl | None) -> pydantic.AnyUrl | None:
+        if v and len(v) > ORG_LOGO_MAX_LENGTH:
+            msg = f"Logo URL must not exceed {ORG_LOGO_MAX_LENGTH} characters"
+            raise ValueError(msg)
+        if v and v.scheme == "data" and not re.compile(DATA_URL_REGEX).match(str(v)):
+            msg = "Invalid data URL format"
+            raise ValueError(msg)
+        return v
 
 
 class PlantRef(BaseOpenEpdSchema):

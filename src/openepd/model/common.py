@@ -21,6 +21,15 @@ import pydantic_core
 
 from openepd.model.base import BaseOpenEpdSchema
 
+DATA_URL_REGEX = r"^data:([-\w]+\/[-+\w.]+)?(;?\w+=[-\w]+)*(;base64)?,.*$"
+"""
+Regular expression pattern for matching Data URLs.
+
+A Data URL is a URI scheme that allows you to embed small data items inline 
+in web pages as if they were external resources.
+The pattern matches the following format: data:[<media-type>][;base64],<data>
+"""
+
 
 class Amount(BaseOpenEpdSchema):
     """A value-and-unit pairing for amounts that do not have an uncertainty."""
