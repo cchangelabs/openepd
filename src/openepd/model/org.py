@@ -15,7 +15,7 @@
 #
 import math
 import re
-from typing import Any, Optional
+from typing import Any, Final, Optional
 
 from openlocationcode import openlocationcode
 import pydantic
@@ -25,7 +25,7 @@ from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.common import DATA_URL_REGEX, Location, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.validation.common import ReferenceStr
 
-ORG_LOGO_MAX_LENGTH = math.ceil(32 * 1024 * 4 / 3)
+ORG_LOGO_MAX_LENGTH: Final[int] = math.ceil(32 * 1024 * 4 / 3)
 """
 Maximum length of Org.logo field.
 
