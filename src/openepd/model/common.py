@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from collections.abc import Callable, Generator
 from enum import StrEnum
 import re
 from typing import Annotated, Any
@@ -325,13 +326,11 @@ class EnumGroupingAware:
         return []
 
 
-class DataUrlField:
+class DataUrl(str):
     @classmethod
-    def __get_validators__(cls):
-        def validator(v):
-            if v is None:
-                return v
-            if isinstance(v, str) and re.compile(DATA_URL_REGEX).match(v):
+    def __get_validators__(cls) -> Generator[Callable[[str], str], None, None]:
+        def validator(v: str) -> str:
+            if re.compile(DATA_URL_REGEX).match(v):
                 return v
             msg = "Value must be a valid dataUrl"
             raise ValueError(msg)

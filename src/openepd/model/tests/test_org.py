@@ -19,7 +19,8 @@ from openepd.model.org import ORG_LOGO_MAX_LENGTH, Org
 
 
 class OrgTestCase(unittest.TestCase):
-    def test_logo(self):
+    def test_logo(self) -> None:
+        Org.parse_obj({"logo": None})
         Org.parse_obj({"logo": "data:image/png;base64,NSUhiVRw0KGgoAAAABO"})
         Org.parse_obj({"logo": "data:image/png,NSUhiVRw0KGgoAAAABO"})
         Org.parse_obj({"logo": "data:;base64,NSUhiVRw0KGgoAAAABO"})

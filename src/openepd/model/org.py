@@ -20,7 +20,7 @@ from openlocationcode import openlocationcode
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import DataUrlField, Location, WithAltIdsMixin, WithAttachmentsMixin
+from openepd.model.common import DataUrl, Location, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.validation.common import ReferenceStr
 
 ORG_LOGO_MAX_LENGTH = math.ceil(32 * 1024 * 4 / 3)
@@ -94,13 +94,13 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
         default=None,
         description="Location of a place of business, preferably the corporate headquarters.",
     )
-    logo: pyd.AnyUrl | DataUrlField | None = pyd.Field(
+    logo: pyd.AnyUrl | DataUrl | None = pyd.Field(
+        default=None,
         description=(
             "URL pointer to, or dataURL, for a square logo for the company, preferably 300x300 pixels."
             "A logo of the type used on social media platforms such as LinkedIn is recommended."
         ),
         example="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...",
-        default=None,
     )
 
     @pyd.validator("logo")
