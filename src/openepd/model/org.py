@@ -14,6 +14,7 @@
 #  limitations under the License.
 #
 import math
+import re
 from typing import Any, Optional
 
 from openlocationcode import openlocationcode
@@ -21,7 +22,7 @@ import pydantic
 from pydantic import ConfigDict
 
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import DataUrlOrAnyUrlField, Location, WithAltIdsMixin, WithAttachmentsMixin
+from openepd.model.common import DATA_URL_REGEX, Location, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.validation.common import ReferenceStr
 
 ORG_LOGO_MAX_LENGTH = math.ceil(32 * 1024 * 4 / 3)
@@ -130,18 +131,22 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
         default=None,
         description="Location of a place of business, preferably the corporate headquarters.",
     )
-    logo: DataUrlOrAnyUrlField | None = pydantic.Field(
+    logo: pydantic.AnyUrl | None = pydantic.Field(
+        default=None,
         description=(
             "URL pointer to, or dataURL, for a square logo for the company, preferably 300x300 pixels."
             "A logo of the type used on social media platforms such as LinkedIn is recommended."
         ),
-        default=None,
+        examples=["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA", "https://example.com/logo.png"],
     )
 
     @pydantic.field_validator("logo")
-    def _validate_logo(cls, v: str | None) -> str | None:
+    def _validate_logo(cls, v: pydantic.AnyUrl | None) -> pydantic.AnyUrl | None:
         if v and len(v) > ORG_LOGO_MAX_LENGTH:
             msg = f"Logo URL must not exceed {ORG_LOGO_MAX_LENGTH} characters"
+            raise ValueError(msg)
+        if v and v.scheme == "data" and not re.compile(DATA_URL_REGEX).match(str(v)):
+            msg = "Invalid data URL format"
             raise ValueError(msg)
         return v
 

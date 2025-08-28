@@ -14,7 +14,6 @@
 #  limitations under the License.
 #
 from enum import StrEnum
-import re
 from typing import Annotated, Any, Self
 
 import pydantic
@@ -373,41 +372,3 @@ class EnumGroupingAware:
     def get_groupings(cls) -> list[list]:
         """Return logical groupings of the values."""
         return []
-
-
-class DataUrlOrAnyUrlField(str):
-    @classmethod
-    def _validate(cls, value: str | None) -> str | None:
-        if value is None:
-            return None
-        if re.compile(DATA_URL_REGEX).match(value):
-            return cls(value)
-
-        url = pydantic.AnyUrl(value)
-        if url.scheme == "data":
-            # AnyUrl allows 'data' scheme, even if value is not a valid data URL
-            msg = "Value must be a valid data URL"
-            raise ValueError(msg)
-        return cls(value)
-
-    @classmethod
-    def __get_pydantic_core_schema__(
-        cls, source: type[Any], handler: pydantic.GetCoreSchemaHandler
-    ) -> pydantic_core.core_schema.CoreSchema:
-        return pydantic_core.core_schema.no_info_after_validator_function(
-            cls._validate,
-            pydantic_core.core_schema.str_schema(),
-            serialization=pydantic_core.core_schema.plain_serializer_function_ser_schema(
-                lambda x: x,
-                info_arg=False,
-                return_schema=pydantic_core.core_schema.str_schema(),
-            ),
-        )
-
-    @classmethod
-    def __get_pydantic_json_schema__(cls, core_schema, handler):
-        json_schema = handler(core_schema)
-        json_schema.update(
-            examples=["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA"],
-        )
-        return json_schema
