@@ -1,3 +1,9 @@
+## 7.9.0 (2025-08-28)
+
+### Feat
+
+- implement `Org.logo` field
+
 ## 7.8.0 (2025-08-01)
 
 ### Feat
