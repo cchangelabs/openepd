@@ -13,14 +13,23 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from typing import Annotated, Optional
+import math
+from typing import Annotated, Final, Optional
 
 from openlocationcode import openlocationcode
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import Location, WithAltIdsMixin, WithAttachmentsMixin
+from openepd.model.common import DataUrl, Location, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.validation.common import ReferenceStr
+
+ORG_LOGO_MAX_LENGTH: Final[int] = math.ceil(32 * 1024 * 4 / 3)
+"""
+Maximum length of Org.logo field.
+
+Logo file size must be less than 32KB. Base64 encoding overhead (approximately 33%) requires 
+limiting the encoded string length to 4/3 of the file size limit.
+"""
 
 
 class OrgRef(BaseOpenEpdSchema):
@@ -85,6 +94,21 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
         default=None,
         description="Location of a place of business, preferably the corporate headquarters.",
     )
+    logo: pyd.AnyUrl | DataUrl | None = pyd.Field(
+        default=None,
+        description=(
+            "URL pointer to, or dataURL, for a square logo for the company, preferably 300x300 pixels."
+            "A logo of the type used on social media platforms such as LinkedIn is recommended."
+        ),
+        example="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...",
+    )
+
+    @pyd.validator("logo")
+    def validate_logo(cls, v: str | None) -> str | None:
+        if v and len(v) > ORG_LOGO_MAX_LENGTH:
+            msg = f"Logo URL must not exceed {ORG_LOGO_MAX_LENGTH} characters"
+            raise ValueError(msg)
+        return v
 
 
 class PlantRef(BaseOpenEpdSchema):

@@ -13,12 +13,23 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from collections.abc import Callable, Generator
 from enum import StrEnum
+import re
 from typing import Annotated, Any
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.validation.numbers import RatioFloat
+
+DATA_URL_REGEX = r"^data:([-\w]+\/[-+\w.]+)?(;?\w+=[-\w]+)*(;base64)?,.*$"
+"""
+Regular expression pattern for matching Data URLs.
+
+A Data URL is a URI scheme that allows you to embed small data items inline 
+in web pages as if they were external resources.
+The pattern matches the following format: data:[<media-type>][;base64],<data>
+"""
 
 
 class Amount(BaseOpenEpdSchema):
@@ -313,3 +324,15 @@ class EnumGroupingAware:
     def get_groupings(cls) -> list[list]:
         """Return logical groupings of the values."""
         return []
+
+
+class DataUrl(str):
+    @classmethod
+    def __get_validators__(cls) -> Generator[Callable[[str], str], None, None]:
+        def validator(v: str) -> str:
+            if re.compile(DATA_URL_REGEX).match(v):
+                return v
+            msg = "Value must be a valid dataUrl"
+            raise ValueError(msg)
+
+        yield validator
