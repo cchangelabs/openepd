@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from collections.abc import Collection
 from typing import Literal, overload
 
 from requests import Response
@@ -27,15 +28,17 @@ from openepd.model.epd import Epd
 class EpdApi(BaseApiMethodGroup):
     """API methods for EPDs."""
 
-    def get_by_openxpd_uuid(self, uuid: str) -> Epd:
+    def get_by_openxpd_uuid(self, uuid: str, *, fields: Collection[str] | None = None) -> Epd:
         """
         Get EPD by OpenEPD UUID.
 
         :param uuid: OpenEPD UUID
-        :return: EPD
+        :param fields: Optional collection of field names to include in the response
+        :return: EPD, Response, or tuple of EPD and Response depending on return_type
         :raise ObjectNotFound: if EPD is not found
         """
-        content = self._client.do_request("get", f"/epds/{uuid}").json()
+        params = {"fields": ",".join(set(fields))} if fields else None
+        content = self._client.do_request("get", f"/epds/{uuid}", params=params).json()
         return Epd.parse_obj(content)
 
     def find_raw(self, omf: str, page_num: int = 1, page_size: int = 10) -> EpdSearchResponse:
