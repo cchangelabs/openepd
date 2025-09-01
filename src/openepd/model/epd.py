@@ -139,6 +139,7 @@ class EpdPreviewV0(
     WithEpdDeveloperMixin,
     WithVerifierMixin,
     WithAltIdsMixin,
+    EpdRef,
     BaseDeclaration,
     title="EPD (Preview)",
 ):
