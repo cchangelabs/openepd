@@ -1,3 +1,13 @@
+## 6.28.0 (2025-09-01)
+
+### Feat
+
+- **api**: add optional fields parameter to get_by_openxpd_uuid method
+
+### Fix
+
+- add missing `EpdRef` mixin to `EpdPreviewV0`
+
 ## 6.27.0 (2025-08-28)
 
 ### Feat
