@@ -1,3 +1,9 @@
+## 7.11.0 (2025-09-05)
+
+### Feat
+
+- add dataUrl support for product image fields
+
 ## 7.10.0 (2025-09-01)
 
 ### Feat
