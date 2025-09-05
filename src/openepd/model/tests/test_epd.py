@@ -19,6 +19,7 @@ import pydantic
 
 from openepd.model.base import OPENEPD_VERSION_FIELD, OpenEpdDoctypes, OpenEpdExtension, Version
 from openepd.model.common import Ingredient, Measurement
+from openepd.model.declaration import PRODUCT_IMAGE_MAX_LENGTH
 from openepd.model.epd import Epd, EpdFactory, EpdPreviewV0, EpdV0
 from openepd.model.lcia import Impacts, ImpactSet, ScopeSet, ScopeSetGwp
 from openepd.model.specs import ConcreteV1
@@ -190,3 +191,31 @@ class EPDTestCase(unittest.TestCase):
         self.assertEqual(
             serialized_epd["specs"]["Concrete"]["ReadyMix"]["ext_version"], epd.specs.Concrete.ReadyMix._EXT_VERSION
         )
+
+    def test_product_image(self):
+        self._test_data_url_image("product_image")
+
+    def test_product_image_small(self):
+        self._test_data_url_image("product_image_small")
+
+    def _test_data_url_image(self, field: str) -> None:
+        Epd.model_validate({field: None})
+        Epd.model_validate({field: "data:image/png;base64,NSUhiVRw0KGgoAAAABO"})
+        Epd.model_validate({field: "data:image/png,NSUhiVRw0KGgoAAAABO"})
+        Epd.model_validate({field: "data:;base64,NSUhiVRw0KGgoAAAABO"})
+        Epd.model_validate({field: "data:,NSUhiVRw0KGgoAAAABO"})
+        Epd.model_validate({field: "https://example.com"})
+
+        with self.assertRaises(ValueError):
+            Epd.model_validate({field: "example"})
+        with self.assertRaises(ValueError):
+            Epd.model_validate({field: "example.com"})
+        with self.assertRaises(ValueError):
+            # image data should be <= 32KB
+            Epd.model_validate({field: "data:image/png;base64," + "a" * PRODUCT_IMAGE_MAX_LENGTH})
+        with self.assertRaises(ValueError):
+            # invalid dataUrl
+            Epd.model_validate({field: "data:base64,NSUhiVRw0KGgoAAAABO"})
+        with self.assertRaises(ValueError):
+            # invalid dataUrl
+            Epd.model_validate({field: "data:NSUhiVRw0KGgoAAAABO"})
