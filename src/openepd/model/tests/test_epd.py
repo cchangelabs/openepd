@@ -18,6 +18,7 @@ import unittest
 from openepd.compat.pydantic import pyd
 from openepd.model.base import OPENEPD_VERSION_FIELD, OpenEpdDoctypes, OpenEpdExtension, Version
 from openepd.model.common import Ingredient
+from openepd.model.declaration import PRODUCT_IMAGE_MAX_LENGTH
 from openepd.model.epd import Epd, EpdFactory, EpdPreviewV0, EpdV0
 from openepd.model.validation.quantity import AmountMass
 from openepd.model.versioning import OpenEpdVersions
@@ -127,3 +128,34 @@ class EPDTestCase(unittest.TestCase):
         ext = epd.get_ext(MyExtension)
         self.assertIsInstance(ext, MyExtension)
         self.assertIsInstance(ext.test_field, AmountMass)
+
+    def test_product_image(self):
+        self._test_data_url_image("product_image")
+
+    def test_product_image_small(self):
+        self._test_data_url_image("product_image_small")
+
+    def _test_data_url_image(self, field: str) -> None:
+        Epd.parse_obj({field: None})
+        Epd.parse_obj({field: "data:image/png;base64,NSUhiVRw0KGgoAAAABO"})
+        Epd.parse_obj({field: "data:image/png,NSUhiVRw0KGgoAAAABO"})
+        Epd.parse_obj({field: "data:;base64,NSUhiVRw0KGgoAAAABO"})
+        Epd.parse_obj({field: "data:,NSUhiVRw0KGgoAAAABO"})
+        Epd.parse_obj({field: "https://example.com"})
+
+        with self.assertRaises(ValueError):
+            Epd.parse_obj({field: "example"})
+        with self.assertRaises(ValueError):
+            Epd.parse_obj({field: "example.com"})
+        with self.assertRaises(ValueError):
+            # host should be <= 63 characters
+            Epd.parse_obj({field: "https://" + "a" * 70 + ".com"})
+        with self.assertRaises(ValueError):
+            # image data should be <= 32KB
+            Epd.parse_obj({field: "data:image/png;base64," + "a" * PRODUCT_IMAGE_MAX_LENGTH})
+        with self.assertRaises(ValueError):
+            # invalid dataUrl
+            Epd.parse_obj({field: "data:base64,NSUhiVRw0KGgoAAAABO"})
+        with self.assertRaises(ValueError):
+            # invalid dataUrl
+            Epd.parse_obj({field: "data:NSUhiVRw0KGgoAAAABO"})
