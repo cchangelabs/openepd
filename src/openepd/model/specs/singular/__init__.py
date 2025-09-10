@@ -53,7 +53,7 @@ from openepd.model.specs.singular.material_handling import MaterialHandlingV1
 from openepd.model.specs.singular.mechanical import MechanicalV1
 from openepd.model.specs.singular.mechanical_insulation import MechanicalInsulationV1
 from openepd.model.specs.singular.network_infrastructure import NetworkInfrastructureV1
-from openepd.model.specs.singular.non_construction import ChemicalsV1
+from openepd.model.specs.singular.non_construction import ChemicalsV1, ElectricityAndFuelV1
 from openepd.model.specs.singular.openings import OpeningsV1
 from openepd.model.specs.singular.other_electrical_equipment import OtherElectricalEquipmentV1
 from openepd.model.specs.singular.other_materials import OtherMaterialsV1, TextileProductsV1
@@ -114,6 +114,7 @@ class Specs(BaseOpenEpdHierarchicalSpec):
     ExteriorImprovements: ExteriorImprovementsV1 | None = None
     TextileProducts: TextileProductsV1 | None = None
     Chemicals: ChemicalsV1 | None = None
+    ElectricityAndFuel: ElectricityAndFuelV1 | None = None
 
     # historical backward-compatible specs
     concrete: ConcreteOldSpec | None = None
