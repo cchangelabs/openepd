@@ -20,3 +20,9 @@ class ChemicalsRangeV1(BaseOpenEpdHierarchicalSpec):
     """Products of the Chemical or Allied Industries.  Includes most products in WCO HS Section VI."""
 
     _EXT_VERSION = "1.0"
+
+
+class ElectricityAndFuelRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Energy carriers including fuels, electricity, and steam."""
+
+    _EXT_VERSION = "1.0"
