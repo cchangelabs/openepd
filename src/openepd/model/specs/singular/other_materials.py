@@ -121,6 +121,12 @@ class ZincV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class OtherPaperPlasticV1(BaseOpenEpdHierarchicalSpec):
+    """Other products primarily made of plastic or paper. Includes WCO HS sections VII and X."""
+
+    _EXT_VERSION = "1.0"
+
+
 class OtherMaterialsV1(BaseOpenEpdHierarchicalSpec):
     """Broad category of materials not yet classified."""
 
@@ -136,3 +142,4 @@ class OtherMaterialsV1(BaseOpenEpdHierarchicalSpec):
     Profiles: ProfilesV1 | None = None
     Unknown: UnknownV1 | None = None
     Zinc: ZincV1 | None = None
+    OtherPaperPlastic: OtherPaperPlasticV1 | None = None
