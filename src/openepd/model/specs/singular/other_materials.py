@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.compat.pydantic import pyd
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -62,8 +63,12 @@ class UnsupportedV1(BaseOpenEpdHierarchicalSpec):
     # Nested specs:
     CleaningProducts: CleaningProductsV1 | None = None
 
-    Clothing: ClothingV1 | None = pyd.Field(
-        ..., deprecated="UnsupportedV1.Clothing is deprecated. Use TextileProductsV1.Clothing instead."
+    Clothing: ClothingV1 | None = pydantic.Field(
+        default=None,
+        json_schema_extra={
+            "deprecated": True,
+        },
+        description="UnsupportedV1.Clothing is deprecated. Use TextileProductsV1.Clothing instead.",
     )
     """
     UnsupportedV1.Clothing is deprecated. Use TextileProductsV1.Clothing instead.
@@ -127,10 +132,16 @@ class OtherPaperPlasticV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class OtherMineralMetalV1(BaseOpenEpdHierarchicalSpec):
+    """Base minerals, metals, materials, and products made primarily of them not otherwise classified.  Includes most of WCO HS Section XV."""
+
+    _EXT_VERSION = "1.0"
+
+
 class OtherMaterialsV1(BaseOpenEpdHierarchicalSpec):
     """Broad category of materials not yet classified."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Nested specs:
     TransportationInfrastructure: TransportationInfrastructureV1 | None = None
@@ -143,3 +154,4 @@ class OtherMaterialsV1(BaseOpenEpdHierarchicalSpec):
     Unknown: UnknownV1 | None = None
     Zinc: ZincV1 | None = None
     OtherPaperPlastic: OtherPaperPlasticV1 | None = None
+    OtherMineralMetal: OtherMineralMetalV1 | None = None
