@@ -44,3 +44,9 @@ class ServicesV1(BaseOpenEpdHierarchicalSpec):
     """Services, including digital and professional services."""
 
     _EXT_VERSION = "1.0"
+
+
+class ConsumerGoodsV1(BaseOpenEpdHierarchicalSpec):
+    """Nonperishable products intended for use by individual consumers."""
+
+    _EXT_VERSION = "1.0"
