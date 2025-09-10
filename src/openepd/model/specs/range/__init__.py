@@ -44,7 +44,7 @@ from .material_handling import MaterialHandlingRangeV1
 from .mechanical import MechanicalRangeV1
 from .mechanical_insulation import MechanicalInsulationRangeV1
 from .network_infrastructure import NetworkInfrastructureRangeV1
-from .non_construction import ChemicalsRangeV1, ElectricityAndFuelRangeV1, VehiclesRangeV1
+from .non_construction import ChemicalsRangeV1, ElectricityAndFuelRangeV1, VehiclesRangeV1, MachineryAndEquipmentRangeV1
 from .openings import OpeningsRangeV1
 from .other_electrical_equipment import OtherElectricalEquipmentRangeV1
 from .other_materials import OtherMaterialsRangeV1, TextileProductsRangeV1
@@ -106,3 +106,4 @@ class SpecsRange(BaseOpenEpdHierarchicalSpec):
     Chemicals: ChemicalsRangeV1 | None = None
     ElectricityAndFuel: ElectricityAndFuelRangeV1 | None = None
     Vehicles: VehiclesRangeV1 | None = None
+    MachineryAndEquipment: MachineryAndEquipmentRangeV1 | None = None
