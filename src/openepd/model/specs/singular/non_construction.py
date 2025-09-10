@@ -26,3 +26,9 @@ class ElectricityAndFuelV1(BaseOpenEpdHierarchicalSpec):
     """Energy carriers including fuels, electricity, and steam."""
 
     _EXT_VERSION = "1.0"
+
+
+class VehiclesV1(BaseOpenEpdHierarchicalSpec):
+    """Machinery for moving people and goods.  Includes most products in WCO HS Section XVII."""
+
+    _EXT_VERSION = "1.0"
