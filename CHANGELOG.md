@@ -1,3 +1,9 @@
+## 7.11.1 (2025-09-10)
+
+### Fix
+
+- set default value for `unit` field in `Measurement` model
+
 ## 7.11.0 (2025-09-05)
 
 ### Feat
