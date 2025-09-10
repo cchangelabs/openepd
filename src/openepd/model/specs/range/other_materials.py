@@ -103,7 +103,8 @@ class UnsupportedRangeV1(BaseOpenEpdHierarchicalSpec):
 
     CleaningProducts: CleaningProductsRangeV1 | None = None
     Clothing: ClothingRangeV1 | None = pyd.Field(
-        ..., deprecated="UnsupportedRangeV1.Clothing is deprecated. Use TextileProductsRangeV1.Clothing instead."
+        default=None,
+        deprecated="UnsupportedRangeV1.Clothing is deprecated. Use TextileProductsRangeV1.Clothing instead.",
     )
     """
     UnsupportedRangeV1.Clothing is deprecated. Use TextileProductsRangeV1.Clothing instead.
@@ -195,6 +196,12 @@ class OtherPaperPlasticRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class OtherMineralMetalRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Base minerals, metals, materials, and products made primarily of them not otherwise classified.  Includes most of WCO HS Section XV."""
+
+    _EXT_VERSION = "1.0"
+
+
 class OtherMaterialsRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Broad category of materials not yet classified.
@@ -202,7 +209,7 @@ class OtherMaterialsRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     TransportationInfrastructure: TransportationInfrastructureRangeV1 | None = None
     Unsupported: UnsupportedRangeV1 | None = None
@@ -214,3 +221,4 @@ class OtherMaterialsRangeV1(BaseOpenEpdHierarchicalSpec):
     Unknown: UnknownRangeV1 | None = None
     Zinc: ZincRangeV1 | None = None
     OtherPaperPlastic: OtherPaperPlasticRangeV1 | None = None
+    OtherMineralMetal: OtherMineralMetalRangeV1 | None = None

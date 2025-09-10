@@ -81,7 +81,7 @@ class Specs(BaseOpenEpdHierarchicalSpec):
 
     COMPATIBILITY_SPECS: ClassVar[list[type[BaseCompatibilitySpec]]] = [ConcreteOldSpec, SteelOldSpec]
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Nested specs:
     CMU: CMUV1 | None = None

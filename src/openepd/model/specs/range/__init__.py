@@ -72,7 +72,7 @@ class SpecsRange(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     CMU: CMURangeV1 | None = None
     Masonry: MasonryRangeV1 | None = None
