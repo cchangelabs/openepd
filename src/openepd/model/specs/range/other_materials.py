@@ -13,6 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from openepd.compat.pydantic import pyd
+
 __all__ = (
     "AuxiliariesRangeV1",
     "CleaningProductsRangeV1",
@@ -100,8 +102,21 @@ class UnsupportedRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     CleaningProducts: CleaningProductsRangeV1 | None = None
-    Clothing: ClothingRangeV1 | None = None
+    Clothing: ClothingRangeV1 | None = pyd.Field(
+        ..., deprecated="UnsupportedRangeV1.Clothing is deprecated. Use TextileProductsRangeV1.Clothing instead."
+    )
+    """
+    UnsupportedRangeV1.Clothing is deprecated. Use TextileProductsRangeV1.Clothing instead.
+    """
     FoodBeverage: FoodBeverageRangeV1 | None = None
+
+
+class TextileProductsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Products to be worn by humans, and materials intended to manufacture them. Includes most of WS HS Sections XI, XII."""
+
+    _EXT_VERSION = "1.0"
+
+    Clothing: ClothingRangeV1 | None = None
 
 
 class CopperRangeV1(BaseOpenEpdHierarchicalSpec):
