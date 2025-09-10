@@ -32,3 +32,9 @@ class VehiclesRangeV1(BaseOpenEpdHierarchicalSpec):
     """Machinery for moving people and goods.  Includes most products in WCO HS Section XVII."""
 
     _EXT_VERSION = "1.0"
+
+
+class MachineryAndEquipmentRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Machinery other than for installation in a building."""
+
+    _EXT_VERSION = "1.0"
