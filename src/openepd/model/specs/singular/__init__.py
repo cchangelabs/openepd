@@ -58,7 +58,7 @@ from openepd.model.specs.singular.mechanical_insulation import MechanicalInsulat
 from openepd.model.specs.singular.network_infrastructure import NetworkInfrastructureV1
 from openepd.model.specs.singular.openings import OpeningsV1
 from openepd.model.specs.singular.other_electrical_equipment import OtherElectricalEquipmentV1
-from openepd.model.specs.singular.other_materials import OtherMaterialsV1
+from openepd.model.specs.singular.other_materials import FoodBeverageV1, OtherMaterialsV1, TextileProductsV1
 from openepd.model.specs.singular.plumbing import PlumbingV1
 from openepd.model.specs.singular.precast_concrete import PrecastConcreteV1
 from openepd.model.specs.singular.sheathing import SheathingV1
@@ -117,6 +117,7 @@ class Specs(BaseOpenEpdHierarchicalSpec):
     OtherElectricalEquipment: OtherElectricalEquipmentV1 | None = None
     WoodJoists: WoodJoistsV1 | None = None
     ExteriorImprovements: ExteriorImprovementsV1 | None = None
+    TextileProducts: TextileProductsV1 | None = None
 
     # historical backward-compatible specs
     concrete: ConcreteOldSpec | None = None
