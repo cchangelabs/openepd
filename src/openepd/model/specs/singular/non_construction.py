@@ -38,3 +38,9 @@ class MachineryAndEquipmentV1(BaseOpenEpdHierarchicalSpec):
     """Machinery other than for installation in a building."""
 
     _EXT_VERSION = "1.0"
+
+
+class ServicesV1(BaseOpenEpdHierarchicalSpec):
+    """Services, including digital and professional services."""
+
+    _EXT_VERSION = "1.0"
