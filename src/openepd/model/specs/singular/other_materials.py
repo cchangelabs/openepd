@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -60,8 +61,22 @@ class UnsupportedV1(BaseOpenEpdHierarchicalSpec):
 
     # Nested specs:
     CleaningProducts: CleaningProductsV1 | None = None
-    Clothing: ClothingV1 | None = None
+
+    Clothing: ClothingV1 | None = pyd.Field(
+        ..., deprecated="UnsupportedV1.Clothing is deprecated. Use TextileProductsV1.Clothing instead."
+    )
+    """
+    UnsupportedV1.Clothing is deprecated. Use TextileProductsV1.Clothing instead.
+    """
     FoodBeverage: FoodBeverageV1 | None = None
+
+
+class TextileProductsV1(BaseOpenEpdHierarchicalSpec):
+    """Products to be worn by humans, and materials intended to manufacture them. Includes most of WS HS Sections XI, XII."""
+
+    _EXT_VERSION = "1.0"
+
+    Clothing: ClothingV1 | None = None
 
 
 class CopperV1(BaseOpenEpdHierarchicalSpec):
