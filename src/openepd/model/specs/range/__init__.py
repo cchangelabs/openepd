@@ -46,7 +46,7 @@ from .mechanical_insulation import MechanicalInsulationRangeV1
 from .network_infrastructure import NetworkInfrastructureRangeV1
 from .openings import OpeningsRangeV1
 from .other_electrical_equipment import OtherElectricalEquipmentRangeV1
-from .other_materials import OtherMaterialsRangeV1
+from .other_materials import FoodBeverageRangeV1, OtherMaterialsRangeV1, TextileProductsRangeV1
 from .plumbing import PlumbingRangeV1
 from .precast_concrete import PrecastConcreteRangeV1
 from .sheathing import SheathingRangeV1
@@ -101,3 +101,4 @@ class SpecsRange(BaseOpenEpdHierarchicalSpec):
     OtherElectricalEquipment: OtherElectricalEquipmentRangeV1 | None = None
     WoodJoists: WoodJoistsRangeV1 | None = None
     ExteriorImprovements: ExteriorImprovementsRangeV1 | None = None
+    TextileProducts: TextileProductsRangeV1 | None = None
