@@ -1,3 +1,19 @@
+## 6.30.0 (2025-09-11)
+
+### Feat
+
+- add `FoodBeverage` category to specs
+- deprecate `Unsupported.FoodBeverage` category
+- add `OtherMineralMetal` category
+- add `OtherPaperPlastic` category
+- add `ConsumerGoods` category
+- add `Services` category
+- add `MachineryAndEquipment` category
+- add `Vehicles` category
+- add `ElectricityAndFuel` category
+- add `Chemicals` category
+- add `TextileProducts` category
+
 ## 6.29.0 (2025-09-05)
 
 ### Feat
