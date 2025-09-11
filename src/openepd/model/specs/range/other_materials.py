@@ -117,7 +117,7 @@ class UnsupportedRangeV1(BaseOpenEpdHierarchicalSpec):
         json_schema_extra={
             "deprecated": True,
         },
-        description="UnsupportedRangeV1.FoodBeverage is deprecated. Use SpecsRange.FoodBeverage instead."
+        description="UnsupportedRangeV1.FoodBeverage is deprecated. Use SpecsRange.FoodBeverage instead.",
     )
     """
     UnsupportedRangeV1.FoodBeverage is deprecated. Use SpecsRange.FoodBeverage instead.

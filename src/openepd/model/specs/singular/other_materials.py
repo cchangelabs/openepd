@@ -78,7 +78,7 @@ class UnsupportedV1(BaseOpenEpdHierarchicalSpec):
         json_schema_extra={
             "deprecated": True,
         },
-        description="UnsupportedV1.FoodBeverage is deprecated. Use Specs.FoodBeverage instead."
+        description="UnsupportedV1.FoodBeverage is deprecated. Use Specs.FoodBeverage instead.",
     )
     """
     UnsupportedV1.FoodBeverage is deprecated. Use TextileProductsV1.FoodBeverage instead.
