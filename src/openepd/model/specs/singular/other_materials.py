@@ -68,7 +68,12 @@ class UnsupportedV1(BaseOpenEpdHierarchicalSpec):
     """
     UnsupportedV1.Clothing is deprecated. Use TextileProductsV1.Clothing instead.
     """
-    FoodBeverage: FoodBeverageV1 | None = None
+    FoodBeverage: FoodBeverageV1 | None = pyd.Field(
+        default=None, deprecated="UnsupportedV1.FoodBeverage is deprecated. Use Specs.FoodBeverage instead."
+    )
+    """
+    UnsupportedV1.FoodBeverage is deprecated. Use TextileProductsV1.FoodBeverage instead.
+    """
 
 
 class TextileProductsV1(BaseOpenEpdHierarchicalSpec):
