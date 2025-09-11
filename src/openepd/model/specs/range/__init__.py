@@ -54,7 +54,7 @@ from .non_construction import (
 )
 from .openings import OpeningsRangeV1
 from .other_electrical_equipment import OtherElectricalEquipmentRangeV1
-from .other_materials import OtherMaterialsRangeV1, TextileProductsRangeV1
+from .other_materials import FoodBeverageRangeV1, OtherMaterialsRangeV1, TextileProductsRangeV1
 from .plumbing import PlumbingRangeV1
 from .precast_concrete import PrecastConcreteRangeV1
 from .sheathing import SheathingRangeV1
@@ -116,3 +116,4 @@ class SpecsRange(BaseOpenEpdHierarchicalSpec):
     MachineryAndEquipment: MachineryAndEquipmentRangeV1 | None = None
     Services: ServicesRangeV1 | None = None
     ConsumerGoods: ConsumerGoodsRangeV1 | None = None
+    FoodBeverage: FoodBeverageRangeV1 | None = None
