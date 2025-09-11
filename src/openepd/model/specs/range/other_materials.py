@@ -112,7 +112,16 @@ class UnsupportedRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     UnsupportedRangeV1.Clothing is deprecated. Use TextileProductsRangeV1.Clothing instead.
     """
-    FoodBeverage: FoodBeverageRangeV1 | None = None
+    FoodBeverage: FoodBeverageRangeV1 | None = pydantic.Field(
+        default=None,
+        json_schema_extra={
+            "deprecated": True,
+        },
+        description="UnsupportedRangeV1.FoodBeverage is deprecated. Use SpecsRange.FoodBeverage instead."
+    )
+    """
+    UnsupportedRangeV1.FoodBeverage is deprecated. Use SpecsRange.FoodBeverage instead.
+    """
 
 
 class TextileProductsRangeV1(BaseOpenEpdHierarchicalSpec):
