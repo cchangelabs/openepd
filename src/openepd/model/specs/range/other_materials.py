@@ -13,6 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from openepd.compat.pydantic import pyd
+
 __all__ = (
     "AuxiliariesRangeV1",
     "CleaningProductsRangeV1",
@@ -100,8 +102,27 @@ class UnsupportedRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     CleaningProducts: CleaningProductsRangeV1 | None = None
+    Clothing: ClothingRangeV1 | None = pyd.Field(
+        default=None,
+        deprecated="UnsupportedRangeV1.Clothing is deprecated. Use TextileProductsRangeV1.Clothing instead.",
+    )
+    """
+    UnsupportedRangeV1.Clothing is deprecated. Use TextileProductsRangeV1.Clothing instead.
+    """
+    FoodBeverage: FoodBeverageRangeV1 | None = pyd.Field(
+        default=None, deprecated="UnsupportedRangeV1.FoodBeverage is deprecated. Use SpecsRange.FoodBeverage instead."
+    )
+    """
+    UnsupportedRangeV1.FoodBeverage is deprecated. Use SpecsRange.FoodBeverage instead.
+    """
+
+
+class TextileProductsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Products to be worn by humans, and materials intended to manufacture them. Includes most of WS HS Sections XI, XII."""
+
+    _EXT_VERSION = "1.0"
+
     Clothing: ClothingRangeV1 | None = None
-    FoodBeverage: FoodBeverageRangeV1 | None = None
 
 
 class CopperRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -174,6 +195,18 @@ class ZincRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class OtherPaperPlasticRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Other products primarily made of plastic or paper. Includes WCO HS sections VII and X."""
+
+    _EXT_VERSION = "1.0"
+
+
+class OtherMineralMetalRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Base minerals, metals, materials, and products made primarily of them not otherwise classified.  Includes most of WCO HS Section XV."""
+
+    _EXT_VERSION = "1.0"
+
+
 class OtherMaterialsRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Broad category of materials not yet classified.
@@ -181,7 +214,7 @@ class OtherMaterialsRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     TransportationInfrastructure: TransportationInfrastructureRangeV1 | None = None
     Unsupported: UnsupportedRangeV1 | None = None
@@ -192,3 +225,5 @@ class OtherMaterialsRangeV1(BaseOpenEpdHierarchicalSpec):
     Profiles: ProfilesRangeV1 | None = None
     Unknown: UnknownRangeV1 | None = None
     Zinc: ZincRangeV1 | None = None
+    OtherPaperPlastic: OtherPaperPlasticRangeV1 | None = None
+    OtherMineralMetal: OtherMineralMetalRangeV1 | None = None

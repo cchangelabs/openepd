@@ -44,9 +44,17 @@ from .material_handling import MaterialHandlingRangeV1
 from .mechanical import MechanicalRangeV1
 from .mechanical_insulation import MechanicalInsulationRangeV1
 from .network_infrastructure import NetworkInfrastructureRangeV1
+from .non_construction import (
+    ChemicalsRangeV1,
+    ConsumerGoodsRangeV1,
+    ElectricityAndFuelRangeV1,
+    MachineryAndEquipmentRangeV1,
+    ServicesRangeV1,
+    VehiclesRangeV1,
+)
 from .openings import OpeningsRangeV1
 from .other_electrical_equipment import OtherElectricalEquipmentRangeV1
-from .other_materials import OtherMaterialsRangeV1
+from .other_materials import FoodBeverageRangeV1, OtherMaterialsRangeV1, TextileProductsRangeV1
 from .plumbing import PlumbingRangeV1
 from .precast_concrete import PrecastConcreteRangeV1
 from .sheathing import SheathingRangeV1
@@ -64,7 +72,7 @@ class SpecsRange(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     CMU: CMURangeV1 | None = None
     Masonry: MasonryRangeV1 | None = None
@@ -101,3 +109,11 @@ class SpecsRange(BaseOpenEpdHierarchicalSpec):
     OtherElectricalEquipment: OtherElectricalEquipmentRangeV1 | None = None
     WoodJoists: WoodJoistsRangeV1 | None = None
     ExteriorImprovements: ExteriorImprovementsRangeV1 | None = None
+    TextileProducts: TextileProductsRangeV1 | None = None
+    Chemicals: ChemicalsRangeV1 | None = None
+    ElectricityAndFuel: ElectricityAndFuelRangeV1 | None = None
+    Vehicles: VehiclesRangeV1 | None = None
+    MachineryAndEquipment: MachineryAndEquipmentRangeV1 | None = None
+    Services: ServicesRangeV1 | None = None
+    ConsumerGoods: ConsumerGoodsRangeV1 | None = None
+    FoodBeverage: FoodBeverageRangeV1 | None = None

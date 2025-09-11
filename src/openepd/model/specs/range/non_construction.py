@@ -1,0 +1,52 @@
+#
+#  Copyright 2025 by C Change Labs Inc. www.c-change-labs.com
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
+
+
+class ChemicalsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Products of the Chemical or Allied Industries.  Includes most products in WCO HS Section VI."""
+
+    _EXT_VERSION = "1.0"
+
+
+class ElectricityAndFuelRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Energy carriers including fuels, electricity, and steam."""
+
+    _EXT_VERSION = "1.0"
+
+
+class VehiclesRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Machinery for moving people and goods.  Includes most products in WCO HS Section XVII."""
+
+    _EXT_VERSION = "1.0"
+
+
+class MachineryAndEquipmentRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Machinery other than for installation in a building."""
+
+    _EXT_VERSION = "1.0"
+
+
+class ServicesRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Services, including digital and professional services."""
+
+    _EXT_VERSION = "1.0"
+
+
+class ConsumerGoodsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """Nonperishable products intended for use by individual consumers."""
+
+    _EXT_VERSION = "1.0"

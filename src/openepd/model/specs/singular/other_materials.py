@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -60,8 +61,27 @@ class UnsupportedV1(BaseOpenEpdHierarchicalSpec):
 
     # Nested specs:
     CleaningProducts: CleaningProductsV1 | None = None
+
+    Clothing: ClothingV1 | None = pyd.Field(
+        default=None, deprecated="UnsupportedV1.Clothing is deprecated. Use TextileProductsV1.Clothing instead."
+    )
+    """
+    UnsupportedV1.Clothing is deprecated. Use TextileProductsV1.Clothing instead.
+    """
+    FoodBeverage: FoodBeverageV1 | None = pyd.Field(
+        default=None, deprecated="UnsupportedV1.FoodBeverage is deprecated. Use Specs.FoodBeverage instead."
+    )
+    """
+    UnsupportedV1.FoodBeverage is deprecated. Use TextileProductsV1.FoodBeverage instead.
+    """
+
+
+class TextileProductsV1(BaseOpenEpdHierarchicalSpec):
+    """Products to be worn by humans, and materials intended to manufacture them. Includes most of WS HS Sections XI, XII."""
+
+    _EXT_VERSION = "1.0"
+
     Clothing: ClothingV1 | None = None
-    FoodBeverage: FoodBeverageV1 | None = None
 
 
 class CopperV1(BaseOpenEpdHierarchicalSpec):
@@ -106,10 +126,22 @@ class ZincV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class OtherPaperPlasticV1(BaseOpenEpdHierarchicalSpec):
+    """Other products primarily made of plastic or paper. Includes WCO HS sections VII and X."""
+
+    _EXT_VERSION = "1.0"
+
+
+class OtherMineralMetalV1(BaseOpenEpdHierarchicalSpec):
+    """Base minerals, metals, materials, and products made primarily of them not otherwise classified.  Includes most of WCO HS Section XV."""
+
+    _EXT_VERSION = "1.0"
+
+
 class OtherMaterialsV1(BaseOpenEpdHierarchicalSpec):
     """Broad category of materials not yet classified."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     # Nested specs:
     TransportationInfrastructure: TransportationInfrastructureV1 | None = None
@@ -121,3 +153,5 @@ class OtherMaterialsV1(BaseOpenEpdHierarchicalSpec):
     Profiles: ProfilesV1 | None = None
     Unknown: UnknownV1 | None = None
     Zinc: ZincV1 | None = None
+    OtherPaperPlastic: OtherPaperPlasticV1 | None = None
+    OtherMineralMetal: OtherMineralMetalV1 | None = None
