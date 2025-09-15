@@ -13,6 +13,39 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+__all__ = (
+    "BatteriesV1",
+    "CableTraysV1",
+    "ElectricPowerV1",
+    "ElectricalBusesV1",
+    "ElectricalConduitV1",
+    "ElectricalGenerationEquipmentV1",
+    "ElectricalPowerStorageV1",
+    "ElectricalV1",
+    "ElectricityFromPowerGridV1",
+    "ElectricityFromSpecificGeneratorV1",
+    "FloorEquipmentBoxesV1",
+    "FueledElectricalGeneratorsV1",
+    "LightbulbsV1",
+    "LightingControlsV1",
+    "LightingFixturesV1",
+    "LightingV1",
+    "LowVoltBusesV1",
+    "LowVoltageElectricalDistributionV1",
+    "MedVoltBusesV1",
+    "OtherElectricalEquipmentV1",
+    "OtherElectricalPowerStorageV1",
+    "OtherGenerationV1",
+    "OutdoorLightingV1",
+    "PhotovoltaicsV1",
+    "PowerDistributionUnitsV1",
+    "PowerPurchaseAgreementsV1",
+    "RacewaysV1",
+    "SpecialtyLightingV1",
+    "TaskLightingV1",
+    "WindTurbinesV1",
+)
+
 from openepd.compat.pydantic import pyd
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CableTraysMaterial, EnergySource, RacewaysMaterial

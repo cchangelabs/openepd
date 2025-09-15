@@ -33,6 +33,7 @@ __all__ = (
     "LowVoltBusesRangeV1",
     "LowVoltageElectricalDistributionRangeV1",
     "MedVoltBusesRangeV1",
+    "OtherElectricalEquipmentRangeV1",
     "OtherElectricalPowerStorageRangeV1",
     "OtherGenerationRangeV1",
     "OutdoorLightingRangeV1",
