@@ -408,6 +408,16 @@ class ElectricalConduitRangeV1(BaseOpenEpdHierarchicalSpec):
     material: list[ConduitMaterial] | None = None
 
 
+class OtherElectricalEquipmentRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Other Electrical Equipment.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class ElectricalRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Electric power and equipment.
@@ -415,7 +425,7 @@ class ElectricalRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.1"
+    _EXT_VERSION = "1.2"
 
     ElectricalPowerStorage: ElectricalPowerStorageRangeV1 | None = None
     LowVoltageElectricalDistribution: LowVoltageElectricalDistributionRangeV1 | None = None
@@ -423,3 +433,4 @@ class ElectricalRangeV1(BaseOpenEpdHierarchicalSpec):
     ElectricPower: ElectricPowerRangeV1 | None = None
     Lighting: LightingRangeV1 | None = None
     ElectricalConduit: ElectricalConduitRangeV1 | None = None
+    OtherElectricalEquipment: OtherElectricalEquipmentRangeV1 | None = None

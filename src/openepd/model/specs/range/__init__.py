@@ -18,6 +18,8 @@ __all__ = [
 ]
 
 
+import pydantic
+
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 from .accessories import AccessoriesRangeV1
@@ -30,7 +32,7 @@ from .cladding import CladdingRangeV1
 from .cmu import CMURangeV1
 from .concrete import ConcreteRangeV1
 from .conveying_equipment import ConveyingEquipmentRangeV1
-from .electrical import ElectricalRangeV1
+from .electrical import ElectricalRangeV1, OtherElectricalEquipmentRangeV1
 from .electrical_transmission_and_distribution_equipment import ElectricalTransmissionAndDistributionEquipmentRangeV1
 from .electricity import ElectricityRangeV1
 from .exterior_improvements import ExteriorImprovementsRangeV1
@@ -53,7 +55,6 @@ from .non_construction import (
     VehiclesRangeV1,
 )
 from .openings import OpeningsRangeV1
-from .other_electrical_equipment import OtherElectricalEquipmentRangeV1
 from .other_materials import FoodBeverageRangeV1, OtherMaterialsRangeV1, TextileProductsRangeV1
 from .plumbing import PlumbingRangeV1
 from .precast_concrete import PrecastConcreteRangeV1
@@ -106,7 +107,6 @@ class SpecsRange(BaseOpenEpdHierarchicalSpec):
     Electricity: ElectricityRangeV1 | None = None
     Grouting: GroutingRangeV1 | None = None
     MechanicalInsulation: MechanicalInsulationRangeV1 | None = None
-    OtherElectricalEquipment: OtherElectricalEquipmentRangeV1 | None = None
     WoodJoists: WoodJoistsRangeV1 | None = None
     ExteriorImprovements: ExteriorImprovementsRangeV1 | None = None
     TextileProducts: TextileProductsRangeV1 | None = None
@@ -117,3 +117,16 @@ class SpecsRange(BaseOpenEpdHierarchicalSpec):
     Services: ServicesRangeV1 | None = None
     ConsumerGoods: ConsumerGoodsRangeV1 | None = None
     FoodBeverage: FoodBeverageRangeV1 | None = None
+
+    OtherElectricalEquipment: OtherElectricalEquipmentRangeV1 | None = pydantic.Field(
+        default=None,
+        json_schema_extra={
+            "deprecated": True,
+        },
+        description=(
+            "SpecsRange.OtherElectricalEquipment is deprecated. Use ElectricalRangeV1.OtherElectricalEquipment instead."
+        ),
+    )
+    """
+    SpecsRange.OtherElectricalEquipment is deprecated. Use ElectricalRangeV1.OtherElectricalEquipment instead.
+    """

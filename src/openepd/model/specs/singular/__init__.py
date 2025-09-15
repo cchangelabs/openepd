@@ -40,7 +40,7 @@ from openepd.model.specs.singular.conveying_equipment import ConveyingEquipmentV
 from openepd.model.specs.singular.deprecated import BaseCompatibilitySpec, get_safely, set_safely
 from openepd.model.specs.singular.deprecated.concrete import ConcreteOldSpec
 from openepd.model.specs.singular.deprecated.steel import SteelOldSpec
-from openepd.model.specs.singular.electrical import ElectricalV1
+from openepd.model.specs.singular.electrical import ElectricalV1, OtherElectricalEquipmentV1
 from openepd.model.specs.singular.electrical_transmission_and_distribution_equipment import (
     ElectricalTransmissionAndDistributionEquipmentV1,
 )
@@ -65,7 +65,6 @@ from openepd.model.specs.singular.non_construction import (
     VehiclesV1,
 )
 from openepd.model.specs.singular.openings import OpeningsV1
-from openepd.model.specs.singular.other_electrical_equipment import OtherElectricalEquipmentV1
 from openepd.model.specs.singular.other_materials import FoodBeverageV1, OtherMaterialsV1, TextileProductsV1
 from openepd.model.specs.singular.plumbing import PlumbingV1
 from openepd.model.specs.singular.precast_concrete import PrecastConcreteV1
@@ -122,7 +121,6 @@ class Specs(BaseOpenEpdHierarchicalSpec):
     Electricity: ElectricityV1 | None = None
     Grouting: GroutingV1 | None = None
     MechanicalInsulation: MechanicalInsulationV1 | None = None
-    OtherElectricalEquipment: OtherElectricalEquipmentV1 | None = None
     WoodJoists: WoodJoistsV1 | None = None
     ExteriorImprovements: ExteriorImprovementsV1 | None = None
     TextileProducts: TextileProductsV1 | None = None
@@ -133,6 +131,17 @@ class Specs(BaseOpenEpdHierarchicalSpec):
     Services: ServicesV1 | None = None
     ConsumerGoods: ConsumerGoodsV1 | None = None
     FoodBeverage: FoodBeverageV1 | None = None
+
+    OtherElectricalEquipment: OtherElectricalEquipmentV1 | None = pydantic.Field(
+        default=None,
+        json_schema_extra={
+            "deprecated": True,
+        },
+        description="Specs.OtherElectricalEquipment is deprecated. Use ElectricalV1.OtherElectricalEquipment instead.",
+    )
+    """
+    Specs.OtherElectricalEquipment is deprecated. Use ElectricalV1.OtherElectricalEquipment instead.
+    """
 
     # historical backward-compatible specs
     concrete: ConcreteOldSpec | None = None
