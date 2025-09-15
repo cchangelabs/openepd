@@ -298,10 +298,16 @@ class ElectricalConduitV1(BaseOpenEpdHierarchicalSpec, ConduitMixin):
     _EXT_VERSION = "1.1"
 
 
+class OtherElectricalEquipmentV1(BaseOpenEpdHierarchicalSpec):
+    """Other Electrical Equipment."""
+
+    _EXT_VERSION = "1.0"
+
+
 class ElectricalV1(BaseOpenEpdHierarchicalSpec):
     """Electric power and equipment."""
 
-    _EXT_VERSION = "1.1"
+    _EXT_VERSION = "1.2"
 
     # Nested specs:
     ElectricalPowerStorage: ElectricalPowerStorageV1 | None = None
@@ -310,3 +316,4 @@ class ElectricalV1(BaseOpenEpdHierarchicalSpec):
     ElectricPower: ElectricPowerV1 | None = None
     Lighting: LightingV1 | None = None
     ElectricalConduit: ElectricalConduitV1 | None = None
+    OtherElectricalEquipment: OtherElectricalEquipmentV1 | None = None

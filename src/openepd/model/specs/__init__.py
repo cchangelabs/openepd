@@ -60,7 +60,7 @@ from openepd.model.specs.singular.cladding import CladdingV1
 from openepd.model.specs.singular.cmu import CMUV1
 from openepd.model.specs.singular.concrete import ConcreteV1
 from openepd.model.specs.singular.conveying_equipment import ConveyingEquipmentV1
-from openepd.model.specs.singular.electrical import ElectricalV1
+from openepd.model.specs.singular.electrical import ElectricalV1, OtherElectricalEquipmentV1
 from openepd.model.specs.singular.electrical_transmission_and_distribution_equipment import (
     ElectricalTransmissionAndDistributionEquipmentV1,
 )
@@ -76,7 +76,6 @@ from openepd.model.specs.singular.mechanical import MechanicalV1
 from openepd.model.specs.singular.mechanical_insulation import MechanicalInsulationV1
 from openepd.model.specs.singular.network_infrastructure import NetworkInfrastructureV1
 from openepd.model.specs.singular.openings import OpeningsV1
-from openepd.model.specs.singular.other_electrical_equipment import OtherElectricalEquipmentV1
 from openepd.model.specs.singular.other_materials import OtherMaterialsV1
 from openepd.model.specs.singular.plumbing import PlumbingV1
 from openepd.model.specs.singular.precast_concrete import PrecastConcreteV1
