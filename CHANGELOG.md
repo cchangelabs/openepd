@@ -1,3 +1,9 @@
+## 6.31.0 (2025-09-15)
+
+### Feat
+
+- move `OtherElectricalEquipment` category under `Electrical`
+
 ## 6.30.0 (2025-09-11)
 
 ### Feat
