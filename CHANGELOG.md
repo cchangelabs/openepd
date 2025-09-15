@@ -1,3 +1,9 @@
+## 7.13.1 (2025-09-15)
+
+### Fix
+
+- fix `OtherElectricalEquipment` imports
+
 ## 7.13.0 (2025-09-15)
 
 ### Feat
