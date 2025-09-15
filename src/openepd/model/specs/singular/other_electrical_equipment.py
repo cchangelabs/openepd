@@ -13,4 +13,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-VERSION = "6.31.1"
+
+# Deprecated import: This import is kept for backward compatibility and should be removed in the future.
+from .electrical import OtherElectricalEquipmentV1  # noqa: F401
