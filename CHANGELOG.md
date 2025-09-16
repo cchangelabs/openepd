@@ -1,3 +1,9 @@
+## 7.13.2 (2025-09-16)
+
+### Fix
+
+- ensure dynamic extensions are serialized correctly in pydantic v2
+
 ## 7.13.1 (2025-09-15)
 
 ### Fix
