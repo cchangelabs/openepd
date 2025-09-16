@@ -76,7 +76,7 @@ class SerializingArgs(TypedDict):
 class BaseOpenEpdSchema(pydantic.BaseModel):
     """Base class for all OpenEPD models."""
 
-    ext: dict[str, AnySerializable] | None = pydantic.Field(alias="ext", default=None)
+    ext: pydantic.SerializeAsAny[dict[str, AnySerializable] | None] = pydantic.Field(alias="ext", default=None)
     model_config: ClassVar[ConfigDict] = ConfigDict(
         validate_assignment=False,
         populate_by_name=True,
