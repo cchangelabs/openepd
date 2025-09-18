@@ -20,6 +20,8 @@ from openepd.model.base import OPENEPD_VERSION_FIELD, OpenEpdDoctypes, OpenEpdEx
 from openepd.model.common import Ingredient
 from openepd.model.declaration import PRODUCT_IMAGE_MAX_LENGTH
 from openepd.model.epd import Epd, EpdFactory, EpdPreviewV0, EpdV0
+from openepd.model.specs import SteelV1
+from openepd.model.specs.enums import SteelComposition
 from openepd.model.validation.quantity import AmountMass
 from openepd.model.versioning import OpenEpdVersions
 
@@ -35,7 +37,44 @@ class MyExtension(OpenEpdExtension):
     test_field: AmountMass = pyd.Field()
 
 
+class MyEpd(Epd):
+    enum_field: SteelComposition = SteelComposition.CARBON
+
+
 class EPDTestCase(unittest.TestCase):
+    def test_strenum_serialization_deserialization(self) -> None:
+        """
+        Test that StrEnum fields are correctly serialized and deserialized in SteelV1 and Epd models.
+
+        Ensures that:
+        - Parsing from string values yields the correct enum members.
+        - Serialization produces string values, not enum members.
+        - The dict representation retains enum members.
+        """
+        # Test SteelV1 parsing and serialization
+        steel_obj = SteelV1.parse_obj({"composition": "Carbon"})
+        self.assertIs(steel_obj.composition, SteelComposition.CARBON)
+        self.assertNotIsInstance(steel_obj.to_serializable()["composition"], SteelComposition)
+        self.assertIs(steel_obj.dict()["composition"], SteelComposition.CARBON)
+
+        steel_obj = SteelV1(composition=SteelComposition.CARBON)
+        self.assertIs(steel_obj.composition, SteelComposition.CARBON)
+        self.assertNotIsInstance(steel_obj.to_serializable()["composition"], SteelComposition)
+        self.assertIs(steel_obj.dict()["composition"], SteelComposition.CARBON)
+
+        # Test Epd parsing and serialization
+        epd_obj = MyEpd.parse_obj({"enum_field": "Carbon", "specs": {"Steel": {"composition": "Carbon"}}})
+        self.assertIs(epd_obj.enum_field, SteelComposition.CARBON)
+        self.assertIs(epd_obj.specs.Steel.composition, SteelComposition.CARBON)
+
+        serializable = epd_obj.to_serializable()
+        self.assertNotIsInstance(serializable["enum_field"], SteelComposition)
+        self.assertNotIsInstance(serializable["specs"]["Steel"]["composition"], SteelComposition)
+
+        obj_dict = epd_obj.dict()
+        self.assertIs(obj_dict["enum_field"], SteelComposition.CARBON)
+        self.assertIs(obj_dict["specs"]["Steel"]["composition"], SteelComposition.CARBON)
+
     def test_epd_openepd_version(self):
         self.assertEqual(Epd().openepd_version, OPENEPD_VERSION.as_str())
         self.assertEqual(Epd.parse_obj({OPENEPD_VERSION_FIELD: "0.2"}).openepd_version, "0.2")
