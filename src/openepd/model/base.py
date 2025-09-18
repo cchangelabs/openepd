@@ -80,7 +80,7 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
     model_config: ClassVar[ConfigDict] = ConfigDict(
         validate_assignment=False,
         populate_by_name=True,
-        use_enum_values=True,
+        use_enum_values=False,
     )
 
     def to_serializable(
