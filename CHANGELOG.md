@@ -1,3 +1,9 @@
+## 7.13.3 (2025-09-18)
+
+### Fix
+
+- update StrEnum serialization behavior for Epd models
+
 ## 7.13.2 (2025-09-16)
 
 ### Fix
