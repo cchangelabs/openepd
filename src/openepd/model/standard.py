@@ -29,7 +29,8 @@ class StandardRef(BaseOpenEpdSchema):
         description="Reference to this Standard's JSON object",
     )
     short_name: str | None = pydantic.Field(
-        description="Short-form of name of standard.  Must be unique. Case-insensitive"
+        default=None,
+        description="Short-form of name of standard.  Must be unique. Case-insensitive",
     )
 
 
