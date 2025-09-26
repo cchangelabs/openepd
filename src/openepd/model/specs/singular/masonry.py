@@ -18,8 +18,6 @@ from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.quantity import (
     PressureMPaStr,
     ThermalConductivityStr,
-    validate_quantity_ge_factory,
-    validate_quantity_unit_factory,
 )
 
 
@@ -40,14 +38,6 @@ class AutoclavedAeratedConcreteV1(BaseOpenEpdHierarchicalSpec):
         default=None, description="", example="1 W / (m * K)"
     )
     white: bool | None = pyd.Field(default=None, description="", example=True)
-
-    _aac_thermal_conductivity_is_quantity_validator = pyd.validator("thermal_conductivity", allow_reuse=True)(
-        validate_quantity_unit_factory("W / (m * K)")
-    )
-
-    _aac_thermal_conductivity_min_validator = pyd.validator("thermal_conductivity", allow_reuse=True)(
-        validate_quantity_ge_factory("0 W / (m * K)")
-    )
 
 
 class BrickV1(BaseOpenEpdHierarchicalSpec):
