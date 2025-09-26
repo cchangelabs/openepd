@@ -341,7 +341,7 @@ class AreaPerVolumeStr(QuantityStr):
 class ThermalConductivityStr(QuantityStr):
     """Thermal conductivity quantity type."""
 
-    unit = "1 W / K / m"
+    unit = "W / K / m"
 
 
 class ThermalExpansionStr(QuantityStr):
