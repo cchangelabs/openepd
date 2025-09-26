@@ -14,12 +14,14 @@
 #  limitations under the License.
 #
 import unittest
+from unittest.mock import Mock, patch
 
 import pydantic
 
 from openepd.model.epd import Epd
 from openepd.model.specs import ConcreteV1
 from openepd.model.specs.enums import AciExposureClass, CsaExposureClass, EnExposureClass
+from openepd.model.specs.singular.masonry import AutoclavedAeratedConcreteV1
 
 
 class SpecValidationTestCase(unittest.TestCase):
@@ -260,3 +262,18 @@ class SpecValidationTestCase(unittest.TestCase):
         actual_specs = epd.specs.Concrete.model_dump_json(exclude_unset=True, exclude_none=True, exclude_defaults=True)
 
         self.assertEqual(actual_specs, expected_specs)
+
+    @patch("openepd.model.validation.quantity.ExternalValidationConfig.QUANTITY_VALIDATOR")
+    def test_aac_thermal_conductivity_validation(self, validator_mock: Mock) -> None:
+        """
+        Test validation of the thermal_conductivity field in AutoclavedAeratedConcreteV1.
+
+        Valid values should be accepted, and invalid values should raise ValidationError.
+        """
+        validate_unit_correctness_mock = Mock()
+        validate_quantity_greater_or_equal_mock = Mock()
+        validator_mock.validate_unit_correctness = validate_unit_correctness_mock
+        validator_mock.validate_quantity_greater_or_equal = validate_quantity_greater_or_equal_mock
+        AutoclavedAeratedConcreteV1(thermal_conductivity="1 W / (m * K)")
+        validate_unit_correctness_mock.assert_called_once()
+        validate_quantity_greater_or_equal_mock.assert_called_once()
