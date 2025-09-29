@@ -1,3 +1,10 @@
+## 7.13.4 (2025-09-29)
+
+### Fix
+
+- remove unused validators and update thermal conductivity unit format
+- set default for `short_name` to make field optional in Standard model
+
 ## 7.13.3 (2025-09-18)
 
 ### Fix
