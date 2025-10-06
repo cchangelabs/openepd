@@ -22,7 +22,7 @@ from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.validation.numbers import RatioFloat
 
-DATA_URL_REGEX = r"^data:([-\w]+\/[-+\w.]+)?(;?\w+=[-\w]+)*(;base64)?,.*$"
+DATA_URL_REGEX = r"^data:([-\w]+\/[-+\w.]+)?(;?\w+=[-\w]+)*(;base64)?,(.*)$"
 """
 Regular expression pattern for matching Data URLs.
 
