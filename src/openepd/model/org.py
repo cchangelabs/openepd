@@ -232,6 +232,10 @@ class Plant(PlantRef, WithAttachmentsMixin, WithAltIdsMixin):
             msg = "Incorrect pluscode for plant"
             raise ValueError(msg)
 
+        if not openlocationcode.isFull(pluscode):
+            msg = "Passed Open Location Code is not a valid full code"
+            raise ValueError(msg)
+
         if not web_domain:
             msg = "Incorrect web_domain for plant"
             raise ValueError(msg)
