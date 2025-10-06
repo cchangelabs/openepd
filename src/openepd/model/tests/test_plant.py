@@ -30,3 +30,8 @@ class PlantTestCase(unittest.TestCase):
         p = Plant.parse_obj(test_data)
 
         self.assertEqual(p.id, "85644Q4R+3P.cemex.com")
+
+    def test_plant_parse_no_full_pluscode(self):
+        test_data = {"id": "F47F+5W.cemex.com"}
+        with self.assertRaises(ValueError):
+            Plant.parse_obj(test_data)
