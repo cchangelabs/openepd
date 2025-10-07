@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openepd"
-version = "7.13.4"
+version = "7.13.5"
 license = "Apache-2.0"
 description = "Python library to work with OpenEPD format"
 authors = ["C-Change Labs <support@c-change-labs.com>"]

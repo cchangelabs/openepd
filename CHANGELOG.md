@@ -1,3 +1,9 @@
+## 7.13.5 (2025-10-07)
+
+### Fix
+
+- enforce full pluscode validation for Plant
+
 ## 7.13.4 (2025-09-29)
 
 ### Fix
