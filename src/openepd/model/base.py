@@ -70,7 +70,7 @@ class BaseOpenEpdSchema(pyd.BaseModel):
         allow_mutation = True
         validate_assignment = False
         allow_population_by_field_name = True
-        use_enum_values = True
+        use_enum_values = False
         schema_extra: Callable | dict = modify_pydantic_schema
 
     def to_serializable(self, *args, **kwargs) -> dict[str, Any]:

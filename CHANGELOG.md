@@ -1,3 +1,11 @@
+## 6.31.2 (2025-10-07)
+
+### Fix
+
+- enforce full pluscode validation for Plant
+- remove unused validators and update thermal conductivity unit format
+- update StrEnum serialization behavior for Epd models
+
 ## 6.31.1 (2025-09-15)
 
 ### Fix
