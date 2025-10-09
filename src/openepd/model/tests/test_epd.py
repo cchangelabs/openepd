@@ -13,15 +13,13 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-import unittest
-
 from openepd.compat.pydantic import pyd
 from openepd.model.base import OPENEPD_VERSION_FIELD, OpenEpdDoctypes, OpenEpdExtension, Version
 from openepd.model.common import Ingredient
-from openepd.model.declaration import PRODUCT_IMAGE_MAX_LENGTH
 from openepd.model.epd import Epd, EpdFactory, EpdPreviewV0, EpdV0
 from openepd.model.specs import SteelV1
 from openepd.model.specs.enums import SteelComposition
+from openepd.model.tests.common import ImageFieldTestCase
 from openepd.model.validation.quantity import AmountMass
 from openepd.model.versioning import OpenEpdVersions
 
@@ -41,7 +39,7 @@ class MyEpd(Epd):
     enum_field: SteelComposition = SteelComposition.CARBON
 
 
-class EPDTestCase(unittest.TestCase):
+class EPDTestCase(ImageFieldTestCase):
     def test_strenum_serialization_deserialization(self) -> None:
         """
         Test that StrEnum fields are correctly serialized and deserialized in SteelV1 and Epd models.
@@ -169,32 +167,13 @@ class EPDTestCase(unittest.TestCase):
         self.assertIsInstance(ext.test_field, AmountMass)
 
     def test_product_image(self):
-        self._test_data_url_image("product_image")
+        self._test_data_url_image_field(Epd, "product_image")
 
     def test_product_image_small(self):
-        self._test_data_url_image("product_image_small")
+        self._test_data_url_image_field(Epd, "product_image_small")
 
-    def _test_data_url_image(self, field: str) -> None:
-        Epd.parse_obj({field: None})
-        Epd.parse_obj({field: "data:image/png;base64,NSUhiVRw0KGgoAAAABO"})
-        Epd.parse_obj({field: "data:image/png,NSUhiVRw0KGgoAAAABO"})
-        Epd.parse_obj({field: "data:;base64,NSUhiVRw0KGgoAAAABO"})
-        Epd.parse_obj({field: "data:,NSUhiVRw0KGgoAAAABO"})
-        Epd.parse_obj({field: "https://example.com"})
+    def test_product_usage_image(self):
+        self._test_data_url_image_field(Epd, "product_usage_image")
 
-        with self.assertRaises(ValueError):
-            Epd.parse_obj({field: "example"})
-        with self.assertRaises(ValueError):
-            Epd.parse_obj({field: "example.com"})
-        with self.assertRaises(ValueError):
-            # host should be <= 63 characters
-            Epd.parse_obj({field: "https://" + "a" * 70 + ".com"})
-        with self.assertRaises(ValueError):
-            # image data should be <= 32KB
-            Epd.parse_obj({field: "data:image/png;base64," + "a" * PRODUCT_IMAGE_MAX_LENGTH})
-        with self.assertRaises(ValueError):
-            # invalid dataUrl
-            Epd.parse_obj({field: "data:base64,NSUhiVRw0KGgoAAAABO"})
-        with self.assertRaises(ValueError):
-            # invalid dataUrl
-            Epd.parse_obj({field: "data:NSUhiVRw0KGgoAAAABO"})
+    def test_manufacturing_image(self):
+        self._test_data_url_image_field(Epd, "manufacturing_image")
