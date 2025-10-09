@@ -15,8 +15,9 @@
 #
 from collections.abc import Callable, Generator
 from enum import StrEnum
+import math
 import re
-from typing import Annotated, Any
+from typing import Annotated, Any, Final
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
@@ -29,6 +30,14 @@ Regular expression pattern for matching Data URLs.
 A Data URL is a URI scheme that allows you to embed small data items inline 
 in web pages as if they were external resources.
 The pattern matches the following format: data:[<media-type>][;base64],<data>
+"""
+
+DATA_URL_IMAGE_MAX_LENGTH: Final[int] = math.ceil(32 * 1024 * 4 / 3)
+"""
+Maximum allowed length of a data URL image string to ensure the decoded image is less than 32KB.
+
+Base64 encoding overhead (approximately 33%) requires 
+limiting the encoded string length to 4/3 of the file size limit.
 """
 
 
@@ -336,3 +345,17 @@ class DataUrl(str):
             raise ValueError(msg)
 
         yield validator
+
+
+def validate_data_url(v: str | None, max_length: int) -> None:
+    """
+    Validate max length of data URL.
+
+    :param v: data URL string.
+    :param max_length: maximum allowed length.
+    :raises ValueError: if the data URL exceeds the maximum length.
+    :return: None
+    """
+    if v and len(v) > max_length:
+        msg = f"URL must not exceed {max_length} characters"
+        raise ValueError(msg)

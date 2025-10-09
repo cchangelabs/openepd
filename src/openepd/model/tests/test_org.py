@@ -13,33 +13,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-import unittest
+from openepd.model.org import Org
+from openepd.model.tests.common import ImageFieldTestCase
 
-from openepd.model.org import ORG_LOGO_MAX_LENGTH, Org
 
-
-class OrgTestCase(unittest.TestCase):
+class OrgTestCase(ImageFieldTestCase):
     def test_logo(self) -> None:
-        Org.parse_obj({"logo": None})
-        Org.parse_obj({"logo": "data:image/png;base64,NSUhiVRw0KGgoAAAABO"})
-        Org.parse_obj({"logo": "data:image/png,NSUhiVRw0KGgoAAAABO"})
-        Org.parse_obj({"logo": "data:;base64,NSUhiVRw0KGgoAAAABO"})
-        Org.parse_obj({"logo": "data:,NSUhiVRw0KGgoAAAABO"})
-        Org.parse_obj({"logo": "https://example.com"})
-
-        with self.assertRaises(ValueError):
-            Org.parse_obj({"logo": "example"})
-        with self.assertRaises(ValueError):
-            Org.parse_obj({"logo": "example.com"})
-        with self.assertRaises(ValueError):
-            # host should be <= 63 characters
-            Org.parse_obj({"logo": "https://" + "a" * 70 + ".com"})
-        with self.assertRaises(ValueError):
-            # image data should be <= 32KB
-            Org.parse_obj({"logo": "data:image/png;base64," + "a" * ORG_LOGO_MAX_LENGTH})
-        with self.assertRaises(ValueError):
-            # invalid dataUrl
-            Org.parse_obj({"logo": "data:base64,NSUhiVRw0KGgoAAAABO"})
-        with self.assertRaises(ValueError):
-            # invalid dataUrl
-            Org.parse_obj({"logo": "data:NSUhiVRw0KGgoAAAABO"})
+        self._test_data_url_image_field(Org, "logo")
