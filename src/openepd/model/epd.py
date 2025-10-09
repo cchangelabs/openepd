@@ -16,7 +16,13 @@
 import pydantic
 
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes, OpenEpdExtension
-from openepd.model.common import Ingredient, WithAltIdsMixin, WithAttachmentsMixin
+from openepd.model.common import (
+    DATA_URL_IMAGE_MAX_LENGTH,
+    Ingredient,
+    WithAltIdsMixin,
+    WithAttachmentsMixin,
+    validate_data_url,
+)
 from openepd.model.declaration import (
     DEVELOPER_DESCRIPTION,
     PROGRAM_OPERATOR_DESCRIPTION,
@@ -242,6 +248,11 @@ class EpdPreviewV0(
             return "openEPD"
         msg = "Invalid doctype"
         raise ValueError(msg)
+
+    @pydantic.field_validator("product_usage_image", "manufacturing_image")
+    def validate_product_usage_image(cls, v: pydantic.AnyUrl | None) -> pydantic.AnyUrl | None:
+        validate_data_url(v, DATA_URL_IMAGE_MAX_LENGTH)
+        return v
 
 
 EpdPreview = EpdPreviewV0

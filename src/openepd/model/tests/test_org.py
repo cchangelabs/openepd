@@ -13,30 +13,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-import unittest
+from openepd.model.org import Org
+from openepd.model.tests.common import ImageFieldTestCase
 
-from openepd.model.org import ORG_LOGO_MAX_LENGTH, Org
 
-
-class OrgTestCase(unittest.TestCase):
+class OrgTestCase(ImageFieldTestCase):
     def test_logo(self) -> None:
-        Org.model_validate({"logo": None})
-        Org.model_validate({"logo": "data:image/png;base64,NSUhiVRw0KGgoAAAABO"})
-        Org.model_validate({"logo": "data:image/png,NSUhiVRw0KGgoAAAABO"})
-        Org.model_validate({"logo": "data:;base64,NSUhiVRw0KGgoAAAABO"})
-        Org.model_validate({"logo": "data:,NSUhiVRw0KGgoAAAABO"})
-        Org.model_validate({"logo": "https://example.com"})
-
-        with self.assertRaises(ValueError):
-            Org.model_validate({"logo": "example"})
-        with self.assertRaises(ValueError):
-            Org.model_validate({"logo": "example.com"})
-        with self.assertRaises(ValueError):
-            # image data should be <= 32KB
-            Org.model_validate({"logo": "data:image/png;base64," + "a" * ORG_LOGO_MAX_LENGTH})
-        with self.assertRaises(ValueError):
-            # invalid dataUrl
-            Org.model_validate({"logo": "data:base64,NSUhiVRw0KGgoAAAABO"})
-        with self.assertRaises(ValueError):
-            # invalid dataUrl
-            Org.model_validate({"logo": "data:NSUhiVRw0KGgoAAAABO"})
+        self._test_data_url_image_field(Org, "logo")

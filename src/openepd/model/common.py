@@ -14,7 +14,9 @@
 #  limitations under the License.
 #
 from enum import StrEnum
-from typing import Annotated, Any, Self
+import math
+import re
+from typing import Annotated, Any, Final, Self
 
 import pydantic
 import pydantic_core
@@ -28,6 +30,14 @@ Regular expression pattern for matching Data URLs.
 A Data URL is a URI scheme that allows you to embed small data items inline 
 in web pages as if they were external resources.
 The pattern matches the following format: data:[<media-type>][;base64],<data>
+"""
+
+DATA_URL_IMAGE_MAX_LENGTH: Final[int] = math.ceil(32 * 1024 * 4 / 3)
+"""
+Maximum allowed length of a data URL image string to ensure the decoded image is less than 32KB.
+
+Base64 encoding overhead (approximately 33%) requires 
+limiting the encoded string length to 4/3 of the file size limit.
 """
 
 
@@ -372,3 +382,20 @@ class EnumGroupingAware:
     def get_groupings(cls) -> list[list]:
         """Return logical groupings of the values."""
         return []
+
+
+def validate_data_url(v: pydantic.AnyUrl | None, max_length: int) -> None:
+    """
+    Validate data URL.
+
+    :param v: data URL string.
+    :param max_length: maximum allowed length.
+    :raises ValueError: if the data URL exceeds the maximum length or has invalid format.
+    :return: None
+    """
+    if v and len(v) > max_length:
+        msg = f"URL must not exceed {max_length} characters"
+        raise ValueError(msg)
+    if v and v.scheme == "data" and not re.compile(DATA_URL_REGEX).match(str(v)):
+        msg = "Invalid data URL format"
+        raise ValueError(msg)
