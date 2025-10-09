@@ -1,3 +1,9 @@
+## 7.14.0 (2025-10-09)
+
+### Feat
+
+- add dataUrl support for product_usage and manufacturing images
+
 ## 7.13.5 (2025-10-07)
 
 ### Fix
