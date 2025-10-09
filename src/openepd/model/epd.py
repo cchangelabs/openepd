@@ -16,7 +16,14 @@
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes, OpenEpdExtension
-from openepd.model.common import Ingredient, WithAltIdsMixin, WithAttachmentsMixin
+from openepd.model.common import (
+    DATA_URL_IMAGE_MAX_LENGTH,
+    DataUrl,
+    Ingredient,
+    WithAltIdsMixin,
+    WithAttachmentsMixin,
+    validate_data_url,
+)
 from openepd.model.declaration import (
     DEVELOPER_DESCRIPTION,
     PROGRAM_OPERATOR_DESCRIPTION,
@@ -200,14 +207,14 @@ class EpdPreviewV0(
         description="Text description of how product is typically used. Can be used to describe accessories "
         "like fasteners, adhesives, etc.  Supports plain text or github flavored markdown.",
     )
-    product_usage_image: pyd.AnyUrl | None = pyd.Field(
+    product_usage_image: pyd.AnyUrl | None | DataUrl = pyd.Field(
         description="Pointer (url) to image illustrating how the product is used. No more than 10MB.", default=None
     )
     manufacturing_description: str | None = pyd.Field(
         default=None,
         description="Text description of manufacturing process.  Supports plain text or github flavored markdown.",
     )
-    manufacturing_image: pyd.AnyUrl | None = pyd.Field(
+    manufacturing_image: pyd.AnyUrl | None | DataUrl = pyd.Field(
         description="Pointer (url) to an image illustrating the manufacturing process. No more than 10MB.", default=None
     )
 
@@ -234,6 +241,11 @@ class EpdPreviewV0(
             return "openEPD"
         msg = "Invalid doctype"
         raise ValueError(msg)
+
+    @pyd.validator("product_usage_image", "manufacturing_image")
+    def validate_product_image(cls, v: str | None) -> str | None:
+        validate_data_url(v, DATA_URL_IMAGE_MAX_LENGTH)
+        return v
 
 
 EpdPreview = EpdPreviewV0

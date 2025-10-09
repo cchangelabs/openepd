@@ -16,12 +16,10 @@
 import abc
 import datetime
 from enum import StrEnum
-import math
-from typing import Final
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema, OpenXpdUUID, RootDocument
-from openepd.model.common import Amount, DataUrl
+from openepd.model.common import DATA_URL_IMAGE_MAX_LENGTH, Amount, DataUrl, validate_data_url
 from openepd.model.geography import Geography
 from openepd.model.org import Org
 from openepd.model.pcr import Pcr
@@ -33,14 +31,6 @@ from openepd.model.validation.quantity import AmountGWP, AmountMass
 DEVELOPER_DESCRIPTION = "The organization responsible for the underlying LCA (and subsequent summarization as EPD)."
 PROGRAM_OPERATOR_DESCRIPTION = "JSON object for program operator Org"
 THIRD_PARTY_VERIFIER_DESCRIPTION = "JSON object for Org that performed a critical review of the EPD data"
-
-PRODUCT_IMAGE_MAX_LENGTH: Final[int] = math.ceil(32 * 1024 * 4 / 3)
-"""
-Maximum length for product_image, product_image_small fields.
-
-Image file size must be less than 32KB. Base64 encoding overhead (approximately 33%) requires 
-limiting the encoded string length to 4/3 of the file size limit.
-"""
 
 
 class BaseDeclaration(RootDocument, abc.ABC):
@@ -175,9 +165,7 @@ class BaseDeclaration(RootDocument, abc.ABC):
 
     @pyd.validator("product_image", "product_image_small")
     def validate_product_image(cls, v: str | None) -> str | None:
-        if v and len(v) > PRODUCT_IMAGE_MAX_LENGTH:
-            msg = f"URL must not exceed {PRODUCT_IMAGE_MAX_LENGTH} characters"
-            raise ValueError(msg)
+        validate_data_url(v, DATA_URL_IMAGE_MAX_LENGTH)
         return v
 
 
