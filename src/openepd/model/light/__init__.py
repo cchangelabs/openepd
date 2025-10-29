@@ -13,17 +13,3 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes, RootDocumentFactory
-from openepd.model.epd import EpdFactory
-from openepd.model.generic_estimate import GenericEstimateFactory
-from openepd.model.industry_epd import IndustryEpdFactory
-
-
-class DocumentFactory(RootDocumentFactory):
-    """A factory for creating documents regardless of the type."""
-
-    DOCTYPE_TO_FACTORY: dict[OpenEpdDoctypes, type[BaseDocumentFactory]] = {
-        OpenEpdDoctypes.Epd: EpdFactory,
-        OpenEpdDoctypes.GenericEstimate: GenericEstimateFactory,
-        OpenEpdDoctypes.IndustryEpd: IndustryEpdFactory,
-    }
