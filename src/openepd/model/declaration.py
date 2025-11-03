@@ -24,7 +24,6 @@ from openepd.model.common import DATA_URL_IMAGE_MAX_LENGTH, Amount, validate_dat
 from openepd.model.geography import Geography
 from openepd.model.org import Org
 from openepd.model.pcr import Pcr
-from openepd.model.specs.range import SpecsRange
 from openepd.model.standard import Standard
 from openepd.model.validation.common import ReferenceStr
 from openepd.model.validation.quantity import AmountGWP, AmountMass
@@ -200,11 +199,6 @@ class AverageDatasetMixin(pydantic.BaseModel, title="Average Dataset"):
         description="Jurisdiction(s) in which the LCA result is applicable.  An empty array, or absent properties, "
         "implies global applicability.",
         default=None,
-    )
-
-    specs: SpecsRange | None = pydantic.Field(
-        default=None,
-        description="Average dataset material performance specifications.",
     )
 
 

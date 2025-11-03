@@ -23,6 +23,7 @@ from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import AverageDatasetMixin, BaseDeclaration, RefBase
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org
+from openepd.model.specs.mixins import AverageDatasetMaterialSpecsMixin
 from openepd.model.versioning import OpenEpdVersions, Version
 
 
@@ -56,6 +57,7 @@ class GenericEstimatePreviewV0(
     AverageDatasetMixin,
     GenericEstimateRef,
     BaseDeclaration,
+    AverageDatasetMaterialSpecsMixin,
     title="Generic Estimate (preview)",
 ):
     """
