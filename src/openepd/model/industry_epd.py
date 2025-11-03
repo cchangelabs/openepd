@@ -29,6 +29,7 @@ from openepd.model.declaration import (
 )
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org
+from openepd.model.specs.mixins import AverageDatasetMaterialSpecsMixin
 from openepd.model.versioning import OpenEpdVersions, Version
 
 
@@ -65,6 +66,7 @@ class IndustryEpdPreviewV0(
     WithProgramOperatorMixin,
     IndustryEpdRef,
     BaseDeclaration,
+    AverageDatasetMaterialSpecsMixin,
     title="Industry EPD (preview)",
 ):
     """
