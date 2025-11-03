@@ -22,6 +22,7 @@ from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import AverageDatasetMixin, BaseDeclaration, RefBase
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org
+from openepd.model.specs.mixins import AverageDatasetMaterialSpecsMixin
 from openepd.model.versioning import OpenEpdVersions, Version
 
 
@@ -51,7 +52,12 @@ class GenericEstimateRef(RefBase, title="Generic Estimate (Ref)"):
 
 
 class GenericEstimatePreviewV0(
-    WithAttachmentsMixin, AverageDatasetMixin, GenericEstimateRef, BaseDeclaration, title="Generic Estimate (preview)"
+    WithAttachmentsMixin,
+    AverageDatasetMixin,
+    GenericEstimateRef,
+    BaseDeclaration,
+    AverageDatasetMaterialSpecsMixin,
+    title="Generic Estimate (preview)",
 ):
     """
     Generic Estimate preview, used in API list responses and where there is no need for a full object.
