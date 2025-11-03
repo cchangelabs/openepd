@@ -13,27 +13,71 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
-from openepd.model.common import WithAltIdsMixin
+from typing import Literal
+
+from openepd.compat.pydantic import pyd
+from openepd.model.base import BaseDocumentFactory, BaseOpenEpdSchema, OpenEpdDoctypes
+from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
+from openepd.model.declaration import (
+    AverageDatasetMixin,
+    BaseDeclaration,
+    RefBase,
+    WithEpdDeveloperMixin,
+    WithProgramOperatorMixin,
+    WithVerifierMixin,
+)
 from openepd.model.lcia import WithLciaMixin
-from openepd.model.specs.mixins import AverageDatasetMaterialSpecsMixin
+from openepd.model.org import Org
 from openepd.model.versioning import OpenEpdVersions, Version
 
-from .light.industry_epd import IndustryEpdPreviewV0 as IndustryEpdPreviewV0Light
 
-# Import light versions here for compatibility reasons so they are available from the same import location
-from .light.industry_epd import IndustryEpdRef  # noqa: F401
+class SampleSize(BaseOpenEpdSchema):
+    """Sample size."""
+
+    products: pyd.NonNegativeInt | None = pyd.Field(
+        default=None,
+        description="Count of separate products or results that were included in this industry EPD, "
+        "and over which the standard deviation was calculated",
+    )
+    plants: pyd.NonNegativeInt | None = pyd.Field(
+        default=None, description="Count of unique manufacturing plants that submitted data for this Industry EPD"
+    )
+    manufacturers: pyd.NonNegativeInt | None = pyd.Field(
+        default=None, description="Count of unique manufacturing companies that submitted data for this Industry EPD"
+    )
+
+
+class IndustryEpdRef(RefBase, title="Industry EPD (Ref)"):
+    """Reference (short) version of Industry average EPD object."""
 
 
 class IndustryEpdPreviewV0(
-    IndustryEpdPreviewV0Light,
-    AverageDatasetMaterialSpecsMixin,
+    WithAttachmentsMixin,
+    AverageDatasetMixin,
+    WithEpdDeveloperMixin,
+    WithVerifierMixin,
+    WithProgramOperatorMixin,
+    IndustryEpdRef,
+    BaseDeclaration,
+    title="Industry EPD (preview)",
 ):
     """
     Industry EPD Preview object.
 
     Used in lists and other cases where full LCIA data is not required.
     """
+
+    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
+
+    doctype: Literal["openIndustryEpd"] = pyd.Field(
+        description='Describes the type and schema of the document. Must always be "openIndustryEpd"',
+        default="openIndustryEpd",
+    )
+
+    sample_size: SampleSize | None = None
+
+    publishers: list[Org] | None = pyd.Field(description="")
+    manufacturers: list[Org] | None = pyd.Field(description="Participating manufacturers")
 
 
 IndustryEpdPreview = IndustryEpdPreviewV0
