@@ -1,3 +1,15 @@
+## 7.15.0 (2025-11-27)
+
+### Feat
+
+- add lightweight version of Generic Estimate object
+- add lightweight version of Industry EPD object
+- add lightweight version of EPD object
+
+### Refactor
+
+- extract RangeSpecs field into dedicated mixin
+
 ## 7.14.0 (2025-10-09)
 
 ### Feat
