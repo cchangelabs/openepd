@@ -38,13 +38,12 @@ from requests import codes as requests_codes
 from requests.auth import AuthBase
 from requests.structures import CaseInsensitiveDict
 
-from openepd.__version__ import VERSION
 from openepd.api import errors
-from openepd.api.common import Throttler, no_trailing_slash
+from openepd.api.base_api_client import BaseApiClient, USER_AGENT_DEFAULT as BASE_USER_AGENT_DEFAULT
 
 logger = logging.getLogger(__name__)
 
-USER_AGENT_DEFAULT: Final[str] = f"OpenEPD API Client/{VERSION}"
+USER_AGENT_DEFAULT: Final[str] = BASE_USER_AGENT_DEFAULT  # Keep here for backward compatibility
 
 DoRequest = Callable[[], Response]
 RetryHandler = Callable[[DoRequest], Response | None]
@@ -143,16 +142,12 @@ class TokenAuth(AuthBase):
         return r
 
 
-class SyncHttpClient:
+class SyncHttpClient(BaseApiClient):
     """
     HTTP client to communicate with OpenEPD servers via HTTP.
 
     It works on top of requests library and provides some commonly needed features, such as throttling, retries, etc.
     """
-
-    HTTP_DATE_TIME_FORMAT = "%a, %d %b %Y %H:%M:%S %Z"
-    DEFAULT_RETRY_INTERVAL_SEC = 10
-    DEFAULT_TIMEOUT_SEC = (15, 2 * 60)
 
     def __init__(
         self,
@@ -177,18 +172,16 @@ class SyncHttpClient:
             as a seconds (just a single float), or a (connect timeout, read timeout) tuple.
         :param retry_count: count of retries to perform in case of connection error or timeout.
         """
-        self._base_url: str = no_trailing_slash(base_url)
-        self._throttler = Throttler(rate_per_sec=requests_per_sec)
-        self._throttle_retry_timeout: float = (
-            float(throttle_retry_timeout)
-            if isinstance(throttle_retry_timeout, float | int)
-            else throttle_retry_timeout.total_seconds()
+        super().__init__(
+            base_url=base_url,
+            throttle_retry_timeout=throttle_retry_timeout,
+            requests_per_sec=requests_per_sec,
+            retry_count=retry_count,
+            user_agent=user_agent,
+            timeout_sec=timeout_sec,
         )
-        self.user_agent = user_agent
-        self.timeout = timeout_sec or self.DEFAULT_TIMEOUT_SEC
         self._session: Session | None = None
         self._auth: AuthBase | None = auth
-        self._retry_count: int = retry_count
 
         self._http_retry_handlers: dict[int, RetryHandler] = {}
         self._http_error_handlers: dict[int, ErrorHandler] = {}
@@ -198,24 +191,6 @@ class SyncHttpClient:
         self.register_error_handler(403, DefaultOpenApiErrorHandlers.handle_access_denied)
         self.register_error_handler(404, DefaultOpenApiErrorHandlers.handle_not_found)
         self.register_error_handler(500, DefaultOpenApiErrorHandlers.handle_server_error)
-
-    @property
-    def base_url(self) -> str:
-        """Return base URL for all requests."""
-        return self._base_url
-
-    @base_url.setter
-    def base_url(self, new_value: str):
-        """Set base URL for all requests."""
-        self._base_url = no_trailing_slash(new_value)
-
-    @property
-    def default_headers(self) -> dict[str, str]:
-        """Default headers for requests. Implement if required."""
-        headers = {}
-        if self.user_agent:
-            headers["user-agent"] = self.user_agent
-        return headers
 
     def reset_session(self) -> None:
         """Reset current session (if any). This will clear all cookies and other session data."""
@@ -416,16 +391,6 @@ class SyncHttpClient:
         msg = "This line should never be reached"
         raise RuntimeError(msg)
 
-    def _get_url_for_request(self, path_or_url: str) -> str:
-        """
-        Generate url for given input.
-
-        If absolute path is given it will be returned as is, otherwise the base url will be prepended.
-        :param path_or_url: Either absolute url or base path.
-        :return: absolute url
-        """
-        return self._base_url + path_or_url if not path_or_url.startswith("http") else path_or_url
-
     @property
     def _current_session(self) -> Session:
         if self._session is None:
@@ -439,20 +404,6 @@ class SyncHttpClient:
         This is a hook that will be called before `do_request`. Can be overridden to check / refresh access tokens.
         """
         pass
-
-    def _get_timeout_from_retry_after_header(self, retry_after: str | None, default: float = 10.0) -> float:
-        if retry_after is None:
-            return default
-        try:
-            return float(retry_after)
-        except ValueError:
-            # This means the value is not at number of seconds but a date, so we parse it
-            try:
-                date_in_future = datetime.datetime.strptime(retry_after.strip(), self.HTTP_DATE_TIME_FORMAT)
-                return (date_in_future - datetime.datetime.utcnow()).total_seconds()
-            except ValueError:
-                logger.warning("Invalid Retry-After header: %s", retry_after)
-                return default
 
     @staticmethod
     def _handle_service_unavailable(method: str, url: str, retry_count: int, func: Callable):
