@@ -13,9 +13,15 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from typing import Any, Final
 import unittest
 
 from openepd.model.common import DATA_URL_IMAGE_MAX_LENGTH
+
+GE_REQUIRED_FIELDS: Final[dict[str, Any]] = {"id": "0197ad82-92cf-7978-a6c8-d4964c0a3624"}
+"""
+Required fields for Generic Estimates to be used in tests.
+"""
 
 
 class ImageFieldTestCase(unittest.TestCase):

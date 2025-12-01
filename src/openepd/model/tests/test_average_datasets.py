@@ -19,17 +19,18 @@ import pydantic
 
 from openepd.model.generic_estimate import GenericEstimatePreview
 from openepd.model.industry_epd import IndustryEpdPreview
+from openepd.model.tests.common import GE_REQUIRED_FIELDS
 
 
 class AverageDatasetTestCase(unittest.TestCase):
     def test_generic_estimate_doctype(self):
-        self.assertEqual(GenericEstimatePreview.model_validate({}).doctype, "openGenericEstimate")
+        self.assertEqual(GenericEstimatePreview.model_validate({**GE_REQUIRED_FIELDS}).doctype, "openGenericEstimate")
         self.assertEqual(
-            GenericEstimatePreview.model_validate({"doctype": "openGenericEstimate"}).doctype,
+            GenericEstimatePreview.model_validate({"doctype": "openGenericEstimate", **GE_REQUIRED_FIELDS}).doctype,
             "openGenericEstimate",
         )
         self.assertEqual(
-            GenericEstimatePreview.model_validate({"id": "EC300001"}).doctype,
+            GenericEstimatePreview.model_validate(GE_REQUIRED_FIELDS).doctype,
             "openGenericEstimate",
         )
 
@@ -39,7 +40,7 @@ class AverageDatasetTestCase(unittest.TestCase):
             {"doctype": "openIndustryEpd"},
         ]:
             with self.assertRaises(pydantic.ValidationError):
-                GenericEstimatePreview.model_validate(o)
+                GenericEstimatePreview.model_validate({**GE_REQUIRED_FIELDS, **o})
 
     def test_iepd_doctype(self):
         self.assertEqual(IndustryEpdPreview.model_validate({}).doctype, "openIndustryEpd")
