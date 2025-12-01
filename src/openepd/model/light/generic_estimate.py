@@ -15,6 +15,7 @@
 #
 from enum import StrEnum
 from typing import Literal
+from uuid import UUID
 
 import pydantic
 
@@ -69,6 +70,13 @@ class GenericEstimatePreviewV0(
     doctype: Literal["openGenericEstimate"] = pydantic.Field(
         description='Describes the type and schema of the document. Must always be "openGenericEstimate"',
         default="openGenericEstimate",
+    )
+    id: UUID = pydantic.Field(  # type: ignore[assignment]
+        description=(
+            "Unique UUID for this dataset."
+            "Use the UUID of the original source where possible, and put any other UUIDs in alt_ids."
+        ),
+        example="0197ad82-92cf-7978-a6c8-d4964c0a3624",
     )
 
     publisher: Org | None = pydantic.Field(description="Organization that published the LCA results.", default=None)
