@@ -164,6 +164,120 @@ class Ingredient(BaseOpenEpdSchema):
         return values
 
 
+class Constituent(BaseOpenEpdSchema):
+    name: str = pydantic.Field(
+        max_length=200,
+        examples=["Mild Steel, machined"],
+        description="Common name for the constituent substance.",
+    )
+    id: str | None = pydantic.Field(
+        max_length=200,
+        examples=["d50ccd58-1a8a-4327-8036-12ff68cecde7"],
+        description=(
+            "A GUID or open_xpd_uuid that is at least locally defined, "
+            "for use when a system needs information not captured in this table.  "
+        ),
+        default=None,
+    )
+    kg_mass: float = pydantic.Field(
+        ge=0,
+        description=(
+            "Mass of this constituent, in kg per declared unit of this generic estimate (not per kg of the constituent)"
+        ),
+        examples=[1.23],
+    )
+    notes: str | None = pydantic.Field(
+        max_length=2000,
+        description="Informative notes or commentary relevant to this entry",
+        examples=["Proxy for teflon coating"],
+        default=None,
+    )
+    EC_no: str | None = pydantic.Field(
+        description=(
+            "European Chemicals Agence registration number for substance, "
+            "e.g. https://echa.europa.eu/candidate-list-table"
+        ),
+        default=None,
+        examples=["618-338-8"],
+        pattern=r"^\d{3}-\d{3}-\d$",
+    )
+    CAS_no: str | None = pydantic.Field(
+        description="CAS Registry Number for substance, e.g. from https://chemindex.ccohs.ca/",
+        default=None,
+        examples=["9002-86-2"],
+        pattern=r"^\d{1,6}-\d{1,6}-\d{1,5}$",
+    )
+    kg_C: float | None = pydantic.Field(
+        ge=0,
+        description=(
+            "Mass of elemental carbon, contained in the product itself, per declared unit of this generic estimate."
+            "Used (among other things) to check a carbon balance or calculate incineration emissions."
+            "The source of carbon (e.g. biogenic) is not relevant in this field."
+        ),
+        default=None,
+        examples=[0.92],
+    )
+    kg_C_biogenic: float | None = pydantic.Field(
+        ge=0,
+        description=(
+            "Mass of elemental carbon from biogenic sources, retained in the product, per declared unit of "
+            "this generic estimate.  It may be presumed that any biogenic carbon content has been accounted for "
+            "as -44/12 kgCO2e per kg C in stages A1-A3, per EN15804 and ISO 21930."
+        ),
+        default=None,
+        examples=[0.15],
+    )
+    kg_post_consumer_recycled: float | None = pydantic.Field(
+        ge=0,
+        description=(
+            "mass of of post-consumer recycled content in this component, in kg, "
+            "per declared unit of this generic estimate. "
+        ),
+        default=None,
+        examples=[0.3],
+    )
+    kg_pre_consumer_recycled: float | None = pydantic.Field(
+        examples=[0.2],
+        description=(
+            "mass of of pre-consumer recycled content in this component, in kg, "
+            "per declared unit of this generic estimate. "
+        ),
+        default=None,
+        ge=0,
+    )
+    tags: list[Annotated[str, pydantic.Field(max_length=200)]] | None = pydantic.Field(
+        max_length=200,
+        description=(
+            "List of properties that apply to this constituent, such subcategories 'plastics' or 'metals'.  "
+            "These will be used for grouping and filtering downstream."
+        ),
+        default=None,
+        examples=[["plastics", "thermoplastics"]],
+    )
+
+    @pydantic.model_validator(mode="after")
+    def _validate_constituent_bounds(self) -> Self:
+        kg_C = self.kg_C
+        kg_C_biogenic = self.kg_C_biogenic
+        kg_mass = self.kg_mass
+        kg_post_consumer_recycled = self.kg_post_consumer_recycled
+        kg_pre_consumer_recycled = self.kg_pre_consumer_recycled
+
+        if kg_C is not None and kg_C_biogenic is not None and kg_C_biogenic > kg_C:
+            msg = "kg_C_biogenic must be less than or equal to kg_C"
+            raise ValueError(msg)
+
+        if kg_mass is not None and kg_post_consumer_recycled is not None and kg_post_consumer_recycled > kg_mass:
+            msg = "kg_post_consumer_recycled must be less than or equal to kg_mass"
+            raise ValueError(msg)
+
+        if kg_mass is not None and kg_pre_consumer_recycled is not None and kg_pre_consumer_recycled > kg_mass:
+            msg = "kg_pre_consumer_recycled must be less than or equal to kg_mass"
+            raise ValueError(msg)
+
+        return self
+
+
 class LatLng(BaseOpenEpdSchema):
     """A latitude and longitude."""
 
