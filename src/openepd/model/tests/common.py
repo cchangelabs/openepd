@@ -16,9 +16,12 @@
 from typing import Any, Final
 import unittest
 
-from openepd.model.common import DATA_URL_IMAGE_MAX_LENGTH
+from openepd.model.common import DATA_URL_IMAGE_MAX_LENGTH, Amount
 
-GE_REQUIRED_FIELDS: Final[dict[str, Any]] = {"id": "0197ad82-92cf-7978-a6c8-d4964c0a3624"}
+GE_REQUIRED_FIELDS: Final[dict[str, Any]] = {
+    "id": "0197ad82-92cf-7978-a6c8-d4964c0a3624",
+    "kg_per_declared_unit": Amount(qty=12.5, unit="kg").to_serializable(exclude_unset=True),
+}
 """
 Required fields for Generic Estimates to be used in tests.
 """
