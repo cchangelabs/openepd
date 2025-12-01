@@ -18,19 +18,24 @@ import unittest
 from openepd.compat.pydantic import pyd
 from openepd.model.generic_estimate import GenericEstimatePreview
 from openepd.model.industry_epd import IndustryEpdPreview
+from openepd.model.tests.common import GE_REQUIRED_FIELDS
 
 
 class AverageDatasetTestCase(unittest.TestCase):
     def test_generic_estimate_doctype(self):
-        self.assertEqual(GenericEstimatePreview.parse_obj({}).doctype, "openGenericEstimate")
+        self.assertEqual(GenericEstimatePreview.parse_obj({**GE_REQUIRED_FIELDS}).doctype, "openGenericEstimate")
         self.assertEqual(
-            GenericEstimatePreview.parse_obj({"doctype": "openGenericEstimate"}).doctype, "openGenericEstimate"
+            GenericEstimatePreview.parse_obj({"doctype": "openGenericEstimate", **GE_REQUIRED_FIELDS}).doctype,
+            "openGenericEstimate",
         )
-        self.assertEqual(GenericEstimatePreview.parse_obj({"id": "EC300001"}).doctype, "openGenericEstimate")
+        self.assertEqual(
+            GenericEstimatePreview.parse_obj({"id": "0197ad82-92cf-7978-a6c8-d4964c0a3624"}).doctype,
+            "openGenericEstimate",
+        )
 
         for o in [{"doctype": None}, {"doctype": "openEPD"}, {"doctype": "openIndustryEpd"}]:
             with self.assertRaises(pyd.ValidationError):
-                GenericEstimatePreview.parse_obj(o)
+                GenericEstimatePreview.parse_obj({**GE_REQUIRED_FIELDS, **o})
 
     def test_iepd_doctype(self):
         self.assertEqual(IndustryEpdPreview.parse_obj({}).doctype, "openIndustryEpd")
