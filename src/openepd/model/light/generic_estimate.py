@@ -19,10 +19,12 @@ from uuid import UUID
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
-from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
+from openepd.model.common import Amount, Constituent, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import AverageDatasetMixin, BaseDeclaration, RefBase
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org
+from openepd.model.resource import DatabaseResource, ResourceRef, SoftwareResource
+from openepd.model.validation.quantity import AmountMass
 from openepd.model.versioning import OpenEpdVersions, Version
 
 
@@ -76,6 +78,57 @@ class GenericEstimatePreviewV0(
             "Use the UUID of the original source where possible, and put any other UUIDs in alt_ids."
         ),
         example="0197ad82-92cf-7978-a6c8-d4964c0a3624",
+    )
+    kg_per_declared_unit: AmountMass = pyd.Field(
+        description="Mass of the product, in kilograms, per declared unit",
+        example=Amount(qty=12.5, unit="kg").to_serializable(exclude_unset=True),
+    )
+    reference_year: int | None = pyd.Field(
+        gt=2000,
+        description=(
+            "The year which the overall inventory represents best, considering the age/representativeness of the "
+            "various specific and background data included.  May be used to calculate data quality indicators."
+        ),
+        default=None,
+    )
+    composition: list[Constituent] | None = pyd.Field(
+        description=(
+            "List of constituent materials for use in making required declarations downstream, "
+            "such as hazardous substances."
+        ),
+        default=None,
+        max_items=255,
+    )
+    lci_databases: list[DatabaseResource] | list[ResourceRef] | None = pyd.Field(
+        description="LCI Database(s) and Version",
+        default=None,
+        example=[
+            {
+                "owner": {"web_domain": "ecoinvent.org"},
+                "name": "ecoinvent",
+                "version": "3.10",
+                "link": "https://support.ecoinvent.org/ecoinvent-version-3.10",
+            },
+            {
+                "owner": {"web_domain": "lcacommons.gov"},
+                "name": "ULSCI",
+                "version": "FY24.Q3.01",
+                "link": "https://www.lcacommons.gov/lca-collaboration/National_Renewable_Energy_Laboratory/USLCI_Database_Public/datasets",
+            },
+        ],
+    )
+    software_used: list[SoftwareResource] | list[ResourceRef] | None = pyd.Field(
+        description="List of software tool(s) and version(s) used for LCA and/or EPD generation.",
+        default=None,
+        example=[
+            {
+                "owner": {"web_domain": "greendelta.com"},
+                "primary_function": "LCA Analysis",
+                "name": "openLCA",
+                "version": "2.3.1",
+                "link": "https://share.greendelta.com/index.php/s/D1xa3haTiHJdhqt?path=%2F2.3.1",
+            }
+        ],
     )
 
     publisher: Org | None = pyd.Field(description="Organization that published the LCA results.")
