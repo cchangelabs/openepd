@@ -24,7 +24,7 @@ from openepd.model.versioning import OpenEpdVersions, Version
 from .light.generic_estimate import GenericEstimatePreviewV0 as GenericEstimatePreviewV0Light
 
 # Import light versions here for compatibility reasons so they are available from the same import location
-from .light.generic_estimate import GenericEstimateRef  # noqa: F401
+from .light.generic_estimate import GenericEstimateRef, LicenseTerms  # noqa: F401
 
 
 class GenericEstimatePreviewV0(
