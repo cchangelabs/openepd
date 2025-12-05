@@ -13,4 +13,15 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-VERSION = "6.33.0"
+from openepd.compat.pydantic import pyd
+
+from .range import SpecsRange
+
+
+class AverageDatasetMaterialSpecsMixin(pyd.BaseModel, title="Average Dataset Material Specs"):
+    """Material specs fields for average dataset (Industry-wide EPDs, Generic Estimates)."""
+
+    specs: SpecsRange | None = pyd.Field(
+        default=None,
+        description="Average dataset material performance specifications.",
+    )

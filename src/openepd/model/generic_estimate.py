@@ -13,69 +13,29 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from enum import StrEnum
-from typing import Literal
-
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
-from openepd.model.common import WithAltIdsMixin, WithAttachmentsMixin
-from openepd.model.declaration import AverageDatasetMixin, BaseDeclaration, RefBase
+from openepd.model.common import WithAltIdsMixin
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org
+from openepd.model.specs.mixins import AverageDatasetMaterialSpecsMixin
 from openepd.model.versioning import OpenEpdVersions, Version
 
+from .light.generic_estimate import GenericEstimatePreviewV0 as GenericEstimatePreviewV0Light
 
-class LicenseTerms(StrEnum):
-    """Licensing terms."""
-
-    CC_BY = "CC-BY"
-    """
-    Creative Commons attribution-only license https://creativecommons.org/licenses/by/4.0/.
-    """
-    ODbL = "ODbL"
-    """
-    Open Database License per https://opendatacommons.org/licenses/odbl/
-    """
-    Government = "Government"
-    """
-    The data is offered at no charge by a government body such as the USDA or Okobaudat.
-    """
-    Other = "Other"
-    """
-    Review estimate documentation to determine license terms.
-    """
-
-
-class GenericEstimateRef(RefBase, title="Generic Estimate (Ref)"):
-    """Reference (short) version of Generic Estimate object."""
+# Import light versions here for compatibility reasons so they are available from the same import location
+from .light.generic_estimate import GenericEstimateRef, LicenseTerms  # noqa: F401
 
 
 class GenericEstimatePreviewV0(
-    WithAttachmentsMixin, AverageDatasetMixin, GenericEstimateRef, BaseDeclaration, title="Generic Estimate (preview)"
+    GenericEstimatePreviewV0Light,
+    AverageDatasetMaterialSpecsMixin,
 ):
     """
     Generic Estimate preview, used in API list responses and where there is no need for a full object.
 
     Excludes LCIA data.
     """
-
-    _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
-
-    doctype: Literal["openGenericEstimate"] = pyd.Field(
-        description='Describes the type and schema of the document. Must always be "openGenericEstimate"',
-        default="openGenericEstimate",
-    )
-
-    publisher: Org | None = pyd.Field(description="Organization that published the LCA results.")
-    reviewer: Org | None = pyd.Field(description="Org that performed a critical review of the LCA.")
-    reviewer_email: pyd.EmailStr | None = pyd.Field(
-        description="Email address of the third party verifier", example="john.doe@example.com", default=None
-    )
-
-    license_terms: LicenseTerms | None = pyd.Field(description="The license terms for use of the data.")
-    model_repository: pyd.AnyUrl | None = pyd.Field(
-        default=None, description="A link to the shared git repository containing the LCA model used for this estimate."
-    )
 
 
 GenericEstimatePreview = GenericEstimatePreviewV0

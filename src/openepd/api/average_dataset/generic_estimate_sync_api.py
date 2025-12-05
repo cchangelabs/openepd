@@ -140,7 +140,7 @@ class GenericEstimateApi(BaseApiMethodGroup):
 
         response = self._client.do_request(
             "put",
-            f"/generic_estimates/{encode_path_param(ge_id)}",
+            f"/generic_estimates/{encode_path_param(str(ge_id))}",
             json=ge.to_serializable(exclude_unset=True, exclude_defaults=True, by_alias=True),
         )
         content = response.json()

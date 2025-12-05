@@ -5,7 +5,7 @@
 #  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-#     http://www.apache.dto_class/licenses/LICENSE-2.0
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
 #  Unless required by applicable law or agreed to in writing, software
 #  distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,9 +13,18 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from typing import Any, Final
 import unittest
 
-from openepd.model.common import DATA_URL_IMAGE_MAX_LENGTH
+from openepd.model.common import DATA_URL_IMAGE_MAX_LENGTH, Amount
+
+GE_REQUIRED_FIELDS: Final[dict[str, Any]] = {
+    "id": "0197ad82-92cf-7978-a6c8-d4964c0a3624",
+    "kg_per_declared_unit": Amount(qty=12.5, unit="kg").to_serializable(exclude_unset=True),
+}
+"""
+Required fields for Generic Estimates to be used in tests.
+"""
 
 
 class ImageFieldTestCase(unittest.TestCase):

@@ -14,9 +14,9 @@
 #  limitations under the License.
 #
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes, RootDocumentFactory
-from openepd.model.epd import EpdFactory
-from openepd.model.generic_estimate import GenericEstimateFactory
-from openepd.model.industry_epd import IndustryEpdFactory
+from openepd.model.light.epd import EpdFactory
+from openepd.model.light.generic_estimate import GenericEstimateFactory
+from openepd.model.light.industry_epd import IndustryEpdFactory
 
 
 class DocumentFactory(RootDocumentFactory):
@@ -24,6 +24,6 @@ class DocumentFactory(RootDocumentFactory):
 
     DOCTYPE_TO_FACTORY: dict[OpenEpdDoctypes, type[BaseDocumentFactory]] = {
         OpenEpdDoctypes.Epd: EpdFactory,
-        OpenEpdDoctypes.GenericEstimate: GenericEstimateFactory,
         OpenEpdDoctypes.IndustryEpd: IndustryEpdFactory,
+        OpenEpdDoctypes.GenericEstimate: GenericEstimateFactory,
     }
