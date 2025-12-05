@@ -1,3 +1,14 @@
+## 7.16.0 (2025-12-05)
+
+### Feat
+
+- update GenericEstimate model with new fields
+- switch identifier from OpenXpdUUID to UUID for GenericEstimate models
+
+### Fix
+
+- update Generic Estimates imports for backwards compatibility
+
 ## 7.15.0 (2025-11-27)
 
 ### Feat
