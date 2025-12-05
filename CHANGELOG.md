@@ -1,3 +1,21 @@
+## 6.33.0 (2025-12-05)
+
+### Feat
+
+- update GenericEstimate model with new fields
+- switch identifier from OpenXpdUUID to UUID for GenericEstimate models
+- add lightweight version of Generic Estimate object
+- add lightweight version of Industry EPD object
+- add lightweight version of EPD object
+
+### Fix
+
+- update Generic Estimates imports for backwards compatibility
+
+### Refactor
+
+- extract RangeSpecs field into dedicated mixin
+
 ## 6.32.0 (2025-10-09)
 
 ### Feat
