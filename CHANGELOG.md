@@ -1,3 +1,10 @@
+## 6.34.0 (2025-12-09)
+
+### Feat
+
+- add `owner` field for Generic Estimate model
+- add `name` field for Generic Estimate model
+
 ## 6.33.0 (2025-12-05)
 
 ### Feat

@@ -72,6 +72,11 @@ class GenericEstimatePreviewV0(
         description='Describes the type and schema of the document. Must always be "openGenericEstimate"',
         default="openGenericEstimate",
     )
+    name: str = pyd.Field(
+        max_length=200,
+        description="Name. Recommended < 80 chars.",
+        example="Aluminium profiles for windows, doors, and facades - anodized",
+    )
     id: UUID = pyd.Field(  # type: ignore[assignment]
         description=(
             "Unique UUID for this dataset."
@@ -136,6 +141,7 @@ class GenericEstimatePreviewV0(
     reviewer_email: pyd.EmailStr | None = pyd.Field(
         description="Email address of the third party verifier", example="john.doe@example.com", default=None
     )
+    owner: Org | None = pyd.Field(description="Org who owns or publishes this dataset.", default=None)
 
     license_terms: LicenseTerms | None = pyd.Field(description="The license terms for use of the data.")
     model_repository: pyd.AnyUrl | None = pyd.Field(
