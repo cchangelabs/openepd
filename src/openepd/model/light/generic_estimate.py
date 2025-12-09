@@ -72,6 +72,11 @@ class GenericEstimatePreviewV0(
         description='Describes the type and schema of the document. Must always be "openGenericEstimate"',
         default="openGenericEstimate",
     )
+    name: str = pyd.Field(
+        max_length=200,
+        description="Name. Recommended < 80 chars.",
+        example="Aluminium profiles for windows, doors, and facades - anodized",
+    )
     id: UUID = pyd.Field(  # type: ignore[assignment]
         description=(
             "Unique UUID for this dataset."
