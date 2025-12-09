@@ -148,6 +148,7 @@ class GenericEstimatePreviewV0(
         examples=["john.doe@example.com"],
         default=None,
     )
+    owner: Org | None = pydantic.Field(description="Org who owns or publishes this dataset.", default=None)
 
     license_terms: LicenseTerms | None = pydantic.Field(
         description="The license terms for use of the data.", default=None
