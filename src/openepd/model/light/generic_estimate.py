@@ -73,6 +73,11 @@ class GenericEstimatePreviewV0(
         description='Describes the type and schema of the document. Must always be "openGenericEstimate"',
         default="openGenericEstimate",
     )
+    name: str = pydantic.Field(
+        max_length=200,
+        description="Name. Recommended < 80 chars.",
+        examples=["Aluminium profiles for windows, doors, and facades - anodized"],
+    )
     id: UUID = pydantic.Field(  # type: ignore[assignment]
         description=(
             "Unique UUID for this dataset."
