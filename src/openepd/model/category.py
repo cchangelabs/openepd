@@ -24,7 +24,7 @@ from openepd.model.common import Amount
 class Category(BaseOpenEpdSchema):
     """DTO for Category model, recursive."""
 
-    id: str = pydantic.Field(description="Category short ID (readable unique string)")
+    id: str = pydantic.Field(description="Category short ID (readable unique string)", alias="unique_name")
     name: str = pydantic.Field(
         default="",
         description="(deprecated) Category display name (user-friendly)",
