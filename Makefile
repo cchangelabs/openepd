@@ -252,4 +252,4 @@ codegen-internal:
        echo "DONE: Generating code"; \
     )
 
-codegen: codegen-internal isort copyright format
+codegen: codegen-internal copyright format
