@@ -48,3 +48,36 @@ class CategoryTestCase(unittest.TestCase):
             subcategories=[],
         )
         self.assertEqual(category.name, "Display Name")
+
+    def test_id_and_alias_unique_name(self) -> None:
+        """Test that Category.id is correctly set and that the alias 'unique_name' works for both input and output."""
+        # Test initialization with 'id'
+        category = Category(
+            id="cat3",
+            name="Name",
+            display_name="Name",
+            short_name="Short",
+            openepd_hierarchical_name="cat3",
+            masterformat=None,
+            description=None,
+            declared_unit=None,
+            subcategories=[],
+        )
+        self.assertEqual(category.id, "cat3")
+        # Test serialization uses 'id'
+        data = category.dict(by_alias=False)
+        self.assertIn("id", data)
+        self.assertEqual(data["id"], "cat3")
+        # Test initialization with alias 'unique_name'
+        category2 = Category(
+            unique_name="cat4",
+            name="Name",
+            display_name="Name",
+            short_name="Short",
+            openepd_hierarchical_name="cat4",
+            masterformat=None,
+            description=None,
+            declared_unit=None,
+            subcategories=[],
+        )
+        self.assertEqual(category2.id, "cat4")
