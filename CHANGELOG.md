@@ -1,3 +1,9 @@
+## 7.17.2 (2025-12-11)
+
+### Fix
+
+- export missing symbols in __all__ to satisfy mypy
+
 ## 7.17.1 (2025-12-11)
 
 ### Fix

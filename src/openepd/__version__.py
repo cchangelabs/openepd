@@ -13,4 +13,4 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-VERSION = "7.17.1"
+VERSION = "7.17.2"
