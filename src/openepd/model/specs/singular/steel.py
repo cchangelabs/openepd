@@ -17,6 +17,8 @@ from typing import Annotated
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec, CodegenSpec
 from openepd.model.specs.enums import SteelComposition, SteelRebarGrade
 from openepd.model.standard import Standard
@@ -71,6 +73,13 @@ class HollowSectionsV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
     """Hollow cross section steel shape, typically referred to as hollow structural section (HSS)."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="HollowSections",
+        display_name="Hollow Sections",
+        masterformat="05 12 00 Structural Steel Framing",
+        description="ollow cross section steel shape, typically referred to as hollow structural section (HSS)",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class HotRolledSectionsV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
@@ -93,7 +102,17 @@ class PlateSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
     """
 
     _EXT_VERSION = "1.0"
-
+    _CATEGORY_META = CategoryMeta(
+        unique_name="PlateSteel",
+        display_name="Plate Steel",
+        short_name="Plate",
+        masterformat="05 12 00 STRUCTURAL STEEL FRAMING",
+        description=(
+            "Flat hot-rolled steel, typically thicker than 'sheet', "
+            "made by compressing multiple steel layers together into one"
+        ),
+        declared_unit=Amount(qty=1, unit="t"),
+    )
     # Own fields:
 
 
@@ -175,7 +194,13 @@ class StructuralSteelV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
-
+    _CATEGORY_META = CategoryMeta(
+        unique_name="StructuralSteel",
+        display_name="Structural Steel",
+        masterformat="05 12 00 Structural Steel Framing",
+        description="Hot rolled steel shapes, Hollow Sections, pipes, and similar hot-worked structural steels",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
     # Own fields:
     modulus_of_elasticity: PressureMPaStr | None = pyd.Field(
         default=None,
@@ -261,6 +286,13 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
     """Broad category for construction materials made from steel and its alloys."""
 
     _EXT_VERSION = "1.2"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Steel",
+        display_name="Steel",
+        masterformat="05 00 00 Metals",
+        description="Broad category for construction materials made from steel and its alloys",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     # Own fields:
     yield_tensile_str: PressureMPaStr | None = pyd.Field(

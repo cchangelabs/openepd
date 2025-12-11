@@ -13,6 +13,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from __future__ import annotations
+
+import dataclasses
 from typing import Any
 
 from openepd.compat.pydantic import pyd
@@ -37,7 +40,7 @@ class Category(BaseOpenEpdSchema):
     masterformat: str | None = pyd.Field(description="Default category code in Masterformat")
     description: str | None = pyd.Field(description="Category verbose description")
     declared_unit: Amount | None = pyd.Field(description="Declared unit of category, for example 1 kg")
-    subcategories: list["Category"] = pyd.Field(
+    subcategories: list[Category] = pyd.Field(
         description="List of subcategories. This makes categories tree-like structure"
     )
 
@@ -61,3 +64,62 @@ class Category(BaseOpenEpdSchema):
             values["display_name"] = name
 
         return values
+
+
+@dataclasses.dataclass
+class CategoryMeta:
+    """
+    Metadata for a category node in the hierarchy.
+
+    Used with BaseOpenEpdHierarchicalSpec to declare category metadata. Provides stable identifiers, display names,
+    historical and alternative names, description, MasterFormat code, and declared unit for a category node.
+    """
+
+    unique_name: str
+    """
+    Stable, unique identifier for the category node (PascalCase).
+
+    Used as a natural key and matches property names in :class:`openepd.model.specs.singular.Specs`.
+    """
+    display_name: str
+    """
+    Human-readable display name for the category.
+
+    Intended for UI. May change over time.
+    """
+    short_name: str | None = None
+    """
+    Short, user-friendly name for the category.
+
+    Unique within its parent. If None, defaults to display_name.
+    """
+    historical_names: list[str] | None = None
+    """
+    Historical hierarchical paths to this category node.
+
+    Each path is a string using '>>' as a separator, representing a previous route through the hierarchy.
+    Unique within the tree.
+    """
+    alt_names: list[str] | None = None
+    """
+    Alternative names for the category, possibly in different languages.
+
+    Unique within the tree.
+    """
+    description: str | None = None
+    """
+    Description of the category's purpose or contents.
+    """
+    masterformat: str | None = None
+    """
+    MasterFormat code for the category.
+
+    See: https://en.wikipedia.org/wiki/MasterFormat
+    Multiple categories may share the same code, and some may not be mapped to any MasterFormat code.
+    """
+    declared_unit: Amount | None = None
+    """
+    Declared unit typically used for items in this category.
+
+    If not specified, this category does not have a stable or specific declared unit.
+    """
