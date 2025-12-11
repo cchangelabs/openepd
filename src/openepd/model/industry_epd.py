@@ -22,7 +22,7 @@ from openepd.model.versioning import OpenEpdVersions, Version
 from .light.industry_epd import IndustryEpdPreviewV0 as IndustryEpdPreviewV0Light
 
 # Import light versions here for compatibility reasons so they are available from the same import location
-from .light.industry_epd import IndustryEpdRef  # noqa: F401
+from .light.industry_epd import IndustryEpdRef, SampleSize  # noqa: F401
 
 
 class IndustryEpdPreviewV0(
