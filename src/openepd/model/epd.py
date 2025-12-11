@@ -13,6 +13,20 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+__all__ = [
+    "EpdPreviewV0",
+    "EpdPreview",
+    "EpdV0",
+    "Epd",
+    "EpdWithDepsV0",
+    "EpdWithDeps",
+    "EpdFactory",
+    "EpdRef",
+    "Ec3EpdExtension",
+    "MANUFACTURER_DESCRIPTION",
+    "PLANT_DESCRIPTION",
+]
+
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
 from openepd.model.declaration import (
