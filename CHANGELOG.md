@@ -1,3 +1,11 @@
+## 6.34.1 (2025-12-11)
+
+### Fix
+
+- add missing SampleSize import for compatibility
+- add missing PLANT_DESCRIPTION import for compatibility
+- add missing intermediate region codes to Geography enum
+
 ## 6.34.0 (2025-12-09)
 
 ### Feat
