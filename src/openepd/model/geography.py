@@ -360,8 +360,15 @@ class Geography(StrEnum):
      * m49_002: Africa
      * m49_015: Northern Africa
      * m49_202: Sub-Saharan Africa
+     * m49_014: Eastern Africa
+     * m49_017: Middle Africa
+     * m49_018: Southern Africa
+     * m49_011: Western Africa
      * m49_019: Americas
      * m49_419: Latin America and the Caribbean
+     * m49_029: Caribbean
+     * m49_013: Central America
+     * m49_005: South America
      * m49_021: Northern America
      * m49_142: Asia
      * m49_143: Central Asia
@@ -963,8 +970,15 @@ class Geography(StrEnum):
     m49_002 = "002"  # Africa
     m49_015 = "015"  # Northern Africa
     m49_202 = "202"  # Sub-Saharan Africa
+    m49_014 = "014"  # Eastern Africa
+    m49_017 = "017"  # Middle Africa
+    m49_018 = "018"  # Southern Africa
+    m49_011 = "011"  # Western Africa
     m49_019 = "019"  # Americas
     m49_419 = "419"  # Latin America and the Caribbean
+    m49_029 = "029"  # Caribbean
+    m49_013 = "013"  # Central America
+    m49_005 = "005"  # South America
     m49_021 = "021"  # Northern America
     m49_142 = "142"  # Asia
     m49_143 = "143"  # Central Asia

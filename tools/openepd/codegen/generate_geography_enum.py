@@ -54,6 +54,8 @@ def __get_m49_codes() -> dict[str, str]:
                 special_m49_codes[row["Region Code"]] = row["Region Name"]
             if row["Sub-region Code"]:
                 special_m49_codes[row["Sub-region Code"]] = row["Sub-region Name"]
+            if row["Intermediate Region Code"]:
+                special_m49_codes[row["Intermediate Region Code"]] = row["Intermediate Region Name"]
 
     return {**special_m49_codes, **result}
 
