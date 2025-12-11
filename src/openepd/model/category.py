@@ -23,7 +23,7 @@ from openepd.model.common import Amount
 class Category(BaseOpenEpdSchema):
     """DTO for Category model, recursive."""
 
-    id: str = pyd.Field(description="Category short ID (readable unique string)")
+    id: str = pyd.Field(description="Category short ID (readable unique string)", alias="unique_name")
     name: str = pyd.Field(
         default="",
         deprecated="Use `display_name` instead",
