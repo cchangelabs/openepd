@@ -67,6 +67,19 @@ class SteelSuspensionAssemblyV1(BaseOpenEpdHierarchicalSpec):
     """Steel suspension assemblies for suspended (e.g. acoustical) ceiling systems."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="SteelSuspensionAssembly",
+        display_name="Steel Suspension Assemblies",
+        short_name="Suspension Assemblies",
+        historical_names=[
+            "Steel >> Cold Formed >> Suspension Assemblies",
+            "Steel >> SteelSuspensionAssembly",
+            "Steel >> Steel Suspension Assemblies",
+        ],
+        description="Steel suspension assemblies for suspended (e.g. acoustical) ceiling systems",
+        masterformat="09 53 00 Suspension Assemblies",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class HollowSectionsV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
@@ -91,6 +104,14 @@ class HotRolledSectionsV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="HotRolledSections",
+        display_name="Hot-Rolled Sections",
+        historical_names=["Steel >> Structural Steel >> Hot-Rolled Sections"],
+        description="Steel shapes, such as angles, wide flange beams and I-beams, produced using a high temperature mill process.",
+        masterformat="05 12 00 Structural Steel Framing",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class PlateSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
@@ -120,6 +141,15 @@ class MetalRailingsV1(BaseOpenEpdHierarchicalSpec):
     """Metal Railings including pipe and tube railings."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="MetalRailings",
+        display_name="Metal Railings",
+        short_name="Railings",
+        historical_names=["Steel >> Prefab Assemb. >> Railings"],
+        description="Metal Railings including pipe and tube railings",
+        masterformat="05 52 00 Metal Railings",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class MetalStairsV1(BaseOpenEpdHierarchicalSpec):
@@ -131,12 +161,30 @@ class MetalStairsV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="MetalStairs",
+        display_name="Metal Stairs",
+        short_name="Stairs",
+        historical_names=["Steel >> Prefab Assemb. >> Stairs"],
+        description="Metal stairs including: metal pan stairs, metal floor plate stairs, grating stairs, fire escapes, ladders, and walkways/catwalks/ramps/platforms",
+        masterformat="05 51 00 Metal Stairs",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class MiscMetalFabricationV1(BaseOpenEpdHierarchicalSpec):
     """Prefabricated steel assemblies not included in another category."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="MiscMetalFabrication",
+        display_name="Misc. Metal Fabrications",
+        short_name="Misc.",
+        historical_names=["Steel >> Prefab Assemb. >> Misc."],
+        description="Prefabricated steel assemblies not included in another category.",
+        masterformat="05 50 00 Misc. Metal Fabrications",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class OpenWebMembranesV1(BaseOpenEpdHierarchicalSpec):
@@ -148,6 +196,15 @@ class OpenWebMembranesV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="OpenWebMembranes",
+        display_name="Open Web Steel Joists",
+        short_name="Open Web",
+        historical_names=["Steel >> Prefab Assemb. >> Open Web"],
+        description="Lightweight steel truss, typically made of parallel chords and a triangulated web system, proportioned to span between bearing points",
+        masterformat="05 21 19 Open Web Steel Joist Framing",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class MBQSteelV1(BaseOpenEpdHierarchicalSpec):
@@ -235,6 +292,15 @@ class PrefabricatedSteelAssembliesV1(BaseOpenEpdHierarchicalSpec):
     """Prefabricated assemblies made primarily of steel."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="PrefabricatedSteelAssemblies",
+        display_name="Prefabricated Steel Assemblies",
+        short_name="Prefab Assemb.",
+        historical_names=["Steel >> Prefab Assemb."],
+        description="Prefabricated assemblies made primarily of steel.",
+        masterformat="05 00 00 Metals",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     # Nested specs:
     MetalRailings: MetalRailingsV1 | None = None
@@ -247,12 +313,32 @@ class PostTensioningSteelV1(BaseOpenEpdHierarchicalSpec):
     """Steel tensioning cables or tendons for compression of prestressed concrete."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="PostTensioningSteel",
+        display_name="Post-Tensioning Steel",
+        short_name="Post-Tensioning",
+        alt_names=["Post-Tension Steel", "PT Tendons", "PT Steel"],
+        historical_names=["Steel >> Post-Tensioning"],
+        description="Steel tensioning cables or tendons for compression of prestressed concrete",
+        masterformat="03 23 00 Stressed Tendon Reinforcing",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class RebarSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
     """Reinforcing bar used together with concrete."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="RebarSteel",
+        display_name="Reinforcing Bar",
+        short_name="Rebar",
+        alt_names=["Concrete Reinforcing", "Concrete Reinforcement"],
+        historical_names=["Steel >> Rebar"],
+        description="Reinforcing bar used together with concrete.",
+        masterformat="03 21 00 Reinforcement Bars",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     # Own fields:
     grade: SteelRebarGrade | None = pyd.Field(default=None, example="60 ksi")
@@ -268,6 +354,16 @@ class WireMeshSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
     """Mild steel wire for reinforcement, connections, and meshes."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="WireMeshSteel",
+        display_name="Reinforcing Wire and Mesh",
+        short_name="Wire & Mesh",
+        alt_names=["Wire Rod", "Wire Mesh", "Structural Welded Wire", "WWF", "Welded Wire Fabric"],
+        historical_names=["Steel >> Wire & Mesh"],
+        description="Mild steel wire for reinforcement, connections, and meshes",
+        masterformat="03 22 00 Fabric and Grid Reinforcing",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class OtherSteelV1(BaseOpenEpdHierarchicalSpec):
@@ -280,6 +376,15 @@ class CrudeSteelV1(BaseOpenEpdHierarchicalSpec):
     """Steel ingots, billets, blooms, and slabs for use in manufacturing steel products."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CrudeSteel",
+        display_name="Crude Steel",
+        short_name="Crude",
+        historical_names=["Steel >> Crude"],
+        description="Steel ingots, billets, blooms, and slabs for use in manufacturing steel products.",
+        masterformat="05 00 00 Metals",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class SteelV1(BaseOpenEpdHierarchicalSpec):
