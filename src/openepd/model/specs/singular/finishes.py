@@ -14,6 +14,8 @@
 #  limitations under the License.
 #
 from openepd.compat.pydantic import pyd
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     AllFabrication,
@@ -63,12 +65,28 @@ class AccessFlooringV1(BaseOpenEpdHierarchicalSpec, AccessFlooringMixin):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="AccessFlooring",
+        display_name="Access Flooring",
+        historical_names=["Finishes >> Flooring >> Access Flooring"],
+        description="Elevated floor system built on top of concrete slab surface, thereby creating a hidden void between the two floors that is used for the passage of mechanical and electrical services. The system consists of panels, stringers, and pedestals.",
+        masterformat="09 69 00 Access Flooring",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class CarpetV1(BaseOpenEpdHierarchicalSpec):
     """Textile Floor Coverings."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Carpet",
+        display_name="Carpet",
+        alt_names=["Carpeting", "Textile Flooring"],
+        description="Textile Floor Coverings",
+        masterformat="09 68 00 Carpeting",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     length: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
@@ -98,12 +116,28 @@ class LaminateV1(BaseOpenEpdHierarchicalSpec):
     """Laminate flooring."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Laminate",
+        display_name="Laminate",
+        alt_names=["Laminates"],
+        description="Laminate flooring",
+        masterformat="09 62 19 Laminate Flooring",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class OtherFlooringV1(BaseOpenEpdHierarchicalSpec):
     """Other not yet classified kinds of flooring."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="OtherFlooring",
+        display_name="Other Flooring",
+        historical_names=["Finishes >> Flooring >> Other Flooring"],
+        description="Other not yet classified kinds of flooring",
+        masterformat="09 60 00 Flooring",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class ResilientFlooringV1(BaseOpenEpdHierarchicalSpec):
@@ -114,6 +148,15 @@ class ResilientFlooringV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ResilientFlooring",
+        display_name="Resilient Flooring",
+        alt_names=["Vinyl Flooring", "Cork Flooring", "Linoleum"],
+        historical_names=["Finishes >> Flooring >> Resilient Flooring"],
+        description="Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes",
+        masterformat="09 65 00 Resilient Flooring",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     length: LengthMStr | None = pyd.Field(default=None, description="", example="1 m")
@@ -135,6 +178,14 @@ class WallBaseV1(BaseOpenEpdHierarchicalSpec):
     """Wall base made to help cover gaps between wall and vinyl, rubber, wood, or tile flooring."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="WallBase",
+        display_name="Wall Base",
+        historical_names=["Finishes >> Flooring >> Wall Base"],
+        description="Wall base made to help cover gaps between wall and vinyl, rubber, wood, or tile flooring.",
+        masterformat="09 65 13 Resilient Base and Accessories",
+        declared_unit=Amount(qty=1, unit="m"),
+    )
 
     # Own fields:
     wall_base_material: WallBaseMaterial | None = pyd.Field(default=None, description="", example="Rubber")
@@ -149,6 +200,14 @@ class WoodFlooringV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="WoodFlooring",
+        display_name="Wood Flooring",
+        historical_names=["Finishes >> Flooring >> Wood Flooring"],
+        description="Wood flooring for interior applications including hardwood strip and plank flooring, engineered hardwood flooring, wood parquet flooring, coordinated transitions, and molding pieces.",
+        masterformat="09 64 00 Wood Flooring",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
@@ -160,6 +219,15 @@ class AcousticalCeilingsV1(BaseOpenEpdHierarchicalSpec):
     """Acoustical ceiling panels."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="AcousticalCeilings",
+        display_name="Acoustical Ceilings",
+        alt_names=["Acoustical Panels"],
+        historical_names=["Finishes >> Ceiling Panels >> Acoustical Ceilings"],
+        description="Acoustical ceiling panels",
+        masterformat="09 51 00 Acoustical Ceilings",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")
@@ -169,6 +237,15 @@ class CeramicTileV1(BaseOpenEpdHierarchicalSpec):
     """Ceramic tiles, including porcelain, quarry, pressed floor tile, wall tile, mosaic tile, etc."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CeramicTile",
+        display_name="Ceramic Tile",
+        short_name="Ceramic",
+        historical_names=["Finishes >> Tiling >> Ceramic"],
+        description="Ceramic tiles, including porcelain, quarry, pressed floor tile, wall tile, mosaic tile, etc.",
+        masterformat="09 31 00 Ceramic Tile",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     porcelain: bool | None = pyd.Field(
@@ -212,6 +289,15 @@ class GaugedTileV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="GaugedTile",
+        display_name="Gauged Tile",
+        short_name="Gauged",
+        historical_names=["Finishes >> Tiling >> Gauged"],
+        description="Specially manufactured porcelain tile with extra-large panels/slabs manufactured to a specific thickness ranging from 2-20 mm",
+        masterformat="09 31 00 Ceramic Tile",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     tile_panels: bool | None = pyd.Field(
@@ -234,6 +320,15 @@ class GlassTileV1(BaseOpenEpdHierarchicalSpec):
     """Glass Tiles."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="GlassTile",
+        display_name="Glass Tile",
+        short_name="Glass",
+        historical_names=["Finishes >> Tiling >> Glass"],
+        description="Glass Tiles",
+        masterformat="09 35 00 Glass Mosaic Tile",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     regular: bool | None = pyd.Field(
@@ -272,6 +367,13 @@ class FlooringV1(BaseOpenEpdHierarchicalSpec):
     """General category - finishes for floors."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Flooring",
+        display_name="Flooring",
+        description="General category - finishes for floors",
+        masterformat="09 60 00 Flooring",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Nested specs:
     AccessFlooring: AccessFlooringV1 | None = None
@@ -287,6 +389,15 @@ class CeilingPanelV1(BaseOpenEpdHierarchicalSpec):
     """Acoustical and other specialty ceiling panels."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CeilingPanel",
+        display_name="Ceiling Panels",
+        alt_names=["Hung Ceiling", "Ceiling Tile"],
+        historical_names=["Finishes >> Ceiling Panels"],
+        description="Acoustical and other specialty ceiling panels",
+        masterformat="09 50 00 Ceilings",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
     """Modular Ceiling Panels"""
 
     # Own fields:
@@ -311,12 +422,29 @@ class BackingAndUnderlayV1(BaseOpenEpdHierarchicalSpec):
     """Cementitious, glass-mat faced gypsum, and fibered gypsum backing boards to support finish materials."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="BackingAndUnderlay",
+        display_name="Backing&Underlay",
+        alt_names=["Subfloor"],
+        historical_names=["Finishes >> Backing&Underlay"],
+        description="Cementitious, glass-mat faced gypsum, and fibered gypsum backing boards to support finish materials",
+        masterformat="09 28 00 Backing Boards and Underlayments",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class CementBoardV1(BaseOpenEpdHierarchicalSpec):
     """Hard cementitious boards, typically used as a tile backer."""
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CementBoard",
+        display_name="Cement Board",
+        historical_names=["Finishes >> Cement Board"],
+        description="Hard cementitious boards, typically used as a tile backer.",
+        masterformat="09 28 13 Cementitious Backing Board",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     thickness: CementBoardThickness | None = pyd.Field(
@@ -336,6 +464,13 @@ class TilingV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Tiling",
+        display_name="Tiling",
+        description="Decorative building materials that includes a variety of ceramic, porcelain, and glass tiles, used for covering and enhancing surfaces such as floors, walls, and countertops.",
+        masterformat="09 30 00 Tiling",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="9 mm")
@@ -395,6 +530,14 @@ class DeckingBoardsV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers)
     """Decking boards provide the finished surface of a deck and support the weight of people and furniture."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="DeckingBoards",
+        display_name="Decking Boards",
+        historical_names=["Finishes >> Decking Boards"],
+        description="Decking boards provide the finished surface of a deck and support the weight of people and furniture.",
+        masterformat="06 00 00 Wood, Plastics & Composites",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     timber_species: SawnTimberSpecies | None = pyd.Field(default=None, description="", example="Alaska Cedar")
@@ -409,12 +552,30 @@ class GlassFiberReinforcedGypsumFabricationsV1(BaseOpenEpdHierarchicalSpec):
     """Gypsum with integrated glass fiber reinforcement, which may be fabricated in complex shapes or as a board."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="GlassFiberReinforcedGypsumFabrications",
+        display_name="Glass Fiber Reinforced Gypsum Fabrications",
+        short_name="GFRG Fabrications",
+        historical_names=["Finishes >> GFRG Fabrications"],
+        description="Gypsum with integrated glass fiber reinforcement, which may be fabricated in complex shapes or as a board.",
+        masterformat="09 27 13 Glass-Fiber-Reinforced Gypsum Fabrications",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class GypsumV1(BaseOpenEpdHierarchicalSpec):
     """Gypsum board used for interior walls, ceilings, and similar applications."""
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Gypsum",
+        display_name="Gypsum Board",
+        alt_names=["Drywall", "Gyp board", "gypsum board"],
+        historical_names=["Finishes >> Gypsum Board"],
+        description="Gypsum board used for interior walls, ceilings, and similar applications.",
+        masterformat="09 29 00 Gypsum Board",
+        declared_unit=Amount(qty=1000, unit="sqft"),
+    )
 
     # Own fields:
     fire_rating: GypsumFireRating | None = pyd.Field(default=None, description="", example="-")
@@ -519,6 +680,12 @@ class FinishesV1(BaseOpenEpdHierarchicalSpec):
     """General category - finishes for interior ceilings, floors, walls."""
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Finishes",
+        display_name="Finishes",
+        description="General category - finishes for interior ceilings, floors, walls",
+        masterformat="09 00 00 Finishes",
+    )
 
     # Nested specs:
     Flooring: FlooringV1 | None = None
