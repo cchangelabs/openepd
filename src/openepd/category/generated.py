@@ -49,6 +49,15 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "ConstructionMaterials",
         },
         {
+            "unique_name": "ColdFormedSteel",
+            "display_name": "Cold Formed Steel",
+            "hierarchical_name": "Steel >> ColdFormedSteel",
+            "description": "All types of cold formed steel products. These products are made from hot-rolled steel coils and sheets and are cold formed into products such as studs, decking, panels, and other accessories.",
+            "masterformat": "05 40 00 Cold-Formed Metal Framing",
+            "declared_unit": Amount(qty=1.0, unit="t"),
+            "parent": "Steel",
+        },
+        {
             "unique_name": "SteelSuspensionAssembly",
             "display_name": "Steel Suspension Assemblies",
             "hierarchical_name": "Steel >> ColdFormedSteel >> SteelSuspensionAssembly",
