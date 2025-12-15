@@ -289,7 +289,7 @@ class ElectricityFromPowerGridV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
     _CATEGORY_META = CategoryMeta(
         unique_name="ElectricityFromPowerGrid",
-        display_name="Eletricity from Power Grid",
+        display_name="Electricity from Power Grid",
         short_name="Grid Electricity",
         historical_names=["Electrical >> Power >> Grid Electricity"],
         description="Electrical energy drawn from a specific utility grid.",
