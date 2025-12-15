@@ -666,6 +666,14 @@ class PlasterV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Plaster",
+        display_name="Plaster, Stucco, & Render",
+        short_name="Plaster",
+        description="Used for the protective or decorative coating of walls and ceilings and for moulding and casting decorative elements. These are typically gypsum-, lime-, or cement-based. Products in this category refer to dry mix.",
+        masterformat="09 24 00 Cement Plastering",
+        declared_unit=Amount(qty=1, unit="kg"),
+    )
 
     # Own fields:
     composition: PlasterComposition | None = pyd.Field(default=None, description="", example="Cement")

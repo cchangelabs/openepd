@@ -371,12 +371,28 @@ class IntegratedDoorsOpeningAssembliesV1(BaseOpenEpdHierarchicalSpec):
     """Pre-installed unit that includes door, frame, and hardware."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="IntegratedDoorsOpeningAssemblies",
+        display_name="Integrated Door Opening Assemblies",
+        historical_names=["Openings >> Doors and Frames >> Integrated Door Opening Assemblies"],
+        description="Pre-installed unit that includes door, frame, and hardware",
+        masterformat="08 17 00 Integrated Door Opening Assemblies",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class MetalDoorAndFramesV1(BaseOpenEpdHierarchicalSpec):
     """Metal doors and frames."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="MetalDoorAndFrames",
+        display_name="Metal Doors and Frames",
+        historical_names=["Openings >> Doors and Frames >> Metal Doors and Frames"],
+        description="Metal doors and frames",
+        masterformat="08 11 00 Metal Doors and Frames",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class SpecialtyDoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
@@ -616,12 +632,28 @@ class CurtainWallsV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CurtainWalls",
+        display_name="Curtain Walls",
+        historical_names=["Openings >> Curtain Walls"],
+        description="Exterior skin of building where walls are non-structural and are outboard of the floor slabs, often as system of aluminum framing with vision glass and opaque panels of glass, metal, or other materials, Can be 'unitized' (prefabricated off-site) or 'stick' (fabricated on site).",
+        masterformat="08 44 00 Curtain Wall and Glazed Assemblies",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class DoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
     """Doors (the operable part) and frames (what holds the door proper)."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="DoorsAndFrames",
+        display_name="Doors and Frames",
+        historical_names=["Openings >> Doors and Frames"],
+        description="Doors (the operable part) and frames (what holds the door proper)",
+        masterformat="08 10 00 Doors and Frames",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
     # Own fields:
     height: LengthMmStr | None = pyd.Field(default=None, example="1200 mm")
@@ -735,6 +767,12 @@ class OpeningsV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Openings",
+        display_name="Openings",
+        description="General category that includes windows, storefronts, window walls, curtain walls, doors, entrances, etc.",
+        masterformat="08 00 00 Openings",
+    )
 
     # Own fields:
     thickness: LengthMmStr | None = pyd.Field(default=None, example="80 mm")
