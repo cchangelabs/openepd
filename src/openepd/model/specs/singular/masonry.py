@@ -14,6 +14,8 @@
 #  limitations under the License.
 #
 from openepd.compat.pydantic import pyd
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.quantity import (
     PressureMPaStr,
@@ -25,12 +27,29 @@ class GMUV1(BaseOpenEpdHierarchicalSpec):
     """Glass masonry unit."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="GMU",
+        display_name="Glass Masonry Unit",
+        historical_names=["Masonry >> Glass Masonry Unit"],
+        description="Glass masonry unit",
+        masterformat="04 23 00 Glass Unit Masonry",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class AutoclavedAeratedConcreteV1(BaseOpenEpdHierarchicalSpec):
     """A lightweight, precast, foamed concrete masonry building material."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="AutoclavedAeratedConcrete",
+        display_name="Autoclaved Aerated Concrete",
+        short_name="AAC",
+        historical_names=["Masonry >> AAC"],
+        description="A lightweight, precast, foamed concrete masonry building material",
+        masterformat="04 22 26 Autoclaved Aerated Concrete Unit Masonry",
+        declared_unit=Amount(qty=1, unit="m^3"),
+    )
 
     # Own fields:
     strength_28d: PressureMPaStr | None = pyd.Field(default=None, description="", example="1 MPa")
@@ -44,6 +63,14 @@ class BrickV1(BaseOpenEpdHierarchicalSpec):
     """Solid masonry units made from clay or shale."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Brick",
+        display_name="Brick",
+        alt_names=["Concrete Masonry Unit", "Concrete Block", "Cinder Block"],
+        description="Solid masonry units made from clay or shale",
+        masterformat="04 21 00 Clay Unit Masonry",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     # Own fields:
     building: bool | None = pyd.Field(default=None, description="", example=True)
@@ -61,6 +88,13 @@ class MasonryV1(BaseOpenEpdHierarchicalSpec):
     """Structural and/or enclosure system based on individual rigid units stacked and bound together with mortar."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Masonry",
+        display_name="Masonry",
+        description="Structural and/or enclosure system based on individual rigid units stacked and bound together with mortar",
+        masterformat="04 20 00 Unit Masonry",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     # Own fields:
     white_cement: bool | None = pyd.Field(default=None, description="", example=True)
