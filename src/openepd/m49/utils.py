@@ -14,6 +14,7 @@
 #  limitations under the License.
 #
 __all__ = [
+    "is_iso_code",
     "is_m49_code",
     "iso_to_m49",
     "m49_to_iso",
@@ -25,14 +26,14 @@ __all__ = [
 from collections.abc import Collection
 
 from openepd.m49.const import (
-    COUNTRY_VERBOSE_NAME_TO_M49,
+    COUNTRY_VERBOSE_NAME_TO_M49_LOWER,
     ISO3166_ALPHA2_TO_M49,
     M49_AREAS,
     M49_TO_COUNTRY_VERBOSE_NAME,
     M49_TO_ISO3166_ALPHA2,
     M49_TO_REGION_VERBOSE_NAME,
     OPENEPD_SPECIAL_REGIONS,
-    REGION_VERBOSE_NAME_TO_M49,
+    REGION_VERBOSE_NAME_TO_M49_LOWER,
 )
 
 
@@ -99,7 +100,9 @@ def region_and_country_names_to_m49(regions: Collection[str]) -> set[str]:
 
     result = set()
     for name in regions:
-        m49_code = REGION_VERBOSE_NAME_TO_M49.get(name.title()) or COUNTRY_VERBOSE_NAME_TO_M49.get(name.title())
+        m49_code = REGION_VERBOSE_NAME_TO_M49_LOWER.get(name.lower()) or COUNTRY_VERBOSE_NAME_TO_M49_LOWER.get(
+            name.lower()
+        )
         if not m49_code:
             msg = f"Region or country name '{name}' not found in M49 region codes."
             raise ValueError(msg)
@@ -162,7 +165,7 @@ def openepd_to_m49(regions: Collection[str]) -> set[str]:
     return result
 
 
-def m49_to_openepd(regions: list[str]) -> set[str]:
+def m49_to_openepd(regions: Collection[str]) -> set[str]:
     """
     Convert M49 region codes to OpenEPD geography definitions.
 
@@ -203,4 +206,22 @@ def is_m49_code(to_check: str) -> bool:
     :param to_check: any string
     :return: `True` if passed string is M49 code, `False` otherwise
     """
+    if not to_check:
+        return False
+    if len(to_check) != 3 or not to_check.isdigit():
+        return False
     return to_check in M49_AREAS or to_check in M49_TO_ISO3166_ALPHA2
+
+
+def is_iso_code(to_check: str) -> bool:
+    """
+    Check if passed string is ISO3166 alpha2 code.
+
+    :param to_check: any string
+    :return: `True` if passed string is ISO3166 alpha2 code, `False` otherwise
+    """
+    if not to_check:
+        return False
+    if len(to_check) != 2:
+        return False
+    return to_check.upper() in ISO3166_ALPHA2_TO_M49
