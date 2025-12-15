@@ -143,6 +143,54 @@ This behaviour is enabled by default. To disable, run the code with `OPENEPD_DIS
 
 See src/openepd/patch_pydantic.py for details.
 
+### Category Tree and Category Node
+
+The library provides a hierarchical category system for organizing materials:
+
+```python
+from openepd.category import CATEGORY_TREE, CategoryNode
+
+# Find a category by name
+concrete_category = CATEGORY_TREE.find_one("Concrete")
+
+# Access category properties
+print(concrete_category.display_name)
+print(concrete_category.unique_name)
+print(concrete_category.description)
+
+# Traverse the category hierarchy
+for child in concrete_category.children:
+    print(f"Subcategory: {child.display_name}")
+
+# Get all ancestors (parent categories)
+ancestors = concrete_category.ancestors
+
+# Check if it's a leaf or root node
+if concrete_category.is_leaf:
+    print("This is a leaf category (no subcategories)")
+
+if concrete_category.is_root:
+    print("This is the root category")
+
+# Convert category to DTO for serialization
+category_dto = concrete_category.as_dto()
+
+# Clone the entire tree for modifications
+cloned_tree = CATEGORY_TREE.clone()
+custom_category = cloned_tree.root_node.create_child_node(
+    unique_name="CustomMaterial",
+    display_name="Custom Material Category",
+    short_name="Custom",
+    description="A custom material category"
+)
+
+# Clone a subtree
+cloned_subtree = concrete_category.clone_tree()
+assert cloned_subtree.root_node.is_root
+
+# Find all categories matching a name
+all_steel = CATEGORY_TREE.find_all("Steel")
+```
 ### Generated enums
 
 The geography and country enums are generated from several sources, including pycountry list of 2-character country
