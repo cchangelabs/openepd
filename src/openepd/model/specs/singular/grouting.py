@@ -13,6 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -25,3 +27,11 @@ class GroutingV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Grouting",
+        display_name="Masonry Grouting",
+        short_name="Grouting",
+        description="Water-cement-sand mixture for embedding rebar in masonry walls, connecting sections of precast concrete, and filling joints and voids",
+        masterformat="03 60 00 Grouting",
+        declared_unit=Amount(qty=1, unit="kg"),
+    )

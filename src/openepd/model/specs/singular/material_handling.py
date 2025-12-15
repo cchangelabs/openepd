@@ -13,6 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -24,6 +26,14 @@ class ConveyorsV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Conveyors",
+        display_name="Conveyors",
+        historical_names=["Material Handling >> Conveyors"],
+        description="Machinery and tools designed to move materials within a facility, both manually and automatically. This includes various types of conveyors such as belt, roller, and overhead conveyors.",
+        masterformat="41 21 00 Conveyors",
+        declared_unit=Amount(qty=1, unit="m"),
+    )
 
 
 class MaterialHandlingV1(BaseOpenEpdHierarchicalSpec):
@@ -34,6 +44,14 @@ class MaterialHandlingV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="MaterialHandling",
+        display_name="Material Processing and Handling",
+        short_name="Material Handling",
+        historical_names=["Material Handling"],
+        description="Equipment and supplies for moving, storing, administering, and protecting materials during the handling process.",
+        masterformat="41 00 00 Material Processing and Handling",
+    )
 
     # Nested specs:
     Conveyors: ConveyorsV1 | None = None
