@@ -22,7 +22,7 @@ class CastDecksAndUnderlaymentV1(BaseOpenEpdHierarchicalSpec):
     """
     Cast roof deck substrate systems.
 
-    Typically made of gyspum concrete or cementitious wood fiber, that provide structural support to
+    Typically made of gypsum concrete or cementitious wood fiber, that provide structural support to
     roofing materials.
     """
 
@@ -31,7 +31,7 @@ class CastDecksAndUnderlaymentV1(BaseOpenEpdHierarchicalSpec):
         unique_name="CastDecksAndUnderlayment",
         display_name="Cast Decks and Underlayment",
         alt_names=["Cast Underlayment", "Self Levelling Underlayment"],
-        description="Cast roof deck substrate systems, typically of gyspum concrete or cementitious wood fiber, that provide structural support to roofing materials",
-        masterformat="03 54 00 CAST UNDERLAYMENT",
+        description="Cast roof deck substrate systems, typically of gypsum concrete or cementitious wood fiber, that provide structural support to roofing materials",
+        masterformat="03 54 00 Cast Underlayment",
         declared_unit=Amount(qty=1, unit="t"),
     )
