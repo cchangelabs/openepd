@@ -51,7 +51,7 @@ class EscalatorsV1(BaseOpenEpdHierarchicalSpec):
         unique_name="Escalators",
         display_name="Escalators",
         historical_names=["Conveying Equipment >> Escalators"],
-        description="A moving staircase consisting of a circulating belt of steps driven by a motor, whiceh conveys people between the floors of a building",
+        description="A moving staircase consisting of a circulating belt of steps driven by a motor, which conveys people between the floors of a building",
         masterformat="14 31 00 Escalators",
         declared_unit=Amount(qty=1, unit="item"),
     )
