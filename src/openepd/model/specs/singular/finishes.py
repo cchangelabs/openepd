@@ -361,6 +361,14 @@ class GypsumSupportsV1(BaseOpenEpdHierarchicalSpec):
     """Supports for suspended and furred gypsum wall and ceiling assemblies."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="GypsumSupports",
+        display_name="Gypsum Supports",
+        historical_names=["Finishes >> Gypsum Board >> Gypsum Supports"],
+        description="Supports for suspended and furred gypsum wall and ceiling assemblies",
+        masterformat="09 22 00 Supports for Plaster and Gypsum Board",
+        declared_unit=Amount(qty=1000, unit="sqft"),
+    )
 
 
 class FlooringV1(BaseOpenEpdHierarchicalSpec):
@@ -605,6 +613,14 @@ class MirrorsV1(BaseOpenEpdHierarchicalSpec):
     """Mirrors."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Mirrors",
+        display_name="Mirrors",
+        alt_names=["Mirror"],
+        description="Mirrors",
+        masterformat="08 83 00 Mirrors",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class PaintByMassV1(BaseOpenEpdHierarchicalSpec):
@@ -615,6 +631,15 @@ class PaintByMassV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="PaintByMass",
+        display_name="Paint By Mass",
+        short_name="By Mass",
+        historical_names=["Finishes >> Painting and Coating >> By Mass"],
+        description="Paintings and coatings measured by mass of ready-to-use product.",
+        masterformat="09 90 00 Painting and Coating",
+        declared_unit=Amount(qty=1, unit="kg"),
+    )
 
 
 class PaintByVolumeV1(BaseOpenEpdHierarchicalSpec):
@@ -625,6 +650,15 @@ class PaintByVolumeV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="PaintByVolume",
+        display_name="Paint By Volume",
+        short_name="By Volume",
+        historical_names=["Finishes >> Painting and Coating >> By Volume"],
+        description="Paintings and coatings measured by volume of ready-to-use product.",
+        masterformat="09 90 00 Painting and Coating",
+        declared_unit=Amount(qty=1, unit="m^3"),
+    )
 
 
 class PaintByAreaV1(BaseOpenEpdHierarchicalSpec):
@@ -635,12 +669,28 @@ class PaintByAreaV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="PaintByArea",
+        display_name="Paint By Area",
+        short_name="By Area",
+        historical_names=["Finishes >> Painting and Coating >> By Area"],
+        description="Paintings and coatings measured by area of host surface covered by the ready-to-use product.",
+        masterformat="09 90 00 Painting and Coating",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class PaintingAndCoatingV1(BaseOpenEpdHierarchicalSpec):
     """Paintings and coatings."""
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="PaintingAndCoating",
+        display_name="Painting and Coating",
+        historical_names=["Finishes >> Painting and Coating"],
+        description="Paintings and coatings",
+        masterformat="09 90 00 Painting and Coating",
+    )
 
     PaintByMass: PaintByMassV1 | None = None
     PaintByVolume: PaintByVolumeV1 | None = None
@@ -651,6 +701,14 @@ class WallFinishesV1(BaseOpenEpdHierarchicalSpec):
     """Interior wall coverings including fabric, textile, wood, stone, and metal products."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="WallFinishes",
+        display_name="Wall Finishes",
+        historical_names=["Finishes >> Wall Finishes"],
+        description="Interior wall coverings including fabric, textile, wood, stone, and metal products ",
+        masterformat="09 70 00 Wall Finishes",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     thickness: LengthMmStr | None = pyd.Field(default=None, description="", example="10 mm")

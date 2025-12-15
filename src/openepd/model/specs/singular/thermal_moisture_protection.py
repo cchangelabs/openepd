@@ -413,6 +413,14 @@ class ThermalMoistureProtectionV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ThermalMoistureProtection",
+        display_name="Thermal/Moisture Prot.",
+        alt_names=["Thermal and Moisture Protection"],
+        description="Broad category of materials whose function is to provide moisture and thermal protection between spaces (e.g., between the exterior and interior of a building)",
+        masterformat="07 00 00 Thermal and Moisture",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Nested specs:
     AirBarriers: AirBarriersV1 | None = None

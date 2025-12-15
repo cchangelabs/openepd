@@ -55,12 +55,31 @@ class ColdFormedFramingV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ColdFormedFraming",
+        display_name="Cold Formed Framing",
+        short_name="Framing",
+        historical_names=["Steel >> Cold Formed >> Framing"],
+        description="Cold formed steel elements such as studs and framing, typically made from coil or sheet steel and used within walls and ceilings.",
+        masterformat="05 40 00 COLD-FORMED METAL FRAMING",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class DeckingSteelV1(BaseOpenEpdHierarchicalSpec):
     """Corrugated Decking made from cold-formed sheet steel. Often filled with concrete."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="DeckingSteel",
+        display_name="Composite and Form Decks",
+        short_name="Decking",
+        alt_names=["Metal Decking", "Steel Decking", "Corrugated Steel Deck"],
+        historical_names=["Steel >> Cold Formed >> Decking", "Steel >> DeckingSteel", "Steel >> Decking"],
+        description="Corrugated Decking made from cold-formed sheet steel. Often filled with concrete.",
+        masterformat="05 31 00 Steel Decking",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class SteelSuspensionAssemblyV1(BaseOpenEpdHierarchicalSpec):
@@ -215,6 +234,16 @@ class MBQSteelV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="MBQSteel",
+        display_name="Merchant Bar (MBQ)",
+        short_name="Merchant Bar",
+        alt_names=["MBQ"],
+        historical_names=["Steel >> Merchant Bar"],
+        description="Merchant Bar Quality (MBQ) steel is used as feedstock to steel construction products, but also includes rounds, angles, and light structural shapes.",
+        masterformat="05 00 00 Metals",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class CoilSteelV1(BaseOpenEpdHierarchicalSpec):
@@ -225,6 +254,15 @@ class CoilSteelV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CoilSteel",
+        display_name="Coil Steel",
+        short_name="Coil",
+        historical_names=["Steel >> Coil"],
+        description="Sheet or strip steel, sold in rolls. Typically, coil steel is cold-formed into light gauge products.",
+        masterformat="05 00 00 Metals",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class ColdFormedSteelV1(BaseOpenEpdHierarchicalSpec):
