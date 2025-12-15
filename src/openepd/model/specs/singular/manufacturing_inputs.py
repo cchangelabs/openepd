@@ -14,6 +14,8 @@
 #  limitations under the License.
 #
 from openepd.compat.pydantic import pyd
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.concrete import Cementitious
 from openepd.model.specs.enums import (
@@ -38,6 +40,14 @@ class CementV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Cement",
+        display_name="Cement",
+        alt_names=["Ciment", "OPC", "Zement", "Blended Cement", "PLC"],
+        historical_names=["Manufacturing Inputs >> Cementitious >> Cement"],
+        description="Cements, including Portland and blended cements, that can serve as the primary binder in a concrete mix.",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     # Own fields:
     cementitious: Cementitious | None = pyd.Field(default=None, description="")
@@ -57,6 +67,13 @@ class MasonryCementV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="MasonryCement",
+        display_name="Masonry Cement",
+        historical_names=["Manufacturing Inputs >> Cementitious >> Masonry Cement"],
+        description="A cementitious product typically composed of Portland cement and hydrated lime. Masonry cement is combined with sand to make mortar",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     # Own fields:
     astm_c91_type: MasonryCementAstmC91Type | None = pyd.Field(default=None, description="", example="Type N")
@@ -66,6 +83,14 @@ class SupplementaryCementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):
     """Cementitious materials that are not effective binders when used on their own."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="SupplementaryCementitiousMaterials",
+        display_name="Supplementary Cementitious Materials",
+        short_name="SCM",
+        historical_names=["Manufacturing Inputs >> Cementitious >> SCM"],
+        description="Cementitious materials that are not effective binders when used on their own.",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     # Own fields:
     cement_scm: list[CementScm] | None = pyd.Field(default=None, description="", example=["ggbs"])
@@ -80,18 +105,42 @@ class AccessFlooringPedestalsV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="AccessFlooringPedestals",
+        display_name="Access Flooring Pedestals",
+        short_name="Pedestals",
+        historical_names=["Manufacturing Inputs >> Pedestals"],
+        description="Part of an access floor system. Pedestals are laid out on top of a floor slab and support access floor panels, creating a void space between the floor slab and finish floor.",
+        masterformat="09 69 00 Access Flooring",
+        declared_unit=Amount(qty=1, unit="kg"),
+    )
 
 
 class CarpetBackingV1(BaseOpenEpdHierarchicalSpec):
     """Fabric backing holding a carpet together."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CarpetBacking",
+        display_name="Carpet Backing",
+        historical_names=["Manufacturing Inputs >> Carpet Backing"],
+        description="Fabric backing holding a carpet together",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class CarpetFiberV1(BaseOpenEpdHierarchicalSpec):
     """Fiber yarn used in the manufacture of carpet, typically nylon or wool."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CarpetFiber",
+        display_name="Carpet Fiber",
+        alt_names=["Carpet Yarn"],
+        historical_names=["Manufacturing Inputs >> Carpet Fiber"],
+        description="Fiber yarn used in the manufacture of carpet, typically nylon or wool",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     # Own fields:
     yarn_material: CarpetYarnType | None = pyd.Field(default=None, description="", example="Nylon 6,6")
@@ -102,6 +151,14 @@ class CementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):
     """Cementitious materials performance specification."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CementitiousMaterials",
+        display_name="Cementitious Materials",
+        short_name="Cementitious",
+        historical_names=["Manufacturing Inputs >> Cementitious"],
+        description="General category for cements and cement components.",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     # Nested specs:
     Cement: CementV1 | None = None
@@ -119,6 +176,15 @@ class ConcreteAdmixturesV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ConcreteAdmixtures",
+        display_name="Concrete Admixtures",
+        short_name="Admixtures",
+        historical_names=["Manufacturing Inputs >> Admixtures"],
+        description="Concrete admixtures are chemical additives that are added to fresh concrete immediately before or during mixing. Admixtures have distinct functions and are categorized as: air-entraining, water-reducing, retarding, accelerating, and plasticizers (i.e., superplasticizers)",
+        masterformat="03 05 00.03 Concrete Admixtures",
+        declared_unit=Amount(qty=1, unit="kg"),
+    )
 
     # Own fields:
     effects: list[AdmixtureEffects] | None = pyd.Field(default=None, description="", example=["Air Entrainer"])
@@ -128,6 +194,14 @@ class TextilesV1(BaseOpenEpdHierarchicalSpec):
     """Textiles for use in manufacturing end products."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Textiles",
+        display_name="Textiles",
+        alt_names=["Cloth", "Fabric", "Leather", "Textile"],
+        historical_names=["Manufacturing Inputs >> Textiles"],
+        description="Textiles for use in manufacturing end products.",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     fabric_type: list[TextilesFabricType] | None = pyd.Field(default=None, description="", example=["Leather"])
@@ -141,12 +215,29 @@ class AccessFlooringPanelsV1(BaseOpenEpdHierarchicalSpec, AccessFlooringMixin):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="AccessFlooringPanels",
+        display_name="Access Floor Panels",
+        short_name="Panels",
+        historical_names=["Manufacturing Inputs >> Panels"],
+        description="Part of an access floor system. Panels are laid on top of an access floor pedestal, creating a finish floor.",
+        masterformat="09 69 00 Access Flooring",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class AsphaltInputsV1(BaseOpenEpdHierarchicalSpec):
     """Binders, additives, and other non-aggregate-like ingredients for asphalt."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="AsphaltInputs",
+        display_name="Asphalt Binders & Additives",
+        short_name="Asphalt Inputs",
+        historical_names=["Manufacturing Inputs >> Asphalt Inputs"],
+        description="Binders, additives, and other non-aggregate-like ingredients for asphalt",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
 
 class ManufacturingInputsV1(BaseOpenEpdHierarchicalSpec):
@@ -158,6 +249,11 @@ class ManufacturingInputsV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.2"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ManufacturingInputs",
+        display_name="Manufacturing Inputs",
+        description="Broad category for collecting materials primarily used as manufacturing inputs, rather than directly used in a construction.",
+    )
 
     # Nested specs:
     AccessFlooringPedestals: AccessFlooringPedestalsV1 | None = None

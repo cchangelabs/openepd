@@ -253,3 +253,19 @@ codegen-internal:
     )
 
 codegen: codegen-internal copyright format
+
+# Generate the OpenEPD category tree Python module from the category specification.
+# This target runs the category tree code generator script and writes the output to the generated.py file.
+.PHONY: codegen-category-tree-internal
+codegen-category-tree-internal:
+	@( \
+	   $(call activate_venv) \
+       echo "Generating code..."; \
+       PYTHONPATH=$PYTHONPATH:./src python ./tools/openepd/codegen/generate_category_tree.py > ./src/openepd/category/generated.py; \
+       echo "DONE: Generating code"; \
+    )
+
+# Generate the OpenEPD category tree and apply copyright and formatting.
+# This target depends on codegen-category-tree-internal, copyright, and format.
+.PHONY: codegen-category-tree
+codegen-category-tree: codegen-category-tree-internal copyright format

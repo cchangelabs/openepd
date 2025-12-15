@@ -14,6 +14,8 @@
 #  limitations under the License.
 #
 from openepd.compat.pydantic import pyd
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     CableTraysMaterial,
@@ -40,6 +42,15 @@ class PDUV1(BaseOpenEpdHierarchicalSpec):
     """Devices with multiple outputs designed to distribute power, often in a data center cabinet."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="PDU",
+        display_name="Power Distribution Units (PDUs)",
+        short_name="PDU",
+        historical_names=["Network Infrastructure >> PDU"],
+        description="Devices with multiple outputs designed to distribute power, often in a data center cabinet",
+        masterformat="26 27 33 Power Distribution",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
     # Own fields:
     amperage: ElectricalCurrentStr | None = pyd.Field(default=None, description="", example="1 A")
@@ -55,6 +66,15 @@ class CabinetsRacksAndEnclosuresV1(BaseOpenEpdHierarchicalSpec):
     """Physical support upon which network equipment is mounted. Includes cabinets, racks, frames, and enclosures."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CabinetsRacksAndEnclosures",
+        display_name="Cabinets, Racks, and Enclosures",
+        short_name="Racks",
+        historical_names=["Network Infrastructure >> Racks"],
+        description="Physical support upon which network equipment is mounted. Includes cabinets, racks, frames, and enclosures",
+        masterformat="27 11 16 Cabinets, Racks, Frames and Enclosures",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
     # Own fields:
     static_load: MassKgStr | None = pyd.Field(default=None, description="", example="1 kg")
@@ -66,6 +86,15 @@ class DataCablingV1(BaseOpenEpdHierarchicalSpec):
     """Telecommunications cabling for buildings."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="DataCabling",
+        display_name="Data Cabling",
+        alt_names=["Wire and Cable", "Communications", "Data Communications", "Interconnect", "Ethernet"],
+        historical_names=["Network Infrastructure >> Data Cabling"],
+        description="Telecommunications cabling for buildings",
+        masterformat="27 10 00 Structured Cabling",
+        declared_unit=Amount(qty=1, unit="m"),
+    )
 
     # Own fields:
     outdoor: bool | None = pyd.Field(default=None, description="", example=True)
@@ -103,6 +132,15 @@ class FloorBoxesAndAccessoriesV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="FloorBoxesAndAccessories",
+        display_name="Floor Boxes and Accessories",
+        short_name="Floor Boxes",
+        historical_names=["Network Infrastructure >> Floor Boxes"],
+        description="Electrical boxes that are installed in the floor. Used to provide power and/or data connections to devices in a room or space.",
+        masterformat="26 05 33.16 Floor Boxes for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
     # Own fields:
     painted: bool | None = pyd.Field(default=None, description="", example=True)
@@ -139,6 +177,14 @@ class NetworkingCableTraysV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="NetworkingCableTrays",
+        display_name="Cable Trays",
+        historical_names=["Network Infrastructure >> Cable Trays"],
+        description="Mechanical support systems that provide a rigid structural system for cables used for communication and power distribution",
+        masterformat="27 05 36 Cable Trays",
+        declared_unit=Amount(qty=1, unit="m"),
+    )
 
     # Own fields:
     height: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
@@ -159,6 +205,14 @@ class NetworkingRacewaysV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="NetworkingRaceways",
+        display_name="Raceways",
+        historical_names=["Network Infrastructure >> Raceways"],
+        description="Surface-mounted systems along the perimeter of walls to route, conceal, and protect cables. Often called trunking.",
+        masterformat="27 05 39 Surface Raceways",
+        declared_unit=Amount(qty=1, unit="m"),
+    )
 
     # Own fields:
     width: LengthMmStr | None = pyd.Field(default=None, description="", example="100 mm")
@@ -176,12 +230,30 @@ class CommunicationsConduitV1(BaseOpenEpdHierarchicalSpec, ConduitMixin):
     """Tubing used to protect and route communications wiring in a building or structure."""
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CommunicationsConduit",
+        display_name="Communications Conduit",
+        short_name="Conduit",
+        historical_names=["Network Infrastructure >> Conduit"],
+        description="Tubing used to protect and route communications wiring in a building or structure",
+        masterformat="27 05 33 Conduits and Backboxes for Communications Systems",
+        declared_unit=Amount(qty=1, unit="m"),
+    )
 
 
 class NetworkInfrastructureV1(BaseOpenEpdHierarchicalSpec):
     """General category for network infrastructure products for data centers and commercial and residential buildings."""
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="NetworkInfrastructure",
+        display_name="Network and Data Infrastructure",
+        short_name="Network Infrastructure",
+        alt_names=["Data Communication and Power"],
+        historical_names=["Network Infrastructure"],
+        description="General category for network infrastructure products for data centers and commercial and residential buildings",
+        masterformat="27 00 00 Communications",
+    )
 
     # Nested specs:
     PDU: PDUV1 | None = None
