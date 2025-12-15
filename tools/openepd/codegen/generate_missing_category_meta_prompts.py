@@ -147,6 +147,9 @@ def main() -> None:
             continue
         nodes_missing_meta.append((node_name, node))
 
+    # Sort nodes_missing_meta by the module where the class is located
+    nodes_missing_meta.sort(key=lambda x: x[1].__module__)
+
     print(f"Nodes missing _CATEGORY_META: {len(nodes_missing_meta)}")
 
     prompts = []
