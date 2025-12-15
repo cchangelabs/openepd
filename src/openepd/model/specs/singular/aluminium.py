@@ -91,6 +91,14 @@ class AluminiumV1(BaseOpenEpdHierarchicalSpec):
     """Broad category for construction materials made primarily from Aluminium and its alloys."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Aluminium",
+        display_name="Aluminium",
+        alt_names=["Aluminum", "Al", "Alluminio"],
+        description="Broad category for construction materials made primarily from Aluminium and its alloys",
+        masterformat="05 00 00 METALS",
+        declared_unit=Amount(qty=1, unit="kg"),
+    )
 
     # Own fields:
     alloy: AluminiumAlloy | None = pyd.Field(default=None, description="", example=str(AluminiumAlloy.ALLOY_1XXX))
