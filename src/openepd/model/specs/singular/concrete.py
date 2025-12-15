@@ -131,7 +131,18 @@ class ReadyMixV1(BaseOpenEpdHierarchicalSpec):
     _CATEGORY_META = CategoryMeta(
         unique_name="ReadyMix",
         display_name="Ready Mix",
-        alt_names=["Ready mixed", "ready-mix", "ready mixed", "RMC", "CIP", "Cast-in-Place", "ready mix concrete", "ready mixed concrete", "Cast-in-Place Concrete", "transportbeton"],
+        alt_names=[
+            "Ready mixed",
+            "ready-mix",
+            "ready mixed",
+            "RMC",
+            "CIP",
+            "Cast-in-Place",
+            "ready mix concrete",
+            "ready mixed concrete",
+            "Cast-in-Place Concrete",
+            "transportbeton",
+        ],
         historical_names=["Concrete >> Ready Mix"],
         description="Concretes to be mixed and then poured on-site",
         masterformat="03 30 00 Cast-in-Place Concrete",
@@ -165,7 +176,7 @@ class CellularConcreteV1(BaseOpenEpdHierarchicalSpec):
     _CATEGORY_META = CategoryMeta(
         unique_name="CellularConcrete",
         display_name="Cellular Concrete",
-        alt_names=["Cellular Concrete", "Foamed concrete", "Foamed cement"],
+        alt_names=["Foamed concrete", "Foamed cement"],
         historical_names=["Concrete >> Cellular Concrete"],
         description="Cellular concrete is typically composed of cementitious material, water, and pre-formed foam with air entrainment resulting in a homogeneous void or cell structure. It is self-compacting and can be pumped over extensive heights and distances.",
         masterformat="03 52 16.13 Lightweight Cellular Insulating Concrete",
