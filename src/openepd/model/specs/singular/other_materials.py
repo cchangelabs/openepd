@@ -73,7 +73,7 @@ class FoodBeverageV1(BaseOpenEpdHierarchicalSpec):
             "OtherMaterials >> Unsupported >> FoodBeverage",
             "Other Materials >> Unsupported >> Foods & Beverages",
         ],
-        description="Foods, beverages, tobacco, other human consumables, and specific ingredients for them.Includes most products in WCO HS Section I,  II and IV.  Excludes pharmaceuticals.",
+        description="Foods, beverages, tobacco, other human consumables, and specific ingredients for them. Includes most products in WCO HS Section I,  II and IV.  Excludes pharmaceuticals.",
     )
 
 
@@ -134,7 +134,7 @@ class TextileProductsV1(BaseOpenEpdHierarchicalSpec):
         display_name="Textiles, Footwear, and Apparel",
         short_name="Textile Products",
         historical_names=["Textile Products"],
-        description="Products to be worn by humans, and materials intended to manufacture them.Includes most of WS HS Sections XI, XII.",
+        description="Products to be worn by humans, and materials intended to manufacture them. Includes most of WS HS Sections XI, XII.",
     )
 
     Clothing: ClothingV1 | None = None

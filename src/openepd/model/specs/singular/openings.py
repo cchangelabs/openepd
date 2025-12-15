@@ -339,7 +339,7 @@ class UnitSkylightsV1(BaseOpenEpdHierarchicalSpec):
         unique_name="UnitSkylights",
         display_name="Unit Skylights",
         historical_names=["Openings >> Glazing >> NAFS Fenestration >> Unit Skylights"],
-        description="A factory assembled fenestration unit for installation on the roof of a structure to provide interior building spaces with natural daylight, warmth, and ventilation; generally not operableby hand (cf. roof window). Includes frame(s) and possibly operating hardware.",
+        description="A factory assembled fenestration unit for installation on the roof of a structure to provide interior building spaces with natural daylight, warmth, and ventilation; generally not operable by hand (cf. roof window). Includes frame(s) and possibly operating hardware.",
         masterformat="08 62 00 Unit Skylights",
         declared_unit=Amount(qty=1, unit="m^2"),
     )
@@ -682,7 +682,7 @@ class StorefrontsV1(BaseOpenEpdHierarchicalSpec):
     _CATEGORY_META = CategoryMeta(
         unique_name="Storefronts",
         display_name="Storefronts",
-        description="Fabricated building facades commonly used in retail applications, tyically one or two stories tall and using metal framing and glass",
+        description="Fabricated building facades commonly used in retail applications, typically one or two stories tall and using metal framing and glass",
         masterformat="08 43 00 Storefronts",
         declared_unit=Amount(qty=1, unit="m^2"),
     )
