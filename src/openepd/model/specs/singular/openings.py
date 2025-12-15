@@ -564,7 +564,7 @@ class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin)
         short_name="IGUs",
         alt_names=["Insulated Glazing Unit", "Integrated Glazing Unit"],
         historical_names=["Openings >> Glazing >> IGUs"],
-        description="A factory-made unit of two or more panes of glass separated by a sealed insulating gap. IGUs often incorporate coated, laminated, or heat treated glass along with with airspace, gas fill, seals, and spacers.",
+        description="A factory-made unit of two or more panes of glass separated by a sealed insulating gap. IGUs often incorporate coated, laminated, or heat treated glass along with airspace, gas fill, seals, and spacers.",
         masterformat="08 81 23 Exterior Glass Glazing",
         declared_unit=Amount(qty=1, unit="m^2"),
     )
