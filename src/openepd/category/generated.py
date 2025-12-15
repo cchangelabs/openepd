@@ -577,6 +577,16 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "ElectricalTransmissionAndDistributionEquipment",
         },
         {
+            "unique_name": "Aluminium",
+            "display_name": "Aluminium",
+            "hierarchical_name": "Aluminium",
+            "alt_names": ["Aluminum", "Al", "Alluminio"],
+            "description": "Broad category for construction materials made primarily from Aluminium and its alloys",
+            "masterformat": "05 00 00 METALS",
+            "declared_unit": Amount(qty=1.0, unit="kg"),
+            "parent": "ConstructionMaterials",
+        },
+        {
             "unique_name": "AluminiumBillets",
             "display_name": "Aluminium Billets",
             "hierarchical_name": "Aluminium >> AluminiumBillets",
