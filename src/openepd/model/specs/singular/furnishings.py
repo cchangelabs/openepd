@@ -269,7 +269,7 @@ class WorkspacesV1(BaseOpenEpdHierarchicalSpec):
     _CATEGORY_META = CategoryMeta(
         unique_name="Workspaces",
         display_name="Workspaces",
-        description="Office furniture and furniture sytems for performing office work, such as cubicle systems.Typically includes component(s) that may fit in other categories.",
+        description="Office furniture and furniture systems for performing office work, such as cubicle systems. Typically includes component(s) that may fit in other categories.",
         masterformat="12 59 00 Systems Furniture",
         declared_unit=Amount(qty=1, unit="m^2"),
     )
