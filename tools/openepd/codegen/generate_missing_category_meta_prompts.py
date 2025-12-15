@@ -150,6 +150,18 @@ def main() -> None:
     # Sort nodes_missing_meta by the module where the class is located
     nodes_missing_meta.sort(key=lambda x: x[1].__module__)
 
+    # Group nodes_missing_meta by module and print group sizes
+    from collections import defaultdict
+
+    grouped_by_module: dict[
+        str, list[tuple[str | None, type[BaseOpenEpdHierarchicalSpec]]]
+    ] = defaultdict(list)
+    for node_name, node in nodes_missing_meta:
+        grouped_by_module[node.__module__].append((node_name, node))
+    print("Nodes missing _CATEGORY_META by module:")
+    for module, group in grouped_by_module.items():
+        print(f"  {module}: {len(group)}")
+
     print(f"Nodes missing _CATEGORY_META: {len(nodes_missing_meta)}")
 
     prompts = []
