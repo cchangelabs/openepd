@@ -14,6 +14,8 @@
 #  limitations under the License.
 #
 from openepd.compat.pydantic import pyd
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import ElevatorsBuildingRise, ElevatorsUsageIntensity
 from openepd.model.validation.quantity import CapacityPerHourStr, LengthMStr, MassKgStr, SpeedStr
@@ -45,12 +47,28 @@ class EscalatorsV1(BaseOpenEpdHierarchicalSpec):
     )
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Escalators",
+        display_name="Escalators",
+        historical_names=["Conveying Equipment >> Escalators"],
+        description="A moving staircase consisting of a circulating belt of steps driven by a motor, whiceh conveys people between the floors of a building",
+        masterformat="14 31 00 Escalators",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class ElevatorsV1(BaseOpenEpdHierarchicalSpec):
     """Car that moves in a vertical shaft to carry passengers or freight between the levels of a multistory building."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Elevators",
+        display_name="Elevators",
+        historical_names=["Conveying Equipment >> Elevators"],
+        description="Car that moves in a vertical shaft to carry passengers or freight between the levels of a multistory building.",
+        masterformat="14 20 00 Elevators",
+        declared_unit=Amount(qty=1, unit="tkm"),
+    )
 
     # Own fields:
     usage_intensity: list[ElevatorsUsageIntensity] | None = pyd.Field(
@@ -66,6 +84,13 @@ class ConveyingEquipmentV1(BaseOpenEpdHierarchicalSpec):
     """Conveying Equipment."""
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ConveyingEquipment",
+        display_name="Conveying Equipment",
+        description="Conveying Equipment",
+        masterformat="14 00 00 Conveying Equipment",
+        declared_unit=Amount(qty=1, unit="tkm"),
+    )
 
     # Nested specs:
     Elevators: ElevatorsV1 | None = None
