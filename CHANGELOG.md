@@ -1,3 +1,20 @@
+## 7.18.0 (2025-12-16)
+
+### Feat
+
+- **m49**: add tree-based geography representation
+- add CategoryTree for search and lightweight manipulation
+- update Category.id to use alias 'unique_name' for clarity
+- deprecate `Category.name` in favor of `display_name`
+
+### Fix
+
+- **m49**: add missing countries to M49_TO_COUNTRY_VERBOSE_NAME, sort the list
+
+### Refactor
+
+- **m49**: refactor m49 to verbose name mapping to drop explicit COUNTRY_VERBOSE_NAME_TO_M49
+
 ## 7.17.2 (2025-12-11)
 
 ### Fix
