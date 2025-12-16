@@ -15,6 +15,8 @@
 #
 import pydantic
 
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import AllFabrication, AllTimberSpecies
 from openepd.model.specs.singular.common import HasForestPracticesCertifiers
@@ -29,6 +31,14 @@ class WoodJoistsV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="WoodJoists",
+        display_name="Wood I-Joists",
+        alt_names=["Metal-Web Wood Joists", "Wood Joist"],
+        description="Prefabricated I-shaped engineered wood structural members made primarily from one or more types of wood. Includes products made with metallic webbing. Excludes products where the wood is merely decorative.",
+        masterformat="06 17 33 Wood I-Joists",
+        declared_unit=Amount(qty=1, unit="m"),
+    )
 
     # Own fields:
     timber_species: AllTimberSpecies | None = pydantic.Field(default=None, description="", examples=["Alaska Cedar"])

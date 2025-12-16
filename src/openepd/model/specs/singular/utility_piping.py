@@ -15,6 +15,7 @@
 #
 import pydantic
 
+from openepd.model.category import CategoryMeta
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import BuriedPipingType, PipingAnsiSchedule, UtilityPipingMaterial
 from openepd.model.validation.quantity import LengthMmStr, MassPerLengthStr
@@ -29,12 +30,28 @@ class BuildingHeatingPipingV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="BuildingHeatingPiping",
+        display_name="Building Heating Piping",
+        short_name="Building Heating",
+        historical_names=["Utility Piping >> Building Heating"],
+        description="System of pipes used to supply heated fluids (liquids or steam) for purposes of controlling temperature inside a home, business, or other building facility.",
+        masterformat="33 60 00 Hydronic and Steam Energy Utilities",
+    )
 
 
 class BuriedPipingV1(BaseOpenEpdHierarchicalSpec):
     """System of pipes used to provide or transport fluids (liquids and gases) underground."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="BuriedPiping",
+        display_name="Buried Piping",
+        short_name="Buried",
+        historical_names=["Utility Piping >> Buried"],
+        description="System of pipes used to provide or transport fluids (liquids and gases) underground.",
+        masterformat="33 00 00 Utilities",
+    )
 
     # Own fields:
     buried_piping_type: list[BuriedPipingType] | None = pydantic.Field(
@@ -51,6 +68,12 @@ class UtilityPipingV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="UtilityPiping",
+        display_name="Utility Piping",
+        description="System of pipes used to convey fluids (liquids and gases) from one location to another. Piping can be metal, plastic, concrete, fiberglass, or other materials.",
+        masterformat="33 00 00 Utilities",
+    )
 
     # Own fields:
     thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["6 m"])

@@ -15,6 +15,8 @@
 #
 import pydantic as pyd
 
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.quantity import AmountPressureMpa
 
@@ -27,6 +29,15 @@ class ConcretePaversV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ConcretePavers",
+        display_name="Concrete Pavers",
+        short_name="Pavers",
+        historical_names=["Exterior Improvements >> Pavers"],
+        description="Segmental units of concrete of standardized sizes and shapes for use in paving applications. Includes pavers and paving slabs.",
+        masterformat="32 14 00 Unit Pavers",
+        declared_unit=Amount(qty=1, unit="m^3"),
+    )
 
     compressive_strength: AmountPressureMpa | None = pyd.Field(
         default=None,
@@ -43,5 +54,11 @@ class ExteriorImprovementsV1(BaseOpenEpdHierarchicalSpec):
     """Products that alter the exterior appearance of a lot or its structures."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ExteriorImprovements",
+        display_name="Exterior Improvements",
+        description="Products that alter the exterior appearance of a lot or its structures",
+        masterformat="32 00 00 Exterior Improvements",
+    )
 
     ConcretePavers: ConcretePaversV1 | None = None

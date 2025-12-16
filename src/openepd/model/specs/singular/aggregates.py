@@ -16,6 +16,8 @@
 import pydantic
 
 from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import AggregateGradation, AggregateWeightClassification
 from openepd.model.validation.quantity import LengthMmStr
@@ -42,6 +44,14 @@ class AggregatesV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Aggregates",
+        display_name="Aggregates",
+        alt_names=["Construction Aggregates", "Aggregate", "Rip Rap"],
+        description="Construction Aggregates, including sand, gravel, crushed stone, etc. for use as bases, ballasts, or as a component in concrete or asphalt",
+        masterformat="32 10 00 Bases Ballasts and Paving",
+        declared_unit=Amount(qty=1, unit="kg"),
+    )
 
     # Own fields:
     recycled_content: float | None = pydantic.Field(

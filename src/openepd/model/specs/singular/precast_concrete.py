@@ -15,6 +15,8 @@
 #
 import pydantic
 
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec
 from openepd.model.validation.quantity import PressureMPaStr
 
@@ -138,6 +140,15 @@ class ArchitecturalPrecastV1(BaseOpenEpdHierarchicalSpec):
     """Precast concrete cladding used for architectural purposes."""
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ArchitecturalPrecast",
+        display_name="Precast Architectural Concrete",
+        short_name="Architectural",
+        historical_names=["Precast >> Architectural"],
+        description="Precast concrete cladding used for architectural purposes",
+        masterformat="03 45 00 Precast Architectural Concrete",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     element_type: ArchitecturalPrecastElementType | None = pydantic.Field(
         default=None,
@@ -149,6 +160,15 @@ class StructuralPrecastV1(BaseOpenEpdHierarchicalSpec):
     """Precast concrete used for structural purposes."""
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="StructuralPrecast",
+        display_name="Structural Precast Concrete",
+        short_name="Structural",
+        historical_names=["Precast >> Structural"],
+        description="Precast concrete used for structural purposes",
+        masterformat="03 41 00 Precast Structural Concrete",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     element_type: StructuralPrecastElementType | None = pydantic.Field(
         default=None,
@@ -160,6 +180,15 @@ class UtilityUndergroundPrecastV1(BaseOpenEpdHierarchicalSpec):
     """Precast concrete for utility vaults, manhole, drain inlets. Excludes piping."""
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="UtilityUndergroundPrecast",
+        display_name="Utility & Underground Precast Concrete",
+        short_name="Utility & Underground",
+        historical_names=["Precast >> Utility & Underground"],
+        description="Precast concrete for utility vaults, manhole, drain inlets. Excludes piping.",
+        masterformat="33 00 00 Site Utilities",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     element_type: UtilityPrecastElementType | None = pydantic.Field(
         default=None,
@@ -171,6 +200,15 @@ class CivilPrecastV1(BaseOpenEpdHierarchicalSpec):
     """Precast concrete used for civil engineering applications including bridges, highways, and railroads."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CivilPrecast",
+        display_name="Civil Precast Concrete",
+        short_name="Civil",
+        historical_names=["Precast >> Civil"],
+        description="Precast concrete used for civil engineering applications including bridges, highways, and railroads.",
+        masterformat="03 48 00 Precast Concrete Specialties",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     element_type: CivilPrecastElementType | None = pydantic.Field(
         default=None,
@@ -182,6 +220,16 @@ class PrecastConcreteV1(BaseOpenEpdHierarchicalSpec):
     """General category for precast concrete components."""
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="PrecastConcrete",
+        display_name="Precast Concrete",
+        short_name="Precast",
+        alt_names=["hormigón prefabricado"],
+        historical_names=["Precast"],
+        description="General category for precast concrete components",
+        masterformat="03 40 00 Precast Concrete",
+        declared_unit=Amount(qty=1, unit="t"),
+    )
 
     # Own fields:
     lightweight: bool | None = pydantic.Field(

@@ -26,6 +26,7 @@ from typing import Any, ClassVar, TypeVar
 import pydantic
 from pydantic.fields import FieldInfo
 
+from openepd.model.category import CategoryMeta
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.singular.accessories import AccessoriesV1
 from openepd.model.specs.singular.aggregates import AggregatesV1
@@ -87,6 +88,12 @@ class Specs(BaseOpenEpdHierarchicalSpec):
     ]
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ConstructionMaterials",
+        display_name="Product Categories",
+        description="Root node for all materials",
+        alt_names=["Construction Materials"],
+    )
 
     # Nested specs:
     CMU: CMUV1 | None = None

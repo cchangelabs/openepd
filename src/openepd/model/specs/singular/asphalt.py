@@ -17,6 +17,8 @@ from typing import Annotated
 
 import pydantic
 
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.enums import AsphaltGradation, AsphaltMixType
 from openepd.model.validation.quantity import LengthMmStr, TemperatureCStr
@@ -26,6 +28,14 @@ class AsphaltV1(BaseOpenEpdHierarchicalSpec):
     """General category for asphalt mixtures."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Asphalt",
+        display_name="Asphalt",
+        alt_names=["Asphalt Mixtures"],
+        description="General category for asphalt mixtures",
+        masterformat="32 12 16 Asphalt Paving",
+        declared_unit=Amount(qty=1, unit="kg"),
+    )
 
     # Own fields:
     aggregate_size_max: LengthMmStr | None = pydantic.Field(
