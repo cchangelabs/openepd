@@ -15,6 +15,8 @@
 #
 import pydantic
 
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import GypsumFacing, GypsumFireRating, GypsumThickness
 from openepd.model.validation.quantity import LengthMmStr, RFactorStr, validate_quantity_unit_factory
@@ -29,6 +31,15 @@ class CementitiousSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CementitiousSheathingBoard",
+        display_name="Cementitious Sheathing Board",
+        short_name="Cement Sheathing",
+        historical_names=["Sheathing >> Cement Sheathing"],
+        description="Cementitious non-gypsum board used for sheathing exteriors, shaft walls, and interior walls/ceilings requiring moisture resistance.",
+        masterformat="06 16 63 Cementitious Sheathing",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     cement_board_thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["10 mm"])
@@ -46,6 +57,15 @@ class GypsumSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="GypsumSheathingBoard",
+        display_name="Gypsum Sheathing Board",
+        short_name="Gypsum Sheathing",
+        historical_names=["Sheathing >> Gypsum Sheathing"],
+        description="Gypsum board used for sheathing exteriors, shaft walls, and interior walls/ceilings requiring moisture resistance.",
+        masterformat="06 16 43 Gypsum Sheathing",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     fire_rating: GypsumFireRating | None = pydantic.Field(default=None, description="", examples=["-"])
@@ -101,6 +121,13 @@ class SheathingV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Sheathing",
+        display_name="Sheathing",
+        description="Boards or panels used in floor, wall and roof assemblies as a surface onto which other materials can be applied.",
+        masterformat="06 16 00 Sheathing",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Nested specs:
     CementitiousSheathingBoard: CementitiousSheathingBoardV1 | None = None

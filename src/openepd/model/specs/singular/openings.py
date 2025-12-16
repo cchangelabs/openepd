@@ -16,6 +16,8 @@
 import pydantic
 
 from openepd.model.base import BaseOpenEpdSchema
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     FlatGlassPanesThickness,
@@ -148,12 +150,32 @@ class PanelDoorsV1(BaseOpenEpdHierarchicalSpec):
     """Panel doors performance specification."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="PanelDoors",
+        display_name="Panel Doors",
+        historical_names=[
+            "Openings >> Doors and Frames >> Specialty Doors and Frames >> Special Function Doors >> Panel Doors"
+        ],
+        description="A panel door consists of stiles and rails framing inset panels that accommodate movement and ensure structural stability.",
+        masterformat="08 36 00 Panel Doors",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class PressureResistantDoorsV1(BaseOpenEpdHierarchicalSpec):
     """Pressure-Resistant Doors."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="PressureResistantDoors",
+        display_name="Pressure-Resistant Doors",
+        historical_names=[
+            "Openings >> Doors and Frames >> Specialty Doors and Frames >> Special Function Doors >> Pressure-Resistant Doors"
+        ],
+        description="Pressure-resistant doors.",
+        masterformat="08 39 00 Pressure-Resistant Doors",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class SpecialFunctionDoorsV1(BaseOpenEpdHierarchicalSpec):
@@ -165,6 +187,14 @@ class SpecialFunctionDoorsV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="SpecialFunctionDoors",
+        display_name="Special Function Doors",
+        historical_names=["Openings >> Doors and Frames >> Specialty Doors and Frames >> Special Function Doors"],
+        description="Special function doors, including doors for e.g., cold storage, hangars, lightproof applications, security, sound control, vaults, etc.",
+        masterformat="08 34 00 Special Function Doors",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
     # Nested specs:
     PanelDoors: PanelDoorsV1 | None = None
@@ -175,6 +205,14 @@ class SlidingGlassDoorsV1(BaseOpenEpdHierarchicalSpec):
     """Sliding glass doors performance specification."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="SlidingGlassDoors",
+        display_name="Sliding Glass Doors",
+        historical_names=["Openings >> Doors and Frames >> Specialty Doors and Frames >> Sliding Glass Doors"],
+        description="Sliding glass doors",
+        masterformat="08 32 00 Sliding Glass Doors",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class FenestrationAccessoriesV1(BaseOpenEpdHierarchicalSpec):
@@ -186,6 +224,14 @@ class FenestrationAccessoriesV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="FenestrationAccessories",
+        display_name="Fenestration Accessories",
+        short_name="Accessories",
+        historical_names=["Openings >> Glazing >> Parts >> Accessories"],
+        description="Gaskets, seals, fasteners, and other low-mass items which may be useful in calculating the impact of a fenestration system.",
+        masterformat="08 85 00 Glazing Accessories",
+    )
 
 
 class FenestrationFramingV1(BaseOpenEpdHierarchicalSpec):
@@ -196,6 +242,15 @@ class FenestrationFramingV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="FenestrationFraming",
+        display_name="Fenestration Framing",
+        short_name="Framing",
+        historical_names=["Openings >> Glazing >> Parts >> Framing"],
+        description='Lineal elements ("sticks") for use in fenestration, including frames, sashes, and mullions.',
+        masterformat="08 80 00 Glazing",
+        declared_unit=Amount(qty=1, unit="kg"),
+    )
 
     # Own fields:
     thermal_separation: ThermalSeparation | None = pydantic.Field(default=None, examples=["Aluminium"])
@@ -206,6 +261,15 @@ class FenestrationHardwareV1(BaseOpenEpdHierarchicalSpec):
     """Locks, operation hardware, and other substantial items declared on a per-piece basis."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="FenestrationHardware",
+        display_name="Fenestration Hardware",
+        short_name="Hardware",
+        historical_names=["Openings >> Glazing >> Parts >> Hardware"],
+        description="Locks, operation hardware, and other substantial items declared on a per-piece basis.",
+        masterformat="08 75 00 Window Hardware",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
     # Own fields:
     function: HardwareFunction | None = pydantic.Field(default=None, description="", examples=["Lock"])
@@ -215,6 +279,16 @@ class FlatGlassPanesV1(BaseOpenEpdHierarchicalSpec):
     """Monolithic, uncoated flat glass panes that are not substantially processed."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="FlatGlassPanes",
+        display_name="Flat Glass Panes",
+        short_name="Flat Glass",
+        alt_names=["Float glass", "Uncoated float glass", "Soda lime silicate glass"],
+        historical_names=["Openings >> Glazing >> Panes >> Flat Glass"],
+        description="Monolithic, uncoated flat glass panes that are not substantially processed.",
+        masterformat="08 81 00 Glass Glazing",
+        declared_unit=Amount(qty=1, unit="kg"),
+    )
 
     # Own fields:
     thickness: FlatGlassPanesThickness | None = pydantic.Field(default=None, examples=["12 mm"])
@@ -238,6 +312,16 @@ class ProcessedNonInsulatingGlassPanesV1(BaseOpenEpdHierarchicalSpec, GlazingOpt
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ProcessedNonInsulatingGlassPanes",
+        display_name="Processed Non-insulating Glass Panes",
+        short_name="Processed Glass",
+        alt_names=["Tempered glass", "Safety glass", "Coated float glass", "Laminated glass"],
+        historical_names=["Openings >> Glazing >> Panes >> Processed Glass"],
+        description="Solid glass panes without internal gaps which have been heat-treated or otherwise substantially processed. Includes:\n1. Coatings including low-e and other coatings (see PCR)\n2. laminating (fire-rated, glass clad polycarbonate, interlayers\n3. Heat treated (heat strengthened, tempered, fire-rated)\n4. Mechanically or chemically processed or fabricated (edging, bending, etching, drilling, notching, cutting, polishing, etc)\n5. combined products of processing in 1-5.",
+        masterformat="08 81 00 Glass Glazing",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class GlazedDoorsV1(BaseOpenEpdHierarchicalSpec):
@@ -248,6 +332,14 @@ class GlazedDoorsV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="GlazedDoors",
+        display_name="Glazed Doors",
+        historical_names=["Openings >> Glazing >> NAFS Fenestration >> Glazed Doors"],
+        description="Factory assembled door which is at least 50% glass by area. Includes sliding patio doors and hinged glass doors.",
+        masterformat="08 30 00 Specialty Doors and Frames",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class UnitSkylightsV1(BaseOpenEpdHierarchicalSpec):
@@ -260,6 +352,14 @@ class UnitSkylightsV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="UnitSkylights",
+        display_name="Unit Skylights",
+        historical_names=["Openings >> Glazing >> NAFS Fenestration >> Unit Skylights"],
+        description="A factory assembled fenestration unit for installation on the roof of a structure to provide interior building spaces with natural daylight, warmth, and ventilation; generally not operable by hand (cf. roof window). Includes frame(s) and possibly operating hardware.",
+        masterformat="08 62 00 Unit Skylights",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     roof_window: bool | None = pydantic.Field(
         default=None,
@@ -274,18 +374,42 @@ class WindowsV1(BaseOpenEpdHierarchicalSpec):
     """Windows including glazing and frame material."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Windows",
+        display_name="Windows",
+        historical_names=["Openings >> Glazing >> NAFS Fenestration >> Windows"],
+        description="Factory assembled window with frame(s), one or more IGUs or glass panes, and possibly operating hardware. Includes fixed and operable windows.",
+        masterformat="08 50 00 Windows",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class IntegratedDoorsOpeningAssembliesV1(BaseOpenEpdHierarchicalSpec):
     """Pre-installed unit that includes door, frame, and hardware."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="IntegratedDoorsOpeningAssemblies",
+        display_name="Integrated Door Opening Assemblies",
+        historical_names=["Openings >> Doors and Frames >> Integrated Door Opening Assemblies"],
+        description="Pre-installed unit that includes door, frame, and hardware",
+        masterformat="08 17 00 Integrated Door Opening Assemblies",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class MetalDoorAndFramesV1(BaseOpenEpdHierarchicalSpec):
     """Metal doors and frames."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="MetalDoorAndFrames",
+        display_name="Metal Doors and Frames",
+        historical_names=["Openings >> Doors and Frames >> Metal Doors and Frames"],
+        description="Metal doors and frames",
+        masterformat="08 11 00 Metal Doors and Frames",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class SpecialtyDoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
@@ -297,6 +421,14 @@ class SpecialtyDoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="SpecialtyDoorsAndFrames",
+        display_name="Specialty Doors and Frames",
+        historical_names=["Openings >> Doors and Frames >> Specialty Doors and Frames"],
+        description="Specialty doors and frames, including e.g., access doors and panels, sliding glass doors, coiling doors, special function doors, folding doors, etc.",
+        masterformat="08 30 00 Specialty Doors and Frames",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
     # Nested specs:
     SpecialFunctionDoors: SpecialFunctionDoorsV1 | None = None
@@ -307,6 +439,14 @@ class WoodDoorsV1(BaseOpenEpdHierarchicalSpec):
     """Wood doors performance specification."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="WoodDoors",
+        display_name="Wood Doors",
+        historical_names=["Openings >> Doors and Frames >> Wood Doors"],
+        description="Wood doors",
+        masterformat="08 14 00 Wood Doors",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class FenestrationPartsV1(BaseOpenEpdHierarchicalSpec):
@@ -318,6 +458,14 @@ class FenestrationPartsV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="FenestrationParts",
+        display_name="Fenestration Parts",
+        short_name="Parts",
+        historical_names=["Openings >> Glazing >> Parts"],
+        description="Parts and assemblies for integration into building fenestration such as windows, curtain walls, and storefronts.",
+        masterformat="08 80 00 Glazing",
+    )
 
     # Own fields:
     intended_application: GlazingIntendedApplication | None = pydantic.Field(
@@ -334,6 +482,14 @@ class GlassPanesV1(BaseOpenEpdHierarchicalSpec):
     """Flat glass panes."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="GlassPanes",
+        display_name="Glass Panes",
+        short_name="Panes",
+        historical_names=["Openings >> Glazing >> Panes"],
+        description="Flat glass panes",
+        masterformat="08 80 00 Glazing",
+    )
 
     # Nested specs:
     FlatGlassPanes: FlatGlassPanesV1 | None = None
@@ -373,6 +529,14 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin):
     """Factory assembled fenestration units compliant to the North American Fenestration Standard."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="NAFSFenestration",
+        display_name="NAFS Fenestration",
+        historical_names=["Openings >> Glazing >> NAFS Fenestration"],
+        description="Factory assembled fenestration units compliant to the North American Fenestration Standard.",
+        masterformat="08 50 00 Windows",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     hurricane_resistant: bool | None = pydantic.Field(
@@ -432,6 +596,16 @@ class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin)
     """Insulating glazing units performance specification."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="InsulatingGlazingUnits",
+        display_name="Insulating Glazing Units",
+        short_name="IGUs",
+        alt_names=["Insulated Glazing Unit", "Integrated Glazing Unit"],
+        historical_names=["Openings >> Glazing >> IGUs"],
+        description="A factory-made unit of two or more panes of glass separated by a sealed insulating gap. IGUs often incorporate coated, laminated, or heat treated glass along with airspace, gas fill, seals, and spacers.",
+        masterformat="08 81 23 Exterior Glass Glazing",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     intended_application: GlazingIntendedApplication | None = pydantic.Field(
@@ -490,12 +664,28 @@ class CurtainWallsV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CurtainWalls",
+        display_name="Curtain Walls",
+        historical_names=["Openings >> Curtain Walls"],
+        description="Exterior skin of building where walls are non-structural and are outboard of the floor slabs, often as system of aluminum framing with vision glass and opaque panels of glass, metal, or other materials, Can be 'unitized' (prefabricated off-site) or 'stick' (fabricated on site).",
+        masterformat="08 44 00 Curtain Wall and Glazed Assemblies",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class DoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
     """Doors (the operable part) and frames (what holds the door proper)."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="DoorsAndFrames",
+        display_name="Doors and Frames",
+        historical_names=["Openings >> Doors and Frames"],
+        description="Doors (the operable part) and frames (what holds the door proper)",
+        masterformat="08 10 00 Doors and Frames",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
     # Own fields:
     height: LengthMmStr | None = pydantic.Field(default=None, examples=["1200 mm"])
@@ -512,6 +702,13 @@ class EntrancesV1(BaseOpenEpdHierarchicalSpec):
     """Building entrances (distinct from the door proper)."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Entrances",
+        display_name="Entrances",
+        description="Building entrances (distinct from the door proper)",
+        masterformat="08 42 00 Entrances",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class GlazingV1(BaseOpenEpdHierarchicalSpec):
@@ -523,6 +720,12 @@ class GlazingV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Glazing",
+        display_name="Glazing",
+        description="Broad category of glass-based products, accessories, and assemblies ranging from glass panes and framing to curtain walls.",
+        masterformat="08 80 00 Glazing",
+    )
 
     # Nested specs:
     FenestrationParts: FenestrationPartsV1 | None = None
@@ -540,6 +743,13 @@ class StorefrontsV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Storefronts",
+        display_name="Storefronts",
+        description="Fabricated building facades commonly used in retail applications, typically one or two stories tall and using metal framing and glass",
+        masterformat="08 43 00 Storefronts",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class TranslucentWallAndRoofAssembliesV1(BaseOpenEpdHierarchicalSpec):
@@ -550,6 +760,14 @@ class TranslucentWallAndRoofAssembliesV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="TranslucentWallAndRoofAssemblies",
+        display_name="Translucent Wall and Roof Assemblies",
+        historical_names=["Openings >> Translucent Wall and Roof Assemblies"],
+        description="Translucent wall and roof assemblies, including structured polycarbonate panel and fiberglass sandwich panel assemblies",
+        masterformat="08 45 00 Translucent Wall and Roof Assemblies",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class WindowWallAssembliesV1(BaseOpenEpdHierarchicalSpec):
@@ -562,6 +780,14 @@ class WindowWallAssembliesV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="WindowWallAssemblies",
+        display_name="Window Wall Assemblies",
+        historical_names=["Openings >> Window Wall Assemblies"],
+        description="Exterior skin of building where walls are non-structural and sit between floor slabs, often as system of aluminum framing with vision glass and opaque panels of glass, metal, or other materials",
+        masterformat="08 46 00 Window Wall Assemblies",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class OpeningsV1(BaseOpenEpdHierarchicalSpec):
@@ -573,6 +799,12 @@ class OpeningsV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Openings",
+        display_name="Openings",
+        description="General category that includes windows, storefronts, window walls, curtain walls, doors, entrances, etc.",
+        masterformat="08 00 00 Openings",
+    )
 
     # Own fields:
     thickness: LengthMmStr | None = pydantic.Field(default=None, examples=["80 mm"])

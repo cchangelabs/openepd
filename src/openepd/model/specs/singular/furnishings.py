@@ -15,6 +15,8 @@
 #
 import pydantic
 
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CountertopMaterial
 from openepd.model.validation.quantity import AreaM2Str, LengthMmStr, VolumeStr
@@ -24,18 +26,42 @@ class DemountablePartitionTrackV1(BaseOpenEpdHierarchicalSpec):
     """Track for modular partitions."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="DemountablePartitionTrack",
+        display_name="Demountable Partition Track",
+        short_name="Track",
+        historical_names=["Furnishings >> Partitions >> Track"],
+        description="Track for modular partitions.",
+        masterformat="10 22 00 Partitions",
+        declared_unit=Amount(qty=1, unit="m"),
+    )
 
 
 class ChairsV1(BaseOpenEpdHierarchicalSpec):
     """Chairs."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Chairs",
+        display_name="Seating",
+        historical_names=["Furnishings >> Seating"],
+        description="Chairs and other seating",
+        masterformat="12 52 00 Seating",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class CountertopsV1(BaseOpenEpdHierarchicalSpec):
     """Raised, flat, and horizontal surfaces often used in kitchens, bathrooms, and workrooms."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Countertops",
+        display_name="Countertops",
+        description="Raised, flat, and horizontal surfaces often used in kitchens, bathrooms, and workrooms",
+        masterformat="12 36 00 Countertops",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Own fields:
     thickness: LengthMmStr | None = pydantic.Field(default=None, description="", examples=["30 mm"])
@@ -46,6 +72,15 @@ class DemountablePartitionsV1(BaseOpenEpdHierarchicalSpec):
     """Demountable partitions."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="DemountablePartitions",
+        display_name="Demountable Partitions",
+        short_name="Partitions",
+        historical_names=["Furnishings >> Partitions"],
+        description="Demountable, modular, and other partitions are interior wall systems that are not permanently attached to the floor or walls and can easily be moved. They can be free-standing or guided with a top-hung or floor-mounted track.",
+        masterformat="10 22 00 Partitions",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
     # Nested specs:
     DemountablePartitionTrack: DemountablePartitionTrackV1 | None = None
@@ -55,6 +90,15 @@ class OtherFurnishingsV1(BaseOpenEpdHierarchicalSpec):
     """Other furnishings."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="OtherFurnishings",
+        display_name="Other Furnishings",
+        short_name="Other",
+        historical_names=["Furnishings >> Other"],
+        description="Other furnishings",
+        masterformat="12 00 00 Furnishings",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class OpenStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
@@ -65,6 +109,14 @@ class OpenStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="OpenStorageFurniture",
+        display_name="Open Storage",
+        historical_names=["Furnishings >> Storage >> Open Storage"],
+        description="Open Storage furniture which is static and has no moving parts",
+        masterformat="10 50 00 Storage Specialties",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class ClosedStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
@@ -75,6 +127,14 @@ class ClosedStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ClosedStorageFurniture",
+        display_name="Closed Storage",
+        historical_names=["Furnishings >> Storage >> Closed Storage"],
+        description="Closed storage furniture making use of doors, sliding and/or hinged parts.",
+        masterformat="10 50 00 Storage Specialties",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class RetractableStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
@@ -85,6 +145,14 @@ class RetractableStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="RetractableStorageFurniture",
+        display_name="Retractable Storage",
+        historical_names=["Furnishings >> Storage >> Retractable Storage"],
+        description="Storage Furniture with retractable (drawer) elements",
+        masterformat="10 50 00 Storage Specialties",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class MobileStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
@@ -95,6 +163,14 @@ class MobileStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="MobileStorageFurniture",
+        display_name="Mobile Storage",
+        historical_names=["Furnishings >> Storage >> Mobile Storage"],
+        description="Mobile storage furniture having wheels or casters for movement",
+        masterformat="10 56 26 Mobile Storage Shelving",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class WallMountedStorageShelvingV1(BaseOpenEpdHierarchicalSpec):
@@ -105,18 +181,45 @@ class WallMountedStorageShelvingV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="WallMountedStorageShelving",
+        display_name="Wall Mounted Shelving",
+        short_name="Wall-Mounted Shelving",
+        historical_names=["Furnishings >> Storage >> Wall-Mounted Shelving"],
+        description="Storage furniture which requires usage of a vertical structure for attachment and functional support",
+        masterformat="10 56 17 Wall-Mounted Standards and Shelving",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class OtherStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
     """Other Storage Furniture."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="OtherStorageFurniture",
+        display_name="Other Storage Furniture",
+        short_name="Other",
+        historical_names=["Furnishings >> Storage >> Other"],
+        description="Other Storage Furniture",
+        masterformat="10 50 00 Storage Specialties",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class StorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
     """Storage Furniture."""
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="StorageFurniture",
+        display_name="Storage Furniture",
+        short_name="Storage",
+        historical_names=["Furnishings >> Storage"],
+        description="Storage Furniture",
+        masterformat="10 56 00 Storage Assemblies",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
     # Nested specs:
     OpenStorageFurniture: OpenStorageFurnitureV1 | None = None
@@ -131,12 +234,27 @@ class TablesV1(BaseOpenEpdHierarchicalSpec):
     """Tables."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Tables",
+        display_name="Tables",
+        description="Tables which are not primarily work surfaces",
+        masterformat="12 64 16 Tables",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class WorkSurfacesV1(BaseOpenEpdHierarchicalSpec):
     """Work surfaces."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="WorkSurfaces",
+        display_name="Work Surfaces",
+        historical_names=["Furnishings >> Work Surfaces"],
+        description="Work surfaces such as desks, countertops, and work benches.",
+        masterformat="12 51 00 Office Furniture",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class WorkspacesV1(BaseOpenEpdHierarchicalSpec):
@@ -148,12 +266,25 @@ class WorkspacesV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Workspaces",
+        display_name="Workspaces",
+        description="Office furniture and furniture systems for performing office work, such as cubicle systems. Typically includes component(s) that may fit in other categories.",
+        masterformat="12 59 00 Systems Furniture",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
 
 
 class FurnishingsV1(BaseOpenEpdHierarchicalSpec):
     """Home and office furnishings."""
 
     _EXT_VERSION = "1.1"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Furnishings",
+        display_name="Furnishings",
+        description="Home and office furnishings",
+        masterformat="12 00 00 Furnishings",
+    )
 
     # Own fields:
     functional_floor_area_m2: AreaM2Str | None = pydantic.Field(

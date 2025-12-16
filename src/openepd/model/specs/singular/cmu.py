@@ -17,6 +17,8 @@ from typing import Annotated
 
 import pydantic
 
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.enums import CmuBlockType, CmuWeightClassification
 from openepd.model.validation.quantity import GwpKgCo2eStr, PressureMPaStr
@@ -26,6 +28,14 @@ class CMUV1(BaseOpenEpdHierarchicalSpec):
     """Pre-manufactured concrete masonry blocks."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CMU",
+        display_name="Concrete Unit Masonry",
+        alt_names=["concrete masonry", "concrete block", "concrete blocks", "maçonnerie"],
+        description="Pre-manufactured concrete masonry blocks",
+        masterformat="04 22 00 Concrete Unit Masonry",
+        declared_unit=Amount(qty=1, unit="m^3"),
+    )
 
     # Own fields:
     white_cement: bool | None = pydantic.Field(

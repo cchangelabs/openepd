@@ -13,9 +13,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from __future__ import annotations
+
 import dataclasses
 from types import UnionType
-from typing import Any
+from typing import TYPE_CHECKING, Any, ClassVar
 
 import pydantic
 from pydantic import ConfigDict
@@ -24,6 +26,9 @@ from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
 from openepd.model.validation.quantity import ExternalValidationConfig, QuantityValidator
 from openepd.model.versioning import Version, WithExtVersionMixin
+
+if TYPE_CHECKING:
+    from openepd.model.category import CategoryMeta
 
 
 class BaseOpenEpdSpec(BaseOpenEpdSchema):
@@ -34,6 +39,8 @@ class BaseOpenEpdSpec(BaseOpenEpdSchema):
 
 class BaseOpenEpdHierarchicalSpec(BaseOpenEpdSpec, WithExtVersionMixin):
     """Base class for new specs (hierarchical, versioned)."""
+
+    _CATEGORY_META: ClassVar[CategoryMeta]
 
     # TODO: Refactor work with class-based and instance-based _EXT_VERSION
     def __init__(self, **data: Any) -> None:
