@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from typing import NamedTuple
+from types import MappingProxyType
+from typing import Final, NamedTuple
 import warnings
 
 M49_CODE_WORLD = "001"
@@ -1042,6 +1043,91 @@ OPENEPD_SPECIAL_REGIONS = {
     ),
     "NAFTA": SpecialRegion(m49_codes=["840", "124", "484"]),  # US, Canada, Mexico
 }
+
+ISO3166_ALPHA2_TO_SUBDIVISIONS: Final[MappingProxyType[str, tuple[str, ...]]] = MappingProxyType(
+    {
+        "CA": (
+            "CA-ON",
+            "CA-QC",
+            "CA-BC",
+            "CA-AB",
+            "CA-MB",
+            "CA-NS",
+            "CA-NB",
+            "CA-NL",
+            "CA-PE",
+            "CA-SK",
+            "CA-NT",
+            "CA-NU",
+            "CA-YT",
+        ),
+        "US": (
+            "US-AL",
+            "US-AK",
+            "US-AZ",
+            "US-AR",
+            "US-CA",
+            "US-CO",
+            "US-CT",
+            "US-DE",
+            "US-FL",
+            "US-GA",
+            "US-HI",
+            "US-ID",
+            "US-IL",
+            "US-IN",
+            "US-IA",
+            "US-KS",
+            "US-KY",
+            "US-LA",
+            "US-ME",
+            "US-MD",
+            "US-MA",
+            "US-MI",
+            "US-MN",
+            "US-MS",
+            "US-MO",
+            "US-MT",
+            "US-NE",
+            "US-NV",
+            "US-NH",
+            "US-NJ",
+            "US-NM",
+            "US-NY",
+            "US-NC",
+            "US-ND",
+            "US-OH",
+            "US-OK",
+            "US-OR",
+            "US-PA",
+            "US-RI",
+            "US-SC",
+            "US-SD",
+            "US-TN",
+            "US-TX",
+            "US-UT",
+            "US-VT",
+            "US-VA",
+            "US-WA",
+            "US-WV",
+            "US-WI",
+            "US-WY",
+            "US-DC",
+            "US-AS",
+            "US-GU",
+            "US-MP",
+            "US-PR",
+            "US-UM",
+            "US-VI",
+        ),
+    }
+)
+"""
+Mapping from ISO 3166-1 alpha-2 country codes to their respective first-level administrative subdivisions.
+
+Immutable mapping where each key is a country code (e.g., 'US', 'CA') 
+and each value is a tuple of subdivision codes (e.g., 'US-CA' for California).
+"""
 
 
 def is_m49_code(to_check: str) -> bool:
