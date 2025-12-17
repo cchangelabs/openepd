@@ -14,6 +14,7 @@
 #  limitations under the License.
 #
 __all__ = [
+    "flatten_to_iso3166_alpha2",
     "is_iso_code",
     "is_m49_code",
     "iso_to_m49",
@@ -23,11 +24,12 @@ __all__ = [
     "openepd_to_m49",
     "region_and_country_names_to_m49",
 ]
-from collections.abc import Collection
+from collections.abc import Collection, Iterable
 
 from openepd.m49.const import (
     COUNTRY_VERBOSE_NAME_TO_M49_LOWER,
     ISO3166_ALPHA2_TO_M49,
+    ISO3166_ALPHA2_TO_SUBDIVISIONS,
     M49_AREAS,
     M49_TO_COUNTRY_VERBOSE_NAME,
     M49_TO_ISO3166_ALPHA2,
@@ -225,3 +227,103 @@ def is_iso_code(to_check: str) -> bool:
     if len(to_check) != 2:
         return False
     return to_check.upper() in ISO3166_ALPHA2_TO_M49
+
+
+def _expand_special_region(identifier: str) -> set[str]:
+    """
+    Expand an OpenEPD special region identifier to its ISO 3166-1 alpha-2 country codes.
+
+    :param identifier: The special region identifier.
+    :return: Set of ISO 3166-1 alpha-2 country codes or M49 codes if mapping is missing.
+    """
+    codes: set[str] = set()
+    for m49_code in OPENEPD_SPECIAL_REGIONS[identifier].m49_codes:
+        iso_code = M49_TO_ISO3166_ALPHA2.get(m49_code)
+        codes.add(iso_code or m49_code)
+    return codes
+
+
+def _expand_m49_code(identifier: str) -> set[str]:
+    """
+    Expand an M49 code to its ISO 3166-1 alpha-2 country codes.
+
+    :param identifier: The M49 code.
+    :return: Set of ISO 3166-1 alpha-2 country codes or M49 codes if mapping is missing.
+    """
+    codes: set[str] = set()
+    if identifier in M49_AREAS:
+        for member_code in M49_AREAS[identifier]:
+            iso_code = M49_TO_ISO3166_ALPHA2.get(member_code)
+            codes.add(iso_code or member_code)
+    else:
+        iso_code = M49_TO_ISO3166_ALPHA2.get(identifier)
+        codes.add(iso_code or identifier)
+    return codes
+
+
+def _expand_subdivisions_if_needed(codes: set[str], expand_subdivisions: bool) -> set[str]:
+    """
+    Expand country codes to their subdivisions if requested.
+
+    :param codes: Set of ISO 3166-1 alpha-2 country codes.
+    :param expand_subdivisions: Whether to expand to subdivisions.
+    :return: Set of subdivision codes or original codes.
+    """
+    if not expand_subdivisions:
+        return codes
+    expanded: set[str] = set()
+    for code in codes:
+        if code in ISO3166_ALPHA2_TO_SUBDIVISIONS:
+            expanded.update(ISO3166_ALPHA2_TO_SUBDIVISIONS[code])
+        else:
+            expanded.add(code)
+    return expanded
+
+
+def flatten_to_iso3166_alpha2(region_identifiers: Iterable[str], *, expand_subdivisions: bool = False) -> set[str]:
+    """
+    Flatten a collection of region identifiers to a set of ISO 3166 codes.
+
+    This function accepts M49 codes, ISO 3166-1 alpha-2 codes,
+    or OpenEPD special region aliases (e.g., 'EU27', 'NAFTA').
+    M49 codes and special region aliases are expanded to their ISO 3166-1 alpha-2 country code members.
+    If ``expand_subdivisions`` is True, countries with known subdivisions are replaced
+    by their ISO 3166-2 subdivision codes.
+    Unrecognized codes are included in the result as-is.
+
+    .. note::
+        The return set contains ISO 3166-1 alpha-2 country codes by default. If ``expand_subdivisions`` is True, the set
+        may contain ISO 3166-2 subdivision codes (e.g., 'US-CA') for countries with known subdivisions, and ISO 3166-1
+        alpha-2 codes for others. Unrecognized codes are always included as-is.
+
+    :param region_identifiers: An iterable of region identifiers to flatten.
+    :param expand_subdivisions: If True, replace countries with their subdivision codes where available
+        (returns ISO 3166-2 codes for those countries).
+    :return: A set of ISO 3166-1 alpha-2 country codes, ISO 3166-2 subdivision codes (if expanded),
+        and any unrecognized codes.
+
+    **Examples**
+
+    .. code-block:: python
+
+        flatten_to_iso3166_alpha2(['EU27', 'US'])
+        # {'AT', 'BE', 'BG', ..., 'US'}
+
+        flatten_to_iso3166_alpha2(['840', '124'])
+        # {'US', 'CA'}
+
+        flatten_to_iso3166_alpha2(['NAFTA', '051'])
+        # {'US', 'CA', 'MX', 'AM'}
+
+        flatten_to_iso3166_alpha2(['US'], expand_subdivisions=True)
+        # {'US-CA', 'US-TX', ...}  # All US subdivisions if defined
+    """
+    country_codes: set[str] = set()
+    for identifier in region_identifiers:
+        if identifier in OPENEPD_SPECIAL_REGIONS:
+            country_codes.update(_expand_special_region(identifier))
+        elif is_m49_code(identifier):
+            country_codes.update(_expand_m49_code(identifier))
+        else:
+            country_codes.add(identifier)
+    return _expand_subdivisions_if_needed(country_codes, expand_subdivisions)

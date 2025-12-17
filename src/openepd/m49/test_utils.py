@@ -16,6 +16,7 @@
 from unittest import TestCase
 
 from openepd.m49.utils import (
+    flatten_to_iso3166_alpha2,
     iso_to_m49,
     m49_to_iso,
     m49_to_openepd,
@@ -375,3 +376,41 @@ class M49UtilsTestCase(TestCase):
             with self.subTest(input_data=input_data, expected_exception=expected_exception):
                 with self.assertRaises(expected_exception):
                     m49_to_openepd(input_data)
+
+    def test_flatten_to_iso3166_alpha2(self) -> None:
+        """
+        Test flatten_to_iso3166_alpha2 with various region identifiers and options.
+
+        This covers M49 codes, ISO codes, special region aliases, and expand_subdivisions option.
+        """
+
+        # Test with special region alias
+        result = flatten_to_iso3166_alpha2(["EU27", "US"])
+        self.assertIn("US", result)
+        self.assertIn("FR", result)
+        self.assertIn("DE", result)
+        self.assertGreater(len(result), 3)
+
+        # Test with M49 codes
+        result = flatten_to_iso3166_alpha2(["840", "124"])
+        self.assertEqual(result, {"US", "CA"})
+
+        # Test with special region and M49 code
+        result = flatten_to_iso3166_alpha2(["NAFTA", "051"])
+        self.assertIn("US", result)
+        self.assertIn("CA", result)
+        self.assertIn("MX", result)
+        self.assertIn("AM", result)
+
+        # Test with expand_subdivisions
+        result = flatten_to_iso3166_alpha2(["US"], expand_subdivisions=True)
+        self.assertTrue(any(code.startswith("US-") for code in result))
+        self.assertNotIn("US", result)
+
+        # Test with unrecognized code
+        result = flatten_to_iso3166_alpha2(["ZZ"])
+        self.assertIn("ZZ", result)
+
+        # Test with empty input
+        result = flatten_to_iso3166_alpha2([])
+        self.assertEqual(result, set())
