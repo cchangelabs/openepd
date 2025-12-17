@@ -14,6 +14,7 @@
 #  limitations under the License.
 #
 __all__ = [
+    "collapse_iso3166_to_known_regions",
     "flatten_to_iso3166_alpha2",
     "is_iso_code",
     "is_m49_code",
@@ -25,6 +26,7 @@ __all__ = [
     "region_and_country_names_to_m49",
 ]
 from collections.abc import Collection, Iterable
+from functools import lru_cache
 
 from openepd.m49.const import (
     COUNTRY_VERBOSE_NAME_TO_M49_LOWER,
@@ -327,3 +329,81 @@ def flatten_to_iso3166_alpha2(region_identifiers: Iterable[str], *, expand_subdi
         else:
             country_codes.add(identifier)
     return _expand_subdivisions_if_needed(country_codes, expand_subdivisions)
+
+
+@lru_cache
+def get_sorted_region_groups() -> tuple[tuple[str, frozenset[str]], ...]:
+    """
+    Generate a sorted tuple of region groups by the number of countries in each group (largest first).
+
+    This function aggregates all special regions (e.g., EU27, NAFTA) and M49-defined areas, converting their codes to
+    sets of ISO 3166-1 alpha-2 country codes. The resulting tuple is sorted in descending order by the size of each
+    country set.
+
+    :return: Tuple of tuples, where each inner tuple contains a region code and its corresponding set of ISO country
+        codes, sorted from largest to smallest group.
+    """
+    region_groups: list[tuple[str, frozenset[str]]] = []
+    for special_region_code, special_region in OPENEPD_SPECIAL_REGIONS.items():
+        iso_countries = m49_to_iso(special_region.m49_codes)
+        region_groups.append((special_region_code, frozenset(iso_countries)))
+    for m49_area_code, iso_countries in M49_AREAS.items():
+        region_groups.append((m49_area_code, frozenset(iso_countries)))
+    region_groups.sort(key=lambda group: len(group[1]), reverse=True)
+    return tuple(region_groups)
+
+
+def _collapse_subdivisions_if_possible(codes: set[str]) -> set[str]:
+    """
+    Collapse ISO 3166-2 subdivision codes to their ISO 3166-1 alpha-2 parent codes where possible.
+
+    The function performs the following steps:
+    - If a parent alpha-2 country code is present, remove any of its subdivision codes.
+    - If all subdivisions for a country are present, replace them with the parent alpha-2 country code.
+
+    :param codes: Set of ISO 3166-1 alpha-2 and/or ISO 3166-2 subdivision codes.
+    :return: A new set with subdivisions collapsed where applicable.
+    """
+    remaining: set[str] = set(codes)
+
+    # Remove subdivisions if parent country is already present.
+    for country_code, subdivisions in ISO3166_ALPHA2_TO_SUBDIVISIONS.items():
+        if country_code in remaining:
+            remaining.difference_update(subdivisions)
+
+    # Replace full subdivision sets by parent country code.
+    for country_code, subdivisions in ISO3166_ALPHA2_TO_SUBDIVISIONS.items():
+        if subdivisions and (subdivisions_set := set(subdivisions)).issubset(remaining):
+            remaining -= subdivisions_set
+            remaining.add(country_code)
+
+    return remaining
+
+
+def collapse_iso3166_to_known_regions(iso3166_alpha2_codes: Iterable[str]) -> set[str]:
+    """
+    Collapse a set of ISO codes into known region groups, special regions, and countries, handling subregions as well.
+
+    This function:
+    1. Collapses ISO 3166-2 subdivision codes back to their ISO 3166-1 alpha-2 parent codes where possible.
+    2. Replaces recognized subsets of country codes with their corresponding region identifiers (M49 areas, OpenEPD
+       special regions like 'EU27').
+    3. Leaves any codes that do not belong to a known group as-is.
+
+    This is the inverse operation of :func:`flatten_to_iso3166_alpha2`.
+
+    :param iso3166_alpha2_codes: Iterable of ISO 3166-1 alpha-2 and/or ISO 3166-2 subdivision codes to collapse.
+    :return: Set of region codes (M49, OpenEPD special regions), remaining ISO 3166-1 codes, and any leftover codes.
+    """
+    collapsed_codes: set[str] = set()
+    # First, collapse subdivisions to their parent countries where possible.
+    remaining_codes: set[str] = _collapse_subdivisions_if_possible(set(iso3166_alpha2_codes))
+
+    # Then, collapse countries into known region groups from largest to smallest.
+    for region_code, region_countries in get_sorted_region_groups():
+        if region_countries.issubset(remaining_codes):
+            collapsed_codes.add(region_code)
+            remaining_codes -= region_countries
+
+    collapsed_codes.update(remaining_codes)
+    return collapsed_codes
