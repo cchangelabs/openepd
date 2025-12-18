@@ -13,8 +13,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from collections.abc import Iterator
 from unittest import TestCase
 
+from openepd.category import CATEGORY_TREE
 from openepd.category.base import CategoryNode, CategoryTree
 from openepd.model.category import Category
 
@@ -82,3 +84,31 @@ class CategoryTreeTestCase(TestCase):
         new_root = CategoryNode(tree, unique_name="NewRoot")
         tree.root_node = new_root
         self.assertIs(tree.root_node, new_root)
+
+    def test_category_tree_name_resolution(self) -> None:
+        """Verify all CATEGORY_TREE nodes are found by unique, hierarchical, and historical names."""
+        category_tree = CATEGORY_TREE
+        for node in self._iterate_nodes(category_tree.root_node):
+            self.assertIsNotNone(
+                category_tree.find_one(node.unique_name), f"Node with unique_name '{node.unique_name}' not found."
+            )
+            if node.hierarchical_name:  # Root node has no hierarchical_name
+                self.assertIsNotNone(
+                    category_tree.find_one(node.hierarchical_name),
+                    f"Node with hierarchical_name '{node.hierarchical_name}' not found.",
+                )
+            for historical_name in node.historical_names:
+                self.assertIsNotNone(
+                    category_tree.find_one(historical_name), f"Node with historical_name '{historical_name}' not found."
+                )
+
+    def _iterate_nodes(self, node: CategoryNode) -> Iterator[CategoryNode]:
+        """
+        Recursively yield the given node and all its descendant nodes in a depth-first manner.
+
+        :param node: The root node to start traversal from.
+        :yield: Each CategoryNode in the tree, including the root node.
+        """
+        yield node
+        for child in node.children:
+            yield from self._iterate_nodes(child)
