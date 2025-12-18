@@ -13,6 +13,13 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+
+__all__ = [
+    "GeographyItem",
+    "GeographyTree",
+    "get_m49_tree",
+    "get_openepd_geography_tree",
+]
 from collections.abc import Callable
 import dataclasses
 import functools
