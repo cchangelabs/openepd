@@ -15,12 +15,13 @@
 #
 import datetime
 from enum import StrEnum
-from typing import Annotated, Optional
+from typing import Optional
 
 import pydantic
 
 from openepd.model.base import BaseOpenEpdSchema, OpenXpdUUID
 from openepd.model.common import Amount, WithAltIdsMixin, WithAttachmentsMixin
+from openepd.model.geography import Geography
 from openepd.model.org import Org
 
 
@@ -121,7 +122,7 @@ class Pcr(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         description="List of classifications, including Masterformat and UNSPC",
         default_factory=dict,
     )
-    applicable_in: list[Annotated[str, pydantic.Field(min_length=2, max_length=2)]] | None = pydantic.Field(
+    applicable_in: list[Geography] | None = pydantic.Field(
         max_length=100,
         default=None,
         description="Jurisdiction(s) in which EPD is applicable. An empty array, or absent properties, "
