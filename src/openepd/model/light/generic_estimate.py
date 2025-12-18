@@ -83,7 +83,7 @@ class GenericEstimatePreviewV0(
             "Unique UUID for this dataset."
             "Use the UUID of the original source where possible, and put any other UUIDs in alt_ids."
         ),
-        example="0197ad82-92cf-7978-a6c8-d4964c0a3624",
+        examples=["0197ad82-92cf-7978-a6c8-d4964c0a3624"],
     )
     kg_per_declared_unit: AmountMass = pydantic.Field(
         description="Mass of the product, in kilograms, per declared unit",

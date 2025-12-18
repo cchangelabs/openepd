@@ -65,7 +65,7 @@ class CategoryTestCase(unittest.TestCase):
         )
         self.assertEqual(category.id, "cat3")
         # Test serialization uses 'id'
-        data = category.dict(by_alias=False)
+        data = category.model_dump(by_alias=False)
         self.assertIn("id", data)
         self.assertEqual(data["id"], "cat3")
         # Test initialization with alias 'unique_name'
