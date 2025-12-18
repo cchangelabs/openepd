@@ -543,20 +543,32 @@ class CategoryTree:
 
     def find_one(self, name: str) -> CategoryNode | None:
         """
-        Find a single CategoryNode by name (case-insensitive).
+        Find a single category node by name (case-insensitive).
 
-        :param name: Name to search for.
-        :return: The matching CategoryNode, or None if not found.
-        :raises ValueError: If multiple matches are found for the given name.
+        This method first attempts to retrieve a unique category node by the given name using the search index.
+        If not found, it performs a broader search for all matching nodes. If multiple matches are found,
+        a ValueError is raised with a descriptive message.
+
+        :param name: The name of the category to search for.
+        :return: The matching CategoryNode if found, or None if no match exists.
+        :raises ValueError: If multiple categories match the given name.
         """
-        found: list[CategoryNode] = self._finder.find(name)
-        if not found:
+        direct_match = self._finder.get(name)
+        if direct_match:
+            return direct_match
+
+        matching_nodes = self._finder.find(name)
+        if not matching_nodes:
             return None
-        if len(found) == 1:
-            return found[0]
-        names = ", ".join(f"{n.unique_name!r}" for n in found)
-        error_msg = f"Multiple categories match '{name}': {names}. Use 'find_all' if you expect non-unique names."
-        raise ValueError(error_msg)
+        if len(matching_nodes) == 1:
+            return matching_nodes[0]
+
+        matched_names = ", ".join(f"`{node.unique_name}`" for node in matching_nodes)
+        error_message = (
+            f"Ambiguous category name '{name}': multiple matches found: {matched_names}. "
+            "Use `find_all` to retrieve all matches."
+        )
+        raise ValueError(error_message)
 
     def find_all(self, name: str) -> list[CategoryNode]:
         """
