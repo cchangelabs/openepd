@@ -1,3 +1,16 @@
+## 7.19.0 (2025-12-18)
+
+### Feat
+
+- **m49**: add collapse_iso3166_to_known_regions to compress ISO code sets
+- **m49**: add `flatten_to_iso3166_alpha2` to expand regions to ISO alpha-2
+
+### Fix
+
+- **pcr**: allow M49 region codes and EU27/NAFTA aliases in applicable_in
+- avoid false multiple matches for unique name lookups
+- export GeographyItem and GeographyTree in __all__ for clarity
+
 ## 7.18.0 (2025-12-16)
 
 ### Feat
