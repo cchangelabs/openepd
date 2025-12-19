@@ -24,7 +24,7 @@ class AcTransformersV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
     _CATEGORY_META = CategoryMeta(
         unique_name="AcTransformers",
-        display_name="AcTransformers",
+        display_name="AC Transformers",
         short_name="Transformers",
         historical_names=["Transmission >> Transformers"],
         description="Equipment for transforming between higher and lower voltage AC power.",
