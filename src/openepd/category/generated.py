@@ -880,7 +880,7 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
         },
         {
             "unique_name": "AcTransformers",
-            "display_name": "AcTransformers",
+            "display_name": "AC Transformers",
             "hierarchical_name": "ElectricalTransmissionAndDistributionEquipment >> AcTransformers",
             "short_name": "Transformers",
             "historical_names": ["Transmission >> Transformers"],
