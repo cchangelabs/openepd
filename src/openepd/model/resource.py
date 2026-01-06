@@ -35,19 +35,6 @@ class SoftwarePrimaryFunction(StrEnum):
     """Software not described by a defined value in this list."""
 
 
-class ResourceRef(BaseOpenEpdSchema):
-    guid: str = pyd.Field(
-        description=(
-            "The GUID of a resource object (e.g. software, database), to be matched against a table of guids "
-            "and alt_ids. Matching MUST only consider the hex digits of the ID, not whitespace or dashes, and is "
-            "case insensitive. When POSTing EPDs to systems that do not have robust deduplication, it is recommended "
-            "to create resource records explicitly and refer to them via their /resource_reference guid rather "
-            "than by posting entire records as part of an EPD."
-        ),
-        example="40888d44-916d-4220-8353-dcdbc4e38d1b",
-    )
-
-
 class ResourceObject(BaseOpenEpdSchema):
     guid: str | None = pyd.Field(
         description=(
