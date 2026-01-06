@@ -23,7 +23,7 @@ from openepd.model.common import Amount, Constituent, WithAltIdsMixin, WithAttac
 from openepd.model.declaration import AverageDatasetMixin, BaseDeclaration, RefBase
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org
-from openepd.model.resource import DatabaseResource, ResourceRef, SoftwareResource
+from openepd.model.resource import DatabaseResource, SoftwareResource
 from openepd.model.validation.quantity import AmountMass
 from openepd.model.versioning import OpenEpdVersions, Version
 
@@ -104,9 +104,9 @@ class GenericEstimatePreviewV0(
         default=None,
         max_items=255,
     )
-    lci_databases: list[DatabaseResource] | list[ResourceRef] | None = pyd.Field(
+    lci_databases: list[DatabaseResource] = pyd.Field(
         description="LCI Database(s) and Version",
-        default=None,
+        default_factory=list,
         example=[
             {
                 "owner": {"web_domain": "ecoinvent.org"},
@@ -122,9 +122,9 @@ class GenericEstimatePreviewV0(
             },
         ],
     )
-    software_used: list[SoftwareResource] | list[ResourceRef] | None = pyd.Field(
+    software_used: list[SoftwareResource] = pyd.Field(
         description="List of software tool(s) and version(s) used for LCA and/or EPD generation.",
-        default=None,
+        default_factory=list,
         example=[
             {
                 "owner": {"web_domain": "greendelta.com"},
