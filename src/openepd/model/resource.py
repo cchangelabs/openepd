@@ -59,7 +59,10 @@ class ResourceObject(BaseOpenEpdSchema):
         examples=["40888d44-916d-4220-8353-dcdbc4e38d1b"],
         default=None,
     )
-    owner: Org = pydantic.Field(description="The owner or publisher.")
+    owner: Org | None = pydantic.Field(
+        description="The owner or publisher.",
+        default=None,
+    )
     alt_ids: list[str] | None = pydantic.Field(
         max_length=255,
         description=(
@@ -73,13 +76,14 @@ class ResourceObject(BaseOpenEpdSchema):
         examples=[["4a90591d-1a40-40e3-b72f-e5853d286b15", "0cddd245-a2c6-477b-afc1-3070ddf0ef9b"]],
         default=None,
     )
-    name: str = pydantic.Field(
+    name: str | None = pydantic.Field(
         max_length=200,
         description=(
             "Title or name of this software, database, or other reference. Avoid adding the name of the owner "
             "to the name (e.g. '911' rather than 'Porsche 911'), and do not add the version here.  "
         ),
         examples=["LCA for Experts"],
+        default=None,
     )
     alt_names: list[Annotated[str, pydantic.Field(max_length=200)]] | None = pydantic.Field(
         max_length=255,
@@ -90,7 +94,7 @@ class ResourceObject(BaseOpenEpdSchema):
         default=None,
         examples=[["GaBi"]],
     )
-    version: str = pydantic.Field(
+    version: str | None = pydantic.Field(
         max_length=40,
         description=(
             "Version ID provided by publishers. Do not include static prefixes like 'v' or 'ver.'"
@@ -99,6 +103,7 @@ class ResourceObject(BaseOpenEpdSchema):
             "The combination (name, version) SHOULD be unique."
         ),
         examples=["2.3.0"],
+        default=None,
     )
     link: str | None = pydantic.Field(
         max_length=200,
