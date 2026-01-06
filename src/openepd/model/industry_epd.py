@@ -14,14 +14,14 @@
 #  limitations under the License.
 #
 __all__ = [
-    "IndustryEpdPreviewV0",
-    "IndustryEpdPreview",
-    "IndustryEpdV0",
     "IndustryEpd",
-    "IndustryEpdWithDepsV0",
-    "IndustryEpdWithDeps",
     "IndustryEpdFactory",
+    "IndustryEpdPreview",
+    "IndustryEpdPreviewV0",
     "IndustryEpdRef",
+    "IndustryEpdV0",
+    "IndustryEpdWithDeps",
+    "IndustryEpdWithDepsV0",
     "SampleSize",
 ]
 

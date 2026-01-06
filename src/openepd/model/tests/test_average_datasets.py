@@ -157,8 +157,8 @@ class GECompositionTestCase(unittest.TestCase):
 
         # Test with None values (optional fields)
         ge_without = GenericEstimatePreview.model_validate({**GE_REQUIRED_FIELDS})
-        self.assertIsNone(ge_without.lci_databases)
-        self.assertIsNone(ge_without.software_used)
+        self.assertEqual(ge_without.lci_databases, [])
+        self.assertEqual(ge_without.software_used, [])
 
         # Test with empty lists
         ge_empty = GenericEstimatePreview.model_validate(
