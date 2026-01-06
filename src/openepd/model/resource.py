@@ -58,7 +58,10 @@ class ResourceObject(BaseOpenEpdSchema):
         example="40888d44-916d-4220-8353-dcdbc4e38d1b",
         default=None,
     )
-    owner: Org = pyd.Field(description="The owner or publisher.")
+    owner: Org | None = pyd.Field(
+        description="The owner or publisher.",
+        default=None,
+    )
     alt_ids: list[str] | None = pyd.Field(
         description=(
             "A list of IDs by which this resource is also referred.  "
@@ -72,13 +75,14 @@ class ResourceObject(BaseOpenEpdSchema):
         default=None,
         max_items=255,
     )
-    name: str = pyd.Field(
+    name: str | None = pyd.Field(
         description=(
             "Title or name of this software, database, or other reference. Avoid adding the name of the owner "
             "to the name (e.g. '911' rather than 'Porsche 911'), and do not add the version here.  "
         ),
         example="LCA for Experts",
         max_length=200,
+        default=None,
     )
     alt_names: list[Annotated[str, pyd.Field(max_length=200)]] | None = pyd.Field(
         description=(
@@ -89,7 +93,7 @@ class ResourceObject(BaseOpenEpdSchema):
         example=["GaBi"],
         max_items=255,
     )
-    version: str = pyd.Field(
+    version: str | None = pyd.Field(
         description=(
             "Version ID provided by publishers. Do not include static prefixes like 'v' or 'ver.'"
             "If there is no version ID, an issue date in the format YYYY-MM-DD or in ISO date format is acceptable."
@@ -98,6 +102,7 @@ class ResourceObject(BaseOpenEpdSchema):
         ),
         max_length=40,
         example="2.3.0",
+        default=None,
     )
     link: str | None = pyd.Field(
         description="URL of a web page providing access to the resource.",
