@@ -1,3 +1,14 @@
+## 7.20.0 (2026-01-06)
+
+### Feat
+
+- remove `ResourceRef`
+- make `ResourceObject` fields optional
+
+### Fix
+
+- correct display name for AC Transformers in metadata
+
 ## 7.19.0 (2025-12-18)
 
 ### Feat
