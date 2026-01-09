@@ -81,22 +81,6 @@ class Org(WithAttachmentsMixin, WithAltIdsMixin, OrgRef):
         description="Organizations controlled by this organization", default=None, max_length=255
     )
 
-    @pydantic.field_validator("subsidiaries", mode="before")
-    def _validate_subsidiaries(cls, value: Any) -> list[str] | None:
-        if value is None:
-            return value
-
-        if not isinstance(value, list):
-            msg = f"Expected type list or None, got {type(value)}"
-            raise TypeError(msg)
-
-        for item in value:
-            if len(item.name) > 200:
-                msg = "One or more subsidiaries name are longer than 200 characters"
-                raise ValueError(msg)
-
-        return value
-
     description: str | None = pydantic.Field(
         default=None,
         max_length=2000,
