@@ -505,7 +505,7 @@ class DefaultOpenApiErrorHandlers:
         error_text = response.text
         validation_errors: dict[str, Any] | None = None
         error_code: str | None = None
-        if response.headers.get("content-type") == "application/json":
+        if response.headers.get("content-type", "").startswith("application/json"):
             json_error = response.json()
             error_text = json_error.get("detail", error_text)
             validation_errors = json_error.get("validation_errors", None)
