@@ -1,3 +1,10 @@
+## 7.20.1 (2026-01-12)
+
+### Fix
+
+- improve JSON content-type check for error response parsing
+- allow parsing `subsidiaries` dicts into `Org` Pydantic model
+
 ## 7.20.0 (2026-01-06)
 
 ### Feat
