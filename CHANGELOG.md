@@ -1,3 +1,9 @@
+## 7.20.2 (2026-01-15)
+
+### Fix
+
+- make GenericEstimate fields optional
+
 ## 7.20.1 (2026-01-12)
 
 ### Fix
