@@ -73,21 +73,24 @@ class GenericEstimatePreviewV0(
         description='Describes the type and schema of the document. Must always be "openGenericEstimate"',
         default="openGenericEstimate",
     )
-    name: str = pydantic.Field(
+    name: str | None = pydantic.Field(
         max_length=200,
         description="Name. Recommended < 80 chars.",
         examples=["Aluminium profiles for windows, doors, and facades - anodized"],
+        default=None,
     )
-    id: UUID = pydantic.Field(  # type: ignore[assignment]
+    id: UUID | None = pydantic.Field(  # type: ignore[assignment]
         description=(
             "Unique UUID for this dataset."
             "Use the UUID of the original source where possible, and put any other UUIDs in alt_ids."
         ),
         examples=["0197ad82-92cf-7978-a6c8-d4964c0a3624"],
+        default=None,
     )
-    kg_per_declared_unit: AmountMass = pydantic.Field(
+    kg_per_declared_unit: AmountMass | None = pydantic.Field(
         description="Mass of the product, in kilograms, per declared unit",
         examples=[Amount(qty=12.5, unit="kg").to_serializable(exclude_unset=True)],
+        default=None,
     )
     reference_year: int | None = pydantic.Field(
         gt=2000,
