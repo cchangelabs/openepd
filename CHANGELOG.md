@@ -1,3 +1,9 @@
+## 7.22.0 (2026-02-05)
+
+### Feat
+
+- add custom error handler registration to `OpenEpdApiClientSync`
+
 ## 7.21.0 (2026-01-20)
 
 ### Feat
