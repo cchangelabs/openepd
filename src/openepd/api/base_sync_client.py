@@ -17,9 +17,11 @@ __all__ = (
     "USER_AGENT_DEFAULT",
     "BaseApiMethodGroup",
     "DoRequest",
+    "ErrorHandler",
     "HttpStreamReader",
     "RetryHandler",
     "SyncHttpClient",
+    "TokenAuth",
 )
 
 from collections.abc import Callable
