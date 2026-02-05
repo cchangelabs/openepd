@@ -19,7 +19,7 @@ from requests.auth import AuthBase
 
 from openepd.api.average_dataset.generic_estimate_sync_api import GenericEstimateApi
 from openepd.api.average_dataset.industry_epd_sync_api import IndustryEpdApi
-from openepd.api.base_sync_client import SyncHttpClient, TokenAuth
+from openepd.api.base_sync_client import ErrorHandler, SyncHttpClient, TokenAuth
 from openepd.api.category.sync_api import CategoryApi
 from openepd.api.epd.sync_api import EpdApi
 from openepd.api.org.sync_api import OrgApi
@@ -106,3 +106,15 @@ class OpenEpdApiClientSync:
         if self.__generic_estimate_api is None:
             self.__generic_estimate_api = GenericEstimateApi(self._http_client)
         return self.__generic_estimate_api
+
+    def set_error_handler(self, http_status_code: int, error_handler: ErrorHandler | None) -> None:
+        """
+        Register a custom error handler for a specific HTTP status code.
+
+        If ``error_handler`` is not ``None``, it will be registered for the given status code. If ``None`` is provided,
+        the method does nothing and does not remove any existing handler.
+
+        :param http_status_code: HTTP status code for which to register the error handler.
+        :param error_handler: Callable to handle the error, or ``None`` to skip registration.
+        """
+        self._http_client.register_error_handler(http_status_code, error_handler)
