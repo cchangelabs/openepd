@@ -82,6 +82,14 @@ class Pcr(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         description="A shortened name without boilerplate text.",
         examples=["Concrete and Concrete Elements"],
     )
+    display_name: str | None = pydantic.Field(
+        default=None,
+        description=(
+            "Display name for this PCR, materialized from short_name, issuer.name, and version."
+            "Should not be set directly by users."
+        ),
+        examples=["Concrete and Concrete Elements, C Change Labs, 1.0.2"],
+    )
     declared_units: list[Amount] | None = pydantic.Field(
         description="SI declared units for this PCR.  If a functional unit is "
         "utilized, the declared unit shall refer to the amount of "
