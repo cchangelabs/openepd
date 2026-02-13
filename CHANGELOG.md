@@ -1,3 +1,9 @@
+## 7.22.1 (2026-02-13)
+
+### Fix
+
+- set max_length of `Pcr.version` to 40 characters
+
 ## 7.22.0 (2026-02-05)
 
 ### Feat
