@@ -90,6 +90,7 @@ class Pcr(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         description="Document version, as expressed in document.",
         example="1.0.2",
         default=None,
+        max_length=40,
     )
     date_of_issue: datetime.datetime | None = pyd.Field(
         example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.UTC),
