@@ -92,6 +92,7 @@ class Pcr(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
         description="Document version, as expressed in document.",
         examples=["1.0.2"],
         default=None,
+        max_length=40,
     )
     date_of_issue: datetime.datetime | None = pydantic.Field(
         examples=[datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.UTC)],
