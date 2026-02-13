@@ -1,5 +1,5 @@
 #
-#  Copyright 2025 by C Change Labs Inc. www.c-change-labs.com
+#  Copyright 2026 by C Change Labs Inc. www.c-change-labs.com
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
 #  limitations under the License.
 #
 __all__ = [
-    "EpdPreviewV0",
-    "EpdPreview",
-    "EpdV0",
-    "Epd",
-    "EpdWithDepsV0",
-    "EpdWithDeps",
-    "EpdFactory",
-    "EpdRef",
-    "Ec3EpdExtension",
     "MANUFACTURER_DESCRIPTION",
     "PLANT_DESCRIPTION",
+    "Ec3EpdExtension",
+    "Epd",
+    "EpdFactory",
+    "EpdPreview",
+    "EpdPreviewV0",
+    "EpdRef",
+    "EpdV0",
+    "EpdWithDeps",
+    "EpdWithDepsV0",
 ]
 
 from openepd.compat.pydantic import pyd
@@ -47,7 +47,7 @@ from .light.epd import EpdPreviewV0 as EpdPreviewV0Light
 
 class EpdPreviewV0(EpdPreviewV0Light):
     specs: Specs = pyd.Field(  # type: ignore[assignment]
-        default_factory=Specs,
+        default_factory=Specs,  # type: ignore[arg-type]
         description="Data structure(s) describing performance specs of product. Unique for each material type.",
     )
 

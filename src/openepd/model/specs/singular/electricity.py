@@ -1,5 +1,5 @@
 #
-#  Copyright 2025 by C Change Labs Inc. www.c-change-labs.com
+#  Copyright 2026 by C Change Labs Inc. www.c-change-labs.com
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -13,6 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -20,3 +22,10 @@ class ElectricityV1(BaseOpenEpdHierarchicalSpec):
     """Electrical equipment and components and supplies."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Electricity",
+        display_name="Electricity",
+        description="Electrical equipment and components and supplies",
+        masterformat="48 00 00 Electrical Power Generation Manufacturers",
+        declared_unit=Amount(qty=1, unit="kWh"),
+    )

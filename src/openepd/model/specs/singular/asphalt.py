@@ -1,5 +1,5 @@
 #
-#  Copyright 2025 by C Change Labs Inc. www.c-change-labs.com
+#  Copyright 2026 by C Change Labs Inc. www.c-change-labs.com
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 from typing import Annotated
 
 from openepd.compat.pydantic import pyd
+from openepd.model.category import CategoryMeta
+from openepd.model.common import Amount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.enums import AsphaltGradation, AsphaltMixType
 from openepd.model.validation.numbers import RatioFloat
@@ -26,6 +28,14 @@ class AsphaltV1(BaseOpenEpdHierarchicalSpec):
     """General category for asphalt mixtures."""
 
     _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="Asphalt",
+        display_name="Asphalt",
+        alt_names=["Asphalt Mixtures"],
+        description="General category for asphalt mixtures",
+        masterformat="32 12 16 Asphalt Paving",
+        declared_unit=Amount(qty=1, unit="kg"),
+    )
 
     # Own fields:
     aggregate_size_max: LengthMmStr | None = pyd.Field(default=None, description="Max aggregate size", example="20 mm")

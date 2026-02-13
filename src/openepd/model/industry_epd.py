@@ -1,5 +1,5 @@
 #
-#  Copyright 2025 by C Change Labs Inc. www.c-change-labs.com
+#  Copyright 2026 by C Change Labs Inc. www.c-change-labs.com
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@
 #  limitations under the License.
 #
 __all__ = [
-    "IndustryEpdPreviewV0",
-    "IndustryEpdPreview",
-    "IndustryEpdV0",
     "IndustryEpd",
-    "IndustryEpdWithDepsV0",
-    "IndustryEpdWithDeps",
     "IndustryEpdFactory",
+    "IndustryEpdPreview",
+    "IndustryEpdPreviewV0",
     "IndustryEpdRef",
+    "IndustryEpdV0",
+    "IndustryEpdWithDeps",
+    "IndustryEpdWithDepsV0",
     "SampleSize",
 ]
 

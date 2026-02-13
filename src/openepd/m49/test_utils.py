@@ -1,5 +1,5 @@
 #
-#  Copyright 2025 by C Change Labs Inc. www.c-change-labs.com
+#  Copyright 2026 by C Change Labs Inc. www.c-change-labs.com
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -15,7 +15,10 @@
 #
 from unittest import TestCase
 
+from openepd.m49.const import ISO3166_ALPHA2_TO_SUBDIVISIONS
 from openepd.m49.utils import (
+    collapse_iso3166_to_known_regions,
+    flatten_to_iso3166_alpha2,
     iso_to_m49,
     m49_to_iso,
     m49_to_openepd,
@@ -375,3 +378,109 @@ class M49UtilsTestCase(TestCase):
             with self.subTest(input_data=input_data, expected_exception=expected_exception):
                 with self.assertRaises(expected_exception):
                     m49_to_openepd(input_data)
+
+    def test_flatten_to_iso3166_alpha2(self) -> None:
+        """
+        Test flatten_to_iso3166_alpha2 with various region identifiers and options.
+
+        This covers M49 codes, ISO codes, special region aliases, and expand_subdivisions option.
+        """
+
+        # Test with special region alias
+        result = flatten_to_iso3166_alpha2(["EU27", "US"])
+        self.assertIn("US", result)
+        self.assertIn("FR", result)
+        self.assertIn("DE", result)
+        self.assertGreater(len(result), 3)
+
+        # Test with M49 codes
+        result = flatten_to_iso3166_alpha2(["840", "124"])
+        self.assertEqual(result, {"US", "CA"})
+
+        # Test with special region and M49 code
+        result = flatten_to_iso3166_alpha2(["NAFTA", "051"])
+        self.assertIn("US", result)
+        self.assertIn("CA", result)
+        self.assertIn("MX", result)
+        self.assertIn("AM", result)
+
+        # Test with expand_subdivisions
+        result = flatten_to_iso3166_alpha2(["US"], expand_subdivisions=True)
+        self.assertTrue(any(code.startswith("US-") for code in result))
+        self.assertNotIn("US", result)
+
+        # Test with unrecognized code
+        result = flatten_to_iso3166_alpha2(["ZZ"])
+        self.assertIn("ZZ", result)
+
+        # Test with empty input
+        result = flatten_to_iso3166_alpha2([])
+        self.assertEqual(result, set())
+
+    def test_collapse_iso3166_to_known_regions(self) -> None:
+        """
+        Test collapse_iso3166_to_known_regions for various scenarios including normal, edge, and special cases.
+
+        This covers:
+        - Collapsing subdivisions to parent country codes.
+        - Collapsing full country sets to region codes.
+        - Handling of unknown or partial codes.
+        - Mixed input of countries, regions, and subdivisions.
+        """
+        # Example: All EU27 countries should collapse to 'EU27' (if such region is defined in region groups)
+        eu27_countries = [
+            "AT",
+            "BE",
+            "BG",
+            "HR",
+            "CY",
+            "CZ",
+            "DK",
+            "EE",
+            "FI",
+            "FR",
+            "DE",
+            "GR",
+            "HU",
+            "IE",
+            "IT",
+            "LV",
+            "LT",
+            "LU",
+            "MT",
+            "NL",
+            "PL",
+            "PT",
+            "RO",
+            "SK",
+            "SI",
+            "ES",
+            "SE",
+        ]
+        result = collapse_iso3166_to_known_regions(eu27_countries)
+        self.assertEqual(result, {"EU27"})
+
+        # Example: Subdivisions of a country (e.g., US-CA, US-TX) should collapse to 'US' if all are present
+        # Use the canonical set of US subdivisions from the constants to ensure a perfect match
+        us_subdivisions = list(ISO3166_ALPHA2_TO_SUBDIVISIONS["US"])
+        result = collapse_iso3166_to_known_regions(us_subdivisions)
+        self.assertEqual(result, {"US"})
+
+        # Example: Partial region set should not collapse
+        partial_eu = ["DE", "FR", "IT"]
+        result = collapse_iso3166_to_known_regions(partial_eu)
+        self.assertEqual(set(result), set(partial_eu))
+
+        # Example: Unknown codes should be left as-is
+        unknown_codes = ["ZZ", "XX"]
+        result = collapse_iso3166_to_known_regions(unknown_codes)
+        self.assertEqual(set(result), set(unknown_codes))
+
+        # Example: Mixed known and unknown codes
+        mixed = ["DE", "FR", "XX"]
+        result = collapse_iso3166_to_known_regions(mixed)
+        self.assertEqual(set(result), {"DE", "FR", "XX"})
+
+        # Example: Empty input
+        result = collapse_iso3166_to_known_regions([])
+        self.assertEqual(result, set())

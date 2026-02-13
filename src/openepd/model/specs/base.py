@@ -1,5 +1,5 @@
 #
-#  Copyright 2025 by C Change Labs Inc. www.c-change-labs.com
+#  Copyright 2026 by C Change Labs Inc. www.c-change-labs.com
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -13,15 +13,20 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from __future__ import annotations
+
 import dataclasses
 from types import UnionType
-from typing import Any
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema, Version
 from openepd.model.validation.common import validate_version_compatibility, validate_version_format
 from openepd.model.validation.quantity import ExternalValidationConfig, QuantityValidator
 from openepd.model.versioning import WithExtVersionMixin
+
+if TYPE_CHECKING:
+    from openepd.model.category import CategoryMeta
 
 
 class BaseOpenEpdSpec(BaseOpenEpdSchema):
@@ -33,6 +38,8 @@ class BaseOpenEpdSpec(BaseOpenEpdSchema):
 
 class BaseOpenEpdHierarchicalSpec(BaseOpenEpdSpec, WithExtVersionMixin):
     """Base class for new specs (hierarchical, versioned)."""
+
+    _CATEGORY_META: ClassVar[CategoryMeta]
 
     def __init__(self, **data: Any) -> None:
         # ensure that all the concrete spec objects fail on creations if they dont have _EXT_VERSION declared to

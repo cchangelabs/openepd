@@ -1,5 +1,5 @@
 #
-#  Copyright 2025 by C Change Labs Inc. www.c-change-labs.com
+#  Copyright 2026 by C Change Labs Inc. www.c-change-labs.com
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ from openepd.model.common import Amount, Constituent, WithAltIdsMixin, WithAttac
 from openepd.model.declaration import AverageDatasetMixin, BaseDeclaration, RefBase
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org
-from openepd.model.resource import DatabaseResource, ResourceRef, SoftwareResource
+from openepd.model.resource import DatabaseResource, SoftwareResource
 from openepd.model.validation.quantity import AmountMass
 from openepd.model.versioning import OpenEpdVersions, Version
 
@@ -72,21 +72,24 @@ class GenericEstimatePreviewV0(
         description='Describes the type and schema of the document. Must always be "openGenericEstimate"',
         default="openGenericEstimate",
     )
-    name: str = pyd.Field(
+    name: str | None = pyd.Field(
         max_length=200,
         description="Name. Recommended < 80 chars.",
         example="Aluminium profiles for windows, doors, and facades - anodized",
+        default=None,
     )
-    id: UUID = pyd.Field(  # type: ignore[assignment]
+    id: UUID | None = pyd.Field(  # type: ignore[assignment]
         description=(
             "Unique UUID for this dataset."
             "Use the UUID of the original source where possible, and put any other UUIDs in alt_ids."
         ),
         example="0197ad82-92cf-7978-a6c8-d4964c0a3624",
+        default=None,
     )
-    kg_per_declared_unit: AmountMass = pyd.Field(
+    kg_per_declared_unit: AmountMass | None = pyd.Field(
         description="Mass of the product, in kilograms, per declared unit",
         example=Amount(qty=12.5, unit="kg").to_serializable(exclude_unset=True),
+        default=None,
     )
     reference_year: int | None = pyd.Field(
         gt=2000,
@@ -104,9 +107,9 @@ class GenericEstimatePreviewV0(
         default=None,
         max_items=255,
     )
-    lci_databases: list[DatabaseResource] | list[ResourceRef] | None = pyd.Field(
+    lci_databases: list[DatabaseResource] = pyd.Field(
         description="LCI Database(s) and Version",
-        default=None,
+        default_factory=list,
         example=[
             {
                 "owner": {"web_domain": "ecoinvent.org"},
@@ -122,9 +125,9 @@ class GenericEstimatePreviewV0(
             },
         ],
     )
-    software_used: list[SoftwareResource] | list[ResourceRef] | None = pyd.Field(
+    software_used: list[SoftwareResource] = pyd.Field(
         description="List of software tool(s) and version(s) used for LCA and/or EPD generation.",
-        default=None,
+        default_factory=list,
         example=[
             {
                 "owner": {"web_domain": "greendelta.com"},

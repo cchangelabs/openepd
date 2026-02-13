@@ -1,5 +1,5 @@
 #
-#  Copyright 2025 by C Change Labs Inc. www.c-change-labs.com
+#  Copyright 2026 by C Change Labs Inc. www.c-change-labs.com
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -142,8 +142,8 @@ class GECompositionTestCase(unittest.TestCase):
 
         # Test with None values (optional fields)
         ge_without = GenericEstimatePreview.parse_obj({**GE_REQUIRED_FIELDS})
-        self.assertIsNone(ge_without.lci_databases)
-        self.assertIsNone(ge_without.software_used)
+        self.assertEqual(ge_without.lci_databases, [])
+        self.assertEqual(ge_without.software_used, [])
 
         # Test with empty lists
         ge_empty = GenericEstimatePreview.parse_obj(

@@ -1,5 +1,5 @@
 #
-#  Copyright 2025 by C Change Labs Inc. www.c-change-labs.com
+#  Copyright 2026 by C Change Labs Inc. www.c-change-labs.com
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -17,9 +17,11 @@ __all__ = (
     "USER_AGENT_DEFAULT",
     "BaseApiMethodGroup",
     "DoRequest",
+    "ErrorHandler",
     "HttpStreamReader",
     "RetryHandler",
     "SyncHttpClient",
+    "TokenAuth",
 )
 
 from collections.abc import Callable
@@ -481,7 +483,7 @@ class DefaultOpenApiErrorHandlers:
         error_text = response.text
         validation_errors: dict[str, Any] | None = None
         error_code: str | None = None
-        if response.headers.get("content-type") == "application/json":
+        if response.headers.get("content-type", "").startswith("application/json"):
             json_error = response.json()
             error_text = json_error.get("detail", error_text)
             validation_errors = json_error.get("validation_errors", None)
