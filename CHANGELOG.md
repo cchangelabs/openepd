@@ -1,3 +1,33 @@
+## 6.35.0 (2026-02-13)
+
+### Feat
+
+- add custom error handler registration to `OpenEpdApiClientSync`
+- remove `ResourceRef`
+- make `ResourceObject` fields optional
+- **m49**: add collapse_iso3166_to_known_regions to compress ISO code sets
+- **m49**: add `flatten_to_iso3166_alpha2` to expand regions to ISO alpha-2
+- **m49**: add tree-based geography representation
+- add CategoryTree for search and lightweight manipulation
+- update Category.id to use alias 'unique_name' for clarity
+- deprecate `Category.name` in favor of `display_name`
+
+### Fix
+
+- set max_length of `Pcr.version` to 40 characters
+- make GenericEstimate fields optional
+- improve JSON content-type check for error response parsing
+- allow parsing `subsidiaries` dicts into `Org` Pydantic model
+- correct display name for AC Transformers in metadata
+- **pcr**: allow M49 region codes and EU27/NAFTA aliases in applicable_in
+- avoid false multiple matches for unique name lookups
+- export GeographyItem and GeographyTree in __all__ for clarity
+- **m49**: add missing countries to M49_TO_COUNTRY_VERBOSE_NAME, sort the list
+
+### Refactor
+
+- **m49**: refactor m49 to verbose name mapping to drop explicit COUNTRY_VERBOSE_NAME_TO_M49
+
 ## 6.34.2 (2025-12-11)
 
 ### Fix
