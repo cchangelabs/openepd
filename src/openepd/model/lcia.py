@@ -455,6 +455,14 @@ class ImpactSet(ScopesetByNameBase):
         description="Climate change effects due to greenhouse gas emissions originating from the oxidation or "
         "reduction of fossil fuels or materials containing fossil carbon. [Source: EN15804]",
     )
+    GWP_GHG: ScopeSetGwp | None = pyd.Field(
+        default=None,
+        description=(
+            "Equal to gwp (aka GWP-total) except that the characterisation factor for biogenic CO2 is set to zero.  "
+            "It should be equal to gwp-fossil + gwp-luluc + the non-CO2 portion of gwp-biogenic.  "
+            "Defined by environdec.com"
+        ),
+    )
     WDP: ScopeSetM3Aware | None = pyd.Field(
         default=None,
         description="Deprivation-weighted water consumption, calculated by the AWARE method "
