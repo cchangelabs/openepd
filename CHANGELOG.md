@@ -1,3 +1,9 @@
+## 7.23.0 (2026-02-26)
+
+### Feat
+
+- add GWP_GHG as a supported impact category
+
 ## 7.22.1 (2026-02-13)
 
 ### Fix
