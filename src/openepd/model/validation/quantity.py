@@ -168,7 +168,9 @@ class QuantityStr(str):
 
     Should be used in models where the physical value (quantity) is expected.
 
-    Checks for dimensionality and for the fact that value is greater than zero.
+    Checks for dimensionality and, when an external ``QUANTITY_VALIDATOR`` is configured via
+    :class:`ExternalValidationConfig`, also validates that the value is greater than or equal to zero.
+    The non-negative check can be disabled for a subclass by setting ``VALIDATE_AT_LEAST_ZERO = False``.
     """
 
     unit: ClassVar[str]
