@@ -21,6 +21,7 @@ import pydantic
 from openepd.model.epd import Epd
 from openepd.model.specs import ConcreteV1
 from openepd.model.specs.enums import AciExposureClass, CsaExposureClass, EnExposureClass
+from openepd.model.specs.singular.asphalt import AsphaltV1
 from openepd.model.specs.singular.masonry import AutoclavedAeratedConcreteV1
 
 
@@ -277,3 +278,23 @@ class SpecValidationTestCase(unittest.TestCase):
         AutoclavedAeratedConcreteV1(thermal_conductivity="1 W / (m * K)")
         validate_unit_correctness_mock.assert_called_once()
         validate_quantity_greater_or_equal_mock.assert_called_once()
+
+    @patch("openepd.model.validation.quantity.ExternalValidationConfig.QUANTITY_VALIDATOR")
+    def test_temperature_allows_negative_values(self, validator_mock: Mock) -> None:
+        """
+        Test that TemperatureCStr accepts negative values and does not invoke validate_quantity_greater_or_equal.
+
+        Negative temperatures (e.g. -20 °C) are physically valid and must not be rejected.
+        The VALIDATE_AT_LEAST_ZERO flag should be False for TemperatureCStr, so the
+        greater-or-equal validator must never be called for temperature fields.
+        """
+        validate_unit_correctness_mock = Mock()
+        validate_quantity_greater_or_equal_mock = Mock()
+        validator_mock.validate_unit_correctness = validate_unit_correctness_mock
+        validator_mock.validate_quantity_greater_or_equal = validate_quantity_greater_or_equal_mock
+
+        # Negative temperature should be accepted without raising an error
+        AsphaltV1(min_temperature="-20 degC")
+
+        validate_unit_correctness_mock.assert_called_once()
+        validate_quantity_greater_or_equal_mock.assert_not_called()

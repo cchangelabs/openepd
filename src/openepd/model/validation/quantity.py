@@ -168,15 +168,19 @@ class QuantityStr(str):
 
     Should be used in models where the physical value (quantity) is expected.
 
-    Checks for dimensionality and for the fact that value is greater than zero.
+    Checks for dimensionality and, when an external ``QUANTITY_VALIDATOR`` is configured via
+    :class:`ExternalValidationConfig`, also validates that the value is greater than or equal to zero.
+    The non-negative check can be disabled for a subclass by setting ``VALIDATE_AT_LEAST_ZERO = False``.
     """
 
     unit: ClassVar[str]
+    VALIDATE_AT_LEAST_ZERO: ClassVar[bool] = True
 
     @classmethod
     def _validate(cls, value: str) -> Self:
         value = validate_quantity_unit_factory(cls.unit)(cls, value)
-        value = validate_quantity_ge_factory(f"0 {cls.unit}")(cls, value)
+        if cls.VALIDATE_AT_LEAST_ZERO:
+            value = validate_quantity_ge_factory(f"0 {cls.unit}")(cls, value)
         return cls(value)
 
     @classmethod
@@ -258,6 +262,7 @@ class TemperatureCStr(QuantityStr):
     """Temperature celsius quantity type."""
 
     unit = OpenEPDUnit.degree_c
+    VALIDATE_AT_LEAST_ZERO = False
 
 
 class GwpKgCo2eStr(QuantityStr):
