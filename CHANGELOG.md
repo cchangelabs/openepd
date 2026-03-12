@@ -1,3 +1,13 @@
+## 7.24.0 (2026-03-12)
+
+### Feat
+
+- enhance `get_by_openxpd_uuid` method with `raw_response` return type
+
+### Fix
+
+- allow negative values for temperature quantity validation
+
 ## 7.23.0 (2026-02-26)
 
 ### Feat
