@@ -45,6 +45,16 @@ class SyncClientApiTestCase(unittest.TestCase):
         epd = self.api_client.epds.get_by_openxpd_uuid("ec3b9j5t")
         self.assertEqual(epd.id, "ec3b9j5t")
 
+    def test_get_existing_epd_by_id_with_response(self):
+        epd, resp = self.api_client.epds.get_by_openxpd_uuid("ec3b9j5t", with_response=True)
+        self.assertEqual(epd.id, "ec3b9j5t")
+        self.assertEqual(resp.status_code, 200)
+
+    def test_get_existing_epd_by_id_raw_response(self):
+        resp = self.api_client.epds.get_by_openxpd_uuid("ec3b9j5t", raw_response=True)
+        self.assertIsInstance(resp, Response)
+        self.assertEqual(resp.status_code, 200)
+
     def test_iterate_over_list(self):
         page_size = 2
         max_iterations = 5

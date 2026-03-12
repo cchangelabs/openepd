@@ -28,18 +28,62 @@ from openepd.model.epd import Epd
 class EpdApi(BaseApiMethodGroup):
     """API methods for EPDs."""
 
-    def get_by_openxpd_uuid(self, uuid: str, *, fields: Collection[str] | None = None) -> Epd:
+    @overload
+    def get_by_openxpd_uuid(
+        self,
+        uuid: str,
+        with_response: Literal[False] = False,
+        *,
+        fields: Collection[str] | None = None,
+        raw_response: Literal[False] = False,
+    ) -> Epd: ...
+
+    @overload
+    def get_by_openxpd_uuid(
+        self,
+        uuid: str,
+        with_response: Literal[True],
+        *,
+        fields: Collection[str] | None = None,
+        raw_response: Literal[False] = False,
+    ) -> tuple[Epd, Response]: ...
+
+    @overload
+    def get_by_openxpd_uuid(
+        self,
+        uuid: str,
+        with_response: bool = False,
+        *,
+        fields: Collection[str] | None = None,
+        raw_response: Literal[True],
+    ) -> Response: ...
+
+    def get_by_openxpd_uuid(
+        self,
+        uuid: str,
+        with_response: bool = False,
+        *,
+        fields: Collection[str] | None = None,
+        raw_response: bool = False,
+    ) -> Epd | tuple[Epd, Response] | Response:
         """
         Get EPD by OpenEPD UUID.
 
         :param uuid: OpenEPD UUID
+        :param with_response: return the response object together with the EPD
         :param fields: Optional collection of field names to include in the response
-        :return: EPD, Response, or tuple of EPD and Response depending on return_type
+        :param raw_response: if True, return the raw HTTP response without DTO conversion
+        :return: EPD, tuple of EPD and Response, or raw Response depending on parameters
         :raise ObjectNotFound: if EPD is not found
         """
         params = {"fields": ",".join(set(fields))} if fields else None
-        content = self._client.do_request("get", f"/epds/{uuid}", params=params).json()
-        return Epd.model_validate(content)
+        response = self._client.do_request("get", f"/epds/{uuid}", params=params)
+        if raw_response:
+            return response
+        epd = Epd.model_validate(response.json())
+        if with_response:
+            return epd, response
+        return epd
 
     def find_raw(self, omf: str, page_num: int = 1, page_size: int = 10) -> EpdSearchResponse:
         """
