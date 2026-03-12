@@ -1,3 +1,14 @@
+## 6.36.0 (2026-03-12)
+
+### Feat
+
+- enhance `get_by_openxpd_uuid` method with `raw_response` return type
+- add GWP_GHG as a supported impact category
+
+### Fix
+
+- allow negative values for temperature quantity validation
+
 ## 6.35.0 (2026-02-13)
 
 ### Feat
