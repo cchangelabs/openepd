@@ -919,6 +919,7 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "historical_names": ["Transmission >> Switchgear"],
             "description": "Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment.",
             "masterformat": "33 77 00 Medium-Voltage Utility Switchgear and Protection Devices",
+            "declared_unit": Amount(qty=1.0, unit="item"),
             "parent": "ElectricalTransmissionAndDistributionEquipment",
         },
         {
