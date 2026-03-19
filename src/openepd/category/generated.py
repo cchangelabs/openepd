@@ -2115,7 +2115,7 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "display_name": "Raceways",
             "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> Raceways",
             "historical_names": ["Electrical >> Distribution >> Raceways"],
-            "description": "Mechanical guideways for eletrical communications cabling, typically embedded in an accessible floor.",
+            "description": "Mechanical guideways for electrical communications cabling, often embedded in an accessible floor.",
             "masterformat": "26 05 33 Raceway and Boxes for Electrical Systems",
             "declared_unit": Amount(qty=1.0, unit="m"),
             "parent": "LowVoltageElectricalDistribution",
