@@ -210,7 +210,7 @@ class RacewaysV1(BaseOpenEpdHierarchicalSpec):
         unique_name="Raceways",
         display_name="Raceways",
         historical_names=["Electrical >> Distribution >> Raceways"],
-        description="Mechanical guideways for eletrical communications cabling, typically embedded in an accessible floor.",
+        description="Mechanical guideways for electrical communications cabling, often embedded in an accessible floor.",
         masterformat="26 05 33 Raceway and Boxes for Electrical Systems",
         declared_unit=Amount(qty=1, unit="m"),
     )
