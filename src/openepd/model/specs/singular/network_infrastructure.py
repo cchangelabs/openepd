@@ -138,7 +138,7 @@ class FloorBoxesAndAccessoriesV1(BaseOpenEpdHierarchicalSpec):
         short_name="Floor Boxes",
         historical_names=["Network Infrastructure >> Floor Boxes"],
         description="Electrical boxes that are installed in the floor. Used to provide power and/or data connections to devices in a room or space.",
-        masterformat="26 05 33.16 Floor Boxes for Electrical Systems",
+        masterformat="26 05 33.16 Boxes for Electrical Systems",
         declared_unit=Amount(qty=1, unit="item"),
     )
 
