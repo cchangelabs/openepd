@@ -2095,7 +2095,7 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "short_name": "Boxes",
             "historical_names": ["Electrical >> Distribution >> Boxes"],
             "description": "Equipment boxes for power or electronic equipment embedded in an accessible floor.",
-            "masterformat": "26 05 33 Raceway and Boxes for Electrical Systems",
+            "masterformat": "26 05 33.16 Boxes for Electrical Systems",
             "declared_unit": Amount(qty=1.0, unit="item"),
             "parent": "LowVoltageElectricalDistribution",
         },
