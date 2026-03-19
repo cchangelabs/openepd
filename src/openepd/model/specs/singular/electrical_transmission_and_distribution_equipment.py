@@ -59,6 +59,7 @@ class ElectricalSubstationsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Transmission >> Substations"],
         description="Substations for electricity transmission and distribution.",
         masterformat="33 72 00 Utility Substations",
+        declared_unit=Amount(qty=1, unit="item"),
     )
 
 
