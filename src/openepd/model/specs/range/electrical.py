@@ -23,6 +23,7 @@ __all__ = (
     "ElectricalCablesRangeV1",
     "ElectricalConduitRangeV1",
     "ElectricalConnectorsRangeV1",
+    "ElectricalDistSwitchgearRangeV1",
     "ElectricalGenerationEquipmentRangeV1",
     "ElectricalGroundingConnectorsRangeV1",
     "ElectricalPowerStorageRangeV1",
@@ -232,6 +233,16 @@ class ElectricalConnectorsRangeV1(BaseOpenEpdHierarchicalSpec):
     ElectricalGroundingConnectors: ElectricalGroundingConnectorsRangeV1 | None = None
 
 
+class ElectricalDistSwitchgearRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class FueledElectricalGeneratorsRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Fueled electrical generators.
@@ -397,6 +408,7 @@ class LowVoltageElectricalDistributionRangeV1(BaseOpenEpdHierarchicalSpec):
     PowerDistributionUnits: PowerDistributionUnitsRangeV1 | None = None
     Raceways: RacewaysRangeV1 | None = None
     ElectricalConnectors: ElectricalConnectorsRangeV1 | None = None
+    ElectricalDistSwitchgear: ElectricalDistSwitchgearRangeV1 | None = None
 
 
 class ElectricalGenerationEquipmentRangeV1(BaseOpenEpdHierarchicalSpec):
