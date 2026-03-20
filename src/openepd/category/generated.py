@@ -2211,6 +2211,17 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "ElectricalDistSwitchgear",
         },
         {
+            "unique_name": "ElectricalMVFuses",
+            "display_name": "Electrical Fuses (Med/Low Voltage)",
+            "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> ElectricalDistSwitchgear >> ElectricalMVFuses",
+            "short_name": "Fuses",
+            "historical_names": ["Electrical >> Distribution >> Switchgear >> Fuses"],
+            "description": "Single-use protective devices that melt and break a circuit when current exceeds a safe level.",
+            "masterformat": "26 28 13 Fuses",
+            "declared_unit": Amount(qty=1.0, unit="item"),
+            "parent": "ElectricalDistSwitchgear",
+        },
+        {
             "unique_name": "ElectricalGenerationEquipment",
             "display_name": "ElectricalGenerationEquipment",
             "hierarchical_name": "Electrical >> ElectricalGenerationEquipment",
