@@ -26,6 +26,7 @@ __all__ = (
     "ElectricalDistSwitchgearV1",
     "ElectricalGenerationEquipmentV1",
     "ElectricalGroundingConnectorsV1",
+    "ElectricalMVSwitchesV1",
     "ElectricalPowerStorageV1",
     "ElectricalV1",
     "ElectricityFromPowerGridV1",
@@ -326,6 +327,21 @@ class ElectricalConnectorsV1(BaseOpenEpdHierarchicalSpec):
     ElectricalGroundingConnectors: ElectricalGroundingConnectorsV1 | None = None
 
 
+class ElectricalMVSwitchesV1(BaseOpenEpdHierarchicalSpec):
+    """Devices that control electrical circuits by opening or closing a connection to turn power on and off, under manual or other intentional control."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalMVSwitches",
+        display_name="Electrical Switches (Med/Low Voltage)",
+        short_name="Switches",
+        historical_names=["Electrical >> Distribution >> Switchgear >> Switches"],
+        description="Devices that control electrical circuits by opening or closing a connection to turn power on and off, under manual or other intentional control.",
+        masterformat="26 28 16.16 Enclosed Switches",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class ElectricalDistSwitchgearV1(BaseOpenEpdHierarchicalSpec):
     """Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment."""
 
@@ -339,6 +355,9 @@ class ElectricalDistSwitchgearV1(BaseOpenEpdHierarchicalSpec):
         masterformat="26 13 00 Medium-Voltage Switchgear",
         declared_unit=Amount(qty=1, unit="item"),
     )
+
+    # Nested specs:
+    ElectricalMVSwitches: ElectricalMVSwitchesV1 | None = None
 
 
 class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
