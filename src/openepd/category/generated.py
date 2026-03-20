@@ -2222,6 +2222,17 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "ElectricalDistSwitchgear",
         },
         {
+            "unique_name": "ChargingStations",
+            "display_name": "Outdoor Charging Stations",
+            "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> ChargingStations",
+            "short_name": "Charging Stations",
+            "historical_names": ["Electrical >> Distribution >> Charging Stations"],
+            "description": "Outdoor charging stations, particularly for electric vehicles (EVs)",
+            "masterformat": "26 27 36 Outdoor Charging Stations",
+            "declared_unit": Amount(qty=1.0, unit="item"),
+            "parent": "LowVoltageElectricalDistribution",
+        },
+        {
             "unique_name": "ElectricalGenerationEquipment",
             "display_name": "ElectricalGenerationEquipment",
             "hierarchical_name": "Electrical >> ElectricalGenerationEquipment",
