@@ -2080,6 +2080,17 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "LowVoltageElectricalDistribution",
         },
         {
+            "unique_name": "ElectricalCableAccs",
+            "display_name": "Low and Medium Voltage Cable Accessories",
+            "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> ElectricalCables >> ElectricalCableAccs",
+            "short_name": "Accessories",
+            "historical_names": ["Electrical >> Distribution >> Cables >> Accessories"],
+            "description": "Accessories for cabling, including ties and supports.",
+            "masterformat": "26 05 29 Hangers and Supports for Electrical Systems",
+            "declared_unit": Amount(qty=1.0, unit="item"),
+            "parent": "ElectricalCables",
+        },
+        {
             "unique_name": "ElectricalBuses",
             "display_name": "Busbars and Busways",
             "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> ElectricalBuses",

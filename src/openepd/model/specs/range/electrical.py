@@ -19,6 +19,7 @@ __all__ = (
     "CableTraysRangeV1",
     "ElectricPowerRangeV1",
     "ElectricalBusesRangeV1",
+    "ElectricalCableAccsRangeV1",
     "ElectricalCablesRangeV1",
     "ElectricalConduitRangeV1",
     "ElectricalGenerationEquipmentRangeV1",
@@ -133,6 +134,16 @@ class CableTraysRangeV1(BaseOpenEpdHierarchicalSpec):
     CableTrayAccs: CableTrayAccsRangeV1 | None = None
 
 
+class ElectricalCableAccsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Accessories for cabling, including ties and supports.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class ElectricalCablesRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Insulated building power distribution conductors to connect electrical equipment within a structure at 600V or less.
@@ -141,6 +152,8 @@ class ElectricalCablesRangeV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+
+    ElectricalCableAccs: ElectricalCableAccsRangeV1 | None = None
 
 
 class ElectricalBusesRangeV1(BaseOpenEpdHierarchicalSpec):
