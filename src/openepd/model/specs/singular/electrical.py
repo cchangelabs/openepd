@@ -19,6 +19,7 @@ __all__ = (
     "CableTraysV1",
     "ElectricPowerV1",
     "ElectricalBusesV1",
+    "ElectricalCablesV1",
     "ElectricalConduitV1",
     "ElectricalGenerationEquipmentV1",
     "ElectricalPowerStorageV1",
@@ -170,6 +171,21 @@ class CableTraysV1(BaseOpenEpdHierarchicalSpec):
 
     # Nested specs:
     CableTrayAccs: CableTrayAccsV1 | None = None
+
+
+class ElectricalCablesV1(BaseOpenEpdHierarchicalSpec):
+    """Insulated building power distribution conductors to connect electrical equipment within a structure at 600V or less."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalCables",
+        display_name="Low and Medium Voltage Cables",
+        short_name="Cables",
+        historical_names=["Electrical >> Distribution >> Cables"],
+        description="Insulated building power distribution conductors to connect electrical equipment within a structure at 600V or less.",
+        masterformat="26 05 13 Medium-Voltage Cables",
+        declared_unit=Amount(qty=1, unit="m"),
+    )
 
 
 class ElectricalBusesV1(BaseOpenEpdHierarchicalSpec):
@@ -481,7 +497,7 @@ class ElectricalPowerStorageV1(BaseOpenEpdHierarchicalSpec):
 class LowVoltageElectricalDistributionV1(BaseOpenEpdHierarchicalSpec):
     """Low Voltage Electrical Distribution."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
     _CATEGORY_META = CategoryMeta(
         unique_name="LowVoltageElectricalDistribution",
         display_name="LowVoltageElectricalDistribution",
@@ -493,6 +509,7 @@ class LowVoltageElectricalDistributionV1(BaseOpenEpdHierarchicalSpec):
 
     # Nested specs:
     CableTrays: CableTraysV1 | None = None
+    ElectricalCables: ElectricalCablesV1 | None = None
     ElectricalBuses: ElectricalBusesV1 | None = None
     FloorEquipmentBoxes: FloorEquipmentBoxesV1 | None = None
     PowerDistributionUnits: PowerDistributionUnitsV1 | None = None
