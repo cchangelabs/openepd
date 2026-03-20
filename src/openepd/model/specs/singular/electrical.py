@@ -19,6 +19,7 @@ __all__ = (
     "CableTraysV1",
     "ElectricPowerV1",
     "ElectricalBusesV1",
+    "ElectricalCableAccsV1",
     "ElectricalCablesV1",
     "ElectricalConduitV1",
     "ElectricalGenerationEquipmentV1",
@@ -168,6 +169,21 @@ class CableTraysV1(BaseOpenEpdHierarchicalSpec):
     CableTrayAccs: CableTrayAccsV1 | None = None
 
 
+class ElectricalCableAccsV1(BaseOpenEpdHierarchicalSpec):
+    """Accessories for cabling, including ties and supports."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalCableAccs",
+        display_name="Low and Medium Voltage Cable Accessories",
+        short_name="Accessories",
+        historical_names=["Electrical >> Distribution >> Cables >> Accessories"],
+        description="Accessories for cabling, including ties and supports.",
+        masterformat="26 05 29 Hangers and Supports for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class ElectricalCablesV1(BaseOpenEpdHierarchicalSpec):
     """Insulated building power distribution conductors to connect electrical equipment within a structure at 600V or less."""
 
@@ -181,6 +197,9 @@ class ElectricalCablesV1(BaseOpenEpdHierarchicalSpec):
         masterformat="26 05 13 Medium-Voltage Cables",
         declared_unit=Amount(qty=1, unit="m"),
     )
+
+    # Nested specs:
+    ElectricalCableAccs: ElectricalCableAccsV1 | None = None
 
 
 class ElectricalBusesV1(BaseOpenEpdHierarchicalSpec):
