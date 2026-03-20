@@ -2189,6 +2189,17 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "LowVoltageElectricalDistribution",
         },
         {
+            "unique_name": "ElectricalMVSwitches",
+            "display_name": "Electrical Switches (Med/Low Voltage)",
+            "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> ElectricalDistSwitchgear >> ElectricalMVSwitches",
+            "short_name": "Switches",
+            "historical_names": ["Electrical >> Distribution >> Switchgear >> Switches"],
+            "description": "Devices that control electrical circuits by opening or closing a connection to turn power on and off, under manual or other intentional control.",
+            "masterformat": "26 28 16.16 Enclosed Switches",
+            "declared_unit": Amount(qty=1.0, unit="item"),
+            "parent": "ElectricalDistSwitchgear",
+        },
+        {
             "unique_name": "ElectricalGenerationEquipment",
             "display_name": "ElectricalGenerationEquipment",
             "hierarchical_name": "Electrical >> ElectricalGenerationEquipment",
