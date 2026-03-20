@@ -23,6 +23,7 @@ __all__ = (
     "ElectricalCablesV1",
     "ElectricalConduitV1",
     "ElectricalConnectorsV1",
+    "ElectricalDistSwitchgearV1",
     "ElectricalGenerationEquipmentV1",
     "ElectricalGroundingConnectorsV1",
     "ElectricalPowerStorageV1",
@@ -325,6 +326,21 @@ class ElectricalConnectorsV1(BaseOpenEpdHierarchicalSpec):
     ElectricalGroundingConnectors: ElectricalGroundingConnectorsV1 | None = None
 
 
+class ElectricalDistSwitchgearV1(BaseOpenEpdHierarchicalSpec):
+    """Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalDistSwitchgear",
+        display_name="Electrical Switchgear (Med/Low Voltage)",
+        short_name="Switchgear",
+        historical_names=["Electrical >> Distribution >> Switchgear"],
+        description="Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment.",
+        masterformat="26 13 00 Medium-Voltage Switchgear",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
     """Fueled electrical generators."""
 
@@ -569,6 +585,7 @@ class LowVoltageElectricalDistributionV1(BaseOpenEpdHierarchicalSpec):
     PowerDistributionUnits: PowerDistributionUnitsV1 | None = None
     Raceways: RacewaysV1 | None = None
     ElectricalConnectors: ElectricalConnectorsV1 | None = None
+    ElectricalDistSwitchgear: ElectricalDistSwitchgearV1 | None = None
 
 
 class ElectricalGenerationEquipmentV1(BaseOpenEpdHierarchicalSpec):

@@ -2178,6 +2178,17 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "ElectricalConnectors",
         },
         {
+            "unique_name": "ElectricalDistSwitchgear",
+            "display_name": "Electrical Switchgear (Med/Low Voltage)",
+            "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> ElectricalDistSwitchgear",
+            "short_name": "Switchgear",
+            "historical_names": ["Electrical >> Distribution >> Switchgear"],
+            "description": "Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment.",
+            "masterformat": "26 13 00 Medium-Voltage Switchgear",
+            "declared_unit": Amount(qty=1.0, unit="item"),
+            "parent": "LowVoltageElectricalDistribution",
+        },
+        {
             "unique_name": "ElectricalGenerationEquipment",
             "display_name": "ElectricalGenerationEquipment",
             "hierarchical_name": "Electrical >> ElectricalGenerationEquipment",
