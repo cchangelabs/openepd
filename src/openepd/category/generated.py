@@ -2200,6 +2200,17 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "ElectricalDistSwitchgear",
         },
         {
+            "unique_name": "ElectricalMVInterrupters",
+            "display_name": "Electrical Interrupters (Med/Low Voltage)",
+            "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> ElectricalDistSwitchgear >> ElectricalMVInterrupters",
+            "short_name": "Interrupters",
+            "historical_names": ["Electrical >> Distribution >> Switchgear >> Interrupters"],
+            "description": "Protective devices that automatically disconnect circuits when detecting faults, surges, or abnormal current conditions",
+            "masterformat": "26 28 16.13 Enclosed Circuit Breakers",
+            "declared_unit": Amount(qty=1.0, unit="item"),
+            "parent": "ElectricalDistSwitchgear",
+        },
+        {
             "unique_name": "ElectricalGenerationEquipment",
             "display_name": "ElectricalGenerationEquipment",
             "hierarchical_name": "Electrical >> ElectricalGenerationEquipment",

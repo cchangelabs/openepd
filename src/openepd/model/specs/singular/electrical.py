@@ -26,6 +26,7 @@ __all__ = (
     "ElectricalDistSwitchgearV1",
     "ElectricalGenerationEquipmentV1",
     "ElectricalGroundingConnectorsV1",
+    "ElectricalMVInterruptersV1",
     "ElectricalMVSwitchesV1",
     "ElectricalPowerStorageV1",
     "ElectricalV1",
@@ -342,6 +343,21 @@ class ElectricalMVSwitchesV1(BaseOpenEpdHierarchicalSpec):
     )
 
 
+class ElectricalMVInterruptersV1(BaseOpenEpdHierarchicalSpec):
+    """Protective devices that automatically disconnect circuits when detecting faults, surges, or abnormal current conditions."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalMVInterrupters",
+        display_name="Electrical Interrupters (Med/Low Voltage)",
+        short_name="Interrupters",
+        historical_names=["Electrical >> Distribution >> Switchgear >> Interrupters"],
+        description="Protective devices that automatically disconnect circuits when detecting faults, surges, or abnormal current conditions",
+        masterformat="26 28 16.13 Enclosed Circuit Breakers",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class ElectricalDistSwitchgearV1(BaseOpenEpdHierarchicalSpec):
     """Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment."""
 
@@ -358,6 +374,7 @@ class ElectricalDistSwitchgearV1(BaseOpenEpdHierarchicalSpec):
 
     # Nested specs:
     ElectricalMVSwitches: ElectricalMVSwitchesV1 | None = None
+    ElectricalMVInterrupters: ElectricalMVInterruptersV1 | None = None
 
 
 class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
