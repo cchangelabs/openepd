@@ -2156,6 +2156,17 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "LowVoltageElectricalDistribution",
         },
         {
+            "unique_name": "ElectricalConnectors",
+            "display_name": "Electrical Connectors",
+            "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> ElectricalConnectors",
+            "short_name": "Connectors",
+            "historical_names": ["Electrical >> Distribution >> Connectors"],
+            "description": "Devices that join electrical conductors or cables together",
+            "masterformat": "26 05 83 Wiring Connections",
+            "declared_unit": Amount(qty=1.0, unit="item"),
+            "parent": "LowVoltageElectricalDistribution",
+        },
+        {
             "unique_name": "ElectricalGenerationEquipment",
             "display_name": "ElectricalGenerationEquipment",
             "hierarchical_name": "Electrical >> ElectricalGenerationEquipment",
