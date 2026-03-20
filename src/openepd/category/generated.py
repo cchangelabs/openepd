@@ -2058,6 +2058,17 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "LowVoltageElectricalDistribution",
         },
         {
+            "unique_name": "CableTrayAccs",
+            "display_name": "Cable Tray Accessories",
+            "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> CableTrays >> CableTrayAccs",
+            "short_name": "Accessories",
+            "historical_names": ["Electrical >> Distribution >> Cable Trays >> Accessories"],
+            "description": "Accessories for cable trays",
+            "masterformat": "26 05 36 Cable Trays for Electrical Systems",
+            "declared_unit": Amount(qty=1.0, unit="item"),
+            "parent": "CableTrays",
+        },
+        {
             "unique_name": "ElectricalBuses",
             "display_name": "Busbars and Busways",
             "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> ElectricalBuses",

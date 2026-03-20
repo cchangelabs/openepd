@@ -15,6 +15,7 @@
 #
 __all__ = (
     "BatteriesV1",
+    "CableTrayAccsV1",
     "CableTraysV1",
     "ElectricPowerV1",
     "ElectricalBusesV1",
@@ -125,10 +126,25 @@ class OtherElectricalPowerStorageV1(BaseOpenEpdHierarchicalSpec):
     )
 
 
+class CableTrayAccsV1(BaseOpenEpdHierarchicalSpec):
+    """Accessories for cable trays."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CableTrayAccs",
+        display_name="Cable Tray Accessories",
+        short_name="Accessories",
+        historical_names=["Electrical >> Distribution >> Cable Trays >> Accessories"],
+        description="Accessories for cable trays",
+        masterformat="26 05 36 Cable Trays for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class CableTraysV1(BaseOpenEpdHierarchicalSpec):
     """Mechanical support for electrial or communications cabling, typically suspended from a roof or wall."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
     _CATEGORY_META = CategoryMeta(
         unique_name="CableTrays",
         display_name="Cable Trays",
@@ -151,6 +167,9 @@ class CableTraysV1(BaseOpenEpdHierarchicalSpec):
     cable_trays_material: CableTraysMaterial | None = pydantic.Field(
         default=None, description="", examples=["Stainless Steel"]
     )
+
+    # Nested specs:
+    CableTrayAccs: CableTrayAccsV1 | None = None
 
 
 class ElectricalBusesV1(BaseOpenEpdHierarchicalSpec):
