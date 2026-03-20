@@ -22,6 +22,7 @@ __all__ = (
     "ElectricalCableAccsV1",
     "ElectricalCablesV1",
     "ElectricalConduitV1",
+    "ElectricalConnectorsV1",
     "ElectricalGenerationEquipmentV1",
     "ElectricalPowerStorageV1",
     "ElectricalV1",
@@ -277,6 +278,21 @@ class RacewaysV1(BaseOpenEpdHierarchicalSpec):
     raceways_material: RacewaysMaterial | None = pyd.Field(default=None, description="", example="Aluminum")
 
 
+class ElectricalConnectorsV1(BaseOpenEpdHierarchicalSpec):
+    """Devices that join electrical conductors or cables together."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalConnectors",
+        display_name="Electrical Connectors",
+        short_name="Connectors",
+        historical_names=["Electrical >> Distribution >> Connectors"],
+        description="Devices that join electrical conductors or cables together",
+        masterformat="26 05 83 Wiring Connections",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
     """Fueled electrical generators."""
 
@@ -520,6 +536,7 @@ class LowVoltageElectricalDistributionV1(BaseOpenEpdHierarchicalSpec):
     FloorEquipmentBoxes: FloorEquipmentBoxesV1 | None = None
     PowerDistributionUnits: PowerDistributionUnitsV1 | None = None
     Raceways: RacewaysV1 | None = None
+    ElectricalConnectors: ElectricalConnectorsV1 | None = None
 
 
 class ElectricalGenerationEquipmentV1(BaseOpenEpdHierarchicalSpec):
