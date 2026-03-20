@@ -2167,6 +2167,17 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "LowVoltageElectricalDistribution",
         },
         {
+            "unique_name": "ElectricalGroundingConnectors",
+            "display_name": "Electrical Grounding Connectors",
+            "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> ElectricalConnectors >> ElectricalGroundingConnectors",
+            "short_name": "Grounding",
+            "historical_names": ["Electrical >> Distribution >> Connectors >> Grounding"],
+            "description": "Grounding connectors are safety devices that establish a low-resistance path to ground",
+            "masterformat": "26 05 26 Grounding and Bonding for Electrical Systems",
+            "declared_unit": Amount(qty=1.0, unit="item"),
+            "parent": "ElectricalConnectors",
+        },
+        {
             "unique_name": "ElectricalGenerationEquipment",
             "display_name": "ElectricalGenerationEquipment",
             "hierarchical_name": "Electrical >> ElectricalGenerationEquipment",

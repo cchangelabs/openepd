@@ -24,6 +24,7 @@ __all__ = (
     "ElectricalConduitV1",
     "ElectricalConnectorsV1",
     "ElectricalGenerationEquipmentV1",
+    "ElectricalGroundingConnectorsV1",
     "ElectricalPowerStorageV1",
     "ElectricalV1",
     "ElectricityFromPowerGridV1",
@@ -291,6 +292,21 @@ class RacewaysV1(BaseOpenEpdHierarchicalSpec):
     raceways_material: RacewaysMaterial | None = pydantic.Field(default=None, description="", examples=["Aluminum"])
 
 
+class ElectricalGroundingConnectorsV1(BaseOpenEpdHierarchicalSpec):
+    """Grounding connectors are safety devices that establish a low-resistance path to ground."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalGroundingConnectors",
+        display_name="Electrical Grounding Connectors",
+        short_name="Grounding",
+        historical_names=["Electrical >> Distribution >> Connectors >> Grounding"],
+        description="Grounding connectors are safety devices that establish a low-resistance path to ground",
+        masterformat="26 05 26 Grounding and Bonding for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class ElectricalConnectorsV1(BaseOpenEpdHierarchicalSpec):
     """Devices that join electrical conductors or cables together."""
 
@@ -304,6 +320,9 @@ class ElectricalConnectorsV1(BaseOpenEpdHierarchicalSpec):
         masterformat="26 05 83 Wiring Connections",
         declared_unit=Amount(qty=1, unit="item"),
     )
+
+    # Nested specs:
+    ElectricalGroundingConnectors: ElectricalGroundingConnectorsV1 | None = None
 
 
 class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
