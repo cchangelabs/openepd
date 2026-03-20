@@ -19,6 +19,7 @@ __all__ = (
     "CableTraysRangeV1",
     "ElectricPowerRangeV1",
     "ElectricalBusesRangeV1",
+    "ElectricalCablesRangeV1",
     "ElectricalConduitRangeV1",
     "ElectricalGenerationEquipmentRangeV1",
     "ElectricalPowerStorageRangeV1",
@@ -130,6 +131,16 @@ class CableTraysRangeV1(BaseOpenEpdHierarchicalSpec):
     ventilated: bool | None = pyd.Field(default=None, description="At least 40% of the tray base is open to air flow")
     cable_trays_material: list[CableTraysMaterial] | None = pyd.Field(default=None, description="")
     CableTrayAccs: CableTrayAccsRangeV1 | None = None
+
+
+class ElectricalCablesRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Insulated building power distribution conductors to connect electrical equipment within a structure at 600V or less.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
 
 
 class ElectricalBusesRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -340,9 +351,10 @@ class LowVoltageElectricalDistributionRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     CableTrays: CableTraysRangeV1 | None = None
+    ElectricalCables: ElectricalCablesRangeV1 | None = None
     ElectricalBuses: ElectricalBusesRangeV1 | None = None
     FloorEquipmentBoxes: FloorEquipmentBoxesRangeV1 | None = None
     PowerDistributionUnits: PowerDistributionUnitsRangeV1 | None = None

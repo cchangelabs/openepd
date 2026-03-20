@@ -2069,6 +2069,17 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "CableTrays",
         },
         {
+            "unique_name": "ElectricalCables",
+            "display_name": "Low and Medium Voltage Cables",
+            "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> ElectricalCables",
+            "short_name": "Cables",
+            "historical_names": ["Electrical >> Distribution >> Cables"],
+            "description": "Insulated building power distribution conductors to connect electrical equipment within a structure at 600V or less.",
+            "masterformat": "26 05 13 Medium-Voltage Cables",
+            "declared_unit": Amount(qty=1.0, unit="m"),
+            "parent": "LowVoltageElectricalDistribution",
+        },
+        {
             "unique_name": "ElectricalBuses",
             "display_name": "Busbars and Busways",
             "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> ElectricalBuses",
