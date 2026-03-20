@@ -15,6 +15,7 @@
 #
 __all__ = (
     "BatteriesRangeV1",
+    "CableTrayAccsRangeV1",
     "CableTraysRangeV1",
     "ElectricPowerRangeV1",
     "ElectricalBusesRangeV1",
@@ -103,6 +104,16 @@ class OtherElectricalPowerStorageRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class CableTrayAccsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Accessories for cable trays.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class CableTraysRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Mechanical support for electrial or communications cabling, typically suspended from a roof or wall.
@@ -110,7 +121,7 @@ class CableTraysRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     height: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
     width: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
@@ -118,6 +129,7 @@ class CableTraysRangeV1(BaseOpenEpdHierarchicalSpec):
     static_load: AmountRangeMass | None = pyd.Field(default=None, description="")
     ventilated: bool | None = pyd.Field(default=None, description="At least 40% of the tray base is open to air flow")
     cable_trays_material: list[CableTraysMaterial] | None = pyd.Field(default=None, description="")
+    CableTrayAccs: CableTrayAccsRangeV1 | None = None
 
 
 class ElectricalBusesRangeV1(BaseOpenEpdHierarchicalSpec):
