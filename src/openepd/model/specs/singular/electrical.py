@@ -26,6 +26,7 @@ __all__ = (
     "ElectricalDistSwitchgearV1",
     "ElectricalGenerationEquipmentV1",
     "ElectricalGroundingConnectorsV1",
+    "ElectricalMVFusesV1",
     "ElectricalMVInterruptersV1",
     "ElectricalMVSwitchesV1",
     "ElectricalPowerStorageV1",
@@ -345,6 +346,21 @@ class ElectricalMVInterruptersV1(BaseOpenEpdHierarchicalSpec):
     )
 
 
+class ElectricalMVFusesV1(BaseOpenEpdHierarchicalSpec):
+    """Single-use protective devices that melt and break a circuit when current exceeds a safe level."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalMVFuses",
+        display_name="Electrical Fuses (Med/Low Voltage)",
+        short_name="Fuses",
+        historical_names=["Electrical >> Distribution >> Switchgear >> Fuses"],
+        description="Single-use protective devices that melt and break a circuit when current exceeds a safe level.",
+        masterformat="26 28 13 Fuses",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class ElectricalDistSwitchgearV1(BaseOpenEpdHierarchicalSpec):
     """Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment."""
 
@@ -362,6 +378,7 @@ class ElectricalDistSwitchgearV1(BaseOpenEpdHierarchicalSpec):
     # Nested specs:
     ElectricalMVSwitches: ElectricalMVSwitchesV1 | None = None
     ElectricalMVInterrupters: ElectricalMVInterruptersV1 | None = None
+    ElectricalMVFuses: ElectricalMVFusesV1 | None = None
 
 
 class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
