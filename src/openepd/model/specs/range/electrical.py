@@ -24,6 +24,7 @@ __all__ = (
     "ElectricalConduitRangeV1",
     "ElectricalConnectorsRangeV1",
     "ElectricalGenerationEquipmentRangeV1",
+    "ElectricalGroundingConnectorsRangeV1",
     "ElectricalPowerStorageRangeV1",
     "ElectricalRangeV1",
     "ElectricityFromPowerGridRangeV1",
@@ -209,6 +210,16 @@ class RacewaysRangeV1(BaseOpenEpdHierarchicalSpec):
     raceways_material: list[RacewaysMaterial] | None = pyd.Field(default=None, description="")
 
 
+class ElectricalGroundingConnectorsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Grounding connectors are safety devices that establish a low-resistance path to ground.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class ElectricalConnectorsRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Devices that join electrical conductors or cables together.
@@ -217,6 +228,8 @@ class ElectricalConnectorsRangeV1(BaseOpenEpdHierarchicalSpec):
     """
 
     _EXT_VERSION = "1.0"
+
+    ElectricalGroundingConnectors: ElectricalGroundingConnectorsRangeV1 | None = None
 
 
 class FueledElectricalGeneratorsRangeV1(BaseOpenEpdHierarchicalSpec):
