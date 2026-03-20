@@ -22,6 +22,7 @@ __all__ = (
     "ElectricalCableAccsRangeV1",
     "ElectricalCablesRangeV1",
     "ElectricalConduitRangeV1",
+    "ElectricalConnectorsRangeV1",
     "ElectricalGenerationEquipmentRangeV1",
     "ElectricalPowerStorageRangeV1",
     "ElectricalRangeV1",
@@ -210,6 +211,16 @@ class RacewaysRangeV1(BaseOpenEpdHierarchicalSpec):
     raceways_material: list[RacewaysMaterial] | None = pydantic.Field(default=None, description="")
 
 
+class ElectricalConnectorsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Devices that join electrical conductors or cables together.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class FueledElectricalGeneratorsRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Fueled electrical generators.
@@ -374,6 +385,7 @@ class LowVoltageElectricalDistributionRangeV1(BaseOpenEpdHierarchicalSpec):
     FloorEquipmentBoxes: FloorEquipmentBoxesRangeV1 | None = None
     PowerDistributionUnits: PowerDistributionUnitsRangeV1 | None = None
     Raceways: RacewaysRangeV1 | None = None
+    ElectricalConnectors: ElectricalConnectorsRangeV1 | None = None
 
 
 class ElectricalGenerationEquipmentRangeV1(BaseOpenEpdHierarchicalSpec):
