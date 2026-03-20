@@ -19,6 +19,7 @@ __all__ = (
     "ElectricalSubstationsRangeV1",
     "ElectricalSwitchgearRangeV1",
     "ElectricalTransmissionAndDistributionEquipmentRangeV1",
+    "PowerCablingAccsRangeV1",
     "PowerCablingRangeV1",
 )
 
@@ -70,6 +71,16 @@ class ElectricalSwitchgearRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class PowerCablingAccsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Accessories to high-voltage electrical cabling.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class PowerCablingRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     High-voltage electrical cabling.
@@ -77,7 +88,9 @@ class PowerCablingRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
+
+    PowerCablingAccs: PowerCablingAccsRangeV1 | None = None
 
 
 class ElectricalTransmissionAndDistributionEquipmentRangeV1(BaseOpenEpdHierarchicalSpec):
