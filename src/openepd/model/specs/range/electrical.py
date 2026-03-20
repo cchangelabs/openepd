@@ -26,6 +26,7 @@ __all__ = (
     "ElectricalDistSwitchgearRangeV1",
     "ElectricalGenerationEquipmentRangeV1",
     "ElectricalGroundingConnectorsRangeV1",
+    "ElectricalMVInterruptersRangeV1",
     "ElectricalMVSwitchesRangeV1",
     "ElectricalPowerStorageRangeV1",
     "ElectricalRangeV1",
@@ -244,6 +245,16 @@ class ElectricalMVSwitchesRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class ElectricalMVInterruptersRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Protective devices that automatically disconnect circuits when detecting faults, surges, or abnormal current conditions.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class ElectricalDistSwitchgearRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment.
@@ -254,6 +265,7 @@ class ElectricalDistSwitchgearRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
     ElectricalMVSwitches: ElectricalMVSwitchesRangeV1 | None = None
+    ElectricalMVInterrupters: ElectricalMVInterruptersRangeV1 | None = None
 
 
 class FueledElectricalGeneratorsRangeV1(BaseOpenEpdHierarchicalSpec):
