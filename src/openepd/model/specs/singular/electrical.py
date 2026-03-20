@@ -17,6 +17,7 @@ __all__ = (
     "BatteriesV1",
     "CableTrayAccsV1",
     "CableTraysV1",
+    "ChargingStationsV1",
     "ElectricPowerV1",
     "ElectricalBusesV1",
     "ElectricalCableAccsV1",
@@ -381,6 +382,21 @@ class ElectricalDistSwitchgearV1(BaseOpenEpdHierarchicalSpec):
     ElectricalMVFuses: ElectricalMVFusesV1 | None = None
 
 
+class ChargingStationsV1(BaseOpenEpdHierarchicalSpec):
+    """Outdoor charging stations, particularly for electric vehicles (EVs)."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ChargingStations",
+        display_name="Outdoor Charging Stations",
+        short_name="Charging Stations",
+        historical_names=["Electrical >> Distribution >> Charging Stations"],
+        description="Outdoor charging stations, particularly for electric vehicles (EVs)",
+        masterformat="26 27 36 Outdoor Charging Stations",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
     """Fueled electrical generators."""
 
@@ -626,6 +642,7 @@ class LowVoltageElectricalDistributionV1(BaseOpenEpdHierarchicalSpec):
     Raceways: RacewaysV1 | None = None
     ElectricalConnectors: ElectricalConnectorsV1 | None = None
     ElectricalDistSwitchgear: ElectricalDistSwitchgearV1 | None = None
+    ChargingStations: ChargingStationsV1 | None = None
 
 
 class ElectricalGenerationEquipmentV1(BaseOpenEpdHierarchicalSpec):

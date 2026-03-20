@@ -17,6 +17,7 @@ __all__ = (
     "BatteriesRangeV1",
     "CableTrayAccsRangeV1",
     "CableTraysRangeV1",
+    "ChargingStationsRangeV1",
     "ElectricPowerRangeV1",
     "ElectricalBusesRangeV1",
     "ElectricalCableAccsRangeV1",
@@ -280,6 +281,16 @@ class ElectricalDistSwitchgearRangeV1(BaseOpenEpdHierarchicalSpec):
     ElectricalMVFuses: ElectricalMVFusesRangeV1 | None = None
 
 
+class ChargingStationsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Outdoor charging stations, particularly for electric vehicles (EVs).
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class FueledElectricalGeneratorsRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Fueled electrical generators.
@@ -446,6 +457,7 @@ class LowVoltageElectricalDistributionRangeV1(BaseOpenEpdHierarchicalSpec):
     Raceways: RacewaysRangeV1 | None = None
     ElectricalConnectors: ElectricalConnectorsRangeV1 | None = None
     ElectricalDistSwitchgear: ElectricalDistSwitchgearRangeV1 | None = None
+    ChargingStations: ChargingStationsRangeV1 | None = None
 
 
 class ElectricalGenerationEquipmentRangeV1(BaseOpenEpdHierarchicalSpec):
