@@ -934,6 +934,17 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "ElectricalTransmissionAndDistributionEquipment",
         },
         {
+            "unique_name": "PowerCablingAccs",
+            "display_name": "Power Cabling Accessories",
+            "hierarchical_name": "ElectricalTransmissionAndDistributionEquipment >> PowerCabling >> PowerCablingAccs",
+            "short_name": "Accessories",
+            "historical_names": ["Electrical >> Transmission >> Cabling >> Accessories"],
+            "description": "Accessories to high-voltage electrical cabling",
+            "masterformat": "33 71 00 Electrical Utility Transmission and Distribution",
+            "declared_unit": Amount(qty=1.0, unit="item"),
+            "parent": "PowerCabling",
+        },
+        {
             "unique_name": "Aggregates",
             "display_name": "Aggregates",
             "hierarchical_name": "Aggregates",
