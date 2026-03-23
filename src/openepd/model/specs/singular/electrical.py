@@ -33,6 +33,7 @@ __all__ = (
     "ElectricalMVSwitchesV1",
     "ElectricalPowerStorageV1",
     "ElectricalV1",
+    "ElectricalWallBoxesV1",
     "ElectricityFromPowerGridV1",
     "ElectricityFromSpecificGeneratorV1",
     "FloorEquipmentBoxesV1",
@@ -249,6 +250,21 @@ class ElectricalBoxAccsV1(BaseOpenEpdHierarchicalSpec):
     )
 
 
+class ElectricalWallBoxesV1(BaseOpenEpdHierarchicalSpec):
+    """Equipment boxes for power or electronic equipment embedded in an accessible wall."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalWallBoxes",
+        display_name="Electrical Wall Boxes",
+        short_name="Wall Boxes",
+        historical_names=["Electrical >> Distribution >> Boxes >> Wall Boxes"],
+        description="Equipment boxes for power or electronic equipment embedded in an accessible wall.",
+        masterformat="26 05 33.16 Boxes for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class FloorEquipmentBoxesV1(BaseOpenEpdHierarchicalSpec):
     """Equipment boxes for power or electronic equipment embedded in an accessible floor."""
 
@@ -265,6 +281,7 @@ class FloorEquipmentBoxesV1(BaseOpenEpdHierarchicalSpec):
 
     # Nested specs:
     ElectricalBoxAccs: ElectricalBoxAccsV1 | None = None
+    ElectricalWallBoxes: ElectricalWallBoxesV1 | None = None
 
 
 class PowerDistributionUnitsV1(BaseOpenEpdHierarchicalSpec):
