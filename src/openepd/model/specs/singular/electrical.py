@@ -29,6 +29,7 @@ __all__ = (
     "ElectricalDistSwitchgearV1",
     "ElectricalGenerationEquipmentV1",
     "ElectricalGroundingConnectorsV1",
+    "ElectricalJunctionBoxesV1",
     "ElectricalMVFusesV1",
     "ElectricalMVInterruptersV1",
     "ElectricalMVSwitchesV1",
@@ -281,6 +282,21 @@ class ElectricalCeilingBoxesV1(BaseOpenEpdHierarchicalSpec):
     )
 
 
+class ElectricalJunctionBoxesV1(BaseOpenEpdHierarchicalSpec):
+    """Equipment boxes for power or electronic equipment embedded."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalJunctionBoxes",
+        display_name="Electrical Junction Boxes",
+        short_name="Junction Boxes",
+        historical_names=["Electrical >> Distribution >> Boxes >> Junction Boxes"],
+        description="Equipment boxes for power or electronic equipment embedded.",
+        masterformat="26 05 33.16 Boxes for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class FloorEquipmentBoxesV1(BaseOpenEpdHierarchicalSpec):
     """Equipment boxes for power or electronic equipment embedded in an accessible floor."""
 
@@ -299,6 +315,7 @@ class FloorEquipmentBoxesV1(BaseOpenEpdHierarchicalSpec):
     ElectricalBoxAccs: ElectricalBoxAccsV1 | None = None
     ElectricalWallBoxes: ElectricalWallBoxesV1 | None = None
     ElectricalCeilingBoxes: ElectricalCeilingBoxesV1 | None = None
+    ElectricalJunctionBoxes: ElectricalJunctionBoxesV1 | None = None
 
 
 class PowerDistributionUnitsV1(BaseOpenEpdHierarchicalSpec):
