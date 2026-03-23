@@ -2168,6 +2168,17 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "FloorEquipmentBoxes",
         },
         {
+            "unique_name": "ElectricalCeilingBoxes",
+            "display_name": "Electrical Ceiling Boxes",
+            "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> FloorEquipmentBoxes >> ElectricalCeilingBoxes",
+            "short_name": "Ceiling Boxes",
+            "historical_names": ["Electrical >> Distribution >> Boxes >> Ceiling Boxes"],
+            "description": "Equipment boxes for power or electronic equipment embedded in an accessible ceiling.",
+            "masterformat": "26 05 33.16 Boxes for Electrical Systems",
+            "declared_unit": Amount(qty=1.0, unit="item"),
+            "parent": "FloorEquipmentBoxes",
+        },
+        {
             "unique_name": "PowerDistributionUnits",
             "display_name": "Power Distribution Units (PDUs)",
             "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> PowerDistributionUnits",

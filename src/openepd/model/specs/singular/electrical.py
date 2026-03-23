@@ -23,6 +23,7 @@ __all__ = (
     "ElectricalBusesV1",
     "ElectricalCableAccsV1",
     "ElectricalCablesV1",
+    "ElectricalCeilingBoxesV1",
     "ElectricalConduitV1",
     "ElectricalConnectorsV1",
     "ElectricalDistSwitchgearV1",
@@ -270,6 +271,21 @@ class ElectricalWallBoxesV1(BaseOpenEpdHierarchicalSpec):
     )
 
 
+class ElectricalCeilingBoxesV1(BaseOpenEpdHierarchicalSpec):
+    """Equipment boxes for power or electronic equipment embedded in an accessible ceiling."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalCeilingBoxes",
+        display_name="Electrical Ceiling Boxes",
+        short_name="Ceiling Boxes",
+        historical_names=["Electrical >> Distribution >> Boxes >> Ceiling Boxes"],
+        description="Equipment boxes for power or electronic equipment embedded in an accessible ceiling.",
+        masterformat="26 05 33.16 Boxes for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class FloorEquipmentBoxesV1(BaseOpenEpdHierarchicalSpec):
     """Equipment boxes for power or electronic equipment embedded in an accessible floor."""
 
@@ -287,6 +303,7 @@ class FloorEquipmentBoxesV1(BaseOpenEpdHierarchicalSpec):
     # Nested specs:
     ElectricalBoxAccs: ElectricalBoxAccsV1 | None = None
     ElectricalWallBoxes: ElectricalWallBoxesV1 | None = None
+    ElectricalCeilingBoxes: ElectricalCeilingBoxesV1 | None = None
 
 
 class PowerDistributionUnitsV1(BaseOpenEpdHierarchicalSpec):
