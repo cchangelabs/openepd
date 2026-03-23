@@ -1,3 +1,31 @@
+## 6.37.0 (2026-03-23)
+
+### Feat
+
+- **specs**: add "Electrical Junction Boxes" category
+- **specs**: add "Electrical Ceiling Boxes" category
+- **specs**: add "Electrical Wall Boxes" category
+- **specs**: add "Electrical Box Accessories" category
+- **specs**: add "Power Cabling Accessories" category
+- **specs**: add "Outdoor Charging Stations" category
+- **specs**: add "Electrical Fuses (Med/Low Voltage)" category
+- **specs**: add "Electrical Interrupters (Med/Low Voltage)" category
+- **specs**: add "Electrical Switches (Med/Low Voltage)" category
+- **specs**: add "Electrical Switchgear (Med/Low Voltage)" category
+- **specs**: add "Electrical Grounding Connectors" category
+- **specs**: add "Electrical Connectors" category
+- **specs**: add "Low and Medium Voltage Cable Accessories" category
+- **specs**: add "Low and Medium Voltage Cables" category
+- **specs**: add "Cable Tray Accessories" category
+
+### Fix
+
+- add declared_unit for switchgear in equipment definitions
+- add declared_unit for substations in equipment definitions
+- correct spelling of "electrical" in raceway descriptions
+- update masterformat for floor boxes in documentation
+- correct masterformat for electrical boxes in documentation
+
 ## 6.36.0 (2026-03-12)
 
 ### Feat
