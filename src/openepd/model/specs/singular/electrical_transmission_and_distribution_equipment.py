@@ -59,6 +59,7 @@ class ElectricalSubstationsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Transmission >> Substations"],
         description="Substations for electricity transmission and distribution.",
         masterformat="33 72 00 Utility Substations",
+        declared_unit=Amount(qty=1, unit="item"),
     )
 
 
@@ -77,13 +78,29 @@ class ElectricalSwitchgearV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Transmission >> Switchgear"],
         description="Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment.",
         masterformat="33 77 00 Medium-Voltage Utility Switchgear and Protection Devices",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
+class PowerCablingAccsV1(BaseOpenEpdHierarchicalSpec):
+    """Accessories to high-voltage electrical cabling."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="PowerCablingAccs",
+        display_name="Power Cabling Accessories",
+        short_name="Accessories",
+        historical_names=["Electrical >> Transmission >> Cabling >> Accessories"],
+        description="Accessories to high-voltage electrical cabling",
+        masterformat="33 71 00 Electrical Utility Transmission and Distribution",
+        declared_unit=Amount(qty=1, unit="item"),
     )
 
 
 class PowerCablingV1(BaseOpenEpdHierarchicalSpec):
     """High-voltage electrical cabling."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
     _CATEGORY_META = CategoryMeta(
         unique_name="PowerCabling",
         display_name="PowerCabling",
@@ -93,6 +110,9 @@ class PowerCablingV1(BaseOpenEpdHierarchicalSpec):
         masterformat="33 71 00 Electrical Utility Transmission and Distribution",
         declared_unit=Amount(qty=1, unit="m"),
     )
+
+    # Nested specs:
+    PowerCablingAccs: PowerCablingAccsV1 | None = None
 
 
 class ElectricalTransmissionAndDistributionEquipmentV1(BaseOpenEpdHierarchicalSpec):

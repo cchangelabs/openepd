@@ -15,13 +15,27 @@
 #
 __all__ = (
     "BatteriesV1",
+    "CableTrayAccsV1",
     "CableTraysV1",
+    "ChargingStationsV1",
     "ElectricPowerV1",
+    "ElectricalBoxAccsV1",
     "ElectricalBusesV1",
+    "ElectricalCableAccsV1",
+    "ElectricalCablesV1",
+    "ElectricalCeilingBoxesV1",
     "ElectricalConduitV1",
+    "ElectricalConnectorsV1",
+    "ElectricalDistSwitchgearV1",
     "ElectricalGenerationEquipmentV1",
+    "ElectricalGroundingConnectorsV1",
+    "ElectricalJunctionBoxesV1",
+    "ElectricalMVFusesV1",
+    "ElectricalMVInterruptersV1",
+    "ElectricalMVSwitchesV1",
     "ElectricalPowerStorageV1",
     "ElectricalV1",
+    "ElectricalWallBoxesV1",
     "ElectricityFromPowerGridV1",
     "ElectricityFromSpecificGeneratorV1",
     "FloorEquipmentBoxesV1",
@@ -124,10 +138,25 @@ class OtherElectricalPowerStorageV1(BaseOpenEpdHierarchicalSpec):
     )
 
 
+class CableTrayAccsV1(BaseOpenEpdHierarchicalSpec):
+    """Accessories for cable trays."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="CableTrayAccs",
+        display_name="Cable Tray Accessories",
+        short_name="Accessories",
+        historical_names=["Electrical >> Distribution >> Cable Trays >> Accessories"],
+        description="Accessories for cable trays",
+        masterformat="26 05 36 Cable Trays for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class CableTraysV1(BaseOpenEpdHierarchicalSpec):
     """Mechanical support for electrial or communications cabling, typically suspended from a roof or wall."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
     _CATEGORY_META = CategoryMeta(
         unique_name="CableTrays",
         display_name="Cable Trays",
@@ -146,6 +175,42 @@ class CableTraysV1(BaseOpenEpdHierarchicalSpec):
         default=None, description="At least 40% of the tray base is open to air flow", example=True
     )
     cable_trays_material: CableTraysMaterial | None = pyd.Field(default=None, description="", example="Stainless Steel")
+
+    # Nested specs:
+    CableTrayAccs: CableTrayAccsV1 | None = None
+
+
+class ElectricalCableAccsV1(BaseOpenEpdHierarchicalSpec):
+    """Accessories for cabling, including ties and supports."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalCableAccs",
+        display_name="Low and Medium Voltage Cable Accessories",
+        short_name="Accessories",
+        historical_names=["Electrical >> Distribution >> Cables >> Accessories"],
+        description="Accessories for cabling, including ties and supports.",
+        masterformat="26 05 29 Hangers and Supports for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
+class ElectricalCablesV1(BaseOpenEpdHierarchicalSpec):
+    """Insulated building power distribution conductors to connect electrical equipment within a structure at 600V or less."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalCables",
+        display_name="Low and Medium Voltage Cables",
+        short_name="Cables",
+        historical_names=["Electrical >> Distribution >> Cables"],
+        description="Insulated building power distribution conductors to connect electrical equipment within a structure at 600V or less.",
+        masterformat="26 05 13 Medium-Voltage Cables",
+        declared_unit=Amount(qty=1, unit="m"),
+    )
+
+    # Nested specs:
+    ElectricalCableAccs: ElectricalCableAccsV1 | None = None
 
 
 class ElectricalBusesV1(BaseOpenEpdHierarchicalSpec):
@@ -172,19 +237,85 @@ class ElectricalBusesV1(BaseOpenEpdHierarchicalSpec):
     MedVoltBuses: MedVoltBusesV1 | None = None
 
 
+class ElectricalBoxAccsV1(BaseOpenEpdHierarchicalSpec):
+    """Accessories for electrical equipment boxes or their contents."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalBoxAccs",
+        display_name="Electrical Box Accessories",
+        short_name="Accessories",
+        historical_names=["Electrical >> Distribution >> Boxes >> Accessories"],
+        description="Accessories for electrical equipment boxes or their contents.",
+        masterformat="26 05 33.16 Boxes for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
+class ElectricalWallBoxesV1(BaseOpenEpdHierarchicalSpec):
+    """Equipment boxes for power or electronic equipment embedded in an accessible wall."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalWallBoxes",
+        display_name="Electrical Wall Boxes",
+        short_name="Wall Boxes",
+        historical_names=["Electrical >> Distribution >> Boxes >> Wall Boxes"],
+        description="Equipment boxes for power or electronic equipment embedded in an accessible wall.",
+        masterformat="26 05 33.16 Boxes for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
+class ElectricalCeilingBoxesV1(BaseOpenEpdHierarchicalSpec):
+    """Equipment boxes for power or electronic equipment embedded in an accessible ceiling."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalCeilingBoxes",
+        display_name="Electrical Ceiling Boxes",
+        short_name="Ceiling Boxes",
+        historical_names=["Electrical >> Distribution >> Boxes >> Ceiling Boxes"],
+        description="Equipment boxes for power or electronic equipment embedded in an accessible ceiling.",
+        masterformat="26 05 33.16 Boxes for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
+class ElectricalJunctionBoxesV1(BaseOpenEpdHierarchicalSpec):
+    """Equipment boxes for power or electronic equipment embedded."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalJunctionBoxes",
+        display_name="Electrical Junction Boxes",
+        short_name="Junction Boxes",
+        historical_names=["Electrical >> Distribution >> Boxes >> Junction Boxes"],
+        description="Equipment boxes for power or electronic equipment embedded.",
+        masterformat="26 05 33.16 Boxes for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class FloorEquipmentBoxesV1(BaseOpenEpdHierarchicalSpec):
     """Equipment boxes for power or electronic equipment embedded in an accessible floor."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
     _CATEGORY_META = CategoryMeta(
         unique_name="FloorEquipmentBoxes",
         display_name="Floor Equipment Boxes",
         short_name="Boxes",
         historical_names=["Electrical >> Distribution >> Boxes"],
         description="Equipment boxes for power or electronic equipment embedded in an accessible floor.",
-        masterformat="26 05 33 Raceway and Boxes for Electrical Systems",
+        masterformat="26 05 33.16 Boxes for Electrical Systems",
         declared_unit=Amount(qty=1, unit="item"),
     )
+
+    # Nested specs:
+    ElectricalBoxAccs: ElectricalBoxAccsV1 | None = None
+    ElectricalWallBoxes: ElectricalWallBoxesV1 | None = None
+    ElectricalCeilingBoxes: ElectricalCeilingBoxesV1 | None = None
+    ElectricalJunctionBoxes: ElectricalJunctionBoxesV1 | None = None
 
 
 class PowerDistributionUnitsV1(BaseOpenEpdHierarchicalSpec):
@@ -210,7 +341,7 @@ class RacewaysV1(BaseOpenEpdHierarchicalSpec):
         unique_name="Raceways",
         display_name="Raceways",
         historical_names=["Electrical >> Distribution >> Raceways"],
-        description="Mechanical guideways for eletrical communications cabling, typically embedded in an accessible floor.",
+        description="Mechanical guideways for electrical communications cabling, often embedded in an accessible floor.",
         masterformat="26 05 33 Raceway and Boxes for Electrical Systems",
         declared_unit=Amount(qty=1, unit="m"),
     )
@@ -221,6 +352,119 @@ class RacewaysV1(BaseOpenEpdHierarchicalSpec):
     painted: bool | None = pyd.Field(default=None, description="", example=True)
     divided: bool | None = pyd.Field(default=None, description="", example=True)
     raceways_material: RacewaysMaterial | None = pyd.Field(default=None, description="", example="Aluminum")
+
+
+class ElectricalGroundingConnectorsV1(BaseOpenEpdHierarchicalSpec):
+    """Grounding connectors are safety devices that establish a low-resistance path to ground."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalGroundingConnectors",
+        display_name="Electrical Grounding Connectors",
+        short_name="Grounding",
+        historical_names=["Electrical >> Distribution >> Connectors >> Grounding"],
+        description="Grounding connectors are safety devices that establish a low-resistance path to ground",
+        masterformat="26 05 26 Grounding and Bonding for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
+class ElectricalConnectorsV1(BaseOpenEpdHierarchicalSpec):
+    """Devices that join electrical conductors or cables together."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalConnectors",
+        display_name="Electrical Connectors",
+        short_name="Connectors",
+        historical_names=["Electrical >> Distribution >> Connectors"],
+        description="Devices that join electrical conductors or cables together",
+        masterformat="26 05 83 Wiring Connections",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+    # Nested specs:
+    ElectricalGroundingConnectors: ElectricalGroundingConnectorsV1 | None = None
+
+
+class ElectricalMVSwitchesV1(BaseOpenEpdHierarchicalSpec):
+    """Devices that control electrical circuits by opening or closing a connection to turn power on and off, under manual or other intentional control."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalMVSwitches",
+        display_name="Electrical Switches (Med/Low Voltage)",
+        short_name="Switches",
+        historical_names=["Electrical >> Distribution >> Switchgear >> Switches"],
+        description="Devices that control electrical circuits by opening or closing a connection to turn power on and off, under manual or other intentional control.",
+        masterformat="26 28 16.16 Enclosed Switches",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
+class ElectricalMVInterruptersV1(BaseOpenEpdHierarchicalSpec):
+    """Protective devices that automatically disconnect circuits when detecting faults, surges, or abnormal current conditions."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalMVInterrupters",
+        display_name="Electrical Interrupters (Med/Low Voltage)",
+        short_name="Interrupters",
+        historical_names=["Electrical >> Distribution >> Switchgear >> Interrupters"],
+        description="Protective devices that automatically disconnect circuits when detecting faults, surges, or abnormal current conditions",
+        masterformat="26 28 16.13 Enclosed Circuit Breakers",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
+class ElectricalMVFusesV1(BaseOpenEpdHierarchicalSpec):
+    """Single-use protective devices that melt and break a circuit when current exceeds a safe level."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalMVFuses",
+        display_name="Electrical Fuses (Med/Low Voltage)",
+        short_name="Fuses",
+        historical_names=["Electrical >> Distribution >> Switchgear >> Fuses"],
+        description="Single-use protective devices that melt and break a circuit when current exceeds a safe level.",
+        masterformat="26 28 13 Fuses",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
+class ElectricalDistSwitchgearV1(BaseOpenEpdHierarchicalSpec):
+    """Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalDistSwitchgear",
+        display_name="Electrical Switchgear (Med/Low Voltage)",
+        short_name="Switchgear",
+        historical_names=["Electrical >> Distribution >> Switchgear"],
+        description="Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment.",
+        masterformat="26 13 00 Medium-Voltage Switchgear",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+    # Nested specs:
+    ElectricalMVSwitches: ElectricalMVSwitchesV1 | None = None
+    ElectricalMVInterrupters: ElectricalMVInterruptersV1 | None = None
+    ElectricalMVFuses: ElectricalMVFusesV1 | None = None
+
+
+class ChargingStationsV1(BaseOpenEpdHierarchicalSpec):
+    """Outdoor charging stations, particularly for electric vehicles (EVs)."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ChargingStations",
+        display_name="Outdoor Charging Stations",
+        short_name="Charging Stations",
+        historical_names=["Electrical >> Distribution >> Charging Stations"],
+        description="Outdoor charging stations, particularly for electric vehicles (EVs)",
+        masterformat="26 27 36 Outdoor Charging Stations",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
 
 
 class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
@@ -449,7 +693,7 @@ class ElectricalPowerStorageV1(BaseOpenEpdHierarchicalSpec):
 class LowVoltageElectricalDistributionV1(BaseOpenEpdHierarchicalSpec):
     """Low Voltage Electrical Distribution."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
     _CATEGORY_META = CategoryMeta(
         unique_name="LowVoltageElectricalDistribution",
         display_name="LowVoltageElectricalDistribution",
@@ -461,10 +705,14 @@ class LowVoltageElectricalDistributionV1(BaseOpenEpdHierarchicalSpec):
 
     # Nested specs:
     CableTrays: CableTraysV1 | None = None
+    ElectricalCables: ElectricalCablesV1 | None = None
     ElectricalBuses: ElectricalBusesV1 | None = None
     FloorEquipmentBoxes: FloorEquipmentBoxesV1 | None = None
     PowerDistributionUnits: PowerDistributionUnitsV1 | None = None
     Raceways: RacewaysV1 | None = None
+    ElectricalConnectors: ElectricalConnectorsV1 | None = None
+    ElectricalDistSwitchgear: ElectricalDistSwitchgearV1 | None = None
+    ChargingStations: ChargingStationsV1 | None = None
 
 
 class ElectricalGenerationEquipmentV1(BaseOpenEpdHierarchicalSpec):

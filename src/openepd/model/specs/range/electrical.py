@@ -15,13 +15,27 @@
 #
 __all__ = (
     "BatteriesRangeV1",
+    "CableTrayAccsRangeV1",
     "CableTraysRangeV1",
+    "ChargingStationsRangeV1",
     "ElectricPowerRangeV1",
+    "ElectricalBoxAccsRangeV1",
     "ElectricalBusesRangeV1",
+    "ElectricalCableAccsRangeV1",
+    "ElectricalCablesRangeV1",
+    "ElectricalCeilingBoxesRangeV1",
     "ElectricalConduitRangeV1",
+    "ElectricalConnectorsRangeV1",
+    "ElectricalDistSwitchgearRangeV1",
     "ElectricalGenerationEquipmentRangeV1",
+    "ElectricalGroundingConnectorsRangeV1",
+    "ElectricalJunctionBoxesRangeV1",
+    "ElectricalMVFusesRangeV1",
+    "ElectricalMVInterruptersRangeV1",
+    "ElectricalMVSwitchesRangeV1",
     "ElectricalPowerStorageRangeV1",
     "ElectricalRangeV1",
+    "ElectricalWallBoxesRangeV1",
     "ElectricityFromPowerGridRangeV1",
     "ElectricityFromSpecificGeneratorRangeV1",
     "FloorEquipmentBoxesRangeV1",
@@ -103,6 +117,16 @@ class OtherElectricalPowerStorageRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class CableTrayAccsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Accessories for cable trays.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class CableTraysRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Mechanical support for electrial or communications cabling, typically suspended from a roof or wall.
@@ -110,7 +134,7 @@ class CableTraysRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     height: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
     width: AmountRangeLengthMm | None = pyd.Field(default=None, description="")
@@ -118,6 +142,29 @@ class CableTraysRangeV1(BaseOpenEpdHierarchicalSpec):
     static_load: AmountRangeMass | None = pyd.Field(default=None, description="")
     ventilated: bool | None = pyd.Field(default=None, description="At least 40% of the tray base is open to air flow")
     cable_trays_material: list[CableTraysMaterial] | None = pyd.Field(default=None, description="")
+    CableTrayAccs: CableTrayAccsRangeV1 | None = None
+
+
+class ElectricalCableAccsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Accessories for cabling, including ties and supports.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class ElectricalCablesRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Insulated building power distribution conductors to connect electrical equipment within a structure at 600V or less.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+    ElectricalCableAccs: ElectricalCableAccsRangeV1 | None = None
 
 
 class ElectricalBusesRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -136,6 +183,46 @@ class ElectricalBusesRangeV1(BaseOpenEpdHierarchicalSpec):
     MedVoltBuses: MedVoltBusesRangeV1 | None = None
 
 
+class ElectricalBoxAccsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Accessories for electrical equipment boxes or their contents.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class ElectricalWallBoxesRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Equipment boxes for power or electronic equipment embedded in an accessible wall.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class ElectricalCeilingBoxesRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Equipment boxes for power or electronic equipment embedded in an accessible ceiling.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class ElectricalJunctionBoxesRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Equipment boxes for power or electronic equipment embedded.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class FloorEquipmentBoxesRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Equipment boxes for power or electronic equipment embedded in an accessible floor.
@@ -143,7 +230,12 @@ class FloorEquipmentBoxesRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
+
+    ElectricalBoxAccs: ElectricalBoxAccsRangeV1 | None = None
+    ElectricalWallBoxes: ElectricalWallBoxesRangeV1 | None = None
+    ElectricalCeilingBoxes: ElectricalCeilingBoxesRangeV1 | None = None
+    ElectricalJunctionBoxes: ElectricalJunctionBoxesRangeV1 | None = None
 
 
 class PowerDistributionUnitsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -170,6 +262,82 @@ class RacewaysRangeV1(BaseOpenEpdHierarchicalSpec):
     painted: bool | None = pyd.Field(default=None, description="")
     divided: bool | None = pyd.Field(default=None, description="")
     raceways_material: list[RacewaysMaterial] | None = pyd.Field(default=None, description="")
+
+
+class ElectricalGroundingConnectorsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Grounding connectors are safety devices that establish a low-resistance path to ground.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class ElectricalConnectorsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Devices that join electrical conductors or cables together.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+    ElectricalGroundingConnectors: ElectricalGroundingConnectorsRangeV1 | None = None
+
+
+class ElectricalMVSwitchesRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Devices that control electrical circuits by opening or closing a connection to turn power on and off, under manual or other intentional control.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class ElectricalMVInterruptersRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Protective devices that automatically disconnect circuits when detecting faults, surges, or abnormal current conditions.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class ElectricalMVFusesRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Single-use protective devices that melt and break a circuit when current exceeds a safe level.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
+class ElectricalDistSwitchgearRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+    ElectricalMVSwitches: ElectricalMVSwitchesRangeV1 | None = None
+    ElectricalMVInterrupters: ElectricalMVInterruptersRangeV1 | None = None
+    ElectricalMVFuses: ElectricalMVFusesRangeV1 | None = None
+
+
+class ChargingStationsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Outdoor charging stations, particularly for electric vehicles (EVs).
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
 
 
 class FueledElectricalGeneratorsRangeV1(BaseOpenEpdHierarchicalSpec):
@@ -328,13 +496,17 @@ class LowVoltageElectricalDistributionRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     CableTrays: CableTraysRangeV1 | None = None
+    ElectricalCables: ElectricalCablesRangeV1 | None = None
     ElectricalBuses: ElectricalBusesRangeV1 | None = None
     FloorEquipmentBoxes: FloorEquipmentBoxesRangeV1 | None = None
     PowerDistributionUnits: PowerDistributionUnitsRangeV1 | None = None
     Raceways: RacewaysRangeV1 | None = None
+    ElectricalConnectors: ElectricalConnectorsRangeV1 | None = None
+    ElectricalDistSwitchgear: ElectricalDistSwitchgearRangeV1 | None = None
+    ChargingStations: ChargingStationsRangeV1 | None = None
 
 
 class ElectricalGenerationEquipmentRangeV1(BaseOpenEpdHierarchicalSpec):
