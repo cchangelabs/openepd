@@ -29,6 +29,7 @@ __all__ = (
     "ElectricalDistSwitchgearRangeV1",
     "ElectricalGenerationEquipmentRangeV1",
     "ElectricalGroundingConnectorsRangeV1",
+    "ElectricalJunctionBoxesRangeV1",
     "ElectricalMVFusesRangeV1",
     "ElectricalMVInterruptersRangeV1",
     "ElectricalMVSwitchesRangeV1",
@@ -214,6 +215,16 @@ class ElectricalCeilingBoxesRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class ElectricalJunctionBoxesRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Equipment boxes for power or electronic equipment embedded.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class FloorEquipmentBoxesRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Equipment boxes for power or electronic equipment embedded in an accessible floor.
@@ -226,6 +237,7 @@ class FloorEquipmentBoxesRangeV1(BaseOpenEpdHierarchicalSpec):
     ElectricalBoxAccs: ElectricalBoxAccsRangeV1 | None = None
     ElectricalWallBoxes: ElectricalWallBoxesRangeV1 | None = None
     ElectricalCeilingBoxes: ElectricalCeilingBoxesRangeV1 | None = None
+    ElectricalJunctionBoxes: ElectricalJunctionBoxesRangeV1 | None = None
 
 
 class PowerDistributionUnitsRangeV1(BaseOpenEpdHierarchicalSpec):
