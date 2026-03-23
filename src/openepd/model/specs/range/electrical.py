@@ -19,6 +19,7 @@ __all__ = (
     "CableTraysRangeV1",
     "ChargingStationsRangeV1",
     "ElectricPowerRangeV1",
+    "ElectricalBoxAccsRangeV1",
     "ElectricalBusesRangeV1",
     "ElectricalCableAccsRangeV1",
     "ElectricalCablesRangeV1",
@@ -181,6 +182,16 @@ class ElectricalBusesRangeV1(BaseOpenEpdHierarchicalSpec):
     MedVoltBuses: MedVoltBusesRangeV1 | None = None
 
 
+class ElectricalBoxAccsRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Accessories for electrical equipment boxes or their contents.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class FloorEquipmentBoxesRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Equipment boxes for power or electronic equipment embedded in an accessible floor.
@@ -188,7 +199,9 @@ class FloorEquipmentBoxesRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
+
+    ElectricalBoxAccs: ElectricalBoxAccsRangeV1 | None = None
 
 
 class PowerDistributionUnitsRangeV1(BaseOpenEpdHierarchicalSpec):

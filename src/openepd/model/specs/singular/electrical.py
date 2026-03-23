@@ -19,6 +19,7 @@ __all__ = (
     "CableTraysV1",
     "ChargingStationsV1",
     "ElectricPowerV1",
+    "ElectricalBoxAccsV1",
     "ElectricalBusesV1",
     "ElectricalCableAccsV1",
     "ElectricalCablesV1",
@@ -238,10 +239,25 @@ class ElectricalBusesV1(BaseOpenEpdHierarchicalSpec):
     MedVoltBuses: MedVoltBusesV1 | None = None
 
 
+class ElectricalBoxAccsV1(BaseOpenEpdHierarchicalSpec):
+    """Accessories for electrical equipment boxes or their contents."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="ElectricalBoxAccs",
+        display_name="Electrical Box Accessories",
+        short_name="Accessories",
+        historical_names=["Electrical >> Distribution >> Boxes >> Accessories"],
+        description="Accessories for electrical equipment boxes or their contents.",
+        masterformat="26 05 33.16 Boxes for Electrical Systems",
+        declared_unit=Amount(qty=1, unit="item"),
+    )
+
+
 class FloorEquipmentBoxesV1(BaseOpenEpdHierarchicalSpec):
     """Equipment boxes for power or electronic equipment embedded in an accessible floor."""
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
     _CATEGORY_META = CategoryMeta(
         unique_name="FloorEquipmentBoxes",
         display_name="Floor Equipment Boxes",
@@ -251,6 +267,9 @@ class FloorEquipmentBoxesV1(BaseOpenEpdHierarchicalSpec):
         masterformat="26 05 33.16 Boxes for Electrical Systems",
         declared_unit=Amount(qty=1, unit="item"),
     )
+
+    # Nested specs:
+    ElectricalBoxAccs: ElectricalBoxAccsV1 | None = None
 
 
 class PowerDistributionUnitsV1(BaseOpenEpdHierarchicalSpec):

@@ -2146,6 +2146,17 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "LowVoltageElectricalDistribution",
         },
         {
+            "unique_name": "ElectricalBoxAccs",
+            "display_name": "Electrical Box Accessories",
+            "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> FloorEquipmentBoxes >> ElectricalBoxAccs",
+            "short_name": "Accessories",
+            "historical_names": ["Electrical >> Distribution >> Boxes >> Accessories"],
+            "description": "Accessories for electrical equipment boxes or their contents.",
+            "masterformat": "26 05 33.16 Boxes for Electrical Systems",
+            "declared_unit": Amount(qty=1.0, unit="item"),
+            "parent": "FloorEquipmentBoxes",
+        },
+        {
             "unique_name": "PowerDistributionUnits",
             "display_name": "Power Distribution Units (PDUs)",
             "hierarchical_name": "Electrical >> LowVoltageElectricalDistribution >> PowerDistributionUnits",
