@@ -1,3 +1,9 @@
+## 7.25.1 (2026-03-31)
+
+### Fix
+
+- **specs**: correct unit type for biogenic carbon mass
+
 ## 7.25.0 (2026-03-23)
 
 ### Feat
