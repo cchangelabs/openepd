@@ -1,3 +1,9 @@
+## 7.26.0 (2026-04-03)
+
+### Feat
+
+- **lcia**: add 'Point' as valid input unit and associate with SQP
+
 ## 7.25.1 (2026-03-31)
 
 ### Fix
