@@ -402,6 +402,12 @@ class ScopeSetEnergy(ScopeSet):
     allowed_units = "MJ"
 
 
+class ScopeSetPoint(ScopeSet):
+    """A ScopeSet for single-score environmental impact results measured in points (Point)."""
+
+    allowed_units: ClassVar[str | tuple[str, ...] | None] = "Point"
+
+
 class ImpactSet(ScopesetByNameBase):
     """A set of impacts, such as GWP, ODP, AP, EP, POCP, EP-marine, EP-terrestrial, EP-freshwater, etc."""
 
@@ -491,7 +497,7 @@ class ImpactSet(ScopesetByNameBase):
         default=None,
         description="Human toxicity, noncancer effects in potential Comparative Toxic Units for humans.",
     )
-    SQP: ScopeSet | None = pyd.Field(
+    SQP: ScopeSetPoint | None = pyd.Field(
         default=None,
         description="Land use related impacts / Soil quality, in potential soil quality parameters.",
     )
