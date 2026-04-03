@@ -168,6 +168,16 @@ class OpenEpdExtension(BaseOpenEpdSchema, metaclass=abc.ABCMeta):
     """Base class for OpenEPD extension models."""
 
     @classmethod
+    def is_private(cls) -> bool:
+        """
+        Return True if this extension is private, False otherwise.
+
+        A private extension is accepted and considered during CRUD operations evaluation,
+        but is never returned when the OpenEPD object is generated.
+        """
+        return False
+
+    @classmethod
     @abc.abstractmethod
     def get_extension_name(cls) -> str:
         """Return the name of the extension."""
