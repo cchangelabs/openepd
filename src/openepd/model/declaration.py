@@ -35,12 +35,6 @@ THIRD_PARTY_VERIFIER_DESCRIPTION = "JSON object for Org that performed a critica
 class BaseDeclaration(RootDocument, abc.ABC):
     """Base class for declaration-related documents (EPDs, Industry-wide EPDs, Generic Estimates)."""
 
-    id: OpenXpdUUID | None = pyd.Field(
-        description="The unique ID for this document.  To ensure global uniqueness, should be registered at "
-        "open-xpd-uuid.cqd.io/register or a coordinating registry.",
-        example="1u7zsed8",
-        default=None,
-    )
     date_of_issue: datetime.datetime | None = pyd.Field(
         example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.UTC),
         description="Date the document was issued. This should be the first day on which the document is valid.",
@@ -166,6 +160,17 @@ class BaseDeclaration(RootDocument, abc.ABC):
     def validate_product_image(cls, v: str | None) -> str | None:
         validate_data_url(v, DATA_URL_IMAGE_MAX_LENGTH)
         return v
+
+
+class WithOpenXpdUUIDMixin(pyd.BaseModel):
+    """Mixin that adds an open xPD UUID identifier field to a model."""
+
+    id: OpenXpdUUID | None = pyd.Field(
+        description="The unique ID for this document.  To ensure global uniqueness, should be registered at "
+        "open-xpd-uuid.cqd.io/register or a coordinating registry.",
+        example="1u7zsed8",
+        default=None,
+    )
 
 
 class AverageDatasetMixin(pyd.BaseModel, title="Average Dataset"):
