@@ -14,6 +14,7 @@
 #  limitations under the License.
 #
 from typing import Literal, TypeAlias, overload
+import warnings
 
 from requests import Response
 
@@ -34,6 +35,26 @@ class GenericEstimateApi(BaseApiMethodGroup):
     """API methods for Generic Estimates."""
 
     @overload
+    def get_by_uuid(self, uuid: str, with_response: Literal[True]) -> tuple[GenericEstimate, Response]: ...
+
+    @overload
+    def get_by_uuid(self, uuid: str, with_response: Literal[False] = False) -> GenericEstimate: ...
+
+    def get_by_uuid(self, uuid: str, with_response: bool = False) -> GenericEstimate | tuple[GenericEstimate, Response]:
+        """
+        Get Generic Estimate by UUID.
+
+        :param uuid: UUID
+        :param with_response: whether to return just object or with response
+        :return: GE or GE with response depending on param with_response
+        :raise ObjectNotFound: if Generic Estimate is not found
+        """
+        response = self._client.do_request("get", f"/generic_estimates/{uuid}")
+        if with_response:
+            return GenericEstimate.parse_obj(response.json()), response
+        return GenericEstimate.parse_obj(response.json())
+
+    @overload
     def get_by_openxpd_uuid(self, uuid: str, with_response: Literal[True]) -> tuple[GenericEstimate, Response]: ...
 
     @overload
@@ -45,15 +66,19 @@ class GenericEstimateApi(BaseApiMethodGroup):
         """
         Get Generic Estimate by OpenEPD UUID.
 
+        This method is deprecated and will be removed in a future version. Use get_by_uuid instead.
+
         :param uuid: Open xPD UUID
         :param with_response: whether to return just object or with response
         :return: GE or GE with response depending on param with_response
         :raise ObjectNotFound: if Generic Estimate is not found
         """
-        response = self._client.do_request("get", f"/generic_estimates/{uuid}")
-        if with_response:
-            return GenericEstimate.parse_obj(response.json()), response
-        return GenericEstimate.parse_obj(response.json())
+        warnings.warn(
+            "get_by_openxpd_uuid is deprecated and will be removed in a future version. Use get_by_uuid instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return self.get_by_uuid(uuid, with_response=with_response)  # type: ignore[call-overload]
 
     @overload
     def post_with_refs(

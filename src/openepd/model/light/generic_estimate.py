@@ -52,6 +52,15 @@ class LicenseTerms(StrEnum):
 class GenericEstimateRef(RefBase, title="Generic Estimate (Ref)"):
     """Reference (short) version of Generic Estimate object."""
 
+    id: UUID | None = pyd.Field(  # type: ignore[assignment]
+        description=(
+            "Unique UUID for this dataset."
+            "Use the UUID of the original source where possible, and put any other UUIDs in alt_ids."
+        ),
+        example="0197ad82-92cf-7978-a6c8-d4964c0a3624",
+        default=None,
+    )
+
 
 class GenericEstimatePreviewV0(
     WithAttachmentsMixin,
@@ -76,14 +85,6 @@ class GenericEstimatePreviewV0(
         max_length=200,
         description="Name. Recommended < 80 chars.",
         example="Aluminium profiles for windows, doors, and facades - anodized",
-        default=None,
-    )
-    id: UUID | None = pyd.Field(  # type: ignore[assignment]
-        description=(
-            "Unique UUID for this dataset."
-            "Use the UUID of the original source where possible, and put any other UUIDs in alt_ids."
-        ),
-        example="0197ad82-92cf-7978-a6c8-d4964c0a3624",
         default=None,
     )
     kg_per_declared_unit: AmountMass | None = pyd.Field(
