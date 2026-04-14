@@ -24,6 +24,7 @@ from openepd.model.declaration import (
     BaseDeclaration,
     RefBase,
     WithEpdDeveloperMixin,
+    WithOpenXpdUUIDMixin,
     WithProgramOperatorMixin,
     WithVerifierMixin,
 )
@@ -65,6 +66,7 @@ class IndustryEpdPreviewV0(
     WithProgramOperatorMixin,
     IndustryEpdRef,
     BaseDeclaration,
+    WithOpenXpdUUIDMixin,
     title="Industry EPD (preview)",
 ):
     """
