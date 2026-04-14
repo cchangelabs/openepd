@@ -33,6 +33,7 @@ from openepd.model.declaration import (
     OriginalDataFormat,
     RefBase,
     WithEpdDeveloperMixin,
+    WithOpenXpdUUIDMixin,
     WithProgramOperatorMixin,
     WithVerifierMixin,
 )
@@ -128,6 +129,7 @@ class EpdPreviewV0(
     WithAltIdsMixin,
     EpdRef,
     BaseDeclaration,
+    WithOpenXpdUUIDMixin,
     title="EPD (Preview)",
 ):
     """
