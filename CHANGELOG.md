@@ -1,3 +1,14 @@
+## 6.38.0 (2026-04-16)
+
+### Feat
+
+- **lcia**: add 'Point' as valid input unit and associate with SQP
+
+### Fix
+
+- switch identifier from OpenXpdUUID to UUID for GenericEstimateRef
+- **specs**: correct unit type for biogenic carbon mass
+
 ## 6.37.0 (2026-03-23)
 
 ### Feat

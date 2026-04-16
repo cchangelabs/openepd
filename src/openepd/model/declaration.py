@@ -25,7 +25,7 @@ from openepd.model.org import Org
 from openepd.model.pcr import Pcr
 from openepd.model.standard import Standard
 from openepd.model.validation.common import ReferenceStr
-from openepd.model.validation.quantity import AmountGWP, AmountMass
+from openepd.model.validation.quantity import AmountMass
 
 DEVELOPER_DESCRIPTION = "The organization responsible for the underlying LCA (and subsequent summarization as EPD)."
 PROGRAM_OPERATOR_DESCRIPTION = "JSON object for program operator Org"
@@ -35,12 +35,6 @@ THIRD_PARTY_VERIFIER_DESCRIPTION = "JSON object for Org that performed a critica
 class BaseDeclaration(RootDocument, abc.ABC):
     """Base class for declaration-related documents (EPDs, Industry-wide EPDs, Generic Estimates)."""
 
-    id: OpenXpdUUID | None = pyd.Field(
-        description="The unique ID for this document.  To ensure global uniqueness, should be registered at "
-        "open-xpd-uuid.cqd.io/register or a coordinating registry.",
-        example="1u7zsed8",
-        default=None,
-    )
     date_of_issue: datetime.datetime | None = pyd.Field(
         example=datetime.datetime(day=11, month=9, year=2019, tzinfo=datetime.UTC),
         description="Date the document was issued. This should be the first day on which the document is valid.",
@@ -144,14 +138,14 @@ class BaseDeclaration(RootDocument, abc.ABC):
         description="Mass of elemental carbon, per declared unit, contained in the product itself at the manufacturing "
         "facility gate.  Used (among other things) to check a carbon balance or calculate incineration "
         "emissions.  The source of carbon (e.g. biogenic) is not relevant in this field.",
-        example=Amount(qty=8.76, unit="kgCO2e").to_serializable(exclude_unset=True),
+        example=Amount(qty=8.76, unit="kg").to_serializable(exclude_unset=True),
     )
-    kg_C_biogenic_per_declared_unit: AmountGWP | None = pyd.Field(
+    kg_C_biogenic_per_declared_unit: AmountMass | None = pyd.Field(
         default=None,
         description="Mass of elemental carbon from biogenic sources, per declared unit, contained in the product "
         "itself at the manufacturing facility gate.  It may be presumed that any biogenic carbon content "
         "has been accounted for as -44/12 kgCO2e per kg C in stages A1-A3, per EN15804 and ISO 21930.",
-        example=Amount(qty=8.76, unit="kgCO2e").to_serializable(exclude_unset=True),
+        example=Amount(qty=8.76, unit="kg").to_serializable(exclude_unset=True),
     )
     product_service_life_years: float | None = pyd.Field(
         gt=0.0009,
@@ -166,6 +160,17 @@ class BaseDeclaration(RootDocument, abc.ABC):
     def validate_product_image(cls, v: str | None) -> str | None:
         validate_data_url(v, DATA_URL_IMAGE_MAX_LENGTH)
         return v
+
+
+class WithOpenXpdUUIDMixin(pyd.BaseModel):
+    """Mixin that adds an open xPD UUID identifier field to a model."""
+
+    id: OpenXpdUUID | None = pyd.Field(
+        description="The unique ID for this document.  To ensure global uniqueness, should be registered at "
+        "open-xpd-uuid.cqd.io/register or a coordinating registry.",
+        example="1u7zsed8",
+        default=None,
+    )
 
 
 class AverageDatasetMixin(pyd.BaseModel, title="Average Dataset"):
