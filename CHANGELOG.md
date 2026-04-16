@@ -1,3 +1,9 @@
+## 7.26.1 (2026-04-16)
+
+### Fix
+
+- switch identifier from OpenXpdUUID to UUID for GenericEstimateRef
+
 ## 7.26.0 (2026-04-03)
 
 ### Feat
