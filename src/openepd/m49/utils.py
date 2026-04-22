@@ -282,6 +282,16 @@ def _expand_subdivisions_if_needed(codes: set[str], expand_subdivisions: bool) -
     return expanded
 
 
+def expand_country_subdivisions(country_code: str) -> set[str]:
+    """
+    Expand country code to subdivisions.
+
+    :param country_code: ISO 3166-1 alpha-2 country code.
+    :return: Set of subdivision codes or original code.
+    """
+    return _expand_subdivisions_if_needed({country_code}, expand_subdivisions=True)
+
+
 def flatten_to_iso3166_alpha2(region_identifiers: Iterable[str], *, expand_subdivisions: bool = False) -> set[str]:
     """
     Flatten a collection of region identifiers to a set of ISO 3166 codes.
