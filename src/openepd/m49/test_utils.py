@@ -18,6 +18,7 @@ from unittest import TestCase
 from openepd.m49.const import ISO3166_ALPHA2_TO_SUBDIVISIONS
 from openepd.m49.utils import (
     collapse_iso3166_to_known_regions,
+    expand_country_subdivisions,
     flatten_to_iso3166_alpha2,
     iso_to_m49,
     m49_to_iso,
@@ -487,3 +488,40 @@ class M49UtilsTestCase(TestCase):
         # Example: Empty input
         result = collapse_iso3166_to_known_regions([])
         self.assertEqual(result, set())
+
+    def test_expand_country_subdivisions(self) -> None:
+        """
+        Test expand_country_subdivisions with various inputs.
+
+        This covers:
+        - Country with known subdivisions returns all subdivision codes.
+        - Country without known subdivisions returns the original code as-is.
+        - Input is case-insensitive.
+        - Subdivisions are in the correct ISO 3166-2 format.
+        """
+        # Country with known subdivisions (US) should return all US-* codes
+        result = expand_country_subdivisions("US")
+        self.assertTrue(len(result) > 0)
+        self.assertTrue(all(code.startswith("US-") for code in result))
+        self.assertNotIn("US", result)
+        self.assertEqual(sorted(list(result)), sorted(list(ISO3166_ALPHA2_TO_SUBDIVISIONS["US"])))
+
+        # Country with known subdivisions (CA) should return all CA-* codes
+        result = expand_country_subdivisions("CA")
+        self.assertTrue(len(result) > 0)
+        self.assertTrue(all(code.startswith("CA-") for code in result))
+        self.assertNotIn("CA", result)
+        self.assertEqual(sorted(list(result)), sorted(list(ISO3166_ALPHA2_TO_SUBDIVISIONS["CA"])))
+
+        # Country without known subdivisions should return the original code
+        result = expand_country_subdivisions("DE")
+        self.assertEqual(result, {"DE"})
+
+        # Input should be case-insensitive
+        result_lower = expand_country_subdivisions("us")
+        result_upper = expand_country_subdivisions("US")
+        self.assertEqual(result_lower, result_upper)
+
+        # Unknown code should be returned as-is
+        result = expand_country_subdivisions("AA")
+        self.assertEqual(result, {"AA"})

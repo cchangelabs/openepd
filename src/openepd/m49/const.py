@@ -983,7 +983,8 @@ M49_TO_COUNTRY_VERBOSE_NAME = {
     "894": "Zambia",
 }
 
-SUBDIVISIONS_VERBOSE_NAMES_MAPPING: Final[MappingProxyType[str, str]] = MappingProxyType(
+# Mapping from first-level administrative subdivisions to their verbose names.
+ISO3166_SUBDIVISION_TO_VERBOSE_NAME: Final[MappingProxyType[str, str]] = MappingProxyType(
     {
         "CA-AB": "Alberta, Canada",
         "CA-BC": "British Columbia, Canada",
@@ -1057,9 +1058,6 @@ SUBDIVISIONS_VERBOSE_NAMES_MAPPING: Final[MappingProxyType[str, str]] = MappingP
         "US-WY": "Wyoming, United States",
     }
 )
-"""
-Mapping from first-level administrative subdivisions to their verbose names.
-"""
 
 # Derive verbose-name-to-code mapping from the canonical M49_TO_COUNTRY_VERBOSE_NAME mapping.
 COUNTRY_VERBOSE_NAME_TO_M49: dict[str, str] = {name: code for code, name in M49_TO_COUNTRY_VERBOSE_NAME.items()}

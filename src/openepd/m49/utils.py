@@ -24,6 +24,7 @@ __all__ = [
     "m49_to_region_and_country_names",
     "openepd_to_m49",
     "region_and_country_names_to_m49",
+    "expand_country_subdivisions",
 ]
 from collections.abc import Collection, Iterable
 from functools import lru_cache
@@ -289,7 +290,7 @@ def expand_country_subdivisions(country_code: str) -> set[str]:
     :param country_code: ISO 3166-1 alpha-2 country code.
     :return: Set of subdivision codes or original code.
     """
-    return _expand_subdivisions_if_needed({country_code}, expand_subdivisions=True)
+    return _expand_subdivisions_if_needed({country_code.upper()}, expand_subdivisions=True)
 
 
 def flatten_to_iso3166_alpha2(region_identifiers: Iterable[str], *, expand_subdivisions: bool = False) -> set[str]:
