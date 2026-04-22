@@ -288,7 +288,7 @@ def expand_country_subdivisions(country_code: str) -> set[str]:
     Expand country code to subdivisions.
 
     :param country_code: ISO 3166-1 alpha-2 country code.
-    :return: Set of subdivision codes or original code.
+    :return: Set of subdivision codes or set containing original code if no subdivisions defined.
     """
     return _expand_subdivisions_if_needed({country_code.upper()}, expand_subdivisions=True)
 
