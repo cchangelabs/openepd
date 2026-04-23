@@ -1,3 +1,9 @@
+## 7.27.0 (2026-04-23)
+
+### Feat
+
+- add subdivisions verbose names
+
 ## 7.26.1 (2026-04-16)
 
 ### Fix
