@@ -13,4 +13,4 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-VERSION = "6.38.0"
+VERSION = "6.39.0"
