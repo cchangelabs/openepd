@@ -513,15 +513,15 @@ class M49UtilsTestCase(TestCase):
         self.assertNotIn("CA", result)
         self.assertEqual(sorted(list(result)), sorted(list(ISO3166_ALPHA2_TO_SUBDIVISIONS["CA"])))
 
-        # Country without known subdivisions should return the original code
+        # Country without known subdivisions should return empty set
         result = expand_country_subdivisions("DE")
-        self.assertEqual(result, {"DE"})
+        self.assertEqual(result, set())
 
         # Input should be case-insensitive
         result_lower = expand_country_subdivisions("us")
         result_upper = expand_country_subdivisions("US")
         self.assertEqual(result_lower, result_upper)
 
-        # Unknown code should be returned as-is
+        # Unknown code should return empty set
         result = expand_country_subdivisions("AA")
-        self.assertEqual(result, {"AA"})
+        self.assertEqual(result, set())
