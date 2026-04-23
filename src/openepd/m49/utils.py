@@ -274,7 +274,7 @@ def _expand_subdivisions_if_needed(
     :param expand_subdivisions: Whether to expand to subdivisions.
     :param include_original_if_no_subdivision: Controls behaviour when no subdivisions are found for a country code.
         If ``True``, the original country code is preserved in the result as a fallback.
-        If ``False``, the country code is dropped from the result.
+        If ``False``, the country code is not returned in the result.
     :return: Set of subdivision codes or original codes.
     """
     if not expand_subdivisions:
@@ -293,7 +293,7 @@ def expand_country_subdivisions(country_code: str) -> set[str]:
     Expand country code to subdivisions.
 
     :param country_code: ISO 3166-1 alpha-2 country code.
-    :return: Set of subdivision codes or set containing original code if no subdivisions defined.
+    :return: Set of subdivision codes. Empty if no subdivisions are found for the country code.
     """
     return _expand_subdivisions_if_needed(
         {country_code.upper()}, expand_subdivisions=True, include_original_if_no_subdivision=False
