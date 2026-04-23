@@ -264,12 +264,17 @@ def _expand_m49_code(identifier: str) -> set[str]:
     return codes
 
 
-def _expand_subdivisions_if_needed(codes: set[str], expand_subdivisions: bool) -> set[str]:
+def _expand_subdivisions_if_needed(
+    codes: set[str], expand_subdivisions: bool, include_original_if_no_subdivision: bool = True
+) -> set[str]:
     """
     Expand country codes to their subdivisions if requested.
 
     :param codes: Set of ISO 3166-1 alpha-2 country codes.
     :param expand_subdivisions: Whether to expand to subdivisions.
+    :param include_original_if_no_subdivision: Controls behaviour when no subdivisions are found for a country code.
+        If ``True``, the original country code is preserved in the result as a fallback.
+        If ``False``, the country code is dropped from the result.
     :return: Set of subdivision codes or original codes.
     """
     if not expand_subdivisions:
@@ -278,7 +283,7 @@ def _expand_subdivisions_if_needed(codes: set[str], expand_subdivisions: bool) -
     for code in codes:
         if code in ISO3166_ALPHA2_TO_SUBDIVISIONS:
             expanded.update(ISO3166_ALPHA2_TO_SUBDIVISIONS[code])
-        else:
+        elif include_original_if_no_subdivision:
             expanded.add(code)
     return expanded
 
@@ -290,7 +295,9 @@ def expand_country_subdivisions(country_code: str) -> set[str]:
     :param country_code: ISO 3166-1 alpha-2 country code.
     :return: Set of subdivision codes or set containing original code if no subdivisions defined.
     """
-    return _expand_subdivisions_if_needed({country_code.upper()}, expand_subdivisions=True)
+    return _expand_subdivisions_if_needed(
+        {country_code.upper()}, expand_subdivisions=True, include_original_if_no_subdivision=False
+    )
 
 
 def flatten_to_iso3166_alpha2(region_identifiers: Iterable[str], *, expand_subdivisions: bool = False) -> set[str]:
