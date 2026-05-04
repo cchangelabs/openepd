@@ -1,3 +1,9 @@
+## 7.28.0 (2026-05-04)
+
+### Feat
+
+- add type validation to ensure RangeBase values is always a dict
+
 ## 7.27.0 (2026-04-23)
 
 ### Feat
