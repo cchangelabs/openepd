@@ -20,6 +20,8 @@ from openepd.compat.pydantic import pyd
 from openepd.model.epd import Epd
 from openepd.model.specs import ConcreteV1
 from openepd.model.specs.enums import AciExposureClass, CsaExposureClass, EnExposureClass
+from openepd.model.specs.range.aggregates import AggregatesRangeV1
+from openepd.model.specs.range.wood import WoodRangeV1
 from openepd.model.specs.singular.asphalt import AsphaltV1
 from openepd.model.specs.singular.masonry import AutoclavedAeratedConcreteV1
 
@@ -243,3 +245,25 @@ class SpecValidationTestCase(unittest.TestCase):
 
         validate_unit_correctness_mock.assert_called_once()
         validate_quantity_greater_or_equal_mock.assert_not_called()
+
+    def test_range_field_rejects_float_when_dict_expected(self) -> None:
+        """Test that a RangeRatioFloat field rejects a plain float value."""
+        with self.assertRaises(pyd.ValidationError):
+            AggregatesRangeV1(recycled_content=0.5)  # type: ignore[arg-type]
+
+    def test_range_field_accepts_dict(self) -> None:
+        """Test that a RangeRatioFloat field accepts a dict with min/max."""
+        model = AggregatesRangeV1(recycled_content={"min": 0.1, "max": 0.5})  # type: ignore[arg-type]
+        self.assertIsNotNone(model.recycled_content)
+        self.assertEqual(model.recycled_content.min, 0.1)
+        self.assertEqual(model.recycled_content.max, 0.5)
+
+    def test_float_field_rejects_dict(self) -> None:
+        """Test that a plain float field rejects a dict value."""
+        with self.assertRaises(pyd.ValidationError):
+            WoodRangeV1(recycled_content={"min": 0.1, "max": 0.5})  # type: ignore[arg-type]
+
+    def test_float_field_accepts_float(self) -> None:
+        """Test that a plain float field accepts a float value."""
+        model = WoodRangeV1(recycled_content=0.5)
+        self.assertEqual(model.recycled_content, 0.5)

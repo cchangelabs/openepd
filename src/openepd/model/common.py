@@ -400,6 +400,9 @@ class RangeBase(BaseOpenEpdSchema):
 
     @pyd.root_validator
     def _validate_range_bounds(cls, values: dict[str, Any]) -> dict[str, Any]:
+        if not isinstance(values, dict):
+            msg = "Value must be an object with 'min' and/or 'max' properties"
+            raise ValueError(msg)
         min_boundary = values.get("min")
         max_boundary = values.get("max")
         if min_boundary is not None and max_boundary is not None and min_boundary > max_boundary:
