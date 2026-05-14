@@ -3,6 +3,7 @@ SKIP_VENV="${NO_VENV}"
 SHELL := /bin/bash
 PYTHON := python3.11
 SRC_ROOT := ./src
+ROOT_PACKAGE := openepd
 POETRY_GROUPS := dev
 
 .DEFAULT_GOAL := pre_commit
@@ -192,12 +193,13 @@ private-publish: build
 		$(POETRY) publish  --repository private; \
 		echo "DONE: Publishing packages"; \
 	)
+.PHONY: coverage
 coverage:
 	@( \
 		echo "Running coverage"; \
 		set -e; \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
-		coverage run --source $(SRC_ROOT)/cqd_etl -m pytest; \
+		coverage run --source $(SRC_ROOT)/$(ROOT_PACKAGE) -m pytest; \
 		coverage html; \
 		echo "DONE: Coverage"; \
 	)
@@ -207,7 +209,7 @@ test:
 		echo "Running tests"; \
 		set -e; \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
-		echo pytest -v --cov-report term-missing --cov=$(SRC_ROOT)/cqd_etl; \
+		echo pytest -v; \
 		pytest -v; \
 		echo "DONE: Tests"; \
 	)
