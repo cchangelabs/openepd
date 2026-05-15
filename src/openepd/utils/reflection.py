@@ -63,15 +63,20 @@ def _traverse_with_keys(
     delimiter: str,
     parent_name: str,
     modify_prefix_func: Callable[[Any], str],
+    modify_field_name: Callable[[str, TypeWithContainer, str], str] | None = None,
 ) -> dict[str, FieldInfo]:
     """
     Traverse the model type with key field types and return the fields info.
 
     :param model_type: The model type to traverse.
     :param key_field_types: The key field types to traverse.
-    :param delimiter: The delimiter to use.
-    :param parent_name: The parent name to use.
-    :param modify_prefix_func: The function to modify the prefix.
+    :param delimiter: The delimiter to use between nested field segments.
+    :param parent_name: The parent name to use to avoid circular traversal.
+    :param modify_prefix_func: Callable that receives a key value and returns the
+        prefix to use when traversing the corresponding keyed sub-object.
+    :param modify_field_name: Optional callable used to transform individual field
+        names. Called as modify_field_name(field_name, data_type, delimiter) and
+        expected to return the (possibly modified) field name string.
     """
     results = {}
     for key_value in key_field_types:
@@ -82,6 +87,7 @@ def _traverse_with_keys(
                 prefix=modified_prefix,
                 parent_name=parent_name,
                 delimiter=delimiter,
+                modify_field_name=modify_field_name,
             )
         )
     return results
@@ -202,12 +208,100 @@ def unwrap_annotated_annotation(annotation: Any) -> Any:
     return annotation
 
 
+def _safe_unwrap_annotation(annotation: Any) -> TypeWithContainer | None:
+    """
+    Safely unwrap an annotation returning None on failure.
+
+    :param annotation: The annotation to unwrap.
+    :return: A TypeWithContainer instance or None when unwrapping fails.
+    """
+    try:
+        return unwrap_annotation(annotation)
+    except ValueError:
+        return None
+
+
+def _is_excluded(name_candidate: str, field_name: str, exclude_list: set[FieldNameMatcher]) -> bool:
+    """
+    Determine whether a field should be excluded based on the exclude list.
+
+    :param name_candidate: Full candidate name including prefix.
+    :param field_name: The original field name.
+    :param exclude_list: Set of matchers.
+    :return: True if excluded, False otherwise.
+    """
+    return any(is_field_matched(name_candidate, field_name, m) for m in exclude_list)
+
+
+def _add_or_recurse_field(
+    result: dict[str, FieldInfo],
+    field_name: str,
+    field_def: Any,
+    inner_types: TypeWithContainer,
+    annotation: Any,
+    prefix: str,
+    delimiter: str,
+    parent_name: str,
+    exclude_list: set[FieldNameMatcher],
+    modify_field_name: Callable[[str, TypeWithContainer, str], str] | None,
+) -> None:
+    """
+    Add a simple field to the result mapping or recurse for nested models.
+
+    :param result: Mapping to populate.
+    :param field_name: Original field name.
+    :param field_def: Pydantic ModelField-like object.
+    :param inner_types: Unwrapped TypeWithContainer for the field.
+    :param annotation: Original annotation for the field.
+    :param prefix: Current prefix for nested paths.
+    :param delimiter: Delimiter for nested segments.
+    :param parent_name: Name of the parent to avoid cycles.
+    :param exclude_list: Set of matchers to exclude.
+    :param modify_field_name: Optional modifier for field names.
+    """
+    effective_field_name = (
+        modify_field_name(field_name, inner_types, delimiter) if modify_field_name is not None else field_name
+    )
+
+    # If target types list is empty, nothing to add
+    if len(inner_types.target_types) == 0:
+        return
+
+    first_type = inner_types.target_types[0]
+
+    # Recurse into nested BaseModel subclasses
+    if isinstance(first_type, type) and issubclass(first_type, pyd.BaseModel):
+        if field_name == parent_name:
+            return
+        result.update(
+            fields_traverse(
+                first_type,
+                prefix=prefix + effective_field_name + delimiter,
+                parent_name=field_name,
+                delimiter=delimiter,
+                exclude_list=exclude_list,
+                modify_field_name=modify_field_name,
+            )
+        )
+        return
+
+    # Otherwise, record the field info
+    result[prefix + effective_field_name] = FieldInfo(
+        name=prefix + effective_field_name,
+        type_annotation=annotation,
+        data_type=inner_types,
+        description=field_def.description,
+        is_optional=is_nullable_annotation(annotation),
+    )
+
+
 def fields_traverse(
     obj: type[pyd.BaseModel],
     delimiter: str = ".",
     prefix: str = "",
     parent_name: str = "",
     exclude_list: set[FieldNameMatcher] | None = None,
+    modify_field_name: Callable[[str, TypeWithContainer, str], str] | None = None,
 ) -> dict[str, FieldInfo]:
     """
     Recursively traverse a Pydantic model's fields and return their metadata.
@@ -223,6 +317,10 @@ def fields_traverse(
     :param exclude_list: A set of field name matchers to exclude from traversal. Each matcher
         can be a string (exact match or full path match if prefixed with "^") or a
         callable that takes (name, full_name) and returns bool.
+    :param modify_field_name: Optional callable to transform a field name before the full
+        name is generated. Called as modify_field_name(field_name, data_type, delimiter)
+        where data_type is a TypeWithContainer describing the field's inner types and
+        any container type. If None, field names are not modified.
 
     :return: A dictionary mapping full field paths to FieldInfo objects containing metadata
     about each field (name, type, description, annotation, and optionality).
@@ -244,39 +342,35 @@ def fields_traverse(
     """
     result: dict[str, FieldInfo] = {}
     exclude_list = exclude_list or set()
+
     for field_name, field_def in obj.model_fields.items():
-        name_candidate = prefix + field_name
-        if any(is_field_matched(name_candidate, field_name, m) for m in exclude_list):
-            continue
         annotation = field_def.annotation
-        is_optional = is_nullable_annotation(annotation)
-        try:
-            inner_types = unwrap_annotation(annotation)
-        except ValueError:
-            continue
-        if len(inner_types.target_types) == 0:
+
+        inner_types = _safe_unwrap_annotation(annotation)
+        if inner_types is None:
+            # Skip fields where annotation unwrapping failed
             continue
 
-        first_type = inner_types.target_types[0]
+        effective_field_name = (
+            modify_field_name(field_name, inner_types, delimiter) if modify_field_name is not None else field_name
+        )
 
-        if isinstance(first_type, type) and issubclass(first_type, pyd.BaseModel):
-            if field_name == parent_name:
-                continue
-            result.update(
-                fields_traverse(
-                    first_type,
-                    prefix=prefix + field_name + delimiter,
-                    parent_name=field_name,
-                    delimiter=delimiter,
-                    exclude_list=exclude_list,
-                )
-            )
-        else:
-            result[prefix + field_name] = FieldInfo(
-                name=prefix + field_name,
-                type_annotation=annotation,
-                data_type=inner_types,
-                description=field_def.description,
-                is_optional=is_optional,
-            )
+        name_candidate = prefix + effective_field_name
+        if _is_excluded(name_candidate, field_name, exclude_list):
+            continue
+
+        # Delegate adding or recursing into a helper to reduce complexity
+        _add_or_recurse_field(
+            result,
+            field_name,
+            field_def,
+            inner_types,
+            annotation,
+            prefix,
+            delimiter,
+            parent_name,
+            exclude_list,
+            modify_field_name,
+        )
+
     return result
