@@ -1,3 +1,9 @@
+## 7.29.0 (2026-05-15)
+
+### Feat
+
+- enhance `fields_traverse` with field name modification
+
 ## 7.28.0 (2026-05-04)
 
 ### Feat
