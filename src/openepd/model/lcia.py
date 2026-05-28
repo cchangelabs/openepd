@@ -773,6 +773,17 @@ class ResourceUseSet(ScopesetByNameBase):
         description="Non-renewable primary resources as material",
         default=None,
     )
+    RPRt: ScopeSetEnergy | None = pydantic.Field(
+        description="Renewable primary resources used, total. If present, must be equal to RPRe + RPRm.",
+        default=None,
+    )
+    NRPRt: ScopeSetEnergy | None = pydantic.Field(
+        description=(
+            "Non-renewable primary resources used, total. First use materials such as peat, oil, gas, coal, uranium used."
+            "If present, must be equal to NRPRe + NRPRm."
+        ),
+        default=None,
+    )
     fw: ScopeSetVolume | None = pydantic.Field(
         description="Use of net fresh water",
         default=None,
