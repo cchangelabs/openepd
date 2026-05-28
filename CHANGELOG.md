@@ -1,3 +1,13 @@
+## 6.41.0 (2026-05-28)
+
+### Feat
+
+- add support RPRt and NRPRt resource uses
+
+### Fix
+
+- **deps**: set minimum pydantic to 2.6.4
+
 ## 6.40.0 (2026-05-04)
 
 ### Feat
