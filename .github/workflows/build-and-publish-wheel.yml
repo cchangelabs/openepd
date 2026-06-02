@@ -35,20 +35,24 @@ jobs:
         run: |
           make verify-prerequisites deps
 
-      - name: Build and publish packages
+      - name: Build packages
         run: |
-          export POETRY_HTTP_BASIC_PYPI_USERNAME=__token__
-          export POETRY_HTTP_BASIC_PYPI_PASSWORD="${{ secrets.pypi_token }}"
-          make publish
-
-      - name: Build and publish packages to private PYPI
-        run: |
-          export POETRY_HTTP_BASIC_PRIVATE_USERNAME=AzureDevOps
-          export POETRY_HTTP_BASIC_PRIVATE_PASSWORD="${{ secrets.pypi_private_token }}"
-          export POETRY_REPOSITORIES_PRIVATE_URL="${{ secrets.pypi_private_url }}"
-          make private-publish
+          make build
 
       - uses: actions/upload-artifact@v4
         with:
           name: wheels
           path: dist/*
+
+      - name: Publish packages
+        run: |
+          export POETRY_HTTP_BASIC_PYPI_USERNAME=__token__
+          export POETRY_HTTP_BASIC_PYPI_PASSWORD="${{ secrets.pypi_token }}"
+          make publish-only
+
+      - name: Publish packages to private PYPI
+        run: |
+          export POETRY_HTTP_BASIC_PRIVATE_USERNAME=AzureDevOps
+          export POETRY_HTTP_BASIC_PRIVATE_PASSWORD="${{ secrets.pypi_private_token }}"
+          export POETRY_REPOSITORIES_PRIVATE_URL="${{ secrets.pypi_private_url }}"
+          make private-publish-only
