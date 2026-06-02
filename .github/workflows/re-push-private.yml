@@ -15,6 +15,7 @@ jobs:
     name: Re-publish wheels to private PyPI
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       actions: read
     steps:
       - name: Checkout repo
