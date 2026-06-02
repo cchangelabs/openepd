@@ -1,0 +1,62 @@
+name: Re-Push to Private PyPI
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: >
+          Run ID of the failed Release run that built the package.
+          Open the run under the Actions tab — the ID is the number in the URL:
+          .../actions/runs/<run_id>
+        required: true
+        type: string
+
+jobs:
+  republish:
+    name: Re-publish wheels to private PyPI
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python and Poetry
+        uses: cchangelabs/action-setup-python-poetry@v1
+        with:
+          python-version: 3.11
+          poetry-version: 2.1.3
+
+      - name: Verify wheels artifact exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Checking artifacts for run ${{ inputs.run_id }}..."
+          names=$(gh api "repos/${{ github.repository }}/actions/runs/${{ inputs.run_id }}/artifacts" --jq '.artifacts[].name')
+          echo "Found artifacts: ${names:-<none>}"
+          if ! echo "$names" | grep -qx "wheels"; then
+            echo "::error::Run ${{ inputs.run_id }} has no 'wheels' artifact (expired, wrong run_id, or run predates the upload-before-publish change). Use a run_id from a release built after that change."
+            exit 1
+          fi
+          echo "OK: 'wheels' artifact is present."
+
+      - name: Download wheels artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: wheels
+          path: dist
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Show downloaded package files
+        run: |
+          echo "Re-publishing the following files to private PyPI:"
+          ls -la dist/
+
+      - name: Re-publish to private PyPI
+        run: |
+          export POETRY_HTTP_BASIC_PRIVATE_USERNAME=AzureDevOps
+          export POETRY_HTTP_BASIC_PRIVATE_PASSWORD="${{ secrets.pypi_private_token }}"
+          export POETRY_REPOSITORIES_PRIVATE_URL="${{ secrets.pypi_private_url }}"
+          make private-publish-only PUBLISH_EXTRA_ARGS=--skip-existing
