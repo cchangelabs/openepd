@@ -7,8 +7,8 @@ description: "Adding new categories to OpenEPD repository"
 
 Use this skill when tasked with adding new category to OpenEPD repository.
 
-1. Extend `spec_maping` to the correct place in the project hierarchy. Search for `src.openepd.model.specs.singular` and `src.openepd.model.specs.range` folders.
-2. Add a new spec material types there. Name it after `db_name` of the category. For example, if you have `DoorsAndFrames` category, add next specifications: `DoorsAndFramesV1` into `singular` folder and `DoorsAndFramesRangeV1` into `range` folder. This classes should be a child of `BaseOpenEpdHierarchicalSpec` class.
+1. Extend specs to the correct place in the project hierarchy. Search in `src/openepd/model/specs/singular/` and `src/openepd/model/specs/range/`.
+2. Add new spec types there. Name them after the category `db_name`. For example, for `DoorsAndFrames`, add `DoorsAndFramesV1` in `singular/` and `DoorsAndFramesRangeV1` in `range/`. These classes should inherit from `BaseOpenEpdHierarchicalSpec`.
 3. Add `_EXT_VERSION` . The newly created V1 category should be `1.0`.
 4. Add `_CATEGORY_META` .
 ```python
@@ -82,7 +82,7 @@ from openepd.model.validation.quantity import LengthMmStr
 
 class DoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
   """Doors (the operable part) and frames (what holds the door proper)."""
-``
+
   _EXT_VERSION = "1.1"
 
   # Own fields:

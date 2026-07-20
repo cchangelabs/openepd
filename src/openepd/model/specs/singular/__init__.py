@@ -88,7 +88,7 @@ class Specs(BaseOpenEpdHierarchicalSpec):
         SteelOldSpec,
     ]
 
-    _EXT_VERSION = "1.1"
+    _EXT_VERSION = "1.2"
     _CATEGORY_META = CategoryMeta(
         unique_name="ConstructionMaterials",
         display_name="Product Categories",
