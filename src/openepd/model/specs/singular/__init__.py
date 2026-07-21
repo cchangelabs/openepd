@@ -67,6 +67,7 @@ from openepd.model.specs.singular.other_materials import FoodBeverageV1, OtherMa
 from openepd.model.specs.singular.plumbing import PlumbingV1
 from openepd.model.specs.singular.precast_concrete import PrecastConcreteV1
 from openepd.model.specs.singular.sheathing import SheathingV1
+from openepd.model.specs.singular.specialties import SpecialtiesV1
 from openepd.model.specs.singular.steel import SteelV1
 from openepd.model.specs.singular.thermal_moisture_protection import ThermalMoistureProtectionV1
 from openepd.model.specs.singular.utility_piping import UtilityPipingV1
@@ -81,7 +82,7 @@ class Specs(BaseOpenEpdHierarchicalSpec):
 
     COMPATIBILITY_SPECS: ClassVar[list[type[BaseCompatibilitySpec]]] = [ConcreteOldSpec, SteelOldSpec]
 
-    _EXT_VERSION = "1.1"
+    _EXT_VERSION = "1.2"
     _CATEGORY_META = CategoryMeta(
         unique_name="ConstructionMaterials",
         display_name="Product Categories",
@@ -124,6 +125,7 @@ class Specs(BaseOpenEpdHierarchicalSpec):
     MechanicalInsulation: MechanicalInsulationV1 | None = None
     WoodJoists: WoodJoistsV1 | None = None
     ExteriorImprovements: ExteriorImprovementsV1 | None = None
+    Specialties: SpecialtiesV1 | None = None
     TextileProducts: TextileProductsV1 | None = None
     Chemicals: ChemicalsV1 | None = None
     ElectricityAndFuel: ElectricityAndFuelV1 | None = None
