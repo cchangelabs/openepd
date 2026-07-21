@@ -167,14 +167,16 @@ build:
 		echo "DONE: Building packages"; \
 	)
 
-publish: build
+publish-only:
 	@( \
-		echo "Publishing packages"; \
+		echo "Publishing packages (no build)"; \
 		set -e; \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
 		$(POETRY) publish; \
-		echo "DONE: Publishing packages"; \
+		echo "DONE: Publishing packages (no build)"; \
 	)
+
+publish: build publish-only
 
 test-publish: build
 	@( \
@@ -185,14 +187,16 @@ test-publish: build
 		echo "DONE: Publishing packages (TEST PYPI)"; \
 	)
 
-private-publish: build
+private-publish-only:
 	@( \
-		echo "Publishing packages"; \
+		echo "Publishing packages to private (no build)"; \
 		set -e; \
 		if [ -z $(SKIP_VENV) ]; then source $(VIRTUAL_ENV_PATH)/bin/activate; fi; \
-		$(POETRY) publish  --repository private; \
-		echo "DONE: Publishing packages"; \
+		$(POETRY) publish --repository private $(PUBLISH_EXTRA_ARGS); \
+		echo "DONE: Publishing packages to private (no build)"; \
 	)
+
+private-publish: build private-publish-only
 .PHONY: coverage
 coverage:
 	@( \
