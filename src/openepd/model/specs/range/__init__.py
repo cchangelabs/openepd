@@ -59,6 +59,7 @@ from .other_materials import FoodBeverageRangeV1, OtherMaterialsRangeV1, Textile
 from .plumbing import PlumbingRangeV1
 from .precast_concrete import PrecastConcreteRangeV1
 from .sheathing import SheathingRangeV1
+from .specialties import SpecialtiesRangeV1
 from .steel import SteelRangeV1
 from .thermal_moisture_protection import ThermalMoistureProtectionRangeV1
 from .utility_piping import UtilityPipingRangeV1
@@ -73,7 +74,7 @@ class SpecsRange(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.1"
+    _EXT_VERSION = "1.2"
 
     CMU: CMURangeV1 | None = None
     Masonry: MasonryRangeV1 | None = None
@@ -109,6 +110,7 @@ class SpecsRange(BaseOpenEpdHierarchicalSpec):
     MechanicalInsulation: MechanicalInsulationRangeV1 | None = None
     WoodJoists: WoodJoistsRangeV1 | None = None
     ExteriorImprovements: ExteriorImprovementsRangeV1 | None = None
+    Specialties: SpecialtiesRangeV1 | None = None
     TextileProducts: TextileProductsRangeV1 | None = None
     Chemicals: ChemicalsRangeV1 | None = None
     ElectricityAndFuel: ElectricityAndFuelRangeV1 | None = None
