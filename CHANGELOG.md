@@ -1,3 +1,9 @@
+## 6.42.0 (2026-07-21)
+
+### Feat
+
+- add Construction Specialties categories
+
 ## 6.41.0 (2026-05-28)
 
 ### Feat
