@@ -300,6 +300,12 @@ class ScopeSetGwp(ScopeSet):
     allowed_units = "kgCO2e"
 
 
+class ScopeSetCarbon(ScopeSet):
+    """ScopeSet measured in kgCO2e or kgCO2."""
+
+    allowed_units = ("kgCO2e", "kgCO2")
+
+
 class ScopeSetOdp(ScopeSet):
     """ScopeSet measured in kgCFC11e."""
 
@@ -511,6 +517,59 @@ class ImpactSet(ScopesetByNameBase):
         alias="ADP-fossil",
         default=None,
         description="Abiotic depletion potential for fossil resources",
+    )
+
+    bcrp: ScopeSetCarbon | None = pyd.Field(
+        default=None,
+        description="Biogenic CO2 Removals associated with biogenic carbon content contained within bio-based Products.",
+    )
+    bcep: ScopeSetCarbon | None = pyd.Field(
+        default=None,
+        description=(
+            "Biogenic CO2 Emitted as a result of combustion or biodegradation of biomass "
+            "related to the Product's life cycle. (excludes packaging)"
+        ),
+    )
+    bcrk: ScopeSetCarbon | None = pyd.Field(
+        default=None,
+        description="Biogenic CO2 Removals associated with biogenic carbon content contained within bio-based packaging",
+    )
+    bcek: ScopeSetCarbon | None = pyd.Field(
+        default=None,
+        description=(
+            "Biogenic CO2 Emitted as a result of combustion or biodegradation of biomass related "
+            "to the bio-based packaging life cycle."
+        ),
+    )
+    bcew: ScopeSetCarbon | None = pyd.Field(
+        default=None,
+        description="Biogenic Carbon Emission from Combustion of Waste from Renewable Sources Used in Production Processes",
+    )
+    co2_e_calc: ScopeSetCarbon | None = pyd.Field(
+        alias="co2-e-calc",
+        default=None,
+        description=(
+            "Calcination Carbon Emissions.  Carbon emissions resulting from thermal decomposition "
+            "of carbon-containing compounds such as CaCO3 -> CaO + CO2."
+        ),
+    )
+    co2_r_carb: ScopeSetCarbon | None = pyd.Field(
+        alias="co2-r-carb",
+        default=None,
+        description=(
+            "Carbonation Carbon Removals.  Carbon absorption by a reaction between the product and "
+            "CO2 in the ecosystem, e.g. CaO + CO2 -> CaCO3."
+        ),
+    )
+    co2_nrwc: ScopeSetCarbon | None = pyd.Field(
+        alias="co2-nrwc",
+        default=None,
+        description="Carbon Emissions from Combustion of Waste from Non-Renewable Sources used in Production Processes",
+    )
+    co2_rwc: ScopeSetCarbon | None = pyd.Field(
+        alias="co2-rwc",
+        default=None,
+        description="Carbon Emissions from Combustion of Waste from Renewable Sources used in Production Processes",
     )
 
 
