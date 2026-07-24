@@ -1,3 +1,9 @@
+## 7.32.0 (2026-07-24)
+
+### Feat
+
+- add kgCO2-based impact scope sets
+
 ## 7.31.0 (2026-07-21)
 
 ### Feat
