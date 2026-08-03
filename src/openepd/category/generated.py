@@ -169,6 +169,16 @@ def get_category_definitions() -> tuple[dict[str, Any], ...]:
             "parent": "ColdFormedSteel",
         },
         {
+            "unique_name": "SheetSteelByArea",
+            "display_name": "Sheet Steel Products (by Area)",
+            "hierarchical_name": "Steel >> ColdFormedSteel >> SheetSteelByArea",
+            "short_name": "by Area",
+            "description": "Products made of sheet steel and declared per unit area.",
+            "masterformat": "05 50 00 Metal Fabrications",
+            "declared_unit": Amount(qty=1.0, unit="m^2"),
+            "parent": "ColdFormedSteel",
+        },
+        {
             "unique_name": "StructuralSteel",
             "display_name": "Structural Steel",
             "hierarchical_name": "Steel >> StructuralSteel",

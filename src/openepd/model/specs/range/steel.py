@@ -31,6 +31,7 @@ __all__ = (
     "PostTensioningSteelRangeV1",
     "PrefabricatedSteelAssembliesRangeV1",
     "RebarSteelRangeV1",
+    "SheetSteelByAreaRangeV1",
     "SteelRangeV1",
     "SteelSuspensionAssemblyRangeV1",
     "StructuralSteelRangeV1",
@@ -198,6 +199,16 @@ class CoilSteelRangeV1(BaseOpenEpdHierarchicalSpec):
     _EXT_VERSION = "1.0"
 
 
+class SheetSteelByAreaRangeV1(BaseOpenEpdHierarchicalSpec):
+    """
+    Products made of sheet steel and declared per unit area.
+
+    Range version.
+    """
+
+    _EXT_VERSION = "1.0"
+
+
 class ColdFormedSteelRangeV1(BaseOpenEpdHierarchicalSpec):
     """
     Cold Formed Steel Products.
@@ -208,11 +219,12 @@ class ColdFormedSteelRangeV1(BaseOpenEpdHierarchicalSpec):
     Range version.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
 
     ColdFormedFraming: ColdFormedFramingRangeV1 | None = None
     DeckingSteel: DeckingSteelRangeV1 | None = None
     SteelSuspensionAssembly: SteelSuspensionAssemblyRangeV1 | None = None
+    SheetSteelByArea: SheetSteelByAreaRangeV1 | None = None
 
 
 class StructuralSteelRangeV1(BaseOpenEpdHierarchicalSpec):
