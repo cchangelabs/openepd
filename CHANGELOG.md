@@ -1,3 +1,9 @@
+## 7.33.0 (2026-08-03)
+
+### Feat
+
+- add SheetSteelByArea category
+
 ## 7.32.0 (2026-07-24)
 
 ### Feat
