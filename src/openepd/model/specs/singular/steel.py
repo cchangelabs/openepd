@@ -265,6 +265,20 @@ class CoilSteelV1(BaseOpenEpdHierarchicalSpec):
     )
 
 
+class SheetSteelByAreaV1(BaseOpenEpdHierarchicalSpec):
+    """Products made of sheet steel and declared per unit area."""
+
+    _EXT_VERSION = "1.0"
+    _CATEGORY_META = CategoryMeta(
+        unique_name="SheetSteelByArea",
+        display_name="Sheet Steel Products (by Area)",
+        short_name="by Area",
+        description="Products made of sheet steel and declared per unit area.",
+        masterformat="05 50 00 Metal Fabrications",
+        declared_unit=Amount(qty=1, unit="m^2"),
+    )
+
+
 class ColdFormedSteelV1(BaseOpenEpdHierarchicalSpec):
     """
     Cold Formed Steel Products.
@@ -273,7 +287,7 @@ class ColdFormedSteelV1(BaseOpenEpdHierarchicalSpec):
     sheets and are cold formed into products such as studs, decking, panels, and other accessories.
     """
 
-    _EXT_VERSION = "1.0"
+    _EXT_VERSION = "1.1"
     _CATEGORY_META = CategoryMeta(
         unique_name="ColdFormedSteel",
         display_name="Cold Formed Steel",
@@ -286,6 +300,7 @@ class ColdFormedSteelV1(BaseOpenEpdHierarchicalSpec):
     ColdFormedFraming: ColdFormedFramingV1 | None = None
     DeckingSteel: DeckingSteelV1 | None = None
     SteelSuspensionAssembly: SteelSuspensionAssemblyV1 | None = None
+    SheetSteelByArea: SheetSteelByAreaV1 | None = None
 
 
 class StructuralSteelV1(BaseOpenEpdHierarchicalSpec):
