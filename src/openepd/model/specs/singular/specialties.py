@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -31,7 +31,7 @@ class ProtectiveRailsGuardsV1(BaseOpenEpdHierarchicalSpec):
             "against wear, traffic, or impact."
         ),
         masterformat="10 26 00 Wall and Door Protection",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
 
@@ -48,7 +48,7 @@ class ProtectiveSurfaceCoveringsV1(BaseOpenEpdHierarchicalSpec):
             "or impact."
         ),
         masterformat="10 26 00 Wall and Door Protection",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 

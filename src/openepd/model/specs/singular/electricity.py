@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -27,5 +27,5 @@ class ElectricityV1(BaseOpenEpdHierarchicalSpec):
         display_name="Electricity",
         description="Electrical equipment and components and supplies",
         masterformat="48 00 00 Electrical Power Generation Manufacturers",
-        declared_unit=Amount(qty=1, unit="kWh"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kWh"),
     )

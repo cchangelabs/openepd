@@ -14,6 +14,8 @@ Use this skill when tasked with adding new category to OpenEPD repository.
 ```python
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.category import CategoryMeta
+from openepd.model.common import NonNegativeAmount
+
 
 class DoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
     """Doors (the operable part) and frames (what holds the door proper)."""
@@ -25,7 +27,7 @@ class DoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Doors and Frames"],
         description="Doors (the operable part) and frames (what holds the door proper)",
         masterformat="08 10 00 Doors and Frames",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 ```
 5. Add the specification as a child of its parent specification. If the parent spec already exists, bump its minor 

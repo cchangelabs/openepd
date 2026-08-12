@@ -21,7 +21,7 @@ from typing import Any
 import pydantic
 
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 
 
 class Category(BaseOpenEpdSchema):
@@ -42,7 +42,7 @@ class Category(BaseOpenEpdSchema):
     )
     masterformat: str | None = pydantic.Field(description="Default category code in Masterformat", default=None)
     description: str | None = pydantic.Field(description="Category verbose description", default=None)
-    declared_unit: Amount | None = pydantic.Field(
+    declared_unit: NonNegativeAmount | None = pydantic.Field(
         description="Declared unit of category, for example 1 kg", default=None
     )
     subcategories: list[Category] = pydantic.Field(
@@ -122,7 +122,7 @@ class CategoryMeta:
     See: https://en.wikipedia.org/wiki/MasterFormat
     Multiple categories may share the same code, and some may not be mapped to any MasterFormat code.
     """
-    declared_unit: Amount | None = None
+    declared_unit: NonNegativeAmount | None = None
     """
     Declared unit typically used for items in this category.
 

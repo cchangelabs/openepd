@@ -17,7 +17,7 @@ import pydantic
 
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     FlatGlassPanesThickness,
@@ -158,7 +158,7 @@ class PanelDoorsV1(BaseOpenEpdHierarchicalSpec):
         ],
         description="A panel door consists of stiles and rails framing inset panels that accommodate movement and ensure structural stability.",
         masterformat="08 36 00 Panel Doors",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -174,7 +174,7 @@ class PressureResistantDoorsV1(BaseOpenEpdHierarchicalSpec):
         ],
         description="Pressure-resistant doors.",
         masterformat="08 39 00 Pressure-Resistant Doors",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -193,7 +193,7 @@ class SpecialFunctionDoorsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Doors and Frames >> Specialty Doors and Frames >> Special Function Doors"],
         description="Special function doors, including doors for e.g., cold storage, hangars, lightproof applications, security, sound control, vaults, etc.",
         masterformat="08 34 00 Special Function Doors",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Nested specs:
@@ -211,7 +211,7 @@ class SlidingGlassDoorsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Doors and Frames >> Specialty Doors and Frames >> Sliding Glass Doors"],
         description="Sliding glass doors",
         masterformat="08 32 00 Sliding Glass Doors",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -249,7 +249,7 @@ class FenestrationFramingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Glazing >> Parts >> Framing"],
         description='Lineal elements ("sticks") for use in fenestration, including frames, sashes, and mullions.',
         masterformat="08 80 00 Glazing",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
     # Own fields:
@@ -268,7 +268,7 @@ class FenestrationHardwareV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Glazing >> Parts >> Hardware"],
         description="Locks, operation hardware, and other substantial items declared on a per-piece basis.",
         masterformat="08 75 00 Window Hardware",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -287,7 +287,7 @@ class FlatGlassPanesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Glazing >> Panes >> Flat Glass"],
         description="Monolithic, uncoated flat glass panes that are not substantially processed.",
         masterformat="08 81 00 Glass Glazing",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
     # Own fields:
@@ -320,7 +320,7 @@ class ProcessedNonInsulatingGlassPanesV1(BaseOpenEpdHierarchicalSpec, GlazingOpt
         historical_names=["Openings >> Glazing >> Panes >> Processed Glass"],
         description="Solid glass panes without internal gaps which have been heat-treated or otherwise substantially processed. Includes:\n1. Coatings including low-e and other coatings (see PCR)\n2. laminating (fire-rated, glass clad polycarbonate, interlayers\n3. Heat treated (heat strengthened, tempered, fire-rated)\n4. Mechanically or chemically processed or fabricated (edging, bending, etching, drilling, notching, cutting, polishing, etc)\n5. combined products of processing in 1-5.",
         masterformat="08 81 00 Glass Glazing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -338,7 +338,7 @@ class GlazedDoorsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Glazing >> NAFS Fenestration >> Glazed Doors"],
         description="Factory assembled door which is at least 50% glass by area. Includes sliding patio doors and hinged glass doors.",
         masterformat="08 30 00 Specialty Doors and Frames",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -358,7 +358,7 @@ class UnitSkylightsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Glazing >> NAFS Fenestration >> Unit Skylights"],
         description="A factory assembled fenestration unit for installation on the roof of a structure to provide interior building spaces with natural daylight, warmth, and ventilation; generally not operable by hand (cf. roof window). Includes frame(s) and possibly operating hardware.",
         masterformat="08 62 00 Unit Skylights",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     roof_window: bool | None = pydantic.Field(
@@ -380,7 +380,7 @@ class WindowsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Glazing >> NAFS Fenestration >> Windows"],
         description="Factory assembled window with frame(s), one or more IGUs or glass panes, and possibly operating hardware. Includes fixed and operable windows.",
         masterformat="08 50 00 Windows",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -394,7 +394,7 @@ class IntegratedDoorsOpeningAssembliesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Doors and Frames >> Integrated Door Opening Assemblies"],
         description="Pre-installed unit that includes door, frame, and hardware",
         masterformat="08 17 00 Integrated Door Opening Assemblies",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -408,7 +408,7 @@ class MetalDoorAndFramesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Doors and Frames >> Metal Doors and Frames"],
         description="Metal doors and frames",
         masterformat="08 11 00 Metal Doors and Frames",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -427,7 +427,7 @@ class SpecialtyDoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Doors and Frames >> Specialty Doors and Frames"],
         description="Specialty doors and frames, including e.g., access doors and panels, sliding glass doors, coiling doors, special function doors, folding doors, etc.",
         masterformat="08 30 00 Specialty Doors and Frames",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Nested specs:
@@ -445,7 +445,7 @@ class WoodDoorsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Doors and Frames >> Wood Doors"],
         description="Wood doors",
         masterformat="08 14 00 Wood Doors",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -535,7 +535,7 @@ class NAFSFenestrationV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin):
         historical_names=["Openings >> Glazing >> NAFS Fenestration"],
         description="Factory assembled fenestration units compliant to the North American Fenestration Standard.",
         masterformat="08 50 00 Windows",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -604,7 +604,7 @@ class InsulatingGlazingUnitsV1(BaseOpenEpdHierarchicalSpec, GlazingOptionsMixin)
         historical_names=["Openings >> Glazing >> IGUs"],
         description="A factory-made unit of two or more panes of glass separated by a sealed insulating gap. IGUs often incorporate coated, laminated, or heat treated glass along with airspace, gas fill, seals, and spacers.",
         masterformat="08 81 23 Exterior Glass Glazing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -670,7 +670,7 @@ class CurtainWallsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Curtain Walls"],
         description="Exterior skin of building where walls are non-structural and are outboard of the floor slabs, often as system of aluminum framing with vision glass and opaque panels of glass, metal, or other materials, Can be 'unitized' (prefabricated off-site) or 'stick' (fabricated on site).",
         masterformat="08 44 00 Curtain Wall and Glazed Assemblies",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -684,7 +684,7 @@ class DoorsAndFramesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Doors and Frames"],
         description="Doors (the operable part) and frames (what holds the door proper)",
         masterformat="08 10 00 Doors and Frames",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -707,7 +707,7 @@ class EntrancesV1(BaseOpenEpdHierarchicalSpec):
         display_name="Entrances",
         description="Building entrances (distinct from the door proper)",
         masterformat="08 42 00 Entrances",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -748,7 +748,7 @@ class StorefrontsV1(BaseOpenEpdHierarchicalSpec):
         display_name="Storefronts",
         description="Fabricated building facades commonly used in retail applications, typically one or two stories tall and using metal framing and glass",
         masterformat="08 43 00 Storefronts",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -766,7 +766,7 @@ class TranslucentWallAndRoofAssembliesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Translucent Wall and Roof Assemblies"],
         description="Translucent wall and roof assemblies, including structured polycarbonate panel and fiberglass sandwich panel assemblies",
         masterformat="08 45 00 Translucent Wall and Roof Assemblies",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -786,7 +786,7 @@ class WindowWallAssembliesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Openings >> Window Wall Assemblies"],
         description="Exterior skin of building where walls are non-structural and sit between floor slabs, often as system of aluminum framing with vision glass and opaque panels of glass, metal, or other materials",
         masterformat="08 46 00 Window Wall Assemblies",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 

@@ -20,7 +20,7 @@ from enum import StrEnum
 import pydantic
 
 from openepd.model.base import BaseOpenEpdSchema, OpenXpdUUID, RootDocument
-from openepd.model.common import DATA_URL_IMAGE_MAX_LENGTH, Amount, validate_data_url
+from openepd.model.common import DATA_URL_IMAGE_MAX_LENGTH, NonNegativeAmount, validate_data_url
 from openepd.model.geography import Geography
 from openepd.model.org import Org
 from openepd.model.pcr import Pcr
@@ -54,7 +54,7 @@ class BaseDeclaration(RootDocument, abc.ABC):
         default=None,
     )
 
-    declared_unit: Amount | None = pydantic.Field(
+    declared_unit: NonNegativeAmount | None = pydantic.Field(
         description="SI declared unit for this document.  If a functional unit is "
         "utilized, the declared unit shall refer to the amount of "
         "product associated with the A1-A3 life cycle stage.",
@@ -63,7 +63,7 @@ class BaseDeclaration(RootDocument, abc.ABC):
     kg_per_declared_unit: AmountMass | None = pydantic.Field(
         default=None,
         description="Mass of the product, in kilograms, per declared unit",
-        examples=[Amount(qty=12.5, unit="kg").to_serializable(exclude_unset=True)],
+        examples=[NonNegativeAmount(qty=12.5, unit="kg").to_serializable(exclude_unset=True)],
     )
     compliance: list[Standard] = pydantic.Field(
         description="Standard(s) to which this document is compliant.",
@@ -148,14 +148,14 @@ class BaseDeclaration(RootDocument, abc.ABC):
         description="Mass of elemental carbon, per declared unit, contained in the product itself at the manufacturing "
         "facility gate.  Used (among other things) to check a carbon balance or calculate incineration "
         "emissions.  The source of carbon (e.g. biogenic) is not relevant in this field.",
-        examples=[Amount(qty=8.76, unit="kg").to_serializable(exclude_unset=True)],
+        examples=[NonNegativeAmount(qty=8.76, unit="kg").to_serializable(exclude_unset=True)],
     )
     kg_C_biogenic_per_declared_unit: AmountMass | None = pydantic.Field(
         default=None,
         description="Mass of elemental carbon from biogenic sources, per declared unit, contained in the product "
         "itself at the manufacturing facility gate.  It may be presumed that any biogenic carbon content "
         "has been accounted for as -44/12 kgCO2e per kg C in stages A1-A3, per EN15804 and ISO 21930.",
-        examples=[Amount(qty=8.76, unit="kg").to_serializable(exclude_unset=True)],
+        examples=[NonNegativeAmount(qty=8.76, unit="kg").to_serializable(exclude_unset=True)],
     )
     product_service_life_years: float | None = pydantic.Field(
         gt=0.0009,

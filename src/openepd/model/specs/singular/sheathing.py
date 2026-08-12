@@ -16,7 +16,7 @@
 import pydantic
 
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import GypsumFacing, GypsumFireRating, GypsumThickness
 from openepd.model.validation.quantity import LengthMmStr, RFactorStr, validate_quantity_unit_factory
@@ -38,7 +38,7 @@ class CementitiousSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Sheathing >> Cement Sheathing"],
         description="Cementitious non-gypsum board used for sheathing exteriors, shaft walls, and interior walls/ceilings requiring moisture resistance.",
         masterformat="06 16 63 Cementitious Sheathing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -64,7 +64,7 @@ class GypsumSheathingBoardV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Sheathing >> Gypsum Sheathing"],
         description="Gypsum board used for sheathing exteriors, shaft walls, and interior walls/ceilings requiring moisture resistance.",
         masterformat="06 16 43 Gypsum Sheathing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -126,7 +126,7 @@ class SheathingV1(BaseOpenEpdHierarchicalSpec):
         display_name="Sheathing",
         description="Boards or panels used in floor, wall and roof assemblies as a surface onto which other materials can be applied.",
         masterformat="06 16 00 Sheathing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Nested specs:

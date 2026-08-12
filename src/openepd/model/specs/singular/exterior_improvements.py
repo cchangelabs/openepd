@@ -16,7 +16,7 @@
 import pydantic as pyd
 
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.quantity import AmountPressureMpa
 
@@ -36,7 +36,7 @@ class ConcretePaversV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Exterior Improvements >> Pavers"],
         description="Segmental units of concrete of standardized sizes and shapes for use in paving applications. Includes pavers and paving slabs.",
         masterformat="32 14 00 Unit Pavers",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
     compressive_strength: AmountPressureMpa | None = pyd.Field(

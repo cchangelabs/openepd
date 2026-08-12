@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -29,7 +29,7 @@ class AcTransformersV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Transmission >> Transformers"],
         description="Equipment for transforming between higher and lower voltage AC power.",
         masterformat="33 73 00 Utility Transformers",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -44,7 +44,7 @@ class ElectricalInsulatorsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Transmission >> Insulators"],
         description="Passive electrical isolation.",
         masterformat="33 71 00 Electrical Utility Transmission and Distribution",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -59,7 +59,7 @@ class ElectricalSubstationsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Transmission >> Substations"],
         description="Substations for electricity transmission and distribution.",
         masterformat="33 72 00 Utility Substations",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -78,7 +78,7 @@ class ElectricalSwitchgearV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Transmission >> Switchgear"],
         description="Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment.",
         masterformat="33 77 00 Medium-Voltage Utility Switchgear and Protection Devices",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -93,7 +93,7 @@ class PowerCablingAccsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Transmission >> Cabling >> Accessories"],
         description="Accessories to high-voltage electrical cabling",
         masterformat="33 71 00 Electrical Utility Transmission and Distribution",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -108,7 +108,7 @@ class PowerCablingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Transmission >> Cabling"],
         description="High-voltage electrical cabling.",
         masterformat="33 71 00 Electrical Utility Transmission and Distribution",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
     # Nested specs:

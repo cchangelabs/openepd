@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -33,5 +33,5 @@ class CastDecksAndUnderlaymentV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Cast Underlayment", "Self Levelling Underlayment"],
         description="Cast roof deck substrate systems, typically of gypsum concrete or cementitious wood fiber, that provide structural support to roofing materials",
         masterformat="03 54 00 Cast Underlayment",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )

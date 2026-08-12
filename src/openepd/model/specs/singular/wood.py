@@ -18,7 +18,7 @@ from typing import Annotated
 import pydantic
 
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.enums import (
     AllFabrication,
@@ -44,7 +44,7 @@ class WoodDeckingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Wood >> Dimension Lumber >> Wood Decking"],
         description="Dimensional boards for exterior decking",
         masterformat="06 15 00 Wood Decking",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -63,7 +63,7 @@ class WoodFramingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Wood >> Dimension Lumber >> Wood Framing"],
         description="Dimension lumber for light framing. Includes solid and finger-jointed lumber. Standard shapes include 2x4, 2x6, and 2x8.",
         masterformat="06 11 00 Wood Framing",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -81,7 +81,7 @@ class PrefabricatedWoodInsulatedPanelsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Wood >> Prefabricated Wood Products >> Prefabricated Wood Insulated Panels"],
         description="Structural insulated panels (SIPs) consisting of wood sheet layer(s) combined with (typically foam) insulation layer(s)",
         masterformat="06 12 00 Structural Panels",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -95,7 +95,7 @@ class PrefabricatedWoodTrussV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Wood >> Prefabricated Wood Products >> Prefabricated Truss"],
         description="Shop-fabricated wood truss",
         masterformat="06 17 53 Shop-Fabricated Wood Trusses",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -114,7 +114,7 @@ class CompositeLumberV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Wood >> Composite Lumber"],
         description="Shop-fabricated structural Lumber including Laminated Strand Lumber (LSL), Parallel Strand Lumber (PSL), and Laminated Veneer Lumber (LVL)",
         masterformat="06 17 00 Shop-Fabricated Structural Wood",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
     fabrication: CompositeLumberFabrication | None = pydantic.Field(default=None, description="", examples=["LVL"])
@@ -133,7 +133,7 @@ class DimensionLumberV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Wood >> Dimension Lumber"],
         description="Dimension lumber for framing, decking, and other purposes.",
         masterformat="06 11 00 Wood Framing",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
     # Nested specs:
@@ -153,7 +153,7 @@ class HeavyTimberV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Wood >> Heavy Timber"],
         description="Large format, unfinished natural timber",
         masterformat="06 13 00 Heavy Timber Construction",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -182,7 +182,7 @@ class MassTimberV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Wood >> Mass Timber"],
         description="Engineered heavy timber products including glue laminated (glulam), cross-laminated timber (CLT), dowel laminated timber (DLT), and nail laminated timber (NLT)",
         masterformat="06 18 00 Glued-Laminated Construction",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
     fabrication: MassTimberFabrication | None = pydantic.Field(default=None, description="", examples=["CLT"])
@@ -202,7 +202,7 @@ class NonStructuralWoodV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Wood >> Non-Structural Wood"],
         description="Non-structural interior and exterior wood products for trim, cabinets, countertops, etc.",
         masterformat="06 20 00 Finish Carpentry",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -221,7 +221,7 @@ class PrefabricatedWoodV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Wood >> Prefabricated Wood Products"],
         description="Prefabricated wood structural members made primarily from one or more types of wood. Includes products made with metallic connectors, insulation, etc. Excludes products where the wood is merely decorative.",
         masterformat="06 10 00 Rough Carpentry",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
     # Nested specs:
@@ -250,7 +250,7 @@ class SheathingPanelsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Wood >> Plywood and OSB Sheathing Panels"],
         description="Wood sheets used for structural sheathing, including plywood and Oriented Strand Board",
         masterformat="06 16 00 Sheathing",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
     # Own fields:
@@ -272,7 +272,7 @@ class UnfinishedWoodV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Wood >> Unfinished"],
         description="Raw logs and other unfinished wood products.",
         masterformat="06 10 00 Rough Carpentry",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -286,7 +286,7 @@ class WoodV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
         alt_names=["Lumber"],
         description="Structural Wood Products used in construction",
         masterformat="06 10 00 Rough Carpentry",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
     # Own fields:
