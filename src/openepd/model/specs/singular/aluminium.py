@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import AluminiumAlloy
 
@@ -31,7 +31,7 @@ class AluminiumBilletsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Aluminium >> Billets"],
         description="Cast Aluminium ingots or billets for use in manufacturing more finished products.",
         masterformat="05 00 00 METALS",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
 
@@ -50,7 +50,7 @@ class AluminiumExtrusionsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Aluminium >> Extrusions"],
         description="Extruded aluminum products used in construction with of a range of finish options including mill finish, painted, and anodized.",
         masterformat="05 00 00 METALS",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
     # Own fields:
@@ -68,7 +68,7 @@ class AluminiumSheetGoodsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Aluminium >> Sheet"],
         description="Rolled and/or Stamped Aluminium coil or sheets, often used in flashing, trim, panels, and deck.",
         masterformat="05 00 00 METALS",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
 
@@ -83,7 +83,7 @@ class AluminiumSuspensionAssemblyV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Aluminium >> Aluminium Suspension Assemblies"],
         description="Aluminum suspension assemblies for acoustical ceiling systems",
         masterformat="09 53 00 Suspension Assemblies",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
 
@@ -97,7 +97,7 @@ class AluminiumV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Aluminum", "Al", "Alluminio"],
         description="Broad category for construction materials made primarily from Aluminium and its alloys",
         masterformat="05 00 00 METALS",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
     # Own fields:

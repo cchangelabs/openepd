@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CladdingFacingMaterial, CladdingInsulatingMaterial, SidingFormFactor
 from openepd.model.validation.quantity import LengthMmStr, LengthMStr, RValueStr, validate_quantity_unit_factory
@@ -32,7 +32,7 @@ class AluminiumSidingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Siding >> Metal >> Aluminium"],
         description="Exterior siding product made primarily from aluminium.",
         masterformat="07 46 16 Aluminum Siding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -47,7 +47,7 @@ class SteelSidingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Siding >> Metal >> Steel"],
         description="Exterior siding product made primarily from steel.",
         masterformat="07 46 19 Steel Siding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -62,7 +62,7 @@ class ZincSidingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Siding >> Metal >> Zinc"],
         description="Exterior siding product made primarily from zinc.",
         masterformat="07 46 21 Zinc Siding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -77,7 +77,7 @@ class ShingleAndShakeSidingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Siding >> Solid Wood >> Shingle and Shake"],
         description="Shingle & shake siding.",
         masterformat="07 46 24 Wood Shingle and Shake Siding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -92,7 +92,7 @@ class MetalSidingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Siding >> Metal"],
         description="Exterior siding product made of metal such as steel, aluminum, etc.",
         masterformat="07 46 00 Siding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Nested specs:
@@ -112,7 +112,7 @@ class CompositionSidingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Siding >> Composition"],
         description="Composite wood siding composed of wood wafers and resin.",
         masterformat="07 46 43 Composition Siding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -127,7 +127,7 @@ class FiberCementSidingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Siding >> Fiber-cement"],
         description="Composite siding product made of cement and cellulose fibers.",
         masterformat="07 46 46 Fiber-Cement Siding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -142,7 +142,7 @@ class InsulatedVinylSidingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Siding >> Insulated Vinyl"],
         description="Vinyl cladding product integrated with manufacturer-installed insulation.",
         masterformat="07 46 00 Siding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -164,7 +164,7 @@ class PlywoodSidingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Siding >> Plywood"],
         description="Siding made of plywood boards.",
         masterformat="07 46 29 Plywood Siding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -179,7 +179,7 @@ class PolypropyleneSidingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Siding >> Polypropylene"],
         description="Exterior wall cladding made from polypropylene, which may contain fillers or reinforcements.",
         masterformat="07 46 00 Siding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -194,7 +194,7 @@ class SolidWoodSidingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Siding >> Solid Wood"],
         description="Siding products made of wood including shingle & shake siding.",
         masterformat="07 46 23 Wood Siding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Nested specs:
@@ -212,7 +212,7 @@ class VinylSidingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Siding >> Vinyl"],
         description="Exterior wall cladding made principally from rigid polyvinyl chloride (PVC).",
         masterformat="07 46 00 Siding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -237,7 +237,7 @@ class SidingV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Rainscreen", "Shingle", "Shakes", "Residential Siding", "Facade", "HPL Boards"],
         description="Long narrow products for exterior wall face of building, made of, e.g., metal, solid wood, plywood, plastic, composition, fiber cement, etc.",
         masterformat="07 46 00 Siding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -268,7 +268,7 @@ class InsulatedRoofPanelsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Insulated Roof Panels"],
         description="Insulated metal panel (IMP) for roof applications",
         masterformat="07 41 00 Roof Panels",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -289,7 +289,7 @@ class InsulatedWallPanelsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Insulated Wall Panels"],
         description="Insulated metal panel (IMP) for exterior wall applications",
         masterformat="07 42 00 Wall Panels",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -309,7 +309,7 @@ class RoofPanelsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Roof Panels"],
         description="Solid roofing panels for exterior face of building, made typically of metal, wood, plastic, or composite materials",
         masterformat="07 41 00 Roof Panels",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -324,7 +324,7 @@ class StoneCladdingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Stone Cladding"],
         description="Exterior stone cladding supported by masonry, steel studs, or other support system",
         masterformat="04 42 00 Stone Cladding",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -339,7 +339,7 @@ class WallPanelsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Cladding >> Wall Panels"],
         description="Solid panels for exterior wall face of building, made of, e.g., metal, wood, tile, terra cotta, cementitious materials, or composite materials",
         masterformat="07 42 00 Wall Panels",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -353,7 +353,7 @@ class CladdingV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Panels"],
         description="Nonstructural materials used primarily on the outside of buildings",
         masterformat="07 40 00 Roofing and Siding Panels",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:

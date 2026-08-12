@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     AllFabrication,
@@ -71,7 +71,7 @@ class AccessFlooringV1(BaseOpenEpdHierarchicalSpec, AccessFlooringMixin):
         historical_names=["Finishes >> Flooring >> Access Flooring"],
         description="Elevated floor system built on top of concrete slab surface, thereby creating a hidden void between the two floors that is used for the passage of mechanical and electrical services. The system consists of panels, stringers, and pedestals.",
         masterformat="09 69 00 Access Flooring",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -85,7 +85,7 @@ class CarpetV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Carpeting", "Textile Flooring"],
         description="Textile Floor Coverings",
         masterformat="09 68 00 Carpeting",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -122,7 +122,7 @@ class LaminateV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Laminates"],
         description="Laminate flooring",
         masterformat="09 62 19 Laminate Flooring",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -136,7 +136,7 @@ class OtherFlooringV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Flooring >> Other Flooring"],
         description="Other not yet classified kinds of flooring",
         masterformat="09 60 00 Flooring",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -155,7 +155,7 @@ class ResilientFlooringV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Flooring >> Resilient Flooring"],
         description="Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes",
         masterformat="09 65 00 Resilient Flooring",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -184,7 +184,7 @@ class WallBaseV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Flooring >> Wall Base"],
         description="Wall base made to help cover gaps between wall and vinyl, rubber, wood, or tile flooring.",
         masterformat="09 65 13 Resilient Base and Accessories",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
     # Own fields:
@@ -206,7 +206,7 @@ class WoodFlooringV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
         historical_names=["Finishes >> Flooring >> Wood Flooring"],
         description="Wood flooring for interior applications including hardwood strip and plank flooring, engineered hardwood flooring, wood parquet flooring, coordinated transitions, and molding pieces.",
         masterformat="09 64 00 Wood Flooring",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -226,7 +226,7 @@ class AcousticalCeilingsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Ceiling Panels >> Acoustical Ceilings"],
         description="Acoustical ceiling panels",
         masterformat="09 51 00 Acoustical Ceilings",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -244,7 +244,7 @@ class CeramicTileV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Tiling >> Ceramic"],
         description="Ceramic tiles, including porcelain, quarry, pressed floor tile, wall tile, mosaic tile, etc.",
         masterformat="09 31 00 Ceramic Tile",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -296,7 +296,7 @@ class GaugedTileV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Tiling >> Gauged"],
         description="Specially manufactured porcelain tile with extra-large panels/slabs manufactured to a specific thickness ranging from 2-20 mm",
         masterformat="09 31 00 Ceramic Tile",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -327,7 +327,7 @@ class GlassTileV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Tiling >> Glass"],
         description="Glass Tiles",
         masterformat="09 35 00 Glass Mosaic Tile",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -367,7 +367,7 @@ class GypsumSupportsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Gypsum Board >> Gypsum Supports"],
         description="Supports for suspended and furred gypsum wall and ceiling assemblies",
         masterformat="09 22 00 Supports for Plaster and Gypsum Board",
-        declared_unit=Amount(qty=1000, unit="sqft"),
+        declared_unit=NonNegativeAmount(qty=1000, unit="sqft"),
     )
 
 
@@ -380,7 +380,7 @@ class FlooringV1(BaseOpenEpdHierarchicalSpec):
         display_name="Flooring",
         description="General category - finishes for floors",
         masterformat="09 60 00 Flooring",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Nested specs:
@@ -404,7 +404,7 @@ class CeilingPanelV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Ceiling Panels"],
         description="Acoustical and other specialty ceiling panels",
         masterformat="09 50 00 Ceilings",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
     """Modular Ceiling Panels"""
 
@@ -437,7 +437,7 @@ class BackingAndUnderlayV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Backing&Underlay"],
         description="Cementitious, glass-mat faced gypsum, and fibered gypsum backing boards to support finish materials",
         masterformat="09 28 00 Backing Boards and Underlayments",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -451,7 +451,7 @@ class CementBoardV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Cement Board"],
         description="Hard cementitious boards, typically used as a tile backer.",
         masterformat="09 28 13 Cementitious Backing Board",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -477,7 +477,7 @@ class TilingV1(BaseOpenEpdHierarchicalSpec):
         display_name="Tiling",
         description="Decorative building materials that includes a variety of ceramic, porcelain, and glass tiles, used for covering and enhancing surfaces such as floors, walls, and countertops.",
         masterformat="09 30 00 Tiling",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -544,7 +544,7 @@ class DeckingBoardsV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers)
         historical_names=["Finishes >> Decking Boards"],
         description="Decking boards provide the finished surface of a deck and support the weight of people and furniture.",
         masterformat="06 00 00 Wood, Plastics & Composites",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -567,7 +567,7 @@ class GlassFiberReinforcedGypsumFabricationsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> GFRG Fabrications"],
         description="Gypsum with integrated glass fiber reinforcement, which may be fabricated in complex shapes or as a board.",
         masterformat="09 27 13 Glass-Fiber-Reinforced Gypsum Fabrications",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -582,7 +582,7 @@ class GypsumV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Gypsum Board"],
         description="Gypsum board used for interior walls, ceilings, and similar applications.",
         masterformat="09 29 00 Gypsum Board",
-        declared_unit=Amount(qty=1000, unit="sqft"),
+        declared_unit=NonNegativeAmount(qty=1000, unit="sqft"),
     )
 
     # Own fields:
@@ -619,7 +619,7 @@ class MirrorsV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Mirror"],
         description="Mirrors",
         masterformat="08 83 00 Mirrors",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -638,7 +638,7 @@ class PaintByMassV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Painting and Coating >> By Mass"],
         description="Paintings and coatings measured by mass of ready-to-use product.",
         masterformat="09 90 00 Painting and Coating",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
 
@@ -657,7 +657,7 @@ class PaintByVolumeV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Painting and Coating >> By Volume"],
         description="Paintings and coatings measured by volume of ready-to-use product.",
         masterformat="09 90 00 Painting and Coating",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -676,7 +676,7 @@ class PaintByAreaV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Painting and Coating >> By Area"],
         description="Paintings and coatings measured by area of host surface covered by the ready-to-use product.",
         masterformat="09 90 00 Painting and Coating",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -707,7 +707,7 @@ class WallFinishesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Finishes >> Wall Finishes"],
         description="Interior wall coverings including fabric, textile, wood, stone, and metal products ",
         masterformat="09 70 00 Wall Finishes",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -730,7 +730,7 @@ class PlasterV1(BaseOpenEpdHierarchicalSpec):
         short_name="Plaster",
         description="Used for the protective or decorative coating of walls and ceilings and for moulding and casting decorative elements. These are typically gypsum-, lime-, or cement-based. Products in this category refer to dry mix.",
         masterformat="09 24 00 Cement Plastering",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
     # Own fields:

@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     CableTraysMaterial,
@@ -49,7 +49,7 @@ class PDUV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Network Infrastructure >> PDU"],
         description="Devices with multiple outputs designed to distribute power, often in a data center cabinet",
         masterformat="26 27 33 Power Distribution",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -73,7 +73,7 @@ class CabinetsRacksAndEnclosuresV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Network Infrastructure >> Racks"],
         description="Physical support upon which network equipment is mounted. Includes cabinets, racks, frames, and enclosures",
         masterformat="27 11 16 Cabinets, Racks, Frames and Enclosures",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -93,7 +93,7 @@ class DataCablingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Network Infrastructure >> Data Cabling"],
         description="Telecommunications cabling for buildings",
         masterformat="27 10 00 Structured Cabling",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
     # Own fields:
@@ -139,7 +139,7 @@ class FloorBoxesAndAccessoriesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Network Infrastructure >> Floor Boxes"],
         description="Electrical boxes that are installed in the floor. Used to provide power and/or data connections to devices in a room or space.",
         masterformat="26 05 33.16 Boxes for Electrical Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -183,7 +183,7 @@ class NetworkingCableTraysV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Network Infrastructure >> Cable Trays"],
         description="Mechanical support systems that provide a rigid structural system for cables used for communication and power distribution",
         masterformat="27 05 36 Cable Trays",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
     # Own fields:
@@ -211,7 +211,7 @@ class NetworkingRacewaysV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Network Infrastructure >> Raceways"],
         description="Surface-mounted systems along the perimeter of walls to route, conceal, and protect cables. Often called trunking.",
         masterformat="27 05 39 Surface Raceways",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
     # Own fields:
@@ -237,7 +237,7 @@ class CommunicationsConduitV1(BaseOpenEpdHierarchicalSpec, ConduitMixin):
         historical_names=["Network Infrastructure >> Conduit"],
         description="Tubing used to protect and route communications wiring in a building or structure",
         masterformat="27 05 33 Conduits and Backboxes for Communications Systems",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
 

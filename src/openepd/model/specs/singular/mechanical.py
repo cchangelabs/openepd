@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     AhuAirflowControl,
@@ -45,7 +45,7 @@ class HvacVrfControlV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> VRF Systems >> VRF Controllers"],
         description="Controller for adjusting airflow across the VRF system.",
         masterformat="23 81 29 Variable Refrigerant Flow HVAC Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -59,7 +59,7 @@ class HvacVrfIndoorV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> VRF Systems >> VRF Indoor Units"],
         description="Heating and cooling unit that is located on the inside of a building and supplies air to specific indoor zones.",
         masterformat="23 81 29 Variable Refrigerant Flow HVAC Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -80,7 +80,7 @@ class HvacVrfOutdoorV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> VRF Systems >> VRF Outdoor Units"],
         description="Heating and cooling unit that is on the outside of a building and distributes air to the indoor units.",
         masterformat="23 81 29 Variable Refrigerant Flow HVAC Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -101,7 +101,7 @@ class HvacAirDiffusersV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> Air Diffusers"],
         description="Room-side terminals for air distribution. This is different from Terminal Heating & Cooling Units.",
         masterformat="23 36 00 Air Terminal Units",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -115,7 +115,7 @@ class HvacAirFiltersV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> Air Filters"],
         description="Device for filtering particles of dust, soot, etc., from the air passing through it.",
         masterformat="23 40 00 HVAC Air Cleaning Devices",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -139,7 +139,7 @@ class HvacAHUsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> AHUs"],
         description="Device which provides healthy, dust free air to buildings with a good energy efficiency. Usually a large metal box containing a blower, heating or cooling elements, filter racks or chambers, sound attenuators, and dampers.",
         masterformat="23 74 00 Packaged Outdoor HVAC Equipment",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -163,7 +163,7 @@ class HvacBoilersV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> Boilers"],
         description="Closed vessel for heating fluid.",
         masterformat="23 52 00 Heating Boilers",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -188,7 +188,7 @@ class HvacChillersV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> Chillers"],
         description="Machine that removes heat from a liquid coolant via a vapor-compression, adsorption refrigeration, or absorption refrigeration cycles. Incldues centrifugal, water-cooled chillers, etc.",
         masterformat="23 64 00 Packaged Water Chillers",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -210,7 +210,7 @@ class HvacFansV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> Fans"],
         description="Apparatus with rotating blades that creates a current of air for cooling or ventilation.",
         masterformat="23 34 00 HVAC Fans",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -224,7 +224,7 @@ class HvacHeatPumpsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> Heat Pumps"],
         description="Device that transfers thermal energy between spaces, including ground and air source heat pumps.",
         masterformat="23 81 00 Decentralized Unitary HVAC Equipment",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -252,7 +252,7 @@ class HvacHeatExV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> Heat Exchangers"],
         description="Systems that with heat exchange cell which recovers and retains the heat that would otherwise be lost from the extracted air.",
         masterformat="23 57 00 Heat Exchangers for HVAC",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -277,7 +277,7 @@ class HvacPumpsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> Pumps"],
         description="Mechanical device using suction or pressure to raise or move liquids, compress gases, or force air into inflatable objects such as tires.",
         masterformat="23 20 00 HVAC Piping and Pumps",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -297,7 +297,7 @@ class HvacRTUsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> RTUs"],
         description="An air handler designed for outdoor use, typically on roofs.",
         masterformat="23 74 00 Packaged Outdoor HVAC Equipment",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -317,7 +317,7 @@ class HvacVrfSystemsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Mechanical >> VRF Systems"],
         description="Variable refrigerant flow (VRF), also known as variable refrigerant volume (VRV), is an HVAC technology that allows for varying degrees of cooling in more specific areas.",
         masterformat="23 81 29 Variable Refrigerant Flow HVAC Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Nested specs:

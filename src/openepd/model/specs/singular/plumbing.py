@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import FireProtectionPipingMaterial, PipingAnsiSchedule, PlumbingPipingMaterial
 from openepd.model.validation.quantity import LengthMmStr, MassPerLengthStr
@@ -31,7 +31,7 @@ class BathtubsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Plumbing >> Plumbing fixtures >> Bathtubs"],
         description="Bathtubs.",
         masterformat="22 42 19 Bathtubs",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -45,7 +45,7 @@ class FaucetsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Plumbing >> Plumbing fixtures >> Faucets"],
         description="Faucets.",
         masterformat="22 42 39 Commercial Faucets",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -60,7 +60,7 @@ class OtherPlumbingFixturesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Plumbing >> Plumbing fixtures >> Other"],
         description="Other plumbing fixtures.",
         masterformat="22 40 00 Plumbing Fixtures",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -74,7 +74,7 @@ class WaterClosetsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Plumbing >> Plumbing fixtures >> Water Closets"],
         description="Water Closets.",
         masterformat="22 42 13 Commercial Water Closets",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -89,7 +89,7 @@ class FireProtectionPipingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Plumbing >> Fire Suppression >> Piping"],
         description="System of pipes used to supply fire-suppression fluids to homes and/or businesses.",
         masterformat="21 11 00 Facility Fire-Suppression Water-Service Piping",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
     # Own fields:
@@ -112,7 +112,7 @@ class FireSprinklersV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Plumbing >> Fire Suppression >> Fire Sprinklers"],
         description="Fire sprinklers.",
         masterformat="21 13 00 Fire Sprinkler Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -126,7 +126,7 @@ class StorageTanksV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Plumbing >> Plumbing Equipment >> Storage Tanks"],
         description="Storage tanks.",
         masterformat="22 12 00 Facility Potable-Water Storage Tanks",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -140,7 +140,7 @@ class WaterHeatersV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Plumbing >> Plumbing Equipment >> Water Heaters"],
         description="Water heaters.",
         masterformat="22 34 00 Fuel-Fired Domestic Water Heaters",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -154,7 +154,7 @@ class PlumbingFixturesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Plumbing >> Plumbing fixtures"],
         description="Residential and commercial water closets, urinals, lavatories, sinks, bathtubs, showers, faucets, etc.",
         masterformat="22 40 00 Plumbing Fixtures",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Nested specs:
@@ -174,7 +174,7 @@ class FireSuppressionV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Plumbing >> Fire Suppression"],
         description="Systems used to extinguish, control, or prevent fires.",
         masterformat="21 00 00 Fire Suppression",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Nested specs:
@@ -218,7 +218,7 @@ class PlumbingEquipmentV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Plumbing >> Plumbing Equipment"],
         description="Water softeners, filtration equipment, water heaters, and other plumbing equipment.",
         masterformat="22 30 00 Plumbing Equipment",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Nested specs:
@@ -235,7 +235,7 @@ class PlumbingV1(BaseOpenEpdHierarchicalSpec):
         display_name="Plumbing",
         description="Residential and commercial plumbing equipment and fixtures.",
         masterformat="22 00 00 Plumbing",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Nested specs:

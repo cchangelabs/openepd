@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import (
     FoamType,
@@ -44,7 +44,7 @@ class BituminousRoofingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Membrane Roofing >> Bituminous"],
         description="Premanufactured membrane roofing sheets consisting of asphalt, reinforcing layers, and in some cases a surfacing.",
         masterformat="07 50 00 Membrane Roofing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -59,7 +59,7 @@ class SinglePlyEPDMV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Membrane Roofing >> EPDM"],
         description="Ethylene propylene diene monomer (EPDM) rubber membrane.",
         masterformat="07 50 00 Membrane Roofing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -78,7 +78,7 @@ class SinglePlyKEEV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Membrane Roofing >> KEE"],
         description="Ketone Ethylene Ester (KEE) roof membranes consist of PVC resin and KEE plasticizer, with KEE exceeding 50% of the polymer content by weight.",
         masterformat="07 50 00 Membrane Roofing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -93,7 +93,7 @@ class SinglePlyOtherV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Membrane Roofing >> Other"],
         description="Other types of membrane roofing materials.",
         masterformat="07 50 00 Membrane Roofing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -108,7 +108,7 @@ class SinglePlyPolyurethaneV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Membrane Roofing >> Polyurethane"],
         description="Polyurethane liquid for flat roof waterproofing.",
         masterformat="07 50 00 Membrane Roofing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -123,7 +123,7 @@ class SinglePlyPVCV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Membrane Roofing >> PVC"],
         description="Polyvinyl chloride (PVC) thermoplastic membrane.",
         masterformat="07 50 00 Membrane Roofing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -138,7 +138,7 @@ class SinglePlyTPOV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Membrane Roofing >> TPO"],
         description="Thermoplastic Polyolefin (TPO) membrane.",
         masterformat="07 50 00 Membrane Roofing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -153,7 +153,7 @@ class BlanketInsulationV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Insulation >> Blanket"],
         description="Non-rigid insulation batts, blankets, and rolls",
         masterformat="07 21 16 Blanket Insulation",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -167,7 +167,7 @@ class BlownInsulationV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Insulation >> Blown"],
         description="Loose-fill insulation for blow-in or closed cavity applications",
         masterformat="07 21 26 Blown Insulation",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -181,7 +181,7 @@ class BoardInsulationV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Insulation >> Board"],
         description="Rigid insulation products including rigid foams, wood fiberboard insulation, and rigid mineral wool boards",
         masterformat="07 21 13 Board Insulation",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -198,7 +198,7 @@ class FoamedInPlaceV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Insulation >> Foamed-In-Place"],
         description="Open and closed cell spray foam insulation",
         masterformat="07 21 19 Foamed-In-Place Insulation",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -219,7 +219,7 @@ class SprayedInsulationV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Insulation >> Sprayed"],
         description="Spray-on insulation, such as spray-on cellulose.  Foaming sprays are categorized separately under foamed-in-place.",
         masterformat="07 21 29 Sprayed Insulation",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -234,7 +234,7 @@ class AirBarriersV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Air Barriers"],
         description="Air Infiltration Barrier",
         masterformat="07 27 00 Air Barriers",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -253,7 +253,7 @@ class MembraneRoofingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Membrane Roofing"],
         description="Built-up bituminous, modified bituminous, elastomeric, thermoplastic, fluid-applied, and hot-applied rubberized asphalt membrane roofing  ",
         masterformat="07 50 00 Membrane Roofing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -286,7 +286,7 @@ class InsulationV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Insulation"],
         description="Thermal insulation materials for use in construction",
         masterformat="07 21 00 Thermal Insulation",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -319,7 +319,7 @@ class DampproofingAndWaterproofingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Dampproofing And Waterproofing"],
         description="Dampproofing, and built-up bituminous, sheet, fluid-applied, cementitious, reactive, and bentonite waterproofing ",
         masterformat="07 10 00 Dampproofing and Waterproofing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -333,7 +333,7 @@ class FlashingAndSheetMetalV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Flashing and Sheet Metal"],
         description="Exposed sheet metal items, typically for drainage",
         masterformat="07 60 00 Flashing and Sheet Metal",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -347,7 +347,7 @@ class JointProtectionV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Joint Protection"],
         description="Preformed joint seals and sealants, expansion control joint cover assemblies",
         masterformat="07 90 00 Joint Protection",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -367,7 +367,7 @@ class RoofCoverBoardsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Roof Cover Boards"],
         description="Boards installed between the insulation and membrane layers on a roof system. It provides additional durability, fire protection, thermal, and vapor performance to a roof system, especially in low-slope, high foot traffic applications.",
         masterformat="07 22 17 Low Slope Roofing Cover Board",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -386,7 +386,7 @@ class SteepSlopeRoofingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Steep Slope Roofing"],
         description="Roofing materials typically for slopes of 3:12 and greater",
         masterformat="07 30 00 Steep Slope Roofing",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -400,7 +400,7 @@ class WeatherBarriersV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Thermal/Moisture Prot. >> Weather Barriers"],
         description="Vapor retarders and sheet or membrane air barriers",
         masterformat="07 25 00 Weather Barriers",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -419,7 +419,7 @@ class ThermalMoistureProtectionV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Thermal and Moisture Protection"],
         description="Broad category of materials whose function is to provide moisture and thermal protection between spaces (e.g., between the exterior and interior of a building)",
         masterformat="07 00 00 Thermal and Moisture",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Nested specs:
