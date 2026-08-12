@@ -20,7 +20,7 @@ from uuid import UUID
 import pydantic
 
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
-from openepd.model.common import Amount, Constituent, WithAltIdsMixin, WithAttachmentsMixin
+from openepd.model.common import Constituent, NonNegativeAmount, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import AverageDatasetMixin, BaseDeclaration, RefBase
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org
@@ -90,7 +90,7 @@ class GenericEstimatePreviewV0(
     )
     kg_per_declared_unit: AmountMass | None = pydantic.Field(
         description="Mass of the product, in kilograms, per declared unit",
-        examples=[Amount(qty=12.5, unit="kg").to_serializable(exclude_unset=True)],
+        examples=[NonNegativeAmount(qty=12.5, unit="kg").to_serializable(exclude_unset=True)],
         default=None,
     )
     reference_year: int | None = pydantic.Field(

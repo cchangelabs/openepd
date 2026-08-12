@@ -16,7 +16,7 @@
 import pydantic
 
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import InsulatingMaterial, InsulationIntendedApplication
 from openepd.model.validation.quantity import LengthMmStr
@@ -35,7 +35,7 @@ class MechanicalInsulationV1(BaseOpenEpdHierarchicalSpec):
         display_name="Mechanical Insulation",
         description="Insulation products whose primary purpose is for mechanical systems rather than for building envelope. Includes HVAC, plumbing, and acoustic insulations.",
         masterformat="23 07 00 HVAC Insulation",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:

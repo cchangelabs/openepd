@@ -16,7 +16,7 @@
 from enum import StrEnum
 import math
 import re
-from typing import Annotated, Any, Final, Self
+from typing import Annotated, Any, Final, Self, TypeAlias
 
 import pydantic
 import pydantic_core
@@ -41,6 +41,11 @@ limiting the encoded string length to 4/3 of the file size limit.
 """
 
 
+# Deprecated: Amount is deprecated — use the NonNegativeAmount type alias instead.
+# NonNegativeAmount makes the non-negative intent explicit. In a future major release
+# NonNegativeAmount will become a proper class and Amount will be removed to avoid
+# ambiguity: the name "Amount" does not clearly communicate that only non‑negative
+# values are allowed.
 class Amount(BaseOpenEpdSchema):
     """A value-and-unit pairing for amounts that do not have an uncertainty."""
 
@@ -65,6 +70,9 @@ class Amount(BaseOpenEpdSchema):
     def to_quantity_str(self):
         """Return a string representation of the amount."""
         return f"{self.qty or ''} {self.unit or 'str'}".strip()
+
+
+NonNegativeAmount: TypeAlias = Amount
 
 
 class Distribution(StrEnum):

@@ -63,7 +63,7 @@ __all__ = (
 import pydantic
 
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CableTraysMaterial, EnergySource, RacewaysMaterial
 from openepd.model.specs.singular.mixins.conduit_mixin import ConduitMixin
@@ -92,7 +92,7 @@ class LowVoltBusesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Buses >> Low Voltage"],
         description="Busbars and Busways of 600V or less",
         masterformat="26 25 00 Low Voltage Enclosed Bus Assemblies",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
 
@@ -107,7 +107,7 @@ class MedVoltBusesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Buses >> Medium Voltage"],
         description="Busbars and Busways over 600V",
         masterformat="26 15 00 Medium-Voltage Enclosed Bus Assemblies",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
 
@@ -135,7 +135,7 @@ class OtherElectricalPowerStorageV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Storage >> Other"],
         description="Other electrical power storage equipment.",
         masterformat="26 00 00 Electrical",
-        declared_unit=Amount(qty=1, unit="kWh"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kWh"),
     )
 
 
@@ -150,7 +150,7 @@ class CableTrayAccsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Cable Trays >> Accessories"],
         description="Accessories for cable trays",
         masterformat="26 05 36 Cable Trays for Electrical Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -164,7 +164,7 @@ class CableTraysV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Cable Trays"],
         description="Mechanical support for electrial or communications cabling, typically suspended from a roof or wall.",
         masterformat="26 05 36 Cable Trays for Electrical Systems",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
     # Own fields:
@@ -196,7 +196,7 @@ class ElectricalCableAccsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Cables >> Accessories"],
         description="Accessories for cabling, including ties and supports.",
         masterformat="26 05 29 Hangers and Supports for Electrical Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -211,7 +211,7 @@ class ElectricalCablesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Cables"],
         description="Insulated building power distribution conductors to connect electrical equipment within a structure at 600V or less.",
         masterformat="26 05 13 Medium-Voltage Cables",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
     # Nested specs:
@@ -234,7 +234,7 @@ class ElectricalBusesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Buses"],
         description="Power distribution, in the form of busbars or of insulted ducts made of copper or aluminum busbars. It is an alternative means of conducting electricity compared toto power cables or cable bus. Also called bus ducts.",
         masterformat="26 00 00 Electrical",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
     # Nested specs:
@@ -253,7 +253,7 @@ class ElectricalBoxAccsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Boxes >> Accessories"],
         description="Accessories for electrical equipment boxes or their contents.",
         masterformat="26 05 33.16 Boxes for Electrical Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -268,7 +268,7 @@ class ElectricalWallBoxesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Boxes >> Wall Boxes"],
         description="Equipment boxes for power or electronic equipment embedded in an accessible wall.",
         masterformat="26 05 33.16 Boxes for Electrical Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -283,7 +283,7 @@ class ElectricalCeilingBoxesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Boxes >> Ceiling Boxes"],
         description="Equipment boxes for power or electronic equipment embedded in an accessible ceiling.",
         masterformat="26 05 33.16 Boxes for Electrical Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -298,7 +298,7 @@ class ElectricalJunctionBoxesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Boxes >> Junction Boxes"],
         description="Equipment boxes for power or electronic equipment embedded.",
         masterformat="26 05 33.16 Boxes for Electrical Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -313,7 +313,7 @@ class FloorEquipmentBoxesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Boxes"],
         description="Equipment boxes for power or electronic equipment embedded in an accessible floor.",
         masterformat="26 05 33.16 Boxes for Electrical Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Nested specs:
@@ -334,7 +334,7 @@ class PowerDistributionUnitsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> PDUs"],
         description="Switched electrical distribution units placed very close to the point of consumption, for example inside a rack of electronic equipment.",
         masterformat="26 26 00 Power Distribution Units",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -348,7 +348,7 @@ class RacewaysV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Raceways"],
         description="Mechanical guideways for electrical communications cabling, often embedded in an accessible floor.",
         masterformat="26 05 33 Raceway and Boxes for Electrical Systems",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
     # Own fields:
@@ -378,7 +378,7 @@ class ElectricalGroundingConnectorsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Connectors >> Grounding"],
         description="Grounding connectors are safety devices that establish a low-resistance path to ground",
         masterformat="26 05 26 Grounding and Bonding for Electrical Systems",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -393,7 +393,7 @@ class ElectricalConnectorsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Connectors"],
         description="Devices that join electrical conductors or cables together",
         masterformat="26 05 83 Wiring Connections",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Nested specs:
@@ -411,7 +411,7 @@ class ElectricalMVSwitchesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Switchgear >> Switches"],
         description="Devices that control electrical circuits by opening or closing a connection to turn power on and off, under manual or other intentional control.",
         masterformat="26 28 16.16 Enclosed Switches",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -426,7 +426,7 @@ class ElectricalMVInterruptersV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Switchgear >> Interrupters"],
         description="Protective devices that automatically disconnect circuits when detecting faults, surges, or abnormal current conditions",
         masterformat="26 28 16.13 Enclosed Circuit Breakers",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -441,7 +441,7 @@ class ElectricalMVFusesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Switchgear >> Fuses"],
         description="Single-use protective devices that melt and break a circuit when current exceeds a safe level.",
         masterformat="26 28 13 Fuses",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -456,7 +456,7 @@ class ElectricalDistSwitchgearV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Switchgear"],
         description="Equipment for interrupting and controlling high-power electrical flows for protection, isolation, or control of electrical equipment.",
         masterformat="26 13 00 Medium-Voltage Switchgear",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Nested specs:
@@ -476,7 +476,7 @@ class ChargingStationsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Distribution >> Charging Stations"],
         description="Outdoor charging stations, particularly for electric vehicles (EVs)",
         masterformat="26 27 36 Outdoor Charging Stations",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -491,7 +491,7 @@ class FueledElectricalGeneratorsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Generation >> Generators"],
         description="Fueled electrical generators.",
         masterformat="26 00 00 Electrical",
-        declared_unit=Amount(qty=1, unit="kW"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kW"),
     )
 
 
@@ -506,7 +506,7 @@ class OtherGenerationV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Generation >> Other"],
         description="Other generation.",
         masterformat="26 00 00 Electrical",
-        declared_unit=Amount(qty=1, unit="kW"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kW"),
     )
 
 
@@ -521,7 +521,7 @@ class PhotovoltaicsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Generation >> Photovoltaics"],
         description="Solar photovoltaics, rated on a nameplate capacity basis.",
         masterformat="26 31 00 Photovoltaic Collectors",
-        declared_unit=Amount(qty=1, unit="kW"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kW"),
     )
 
 
@@ -536,7 +536,7 @@ class WindTurbinesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Generation >> Wind"],
         description="Wind generators, rated on a nameplate capacity basis.",
         masterformat="26 00 00 Electrical",
-        declared_unit=Amount(qty=1, unit="kW"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kW"),
     )
 
 
@@ -551,7 +551,7 @@ class ElectricityFromPowerGridV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Power >> Grid Electricity"],
         description="Electrical energy drawn from a specific utility grid.",
         masterformat="26 00 00 Electrical",
-        declared_unit=Amount(qty=1, unit="kWh"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kWh"),
     )
 
 
@@ -566,7 +566,7 @@ class ElectricityFromSpecificGeneratorV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Power >> Generated Electricity"],
         description="Electrical energy from a specific power plant, such as a wind farm using a specific type of turbine.",
         masterformat="26 00 00 Electrical",
-        declared_unit=Amount(qty=1, unit="kWh"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kWh"),
     )
 
     # Own fields:
@@ -588,7 +588,7 @@ class PowerPurchaseAgreementsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Power >> PPAs"],
         description="Electrical energy subject to a verified power purchase agreement in which the impact of electricity generation is allocated specifically to the agreement and not to the general grid.",
         masterformat="26 00 00 Electrical",
-        declared_unit=Amount(qty=1, unit="kWh"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kWh"),
     )
 
     # Own fields:
@@ -606,7 +606,7 @@ class LightbulbsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Lighting >> Bulbs"],
         description="Various types of light bulbs, including LED, CFL, halogen, and incandescent.",
         masterformat="26 51 00 Interior Lighting",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -621,7 +621,7 @@ class LightingControlsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Lighting >> Controls"],
         description="Devices used to control the operation of lighting, including dimmers, sensors, and smart controls.",
         masterformat="26 09 23 Lighting Control Devices",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -636,7 +636,7 @@ class LightingFixturesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Lighting >> Fixtures"],
         description="Permanent lighting fixtures for interior spaces, including ceiling, wall-mounted, and pendant fixtures.",
         masterformat="26 51 00 Interior Lighting",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -651,7 +651,7 @@ class OutdoorLightingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Lighting >> Outdoor"],
         description="Lighting products designed for outdoor use, including landscape and security lighting.",
         masterformat="26 56 00 Exterior Lighting",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -666,7 +666,7 @@ class SpecialtyLightingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Lighting >> Specialty"],
         description="Specialized lighting for niche applications like emergency, medical, or theatrical lighting.",
         masterformat="26 51 00 Interior Lighting",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -680,7 +680,7 @@ class TaskLightingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Lighting >> Task Lighting"],
         description="Lighting designed for specific tasks such as desk lamps, under-cabinet lighting, and reading lamps.",
         masterformat="26 51 13 Interior Lighting Fixtures, Lamps, And Ballasts",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -695,7 +695,7 @@ class ElectricalPowerStorageV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Storage"],
         description="Electrical Power Storage.",
         masterformat="26 00 00 Electrical",
-        declared_unit=Amount(qty=1, unit="kWh"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kWh"),
     )
 
     # Nested specs:
@@ -743,7 +743,7 @@ class ElectricalGenerationEquipmentV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Generation"],
         description="Equipment for generating electrical power. This category is primarily for smaller-scale (e.g. on premises) generation, rather than utility-scale equipment.",
         masterformat="26 00 00 Electrical",
-        declared_unit=Amount(qty=1, unit="kW"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kW"),
     )
 
     # Nested specs:
@@ -764,7 +764,7 @@ class ElectricPowerV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Electrical >> Power"],
         description="Electrical energy drawn from a utility grid.",
         masterformat="26 00 00 Electrical",
-        declared_unit=Amount(qty=1, unit="kWh"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kWh"),
     )
 
     # Nested specs:
@@ -782,7 +782,7 @@ class LightingV1(BaseOpenEpdHierarchicalSpec):
         display_name="Lighting",
         description="Lamps and lightbulbs and lamp components",
         masterformat="26 50 00 Lighting",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Own fields:
@@ -849,7 +849,7 @@ class ElectricalConduitV1(BaseOpenEpdHierarchicalSpec, ConduitMixin):
         historical_names=["Electrical >> Conduit"],
         description="Tubing used to protect and route electrical wiring in a building or structure",
         masterformat="26 05 33.13 Electrical Conduit",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
 

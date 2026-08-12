@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -26,5 +26,5 @@ class BulkMaterialsV1(BaseOpenEpdHierarchicalSpec):
         unique_name="BulkMaterials",
         display_name="Bulk Materials",
         description="A generic category for materials whose declared unit is mass (e.g. 1kg ) and which are not in another category.",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )

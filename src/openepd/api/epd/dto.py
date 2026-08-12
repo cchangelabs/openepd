@@ -21,7 +21,7 @@ from openepd.api.dto.base import BaseOpenEpdApiModel
 from openepd.api.dto.common import BaseMeta, OpenEpdApiResponse
 from openepd.api.dto.meta import PagingMetaMixin, WarningMetaMixin
 from openepd.api.dto.mf import MaterialFilterMetaMixin
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.epd import Epd
 
 
@@ -105,7 +105,7 @@ class StatisticsDto(BaseOpenEpdApiModel):
         examples=[0],
     )
 
-    declared_unit: Amount = pydantic.Field(
+    declared_unit: NonNegativeAmount = pydantic.Field(
         description="Declared unit for the statistics. "
         "Statistical values - percentiles, averages etc - are based on this unit of product"
     )

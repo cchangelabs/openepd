@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -33,7 +33,7 @@ class BlanketFacingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Accessories >> Blanket Facing"],
         description="Facing materials for insulation products, such as kraft, white vinyl sheeting, or aluminum foil, which can serve as air barrier, vapor barrier, radiant barrier, or flame resistive layer.",
         masterformat="07 21 16 Blanket Insulation",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -47,7 +47,7 @@ class DoorsHardwareV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Accessories >> Doors Hardware"],
         description="Door hardware, including automatic and security door hardware",
         masterformat="08 70 00 Doors Hardware",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -61,7 +61,7 @@ class FlooringAccessoriesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Accessories >> Flooring Accessories"],
         description="Products used in flooring, other than the actual flooring product itself.",
         masterformat="09 60 00 Flooring",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -75,7 +75,7 @@ class MortarV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Mortars", "mørtel"],
         description="Cementitious paste used to bind building blocks such as stones, bricks, and concrete masonry.",
         masterformat="04 05 13 Masonry Mortaring",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -89,7 +89,7 @@ class TileGroutV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Accessories >> Tile Grout"],
         description="Water-cement-sand mixture for laying ceramic tile",
         masterformat="09 30 60 Tile Adhesives, Mortars and Grouts",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
 

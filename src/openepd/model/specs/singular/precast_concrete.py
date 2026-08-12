@@ -16,7 +16,7 @@
 import pydantic
 
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec
 from openepd.model.validation.quantity import PressureMPaStr
 
@@ -147,7 +147,7 @@ class ArchitecturalPrecastV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Precast >> Architectural"],
         description="Precast concrete cladding used for architectural purposes",
         masterformat="03 45 00 Precast Architectural Concrete",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     element_type: ArchitecturalPrecastElementType | None = pydantic.Field(
@@ -167,7 +167,7 @@ class StructuralPrecastV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Precast >> Structural"],
         description="Precast concrete used for structural purposes",
         masterformat="03 41 00 Precast Structural Concrete",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     element_type: StructuralPrecastElementType | None = pydantic.Field(
@@ -187,7 +187,7 @@ class UtilityUndergroundPrecastV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Precast >> Utility & Underground"],
         description="Precast concrete for utility vaults, manhole, drain inlets. Excludes piping.",
         masterformat="33 00 00 Site Utilities",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     element_type: UtilityPrecastElementType | None = pydantic.Field(
@@ -207,7 +207,7 @@ class CivilPrecastV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Precast >> Civil"],
         description="Precast concrete used for civil engineering applications including bridges, highways, and railroads.",
         masterformat="03 48 00 Precast Concrete Specialties",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     element_type: CivilPrecastElementType | None = pydantic.Field(
@@ -228,7 +228,7 @@ class PrecastConcreteV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Precast"],
         description="General category for precast concrete components",
         masterformat="03 40 00 Precast Concrete",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     # Own fields:

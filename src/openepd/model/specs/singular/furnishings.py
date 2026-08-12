@@ -16,7 +16,7 @@
 import pydantic
 
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import CountertopMaterial
 from openepd.model.validation.quantity import AreaM2Str, LengthMmStr, VolumeStr
@@ -33,7 +33,7 @@ class DemountablePartitionTrackV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Furnishings >> Partitions >> Track"],
         description="Track for modular partitions.",
         masterformat="10 22 00 Partitions",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
 
@@ -47,7 +47,7 @@ class ChairsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Furnishings >> Seating"],
         description="Chairs and other seating",
         masterformat="12 52 00 Seating",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -60,7 +60,7 @@ class CountertopsV1(BaseOpenEpdHierarchicalSpec):
         display_name="Countertops",
         description="Raised, flat, and horizontal surfaces often used in kitchens, bathrooms, and workrooms",
         masterformat="12 36 00 Countertops",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -79,7 +79,7 @@ class DemountablePartitionsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Furnishings >> Partitions"],
         description="Demountable, modular, and other partitions are interior wall systems that are not permanently attached to the floor or walls and can easily be moved. They can be free-standing or guided with a top-hung or floor-mounted track.",
         masterformat="10 22 00 Partitions",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Nested specs:
@@ -97,7 +97,7 @@ class OtherFurnishingsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Furnishings >> Other"],
         description="Other furnishings",
         masterformat="12 00 00 Furnishings",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -115,7 +115,7 @@ class OpenStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Furnishings >> Storage >> Open Storage"],
         description="Open Storage furniture which is static and has no moving parts",
         masterformat="10 50 00 Storage Specialties",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -133,7 +133,7 @@ class ClosedStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Furnishings >> Storage >> Closed Storage"],
         description="Closed storage furniture making use of doors, sliding and/or hinged parts.",
         masterformat="10 50 00 Storage Specialties",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -151,7 +151,7 @@ class RetractableStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Furnishings >> Storage >> Retractable Storage"],
         description="Storage Furniture with retractable (drawer) elements",
         masterformat="10 50 00 Storage Specialties",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -169,7 +169,7 @@ class MobileStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Furnishings >> Storage >> Mobile Storage"],
         description="Mobile storage furniture having wheels or casters for movement",
         masterformat="10 56 26 Mobile Storage Shelving",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -188,7 +188,7 @@ class WallMountedStorageShelvingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Furnishings >> Storage >> Wall-Mounted Shelving"],
         description="Storage furniture which requires usage of a vertical structure for attachment and functional support",
         masterformat="10 56 17 Wall-Mounted Standards and Shelving",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -203,7 +203,7 @@ class OtherStorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Furnishings >> Storage >> Other"],
         description="Other Storage Furniture",
         masterformat="10 50 00 Storage Specialties",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -218,7 +218,7 @@ class StorageFurnitureV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Furnishings >> Storage"],
         description="Storage Furniture",
         masterformat="10 56 00 Storage Assemblies",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
     # Nested specs:
@@ -239,7 +239,7 @@ class TablesV1(BaseOpenEpdHierarchicalSpec):
         display_name="Tables",
         description="Tables which are not primarily work surfaces",
         masterformat="12 64 16 Tables",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -253,7 +253,7 @@ class WorkSurfacesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Furnishings >> Work Surfaces"],
         description="Work surfaces such as desks, countertops, and work benches.",
         masterformat="12 51 00 Office Furniture",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -271,7 +271,7 @@ class WorkspacesV1(BaseOpenEpdHierarchicalSpec):
         display_name="Workspaces",
         description="Office furniture and furniture systems for performing office work, such as cubicle systems. Typically includes component(s) that may fit in other categories.",
         masterformat="12 59 00 Systems Furniture",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
