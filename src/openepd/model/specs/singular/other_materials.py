@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -28,7 +28,7 @@ class AuxiliariesV1(BaseOpenEpdHierarchicalSpec):
         display_name="Auxiliaries",
         historical_names=["Other Materials >> Transportation Infrastructure >> Auxiliaries"],
         description="Auxiliary equipment for transportation",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
 
@@ -41,7 +41,7 @@ class CleaningProductsV1(BaseOpenEpdHierarchicalSpec):
         display_name="Cleaning Products",
         historical_names=["Other Materials >> Unsupported >> Cleaning Products"],
         description="Cleaning and disinfecting solutions",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
 
@@ -58,7 +58,7 @@ class ClothingV1(BaseOpenEpdHierarchicalSpec):
             "Other Materials >> Unsupported >> Clothing",
         ],
         description="Clothing",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -86,7 +86,7 @@ class TransportationInfrastructureV1(BaseOpenEpdHierarchicalSpec):
         display_name="Transportation Infrastructure",
         historical_names=["Other Materials >> Transportation Infrastructure"],
         description="A broad category for unclassified materials focused on transportation infrastructure",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
     # Nested specs:
@@ -149,7 +149,7 @@ class CopperV1(BaseOpenEpdHierarchicalSpec):
         display_name="Copper",
         historical_names=["Other Materials >> Copper"],
         description="Products made of copper",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
 
@@ -163,7 +163,7 @@ class EarthworkV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Other Materials >> Earthwork"],
         description="Earthwork, including excavation, shoring, piles, etc.",
         masterformat="31 00 00 Earthwork",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -178,7 +178,7 @@ class ExteriorSunControlDevicesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Other Materials >> Exterior Sun Control Devices"],
         description="Sun control devices help to manage solar heat gain by redirecting sunlight.",
         masterformat="10 71 13 Exterior Sun Control Devices",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
 
@@ -191,7 +191,7 @@ class GypsumFinishingCompoundsV1(BaseOpenEpdHierarchicalSpec):
         display_name="Gypsum Finishing Compounds",
         historical_names=["Other Materials >> Gypsum Finishing Compounds"],
         description="Plasters and the like for finishing Gypsum Sheet and Board",
-        declared_unit=Amount(qty=1000, unit="sqft"),
+        declared_unit=NonNegativeAmount(qty=1000, unit="sqft"),
     )
 
 
@@ -204,7 +204,7 @@ class ProfilesV1(BaseOpenEpdHierarchicalSpec):
         display_name="Profiles",
         historical_names=["Other Materials >> Profiles"],
         description="Metal or polymer profiles used for producing or installing of Windows, Doors, Frames and Cladding",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
 
@@ -229,7 +229,7 @@ class ZincV1(BaseOpenEpdHierarchicalSpec):
         display_name="Zinc",
         historical_names=["Other Materials >> Zinc"],
         description="Products made of zinc.",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
 

@@ -17,7 +17,7 @@ from typing import Annotated, Literal
 
 from openepd.compat.pydantic import pyd
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, CodegenSpec
 from openepd.model.specs.concrete import Cementitious, ConcreteTypicalApplication
 from openepd.model.specs.enums import AciExposureClass, CsaExposureClass, EnExposureClass
@@ -50,7 +50,7 @@ class CementGroutV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Concrete >> Cement Grout"],
         description="Cement grouting is a slurry that is placed as a flowable liquid. It is an effective material for filling and strengthening granular soils, voids in rocks, foundation underpinnings, and other underground voids. Also called structural grout, these materials typically impart significant compressive strength to the system.",
         masterformat="03 61 00 Cementitious Grouting",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -64,7 +64,7 @@ class ConcretePavingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Concrete >> Paving"],
         description="Concrete paving",
         masterformat="32 13 13 Concrete Paving",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
     # Own fields:
@@ -100,7 +100,7 @@ class FlowableFillV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Concrete >> Flowable Fill (CDF)"],
         description="Flowable fill is a slurry that is placed as a flowable liquid (high slump) and sets with no compaction. It is often used in tight or restricted access areas where placing and compacting fill is difficult. Applications include filling large voids such as abandoned underground storage tanks, basements, tunnels, mines, and sewers. It can also be used as paving sub-base, bridge abutment, and retaining wall backfill. Also called Controlled Density Fill (CDF) or Controlled Low Strength Materials (CLSMs). These materials typically have compressive strengths under 1200 psi.",
         masterformat="31 23 23 Fill",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -120,7 +120,7 @@ class OilPatchV1(BaseOpenEpdHierarchicalSpec):
         short_name="Oilpatch",
         historical_names=["Concrete >> Oilpatch"],
         description="Concretes for use in creation, maintenance, and decommissioning of petroleum extraction wells and similar applications. Includes foamed cement; often called cement in the drilling industry. Differs from flowable fill and grout in that it contains no sand or other aggregates.",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -146,7 +146,7 @@ class ReadyMixV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Concrete >> Ready Mix"],
         description="Concretes to be mixed and then poured on-site",
         masterformat="03 30 00 Cast-in-Place Concrete",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -160,7 +160,7 @@ class ShotcreteV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["shotcrete"],
         description="Concretes sprayed on a target",
         masterformat="03 37 13 Shotcrete",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -180,7 +180,7 @@ class CellularConcreteV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Concrete >> Cellular Concrete"],
         description="Cellular concrete is typically composed of cementitious material, water, and pre-formed foam with air entrainment resulting in a homogeneous void or cell structure. It is self-compacting and can be pumped over extensive heights and distances.",
         masterformat="03 52 16.13 Lightweight Cellular Insulating Concrete",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -200,7 +200,7 @@ class OtherConcreteV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Concrete >> Other"],
         description="Other types of concrete products not captured by existing concrete categories. Could include products such as patching concrete or additives",
         masterformat="03 00 00 Concrete",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
 
@@ -219,7 +219,7 @@ class ConcreteV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Concretes", "béton", "beton", "hormigón"],
         description="A composite material composed of fine and coarse aggregate bonded together with a fluid cement (cement paste) that hardens over time",
         masterformat="03 00 00 Concrete",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
     # Own fields:

@@ -23,7 +23,7 @@ from typing import Final
 from openepd.category.generated import get_category_definitions
 from openepd.category.search import CategoryFinder
 from openepd.model.category import Category
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 
 
 def normalize_string_collection(strings: Collection[str] | None) -> list[str]:
@@ -59,7 +59,7 @@ class CategoryNode:
         alt_names: Collection[str] | None = None,
         description: str = "",
         masterformat: str | None = None,
-        declared_unit: Amount | None = None,
+        declared_unit: NonNegativeAmount | None = None,
         parent: CategoryNode | None = None,
     ) -> None:
         """
@@ -273,7 +273,7 @@ class CategoryNode:
         self._masterformat = value
 
     @property
-    def declared_unit(self) -> Amount | None:
+    def declared_unit(self) -> NonNegativeAmount | None:
         """
         Declared unit typically used for items in this category.
 
@@ -284,7 +284,7 @@ class CategoryNode:
         return self._declared_unit
 
     @declared_unit.setter
-    def declared_unit(self, value: Amount | None) -> None:
+    def declared_unit(self, value: NonNegativeAmount | None) -> None:
         """
         Set the declared unit for the category.
 
@@ -376,7 +376,7 @@ class CategoryNode:
         alt_names: Collection[str] | None = None,
         description: str = "",
         masterformat: str | None = None,
-        declared_unit: Amount | None = None,
+        declared_unit: NonNegativeAmount | None = None,
     ) -> CategoryNode:
         """
         Create and add a new child node to this category.
@@ -496,7 +496,7 @@ class CategoryNode:
             alt_names=self.alt_names,
             description=self.description,
             masterformat=self.masterformat,
-            declared_unit=Amount(**self.declared_unit.to_serializable()) if self.declared_unit else None,
+            declared_unit=NonNegativeAmount(**self.declared_unit.to_serializable()) if self.declared_unit else None,
         )
 
         for child in self.children:

@@ -18,7 +18,7 @@ from typing import Annotated
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec, BaseOpenEpdSpec, CodegenSpec
 from openepd.model.specs.enums import SteelComposition, SteelRebarGrade
 from openepd.model.standard import Standard
@@ -62,7 +62,7 @@ class ColdFormedFramingV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Steel >> Cold Formed >> Framing"],
         description="Cold formed steel elements such as studs and framing, typically made from coil or sheet steel and used within walls and ceilings.",
         masterformat="05 40 00 COLD-FORMED METAL FRAMING",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -78,7 +78,7 @@ class DeckingSteelV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Steel >> Cold Formed >> Decking", "Steel >> DeckingSteel", "Steel >> Decking"],
         description="Corrugated Decking made from cold-formed sheet steel. Often filled with concrete.",
         masterformat="05 31 00 Steel Decking",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -97,7 +97,7 @@ class SteelSuspensionAssemblyV1(BaseOpenEpdHierarchicalSpec):
         ],
         description="Steel suspension assemblies for suspended (e.g. acoustical) ceiling systems",
         masterformat="09 53 00 Suspension Assemblies",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -110,7 +110,7 @@ class HollowSectionsV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
         display_name="Hollow Sections",
         masterformat="05 12 00 Structural Steel Framing",
         description="Hollow cross section steel shape, typically referred to as hollow structural section (HSS)",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -129,7 +129,7 @@ class HotRolledSectionsV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
         historical_names=["Steel >> Structural Steel >> Hot-Rolled Sections"],
         description="Steel shapes, such as angles, wide flange beams and I-beams, produced using a high temperature mill process.",
         masterformat="05 12 00 Structural Steel Framing",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -151,7 +151,7 @@ class PlateSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
             "Flat hot-rolled steel, typically thicker than 'sheet', "
             "made by compressing multiple steel layers together into one"
         ),
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
     # Own fields:
 
@@ -167,7 +167,7 @@ class MetalRailingsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Steel >> Prefab Assemb. >> Railings"],
         description="Metal Railings including pipe and tube railings",
         masterformat="05 52 00 Metal Railings",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -187,7 +187,7 @@ class MetalStairsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Steel >> Prefab Assemb. >> Stairs"],
         description="Metal stairs including: metal pan stairs, metal floor plate stairs, grating stairs, fire escapes, ladders, and walkways/catwalks/ramps/platforms",
         masterformat="05 51 00 Metal Stairs",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -202,7 +202,7 @@ class MiscMetalFabricationV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Steel >> Prefab Assemb. >> Misc."],
         description="Prefabricated steel assemblies not included in another category.",
         masterformat="05 50 00 Misc. Metal Fabrications",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -222,7 +222,7 @@ class OpenWebMembranesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Steel >> Prefab Assemb. >> Open Web"],
         description="Lightweight steel truss, typically made of parallel chords and a triangulated web system, proportioned to span between bearing points",
         masterformat="05 21 19 Open Web Steel Joist Framing",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -242,7 +242,7 @@ class MBQSteelV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Steel >> Merchant Bar"],
         description="Merchant Bar Quality (MBQ) steel is used as feedstock to steel construction products, but also includes rounds, angles, and light structural shapes.",
         masterformat="05 00 00 Metals",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -261,7 +261,7 @@ class CoilSteelV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Steel >> Coil"],
         description="Sheet or strip steel, sold in rolls. Typically, coil steel is cold-formed into light gauge products.",
         masterformat="05 00 00 Metals",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -275,7 +275,7 @@ class SheetSteelByAreaV1(BaseOpenEpdHierarchicalSpec):
         short_name="by Area",
         description="Products made of sheet steel and declared per unit area.",
         masterformat="05 50 00 Metal Fabrications",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -293,7 +293,7 @@ class ColdFormedSteelV1(BaseOpenEpdHierarchicalSpec):
         display_name="Cold Formed Steel",
         description="All types of cold formed steel products. These products are made from hot-rolled steel coils and sheets and are cold formed into products such as studs, decking, panels, and other accessories.",
         masterformat="05 40 00 Cold-Formed Metal Framing",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     # Nested specs:
@@ -316,7 +316,7 @@ class StructuralSteelV1(BaseOpenEpdHierarchicalSpec):
         display_name="Structural Steel",
         masterformat="05 12 00 Structural Steel Framing",
         description="Hot rolled steel shapes, Hollow Sections, pipes, and similar hot-worked structural steels",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
     # Own fields:
     modulus_of_elasticity: PressureMPaStr | None = pyd.Field(
@@ -359,7 +359,7 @@ class PrefabricatedSteelAssembliesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Steel >> Prefab Assemb."],
         description="Prefabricated assemblies made primarily of steel.",
         masterformat="05 00 00 Metals",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     # Nested specs:
@@ -381,7 +381,7 @@ class PostTensioningSteelV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Steel >> Post-Tensioning"],
         description="Steel tensioning cables or tendons for compression of prestressed concrete",
         masterformat="03 23 00 Stressed Tendon Reinforcing",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -397,7 +397,7 @@ class RebarSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
         historical_names=["Steel >> Rebar"],
         description="Reinforcing bar used together with concrete.",
         masterformat="03 21 00 Reinforcement Bars",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     # Own fields:
@@ -422,7 +422,7 @@ class WireMeshSteelV1(BaseOpenEpdHierarchicalSpec, SteelFabricatedMixin):
         historical_names=["Steel >> Wire & Mesh"],
         description="Mild steel wire for reinforcement, connections, and meshes",
         masterformat="03 22 00 Fabric and Grid Reinforcing",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -438,7 +438,7 @@ class OtherSteelV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Steel >> Other"],
         description="Steel products that do not fit into a defined subcategory",
         masterformat="05 00 00 Metals",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -453,7 +453,7 @@ class CrudeSteelV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Steel >> Crude"],
         description="Steel ingots, billets, blooms, and slabs for use in manufacturing steel products.",
         masterformat="05 00 00 Metals",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -466,7 +466,7 @@ class SteelV1(BaseOpenEpdHierarchicalSpec):
         display_name="Steel",
         masterformat="05 00 00 Metals",
         description="Broad category for construction materials made from steel and its alloys",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     # Own fields:

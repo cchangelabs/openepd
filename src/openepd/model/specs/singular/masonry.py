@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.validation.quantity import (
     PressureMPaStr,
@@ -33,7 +33,7 @@ class GMUV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Masonry >> Glass Masonry Unit"],
         description="Glass masonry unit",
         masterformat="04 23 00 Glass Unit Masonry",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -48,7 +48,7 @@ class AutoclavedAeratedConcreteV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Masonry >> AAC"],
         description="A lightweight, precast, foamed concrete masonry building material",
         masterformat="04 22 26 Autoclaved Aerated Concrete Unit Masonry",
-        declared_unit=Amount(qty=1, unit="m^3"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^3"),
     )
 
     # Own fields:
@@ -69,7 +69,7 @@ class BrickV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Concrete Masonry Unit", "Concrete Block", "Cinder Block"],
         description="Solid masonry units made from clay or shale",
         masterformat="04 21 00 Clay Unit Masonry",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     # Own fields:
@@ -93,7 +93,7 @@ class MasonryV1(BaseOpenEpdHierarchicalSpec):
         display_name="Masonry",
         description="Structural and/or enclosure system based on individual rigid units stacked and bound together with mortar",
         masterformat="04 20 00 Unit Masonry",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     # Own fields:
