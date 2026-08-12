@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from abc import ABC
 from collections.abc import Callable, Generator
 from enum import StrEnum
 import math
@@ -41,15 +42,10 @@ limiting the encoded string length to 4/3 of the file size limit.
 """
 
 
-# Deprecated: Amount is deprecated — use the NonNegativeAmount type alias instead.
-# NonNegativeAmount makes the non-negative intent explicit. In a future major release
-# NonNegativeAmount will become a proper class and Amount will be removed to avoid
-# ambiguity: the name "Amount" does not clearly communicate that only non‑negative
-# values are allowed.
-class Amount(BaseOpenEpdSchema):
-    """A value-and-unit pairing for amounts that do not have an uncertainty."""
+class BaseAmount(BaseOpenEpdSchema, ABC):
+    """Shared value-and-unit behavior for amount models."""
 
-    qty: float | None = pyd.Field(description="How much of this in the amount.", ge=0, default=None)
+    qty: float | None = pyd.Field(description="How much of this in the amount.", default=None)
     unit: str | None = pyd.Field(description="Which unit.  SI units are preferred.", example="kg", default=None)
 
     @pyd.root_validator
@@ -60,12 +56,27 @@ class Amount(BaseOpenEpdSchema):
             raise ValueError(msg)
         return values
 
-    def to_quantity_str(self):
+    def to_quantity_str(self) -> str:
         """Return a string representation of the amount."""
         return f"{self.qty or ''} {self.unit or 'str'}".strip()
 
 
+# Deprecated: Amount is deprecated — use the NonNegativeAmount type alias instead.
+# NonNegativeAmount makes the non-negative intent explicit. In a future major release
+# NonNegativeAmount will become a proper class and Amount will be removed to avoid
+# ambiguity: the name "Amount" does not clearly communicate that only non‑negative
+# values are allowed.
+class Amount(BaseAmount):
+    """A value-and-unit pairing for amounts that do not have an uncertainty."""
+
+    qty: float | None = pyd.Field(description="How much of this in the amount.", ge=0, default=None)
+
+
 NonNegativeAmount: TypeAlias = Amount
+
+
+class AnyAmount(BaseAmount):
+    """A value-and-unit pairing for amounts that may be positive or negative and do not express uncertainty."""
 
 
 class Distribution(StrEnum):
