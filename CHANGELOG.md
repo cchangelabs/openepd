@@ -1,3 +1,11 @@
+## 7.34.0 (2026-08-14)
+
+### Feat
+
+- **model**: add harmonization extension models and validation
+- add AnyAmount for signed quantities
+- introduce NonNegativeAmount type alias as future replacement for Amount
+
 ## 7.33.0 (2026-08-03)
 
 ### Feat
