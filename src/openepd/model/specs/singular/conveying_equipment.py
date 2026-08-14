@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import ElevatorsBuildingRise, ElevatorsUsageIntensity
 from openepd.model.validation.quantity import CapacityPerHourStr, LengthMStr, MassKgStr, SpeedStr
@@ -53,7 +53,7 @@ class EscalatorsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Conveying Equipment >> Escalators"],
         description="A moving staircase consisting of a circulating belt of steps driven by a motor, which conveys people between the floors of a building",
         masterformat="14 31 00 Escalators",
-        declared_unit=Amount(qty=1, unit="item"),
+        declared_unit=NonNegativeAmount(qty=1, unit="item"),
     )
 
 
@@ -67,7 +67,7 @@ class ElevatorsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Conveying Equipment >> Elevators"],
         description="Car that moves in a vertical shaft to carry passengers or freight between the levels of a multistory building.",
         masterformat="14 20 00 Elevators",
-        declared_unit=Amount(qty=1, unit="tkm"),
+        declared_unit=NonNegativeAmount(qty=1, unit="tkm"),
     )
 
     # Own fields:
@@ -89,7 +89,7 @@ class ConveyingEquipmentV1(BaseOpenEpdHierarchicalSpec):
         display_name="Conveying Equipment",
         description="Conveying Equipment",
         masterformat="14 00 00 Conveying Equipment",
-        declared_unit=Amount(qty=1, unit="tkm"),
+        declared_unit=NonNegativeAmount(qty=1, unit="tkm"),
     )
 
     # Nested specs:

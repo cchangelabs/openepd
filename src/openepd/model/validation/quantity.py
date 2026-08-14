@@ -19,7 +19,7 @@ from typing import TYPE_CHECKING, Any, ClassVar
 
 from openepd.compat.pydantic import pyd
 from openepd.model.base import BaseOpenEpdSchema
-from openepd.model.common import Amount, OpenEPDUnit, RangeAmount
+from openepd.model.common import NonNegativeAmount, OpenEPDUnit, RangeAmount
 
 if TYPE_CHECKING:
     QuantityValidatorType = Callable[[type, str], str]
@@ -396,7 +396,7 @@ class WithMassKgMixin(WithDimensionalityMixin):
     dimensionality_unit = MassKgStr.unit
 
 
-class AmountMass(Amount, WithMassKgMixin):
+class AmountMass(NonNegativeAmount, WithMassKgMixin):
     """Amount of mass, measured in kg, t, etc."""
 
     pass
@@ -414,7 +414,7 @@ class WithGwpMixin(WithDimensionalityMixin):
     dimensionality_unit = GwpKgCo2eStr.unit
 
 
-class AmountGWP(Amount, WithGwpMixin):
+class AmountGWP(NonNegativeAmount, WithGwpMixin):
     """Amount of Global Warming Potential, measured in kgCO2e."""
 
     pass
@@ -438,7 +438,7 @@ class AmountRangeLengthM(AmountRangeWithDimensionality, WithLengthMMixin):
     pass
 
 
-class AmountLengthM(Amount, WithLengthMMixin):
+class AmountLengthM(NonNegativeAmount, WithLengthMMixin):
     """Length (m)."""
 
     pass
@@ -450,7 +450,7 @@ class WithLengthMmMixin(WithDimensionalityMixin):
     dimensionality_unit = LengthMmStr.unit
 
 
-class AmountLengthMm(Amount, WithLengthMMixin):
+class AmountLengthMm(NonNegativeAmount, WithLengthMMixin):
     """Length (mm)."""
 
     pass
@@ -468,7 +468,7 @@ class WithPressureMpaMixin(WithDimensionalityMixin):
     dimensionality_unit = PressureMPaStr.unit
 
 
-class AmountPressureMpa(Amount, WithPressureMpaMixin):
+class AmountPressureMpa(NonNegativeAmount, WithPressureMpaMixin):
     """Pressure (MPa)."""
 
     pass
@@ -486,7 +486,7 @@ class WithAreaM2Mixin(WithDimensionalityMixin):
     dimensionality_unit = AreaM2Str.unit
 
 
-class AmountAreaM2(Amount, WithAreaM2Mixin):
+class AmountAreaM2(NonNegativeAmount, WithAreaM2Mixin):
     """Area (m2)."""
 
     pass
@@ -504,7 +504,7 @@ class WithLengthInchStr(WithDimensionalityMixin):
     dimensionality_unit = LengthInchStr.unit
 
 
-class AmountLengthInch(Amount, WithLengthInchStr):
+class AmountLengthInch(NonNegativeAmount, WithLengthInchStr):
     """Length (inch)."""
 
     pass
@@ -522,7 +522,7 @@ class WithTemperatureCMixin(WithDimensionalityMixin):
     dimensionality_unit = TemperatureCStr.unit
 
 
-class AmountTemperatureC(Amount, WithTemperatureCMixin):
+class AmountTemperatureC(NonNegativeAmount, WithTemperatureCMixin):
     """Temperature (degrees C)."""
 
     pass
@@ -540,7 +540,7 @@ class WithCapacityPerHourMixin(WithDimensionalityMixin):
     dimensionality_unit = CapacityPerHourStr.unit
 
 
-class AmountCapacityPerHour(Amount, WithCapacityPerHourMixin):
+class AmountCapacityPerHour(NonNegativeAmount, WithCapacityPerHourMixin):
     """Capacity per hour."""
 
     pass
@@ -558,7 +558,7 @@ class WithRValueMixin(WithDimensionalityMixin):
     dimensionality_unit = RValueStr.unit
 
 
-class AmountRValue(Amount, WithRValueMixin):
+class AmountRValue(NonNegativeAmount, WithRValueMixin):
     """R-Value."""
 
     pass
@@ -576,7 +576,7 @@ class WithSpeedMixin(WithDimensionalityMixin):
     dimensionality_unit = SpeedStr.unit
 
 
-class AmountSpeed(Amount, WithSpeedMixin):
+class AmountSpeed(NonNegativeAmount, WithSpeedMixin):
     """Speed."""
 
     pass
@@ -594,7 +594,7 @@ class WithColorTemperatureMixin(WithDimensionalityMixin):
     dimensionality_unit = ColorTemperatureStr.unit
 
 
-class AmountColorTemperature(Amount, WithColorTemperatureMixin):
+class AmountColorTemperature(NonNegativeAmount, WithColorTemperatureMixin):
     """Color temperature."""
 
     pass
@@ -612,7 +612,7 @@ class WithLuminosityMixin(WithDimensionalityMixin):
     dimensionality_unit = LuminosityStr.unit
 
 
-class AmountLuminosity(Amount, WithLuminosityMixin):
+class AmountLuminosity(NonNegativeAmount, WithLuminosityMixin):
     """Luminosity."""
 
     pass
@@ -630,7 +630,7 @@ class WithPowerMixin(WithDimensionalityMixin):
     dimensionality_unit = PowerStr.unit
 
 
-class AmountPower(Amount, WithPowerMixin):
+class AmountPower(NonNegativeAmount, WithPowerMixin):
     """Power."""
 
     pass
@@ -648,7 +648,7 @@ class WithElectricalCurrentMixin(WithDimensionalityMixin):
     dimensionality_unit = ElectricalCurrentStr.unit
 
 
-class AmountElectricalCurrent(Amount, WithElectricalCurrentMixin):
+class AmountElectricalCurrent(NonNegativeAmount, WithElectricalCurrentMixin):
     """Current."""
 
     pass
@@ -666,7 +666,7 @@ class WithVolumeMixin(WithDimensionalityMixin):
     dimensionality_unit = VolumeStr.unit
 
 
-class AmountVolume(Amount, WithVolumeMixin):
+class AmountVolume(NonNegativeAmount, WithVolumeMixin):
     """Volume."""
 
     pass
@@ -684,7 +684,7 @@ class WithAirflowMixin(WithDimensionalityMixin):
     dimensionality_unit = AirflowStr.unit
 
 
-class AmountAirflow(Amount, WithAirflowMixin):
+class AmountAirflow(NonNegativeAmount, WithAirflowMixin):
     """Airflow."""
 
     pass
@@ -702,7 +702,7 @@ class WithFlowRateMixin(WithDimensionalityMixin):
     dimensionality_unit = FlowRateStr.unit
 
 
-class AmountFlowRate(Amount, WithFlowRateMixin):
+class AmountFlowRate(NonNegativeAmount, WithFlowRateMixin):
     """Flow Rate."""
 
     pass
@@ -720,7 +720,7 @@ class WithMassPerLengthMixin(WithDimensionalityMixin):
     dimensionality_unit = MassPerLengthStr.unit
 
 
-class AmountMassPerLength(Amount, WithFlowRateMixin):
+class AmountMassPerLength(NonNegativeAmount, WithFlowRateMixin):
     """Mass per length."""
 
     pass
@@ -738,7 +738,7 @@ class WithAreaPerVolumeMixin(WithDimensionalityMixin):
     dimensionality_unit = AreaPerVolumeStr.unit
 
 
-class AmountAreaPerVolume(Amount, WithFlowRateMixin):
+class AmountAreaPerVolume(NonNegativeAmount, WithFlowRateMixin):
     """Area per volume."""
 
     pass
@@ -756,7 +756,7 @@ class WithThermalConductivity(WithDimensionalityMixin):
     dimensionality_unit = ThermalConductivityStr.unit
 
 
-class AmountThermalConductivityMixin(Amount, WithThermalConductivity):
+class AmountThermalConductivityMixin(NonNegativeAmount, WithThermalConductivity):
     """Area per volume."""
 
     pass
@@ -778,7 +778,7 @@ class WithForce(WithDimensionalityMixin):
     dimensionality_unit = ForceNStr.unit
 
 
-class AmountForce(Amount, WithForce):
+class AmountForce(NonNegativeAmount, WithForce):
     """Area per volume."""
 
     pass
@@ -796,7 +796,7 @@ class WithYarnWeight(WithDimensionalityMixin):
     dimensionality_unit = YarnWeightStr.unit
 
 
-class AmountYarnWeight(Amount, WithYarnWeight):
+class AmountYarnWeight(NonNegativeAmount, WithYarnWeight):
     """Yarn weight."""
 
     pass
@@ -814,7 +814,7 @@ class WithThermalExpansion(WithDimensionalityMixin):
     dimensionality_unit = ThermalExpansionStr.unit
 
 
-class AmountThermalExpansion(Amount, WithThermalExpansion):
+class AmountThermalExpansion(NonNegativeAmount, WithThermalExpansion):
     """Yarn weight."""
 
     pass
@@ -832,7 +832,7 @@ class WithUtilization(WithDimensionalityMixin):
     dimensionality_unit = UtilizationStr.unit
 
 
-class AmountUtilization(Amount, WithUtilization):
+class AmountUtilization(NonNegativeAmount, WithUtilization):
     """Utilization."""
 
     pass
@@ -850,7 +850,7 @@ class WithUFactor(WithDimensionalityMixin):
     dimensionality_unit = UFactorStr.unit
 
 
-class AmountUFactor(Amount, WithUFactor):
+class AmountUFactor(NonNegativeAmount, WithUFactor):
     """U-Factor."""
 
     pass
@@ -868,7 +868,7 @@ class WithRFactor(WithDimensionalityMixin):
     dimensionality_unit = RFactorStr.unit
 
 
-class AmountRFactor(Amount, WithRFactor):
+class AmountRFactor(NonNegativeAmount, WithRFactor):
     """R-Factor."""
 
     pass

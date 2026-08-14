@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -33,5 +33,5 @@ class GroutingV1(BaseOpenEpdHierarchicalSpec):
         short_name="Grouting",
         description="Water-cement-sand mixture for embedding rebar in masonry walls, connecting sections of precast concrete, and filling joints and voids",
         masterformat="03 60 00 Grouting",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )

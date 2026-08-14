@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.enums import AllFabrication, AllTimberSpecies
 from openepd.model.specs.singular.common import HasForestPracticesCertifiers
@@ -36,7 +36,7 @@ class WoodJoistsV1(BaseOpenEpdHierarchicalSpec, HasForestPracticesCertifiers):
         alt_names=["Metal-Web Wood Joists", "Wood Joist"],
         description="Prefabricated I-shaped engineered wood structural members made primarily from one or more types of wood. Includes products made with metallic webbing. Excludes products where the wood is merely decorative.",
         masterformat="06 17 33 Wood I-Joists",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
     # Own fields:

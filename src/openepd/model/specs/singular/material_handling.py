@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 
 
@@ -32,7 +32,7 @@ class ConveyorsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Material Handling >> Conveyors"],
         description="Machinery and tools designed to move materials within a facility, both manually and automatically. This includes various types of conveyors such as belt, roller, and overhead conveyors.",
         masterformat="41 21 00 Conveyors",
-        declared_unit=Amount(qty=1, unit="m"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m"),
     )
 
 

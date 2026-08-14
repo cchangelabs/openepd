@@ -13,4 +13,17 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-VERSION = "6.45.0"
+from openepd.compat.pydantic import pyd
+from openepd.model.ext.harmonization.base import HarmonizationFactorBase
+
+
+class CustomHarmonizationFactor(HarmonizationFactorBase):
+    class Config:
+        extra = pyd.Extra.allow
+
+    name: str = pyd.Field(
+        description="Display name for the harmonization factor.",
+        example="Custom Harmonization Factor",
+        min_length=1,
+        max_length=250,
+    )

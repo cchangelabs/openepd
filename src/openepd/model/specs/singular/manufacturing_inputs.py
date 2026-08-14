@@ -15,7 +15,7 @@
 #
 from openepd.compat.pydantic import pyd
 from openepd.model.category import CategoryMeta
-from openepd.model.common import Amount
+from openepd.model.common import NonNegativeAmount
 from openepd.model.specs.base import BaseOpenEpdHierarchicalSpec
 from openepd.model.specs.concrete import Cementitious
 from openepd.model.specs.enums import (
@@ -46,7 +46,7 @@ class CementV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Ciment", "OPC", "Zement", "Blended Cement", "PLC"],
         historical_names=["Manufacturing Inputs >> Cementitious >> Cement"],
         description="Cements, including Portland and blended cements, that can serve as the primary binder in a concrete mix.",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     # Own fields:
@@ -72,7 +72,7 @@ class MasonryCementV1(BaseOpenEpdHierarchicalSpec):
         display_name="Masonry Cement",
         historical_names=["Manufacturing Inputs >> Cementitious >> Masonry Cement"],
         description="A cementitious product typically composed of Portland cement and hydrated lime. Masonry cement is combined with sand to make mortar",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     # Own fields:
@@ -89,7 +89,7 @@ class SupplementaryCementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):
         short_name="SCM",
         historical_names=["Manufacturing Inputs >> Cementitious >> SCM"],
         description="Cementitious materials that are not effective binders when used on their own.",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     # Own fields:
@@ -112,7 +112,7 @@ class AccessFlooringPedestalsV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Manufacturing Inputs >> Pedestals"],
         description="Part of an access floor system. Pedestals are laid out on top of a floor slab and support access floor panels, creating a void space between the floor slab and finish floor.",
         masterformat="09 69 00 Access Flooring",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
 
@@ -125,7 +125,7 @@ class CarpetBackingV1(BaseOpenEpdHierarchicalSpec):
         display_name="Carpet Backing",
         historical_names=["Manufacturing Inputs >> Carpet Backing"],
         description="Fabric backing holding a carpet together",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
@@ -139,7 +139,7 @@ class CarpetFiberV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Carpet Yarn"],
         historical_names=["Manufacturing Inputs >> Carpet Fiber"],
         description="Fiber yarn used in the manufacture of carpet, typically nylon or wool",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     # Own fields:
@@ -157,7 +157,7 @@ class CementitiousMaterialsV1(BaseOpenEpdHierarchicalSpec):
         short_name="Cementitious",
         historical_names=["Manufacturing Inputs >> Cementitious"],
         description="General category for cements and cement components.",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
     # Nested specs:
@@ -183,7 +183,7 @@ class ConcreteAdmixturesV1(BaseOpenEpdHierarchicalSpec):
         historical_names=["Manufacturing Inputs >> Admixtures"],
         description="Concrete admixtures are chemical additives that are added to fresh concrete immediately before or during mixing. Admixtures have distinct functions and are categorized as: air-entraining, water-reducing, retarding, accelerating, and plasticizers (i.e., superplasticizers)",
         masterformat="03 05 00.03 Concrete Admixtures",
-        declared_unit=Amount(qty=1, unit="kg"),
+        declared_unit=NonNegativeAmount(qty=1, unit="kg"),
     )
 
     # Own fields:
@@ -200,7 +200,7 @@ class TextilesV1(BaseOpenEpdHierarchicalSpec):
         alt_names=["Cloth", "Fabric", "Leather", "Textile"],
         historical_names=["Manufacturing Inputs >> Textiles"],
         description="Textiles for use in manufacturing end products.",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
     # Own fields:
@@ -222,7 +222,7 @@ class AccessFlooringPanelsV1(BaseOpenEpdHierarchicalSpec, AccessFlooringMixin):
         historical_names=["Manufacturing Inputs >> Panels"],
         description="Part of an access floor system. Panels are laid on top of an access floor pedestal, creating a finish floor.",
         masterformat="09 69 00 Access Flooring",
-        declared_unit=Amount(qty=1, unit="m^2"),
+        declared_unit=NonNegativeAmount(qty=1, unit="m^2"),
     )
 
 
@@ -236,7 +236,7 @@ class AsphaltInputsV1(BaseOpenEpdHierarchicalSpec):
         short_name="Asphalt Inputs",
         historical_names=["Manufacturing Inputs >> Asphalt Inputs"],
         description="Binders, additives, and other non-aggregate-like ingredients for asphalt",
-        declared_unit=Amount(qty=1, unit="t"),
+        declared_unit=NonNegativeAmount(qty=1, unit="t"),
     )
 
 
