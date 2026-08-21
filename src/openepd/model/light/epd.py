@@ -37,6 +37,7 @@ from openepd.model.declaration import (
     WithProgramOperatorMixin,
     WithVerifierMixin,
 )
+from openepd.model.examples.epd import EXAMPLE_EPD_WORK_SURFACES
 from openepd.model.geography import Geography
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org, Plant
@@ -245,6 +246,8 @@ EpdPreview = EpdPreviewV0
 
 class EpdV0(WithLciaMixin, EpdPreviewV0, title="EPD (Full)"):
     """Represent an EPD."""
+
+    model_config = pydantic.ConfigDict(json_schema_extra={"examples": [EXAMPLE_EPD_WORK_SURFACES]})
 
     _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
 

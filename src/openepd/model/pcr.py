@@ -21,6 +21,7 @@ import pydantic
 
 from openepd.model.base import BaseOpenEpdSchema, OpenXpdUUID
 from openepd.model.common import NonNegativeAmount, WithAltIdsMixin, WithAttachmentsMixin
+from openepd.model.examples.pcr import EXAMPLE_PCR_BIFMA_SEATING
 from openepd.model.geography import Geography
 from openepd.model.org import Org
 
@@ -57,6 +58,8 @@ class PcrRef(BaseOpenEpdSchema):
 
 class Pcr(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
     """Represent a PCR (Product Category Rules)."""
+
+    model_config = pydantic.ConfigDict(json_schema_extra={"examples": [EXAMPLE_PCR_BIFMA_SEATING]})
 
     id: OpenXpdUUID | None = pydantic.Field(
         description="The unique ID for this PCR.  To ensure global uniqueness, should be registered "

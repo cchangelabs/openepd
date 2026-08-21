@@ -21,6 +21,7 @@ import pydantic
 
 from openepd.model.base import BaseOpenEpdSchema, OpenXpdUUID, RootDocument
 from openepd.model.common import DATA_URL_IMAGE_MAX_LENGTH, NonNegativeAmount, validate_data_url
+from openepd.model.examples.pcr import EXAMPLE_PCR_BIFMA_SEATING
 from openepd.model.geography import Geography
 from openepd.model.org import Org
 from openepd.model.pcr import Pcr
@@ -98,6 +99,7 @@ class BaseDeclaration(RootDocument, abc.ABC):
         "most-specific PCR that applies; the PCR entry should point to any "
         "parent PCR.",
         default=None,
+        examples=[EXAMPLE_PCR_BIFMA_SEATING],
     )
     lca_discussion: str | None = pydantic.Field(
         max_length=20000,

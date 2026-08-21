@@ -41,6 +41,8 @@ from openepd.model.org import Org
 from openepd.model.specs.singular import Specs
 from openepd.model.versioning import OpenEpdVersions, Version
 
+from .examples.epd import EXAMPLE_EPD_WORK_SURFACES
+
 # Import light versions here for compatibility reasons so they are available from the same import location
 from .light.epd import MANUFACTURER_DESCRIPTION, PLANT_DESCRIPTION, Ec3EpdExtension, EpdRef  # noqa: F401
 from .light.epd import EpdPreviewV0 as EpdPreviewV0Light
@@ -58,6 +60,8 @@ EpdPreview = EpdPreviewV0
 
 class EpdV0(WithLciaMixin, EpdPreviewV0, title="EPD (Full)"):
     """Represent an EPD."""
+
+    model_config = pydantic.ConfigDict(json_schema_extra={"examples": [EXAMPLE_EPD_WORK_SURFACES]})
 
     _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
 

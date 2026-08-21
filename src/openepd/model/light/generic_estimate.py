@@ -22,6 +22,7 @@ import pydantic
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
 from openepd.model.common import Constituent, NonNegativeAmount, WithAltIdsMixin, WithAttachmentsMixin
 from openepd.model.declaration import AverageDatasetMixin, BaseDeclaration, RefBase
+from openepd.model.examples.generic_estimate import EXAMPLE_GENERIC_ESTIMATE_SAMPLE
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org
 from openepd.model.resource import DatabaseResource, SoftwareResource
@@ -75,6 +76,8 @@ class GenericEstimatePreviewV0(
 
     Excludes LCIA data.
     """
+
+    model_config = pydantic.ConfigDict(json_schema_extra={"examples": [EXAMPLE_GENERIC_ESTIMATE_SAMPLE]})
 
     _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
 
