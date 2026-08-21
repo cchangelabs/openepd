@@ -24,6 +24,7 @@ __all__ = [
     "IndustryEpdWithDepsV0",
     "SampleSize",
 ]
+import pydantic
 
 from openepd.model.base import BaseDocumentFactory, OpenEpdDoctypes
 from openepd.model.common import WithAltIdsMixin
@@ -31,6 +32,7 @@ from openepd.model.lcia import WithLciaMixin
 from openepd.model.specs.mixins import AverageDatasetMaterialSpecsMixin
 from openepd.model.versioning import OpenEpdVersions, Version
 
+from .examples.industry_epd import EXAMPLE_INDUSTRY_EPD_METAL_PRODUCTS
 from .light.industry_epd import IndustryEpdPreviewV0 as IndustryEpdPreviewV0Light
 
 # Import light versions here for compatibility reasons so they are available from the same import location
@@ -59,6 +61,8 @@ class IndustryEpdV0(IndustryEpdPreviewV0, WithLciaMixin, WithAltIdsMixin, title=
     models are defined, either with fewer fields (to be used in APIs for list requests) or with more relaxed structure
     to support related entities matching.
     """
+
+    model_config = pydantic.ConfigDict(json_schema_extra={"examples": [EXAMPLE_INDUSTRY_EPD_METAL_PRODUCTS]})
 
 
 IndustryEpd = IndustryEpdV0

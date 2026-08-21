@@ -28,6 +28,7 @@ from openepd.model.declaration import (
     WithProgramOperatorMixin,
     WithVerifierMixin,
 )
+from openepd.model.examples.industry_epd import EXAMPLE_INDUSTRY_EPD_METAL_PRODUCTS
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org
 from openepd.model.versioning import OpenEpdVersions, Version
@@ -74,6 +75,8 @@ class IndustryEpdPreviewV0(
 
     Used in lists and other cases where full LCIA data is not required.
     """
+
+    model_config = pydantic.ConfigDict(json_schema_extra={"examples": [EXAMPLE_INDUSTRY_EPD_METAL_PRODUCTS]})
 
     _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
 
