@@ -1,3 +1,9 @@
+## 7.35.0 (2026-09-02)
+
+### Feat
+
+- **model**: add static examples for schema generation
+
 ## 7.34.0 (2026-08-14)
 
 ### Feat
