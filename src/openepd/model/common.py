@@ -419,6 +419,30 @@ class WithAttachmentsMixin(pydantic.BaseModel):
         if url is not None:
             self.set_attachment(name, url)
 
+    def get_attachment(self, name: str) -> pydantic.AnyUrl | str | None:
+        """
+        Return the URL of an attachment.
+
+        :param name: name of the attachment to look up.
+        :return: the attachment URL, or ``None`` if no such attachment exists.
+        """
+        if self.attachments is None:
+            return None
+        return self.attachments.get(name)
+
+    def get_attachment_as_string(self, name: str) -> str | None:
+        """
+        Return the URL of an attachment as a string.
+
+        Pydantic v2 ``AnyUrl`` values are not plain strings, so this converts the stored
+        value to its string representation.
+
+        :param name: name of the attachment to look up.
+        :return: the attachment URL as a string, or ``None`` if no such attachment exists.
+        """
+        url = self.get_attachment(name)
+        return str(url) if url else None
+
 
 class WithAltIdsMixin(pydantic.BaseModel):
     """Mixin for objects that can have alt_ids."""
