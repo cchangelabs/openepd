@@ -57,10 +57,16 @@ class BaseAmount(BaseOpenEpdSchema, ABC):
     @pydantic.model_validator(mode="after")
     def check_qty_or_unit(self) -> Self:
         """Ensure that qty or unit is provided."""
+        from openepd.model.validation.quantity import validate_unit_is_known
 
         if self.qty is None and self.unit is None:
             msg = "Either qty or unit must be provided."
             raise ValueError(msg)
+
+        # Validate that system can recognize the unit if it is provided
+        if self.unit is not None:
+            validate_unit_is_known(self.unit)
+
         return self
 
     def to_quantity_str(self) -> str:
