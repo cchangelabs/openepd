@@ -112,6 +112,26 @@ class ExternalValidationConfig:
     QUANTITY_VALIDATOR: ClassVar[QuantityValidator | None] = None
 
 
+def validate_unit_is_known(unit: str | None, error_msg: str = "Valid unit is required") -> None:
+    """
+    Validate that a given unit is a recognized unit without checking it against any specific unit.
+
+    This is useful for fields that may legitimately hold any unit (e.g. `declared_unit`, which might be "kg",
+    "m2", "item", etc. depending on the product) but should still reject garbage values and typos.
+
+    :param unit: unit string to validate, e.g. "kg". No-op if None/empty or if no external validator is configured.
+    :param error_msg: error message to raise if the unit is not recognized
+    :raise ValueError: if the unit is not recognized by the external validator
+    """
+    if not unit or ExternalValidationConfig.QUANTITY_VALIDATOR is None:
+        return
+
+    try:
+        ExternalValidationConfig.QUANTITY_VALIDATOR.validate_same_dimensionality(unit, unit)
+    except ValueError as err:
+        raise ValueError(error_msg) from err
+
+
 def validate_unit_factory(dimensionality: OpenEPDUnit | str) -> "QuantityValidatorType":
     """Create validator for units (not quantities) to check for dimensionality."""
 
