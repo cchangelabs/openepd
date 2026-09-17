@@ -1,3 +1,10 @@
+## 7.36.0 (2026-09-17)
+
+### Feat
+
+- require valid unit for `BaseAmount.unit`
+- **model**: add attachment URL getters to WithAttachmentsMixin
+
 ## 7.35.0 (2026-09-02)
 
 ### Feat
