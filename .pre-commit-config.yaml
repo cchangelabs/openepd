@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+    rev: v6.0.0
     hooks:
       - id: detect-aws-credentials
         args: [--allow-missing-credentials]
@@ -18,7 +18,7 @@ repos:
       - id: check-yaml
         name: Check XML files with xmllint
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.28.0
+    rev: v1.38.0
     hooks:
       - id: yamllint
         name: Check YAML files with yamllint
@@ -42,21 +42,19 @@ repos:
       # Run the formatter.
       - id: ruff-format
         name: Format code using ruff code formatter
-  - repo: https://gitlab.com/smop/pre-commit-hooks
-    rev: v1.0.0
+  - repo: local
     hooks:
-      - id: check-poetry
-        name: Validate poetry config
+      - name: Poetry Check
+        id: check-poetry
+        language: system
+        pass_filenames: false
+        stages: [ pre-commit ]
+        entry: poetry check
   - repo: local
     hooks:
       - name: Apply copyright
         id: apply-copyright
         language: script
         pass_filenames: true
-        stages: [ commit ]
+        stages: [ pre-commit ]
         entry: development/apply-copyright.sh
-#  - repo: https://github.com/commitizen-tools/commitizen
-#    rev: v2.37.0
-#    hooks:
-#      - id: commitizen-branch
-#        stages: [ push ]

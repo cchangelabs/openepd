@@ -42,7 +42,7 @@ pytest-cov = ">=7.1.0"
 ruff = ">=0.11.8"
 licenseheaders = "~=0.8"
 mypy = ">=1.0.1"
-pre-commit = "~=2.19"
+pre-commit = ">=4.6.2"
 commitizen = "~=3.16.0"
 
 # Type checking
