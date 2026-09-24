@@ -43,7 +43,15 @@ class SpecVersionTestCase(unittest.TestCase):
         if spec:
             module = importlib.import_module(spec.name)
             for module_info in pkgutil.walk_packages(module.__path__):
+                full_module_name = ".".join((module.__name__, module_info.name))
                 if module_info.ispkg:
-                    yield from cls.__find_iteratively(".".join((module.__name__, module_info.name)), relative_to)
+                    yield from cls.__find_iteratively(full_module_name, relative_to)
                 else:
-                    yield module_info.name, importlib.import_module(".".join((module.__name__, module_info.name)))
+                    module_spec = importlib.util.find_spec(full_module_name)
+                    if not module_spec:
+                        continue
+                    try:
+                        yield module_info.name, importlib.import_module(full_module_name)
+                    except ModuleNotFoundError as exc:
+                        if exc.name != full_module_name:
+                            raise
