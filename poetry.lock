@@ -1223,18 +1223,6 @@ test = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "ini2toml[lite] (>=
 type = ["importlib_metadata (>=7.0.2) ; python_version < \"3.10\"", "jaraco.develop (>=7.21) ; sys_platform != \"cygwin\"", "mypy (==1.14.*)", "pytest-mypy"]
 
 [[package]]
-name = "teamcity-messages"
-version = "1.32"
-description = "Send test results to TeamCity continuous integration server from unittest, nose, py.test, twisted trial, behave (Python 2.6+)"
-optional = false
-python-versions = "*"
-groups = ["dev"]
-files = [
-    {file = "teamcity-messages-1.32.tar.gz", hash = "sha256:6991d95642c8d067524c90985b650d89caab6ac0bf47b721b931b04951abbfc1"},
-    {file = "teamcity_messages-1.32-py3-none-any.whl", hash = "sha256:1dbd30e24e80ee80083a5ce01d8898c8157a974fd7cd13ee219834b918f4ab8c"},
-]
-
-[[package]]
 name = "termcolor"
 version = "2.4.0"
 description = "ANSI color formatting for output in terminal"
@@ -1401,4 +1389,4 @@ api-client = ["requests"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "c812e00e4d61e8f9e087fb57b2e65d0d9d8f1b17f34866edb4f5da031758075b"
+content-hash = "07ec8d2b781915a2c18e01e665fa08977e26775de1e2c02aec14249f0c262e5e"

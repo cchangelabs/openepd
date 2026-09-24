@@ -38,7 +38,6 @@ coverage = { version = ">=7.16.1", extras = ["toml"] }
 pytest = "~=7.2"
 pytest-subtests = "~=0.4"
 pytest-cov = "~=4.0"
-teamcity-messages = ">=1.31"
 
 # Dev tools
 ruff = ">=0.11.8"
