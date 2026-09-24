@@ -17,20 +17,12 @@ This library is a Python library to work with OpenEPD format.
 
 > ⚠️ **Version Warning**
 >
-> This application is currently developed in **two major versions** in parallel:
+> Maintenance of the **v6** branch has been stopped.
 >
-> - **v6.x (>=6.0.0)** — Stable and production-ready. Maintains support for Pydantic v1 and v2 through a compatibility layer.
-> - **v7.x (>=7.0.0)** — Public beta. Fully functional, with native support for Pydantic v2. Still experimental and may introduce breaking changes in **internal and integration interfaces**.
+> This branch is kept here as an **archive**.
 >
-> ⚠️ No breaking changes are expected in the **public standard or data model**, only in internal APIs and integration points.
-> 
-> Both versions currently offer the same set of features.  
-> We recommend using **v6** for most production use cases as the more mature and stable option.  
-> **v7** is suitable for production environments that can tolerate some level of interface instability and want to adopt the latest internals.
->
-> 💡 Only the **latest version of v7** is guaranteed to contain all the features and updates from v6. Earlier v7 releases may lack some recent improvements.
->
-> Once **v7 is promoted to stable**, all earlier **pre-stable (beta) v7 releases** will be **marked as yanked** to prevent accidental usage in production.
+> ⚠️ This branch **cannot be simply merged** into the `dev` branch, because development happened in parallel and
+> the histories diverged.
 >
 
 ## About OpenEPD
