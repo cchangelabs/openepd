@@ -35,8 +35,7 @@ openlocationcode = ">=1.0.1"
 [tool.poetry.group.dev.dependencies]
 # Unit tests
 coverage = { version = ">=7.16.1", extras = ["toml"] }
-pytest = "~=7.2"
-pytest-subtests = "~=0.4"
+pytest = ">=9.1.1"
 pytest-cov = "~=4.0"
 
 # Dev tools
@@ -97,10 +96,10 @@ atomic = "true"
 
 # Tests and Coverage
 [tool.pytest.ini_options]
-minversion = "7.0"
+minversion = "9.0"
 addopts = "--maxfail=50"
 python_files = ["test_*.py"]
-required_plugins = ["pytest-subtests", "pytest-cov"]
+required_plugins = ["pytest-cov"]
 testpaths = ["src"]
 
 [tool.coverage.run]
