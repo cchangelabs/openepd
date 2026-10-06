@@ -15,7 +15,6 @@
 #
 from types import MappingProxyType
 from typing import Final, NamedTuple
-import warnings
 
 M49_CODE_WORLD = "001"
 M49_CODE_AFRICA = "002"
@@ -1204,16 +1203,3 @@ Mapping from ISO 3166-1 alpha-2 country codes to their respective first-level ad
 Immutable mapping where each key is a country code (e.g., 'US', 'CA') 
 and each value is a tuple of subdivision codes (e.g., 'US-CA' for California).
 """
-
-
-def is_m49_code(to_check: str) -> bool:
-    """
-    Check if passed string is M49 code.
-
-    :param to_check: any string
-    :return: `True` if passed string is M49 code, `False` otherwise
-    """
-    warnings.warn("Use m49.utils.is_m49_code instead.", DeprecationWarning, stacklevel=2)
-    from . import utils
-
-    return utils.is_m49_code(to_check)
