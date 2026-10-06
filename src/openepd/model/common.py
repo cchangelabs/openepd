@@ -17,7 +17,7 @@ from abc import ABC
 from enum import StrEnum
 import math
 import re
-from typing import Annotated, Any, Final, Self, TypeAlias
+from typing import Annotated, Any, Final, Self
 
 import pydantic
 import pydantic_core
@@ -74,18 +74,10 @@ class BaseAmount(BaseOpenEpdSchema, ABC):
         return f"{self.qty or ''} {self.unit or 'str'}".strip()
 
 
-# Deprecated: Amount is deprecated — use the NonNegativeAmount type alias instead.
-# NonNegativeAmount makes the non-negative intent explicit. In a future major release
-# NonNegativeAmount will become a proper class and Amount will be removed to avoid
-# ambiguity: the name "Amount" does not clearly communicate that only non‑negative
-# values are allowed.
-class Amount(BaseAmount):
+class NonNegativeAmount(BaseAmount):
     """A value-and-unit pairing for amounts that do not have an uncertainty."""
 
     qty: float | None = pydantic.Field(description="How much of this in the amount.", ge=0, default=None)
-
-
-NonNegativeAmount: TypeAlias = Amount
 
 
 class AnyAmount(BaseAmount):
