@@ -26,6 +26,7 @@ class SchemaGenerationTestCase(unittest.TestCase):
         for key in actual["properties"]:
             actual_def = {"allOf": actual["properties"][key]["allOf"]}
             self.assertEqual(expected_property_def, actual_def)
+        self.assertEqual(actual["additionalProperties"], expected_property_def)
 
     def test_epd_generated_without_errors_schema(self):
         Epd.model_json_schema(ref_template="#/components/schemas/{model}")
