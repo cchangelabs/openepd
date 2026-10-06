@@ -15,7 +15,7 @@
 #
 from collections.abc import Generator
 from enum import StrEnum
-from typing import Any, ClassVar, Self, cast
+from typing import Any, ClassVar, Literal, Self, cast, overload
 
 import pydantic
 from pydantic.annotated_handlers import GetJsonSchemaHandler
@@ -698,6 +698,51 @@ class LCIAMethod(StrEnum):
             return cls(d_name)
         except ValueError:
             return cls.UNKNOWN
+
+    @classmethod
+    @overload
+    def normalize_method(cls, method: "LCIAMethod", none_as_unknown: bool = True) -> "LCIAMethod": ...
+
+    @classmethod
+    @overload
+    def normalize_method(cls, method: str, none_as_unknown: bool = True) -> "LCIAMethod | str": ...
+
+    @classmethod
+    @overload
+    def normalize_method(cls, method: None, none_as_unknown: Literal[True] = True) -> "LCIAMethod": ...
+
+    @classmethod
+    @overload
+    def normalize_method(cls, method: None, none_as_unknown: Literal[False]) -> None: ...
+
+    @classmethod
+    @overload
+    def normalize_method(
+        cls, method: "LCIAMethod | str | None", none_as_unknown: bool = True
+    ) -> "LCIAMethod | str | None": ...
+
+    @classmethod
+    def normalize_method(
+        cls, method: "LCIAMethod | str | None", none_as_unknown: bool = True
+    ) -> "LCIAMethod | str | None":
+        """
+        Convert a recognized method name to its enum member.
+
+        Unrecognized strings and enum members are returned unchanged. ``None`` is
+        converted to :attr:`UNKNOWN` by default.
+
+        :param method: LCIA method enum, method name, custom method name, or ``None``.
+        :param none_as_unknown: Whether to convert ``None`` to :attr:`UNKNOWN`.
+        :returns: The normalized method, an unchanged custom method name, or ``None``.
+        """
+        if method is None:
+            return cls.UNKNOWN if none_as_unknown else None
+        if not isinstance(method, str):
+            return method
+        try:
+            return cls(method)
+        except ValueError:
+            return method
 
 
 class Impacts(pydantic.RootModel[dict[LCIAMethod, ImpactSet]]):

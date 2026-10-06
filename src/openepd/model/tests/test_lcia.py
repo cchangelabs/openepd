@@ -92,6 +92,15 @@ class LciaTestCase(unittest.TestCase):
         self.assertEqual(expected_items, items)
 
 
+class LCIAMethodTestCase(unittest.TestCase):
+    def test_normalize_method(self) -> None:
+        self.assertIs(LCIAMethod.normalize_method("TRACI 2.1"), LCIAMethod.TRACI_2_1)
+        self.assertEqual(LCIAMethod.normalize_method("custom method"), "custom method")
+        self.assertIs(LCIAMethod.normalize_method(LCIAMethod.TRACI_2_1), LCIAMethod.TRACI_2_1)
+        self.assertIs(LCIAMethod.normalize_method(None), LCIAMethod.UNKNOWN)
+        self.assertIsNone(LCIAMethod.normalize_method(None, none_as_unknown=False))
+
+
 class ImpactsTestCase(unittest.TestCase):
     def test_model_validate_parses_lcia_method_keys(self) -> None:
         impacts = Impacts.model_validate(
