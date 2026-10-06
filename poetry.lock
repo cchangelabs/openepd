@@ -1242,18 +1242,6 @@ files = [
 ]
 
 [[package]]
-name = "types-deprecated"
-version = "1.2.9.20240311"
-description = "Typing stubs for Deprecated"
-optional = false
-python-versions = ">=3.8"
-groups = ["dev"]
-files = [
-    {file = "types-Deprecated-1.2.9.20240311.tar.gz", hash = "sha256:0680e89989a8142707de8103f15d182445a533c1047fd9b7e8c5459101e9b90a"},
-    {file = "types_Deprecated-1.2.9.20240311-py3-none-any.whl", hash = "sha256:d7793aaf32ff8f7e49a8ac781de4872248e0694c4b75a7a8a186c51167463f9d"},
-]
-
-[[package]]
 name = "types-requests"
 version = "2.31.0.20240311"
 description = "Typing stubs for requests"
@@ -1463,4 +1451,4 @@ api-client = ["requests"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "eafffcf5d020741431f81b29fd045446b5210f81084680c94f6a617ed012cdda"
+content-hash = "4ac75df43082d2aba32e855aecc3437d5431526d5d8d68f74fa4a38284938cdd"
