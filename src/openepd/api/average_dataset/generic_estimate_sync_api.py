@@ -14,7 +14,6 @@
 #  limitations under the License.
 #
 from typing import Literal, TypeAlias, overload
-import warnings
 
 from requests import Response
 
@@ -53,32 +52,6 @@ class GenericEstimateApi(BaseApiMethodGroup):
         if with_response:
             return GenericEstimate.model_validate(response.json()), response
         return GenericEstimate.model_validate(response.json())
-
-    @overload
-    def get_by_openxpd_uuid(self, uuid: str, with_response: Literal[True]) -> tuple[GenericEstimate, Response]: ...
-
-    @overload
-    def get_by_openxpd_uuid(self, uuid: str, with_response: Literal[False] = False) -> GenericEstimate: ...
-
-    def get_by_openxpd_uuid(
-        self, uuid: str, with_response: bool = False
-    ) -> GenericEstimate | tuple[GenericEstimate, Response]:
-        """
-        Get Generic Estimate by OpenEPD UUID.
-
-        This method is deprecated and will be removed in a future version. Use get_by_uuid instead.
-
-        :param uuid: Open xPD UUID
-        :param with_response: whether to return just object or with response
-        :return: GE or GE with response depending on param with_response
-        :raise ObjectNotFound: if Generic Estimate is not found
-        """
-        warnings.warn(
-            "get_by_openxpd_uuid is deprecated and will be removed in a future version. Use get_by_uuid instead.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-        return self.get_by_uuid(uuid, with_response=with_response)  # type: ignore[call-overload]
 
     @overload
     def post_with_refs(
