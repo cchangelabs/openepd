@@ -701,17 +701,25 @@ class LCIAMethod(StrEnum):
 
 
 class Impacts(pydantic.RootModel[dict[LCIAMethod, ImpactSet]]):
-    """List of environmental impacts, compiled per one of the standard Impact Assessment methods."""
+    """Environmental impact results grouped by Life Cycle Impact Assessment (LCIA) method."""
 
-    def set_unknown_lcia(self, impact_set: ImpactSet):
-        """Set the impact set as an unknown LCIA method."""
+    def set_unknown_lcia(self, impact_set: ImpactSet) -> None:
+        """
+        Store an impact set whose LCIA method is unknown.
+
+        :param impact_set: Impact results to associate with the unknown method.
+        """
         self.root[LCIAMethod.UNKNOWN] = impact_set
 
-    def set_impact_set(self, lcia_method: LCIAMethod | str | None, impact_set: ImpactSet):
+    def set_impact_set(self, lcia_method: LCIAMethod | str | None, impact_set: ImpactSet) -> None:
         """
-        Set the impact set for the given LCIA method.
+        Store or replace the impact set for an LCIA method.
 
-        If the LCIA method is None, set it as an unknown LCIA method.
+        A string matching a defined method is associated with that method. An unrecognized
+        string or ``None`` is stored under :attr:`LCIAMethod.UNKNOWN`.
+
+        :param lcia_method: Method enum, method name, or ``None`` if the method is unknown.
+        :param impact_set: Impact results to associate with the method.
         """
         if lcia_method is None:
             self.set_unknown_lcia(impact_set)
@@ -722,20 +730,35 @@ class Impacts(pydantic.RootModel[dict[LCIAMethod, ImpactSet]]):
 
     def replace_lcia_method(self, lcia_method: LCIAMethod, new_lcia_method: LCIAMethod) -> None:
         """
-        Replace the LCIA method.
+        Move an impact set from one LCIA method key to another.
 
-        If the there is no impact set for the given LCIA method, do nothing.
+        If no impact set is stored for ``lcia_method``, or both method keys are the same,
+        this instance is unchanged.
+
+        :param lcia_method: Existing method key to replace.
+        :param new_lcia_method: Method key under which to store the existing impact set.
         """
-        impact_set = self.get_impact_set(lcia_method)
+        if lcia_method == new_lcia_method:
+            return
+        impact_set = self.root.pop(lcia_method, None)
         if impact_set is None:
-            return None
+            return
         self.set_impact_set(new_lcia_method, impact_set)
-        del self.root[lcia_method]
 
     def get_impact_set(
         self, lcia_method: LCIAMethod | str | None, default_val: ImpactSet | None = None
     ) -> ImpactSet | None:
-        """Return the impact set for the given LCIA method."""
+        """
+        Get the impact set associated with an LCIA method.
+
+        A string matching a defined method looks up that method. Other strings, like
+        ``None``, look up :attr:`LCIAMethod.UNKNOWN`.
+
+        :param lcia_method: Method enum, method name, or ``None`` for the unknown method.
+        :param default_val: Value to return if no impact set is stored for the resolved method.
+        :returns: The matching impact set, or ``default_val`` if the method is not present.
+        :rtype: ImpactSet | None
+        """
         if lcia_method is None:
             return self.root.get(LCIAMethod.UNKNOWN, default_val)
         if isinstance(lcia_method, str):
@@ -743,11 +766,15 @@ class Impacts(pydantic.RootModel[dict[LCIAMethod, ImpactSet]]):
         return self.root.get(lcia_method, default_val)
 
     def available_methods(self) -> set[LCIAMethod]:
-        """Return a list of available LCIA methods."""
+        """Return the set of LCIA methods with stored impact sets."""
         return set(self.root.keys())
 
     def as_dict(self) -> dict[LCIAMethod, ImpactSet]:
-        """Return the impacts as a dictionary."""
+        """
+        Return the underlying mapping of LCIA methods to impact sets.
+
+        The returned dictionary is the model's root mapping, not a copy.
+        """
         return self.root
 
     @classmethod
