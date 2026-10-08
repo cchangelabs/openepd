@@ -745,7 +745,7 @@ class LCIAMethod(StrEnum):
             return method
 
 
-class Impacts(pydantic.RootModel[dict[LCIAMethod, ImpactSet]]):
+class Impacts(pydantic.RootModel[dict[LCIAMethod | str, ImpactSet]]):
     """Environmental impact results grouped by Life Cycle Impact Assessment (LCIA) method."""
 
     def set_unknown_lcia(self, impact_set: ImpactSet) -> None:
@@ -760,35 +760,39 @@ class Impacts(pydantic.RootModel[dict[LCIAMethod, ImpactSet]]):
         """
         Store or replace the impact set for an LCIA method.
 
-        A string matching a defined method is associated with that method. An unrecognized
-        string or ``None`` is stored under :attr:`LCIAMethod.UNKNOWN`.
+        A ``LCIAMethod`` value is used directly. A string that exactly matches a
+        ``LCIAMethod`` value is converted to that enum; matching is case-sensitive.
+        Any other string is stored as-is as a custom method name. ``None`` stores
+        the impact set under :attr:`LCIAMethod.UNKNOWN`.
 
-        :param lcia_method: Method enum, method name, or ``None`` if the method is unknown.
+        :param lcia_method: Method enum, method name, custom method name, or ``None`` for unknown.
         :param impact_set: Impact results to associate with the method.
         """
-        if lcia_method is None:
-            self.set_unknown_lcia(impact_set)
-        else:
-            if isinstance(lcia_method, str):
-                lcia_method = LCIAMethod.get_by_name(lcia_method)
-            self.root[lcia_method] = impact_set
+        self.root[LCIAMethod.normalize_method(lcia_method)] = impact_set
 
-    def replace_lcia_method(self, lcia_method: LCIAMethod, new_lcia_method: LCIAMethod) -> None:
+    def replace_lcia_method(self, lcia_method: LCIAMethod | str, new_lcia_method: LCIAMethod | str) -> None:
         """
         Move an impact set from one LCIA method key to another.
+
+        Both method arguments may be enum members or strings. A string matching a
+        defined :class:`LCIAMethod` value works whether the existing key is stored
+        as that enum member or as a plain string; any other string is treated as a
+        custom method name.
 
         If no impact set is stored for ``lcia_method``, or both method keys are the same,
         this instance is unchanged.
 
-        :param lcia_method: Existing method key to replace.
-        :param new_lcia_method: Method key under which to store the existing impact set.
+        :param lcia_method: Existing method key or custom method name to replace.
+        :param new_lcia_method: Method key or custom method name under which to store the impact set.
         """
-        if lcia_method == new_lcia_method:
+        source_key = LCIAMethod.normalize_method(lcia_method)
+        destination_key = LCIAMethod.normalize_method(new_lcia_method)
+        if source_key == destination_key:
             return
-        impact_set = self.root.pop(lcia_method, None)
+        impact_set = self.root.pop(source_key, None)
         if impact_set is None:
             return
-        self.set_impact_set(new_lcia_method, impact_set)
+        self.set_impact_set(destination_key, impact_set)
 
     def get_impact_set(
         self, lcia_method: LCIAMethod | str | None, default_val: ImpactSet | None = None
@@ -796,25 +800,24 @@ class Impacts(pydantic.RootModel[dict[LCIAMethod, ImpactSet]]):
         """
         Get the impact set associated with an LCIA method.
 
-        A string matching a defined method looks up that method. Other strings, like
-        ``None``, look up :attr:`LCIAMethod.UNKNOWN`.
+        A string that exactly matches a defined :class:`LCIAMethod` value is
+        normalized to that enum member; matching is case-sensitive. Other strings
+        are treated as custom method names and looked up as-is. ``None`` looks up
+        :attr:`LCIAMethod.UNKNOWN`.
 
-        :param lcia_method: Method enum, method name, or ``None`` for the unknown method.
+        :param lcia_method: Method enum, method name, custom method name, or ``None`` for unknown.
         :param default_val: Value to return if no impact set is stored for the resolved method.
         :returns: The matching impact set, or ``default_val`` if the method is not present.
         :rtype: ImpactSet | None
         """
-        if lcia_method is None:
-            return self.root.get(LCIAMethod.UNKNOWN, default_val)
-        if isinstance(lcia_method, str):
-            lcia_method = LCIAMethod.get_by_name(lcia_method)
-        return self.root.get(lcia_method, default_val)
+        normalized_method = LCIAMethod.normalize_method(lcia_method, none_as_unknown=True)
+        return self.root.get(normalized_method, default_val)
 
-    def available_methods(self) -> set[LCIAMethod]:
+    def available_methods(self) -> set[LCIAMethod | str]:
         """Return the set of LCIA methods with stored impact sets."""
         return set(self.root.keys())
 
-    def as_dict(self) -> dict[LCIAMethod, ImpactSet]:
+    def as_dict(self) -> dict[LCIAMethod | str, ImpactSet]:
         """
         Return the underlying mapping of LCIA methods to impact sets.
 
@@ -860,20 +863,22 @@ class Impacts(pydantic.RootModel[dict[LCIAMethod, ImpactSet]]):
         if not impact_set_ref:
             impact_set_ref = ref_template.format(model="ImpactSet")
 
-        # Update the schema with explicit properties for each LCIA method
+        impact_set_schema = {"allOf": [{"$ref": impact_set_ref}]}
+
+        # Keep known methods explicit while allowing custom method names.
         json_schema.update(
             {
                 "type": "object",
                 "properties": {
                     str(lm): {
                         "description": str(lm),
-                        "allOf": [{"$ref": impact_set_ref}],
+                        **impact_set_schema,
                     }
                     for lm in LCIAMethod
                 },
+                "additionalProperties": impact_set_schema,
             }
         )
-        json_schema.pop("additionalProperties")
 
         return json_schema
 
