@@ -1,3 +1,10 @@
+## 7.37.0 (2026-10-08)
+
+### Feat
+
+- add normalize_method for LCIAMethod with overloads and tests
+- **deps**: widen open-xpd-uuid version range to <3
+
 ## 7.36.0 (2026-09-17)
 
 ### Feat
