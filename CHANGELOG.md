@@ -1,3 +1,34 @@
+## 8.0.0 (2026-10-08)
+
+### BREAKING CHANGE
+
+- OtherElectricalEquipmentV1 is no longer importable from
+openepd.model.specs.singular.other_electrical_equipment.
+OtherElectricalEquipmentRangeV1 is no longer importable from
+openepd.model.specs.range.other_electrical_equipment.
+- Remove the deprecated Amount class. NonNegativeAmount is now
+a concrete class rather than a type alias.
+- Remove `is_m49_code` from `openepd.m49.const`; callers must use `m49.utils.is_m49_code` instead.
+- Remove `GenericEstimateApi.get_by_openxpd_uuid`; use
+`get_by_uuid` instead.
+- Impacts keys now accept `LCIAMethod | str`. `Impacts.set_impact_set()`
+preserves custom method names instead of falling back to `LCIAMethod.UNKNOWN`.
+`Impacts.get_impact_set()` now looks up unrecognized strings as exact custom keys rather
+than resolving them to UNKNOWN. `Impacts.replace_lcia_method()` now supports moving
+impact sets from and to custom method keys; previously, unrecognized method
+names resolved to UNKNOWN when storing the destination.
+
+### Feat
+
+- **lcia**: support custom LCIA methods
+
+### Refactor
+
+- **specs**: remove deprecated electrical equipment import shims
+- replace Amount with NonNegativeAmount
+- **m49**: remove deprecated is_m49_code method
+- **api**: remove deprecated get_by_openxpd_uuid method
+
 ## 7.37.0 (2026-10-08)
 
 ### Feat
