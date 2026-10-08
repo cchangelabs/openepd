@@ -77,8 +77,6 @@ class GenericEstimatePreviewV0(
     Excludes LCIA data.
     """
 
-    model_config = pydantic.ConfigDict(json_schema_extra={"examples": [EXAMPLE_GENERIC_ESTIMATE_SAMPLE]})
-
     _FORMAT_VERSION = OpenEpdVersions.Version0.as_str()
 
     doctype: Literal["openGenericEstimate"] = pydantic.Field(
@@ -166,7 +164,7 @@ class GenericEstimatePreviewV0(
     )
 
     model_config = pydantic.ConfigDict(
-        protected_namespaces=(),
+        protected_namespaces=(), json_schema_extra={"examples": [EXAMPLE_GENERIC_ESTIMATE_SAMPLE]}
     )
 
 

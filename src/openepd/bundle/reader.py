@@ -151,9 +151,8 @@ class DefaultBundleReader(BaseBundleReader):
         asset_ref = self._asset_ref_to_str(asset)
         for x in self.assets_iter():
             rel_asset_list = self._get_rel_asset_list(x)
-            if asset_ref in rel_asset_list:
-                if rel_type is None or x.rel_type in rel_type:
-                    yield x
+            if asset_ref in rel_asset_list and (rel_type is None or x.rel_type in rel_type):
+                yield x
 
     def get_asset_by_ref(self, asset_ref: AssetRef) -> AssetInfo | None:
         """Get the asset by its reference."""

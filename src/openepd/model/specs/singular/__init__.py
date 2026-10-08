@@ -268,12 +268,12 @@ class Specs(BaseOpenEpdHierarchicalSpec):
             if issubclass(target_type, pydantic.BaseModel):
                 fields = target_type.model_fields
             elif i == len(keys):
-                return None
+                return
             else:
                 msg = f"Path {'.'.join(keys)} does not exist in {klass.__name__} spec"
                 raise KeyError(msg)
 
-        return None
+        return
 
     def _path_to_keys(self, path: str | Sequence[str], delimiter: str) -> Sequence[str]:
         """

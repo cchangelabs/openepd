@@ -122,12 +122,9 @@ def unwrap_annotation(annotation: Any) -> TypeWithContainer:
         # list[T], tuple[T, ...], set[T] -> return element types
         return TypeWithContainer(tuple(unwrap_annotated_annotation(a) for a in args if a is not type(None)), origin)
 
-    if origin is dict:
+    if origin is dict and len(args) == 2:
         # dict[K, V] -> return value type(s)
-        if len(args) == 2:
-            return TypeWithContainer(
-                tuple(unwrap_annotated_annotation(a) for a in args[1:] if a is not type(None)), origin
-            )
+        return TypeWithContainer(tuple(unwrap_annotated_annotation(a) for a in args[1:] if a is not type(None)), origin)
 
     if origin is type(Union[int, str]):  # noqa: UP007
         # Just in case, but `get_origin` for `|` unions is `types.UnionType`
@@ -202,9 +199,8 @@ def unwrap_annotated_annotation(annotation: Any) -> Any:
     origin = get_origin(annotation)
     args = get_args(annotation)
 
-    if origin is Annotated:
-        if len(args) >= 1:
-            return args[0]
+    if origin is Annotated and len(args) >= 1:
+        return args[0]
     return annotation
 
 

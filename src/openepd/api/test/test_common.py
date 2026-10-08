@@ -53,18 +53,14 @@ class StreamingListResponseTestCase(unittest.TestCase):
         self.assertEqual(len(sl), len(self.DATA))
         self.assertEqual(sl.get_total_pages(), math.ceil(len(self.DATA) / page_size))
 
-        result = []
-        for x in sl:
-            result.append(x)
+        result = list(sl)
         self.assertEqual(result, self.DATA)
 
     def test_streaming_list_skip_pages(self):
         page_size = 7
         sl = StreamingListResponse[int](self.fetch_data, page_size=page_size)
 
-        result = []
-        for x in sl.iterator(start_from_page=4):
-            result.append(x)
+        result = list(sl.iterator(start_from_page=4))
         self.assertEqual(result, self.DATA[(4 - 1) * page_size :])
 
 

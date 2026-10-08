@@ -15,6 +15,7 @@
 #
 __all__ = [
     "collapse_iso3166_to_known_regions",
+    "expand_country_subdivisions",
     "flatten_to_iso3166_alpha2",
     "is_iso_code",
     "is_m49_code",
@@ -24,7 +25,6 @@ __all__ = [
     "m49_to_region_and_country_names",
     "openepd_to_m49",
     "region_and_country_names_to_m49",
-    "expand_country_subdivisions",
 ]
 from collections.abc import Collection, Iterable
 from functools import lru_cache

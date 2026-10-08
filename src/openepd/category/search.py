@@ -133,8 +133,7 @@ class CategoryFinder:
                 self._add_multi(key, node, multi)
 
             # Traverse children
-            for child in node.children:
-                stack.append(child)
+            stack.extend(node.children)
 
     def _ensure_index_built(self) -> tuple[dict[str, CategoryNode], dict[str, list[CategoryNode]]]:
         """

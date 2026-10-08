@@ -20,7 +20,7 @@ import unittest
 
 from requests import Response
 
-from openepd.api.errors import ApiError, AuthError, ValidationError
+from openepd.api.errors import AuthError, ValidationError
 from openepd.api.sync_client import OpenEpdApiClientSync
 from openepd.model.epd import Epd
 from openepd.model.generic_estimate import GenericEstimateWithDeps
@@ -115,10 +115,8 @@ class SyncClientApiTestCase(unittest.TestCase):
                 "doc": "https://non-existing-url.com/pcrs/non-existing-pcr.pdf",
             }
         )
-        try:
-            pcr_ref = self.api_client.pcrs.create(new_pcr)
-        except ApiError as e:
-            raise e
+        pcr_ref = self.api_client.pcrs.create(new_pcr)
+
         self.assertEqual("Test PCR full name", pcr_ref.name)
         self.assertIsNotNone(pcr_ref.id)
         self.assertIsNotNone(pcr_ref.ref)
