@@ -3,7 +3,7 @@
 <p align="center">
 <a href="https://pypi.org/project/openepd/"><img src="https://img.shields.io/pypi/l/openepd?style=for-the-badge" title="License: Apache-2"/></a> 
 <a href="https://pypi.org/project/openepd/"><img src="https://img.shields.io/pypi/pyversions/openepd?style=for-the-badge" title="Python Versions"/></a> 
-<a href="https://github.com/psf/black/"><img src="https://img.shields.io/badge/Code%20Style-black-black?style=for-the-badge" title="Code style: black"/></a> 
+<a href="https://github.com/astral-sh/ruff/"><img src="https://img.shields.io/badge/Code%20Style-ruff-d7ff64?style=for-the-badge&logo=ruff&logoColor=black" title="Code style: Ruff"/></a>
 <a href="https://pypi.org/project/openepd/"><img src="https://img.shields.io/pypi/v/openepd?style=for-the-badge" title="PyPy Version"/></a> 
 <a href="https://pypi.org/project/openepd/"><img src="https://img.shields.io/pypi/dm/openepd?style=for-the-badge" title="PyPy Downloads"/></a> 
 <br>
