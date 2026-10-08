@@ -15,9 +15,8 @@
 #
 from collections.abc import Callable, Iterable, Iterator
 from contextlib import contextmanager
-from datetime import datetime, timedelta
 import threading
-from time import sleep
+from time import monotonic, sleep
 from typing import Generic, cast
 
 from requests import Response
@@ -44,8 +43,8 @@ class Throttler:
         self.__time_lock = threading.Lock()
 
         self.__count = 0
-        self.__start = datetime.now()
-        self.__time_limit = timedelta(seconds=1)
+        self.__start = monotonic()
+        self.__time_limit = 1.0
 
     @contextmanager
     def throttle(self):
@@ -54,11 +53,11 @@ class Throttler:
             count = self.__count
 
         with self.__time_lock:
-            diff = datetime.now() - self.__start
+            diff = monotonic() - self.__start
             if diff < self.__time_limit and count >= self.rate:
-                seconds = (self.__time_limit - diff).total_seconds()
+                seconds = self.__time_limit - diff
                 sleep(seconds)
-                self.__start = datetime.now()
+                self.__start = monotonic()
                 self.__count = count - self.rate
 
         with self.__count_lock:
@@ -139,13 +138,13 @@ class StreamingListResponse(Iterable[TOpenEpdObject], Generic[TOpenEpdObject]):
             raise ValueError(msg)
         if not isinstance(self.__recent_response.payload, list):
             msg = "Response does not contain a list"
-            raise ValueError(msg)
+            raise ValueError(msg)  # noqa: TRY004
         if self.__recent_response.meta is None:
             msg = "Response does not contain meta"
             raise ValueError(msg)
         if not isinstance(self.__recent_response.meta, PagingMetaMixin):
             msg = "Response does not contain paging meta"
-            raise ValueError(msg)
+            raise ValueError(msg)  # noqa: TRY004
         return self.__recent_response.payload
 
     def get_paging_meta(self) -> PagingMeta:

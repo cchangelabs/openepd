@@ -44,7 +44,7 @@ from openepd.model.versioning import OpenEpdVersions, Version
 from .examples.epd import EXAMPLE_EPD_WORK_SURFACES
 
 # Import light versions here for compatibility reasons so they are available from the same import location
-from .light.epd import MANUFACTURER_DESCRIPTION, PLANT_DESCRIPTION, Ec3EpdExtension, EpdRef  # noqa: F401
+from .light.epd import MANUFACTURER_DESCRIPTION, PLANT_DESCRIPTION, Ec3EpdExtension, EpdRef
 from .light.epd import EpdPreviewV0 as EpdPreviewV0Light
 
 

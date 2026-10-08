@@ -159,7 +159,7 @@ class SyncHttpClient:
     def __init__(
         self,
         base_url: str,
-        throttle_retry_timeout: float | int | datetime.timedelta = 300,
+        throttle_retry_timeout: float | int | datetime.timedelta = 300,  # noqa: PYI041
         requests_per_sec: float = 10,
         retry_count: int = 3,
         user_agent: str | None = None,
@@ -372,15 +372,15 @@ class SyncHttpClient:
 
         url = self._get_url_for_request(endpoint)
 
-        request_kwargs = dict(
-            params=params,
-            data=data,
-            json=json,
-            files=files,
-            headers=headers,
-            timeout=self.timeout,
-            auth=auth or self._auth,
-        )
+        request_kwargs = {
+            "params": params,
+            "data": data,
+            "json": json,
+            "files": files,
+            "headers": headers,
+            "timeout": self.timeout,
+            "auth": auth or self._auth,
+        }
         request_kwargs.update(kwargs)
 
         do_request = self._handle_service_unavailable(
@@ -450,8 +450,10 @@ class SyncHttpClient:
         except ValueError:
             # This means the value is not at number of seconds but a date, so we parse it
             try:
-                date_in_future = datetime.datetime.strptime(retry_after.strip(), self.HTTP_DATE_TIME_FORMAT)
-                return (date_in_future - datetime.datetime.utcnow()).total_seconds()
+                date_in_future = datetime.datetime.strptime(retry_after.strip(), self.HTTP_DATE_TIME_FORMAT).replace(
+                    tzinfo=datetime.UTC
+                )
+                return (date_in_future - datetime.datetime.now(datetime.UTC)).total_seconds()
             except ValueError:
                 logger.warning("Invalid Retry-After header: %s", retry_after)
                 return default
@@ -515,7 +517,7 @@ class DefaultOpenApiErrorHandlers:
                 error_code = validation_errors.get("code", None)
                 if isinstance(validation_errors.get("detail", 0), str):
                     error_text = validation_errors.get("detail", "")
-                    validation_errors = dict(msg=validation_errors.get("detail", []))
+                    validation_errors = {"msg": validation_errors.get("detail", [])}
                 if error_code is not None:
                     error_text = f"[{error_code}] {error_text}"
         return DefaultOpenApiErrorHandlers._Error(error_text, error_code, validation_errors)

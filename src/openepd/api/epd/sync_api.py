@@ -100,11 +100,11 @@ class EpdApi(BaseApiMethodGroup):
         content = self._client.do_request(
             "get",
             "/v2/epds/search",
-            params=dict(
-                omf=omf,
-                page_number=page_num,
-                page_size=page_size,
-            ),
+            params={
+                "omf": omf,
+                "page_number": page_num,
+                "page_size": page_size,
+            },
         ).json()
         return EpdSearchResponse.model_validate(content)
 
@@ -136,7 +136,7 @@ class EpdApi(BaseApiMethodGroup):
         :param omf: OMF - open material filter string (see OMF spec).
         :return: statistics wrapped in OpenEpdApiResponse
         """
-        content = self._client.do_request("get", "/v2/epds/statistics", params=dict(omf=omf)).json()
+        content = self._client.do_request("get", "/v2/epds/statistics", params={"omf": omf}).json()
         return EpdStatisticsResponse.model_validate(content)
 
     def get_statistics(self, omf: str) -> StatisticsDto:

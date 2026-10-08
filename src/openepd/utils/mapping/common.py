@@ -30,7 +30,7 @@ T = TypeVar("T")
 K = TypeVar("K")
 
 
-class BaseDataMapper(Generic[T, K], abc.ABC):
+class BaseDataMapper(abc.ABC, Generic[T, K]):
     """
     Base class for all data mappers.
 
