@@ -39,7 +39,7 @@ pytest = ">=9.1.1"
 pytest-cov = ">=7.1.0"
 
 # Dev tools
-ruff = ">=0.16.10"
+ruff = ">=0.17.1"
 licenseheaders = "~=0.8"
 mypy = ">=1.0.1"
 pre-commit = ">=4.7.0"
