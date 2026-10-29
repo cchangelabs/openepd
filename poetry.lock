@@ -155,18 +155,15 @@ markers = {main = "extra == \"api-client\""}
 
 [[package]]
 name = "click"
-version = "8.1.7"
+version = "8.5.0"
 description = "Composable command line interface toolkit"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "click-8.1.7-py3-none-any.whl", hash = "sha256:ae74fb96c20a0277a1d615f1e4d73c8414f5a98db8b799a7931d1582f3390c28"},
-    {file = "click-8.1.7.tar.gz", hash = "sha256:ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de"},
+    {file = "click-8.5.0-py3-none-any.whl", hash = "sha256:255bc9599cf7748b4b1a446ccc735421bd08a2ae529a8b88597d3de5664ee360"},
+    {file = "click-8.5.0.tar.gz", hash = "sha256:ba0d2089de75ea0310e2dde03160e6ca10009947fb95a182f9b54021bb272e34"},
 ]
-
-[package.dependencies]
-colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
 name = "colorama"
@@ -1464,4 +1461,4 @@ api-client = ["requests"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "807cf11e014af26e301fe1806ba638ef65dfdbb17d18f6ce13b075a718562a11"
+content-hash = "42e5fd965e24cd41a77503cd4650904831d8233951fd8e4db4fea3302522ecda"

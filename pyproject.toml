@@ -50,7 +50,7 @@ types-dateparser = ">=1.1.3"
 types-requests = ">=2.0"
 
 # Code generation
-click = "~=8.1.7"
+click = "~=8.5.0"
 # For list of countries
 pycountry = ">=24.6.1"
 jinja2 = ">=3.1.4"
