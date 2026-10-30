@@ -201,4 +201,4 @@ class GenericEstimateFactory(BaseDocumentFactory[GenericEstimate]):
     """Factory for EPD objects."""
 
     DOCTYPE_CONSTRAINT = OpenEpdDoctypes.GenericEstimate
-    VERSION_MAP: dict[Version, type[GenericEstimate]] = {OpenEpdVersions.Version0: GenericEstimateV0}
+    VERSION_MAP: dict[Version, type[GenericEstimate]] = {OpenEpdVersions.Version0: GenericEstimateV0}  # type: ignore[dict-item]
