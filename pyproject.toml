@@ -46,8 +46,8 @@ pre-commit = ">=4.7.0"
 commitizen = ">=4.19.2"
 
 # Type checking
-types-dateparser = ">=1.1.3"
-types-requests = ">=2.0"
+types-dateparser = ">=1.4.3.20260907"
+types-requests = ">=2.33.0.20261006"
 
 # Code generation
 click = "~=8.5.0"

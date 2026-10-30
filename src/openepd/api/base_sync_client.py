@@ -92,13 +92,13 @@ class HttpStreamReader(IOBase):
 
     def raw(self) -> BinaryIO:
         """Return the underlying HTTP Response content."""
-        return self._http_response.raw
+        return self._http_response.raw  # type: ignore[return-value]
 
     def detach(self) -> BinaryIO:
         """Separate the underlying HTTP Response from the HttpStreamReader and return it."""
         tmp = self._http_response
         self._http_response = None  # type: ignore
-        return tmp.raw
+        return tmp.raw  # type: ignore[return-value]
 
     def close(self) -> None:
         """
