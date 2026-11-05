@@ -39,7 +39,7 @@ pytest = ">=9.2.0"
 pytest-cov = ">=7.1.0"
 
 # Dev tools
-ruff = ">=0.17.1"
+ruff = ">=0.17.3" # bump .pre-commit-config.yaml as well
 licenseheaders = "~=0.8"
 mypy = ">=2.4.1"
 pre-commit = ">=4.7.0"
