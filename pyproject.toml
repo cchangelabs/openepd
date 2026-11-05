@@ -43,7 +43,7 @@ ruff = ">=0.17.1"
 licenseheaders = "~=0.8"
 mypy = ">=2.4.1"
 pre-commit = ">=4.7.0"
-commitizen = ">=4.19.2"
+commitizen = ">=4.19.3"
 
 # Type checking
 types-dateparser = ">=1.4.3.20260907"
