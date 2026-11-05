@@ -34,8 +34,8 @@ openlocationcode = ">=1.0.1"
 
 [tool.poetry.group.dev.dependencies]
 # Unit tests
-coverage = { version = ">=7.16.2", extras = ["toml"] }
-pytest = ">=9.1.1"
+coverage = { version = ">=7.17.0", extras = ["toml"] }
+pytest = ">=9.2.0"
 pytest-cov = ">=7.1.0"
 
 # Dev tools
