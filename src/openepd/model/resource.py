@@ -109,3 +109,43 @@ class SoftwareResource(ResourceObject):
         description="The primary function of this software.",
         default=None,
     )
+
+
+class WithLcaResourcesMixin(pydantic.BaseModel):
+    """Mixin providing shared LCA resource references for declarations and estimates."""
+
+    lci_databases: list[DatabaseResource] = pydantic.Field(
+        description="LCI Database(s) and Version",
+        default_factory=list,
+        examples=[
+            [
+                {
+                    "owner": {"web_domain": "ecoinvent.org"},
+                    "name": "ecoinvent",
+                    "version": "3.10",
+                    "link": "https://support.ecoinvent.org/ecoinvent-version-3.10",
+                },
+                {
+                    "owner": {"web_domain": "lcacommons.gov"},
+                    "name": "ULSCI",
+                    "version": "FY24.Q3.01",
+                    "link": "https://www.lcacommons.gov/lca-collaboration/National_Renewable_Energy_Laboratory/USLCI_Database_Public/datasets",
+                },
+            ]
+        ],
+    )
+    software_used: list[SoftwareResource] = pydantic.Field(
+        description="List of software tool(s) and version(s) used for LCA and/or EPD generation.",
+        default_factory=list,
+        examples=[
+            [
+                {
+                    "owner": {"web_domain": "greendelta.com"},
+                    "primary_function": "LCA Analysis",
+                    "name": "openLCA",
+                    "version": "2.3.1",
+                    "link": "https://share.greendelta.com/index.php/s/D1xa3haTiHJdhqt?path=%2F2.3.1",
+                }
+            ]
+        ],
+    )

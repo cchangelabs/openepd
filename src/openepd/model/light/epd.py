@@ -41,6 +41,7 @@ from openepd.model.examples.epd import EXAMPLE_EPD_WORK_SURFACES
 from openepd.model.geography import Geography
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org, Plant
+from openepd.model.resource import WithLcaResourcesMixin
 from openepd.model.versioning import OpenEpdVersions, Version
 
 MANUFACTURER_DESCRIPTION = (
@@ -124,6 +125,7 @@ class EpdRef(RefBase, title="EPD (Ref)"):
 
 class EpdPreviewV0(
     WithAttachmentsMixin,
+    WithLcaResourcesMixin,
     WithProgramOperatorMixin,
     WithEpdDeveloperMixin,
     WithVerifierMixin,
