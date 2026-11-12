@@ -62,8 +62,8 @@ class ValidationError(ApiError):
             full_key = f"{parent_key}.{key}" if parent_key else key
             if isinstance(value, dict):
                 nested_result = ValidationError.__flatten(value, full_key)
-                for nested_key, nested_errors in nested_result.items():  # type: ignore[assignment]
-                    result.setdefault(nested_key, []).extend(nested_errors)
+                for nested_key, error_messages in nested_result.items():
+                    result.setdefault(nested_key, []).extend(error_messages)
             else:
                 result.setdefault(full_key, []).extend(value)
         return result
@@ -72,8 +72,7 @@ class ValidationError(ApiError):
         result: list[str] = ["Validation errors:"]
         for code, errors in self.__flatten(self.validation_errors).items():  # type: ignore[arg-type]
             result.append(f"{code}:")
-            for e in errors:
-                result.append(f"  {e}")
+            result.extend(f"  {e}" for e in errors)
         return "\n".join(result)
 
 

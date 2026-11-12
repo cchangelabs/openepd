@@ -21,6 +21,7 @@ __all__ = [
     "get_openepd_geography_tree",
 ]
 from collections.abc import Callable
+import contextlib
 import dataclasses
 import functools
 
@@ -102,14 +103,10 @@ class GeographyTree:
 def _create_geography_item_from_m49(m49_code: str, level: int) -> GeographyItem:
     openepd_code = m49_code
     iso_codes: set[str] | None = None
-    try:
+    with contextlib.suppress(ValueError):
         openepd_code = m49_utils.m49_to_openepd({m49_code}).pop()
-    except ValueError:
-        pass
-    try:
+    with contextlib.suppress(ValueError):
         iso_codes = m49_utils.m49_to_iso({m49_code})
-    except ValueError:
-        pass
     verbose_name = m49_utils.m49_to_region_and_country_names([m49_code]).pop()
     return GeographyItem(
         verbose_name=verbose_name,

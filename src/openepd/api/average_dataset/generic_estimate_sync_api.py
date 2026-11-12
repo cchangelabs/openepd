@@ -171,10 +171,10 @@ class GenericEstimateApi(BaseApiMethodGroup):
         response = self._client.do_request(
             "get",
             "/generic_estimates",
-            params=dict(
-                page_number=page_num,
-                page_size=page_size,
-            ),
+            params={
+                "page_number": page_num,
+                "page_size": page_size,
+            },
         )
         data = [GenericEstimatePreview.model_validate(o) for o in response.json()]
         if with_response:

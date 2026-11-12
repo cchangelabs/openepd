@@ -43,7 +43,7 @@ class SpecVersionTestCase(unittest.TestCase):
         if spec:
             module = importlib.import_module(spec.name)
             for module_info in pkgutil.walk_packages(module.__path__):
-                full_module_name = ".".join((module.__name__, module_info.name))
+                full_module_name = f"{module.__name__}.{module_info.name}"
                 if module_info.ispkg:
                     yield from cls.__find_iteratively(full_module_name, relative_to)
                 else:

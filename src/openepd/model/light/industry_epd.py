@@ -126,4 +126,4 @@ class IndustryEpdFactory(BaseDocumentFactory[IndustryEpd]):
     """Factory for EPD objects."""
 
     DOCTYPE_CONSTRAINT = OpenEpdDoctypes.IndustryEpd
-    VERSION_MAP: dict[Version, type[IndustryEpd]] = {OpenEpdVersions.Version0: IndustryEpdV0}
+    VERSION_MAP: dict[Version, type[IndustryEpd]] = {OpenEpdVersions.Version0: IndustryEpdV0}  # type: ignore[dict-item]

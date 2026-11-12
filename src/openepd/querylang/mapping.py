@@ -114,10 +114,11 @@ class FieldMappingLibrary:
 
     def exclude(self, *matchers: FieldNameMatcher) -> None:
         for matcher in matchers:
-            to_delete: list[str] = []
-            for fd in self._field_mappings.values():
-                if is_field_matched_by_def(fd, matcher, self.delimiter):
-                    to_delete.append(fd.lang_field_name)
+            to_delete = [
+                fd.lang_field_name
+                for fd in self._field_mappings.values()
+                if is_field_matched_by_def(fd, matcher, self.delimiter)
+            ]
             for name in to_delete:
                 del self._field_mappings[name]
 

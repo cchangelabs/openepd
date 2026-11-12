@@ -13,7 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-from enum import Enum, StrEnum
+from enum import StrEnum
 import logging
 import re
 from typing import Final, TypeVar, Union
@@ -30,7 +30,7 @@ from .operators import SupportedOperators
 logger = logging.getLogger(__name__)
 
 
-class MfFieldSet(str, Enum):
+class MfFieldSet(StrEnum):
     OPEN_MATERIAL_FILTER = "open_mf"
 
 
@@ -170,11 +170,11 @@ class MfExpression(pyd.BaseModel):
         return None
 
     def get_predicates_by_field(self, field_name: str) -> list[MfPredicate]:
-        result: list[MfPredicate] = []
-        for ex in self.children:  # type: ignore[union-attr]
-            if ex.type == MfBooleanOp.NONE and ex.pred and ex.pred.field == field_name:
-                result.append(ex.pred)
-        return result
+        return [
+            ex.pred
+            for ex in self.children  # type: ignore[union-attr]
+            if ex.type == MfBooleanOp.NONE and ex.pred and ex.pred.field == field_name
+        ]
 
     def remove_predicate(self, to_remove: MfPredicate) -> "MfExpression":
         for ex in self.children:  # type: ignore[union-attr]
@@ -203,9 +203,7 @@ class MaterialFilter(pyd.BaseModel):
 
     @classmethod
     def is_version_pragma(cls, pragma: PragmaDto) -> bool:
-        if pragma.name.upper() in _VERSION_PRAGMA_NAMES_HASHMAP:
-            return True
-        return False
+        return pragma.name.upper() in _VERSION_PRAGMA_NAMES_HASHMAP
 
     @classmethod
     def get_lang_version_from_pragma(cls, pragma: list[PragmaDto]) -> int | None:

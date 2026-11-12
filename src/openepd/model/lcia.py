@@ -267,7 +267,7 @@ class ScopesetByNameBase(BaseOpenEpdSchema, extra="allow"):
 
         # add extra fields
         if not only_standard and self.model_extra:
-            for name in self.model_extra.keys():
+            for name in self.model_extra:
                 if name not in result:
                     result.append(name)
 
@@ -853,7 +853,7 @@ class Impacts(pydantic.RootModel[dict[LCIAMethod | str, ImpactSet]]):
             and json_schema_generator.definitions
         ):
             # Look for ImpactSet in the definitions
-            for def_name, _ in json_schema_generator.definitions.items():
+            for def_name in json_schema_generator.definitions:
                 if "ImpactSet" in def_name:
                     # Use the correct OpenAPI reference format
                     impact_set_ref = ref_template.format(model=def_name)

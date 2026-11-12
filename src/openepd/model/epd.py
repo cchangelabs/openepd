@@ -44,7 +44,7 @@ from openepd.model.versioning import OpenEpdVersions, Version
 from .examples.epd import EXAMPLE_EPD_WORK_SURFACES
 
 # Import light versions here for compatibility reasons so they are available from the same import location
-from .light.epd import MANUFACTURER_DESCRIPTION, PLANT_DESCRIPTION, Ec3EpdExtension, EpdRef  # noqa: F401
+from .light.epd import MANUFACTURER_DESCRIPTION, PLANT_DESCRIPTION, Ec3EpdExtension, EpdRef
 from .light.epd import EpdPreviewV0 as EpdPreviewV0Light
 
 
@@ -110,4 +110,4 @@ class EpdFactory(BaseDocumentFactory[BaseDeclaration]):
     """Factory for EPD objects."""
 
     DOCTYPE_CONSTRAINT = OpenEpdDoctypes.Epd
-    VERSION_MAP: dict[Version, type[BaseDeclaration]] = {OpenEpdVersions.Version0: EpdV0}
+    VERSION_MAP: dict[Version, type[BaseDeclaration]] = {OpenEpdVersions.Version0: EpdV0}  # type: ignore[dict-item]

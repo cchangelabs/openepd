@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openepd"
-version = "8.0.0"
+version = "8.1.0"
 license = "Apache-2.0"
 description = "Python library to work with OpenEPD format"
 authors = ["C-Change Labs <support@c-change-labs.com>"]
@@ -34,25 +34,25 @@ openlocationcode = ">=1.0.1"
 
 [tool.poetry.group.dev.dependencies]
 # Unit tests
-coverage = { version = ">=7.16.1", extras = ["toml"] }
-pytest = ">=9.1.1"
+coverage = { version = ">=7.17.0", extras = ["toml"] }
+pytest = ">=9.2.0"
 pytest-cov = ">=7.1.0"
 
 # Dev tools
-ruff = ">=0.11.8"
+ruff = ">=0.17.3" # bump .pre-commit-config.yaml as well
 licenseheaders = "~=0.8"
-mypy = ">=1.0.1"
-pre-commit = ">=4.6.2"
-commitizen = ">=4.19.0"
+mypy = ">=2.4.1"
+pre-commit = ">=4.7.0"
+commitizen = ">=4.19.3"
 
 # Type checking
-types-dateparser = ">=1.1.3"
-types-requests = ">=2.0"
+types-dateparser = ">=1.4.3.20260907"
+types-requests = ">=2.33.0.20261006"
 
 # Code generation
-click = "~=8.1.7"
+click = "~=8.5.0"
 # For list of countries
-pycountry = ">=24.6.1"
+pycountry = ">=26.2.16"
 jinja2 = ">=3.1.4"
 
 
@@ -67,31 +67,6 @@ pre_bump_hooks = []
 version_files = [
     "src/openepd/__version__.py",
 ]
-
-[tool.black]
-line-length = 120
-target-version = ['py311']
-exclude = '''
-(
-  /(
-      \.eggs         # exclude a few common directories in the
-    | \.git          # root of the project
-    | \.mypy_cache
-    | \.tox
-    | \.venv
-    | _build
-    | buck-out
-    | build
-    | dist
-  )/
-)
-'''
-
-[tool.isort]
-profile = "black"
-line_length = 120
-force_sort_within_sections = "true"
-atomic = "true"
 
 # Tests and Coverage
 [tool.pytest.ini_options]
@@ -167,6 +142,9 @@ extend-ignore = [
     "D202", # D202 No blank lines allowed after function docstring
     "D203", # We want to have blank line before class
     "D212", # We want to require second line for multiline docstrings
+    "BLE001", # Do not catch blind exception: `Exception`
+    "RUF012", # Mutable default value for class attribute
+    "PIE790", # Unnecessary `pass` statement
 ]
 extend-select = ["S", "E", "B", "A", "EM", "UP", "LOG", "G", "I", "D"]
 

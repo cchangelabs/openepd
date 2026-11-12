@@ -106,7 +106,7 @@ class BaseMeta(
     pass
 
 
-TMeta = TypeVar("TMeta", bound=MetaCollectionDto, covariant=True)
+TMeta = TypeVar("TMeta", bound=MetaCollectionDto, covariant=True)  # noqa: PLC0105
 
 
 class OpenEpdApiResponse(BaseOpenEpdApiModel, Generic[TPayload, TMeta]):

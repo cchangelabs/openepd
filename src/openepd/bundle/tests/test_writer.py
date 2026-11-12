@@ -39,7 +39,7 @@ class DefaultBundleReaderTestCase(unittest.TestCase):
         bundle_comment = "First empty bundle"
         file_name, writer = self.__create_writer(bundle_comment)
         with writer:
-            pass  # noqa
+            pass
         with self.__create_reader(file_name) as reader:
             manifest = reader.get_manifest()
             self.assertEqual(bundle_comment, manifest.comment)

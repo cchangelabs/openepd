@@ -52,10 +52,7 @@ class Version(NamedTuple):
         :param version: The extension version.
         :return: A tuple of major and minor version numbers.
         """
-        if isinstance(version, str):
-            splits = version.split(".", 1)
-        else:
-            splits = []
+        splits = version.split(".", 1) if isinstance(version, str) else []
         if len(splits) != 2:
             msg = f"Invalid version: {version}"
             raise ValueError(msg)

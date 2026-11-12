@@ -76,7 +76,7 @@ class CategoryTreeTestCase(TestCase):
         self.assertIsNot(clone, tree)
         self.assertNotEqual(id(clone.root_node), id(tree.root_node))
         self.assertEqual(len(list(clone.root_node.children)), 1)
-        self.assertEqual(list(clone.root_node.children)[0].display_name, "Steel")
+        self.assertEqual(next(iter(clone.root_node.children)).display_name, "Steel")
 
     def test_root_node_setter(self) -> None:
         """Test that setting root_node updates the tree's root and search index."""

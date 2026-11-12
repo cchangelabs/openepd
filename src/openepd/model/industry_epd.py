@@ -36,7 +36,7 @@ from .examples.industry_epd import EXAMPLE_INDUSTRY_EPD_METAL_PRODUCTS
 from .light.industry_epd import IndustryEpdPreviewV0 as IndustryEpdPreviewV0Light
 
 # Import light versions here for compatibility reasons so they are available from the same import location
-from .light.industry_epd import IndustryEpdRef, SampleSize  # noqa: F401
+from .light.industry_epd import IndustryEpdRef, SampleSize
 
 
 class IndustryEpdPreviewV0(
@@ -87,4 +87,4 @@ class IndustryEpdFactory(BaseDocumentFactory[IndustryEpd]):
     """Factory for EPD objects."""
 
     DOCTYPE_CONSTRAINT = OpenEpdDoctypes.IndustryEpd
-    VERSION_MAP: dict[Version, type[IndustryEpd]] = {OpenEpdVersions.Version0: IndustryEpdV0}
+    VERSION_MAP: dict[Version, type[IndustryEpd]] = {OpenEpdVersions.Version0: IndustryEpdV0}  # type: ignore[dict-item]

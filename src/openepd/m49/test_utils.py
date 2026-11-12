@@ -48,9 +48,11 @@ class M49UtilsTestCase(TestCase):
         ]
 
         for input_data, expected_exception in negative_test_cases:
-            with self.subTest(input_data=input_data, expected_exception=expected_exception):
-                with self.assertRaises(expected_exception):
-                    iso_to_m49(input_data)
+            with (
+                self.subTest(input_data=input_data, expected_exception=expected_exception),
+                self.assertRaises(expected_exception),
+            ):
+                iso_to_m49(input_data)
 
     def test_m49_to_iso(self) -> None:
         positive_test_cases = [
@@ -71,9 +73,11 @@ class M49UtilsTestCase(TestCase):
         ]
 
         for input_data, expected_exception in negative_test_cases:
-            with self.subTest(input_data=input_data, expected_exception=expected_exception):
-                with self.assertRaises(expected_exception):
-                    m49_to_iso(input_data)
+            with (
+                self.subTest(input_data=input_data, expected_exception=expected_exception),
+                self.assertRaises(expected_exception),
+            ):
+                m49_to_iso(input_data)
 
     def test_region_and_country_names_to_m49(self) -> None:
         positive_test_cases = [
@@ -101,9 +105,11 @@ class M49UtilsTestCase(TestCase):
         ]
 
         for input_data, expected_exception in negative_test_cases:
-            with self.subTest(input_data=input_data, expected_exception=expected_exception):
-                with self.assertRaises(expected_exception):
-                    region_and_country_names_to_m49(input_data)
+            with (
+                self.subTest(input_data=input_data, expected_exception=expected_exception),
+                self.assertRaises(expected_exception),
+            ):
+                region_and_country_names_to_m49(input_data)
 
     def test_m49_to_region_and_country_names(self) -> None:
         positive_test_cases = [
@@ -125,9 +131,11 @@ class M49UtilsTestCase(TestCase):
         ]
 
         for input_data, expected_exception in negative_test_cases:
-            with self.subTest(input_data=input_data, expected_exception=expected_exception):
-                with self.assertRaises(expected_exception):
-                    m49_to_region_and_country_names(input_data)
+            with (
+                self.subTest(input_data=input_data, expected_exception=expected_exception),
+                self.assertRaises(expected_exception),
+            ):
+                m49_to_region_and_country_names(input_data)
 
     def test_openepd_to_m49(self) -> None:
         positive_test_cases = [
@@ -254,9 +262,11 @@ class M49UtilsTestCase(TestCase):
         ]
 
         for input_data, expected_exception in negative_test_cases:
-            with self.subTest(input_data=input_data, expected_exception=expected_exception):
-                with self.assertRaises(expected_exception):
-                    openepd_to_m49(input_data)
+            with (
+                self.subTest(input_data=input_data, expected_exception=expected_exception),
+                self.assertRaises(expected_exception),
+            ):
+                openepd_to_m49(input_data)
 
     def test_m49_to_openepd(self) -> None:
         positive_test_cases = [
@@ -379,9 +389,11 @@ class M49UtilsTestCase(TestCase):
         ]
 
         for input_data, expected_exception in negative_test_cases:
-            with self.subTest(input_data=input_data, expected_exception=expected_exception):
-                with self.assertRaises(expected_exception):
-                    m49_to_openepd(input_data)
+            with (
+                self.subTest(input_data=input_data, expected_exception=expected_exception),
+                self.assertRaises(expected_exception),
+            ):
+                m49_to_openepd(input_data)
 
     def test_flatten_to_iso3166_alpha2(self) -> None:
         """
@@ -504,14 +516,14 @@ class M49UtilsTestCase(TestCase):
         self.assertTrue(len(result) > 0)
         self.assertTrue(all(code.startswith("US-") for code in result))
         self.assertNotIn("US", result)
-        self.assertEqual(sorted(list(result)), sorted(list(ISO3166_ALPHA2_TO_SUBDIVISIONS["US"])))
+        self.assertEqual(sorted(result), sorted(ISO3166_ALPHA2_TO_SUBDIVISIONS["US"]))
 
         # Country with known subdivisions (CA) should return all CA-* codes
         result = expand_country_subdivisions("CA")
         self.assertTrue(len(result) > 0)
         self.assertTrue(all(code.startswith("CA-") for code in result))
         self.assertNotIn("CA", result)
-        self.assertEqual(sorted(list(result)), sorted(list(ISO3166_ALPHA2_TO_SUBDIVISIONS["CA"])))
+        self.assertEqual(sorted(result), sorted(ISO3166_ALPHA2_TO_SUBDIVISIONS["CA"]))
 
         # Country without known subdivisions should return empty set
         result = expand_country_subdivisions("DE")

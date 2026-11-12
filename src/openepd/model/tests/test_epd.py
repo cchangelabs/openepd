@@ -185,6 +185,54 @@ class EPDTestCase(ImageFieldTestCase):
         self.assertIsInstance(epd.includes[1], Ingredient)
         self.assertEqual(epd.includes[1].gwp_fraction, 0.2)
 
+    def test_lci_databases_and_software_used(self) -> None:
+        valid_database = {
+            "guid": "40888d44-916d-4220-8353-dcdbc4e38d1b",
+            "owner": {"name": "Ecoinvent", "web_domain": "ecoinvent.org"},
+            "name": "ecoinvent",
+            "version": "3.10",
+            "link": "https://support.ecoinvent.org/ecoinvent-version-3.10",
+        }
+        valid_software = {
+            "guid": "50999e55-027e-5331-9464-edddc5f49e2c",
+            "owner": {"name": "GreenDelta", "web_domain": "greendelta.com"},
+            "primary_function": "LCA Analysis",
+            "name": "openLCA",
+            "version": "2.3.1",
+            "link": "https://share.greendelta.com/index.php/s/D1xa3haTiHJdhqt?path=%2F2.3.1",
+        }
+
+        epd = EpdPreviewV0.model_validate(
+            {
+                "lci_databases": [valid_database],
+                "software_used": [valid_software],
+            }
+        )
+        self.assertEqual(len(epd.lci_databases), 1)
+        self.assertEqual(epd.lci_databases[0].name, "ecoinvent")
+        self.assertEqual(epd.lci_databases[0].version, "3.10")
+        self.assertEqual(epd.lci_databases[0].owner.name, "Ecoinvent")
+        self.assertEqual(len(epd.software_used), 1)
+        self.assertEqual(epd.software_used[0].name, "openLCA")
+        self.assertEqual(epd.software_used[0].version, "2.3.1")
+        self.assertEqual(epd.software_used[0].primary_function, "LCA Analysis")
+        self.assertEqual(epd.software_used[0].owner.name, "GreenDelta")
+
+        epd_with_ref = EpdPreviewV0.model_validate(
+            {
+                "lci_databases": [{"guid": "40888d44-916d-4220-8353-dcdbc4e38d1b"}],
+                "software_used": [{"guid": "50999e55-027e-5331-9464-edddc5f49e2c"}],
+            }
+        )
+        self.assertEqual(len(epd_with_ref.lci_databases), 1)
+        self.assertEqual(epd_with_ref.lci_databases[0].guid, "40888d44-916d-4220-8353-dcdbc4e38d1b")
+        self.assertEqual(len(epd_with_ref.software_used), 1)
+        self.assertEqual(epd_with_ref.software_used[0].guid, "50999e55-027e-5331-9464-edddc5f49e2c")
+
+        epd_without = EpdPreviewV0.model_validate({})
+        self.assertEqual(epd_without.lci_databases, [])
+        self.assertEqual(epd_without.software_used, [])
+
     def test_parse_extension(self) -> None:
         """Test that parsing of extensions works."""
         epd = Epd.model_validate(

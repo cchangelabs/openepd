@@ -1,3 +1,9 @@
+## 8.1.0 (2026-11-12)
+
+### Feat
+
+- add lci_databases, software_used field to EPD model
+
 ## 8.0.0 (2026-10-08)
 
 ### BREAKING CHANGE

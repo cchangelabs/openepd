@@ -77,8 +77,8 @@ class ReflectionTestCase(unittest.TestCase):
 
         # Excluding a top-level field name (by exact field name) removes its nested entries
         no_emps = fields_traverse(Company, exclude_list={"employees"})
-        self.assertFalse(any(k.startswith("employees.") for k in no_emps.keys()))
-        self.assertTrue(any(k.startswith("office_by_city.") for k in no_emps.keys()))
+        self.assertFalse(any(k.startswith("employees.") for k in no_emps))
+        self.assertTrue(any(k.startswith("office_by_city.") for k in no_emps))
 
         # Excluding a full path using '^' excludes that specific nested key
         excl_city = fields_traverse(Company, exclude_list={"^office_by_city.city"})
@@ -100,7 +100,7 @@ class ReflectionTestCase(unittest.TestCase):
         self.assertIn("val", fields)
         self.assertIn("c.val", fields)
         # Ensure recursion stopped at one level (no c.c.val keys)
-        self.assertFalse(any(k.startswith("c.c") for k in fields.keys()))
+        self.assertFalse(any(k.startswith("c.c") for k in fields))
 
         # Exclude via callable matcher: remove any field whose full name ends with 'val'
         def ends_with_val(name: str, full_name: str) -> bool:  # pragma: no cover - simple helper

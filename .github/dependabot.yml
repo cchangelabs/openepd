@@ -1,0 +1,36 @@
+version: 2
+
+updates:
+  - package-ecosystem: pip
+    versioning-strategy: increase
+    directory: /
+    # Only raise minimum versions for development dependencies; leave primary
+    # (production) dependencies untouched.
+    allow:
+      - dependency-type: development
+    schedule:
+      interval: weekly
+      time: "05:00"
+      timezone: "America/New_York"
+    open-pull-requests-limit: 10
+    rebase-strategy: "disabled"
+    # Do not propose a version until it has been published for at least 7 days.
+    # This helps avoid picking up a newly-published (potentially compromised)
+    # release before the community has had time to detect supply-chain attacks.
+    cooldown:
+      default-days: 7
+    groups:
+      tests:
+        patterns:
+          - "pytest"
+          - "pytest-cov"
+          - "coverage"
+          - "teamcity-messages"
+      types:
+        patterns:
+          - "types-*"
+    labels:
+      - dependencies
+      - python
+    commit-message:
+      prefix: "build(deps)"

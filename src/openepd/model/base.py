@@ -182,7 +182,7 @@ class BaseOpenEpdSchema(pydantic.BaseModel):
 
     def get_ext_or_empty(self, ext_type: type["TOpenEpdExtension"]) -> "TOpenEpdExtension":
         """Get an extension field from the model or an empty instance if it doesn't exist."""
-        return self.get_typed_ext_field(ext_type.get_extension_name(), ext_type, ext_type.model_construct(**{}))  # type: ignore[return-value]
+        return self.get_typed_ext_field(ext_type.get_extension_name(), ext_type, ext_type.model_construct())  # type: ignore[return-value]
 
     @classmethod
     def is_allowed_field_name(cls, field_name: str) -> bool:
@@ -299,7 +299,7 @@ class BaseDocumentFactory(Generic[TRootDocument]):
                         f"Unsupported version: {version}. The highest supported version from branch {x.major}.x is {x}"
                     )
                     raise ValueError(msg)
-        supported_versions = ", ".join(f"{v.major}.x" for v in cls.VERSION_MAP.keys())
+        supported_versions = ", ".join(f"{v.major}.x" for v in cls.VERSION_MAP)
         msg = f"Version {version} is not supported. Supported versions are: {supported_versions}"
         raise ValueError(msg)
 
@@ -358,7 +358,7 @@ class OpenXpdUUID(str):
     def _validate_id(cls, value: Any, _: pydantic_core.core_schema.ValidatorFunctionWrapHandler) -> Any:
         if not isinstance(value, str | None):
             msg = f"Invalid value type: {type(value)}"
-            raise ValueError(msg)
+            raise ValueError(msg)  # noqa: TRY004
 
         try:
             open_xpd_uuid.validate(open_xpd_uuid.sanitize(str(value)))

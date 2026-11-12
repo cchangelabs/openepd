@@ -41,6 +41,7 @@ from openepd.model.examples.epd import EXAMPLE_EPD_WORK_SURFACES
 from openepd.model.geography import Geography
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org, Plant
+from openepd.model.resource import WithLcaResourcesMixin
 from openepd.model.versioning import OpenEpdVersions, Version
 
 MANUFACTURER_DESCRIPTION = (
@@ -124,6 +125,7 @@ class EpdRef(RefBase, title="EPD (Ref)"):
 
 class EpdPreviewV0(
     WithAttachmentsMixin,
+    WithLcaResourcesMixin,
     WithProgramOperatorMixin,
     WithEpdDeveloperMixin,
     WithVerifierMixin,
@@ -296,4 +298,4 @@ class EpdFactory(BaseDocumentFactory[BaseDeclaration]):
     """Factory for EPD objects."""
 
     DOCTYPE_CONSTRAINT = OpenEpdDoctypes.Epd
-    VERSION_MAP: dict[Version, type[BaseDeclaration]] = {OpenEpdVersions.Version0: EpdV0}
+    VERSION_MAP: dict[Version, type[BaseDeclaration]] = {OpenEpdVersions.Version0: EpdV0}  # type: ignore[dict-item]
