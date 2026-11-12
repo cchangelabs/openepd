@@ -25,7 +25,7 @@ from openepd.model.declaration import AverageDatasetMixin, BaseDeclaration, RefB
 from openepd.model.examples.generic_estimate import EXAMPLE_GENERIC_ESTIMATE_SAMPLE
 from openepd.model.lcia import WithLciaMixin
 from openepd.model.org import Org
-from openepd.model.resource import DatabaseResource, SoftwareResource
+from openepd.model.resource import WithLcaResourcesMixin
 from openepd.model.validation.quantity import AmountMass
 from openepd.model.versioning import OpenEpdVersions, Version
 
@@ -66,6 +66,7 @@ class GenericEstimateRef(RefBase, title="Generic Estimate (Ref)"):
 
 class GenericEstimatePreviewV0(
     WithAttachmentsMixin,
+    WithLcaResourcesMixin,
     AverageDatasetMixin,
     GenericEstimateRef,
     BaseDeclaration,
@@ -110,42 +111,6 @@ class GenericEstimatePreviewV0(
         ),
         default=None,
     )
-    lci_databases: list[DatabaseResource] = pydantic.Field(
-        description="LCI Database(s) and Version",
-        default_factory=list,
-        examples=[
-            [
-                {
-                    "owner": {"web_domain": "ecoinvent.org"},
-                    "name": "ecoinvent",
-                    "version": "3.10",
-                    "link": "https://support.ecoinvent.org/ecoinvent-version-3.10",
-                },
-                {
-                    "owner": {"web_domain": "lcacommons.gov"},
-                    "name": "ULSCI",
-                    "version": "FY24.Q3.01",
-                    "link": "https://www.lcacommons.gov/lca-collaboration/National_Renewable_Energy_Laboratory/USLCI_Database_Public/datasets",
-                },
-            ]
-        ],
-    )
-    software_used: list[SoftwareResource] = pydantic.Field(
-        description="List of software tool(s) and version(s) used for LCA and/or EPD generation.",
-        default_factory=list,
-        examples=[
-            [
-                {
-                    "owner": {"web_domain": "greendelta.com"},
-                    "primary_function": "LCA Analysis",
-                    "name": "openLCA",
-                    "version": "2.3.1",
-                    "link": "https://share.greendelta.com/index.php/s/D1xa3haTiHJdhqt?path=%2F2.3.1",
-                }
-            ]
-        ],
-    )
-
     publisher: Org | None = pydantic.Field(description="Organization that published the LCA results.", default=None)
     reviewer: Org | None = pydantic.Field(description="Org that performed a critical review of the LCA.", default=None)
     reviewer_email: pydantic.EmailStr | None = pydantic.Field(
