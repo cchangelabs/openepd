@@ -47,7 +47,7 @@ commitizen = ">=4.19.3"
 
 # Type checking
 types-dateparser = ">=1.4.3.20260907"
-types-requests = ">=2.33.0.20261006"
+types-requests = ">=2.33.0.20261030"
 
 # Code generation
 click = "~=8.5.0"
