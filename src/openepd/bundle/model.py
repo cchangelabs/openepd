@@ -76,10 +76,21 @@ class AssetInfo(BaseOpenEpdSchema):
     """The name of the asset."""
     type: AssetType
     """The type of the asset."""
-    lang: str | None
+    lang: str | None = None
     """The language of the asset."""
-    rel_type: str | None
-    rel_asset: str | None
+    rels: str | None = None
+    """The relation type/reference pairs, serialized as a semicolon-separated TOC value."""
+    id: str | None = None
+    """The document identifier, when present."""
+    version: str | None = None
+    """The document version, when present."""
+    date_of_issue: str | None = None
+    """The document issue date, when present."""
+    sha256: str | None = None
+    """The SHA-256 digest of the asset, when present."""
+    rel_type: str | None = None
+    """Legacy relation type field retained for compatibility."""
+    rel_asset: str | None = None
     """The related asset reference (serialized as semicolon-separated for multiple assets)."""
     comment: str | None = pydantic.Field(default=None)
     content_type: str | None = pydantic.Field(default=None)
