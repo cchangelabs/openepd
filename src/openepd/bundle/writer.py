@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from collections.abc import Sequence
 import csv
 from io import BytesIO, StringIO
 from os import PathLike
@@ -22,7 +23,7 @@ from typing import IO
 import zipfile
 
 from openepd.__version__ import VERSION
-from openepd.bundle.base import AssetRef, BaseBundleWriter
+from openepd.bundle.base import AssetRef, AssetRelation, BaseBundleWriter
 from openepd.bundle.model import AssetInfo, AssetType, BundleManifest, BundleManifestAssetsStats
 from openepd.model.base import TOpenEpdObject
 
@@ -42,6 +43,7 @@ class DefaultBundleWriter(BaseBundleWriter):
             assets=BundleManifestAssetsStats(),
         )
         self.__added_entries: set[str] = set()
+        self.__assets: dict[str, AssetInfo] = {}
         self.__toc_buffer = StringIO()
         self._toc_writer = csv.DictWriter(self.__toc_buffer, fieldnames=self._TOC_FIELDS, dialect="toc")
         self._toc_writer.writeheader()
@@ -58,10 +60,14 @@ class DefaultBundleWriter(BaseBundleWriter):
         comment: str | None = None,
         custom_type: str | None = None,
         custom_data: str | None = None,
+        rels: Sequence[AssetRelation] | None = None,
     ) -> AssetInfo:
-        """Write a blob asset to the bundle."""
-        # Convert legacy relation arguments to the TOC representation.
-        rel_ref_converted = self._asset_refs_to_str(rel_asset)
+        """
+        Write a blob asset with per-reference `(type, ref)` pairs in `rels`.
+
+        The legacy `rel_asset` and `rel_type` arguments remain supported.
+        """
+        relations = self._normalize_relations(rels, rel_asset, rel_type)
         ref_str = self.__generate_entry_name(
             AssetType.Blob,
             self.__get_ext_for_content_type(content_type, "bin"),
@@ -72,7 +78,7 @@ class DefaultBundleWriter(BaseBundleWriter):
             name=name,
             type=AssetType.Blob,
             lang=lang,
-            rels=self._serialize_rels_for_csv(rel_type, rel_ref_converted),
+            rels=self._serialize_relations_for_csv(relations),
             content_type=content_type,
             comment=comment,
             custom_type=custom_type,
@@ -93,15 +99,19 @@ class DefaultBundleWriter(BaseBundleWriter):
         comment: str | None = None,
         custom_type: str | None = None,
         custom_data: str | None = None,
+        rels: Sequence[AssetRelation] | None = None,
     ) -> AssetInfo:
-        """Write an object asset to the bundle. Object means subclass of BaseOpenEpdSchem."""
+        """
+        Write an object asset with per-reference `(type, ref)` pairs in `rels`.
+
+        The legacy `rel_asset` and `rel_type` arguments remain supported.
+        """
         asset_type_str = obj.get_asset_type()
         if asset_type_str is None:
             msg = f"Object {obj} does not have a valid asset type and can't be written to a bundle."
             raise ValueError(msg)
         asset_type = AssetType(asset_type_str)
-        # Convert legacy relation arguments to the TOC representation.
-        rel_ref_converted = self._asset_refs_to_str(rel_asset)
+        relations = self._normalize_relations(rels, rel_asset, rel_type)
         ref_str = self.__generate_entry_name(
             asset_type,
             self.__get_ext_for_content_type("application/json", "json"),
@@ -112,7 +122,7 @@ class DefaultBundleWriter(BaseBundleWriter):
             name=name,
             type=asset_type,
             lang=lang,
-            rels=self._serialize_rels_for_csv(rel_type, rel_ref_converted),
+            rels=self._serialize_relations_for_csv(relations),
             content_type="application/json",
             comment=comment,
             custom_type=custom_type,
@@ -129,6 +139,7 @@ class DefaultBundleWriter(BaseBundleWriter):
 
     def commit(self):
         """Write the manifest and TOC to the bundle. This will be called automatically when the bundle is closed."""
+        self._validate_relations(self.__assets.values())
         with self._bundle_archive.open("manifest", "w") as manifest_stream:
             manifest_stream.write(self.__manifest.model_dump_json(indent=2, exclude_none=True).encode("utf-8"))
         with self._bundle_archive.open("toc", "w") as toc_stream:
@@ -136,8 +147,10 @@ class DefaultBundleWriter(BaseBundleWriter):
 
     def close(self):
         """Write the manifest and TOC and close the bundle stream."""
-        self.commit()
-        self._bundle_archive.close()
+        try:
+            self.commit()
+        finally:
+            self._bundle_archive.close()
 
     def __register_entry(self, asset_info: AssetInfo):
         if asset_info.ref in self.__added_entries:
@@ -145,6 +158,7 @@ class DefaultBundleWriter(BaseBundleWriter):
             raise ValueError(msg)
         self._toc_writer.writerow(asset_info.model_dump(exclude_unset=True, exclude_none=True))
         self.__added_entries.add(asset_info.ref)
+        self.__assets[asset_info.ref] = asset_info.model_copy(deep=True)
         type_counter = self.__manifest.assets.count_by_type.get(asset_info.type, 0) + 1
         self.__manifest.assets.count_by_type[asset_info.type] = type_counter
         self.__manifest.assets.total_count += 1

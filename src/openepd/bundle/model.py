@@ -52,6 +52,12 @@ class RelType(StrEnum):
     """A PDF representation of the asset."""
     Ilcd = "repr.ilcd"
     """An ILCD representation of the asset."""
+    Embedded = "embedded"
+    """An asset embedded in the parent asset."""
+    Supplement = "supplement"
+    """Supporting material for the parent asset."""
+    Related = "related"
+    """A related asset without a more specific relation type."""
 
 
 class BundleManifest(BaseOpenEpdSchema):
