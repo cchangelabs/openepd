@@ -46,6 +46,7 @@ class DefaultBundleReaderTestCase(unittest.TestCase):
         with self.__create_reader(file_name) as reader:
             manifest = reader.get_manifest()
             self.assertEqual(bundle_comment, manifest.comment)
+            self.assertEqual("openEPD Bundle/1.0", manifest.format)
             self.assertEqual(0, len(list(reader.root_assets_iter())))
 
     def test_toc_uses_spec_columns_and_is_readable(self):

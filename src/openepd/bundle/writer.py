@@ -24,7 +24,7 @@ import zipfile
 
 from openepd.__version__ import VERSION
 from openepd.bundle.base import AssetRef, AssetRelation, BaseBundleWriter
-from openepd.bundle.model import AssetInfo, AssetType, BundleManifest, BundleManifestAssetsStats
+from openepd.bundle.model import BUNDLE_FORMAT, AssetInfo, AssetType, BundleManifest, BundleManifestAssetsStats
 from openepd.model.base import TOpenEpdObject
 
 
@@ -37,7 +37,7 @@ class DefaultBundleWriter(BaseBundleWriter):
             raise ValueError(msg)
         self._bundle_archive = zipfile.ZipFile(bundle_file, mode="w")
         self.__manifest = BundleManifest(
-            format="openEPD Bundle/1.0",
+            format=BUNDLE_FORMAT,
             generator=f"openEPD Python SDK/{VERSION}",
             comment=comment,
             assets=BundleManifestAssetsStats(),

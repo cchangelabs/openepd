@@ -20,6 +20,15 @@ import pydantic
 
 from openepd.model.base import BaseOpenEpdSchema
 
+BUNDLE_FORMAT_NAME = "openEPD Bundle"
+"""The format name used in the manifest `format` field."""
+BUNDLE_FORMAT_MAJOR_VERSION = 1
+"""The bundle format major version supported by this library."""
+BUNDLE_FORMAT_MINOR_VERSION = 0
+"""The bundle format minor version written by this library."""
+BUNDLE_FORMAT = f"{BUNDLE_FORMAT_NAME}/{BUNDLE_FORMAT_MAJOR_VERSION}.{BUNDLE_FORMAT_MINOR_VERSION}"
+"""The manifest `format` value written by this library."""
+
 
 class BundleManifestAssetsStats(BaseOpenEpdSchema):
     """The statistics of assets in a bundle."""
@@ -63,8 +72,8 @@ class RelType(StrEnum):
 class BundleManifest(BaseOpenEpdSchema):
     """The manifest of a bundle."""
 
-    format: str = "openEPD Bundle/1.0"
-    """The format of the bundle."""
+    format: str
+    """The format identifier and version of the bundle, e.g. `openEPD Bundle/1.0`."""
     generator: str
     """The generator of the bundle."""
     assets: BundleManifestAssetsStats = pydantic.Field(default_factory=BundleManifestAssetsStats)

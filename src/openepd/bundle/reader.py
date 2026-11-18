@@ -17,12 +17,21 @@ from collections.abc import Callable, Iterator, Sequence
 import csv
 import io
 from os import PathLike
+import re
 from typing import IO, cast
 import zipfile
 
 from openepd.bundle.base import AssetFilter, AssetRef, BaseBundleReader
-from openepd.bundle.model import AssetInfo, AssetType, BundleManifest
+from openepd.bundle.model import (
+    BUNDLE_FORMAT_MAJOR_VERSION,
+    BUNDLE_FORMAT_NAME,
+    AssetInfo,
+    AssetType,
+    BundleManifest,
+)
 from openepd.model.base import TOpenEpdObject
+
+_BUNDLE_FORMAT_PATTERN = re.compile(rf"{re.escape(BUNDLE_FORMAT_NAME)}/(?P<major>\d+)\.(?P<minor>\d+)")
 
 
 class DefaultBundleReader(BaseBundleReader):
@@ -33,12 +42,23 @@ class DefaultBundleReader(BaseBundleReader):
         try:
             with self._bundle_archive.open("manifest", "r") as manifest_stream:
                 self.__manifest = BundleManifest.model_validate_json(manifest_stream.read())
+            self.__check_format(self.__manifest.format)
         except Exception as e:
             raise ValueError("The bundle file is not valid. Manifest reading error: " + str(e)) from e
         try:
             self.__check_toc()
         except Exception as e:
             raise ValueError("The bundle file is not valid. TOC reading error: " + str(e)) from e
+
+    @staticmethod
+    def __check_format(bundle_format: str) -> None:
+        format_match = _BUNDLE_FORMAT_PATTERN.fullmatch(bundle_format)
+        if format_match is None:
+            msg = f"Unsupported bundle format: {bundle_format!r}"
+            raise ValueError(msg)
+        if int(format_match.group("major")) != BUNDLE_FORMAT_MAJOR_VERSION:
+            msg = f"Unsupported bundle format major version: {format_match.group('major')}"
+            raise ValueError(msg)
 
     def close(self):
         """Close the reader."""

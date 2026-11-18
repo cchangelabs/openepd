@@ -48,6 +48,50 @@ class DefaultBundleReaderTestCase(unittest.TestCase):
         with self.assertRaises(ValueError):
             DefaultBundleReader(DATA_DIR / "test-bundle-missing-manifest.epb")
 
+    def test_open_invalid_file_missing_manifest_format(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            bundle_file = Path(temp_dir) / "missing-format.epb"
+            with zipfile.ZipFile(bundle_file, mode="w") as archive:
+                archive.writestr("manifest", '{"generator":"test"}')
+
+            with self.assertRaisesRegex(ValueError, "format"):
+                DefaultBundleReader(bundle_file)
+
+    def test_open_invalid_file_unsupported_manifest_major_version(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            bundle_file = Path(temp_dir) / "unsupported-format.epb"
+            with zipfile.ZipFile(bundle_file, mode="w") as archive:
+                archive.writestr("manifest", '{"format":"openEPD Bundle/2.0","generator":"test"}')
+
+            with self.assertRaisesRegex(ValueError, "major version"):
+                DefaultBundleReader(bundle_file)
+
+    def test_open_invalid_file_malformed_manifest_format(self):
+        for bundle_format in ("openEPD Bundle/1", "Other Bundle/1.0", "openEPD Bundle/1.0-beta"):
+            with self.subTest(bundle_format=bundle_format), tempfile.TemporaryDirectory() as temp_dir:
+                bundle_file = Path(temp_dir) / "malformed-format.epb"
+                with zipfile.ZipFile(bundle_file, mode="w") as archive:
+                    archive.writestr("manifest", f'{{"format":"{bundle_format}","generator":"test"}}')
+
+                with self.assertRaisesRegex(ValueError, "Unsupported bundle format"):
+                    DefaultBundleReader(bundle_file)
+
+    def test_open_file_with_supported_manifest_major_version(self):
+        toc_buffer = StringIO()
+        toc_writer = csv.writer(toc_buffer, dialect="toc")
+        toc_writer.writerow(("ref", "type", "rels", "size"))
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            bundle_file = Path(temp_dir) / "supported-format.epb"
+            with zipfile.ZipFile(bundle_file, mode="w") as archive:
+                archive.writestr(
+                    "manifest", '{"format":"openEPD Bundle/1.1","generator":"test","future_field":"ignored"}'
+                )
+                archive.writestr("toc", toc_buffer.getvalue())
+
+            with DefaultBundleReader(bundle_file) as reader:
+                self.assertEqual("openEPD Bundle/1.1", reader.get_manifest().format)
+
     def test_open_invalid_file_missing_toc(self):
         with self.assertRaises(ValueError):
             DefaultBundleReader(DATA_DIR / "test-bundle-missing-toc.epb")
@@ -61,7 +105,7 @@ class DefaultBundleReaderTestCase(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             bundle_file = Path(temp_dir) / "invalid-relation.epb"
             with zipfile.ZipFile(bundle_file, mode="w") as archive:
-                archive.writestr("manifest", '{"generator":"test"}')
+                archive.writestr("manifest", '{"format":"openEPD Bundle/1.0","generator":"test"}')
                 archive.writestr("toc", toc_buffer.getvalue())
 
             with self.assertRaisesRegex(ValueError, "missing asset"):
