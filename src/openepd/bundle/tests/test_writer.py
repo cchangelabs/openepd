@@ -52,7 +52,7 @@ class DefaultBundleReaderTestCase(unittest.TestCase):
         file_name, writer = self.__create_writer()
         with writer:
             root = writer.write_blob_asset(BytesIO(b"root"), "text/plain")
-            writer.write_blob_asset(BytesIO(b"related"), "text/plain", root, "translation")
+            writer.write_blob_asset(BytesIO(b"related"), "text/plain", root, "translation", lang="fr")
 
         with zipfile.ZipFile(file_name) as archive:
             toc = csv.DictReader(StringIO(archive.read("toc").decode("utf-8")), dialect="toc")
@@ -88,6 +88,46 @@ class DefaultBundleReaderTestCase(unittest.TestCase):
             self.assertEqual(2, len(assets))
             self.assertEqual(f"translation:{root.ref}", assets[1].rels)
             self.assertEqual(assets[1].ref, reader.get_first_relative_asset(root).ref)
+
+    def test_write_and_read_multiple_relation_types(self):
+        file_name, writer = self.__create_writer()
+        with writer:
+            first_parent = writer.write_blob_asset(BytesIO(b"first"), "text/plain")
+            second_parent = writer.write_blob_asset(BytesIO(b"second"), "text/plain")
+            child = writer.write_blob_asset(
+                BytesIO(b"child"),
+                "text/plain",
+                rels=[
+                    (RelType.Related, first_parent),
+                    ("acme.audit-trail", first_parent),
+                    (RelType.Supplement, second_parent),
+                ],
+            )
+
+        with self.__create_reader(file_name) as reader:
+            child_from_bundle = reader.get_asset_by_ref(child.ref)
+            self.assertEqual(
+                f"related:{first_parent.ref};acme.audit-trail:{first_parent.ref};supplement:{second_parent.ref}",
+                child_from_bundle.rels,
+            )
+            self.assertEqual(
+                [child.ref],
+                [asset.ref for asset in reader.get_relative_assets(first_parent, RelType.Related)],
+            )
+            self.assertEqual(
+                [child.ref],
+                [asset.ref for asset in reader.get_relative_assets(second_parent, RelType.Supplement)],
+            )
+
+    def test_writer_rejects_missing_relation_target(self):
+        _, writer = self.__create_writer()
+        writer.write_blob_asset(
+            BytesIO(b"child"),
+            "text/plain",
+            rels=[(RelType.Related, "blob/missing.txt")],
+        )
+        with self.assertRaisesRegex(ValueError, "missing asset"):
+            writer.close()
 
     def test_add_objects_with_minimal_info(self):
         file_name, writer = self.__create_writer()

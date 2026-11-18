@@ -14,8 +14,9 @@
 #  limitations under the License.
 #
 import abc
-from collections.abc import Callable, Iterator, Sequence
+from collections.abc import Callable, Iterable, Iterator, Sequence
 import csv
+import re
 from typing import IO, Self
 
 from openepd.bundle.model import AssetInfo, AssetType, BundleManifest, RelType
@@ -24,6 +25,8 @@ from openepd.model.base import TOpenEpdObject
 AssetFilter = Callable[[AssetInfo], bool]
 """A filter function for assets. Returns True if the asset should be included."""
 AssetRef = str | AssetInfo
+AssetRelation = tuple[str, AssetRef]
+_REL_TYPE_PATTERN = re.compile(r"[a-z0-9._-]+\Z")
 
 
 class toc_dialect(csv.Dialect):
@@ -78,61 +81,137 @@ class BundleMixin:
             return cls._asset_ref_to_str(asset_refs)
 
     @classmethod
-    def _serialize_rel_asset_for_csv(cls, rel_asset: list[str] | str | None) -> str | None:
-        """
-        Serialize rel_asset for CSV storage.
+    def _normalize_relations(
+        cls,
+        rels: Sequence[AssetRelation] | None,
+        rel_asset: AssetRef | list[AssetRef] | None,
+        rel_type: str | None,
+    ) -> list[tuple[str, str]]:
+        """Normalize relation pairs and the legacy single-type arguments."""
+        if rels is not None and (rel_asset is not None or rel_type is not None):
+            msg = "Specify rels or the legacy rel_asset/rel_type arguments, not both."
+            raise ValueError(msg)
 
-        Multiple assets are joined with semicolons.
-        """
-        if rel_asset is None:
-            return None
-        if isinstance(rel_asset, list):
-            # For empty list, return None. For non-empty list, join with semicolons
-            return ";".join(rel_asset) if rel_asset else None
+        if rels is None:
+            if rel_asset is None and rel_type is None:
+                return []
+            if rel_asset is None or rel_type is None:
+                msg = "Both legacy rel_asset and rel_type arguments are required."
+                raise ValueError(msg)
+            rel_assets = cls._asset_refs_to_str(rel_asset)
+            if isinstance(rel_assets, str):
+                rel_assets = [rel_assets]
+            relations = [(rel_type, ref) for ref in rel_assets or []]
         else:
-            # Single asset - return as string
-            return str(rel_asset)
+            relations = [(rel_type, cls._asset_ref_to_str(ref)) for rel_type, ref in rels]
+
+        return [cls._validate_relation_pair(rel_type, ref) for rel_type, ref in relations]
 
     @classmethod
-    def _deserialize_rel_asset_from_csv(cls, rel_asset_str: str | None) -> list[str] | str | None:
-        """
-        Deserialize rel_asset from CSV storage.
-
-        Semicolon-separated values become lists.
-        """
-        if rel_asset_str is None or rel_asset_str == "":
+    def _serialize_relations_for_csv(cls, relations: Sequence[tuple[str, str]]) -> str | None:
+        """Serialize validated relation pairs to the semicolon-separated TOC value."""
+        if not relations:
             return None
-        if ";" in rel_asset_str:
-            return rel_asset_str.split(";")
-        else:
-            return rel_asset_str
+        return ";".join(f"{rel_type}:{asset_ref}" for rel_type, asset_ref in relations)
 
     @classmethod
-    def _serialize_rels_for_csv(cls, rel_type: str | None, rel_assets: list[str] | str | None) -> str | None:
-        """Serialize legacy relation arguments to the bundle TOC relation format."""
-        if rel_assets is None:
-            return None
-        if isinstance(rel_assets, str):
-            rel_assets = [rel_assets]
-        if not rel_assets:
-            return None
-        return ";".join(f"{rel_type or ''}:{asset_ref}" for asset_ref in rel_assets)
+    def _validate_relation_pair(cls, rel_type: str, asset_ref: str) -> tuple[str, str]:
+        if not isinstance(rel_type, str) or not _REL_TYPE_PATTERN.fullmatch(rel_type):
+            raise ValueError(f"Invalid relation type {rel_type!r}.")
+        if not asset_ref or asset_ref != asset_ref.strip() or ":" in asset_ref or ";" in asset_ref:
+            raise ValueError(f"Invalid relation reference {asset_ref!r}.")
+        return str(rel_type), asset_ref
+
+    @classmethod
+    def _effective_rel_type(cls, rel_type: str) -> str:
+        """Map extension relation types to the reader-facing `related` type."""
+        known_types = {relation_type.value for relation_type in RelType}
+        return rel_type if rel_type in known_types else RelType.Related
+
+    @classmethod
+    def _relation_type_matches(cls, actual: str, requested: str) -> bool:
+        return cls._effective_rel_type(actual) == cls._effective_rel_type(requested)
 
     @classmethod
     def _get_asset_relations(cls, asset_info: AssetInfo) -> list[tuple[str, str]]:
-        """Return relation type/reference pairs, accepting legacy in-memory and TOC fields."""
-        if asset_info.rels:
+        """Return relation type/reference pairs, accepting legacy TOC rows."""
+        if asset_info.rels is not None:
+            if not asset_info.rels:
+                return []
             relations = []
             for relation in asset_info.rels.split(";"):
-                rel_type, separator, asset_ref = relation.partition(":")
-                if separator:
-                    relations.append((rel_type, asset_ref))
+                if relation.count(":") != 1:
+                    raise ValueError(f"Invalid relation {relation!r} in asset {asset_info.ref!r}.")
+                relations.append(cls._validate_relation_pair(*relation.split(":")))
             return relations
 
-        rel_assets = cls._deserialize_rel_asset_from_csv(asset_info.rel_asset)
-        if isinstance(rel_assets, str):
-            rel_assets = [rel_assets]
-        return [(asset_info.rel_type or "", asset_ref) for asset_ref in (rel_assets or [])]
+        if asset_info.rel_type is None and asset_info.rel_asset is None:
+            return []
+        if asset_info.rel_type is None or asset_info.rel_asset is None:
+            raise ValueError(f"Incomplete legacy relation on asset {asset_info.ref!r}.")
+        return [cls._validate_relation_pair(asset_info.rel_type, ref) for ref in asset_info.rel_asset.split(";")]
+
+    @classmethod
+    def _validate_relations(cls, assets: Iterable[AssetInfo]) -> None:
+        """Validate relation syntax and graph invariants for a bundle."""
+        assets_by_ref: dict[str, AssetInfo] = {}
+        for asset in assets:
+            assets_by_ref.setdefault(asset.ref, asset)
+
+        relations_by_ref: dict[str, list[tuple[str, str]]] = {}
+        parents_by_ref: dict[str, list[str]] = {}
+        incoming_count = dict.fromkeys(assets_by_ref, 0)
+        for asset in assets_by_ref.values():
+            relations = cls._get_asset_relations(asset)
+            if len(relations) != len(set(relations)):
+                raise ValueError(f"Duplicate relation on asset {asset.ref!r}.")
+            relations_by_ref[asset.ref] = relations
+            parents_by_ref[asset.ref] = []
+            translation_relations = [
+                parent_ref for rel_type, parent_ref in relations if rel_type == RelType.Translation
+            ]
+            if len(translation_relations) > 1:
+                raise ValueError(f"Asset {asset.ref!r} has more than one translation relation.")
+
+            for rel_type, parent_ref in relations:
+                parent = assets_by_ref.get(parent_ref)
+                if parent is None:
+                    raise ValueError(f"Relation on asset {asset.ref!r} references missing asset {parent_ref!r}.")
+                if parent_ref == asset.ref:
+                    raise ValueError(f"Asset {asset.ref!r} must not relate to itself.")
+                parents_by_ref[asset.ref].append(parent_ref)
+                incoming_count[parent_ref] += 1
+
+                if rel_type == RelType.Translation:
+                    if asset.type != parent.type:
+                        msg = "A translation relation must connect assets of the same type."
+                        raise ValueError(msg)
+                    if not asset.lang:
+                        raise ValueError(f"Translation asset {asset.ref!r} must have a language.")
+                elif rel_type == RelType.Pdf and asset.content_type != "application/pdf":
+                    raise ValueError(f"PDF representation {asset.ref!r} must have application/pdf content type.")
+                elif rel_type == RelType.Embedded and parent.type == AssetType.Blob:
+                    raise ValueError(f"Embedded relation parent {parent_ref!r} must be an object asset.")
+
+        for relations in relations_by_ref.values():
+            for rel_type, parent_ref in relations:
+                if rel_type == RelType.Translation and any(
+                    parent_rel_type == RelType.Translation for parent_rel_type, _ in relations_by_ref[parent_ref]
+                ):
+                    raise ValueError(f"Translation parent {parent_ref!r} must not itself be a translation.")
+
+        ready = [asset_ref for asset_ref, count in incoming_count.items() if count == 0]
+        visited_count = 0
+        while ready:
+            asset_ref = ready.pop()
+            visited_count += 1
+            for parent_ref in parents_by_ref[asset_ref]:
+                incoming_count[parent_ref] -= 1
+                if incoming_count[parent_ref] == 0:
+                    ready.append(parent_ref)
+        if visited_count != len(assets_by_ref):
+            msg = "Asset relations must not contain cycles."
+            raise ValueError(msg)
 
 
 class BaseBundleReader(BundleMixin, metaclass=abc.ABCMeta):
@@ -258,6 +337,7 @@ class BaseBundleWriter(BundleMixin, metaclass=abc.ABCMeta):
         comment: str | None = None,
         custom_type: str | None = None,
         custom_data: str | None = None,
+        rels: Sequence[AssetRelation] | None = None,
     ) -> AssetInfo:
         """Write a blob asset."""
         pass
@@ -274,6 +354,7 @@ class BaseBundleWriter(BundleMixin, metaclass=abc.ABCMeta):
         comment: str | None = None,
         custom_type: str | None = None,
         custom_data: str | None = None,
+        rels: Sequence[AssetRelation] | None = None,
     ) -> AssetInfo:
         """Write an object asset."""
         pass

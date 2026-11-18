@@ -66,7 +66,9 @@ class DefaultBundleReader(BaseBundleReader):
                 rel_asset_list = self._get_rel_asset_list(a)
                 if parent_ref_str not in rel_asset_list:
                     return False
-            if ref_type is not None and ref_type not in {rel_type for rel_type, _ in self._get_asset_relations(a)}:
+            if ref_type is not None and not any(
+                self._relation_type_matches(rel_type, ref_type) for rel_type, _ in self._get_asset_relations(a)
+            ):
                 return False
             if is_translated is not None and a.lang is not None and "translated" in a.lang:
                 return True
@@ -109,6 +111,8 @@ class DefaultBundleReader(BaseBundleReader):
             if not (required_columns <= columns or legacy_columns <= columns):
                 msg = "The bundle file is not valid. TOC reading error: missing required columns"
                 raise ValueError(msg)
+            assets = [AssetInfo.model_validate(self.__preprocess_csv_dict(row)) for row in toc_reader]
+        self._validate_relations(assets)
 
     def root_assets_iter(
         self,
@@ -145,7 +149,12 @@ class DefaultBundleReader(BaseBundleReader):
         for x in self.assets_iter():
             relations = self._get_asset_relations(x)
             if asset_ref in {ref for _, ref in relations} and (
-                rel_type is None or any(relation_type in rel_type for relation_type, _ in relations)
+                rel_type is None
+                or any(
+                    self._relation_type_matches(relation_type, requested)
+                    for relation_type, _ in relations
+                    for requested in rel_type
+                )
             ):
                 yield x
 
