@@ -63,11 +63,10 @@ class DefaultBundleReader(BaseBundleReader):
                 return False
             if parent_ref is not None:
                 parent_ref_str = self._asset_ref_to_str(parent_ref)
-                # Get the actual list of related assets
                 rel_asset_list = self._get_rel_asset_list(a)
                 if parent_ref_str not in rel_asset_list:
                     return False
-            if ref_type is not None and a.rel_type != ref_type:
+            if ref_type is not None and ref_type not in {rel_type for rel_type, _ in self._get_asset_relations(a)}:
                 return False
             if is_translated is not None and a.lang is not None and "translated" in a.lang:
                 return True
@@ -77,6 +76,7 @@ class DefaultBundleReader(BaseBundleReader):
 
     def __preprocess_csv_dict(self, input_dict: dict[str, str | None]) -> dict[str, str | None]:
         default_to_none_fields = (
+            "rels",
             "rel_type",
             "rel_asset",
             "lang",
@@ -85,23 +85,13 @@ class DefaultBundleReader(BaseBundleReader):
             "custom_data",
         )
         for x in default_to_none_fields:
-            if input_dict[x] == "":
+            if input_dict.get(x) == "":
                 input_dict[x] = None
         return input_dict
 
     def _get_rel_asset_list(self, asset_info: AssetInfo) -> list[str]:
         """Get the list of related asset references from an AssetInfo object."""
-        if asset_info.rel_asset is None:
-            return []
-
-        # Deserialize from CSV format (semicolon-separated values)
-        deserialized = self._deserialize_rel_asset_from_csv(asset_info.rel_asset)
-        if isinstance(deserialized, list):
-            return deserialized
-        elif isinstance(deserialized, str):
-            return [deserialized]
-        else:
-            return []
+        return [asset_ref for _, asset_ref in self._get_asset_relations(asset_info)]
 
     def assets_iter(self) -> Iterator[AssetInfo]:
         """Iterate over all assets in the bundle."""
@@ -113,8 +103,11 @@ class DefaultBundleReader(BaseBundleReader):
     def __check_toc(self):
         with self._bundle_archive.open("toc", "r") as toc_stream:
             toc_reader = csv.DictReader(io.TextIOWrapper(toc_stream, encoding="utf-8"), dialect="toc")
-            if not toc_reader.fieldnames or len(toc_reader.fieldnames) < len(self._TOC_FIELDS):
-                msg = "The bundle file is not valid. TOC reading error: wrong number of fields"
+            columns = set(toc_reader.fieldnames or ())
+            required_columns = {"ref", "type", "rels", "size"}
+            legacy_columns = {"ref", "type", "rel_type", "rel_asset", "size"}
+            if not (required_columns <= columns or legacy_columns <= columns):
+                msg = "The bundle file is not valid. TOC reading error: missing required columns"
                 raise ValueError(msg)
 
     def root_assets_iter(
@@ -139,7 +132,7 @@ class DefaultBundleReader(BaseBundleReader):
             )
 
         for x in self.assets_iter():
-            if _filter(x) and x.rel_asset is None:
+            if _filter(x) and not self._get_asset_relations(x):
                 yield x
 
     def get_relative_assets_iter(
@@ -150,8 +143,10 @@ class DefaultBundleReader(BaseBundleReader):
             rel_type = [rel_type]
         asset_ref = self._asset_ref_to_str(asset)
         for x in self.assets_iter():
-            rel_asset_list = self._get_rel_asset_list(x)
-            if asset_ref in rel_asset_list and (rel_type is None or x.rel_type in rel_type):
+            relations = self._get_asset_relations(x)
+            if asset_ref in {ref for _, ref in relations} and (
+                rel_type is None or any(relation_type in rel_type for relation_type, _ in relations)
+            ):
                 yield x
 
     def get_asset_by_ref(self, asset_ref: AssetRef) -> AssetInfo | None:

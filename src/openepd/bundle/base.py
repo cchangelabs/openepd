@@ -48,11 +48,14 @@ class BundleMixin:
         "name",
         "type",
         "lang",
-        "rel_type",
-        "rel_asset",
+        "rels",
+        "id",
+        "version",
+        "date_of_issue",
         "comment",
         "content_type",
         "size",
+        "sha256",
         "custom_type",
         "custom_data",
     )
@@ -103,6 +106,33 @@ class BundleMixin:
             return rel_asset_str.split(";")
         else:
             return rel_asset_str
+
+    @classmethod
+    def _serialize_rels_for_csv(cls, rel_type: str | None, rel_assets: list[str] | str | None) -> str | None:
+        """Serialize legacy relation arguments to the bundle TOC relation format."""
+        if rel_assets is None:
+            return None
+        if isinstance(rel_assets, str):
+            rel_assets = [rel_assets]
+        if not rel_assets:
+            return None
+        return ";".join(f"{rel_type or ''}:{asset_ref}" for asset_ref in rel_assets)
+
+    @classmethod
+    def _get_asset_relations(cls, asset_info: AssetInfo) -> list[tuple[str, str]]:
+        """Return relation type/reference pairs, accepting legacy in-memory and TOC fields."""
+        if asset_info.rels:
+            relations = []
+            for relation in asset_info.rels.split(";"):
+                rel_type, separator, asset_ref = relation.partition(":")
+                if separator:
+                    relations.append((rel_type, asset_ref))
+            return relations
+
+        rel_assets = cls._deserialize_rel_asset_from_csv(asset_info.rel_asset)
+        if isinstance(rel_assets, str):
+            rel_assets = [rel_assets]
+        return [(asset_info.rel_type or "", asset_ref) for asset_ref in (rel_assets or [])]
 
 
 class BaseBundleReader(BundleMixin, metaclass=abc.ABCMeta):
