@@ -1,4 +1,5 @@
-VIRTUAL_ENV_PATH=venv
+VIRTUAL_ENV_PATH=.venv
+LEGACY_VIRTUAL_ENV_PATH=venv
 SKIP_VENV="${NO_VENV}"
 SHELL := /bin/bash
 PYTHON := python3.11
@@ -67,12 +68,27 @@ deps-update:
 		$(POETRY) update; \
 	)
 
+# Create a virtual environment
 .PHONY: venv
 venv:
 	@( \
-	  	set -e; \
+		set -e; \
+		if [ -e $(LEGACY_VIRTUAL_ENV_PATH) ] && [ ! -L $(LEGACY_VIRTUAL_ENV_PATH) ]; then \
+			if [ ! -d $(LEGACY_VIRTUAL_ENV_PATH) ]; then \
+				echo "$(LEGACY_VIRTUAL_ENV_PATH) is not a directory; move or remove it first" >&2; \
+				exit 1; \
+			fi; \
+			if [ -e $(VIRTUAL_ENV_PATH) ] || [ -L $(VIRTUAL_ENV_PATH) ]; then \
+				echo "$(VIRTUAL_ENV_PATH) already exists; cannot move $(LEGACY_VIRTUAL_ENV_PATH)" >&2; \
+				exit 1; \
+			fi; \
+			mv $(LEGACY_VIRTUAL_ENV_PATH) $(VIRTUAL_ENV_PATH); \
+			ln -s $(VIRTUAL_ENV_PATH) $(LEGACY_VIRTUAL_ENV_PATH); \
+			echo "Moved $(LEGACY_VIRTUAL_ENV_PATH) to $(VIRTUAL_ENV_PATH)"; \
+		fi; \
 		$(PYTHON) -m venv $(VIRTUAL_ENV_PATH); \
-		source ./venv/bin/activate; \
+		ln -sfn $(VIRTUAL_ENV_PATH) $(LEGACY_VIRTUAL_ENV_PATH); \
+		source $(VIRTUAL_ENV_PATH)/bin/activate; \
 	)
 
 copyright:
