@@ -48,12 +48,12 @@ class ValidationError(ApiError):
         self,
         http_status: int,
         error_summary: str,
-        validation_errors: dict[str, list[str]] | None,
+        validation_errors: dict[str, Any] | None,
         response: Any,
         error_code: str | None,
     ) -> None:
         super().__init__(http_status, error_summary, response, error_code)
-        self.validation_errors: dict[str, list[str]] = validation_errors or {}
+        self.validation_errors: dict[str, Any] = validation_errors or {}
 
     @staticmethod
     def __flatten(nested_errors: dict[str, Any], parent_key: str = "") -> dict[str, list[str]]:
@@ -64,13 +64,15 @@ class ValidationError(ApiError):
                 nested_result = ValidationError.__flatten(value, full_key)
                 for nested_key, error_messages in nested_result.items():
                     result.setdefault(nested_key, []).extend(error_messages)
+            elif isinstance(value, str):
+                result.setdefault(full_key, []).append(value)
             else:
                 result.setdefault(full_key, []).extend(value)
         return result
 
     def __str__(self) -> str:
         result: list[str] = ["Validation errors:"]
-        for code, errors in self.__flatten(self.validation_errors).items():  # type: ignore[arg-type]
+        for code, errors in self.__flatten(self.validation_errors).items():
             result.append(f"{code}:")
             result.extend(f"  {e}" for e in errors)
         return "\n".join(result)
