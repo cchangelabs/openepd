@@ -60,4 +60,5 @@ jobs:
           export POETRY_HTTP_BASIC_PRIVATE_USERNAME=AzureDevOps
           export POETRY_HTTP_BASIC_PRIVATE_PASSWORD="${{ secrets.pypi_private_token }}"
           export POETRY_REPOSITORIES_PRIVATE_URL="${{ secrets.pypi_private_url }}"
+          make venv
           make private-publish-only PUBLISH_EXTRA_ARGS=--skip-existing

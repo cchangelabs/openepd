@@ -33,7 +33,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          make verify-prerequisites deps
+          make verify-prerequisites venv deps
 
       - name: Build packages
         run: |
