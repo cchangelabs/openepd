@@ -30,6 +30,7 @@ jobs:
         with:
           python-version: 3.11
           poetry-version: 2.1.3
+          venv-path: ".venv"
 
       - name: Install dependencies
         run: |
