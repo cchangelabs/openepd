@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openepd"
-version = "8.1.0"
+version = "8.1.1"
 license = "Apache-2.0"
 description = "Python library to work with OpenEPD format"
 authors = ["C-Change Labs <support@c-change-labs.com>"]
@@ -34,12 +34,12 @@ openlocationcode = ">=1.0.1"
 
 [tool.poetry.group.dev.dependencies]
 # Unit tests
-coverage = { version = ">=7.17.0", extras = ["toml"] }
+coverage = { version = ">=7.17.2", extras = ["toml"] }
 pytest = ">=9.2.0"
 pytest-cov = ">=7.1.0"
 
 # Dev tools
-ruff = ">=0.17.3" # bump .pre-commit-config.yaml as well
+ruff = ">=0.17.4" # bump .pre-commit-config.yaml as well
 licenseheaders = "~=0.8"
 mypy = ">=2.4.1"
 pre-commit = ">=4.7.0"
@@ -47,10 +47,10 @@ commitizen = ">=4.19.3"
 
 # Type checking
 types-dateparser = ">=1.4.3.20260907"
-types-requests = ">=2.33.0.20261006"
+types-requests = ">=2.33.0.20261030"
 
 # Code generation
-click = "~=8.5.0"
+click = "~=8.5.1"
 # For list of countries
 pycountry = ">=26.2.16"
 jinja2 = ">=3.1.4"

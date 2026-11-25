@@ -49,36 +49,26 @@ class PcrRef(BaseOpenEpdSchema):
         max_length=200,
         description="Full document name as listed in source document",
         examples=["c-PCR-003 Concrete and concrete elements (EN 16757)"],
+        default=None,
     )
     ref: pydantic.AnyUrl | None = pydantic.Field(
         description="Reference to this PCR's JSON object",
         examples=["https://openepd.buildingtransparency.org/api/pcrs/1u7zsed8"],
+        default=None,
     )
 
 
-class Pcr(WithAttachmentsMixin, WithAltIdsMixin, BaseOpenEpdSchema):
+class Pcr(WithAttachmentsMixin, WithAltIdsMixin, PcrRef):
     """Represent a PCR (Product Category Rules)."""
 
     model_config = pydantic.ConfigDict(json_schema_extra={"examples": [EXAMPLE_PCR_BIFMA_SEATING]})
 
-    id: OpenXpdUUID | None = pydantic.Field(
-        description="The unique ID for this PCR.  To ensure global uniqueness, should be registered "
-        "at open-xpd-uuid.cqd.io/register or a coordinating registry.",
-        examples=["ec3xpgq2"],
-        default=None,
-    )
     issuer: Org | None = pydantic.Field(description="Organization issuing this PCR", default=None)
     issuer_doc_id: str | None = pydantic.Field(
         max_length=40,
         default=None,
         description="Document ID or code created by issuer",
         examples=["c-PCR-003"],
-    )
-    name: str | None = pydantic.Field(
-        max_length=200,
-        default=None,
-        description="Full document name as listed in source document",
-        examples=["c-PCR-003 Concrete and concrete elements (EN 16757)"],
     )
     short_name: str | None = pydantic.Field(
         default=None,

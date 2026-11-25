@@ -16,6 +16,9 @@
 import math
 import unittest
 
+from requests import Response
+
+from openepd.api.base_sync_client import DefaultOpenApiErrorHandlers
 from openepd.api.common import StreamingListResponse
 from openepd.api.dto.common import MetaCollectionDto, OpenEpdApiResponse
 from openepd.api.dto.meta import PagingMeta, PagingMetaMixin
@@ -91,5 +94,43 @@ field4.subfield1.subfield2:
         for name, errors_dict, expected_output in self.TEST_CASES:
             with self.subTest(name):
                 error = ValidationError(400, "Validation error", errors_dict, None, None)
-                print(str(error))
                 self.assertEqual(expected_output.strip(), str(error))
+
+    def test_validation_errors_serialization_without_errors(self):
+        error = ValidationError(400, "Validation error", None, None, None)
+
+        self.assertEqual("Validation errors:", str(error))
+
+    def test_string_message_from_ec3_response(self):
+        response = Response()
+        response.status_code = 400
+        response.headers["content-type"] = "application/json"
+        response._content = (
+            b'{"detail":"Submitted data are not valid. See `errors`. `validation_errors` is deprecated.",'
+            b'"validation_errors":{"web_domain":"Web domain should be unique"},'
+            b'"errors":[{"loc":["web_domain"],"msg":"Web domain should be unique","type":"value_error"}]}'
+        )
+
+        with self.assertRaises(ValidationError) as raised:
+            DefaultOpenApiErrorHandlers.handle_bad_request(response, True)
+
+        self.assertEqual("Validation errors:\nweb_domain:\n  Web domain should be unique", str(raised.exception))
+
+    def test_list_messages(self):
+        error = ValidationError(400, "Validation error", {"field": ["First error", "Second error"]}, None, None)
+
+        self.assertEqual("Validation errors:\nfield:\n  First error\n  Second error", str(error))
+
+    def test_nested_string_and_list_messages(self):
+        error = ValidationError(
+            400,
+            "Validation error",
+            {"organization": {"web_domain": "Already used", "name": ["Required", "Invalid"]}},
+            None,
+            None,
+        )
+
+        self.assertEqual(
+            "Validation errors:\norganization.web_domain:\n  Already used\norganization.name:\n  Required\n  Invalid",
+            str(error),
+        )
