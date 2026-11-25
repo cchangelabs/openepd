@@ -502,7 +502,7 @@ class DefaultOpenApiErrorHandlers:
     class _Error(NamedTuple):
         summary: str
         error_code: str | None
-        details: dict[str, list[str]] | None
+        details: dict[str, Any] | None
 
     @staticmethod
     def _parse_error_response(response: Response) -> _Error:

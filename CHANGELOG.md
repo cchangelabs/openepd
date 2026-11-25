@@ -1,3 +1,11 @@
+## 8.1.1 (2026-11-25)
+
+### Fix
+
+- **model**: add optional `ref` fields to PCR models
+- **api**: handle string-valued EC3 validation errors
+- exclude API tests from the built package
+
 ## 8.1.0 (2026-11-12)
 
 ### Feat

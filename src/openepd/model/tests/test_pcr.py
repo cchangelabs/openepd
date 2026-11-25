@@ -15,10 +15,35 @@
 #
 import unittest
 
-from openepd.model.pcr import Pcr
+from openepd.model.pcr import Pcr, PcrRef
 
 
 class PcrTestCase(unittest.TestCase):
+    def test_pcr_ref_fields_are_optional(self) -> None:
+        pcr_ref = PcrRef.model_validate({})
+
+        self.assertIsNone(pcr_ref.id)
+        self.assertIsNone(pcr_ref.name)
+        self.assertIsNone(pcr_ref.ref)
+
+        pcr = Pcr.model_validate({})
+        self.assertIsNone(pcr.id)
+        self.assertIsNone(pcr.name)
+        self.assertIsNone(pcr.ref)
+
+    def test_pcr_includes_reference_fields(self) -> None:
+        pcr = Pcr.model_validate(
+            {
+                "id": "ec3xpgq2",
+                "name": "Concrete and concrete elements",
+                "ref": "https://openepd.buildingtransparency.org/api/pcrs/1u7zsed8",
+            }
+        )
+
+        self.assertEqual(pcr.id, "ec3xpgq2")
+        self.assertEqual(pcr.name, "Concrete and concrete elements")
+        self.assertEqual(str(pcr.ref), "https://openepd.buildingtransparency.org/api/pcrs/1u7zsed8")
+
     def test_pcr_accepts_various_geographies(self) -> None:
         """
         Test that the Pcr model accepts a variety of valid geography codes in the 'applicable_in' field.
