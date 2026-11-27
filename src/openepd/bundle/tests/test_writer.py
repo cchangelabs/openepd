@@ -13,9 +13,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+import csv
+from io import BytesIO, StringIO
 from pathlib import Path
 import tempfile
 import unittest
+import zipfile
 
 from openepd.bundle.model import AssetType, RelType
 from openepd.bundle.reader import DefaultBundleReader
@@ -44,6 +47,47 @@ class DefaultBundleReaderTestCase(unittest.TestCase):
             manifest = reader.get_manifest()
             self.assertEqual(bundle_comment, manifest.comment)
             self.assertEqual(0, len(list(reader.root_assets_iter())))
+
+    def test_toc_uses_spec_columns_and_is_readable(self):
+        file_name, writer = self.__create_writer()
+        with writer:
+            root = writer.write_blob_asset(BytesIO(b"root"), "text/plain")
+            writer.write_blob_asset(BytesIO(b"related"), "text/plain", root, "translation")
+
+        with zipfile.ZipFile(file_name) as archive:
+            toc = csv.DictReader(StringIO(archive.read("toc").decode("utf-8")), dialect="toc")
+            self.assertEqual(
+                [
+                    "ref",
+                    "name",
+                    "type",
+                    "lang",
+                    "rels",
+                    "id",
+                    "version",
+                    "date_of_issue",
+                    "comment",
+                    "content_type",
+                    "size",
+                    "sha256",
+                    "custom_type",
+                    "custom_data",
+                ],
+                toc.fieldnames,
+            )
+            rows = list(toc)
+            self.assertEqual("", rows[0]["rels"])
+            self.assertEqual(f"translation:{root.ref}", rows[1]["rels"])
+            self.assertEqual("", rows[0]["id"])
+            self.assertEqual("", rows[0]["version"])
+            self.assertEqual("", rows[0]["date_of_issue"])
+            self.assertEqual("", rows[0]["sha256"])
+
+        with self.__create_reader(file_name) as reader:
+            assets = list(reader.assets_iter())
+            self.assertEqual(2, len(assets))
+            self.assertEqual(f"translation:{root.ref}", assets[1].rels)
+            self.assertEqual(assets[1].ref, reader.get_first_relative_asset(root).ref)
 
     def test_add_objects_with_minimal_info(self):
         file_name, writer = self.__create_writer()
